@@ -22,7 +22,6 @@
 #include <score/assert.hpp>
 
 #include <iterator>
-#include <limits>
 #include <type_traits>
 
 namespace score
@@ -33,19 +32,47 @@ namespace serialization
 namespace helper
 {
 
-/// @brief We use free function overloads, in order to change the store routine based on the container. If we would want
-/// to-do this inside the iterator (as one normally would expect) we would need to specialize the iterator which could
-/// cause some more code duplication. Thus, extracting this functionality for overloading is the more elegant solution
-template <typename Container, std::enable_if_t<details::supports_emplace_back<Container>::value, bool> = true>
-bool StoreIn(Container& container, typename Container::iterator& iterator, const typename Container::value_type& value)
+/// @brief Appends value via emplace_back and moves the iterator to end(). Caller must ensure capacity is available.
+template <typename Container>
+bool EmplaceBackInto(Container& container,
+                     typename Container::iterator& iterator,
+                     const typename Container::value_type& value)
 {
     // Suppress "AUTOSAR C++14 A0-1-2", The rule states: "The value returned by a function having a non-void return type
     // that is not an overloaded operator shall be used." This is false positive. API returns void.
     // coverity[autosar_cpp14_a0_1_2_violation : FALSE]
     container.emplace_back(value);
     iterator = container.end();  // we cannot be sure that the iterator stays valid (most certainly it did not)
-    return true;  // if emplace back does not work, we will get an exception and thus terminate. maybe we can come up
-                  // with a more robust solution once we switched to PMR.
+    return true;
+}
+
+/// @brief We use free function overloads, in order to change the store routine based on the container. If we would want
+/// to-do this inside the iterator (as one normally would expect) we would need to specialize the iterator which could
+/// cause some more code duplication. Thus, extracting this functionality for overloading is the more elegant solution
+template <typename Container,
+          std::enable_if_t<details::supports_emplace_back<Container>::value &&
+                               (details::has_bounded_capacity<Container>::value == false),
+                           bool> = true>
+bool StoreIn(Container& container, typename Container::iterator& iterator, const typename Container::value_type& value)
+{
+    // if emplace back does not work, we will get an exception and thus terminate. maybe we can come up with a more
+    // robust solution once we switched to PMR.
+    return EmplaceBackInto(container, iterator, value);
+}
+
+/// @brief Overload for bounded containers (e.g. score::cpp::static_vector) whose emplace_back has a size() < capacity()
+/// precondition. We check capacity ourselves and report an out-of-bounds write instead of terminating.
+template <typename Container,
+          std::enable_if_t<details::supports_emplace_back<Container>::value &&
+                               details::has_bounded_capacity<Container>::value,
+                           bool> = true>
+bool StoreIn(Container& container, typename Container::iterator& iterator, const typename Container::value_type& value)
+{
+    if (container.size() >= container.capacity())
+    {
+        return false;
+    }
+    return EmplaceBackInto(container, iterator, value);
 }
 
 template <typename Container, std::enable_if_t<details::supports_emplace_back<Container>::value == false, bool> = true>
@@ -84,7 +111,8 @@ class SerializeIterator
     explicit SerializeIterator(Container& container)
         : container_(container),
           iterator_{std::make_shared<typename Container::iterator>(container_.begin())},
-          result_{std::make_shared<Result<std::size_t>>()}
+          result_{std::make_shared<Result<std::size_t>>()},
+          number_of_bytes_written_{std::make_shared<std::size_t>(0U)}
     {
         static_assert(details::is_supported_sequence_container<Container>::value,
                       "Provided Container is not supported.");
@@ -99,6 +127,10 @@ class SerializeIterator
         if (result == false)
         {
             *result_ = MakeUnexpected(SerializationError::kOutOfBoundsWrite);
+        }
+        else
+        {
+            ++(*number_of_bytes_written_);
         }
         return *this;
     }
@@ -146,15 +178,14 @@ class SerializeIterator
     // coverity[autosar_cpp14_a0_1_3_violation : FALSE]
     std::size_t GetNumberOfBytesWritten() const
     {
-        const auto distance = std::distance(container_.begin(), *iterator_);
-        SCORE_LANGUAGE_FUTURECPP_ASSERT_PRD(distance >=
-                                            0);  // we start at begin and go on from there, it can not be negative.
-        return static_cast<std::size_t>(distance);
+        // Counts only elements stored through this iterator, excluding any content the container held beforehand.
+        return *number_of_bytes_written_;
     }
 
     Container& container_;
     std::shared_ptr<typename Container::iterator> iterator_;
     std::shared_ptr<Result<std::size_t>> result_;
+    std::shared_ptr<std::size_t> number_of_bytes_written_;
 };
 
 /// @brief Creates a SerializeIterator for a given Container
@@ -214,11 +245,12 @@ class DeSerializeIterator
     /// @brief Move iterator to next position (but not past end())
     DeSerializeIterator<Container> operator++(int)
     {
+        DeSerializeIterator<Container> previous{*this};
         if (iterator_ != container_.cend())
         {
             ++iterator_;
         }
-        return *this;
+        return previous;
     }
 
     /// @brief Indicate how much the iterator was moved and if an out-of-bound access happend
@@ -254,9 +286,7 @@ class DeSerializeIterator
     DeSerializeIterator End() const
     {
         DeSerializeIterator end{container_};
-        constexpr difference_type max_difference_type = std::numeric_limits<difference_type>::max();
-        SCORE_LANGUAGE_FUTURECPP_ASSERT_PRD(static_cast<difference_type>(container_.size()) < max_difference_type);
-        std::advance(end, static_cast<difference_type>(container_.size()));
+        end.iterator_ = container_.cend();
         return end;
     }
 

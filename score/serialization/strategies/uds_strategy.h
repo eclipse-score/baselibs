@@ -78,13 +78,22 @@ class UDSStrategy final : public UnsignedIntegralOnlyStrategy
                              DeSerializeIterator<Container>&,
                              LengthPrefixedVector<UnderlyingType, LengthType>& value) const
     {
+        value.clear();  // a reused destination must hold only the decoded value, not previous contents
         LengthType counter{};
         visitor.Next(counter);
+        if (!visitor.GetResult().has_value())
+        {
+            return MakeUnexpected(SerializationError::kOutOfBoundsWrite);
+        }
 
         for (; counter > static_cast<decltype(counter)>(0); counter--)
         {
             UnderlyingType underlying_type{};
             visitor.Next(underlying_type);
+            if (!visitor.GetResult().has_value())
+            {
+                return MakeUnexpected(SerializationError::kOutOfBoundsWrite);
+            }
             value.push_back(underlying_type);
         }
 
@@ -118,6 +127,7 @@ class UDSStrategy final : public UnsignedIntegralOnlyStrategy
     template <typename Visitor, typename Container>
     Result<void> DeSerialize(Visitor&, DeSerializeIterator<Container>& iterator, score::cpp::pmr::string& value) const
     {
+        value.clear();  // a reused destination must hold only the decoded value, not previous contents
         if (iterator == iterator.End())
         {
             return {};
@@ -175,6 +185,7 @@ class UDSStrategy final : public UnsignedIntegralOnlyStrategy
                              DeSerializeIterator<Container>& iterator,
                              score::cpp::static_vector<UnderlyingType, MaxSize>& value) const
     {
+        value.clear();  // a reused destination must hold only the decoded value, not previous contents
         if (iterator == iterator.End())
         {
             return {};
@@ -223,11 +234,20 @@ class UDSStrategy final : public UnsignedIntegralOnlyStrategy
                              DeSerializeIterator<Container>& iterator,
                              score::cpp::pmr::vector<UnderlyingType>& value) const
     {
+        value.clear();  // a reused destination must hold only the decoded value, not previous contents
         const auto end = iterator.End();
         while (iterator != end)
         {
+            const auto position_before = iterator;
             UnderlyingType underlying_type{};
             visitor.Next(underlying_type);
+
+            // A latched failure turns Next into a no-op and an element consuming no input never advances;
+            // either case would loop forever, so bail out before appending when the decode failed or made no progress.
+            if ((not visitor.GetResult().has_value()) || (iterator == position_before))
+            {
+                return MakeUnexpected(SerializationError::kOutOfBoundsWrite);
+            }
             value.push_back(underlying_type);
         }
 

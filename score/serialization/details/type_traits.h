@@ -116,6 +116,20 @@ struct supports_emplace_back<score::cpp::static_vector<T, Size>>
     static const bool value = true;
 };
 
+/// @brief Base case, containers are assumed to grow unbounded via emplace_back
+template <class T>
+struct has_bounded_capacity
+{
+    static const bool value = false;
+};
+
+/// @brief score::cpp::static_vector has a fixed capacity and emplace_back requires size() < capacity()
+template <class T, std::size_t Size>
+struct has_bounded_capacity<score::cpp::static_vector<T, Size>>
+{
+    static const bool value = true;
+};
+
 }  // namespace details
 
 }  // namespace serialization

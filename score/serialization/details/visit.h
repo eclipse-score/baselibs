@@ -145,8 +145,9 @@ inline void visit_as_struct(DeSerializationVisitor<Container, Strategy>& visitor
     std::size_t counter{};
     // coverity[autosar_cpp14_a6_2_2_violation]
     // coverity[autosar_cpp14_m5_2_10_violation]
+    // Route each field through Next() so the visitor's latched-error guard stops traversal after the first failure.
     score::cpp::ignore = (expander{(helper::MarkMetaInformationAboutElement<Structure>(visitor, counter),
-                                    ::score::common::visitor::visit(visitor, std::forward<Args>(fields)),
+                                    visitor.Next(std::forward<Args>(fields)),
                                     // coverity[autosar_cpp14_m0_1_9_violation : FALSE]
                                     ++counter)...});
 
