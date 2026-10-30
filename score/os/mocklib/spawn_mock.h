@@ -179,11 +179,11 @@ class SpawnMock : public Spawn
                 (override, const, noexcept));
     MOCK_METHOD((score::cpp::expected<std::int32_t, score::os::Error>),
                 posix_spawnattr_getcred,
-                (const posix_spawnattr_t* attrp, uid_t* uid_p, gid_t* gid_p),
+                (const posix_spawnattr_t* attrp, UserId* uid_p, GroupId* gid_p),
                 (override, const, noexcept));
     MOCK_METHOD((score::cpp::expected<std::int32_t, score::os::Error>),
                 posix_spawnattr_setcred,
-                (posix_spawnattr_t * attrp, uid_t uid, gid_t gid),
+                (posix_spawnattr_t * attrp, UserId uid, GroupId gid),
                 (override, const, noexcept));
     MOCK_METHOD((score::cpp::expected<std::int32_t, score::os::Error>),
                 posix_spawnattr_gettypeid,
