@@ -69,7 +69,7 @@ In addition, VaJson satisfies the extended requirements defined in :need:`doc__v
 
 * :need:`comp_req__vajson__validation`
 * :need:`comp_req__vajson__trailing_commas`
-* :need:`comp_req__vajson__hex_integers`
+* :need:`comp_req__vajson__number_grammar`
 * :need:`comp_req__vajson__unicode`
 
 Backward Compatibility
