@@ -21,6 +21,7 @@
 #include "gmock/gmock.h"
 #include "gtest/gtest.h"
 
+#include <cstdint>
 #include <future>
 #include <memory>
 #include <type_traits>
@@ -316,6 +317,242 @@ TEST(InterruptibleStateInitialResultTest, VoidStateStartsWithAValue)
     const auto state = InterruptibleState<void>::Make();
 
     EXPECT_TRUE(state->GetValue().has_value());
+}
+
+// SetValue() constructs the stored value in place from whatever it is handed.
+// That is either an object of the value type, copied or moved from as before, or the arguments of a constructor.
+// The cases below are the ones only the second form can reach.
+// They also pin the behaviour that must not change now that the value category of the arguments is preserved.
+template <typename State, typename AlwaysVoid, typename... Args>
+struct IsSetValueViableImpl : std::false_type
+{
+};
+
+template <typename State, typename... Args>
+struct IsSetValueViableImpl<State,
+                            decltype(static_cast<void>(std::declval<State&>().SetValue(std::declval<Args>()...))),
+                            Args...> : std::true_type
+{
+};
+
+template <typename State, typename... Args>
+using IsSetValueViable = IsSetValueViableImpl<State, void, Args...>;
+
+static_assert(IsSetValueViable<InterruptibleState<testing::NeitherCopyNorMoveType>, int>::value,
+              "a value that can be neither copied nor moved must be settable from its constructor arguments");
+static_assert(IsSetValueViable<InterruptibleState<testing::NeitherCopyNorMoveType>, int, int>::value,
+              "several constructor arguments must be forwarded together");
+static_assert(
+    !IsSetValueViable<InterruptibleState<testing::NeitherCopyNorMoveType>, testing::NeitherCopyNorMoveType&&>::value,
+    "an object of a type that cannot be moved still cannot be handed over by value; that is the language");
+static_assert(IsSetValueViable<InterruptibleState<testing::CopyAndMovableType>, int>::value,
+              "an explicit converting constructor must be usable, since the value is constructed, not converted");
+static_assert(IsSetValueViable<InterruptibleState<testing::DefaultConstructibleType>>::value,
+              "a default constructible value must be settable with no arguments");
+
+TEST(InterruptibleStateInPlaceSetValueTest, ConstructsAValueThatCanBeNeitherCopiedNorMoved)
+{
+    const auto state{InterruptibleState<testing::NeitherCopyNorMoveType>::Make()};
+
+    EXPECT_TRUE(state->SetValue(kFirstValue));
+
+    auto& result{state->GetValue()};
+    ASSERT_TRUE(result.has_value());
+    EXPECT_EQ(result.value().GetValue(), kFirstValue);
+}
+
+TEST(InterruptibleStateInPlaceSetValueTest, ForwardsSeveralConstructorArgumentsTogether)
+{
+    const auto state{InterruptibleState<testing::NeitherCopyNorMoveType>::Make()};
+
+    EXPECT_TRUE(state->SetValue(kFirstValue, kOtherValue));
+
+    auto& result{state->GetValue()};
+    ASSERT_TRUE(result.has_value());
+    EXPECT_EQ(result.value().GetValue(), kFirstValue + kOtherValue);
+}
+
+TEST(InterruptibleStateInPlaceSetValueTest, ASecondCallReturnsFalseAndKeepsTheFirstValue)
+{
+    const auto state{InterruptibleState<testing::NeitherCopyNorMoveType>::Make()};
+    ASSERT_TRUE(state->SetValue(kFirstValue));
+
+    EXPECT_FALSE(state->SetValue(kOtherValue));
+
+    auto& result{state->GetValue()};
+    ASSERT_TRUE(result.has_value());
+    EXPECT_EQ(result.value().GetValue(), kFirstValue);
+}
+
+TEST(InterruptibleStateInPlaceSetValueTest, AcceptsAnExplicitConvertingConstructor)
+{
+    // CopyAndMovableType's constructor from int is explicit, so no int converts to it implicitly.
+    const auto state{InterruptibleState<testing::CopyAndMovableType>::Make()};
+
+    EXPECT_TRUE(state->SetValue(kFirstValue));
+
+    auto& result{state->GetValue()};
+    ASSERT_TRUE(result.has_value());
+    EXPECT_EQ(result.value().GetValue(), kFirstValue);
+}
+
+TEST(InterruptibleStateInPlaceSetValueTest, DefaultConstructsTheValueWhenGivenNoArguments)
+{
+    const auto state{InterruptibleState<testing::DefaultConstructibleType>::Make()};
+
+    EXPECT_TRUE(state->SetValue());
+
+    auto& result{state->GetValue()};
+    ASSERT_TRUE(result.has_value());
+    EXPECT_EQ(result.value().GetValue(), testing::DefaultConstructibleType::kDefaultValue);
+}
+
+TEST(InterruptibleStateInPlaceSetValueTest, HandingOverAnObjectMovesItExactlyOnce)
+{
+    // The contrast for the test below: without it, a counter that never counted would make that test pass vacuously.
+    int move_count{0};
+    const auto state{InterruptibleState<testing::MoveCountingType>::Make()};
+
+    constexpr int kExactlyOnce{1};
+
+    ASSERT_TRUE(state->SetValue(testing::MoveCountingType{kFirstValue, move_count}));
+
+    EXPECT_EQ(move_count, kExactlyOnce);
+}
+
+TEST(InterruptibleStateInPlaceSetValueTest, HandingOverConstructorArgumentsMovesNothing)
+{
+    int move_count{0};
+    const auto state{InterruptibleState<testing::MoveCountingType>::Make()};
+
+    constexpr int kNotAtAll{0};
+
+    ASSERT_TRUE(state->SetValue(kFirstValue, move_count));
+
+    EXPECT_EQ(move_count, kNotAtAll);
+    auto& result{state->GetValue()};
+    ASSERT_TRUE(result.has_value());
+    EXPECT_EQ(result.value().GetValue(), kFirstValue);
+}
+
+TEST(InterruptibleStateInPlaceSetValueTest, CopiesFromANonConstLvalueWhenTheForwardingConstructorIsGuarded)
+{
+    const auto state{InterruptibleState<testing::GuardedForwardingType>::Make()};
+    testing::GuardedForwardingType value{kFirstValue};
+    ASSERT_FALSE(value.WasCopyConstructed());
+
+    ASSERT_TRUE(state->SetValue(value));
+
+    auto& result{state->GetValue()};
+    ASSERT_TRUE(result.has_value());
+    EXPECT_TRUE(result.value().WasCopyConstructed());
+    EXPECT_EQ(result.value().GetValue(), kFirstValue);
+}
+
+// Handing SetValue() an existing object, or a braced-init-list naming one, must resolve as it did before.
+// A braced-init-list has no type, so it cannot be deduced into a parameter pack.
+// A non-const lvalue would otherwise be offered to overload resolution as `Value&`.
+// The in-place overload has to stay out of both cases.
+TEST(InterruptibleStateInPlaceSetValueTest, StillAcceptsABracedInitList)
+{
+    const auto state{InterruptibleState<testing::ListInitialisableType>::Make()};
+
+    EXPECT_TRUE(state->SetValue({kFirstValue, kOtherValue}));
+
+    auto& result{state->GetValue()};
+    ASSERT_TRUE(result.has_value());
+    EXPECT_EQ(result.value().GetValue(), kFirstValue + kOtherValue);
+}
+
+TEST(InterruptibleStateInPlaceSetValueTest, StillAcceptsAnEmptyBracedInitList)
+{
+    const auto state{InterruptibleState<testing::DefaultConstructibleType>::Make()};
+
+    EXPECT_TRUE(state->SetValue({}));
+
+    auto& result{state->GetValue()};
+    ASSERT_TRUE(result.has_value());
+    EXPECT_EQ(result.value().GetValue(), testing::DefaultConstructibleType::kDefaultValue);
+}
+
+TEST(InterruptibleStateInPlaceSetValueTest, CopiesFromANonConstLvalueEvenWhenTheForwardingConstructorIsUnguarded)
+{
+    const auto state{InterruptibleState<testing::UnguardedForwardingType>::Make()};
+    testing::UnguardedForwardingType value{kFirstValue};
+    ASSERT_FALSE(value.WasCopyConstructed());
+
+    ASSERT_TRUE(state->SetValue(value));
+
+    auto& result{state->GetValue()};
+    ASSERT_TRUE(result.has_value());
+    EXPECT_TRUE(result.value().WasCopyConstructed());
+    EXPECT_EQ(result.value().GetValue(), kFirstValue);
+}
+
+TEST(InterruptibleStateInPlaceSetValueTest, CopiesFromANonConstLvalueEvenWhenTheValueTypeIsConstQualified)
+{
+    // For a const-qualified Value the argument decays to the unqualified type.
+    // The in-place overload must therefore ignore the cv-qualifiers of Value to recognise an existing object.
+    const auto state{InterruptibleState<const testing::UnguardedForwardingType>::Make()};
+    testing::UnguardedForwardingType value{kFirstValue};
+    ASSERT_FALSE(value.WasCopyConstructed());
+
+    ASSERT_TRUE(state->SetValue(value));
+
+    auto& result{state->GetValue()};
+    ASSERT_TRUE(result.has_value());
+    EXPECT_TRUE(result.value().WasCopyConstructed());
+    EXPECT_EQ(result.value().GetValue(), kFirstValue);
+}
+
+// More generally, every single-argument call that compiled before the in-place overload existed must resolve as before.
+// The tests below cover the cases a forwarding reference would otherwise take over.
+// An object derived from Value would reach a forwarding constructor instead of the copy constructor.
+// An argument that converts to Value implicitly would reach an explicit constructor that matches it better.
+// A bit-field would not compile, because it cannot bind to a forwarding reference.
+TEST(InterruptibleStateInPlaceSetValueTest, CopiesFromADerivedLvalueEvenThoughTheForwardingConstructorWouldAcceptIt)
+{
+    const auto state{InterruptibleState<testing::GuardedForwardingType>::Make()};
+    testing::DerivedFromGuardedForwardingType value{kFirstValue};
+    ASSERT_FALSE(value.WasCopyConstructed());
+
+    ASSERT_TRUE(state->SetValue(value));
+
+    auto& result{state->GetValue()};
+    ASSERT_TRUE(result.has_value());
+    EXPECT_TRUE(result.value().WasCopyConstructed());
+    EXPECT_EQ(result.value().GetValue(), kFirstValue);
+}
+
+TEST(InterruptibleStateInPlaceSetValueTest, StillConvertsImplicitlyWhenAnExplicitConstructorWouldMatchBetter)
+{
+    const auto state{InterruptibleState<testing::ImplicitlyAndExplicitlyConstructibleType>::Make()};
+
+    EXPECT_TRUE(state->SetValue(kFirstValue));
+
+    auto& result{state->GetValue()};
+    ASSERT_TRUE(result.has_value());
+    EXPECT_TRUE(result.value().WasConvertedImplicitly());
+    EXPECT_EQ(result.value().GetValue(), kFirstValue);
+}
+
+TEST(InterruptibleStateInPlaceSetValueTest, StillAcceptsABitFieldOfAnotherType)
+{
+    struct WithBitField
+    {
+        // coverity[autosar_cpp14_a9_6_2_violation] a bit-field is what this test is about
+        std::uint32_t field : 4U;
+    };
+    constexpr std::uint32_t kBitFieldValue{5U};
+    // Not const on purpose: a const bit-field binds to a const reference through a temporary, which always worked.
+    WithBitField holder{kBitFieldValue};
+    const auto state{InterruptibleState<std::int64_t>::Make()};
+
+    EXPECT_TRUE(state->SetValue(holder.field));
+
+    auto& result{state->GetValue()};
+    ASSERT_TRUE(result.has_value());
+    EXPECT_EQ(result.value(), static_cast<std::int64_t>(kBitFieldValue));
 }
 
 }  // namespace
