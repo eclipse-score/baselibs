@@ -35,10 +35,10 @@ class Registry_string_view final
     friend class String_registry;
 
   public:
-    using const_pointer = typename std::string_view::const_pointer;
-    using const_iterator = typename std::string_view::const_iterator;
-    using difference_type = typename std::string_view::difference_type;
-    using size_type = typename std::string_view::size_type;
+    using const_pointer = std::string_view::const_pointer;
+    using const_iterator = std::string_view::const_iterator;
+    using difference_type = std::string_view::difference_type;
+    using size_type = std::string_view::size_type;
     // npos is a constant representing the largest possible value of size_type, because of
     // signed-to-unsigned implicit conversion. It is used as an "end of string" or "not found"
     // indicator. More details: https://en.cppreference.com/w/cpp/string/basic_string/npos
