@@ -199,9 +199,8 @@ cc_test(
     ],
 )
 
-# The coverage tool only picks up this test when it lives in the same directory as json_writer.cpp.
 cc_test(
-    name = "json_writer_unit_test",
+    name = "json_writer_test",
     srcs = [
         "json_writer_test.cpp",
     ],

@@ -52,13 +52,9 @@ class GenericValueSerializer final
     ///     score/json/internal/writer/vajson/writer/serializers/structures/serializer.h
     /// \param[in] os Writer to write into. It must outlive the serializer.
     /// \param[in] state of the Serializer.
-    /// \param[in] bom The BOM type to write.
-    explicit GenericValueSerializer(WriterType os,
-                                    SerializerState state = SerializerState::kEmpty,
-                                    EncodingType bom = EncodingType::kNone) noexcept
+    explicit GenericValueSerializer(WriterType os, SerializerState state = SerializerState::kEmpty) noexcept
         : os_(os), serializer_state_{state}
     {
-        this->WriteBom(bom);
     }
 
     /// \brief Default move constructor
@@ -212,19 +208,6 @@ class GenericValueSerializer final
         }
         std::forward<Fn>(fn)();
         return Next(this->os_.get(), SerializerState::kNonEmpty);
-    }
-
-    /// \brief Writes the requested BOM type
-    /// \details
-    /// - Write the requested BOM to the stream.
-    /// \param[in] type The BOM type to write.
-    void WriteBom(EncodingType type) const noexcept
-    {
-        if (type == EncodingType::kUtf8)
-        {
-            constexpr std::string_view kUtf8Bom{"\xEF\xBB\xBF"sv};
-            this->os_.get().Stream().write(kUtf8Bom.data(), kUtf8Bom.size());
-        }
     }
 
     /// \brief Writer to write into
