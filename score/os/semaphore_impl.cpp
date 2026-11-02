@@ -125,6 +125,34 @@ score::cpp::expected_blank<Error> SemaphoreImpl::sem_timedwait(sem_t* const sem,
     }
     return {};
 }
+score::cpp::expected_blank<Error> SemaphoreImpl::sem_waittimeout(sem_t* const sem,
+                                                                 const std::chrono::nanoseconds timeout) const noexcept
+{
+    const auto tp = std::chrono::system_clock::now() + timeout;
+    return sem_timedwait(sem, tp);
+}
+score::cpp::expected_blank<Error> SemaphoreImpl::sem_timedwait(
+    sem_t* const sem,
+    const std::chrono::time_point<std::chrono::system_clock, std::chrono::nanoseconds> tp) const noexcept
+{
+    // convert time_point to timespec
+    struct timespec abs_time{};
+    abs_time.tv_sec = std::chrono::duration_cast<std::chrono::seconds>(tp.time_since_epoch()).count();
+    abs_time.tv_nsec = std::chrono::duration_cast<std::chrono::nanoseconds>(tp.time_since_epoch()).count() %
+                       std::chrono::nanoseconds::period::den;
+    return sem_timedwait(sem, &abs_time);
+}
+score::cpp::expected_blank<Error> SemaphoreImpl::sem_timedwait_monotonic(
+    sem_t* const sem,
+    const std::chrono::time_point<std::chrono::steady_clock, std::chrono::nanoseconds> tp) const noexcept
+{
+    // convert time_point to timespec
+    struct timespec abs_time{};
+    abs_time.tv_sec = std::chrono::duration_cast<std::chrono::seconds>(tp.time_since_epoch()).count();
+    abs_time.tv_nsec = std::chrono::duration_cast<std::chrono::nanoseconds>(tp.time_since_epoch()).count() %
+                       std::chrono::nanoseconds::period::den;
+    return sem_timedwait_monotonic(sem, &abs_time);
+}
 // SemaphoreImpl::sem_timedwait_monotonic() is platform-specific and lives in
 // semaphore_impl_linux.cpp / semaphore_impl_qnx.cpp (selected in BUILD).
 score::cpp::expected_blank<Error> SemaphoreImpl::sem_getvalue(sem_t* const sem, std::int32_t* const sval) const noexcept

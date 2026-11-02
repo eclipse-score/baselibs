@@ -231,6 +231,18 @@ TEST_F(SemaphoreTestFixture, SuccessSemPost)
     unit_.sem_close(sem);
 }
 
+// Timeout test for sem_waittimeout()
+TEST_F(SemaphoreTestFixture, TimeoutWaitTimeout)
+{
+    // Semaphore starts at 0 and nobody posts to it, so sem_timedwait_monotonic() must block and
+    // return ETIMEDOUT once the deadline passes. Deadline is 10 ms from now on CLOCK_MONOTONIC.
+    const auto ret = unit_.sem_open(m_name_.c_str(), Semaphore::OpenFlag::kCreate, Semaphore::ModeFlag::kReadUser, 0U);
+    ASSERT_TRUE(ret.has_value());
+    ASSERT_TRUE(ret.value() != nullptr);
+    ASSERT_FALSE(unit_.sem_waittimeout(ret.value(), std::chrono::milliseconds(10)).has_value());
+    unit_.sem_close(ret.value());
+}
+
 // Positive Negative for sem_timedwait()
 TEST_F(SemaphoreTestFixture, SuccessTimedWaitFailure)
 {
@@ -312,6 +324,100 @@ TEST_F(SemaphoreTestFixture, TimeoutTimedWaitMonotonic)
     ASSERT_TRUE(ret.value() != nullptr);
     ASSERT_FALSE(unit_.sem_timedwait_monotonic(ret.value(), &abs_time).has_value());
     unit_.sem_close(ret.value());
+}
+
+// Positive test for chrono wrapper of sem_timedwait()
+TEST_F(SemaphoreTestFixture, SuccessTimedWaitChrono)
+{
+    RecordProperty("Verifies", "SCR-46010294");
+    RecordProperty("ASIL", "B");
+    RecordProperty("Description", "SemaphoreTestFixture Success Timed Wait");
+    RecordProperty("TestType", "interface-test");
+    RecordProperty("DerivationTechnique", "equivalence-classes");  // equivalence classes
+
+    const auto tp = std::chrono::system_clock::now() + std::chrono::seconds{5};
+    const auto ret =
+        unit_.sem_open(m_name_.c_str(), Semaphore::OpenFlag::kCreate, Semaphore::ModeFlag::kReadUser, value_);
+    ASSERT_TRUE(ret.has_value());
+    ASSERT_TRUE(ret.value() != nullptr);
+    ASSERT_TRUE(unit_.sem_timedwait(ret.value(), tp).has_value());
+    unit_.sem_close(ret.value());
+}
+
+// Positive Negative for chrono wrapper of sem_timedwait()
+TEST_F(SemaphoreTestFixture, SuccessTimedWaitFailureChrono)
+{
+    RecordProperty("Verifies", "SCR-46010294");
+    RecordProperty("ASIL", "B");
+    RecordProperty("Description", "SemaphoreTestFixture Success Timed Wait Failure");
+    RecordProperty("TestType", "interface-test");
+    RecordProperty("DerivationTechnique", "equivalence-classes");  // equivalence classes
+
+    std::chrono::time_point<std::chrono::system_clock> abs_time =
+        std::chrono::time_point<std::chrono::system_clock>{std::chrono::nanoseconds(-1)};
+    const auto sem = ::sem_open(m_name_.c_str(), O_CREAT, S_IRUSR, value_);
+    ASSERT_NE(sem, SEM_FAILED);
+    ASSERT_TRUE(sem != nullptr);
+    ASSERT_FALSE(unit_.sem_timedwait(sem, abs_time).has_value());
+    unit_.sem_close(sem);
+}
+
+// Positive test for chrono wrapper of sem_timedwait_monotonic()
+TEST_F(SemaphoreTestFixture, SuccessTimedWaitMonotonicChrono)
+{
+    RecordProperty("Verifies", "SCR-46010294");
+    RecordProperty("ASIL", "B");
+    RecordProperty("Description", "SemaphoreTestFixture Success Timed Wait Monotonic");
+    RecordProperty("TestType", "interface-test");
+    RecordProperty("DerivationTechnique", "equivalence-classes");  // equivalence classes
+
+    // The timeout is expressed against CLOCK_MONOTONIC. Since the semaphore is created with value 1 it can be
+    // decremented immediately, so the call returns success without ever blocking until the (future) deadline.
+    std::chrono::time_point<std::chrono::steady_clock> tp = std::chrono::steady_clock::now() + std::chrono::seconds(5);
+    const auto ret =
+        unit_.sem_open(m_name_.c_str(), Semaphore::OpenFlag::kCreate, Semaphore::ModeFlag::kReadUser, value_);
+    ASSERT_TRUE(ret.has_value());
+    ASSERT_TRUE(ret.value() != nullptr);
+    ASSERT_TRUE(unit_.sem_timedwait_monotonic(ret.value(), tp).has_value());
+    unit_.sem_close(ret.value());
+}
+
+// Timeout test for chrono wrapper of sem_timedwait_monotonic()
+TEST_F(SemaphoreTestFixture, TimeoutTimedWaitMonotonicChrono)
+{
+    RecordProperty("Verifies", "SCR-46010294");
+    RecordProperty("ASIL", "B");
+    RecordProperty("Description", "SemaphoreTestFixture Timeout Timed Wait Monotonic");
+    RecordProperty("TestType", "interface-test");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
+
+    // Semaphore starts at 0 and nobody posts to it, so sem_timedwait_monotonic() must block and
+    // return ETIMEDOUT once the deadline passes. Deadline is 10 ms from now on CLOCK_MONOTONIC.
+    std::chrono::steady_clock::time_point tp = std::chrono::steady_clock::now() + std::chrono::milliseconds(10);
+    const auto ret = unit_.sem_open(m_name_.c_str(), Semaphore::OpenFlag::kCreate, Semaphore::ModeFlag::kReadUser, 0U);
+    ASSERT_TRUE(ret.has_value());
+    ASSERT_TRUE(ret.value() != nullptr);
+    ASSERT_FALSE(unit_.sem_timedwait_monotonic(ret.value(), tp).has_value());
+    unit_.sem_close(ret.value());
+}
+
+// Negative test for chrono wrapper of sem_timedwait_monotonic()
+TEST_F(SemaphoreTestFixture, FailureTimedWaitMonotonicChrono)
+{
+    RecordProperty("Verifies", "SCR-46010294");
+    RecordProperty("ASIL", "B");
+    RecordProperty("Description", "SemaphoreTestFixture Failure Timed Wait Monotonic");
+    RecordProperty("TestType", "interface-test");
+    RecordProperty("DerivationTechnique", "equivalence-classes");  // equivalence classes
+
+    // An invalid nanoseconds field is rejected with EINVAL before the semaphore can be decremented.
+    std::chrono::time_point<std::chrono::steady_clock> abs_time =
+        std::chrono::time_point<std::chrono::steady_clock>{std::chrono::nanoseconds(-1)};
+    const auto sem = ::sem_open(m_name_.c_str(), O_CREAT, S_IRUSR, value_);
+    ASSERT_NE(sem, SEM_FAILED);
+    ASSERT_TRUE(sem != nullptr);
+    ASSERT_FALSE(unit_.sem_timedwait_monotonic(sem, abs_time).has_value());
+    unit_.sem_close(sem);
 }
 
 TEST(Semaphore, get_instance)
