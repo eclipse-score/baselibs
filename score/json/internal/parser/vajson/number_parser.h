@@ -23,12 +23,12 @@
 /**********************************************************************************************************************
  *  INCLUDES
  *********************************************************************************************************************/
+#include "score/json/internal/parser/vajson/types.h"
+
 #include <cerrno>
 #include <cstdlib>
 #include <string>
 #include <type_traits>
-
-#include "score/json/internal/parser/vajson/types.h"
 
 namespace score
 {

@@ -22,14 +22,9 @@
  *  INCLUDES
  *********************************************************************************************************************/
 #include <algorithm>
-#include <cassert>
-
-#include <cctype>
 #include <cerrno>
 #include <cmath>
 #include <cstdint>
-#include <cstdlib>
-#include <iterator>
 #include <limits>
 #include <string>
 #include <type_traits>

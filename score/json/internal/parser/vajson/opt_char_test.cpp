@@ -18,6 +18,7 @@
  *  INCLUDES
  *********************************************************************************************************************/
 #include "score/json/internal/parser/vajson/opt_char.h"
+
 #include "gtest/gtest.h"
 
 namespace score

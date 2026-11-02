@@ -14,10 +14,11 @@
  *        \brief  Unit tests for the depth counter
  *
  *********************************************************************************************************************/
+#include "score/json/internal/parser/vajson/depth_counter.h"
+
 #include <utility>
 
 #include "gtest/gtest.h"
-#include "score/json/internal/parser/vajson/depth_counter.h"
 #include "score/json/internal/parser/vajson/json_error_domain.h"
 
 namespace score

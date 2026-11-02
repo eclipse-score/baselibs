@@ -14,6 +14,8 @@
  *        \brief  Unit tests for Number
  *
  *********************************************************************************************************************/
+#include "score/json/internal/parser/vajson/json_number.h"
+
 #include <gtest/gtest.h>
 #include <cstdint>
 #include <cstdlib>
@@ -23,7 +25,6 @@
 #include <type_traits>
 #include <utility>
 
-#include "score/json/internal/parser/vajson/json_number.h"
 #include "score/json/internal/parser/vajson/types.h"
 #include "score/language/futurecpp/include/score/optional.hpp"
 
@@ -356,18 +357,6 @@ void range_test(const ::std::string& underflow, const std::string& overflow)
     EXPECT_FALSE(ParseNumberAs<T>(overflow).has_value());
 }
 }  // namespace
-
-/*!
- * \brief           Tests if IsDigit works as expected.
- * \trace           CREQ-Json-ProvidedSerializers
- */
-TEST_F(UT__Number, IsDigit)
-{
-    ASSERT_FALSE(internal::util::IsDigit('/'));
-    ASSERT_TRUE(internal::util::IsDigit('0'));
-    ASSERT_TRUE(internal::util::IsDigit('9'));
-    ASSERT_FALSE(internal::util::IsDigit(':'));
-}
 
 /*
  * General & Misc Tests

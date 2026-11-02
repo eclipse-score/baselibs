@@ -59,6 +59,7 @@ cc_gtest_unit_test(
         "json_error_domain_test.cpp",
         "json_number_test.cpp",
         "json_ops_test.cpp",
+        "number_parser_test.cpp",
         "opt_char_test.cpp",
         "virtual_parser_array_test.cpp",
         "virtual_parser_bool_test.cpp",

@@ -17,11 +17,12 @@
 /**********************************************************************************************************************
  *  INCLUDES
  *********************************************************************************************************************/
+#include "score/json/internal/parser/vajson/json_error_domain.h"
+
 #include <string>
 #include <utility>
 
 #include "gtest/gtest.h"
-#include "score/json/internal/parser/vajson/json_error_domain.h"
 
 namespace score
 {
