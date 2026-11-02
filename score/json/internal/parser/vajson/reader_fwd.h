@@ -14,8 +14,8 @@
  *        \brief  Forward declarations of public JSON types.
  *
  *********************************************************************************************************************/
-#ifndef SCORE_LIB_JSON_INTERNAL_PARSER_VAJSON_JSON_READER_FWD_H
-#define SCORE_LIB_JSON_INTERNAL_PARSER_VAJSON_JSON_READER_FWD_H
+#ifndef SCORE_JSON_INTERNAL_PARSER_VAJSON_READER_FWD_H
+#define SCORE_JSON_INTERNAL_PARSER_VAJSON_READER_FWD_H
 
 namespace score
 {
@@ -35,4 +35,4 @@ class JsonOps;
 }  // namespace vajson
 }  // namespace json
 }  // namespace score
-#endif  // SCORE_LIB_JSON_INTERNAL_PARSER_VAJSON_JSON_READER_FWD_H
+#endif  // SCORE_JSON_INTERNAL_PARSER_VAJSON_READER_FWD_H

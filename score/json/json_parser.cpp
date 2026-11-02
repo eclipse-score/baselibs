@@ -13,8 +13,8 @@
 
 #include "score/json/json_parser.h"
 
-#include "score/json/internal/parser/vajson/reader/internal/parsers/virtual_parser.h"
-#include "score/json/internal/parser/vajson/reader/json_data.h"
+#include "score/json/internal/parser/vajson/json_data.h"
+#include "score/json/internal/parser/vajson/virtual_parser.h"
 
 #include <iostream>
 #include <stack>
