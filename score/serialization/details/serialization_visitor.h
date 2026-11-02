@@ -82,11 +82,13 @@ class CommonVisitorLogic
 
     /// @brief Records that traversal descended into the field at the given index of the current struct. Together with
     /// PopField this maintains the full index path from the root to the element currently visited, letting a format
-    /// resolve per-level configuration for arbitrarily nested types.
-    void PushField(const std::size_t field_index)
+    /// resolve per-level configuration for arbitrarily nested types. is_last records whether this field is the last one
+    /// of its struct, so a format can tell whether anything follows the element across all nesting levels.
+    void PushField(const std::size_t field_index, const bool is_last)
     {
         SCORE_LANGUAGE_FUTURECPP_ASSERT_PRD(field_depth_ < kMaxNestingDepth);
         field_path_[field_depth_] = field_index;
+        last_path_[field_depth_] = is_last;
         ++field_depth_;
     }
 
@@ -101,6 +103,11 @@ class CommonVisitorLogic
         return field_path_.data();
     }
 
+    const bool* LastPathData() const
+    {
+        return last_path_.data();
+    }
+
     std::size_t FieldDepth() const
     {
         return field_depth_;
@@ -109,6 +116,7 @@ class CommonVisitorLogic
   private:
     MetaInformation meta_{};
     std::array<std::size_t, kMaxNestingDepth> field_path_{};
+    std::array<bool, kMaxNestingDepth> last_path_{};
     std::size_t field_depth_{0U};
 };
 
