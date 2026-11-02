@@ -21170,7 +21170,7 @@
   {
     "name": "UT__ErrorDomain__DeathTest__AssertCondition",
     "file": "score/json/internal/parser/vajson/json_error_domain_test.cpp",
-    "line": "99",
+    "line": "100",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -21184,7 +21184,7 @@
   {
     "name": "UT__DepthCounter__MoveAssignment",
     "file": "score/json/internal/parser/vajson/depth_counter_test.cpp",
-    "line": "35",
+    "line": "36",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -21198,7 +21198,7 @@
   {
     "name": "UT__DepthCounter__MoveConstruction",
     "file": "score/json/internal/parser/vajson/depth_counter_test.cpp",
-    "line": "62",
+    "line": "63",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -21212,7 +21212,7 @@
   {
     "name": "UT__DepthCounter__CheckEndOfFile__EmptyDocument",
     "file": "score/json/internal/parser/vajson/depth_counter_test.cpp",
-    "line": "83",
+    "line": "84",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -21226,7 +21226,7 @@
   {
     "name": "UT__DepthCounter__CheckEndOfFile__ArrayOpen",
     "file": "score/json/internal/parser/vajson/depth_counter_test.cpp",
-    "line": "95",
+    "line": "96",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -21240,7 +21240,7 @@
   {
     "name": "UT__DepthCounter__CheckEndOfFile__ObjectOpen",
     "file": "score/json/internal/parser/vajson/depth_counter_test.cpp",
-    "line": "109",
+    "line": "110",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -21254,7 +21254,7 @@
   {
     "name": "UT__DepthCounter__CheckEndOfFile__Valid",
     "file": "score/json/internal/parser/vajson/depth_counter_test.cpp",
-    "line": "122",
+    "line": "123",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -21268,7 +21268,7 @@
   {
     "name": "UT__DepthCounter__CheckEndOfFile__SingleValue",
     "file": "score/json/internal/parser/vajson/depth_counter_test.cpp",
-    "line": "136",
+    "line": "137",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -21282,7 +21282,7 @@
   {
     "name": "UT__DepthCounter__AddKey__OnlyKey",
     "file": "score/json/internal/parser/vajson/depth_counter_test.cpp",
-    "line": "147",
+    "line": "148",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -21296,7 +21296,7 @@
   {
     "name": "UT__DepthCounter__AddKey__Valid",
     "file": "score/json/internal/parser/vajson/depth_counter_test.cpp",
-    "line": "159",
+    "line": "160",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -21310,7 +21310,7 @@
   {
     "name": "UT__DepthCounter__AddKey__NoComma",
     "file": "score/json/internal/parser/vajson/depth_counter_test.cpp",
-    "line": "170",
+    "line": "171",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -21324,7 +21324,7 @@
   {
     "name": "UT__DepthCounter__AddKey__MultipleTopLevel",
     "file": "score/json/internal/parser/vajson/depth_counter_test.cpp",
-    "line": "185",
+    "line": "186",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -21338,7 +21338,7 @@
   {
     "name": "UT__DepthCounter__AddValue__SingleValue",
     "file": "score/json/internal/parser/vajson/depth_counter_test.cpp",
-    "line": "199",
+    "line": "200",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -21352,7 +21352,7 @@
   {
     "name": "UT__DepthCounter__AddValue__InsideArray",
     "file": "score/json/internal/parser/vajson/depth_counter_test.cpp",
-    "line": "212",
+    "line": "213",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -21366,7 +21366,7 @@
   {
     "name": "UT__DepthCounter__AddValue__NoKey",
     "file": "score/json/internal/parser/vajson/depth_counter_test.cpp",
-    "line": "223",
+    "line": "224",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -21380,7 +21380,7 @@
   {
     "name": "UT__DepthCounter__AddValue__NoComma",
     "file": "score/json/internal/parser/vajson/depth_counter_test.cpp",
-    "line": "236",
+    "line": "237",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -21394,7 +21394,7 @@
   {
     "name": "UT__DepthCounter__AddValue__MultipleTopLevel",
     "file": "score/json/internal/parser/vajson/depth_counter_test.cpp",
-    "line": "250",
+    "line": "251",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -21408,7 +21408,7 @@
   {
     "name": "UT__DepthCounter__AddElement__MultipleTopLevel",
     "file": "score/json/internal/parser/vajson/depth_counter_test.cpp",
-    "line": "263",
+    "line": "264",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -21422,7 +21422,7 @@
   {
     "name": "UT__DepthCounter__AddElement__NoKey",
     "file": "score/json/internal/parser/vajson/depth_counter_test.cpp",
-    "line": "276",
+    "line": "277",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -21436,7 +21436,7 @@
   {
     "name": "UT__DepthCounter__AddElement__NoComma",
     "file": "score/json/internal/parser/vajson/depth_counter_test.cpp",
-    "line": "289",
+    "line": "290",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -21450,7 +21450,7 @@
   {
     "name": "UT__DepthCounter__AddElement__Valid",
     "file": "score/json/internal/parser/vajson/depth_counter_test.cpp",
-    "line": "304",
+    "line": "305",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -21464,7 +21464,7 @@
   {
     "name": "UT__DepthCounter__Pop",
     "file": "score/json/internal/parser/vajson/depth_counter_test.cpp",
-    "line": "316",
+    "line": "317",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -21478,7 +21478,7 @@
   {
     "name": "UT__DepthCounter__AddComma",
     "file": "score/json/internal/parser/vajson/depth_counter_test.cpp",
-    "line": "334",
+    "line": "335",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -21492,7 +21492,7 @@
   {
     "name": "UT__JsonOps__JsonData__ConstructFromFile",
     "file": "score/json/internal/parser/vajson/json_data_test.cpp",
-    "line": "42",
+    "line": "43",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -21506,7 +21506,7 @@
   {
     "name": "UT__JsonOps__JsonData__ConstructFromStringView",
     "file": "score/json/internal/parser/vajson/json_data_test.cpp",
-    "line": "56",
+    "line": "57",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -21520,7 +21520,7 @@
   {
     "name": "UT__JsonOps__JsonData__ConstructFromCStringView",
     "file": "score/json/internal/parser/vajson/json_data_test.cpp",
-    "line": "70",
+    "line": "71",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -21534,7 +21534,7 @@
   {
     "name": "UT__JsonOps__JsonData__ConstructFromSpan",
     "file": "score/json/internal/parser/vajson/json_data_test.cpp",
-    "line": "82",
+    "line": "83",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -21548,7 +21548,7 @@
   {
     "name": "UT__JsonOps__JsonData__ConstructFromNonExistingFile",
     "file": "score/json/internal/parser/vajson/json_data_test.cpp",
-    "line": "95",
+    "line": "96",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -21562,7 +21562,7 @@
   {
     "name": "UT__JsonOps__JsonData__ReadsUtf8Bom",
     "file": "score/json/internal/parser/vajson/json_data_test.cpp",
-    "line": "110",
+    "line": "111",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -21576,7 +21576,7 @@
   {
     "name": "UT__JsonOps__JsonData__FailsOnUnknownBom",
     "file": "score/json/internal/parser/vajson/json_data_test.cpp",
-    "line": "128",
+    "line": "129",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -21590,7 +21590,7 @@
   {
     "name": "UT__JsonOps__JsonData__GetState",
     "file": "score/json/internal/parser/vajson/json_data_test.cpp",
-    "line": "145",
+    "line": "146",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -21604,7 +21604,7 @@
   {
     "name": "UT__JsonOps__JsonData__CurrentStringBuffer",
     "file": "score/json/internal/parser/vajson/json_data_test.cpp",
-    "line": "164",
+    "line": "165",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -21618,7 +21618,7 @@
   {
     "name": "UT__ErrorDomain__General",
     "file": "score/json/internal/parser/vajson/json_error_domain_test.cpp",
-    "line": "38",
+    "line": "39",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -21632,7 +21632,7 @@
   {
     "name": "UT__ErrorDomain__MakeResult__FromOptional",
     "file": "score/json/internal/parser/vajson/json_error_domain_test.cpp",
-    "line": "56",
+    "line": "57",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -21646,21 +21646,7 @@
   {
     "name": "UT__ErrorDomain__MakeResult__FromValue",
     "file": "score/json/internal/parser/vajson/json_error_domain_test.cpp",
-    "line": "82",
-    "result": "passed",
-    "repo_name": null,
-    "hash": null,
-    "url": null,
-    "TestType": null,
-    "DerivationTechnique": null,
-    "result_text": "",
-    "PartiallyVerifies": null,
-    "FullyVerifies": null
-  },
-  {
-    "name": "UT__Number__IsDigit",
-    "file": "score/json/internal/parser/vajson/json_number_test.cpp",
-    "line": "364",
+    "line": "83",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -21674,7 +21660,7 @@
   {
     "name": "UT__Number__OnesAndZerosCanBeParsedToBool",
     "file": "score/json/internal/parser/vajson/json_number_test.cpp",
-    "line": "380",
+    "line": "369",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -21688,7 +21674,7 @@
   {
     "name": "UT__Number__ErrnoIsUnsetBeforeConversion",
     "file": "score/json/internal/parser/vajson/json_number_test.cpp",
-    "line": "411",
+    "line": "400",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -21702,7 +21688,7 @@
   {
     "name": "UT__Number__StringsCanBeCustomParsed",
     "file": "score/json/internal/parser/vajson/json_number_test.cpp",
-    "line": "454",
+    "line": "443",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -21716,7 +21702,7 @@
   {
     "name": "UT__Number__AsJsonNumber",
     "file": "score/json/internal/parser/vajson/json_number_test.cpp",
-    "line": "471",
+    "line": "460",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -21730,7 +21716,7 @@
   {
     "name": "UT__Number__InvalidNumber",
     "file": "score/json/internal/parser/vajson/json_number_test.cpp",
-    "line": "490",
+    "line": "479",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -21744,7 +21730,7 @@
   {
     "name": "Number__Bool",
     "file": "score/json/internal/parser/vajson/json_number_test.cpp",
-    "line": "756",
+    "line": "745",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -21758,7 +21744,7 @@
   {
     "name": "Number__Uint8",
     "file": "score/json/internal/parser/vajson/json_number_test.cpp",
-    "line": "767",
+    "line": "756",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -21772,7 +21758,7 @@
   {
     "name": "Number__Uint16",
     "file": "score/json/internal/parser/vajson/json_number_test.cpp",
-    "line": "778",
+    "line": "767",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -21786,7 +21772,7 @@
   {
     "name": "Number__Uint32",
     "file": "score/json/internal/parser/vajson/json_number_test.cpp",
-    "line": "789",
+    "line": "778",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -21800,7 +21786,7 @@
   {
     "name": "Number__Uint64",
     "file": "score/json/internal/parser/vajson/json_number_test.cpp",
-    "line": "800",
+    "line": "789",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -21814,7 +21800,7 @@
   {
     "name": "Number__Int8",
     "file": "score/json/internal/parser/vajson/json_number_test.cpp",
-    "line": "811",
+    "line": "800",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -21828,7 +21814,7 @@
   {
     "name": "Number__Int16",
     "file": "score/json/internal/parser/vajson/json_number_test.cpp",
-    "line": "822",
+    "line": "811",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -21842,7 +21828,7 @@
   {
     "name": "Number__Int32",
     "file": "score/json/internal/parser/vajson/json_number_test.cpp",
-    "line": "833",
+    "line": "822",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -21856,7 +21842,7 @@
   {
     "name": "Number__Int64",
     "file": "score/json/internal/parser/vajson/json_number_test.cpp",
-    "line": "844",
+    "line": "833",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -21870,7 +21856,7 @@
   {
     "name": "Number__Float",
     "file": "score/json/internal/parser/vajson/json_number_test.cpp",
-    "line": "855",
+    "line": "844",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -21884,7 +21870,7 @@
   {
     "name": "Number__Double",
     "file": "score/json/internal/parser/vajson/json_number_test.cpp",
-    "line": "866",
+    "line": "855",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -21898,7 +21884,7 @@
   {
     "name": "Number__WithDecimalPointWithoutFractionalPartCannotBeParsedAsInteger",
     "file": "score/json/internal/parser/vajson/json_number_test.cpp",
-    "line": "877",
+    "line": "866",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -21912,7 +21898,7 @@
   {
     "name": "Number__WithExponentialNotationWithoutFractionalPartCannotBeParsedAsInteger",
     "file": "score/json/internal/parser/vajson/json_number_test.cpp",
-    "line": "889",
+    "line": "878",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -21926,7 +21912,7 @@
   {
     "name": "Number__FloatingPointWithoutDecimalPoint",
     "file": "score/json/internal/parser/vajson/json_number_test.cpp",
-    "line": "902",
+    "line": "891",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -21940,7 +21926,7 @@
   {
     "name": "Number__NearDoubleLimitsIsParsable",
     "file": "score/json/internal/parser/vajson/json_number_test.cpp",
-    "line": "914",
+    "line": "903",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -21954,7 +21940,7 @@
   {
     "name": "Number__FloatingPointOverflowIsRejected",
     "file": "score/json/internal/parser/vajson/json_number_test.cpp",
-    "line": "925",
+    "line": "914",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -21968,7 +21954,7 @@
   {
     "name": "UT__JsonOps__Skip",
     "file": "score/json/internal/parser/vajson/json_ops_test.cpp",
-    "line": "56",
+    "line": "57",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -21982,7 +21968,7 @@
   {
     "name": "UT__JsonOps__Take",
     "file": "score/json/internal/parser/vajson/json_ops_test.cpp",
-    "line": "70",
+    "line": "71",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -21996,7 +21982,7 @@
   {
     "name": "UT__JsonOps__TryTake__Error",
     "file": "score/json/internal/parser/vajson/json_ops_test.cpp",
-    "line": "81",
+    "line": "82",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -22010,7 +21996,7 @@
   {
     "name": "UT__JsonOps__Move",
     "file": "score/json/internal/parser/vajson/json_ops_test.cpp",
-    "line": "106",
+    "line": "107",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -22024,7 +22010,7 @@
   {
     "name": "UT__JsonOps__CheckString",
     "file": "score/json/internal/parser/vajson/json_ops_test.cpp",
-    "line": "121",
+    "line": "122",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -22038,7 +22024,7 @@
   {
     "name": "UT__JsonOps__ReadStringAbortsOnEmpty",
     "file": "score/json/internal/parser/vajson/json_ops_test.cpp",
-    "line": "143",
+    "line": "144",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -22052,7 +22038,7 @@
   {
     "name": "UT__JsonOps__SkipWhitespace",
     "file": "score/json/internal/parser/vajson/json_ops_test.cpp",
-    "line": "157",
+    "line": "158",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -22066,7 +22052,21 @@
   {
     "name": "UT__JsonOps__ReadUntil",
     "file": "score/json/internal/parser/vajson/json_ops_test.cpp",
-    "line": "175",
+    "line": "176",
+    "result": "passed",
+    "repo_name": null,
+    "hash": null,
+    "url": null,
+    "TestType": null,
+    "DerivationTechnique": null,
+    "result_text": "",
+    "PartiallyVerifies": null,
+    "FullyVerifies": null
+  },
+  {
+    "name": "UT__NumberParser__IsDigit",
+    "file": "score/json/internal/parser/vajson/number_parser_test.cpp",
+    "line": "30",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -22080,7 +22080,7 @@
   {
     "name": "UT__JsonOps__OptChar__ValidChar",
     "file": "score/json/internal/parser/vajson/opt_char_test.cpp",
-    "line": "35",
+    "line": "36",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -22094,7 +22094,7 @@
   {
     "name": "UT__JsonOps__OptChar__EofChar",
     "file": "score/json/internal/parser/vajson/opt_char_test.cpp",
-    "line": "47",
+    "line": "48",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -22108,7 +22108,7 @@
   {
     "name": "UT__JsonOps__OptChar__Comparison",
     "file": "score/json/internal/parser/vajson/opt_char_test.cpp",
-    "line": "58",
+    "line": "59",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -22122,7 +22122,7 @@
   {
     "name": "UT__Parser__Array__Dynamic__Ints",
     "file": "score/json/internal/parser/vajson/virtual_parser_array_test.cpp",
-    "line": "131",
+    "line": "132",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -22136,7 +22136,7 @@
   {
     "name": "UT__Parser__Array__Dynamic__Nested",
     "file": "score/json/internal/parser/vajson/virtual_parser_array_test.cpp",
-    "line": "146",
+    "line": "147",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -22150,7 +22150,7 @@
   {
     "name": "UT__Parser__Array__Dynamic__NoArrays",
     "file": "score/json/internal/parser/vajson/virtual_parser_array_test.cpp",
-    "line": "161",
+    "line": "162",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -22164,7 +22164,7 @@
   {
     "name": "UT__Parser__Array__Error__Dynamic__OnEndArray",
     "file": "score/json/internal/parser/vajson/virtual_parser_array_test.cpp",
-    "line": "176",
+    "line": "177",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -22178,7 +22178,7 @@
   {
     "name": "UT__Parser__Array__Error__Dynamic__OnStartArray",
     "file": "score/json/internal/parser/vajson/virtual_parser_array_test.cpp",
-    "line": "192",
+    "line": "193",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -22192,7 +22192,7 @@
   {
     "name": "UT__Parser__Bool__Dynamic__True",
     "file": "score/json/internal/parser/vajson/virtual_parser_bool_test.cpp",
-    "line": "95",
+    "line": "96",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -22206,7 +22206,7 @@
   {
     "name": "UT__Parser__Bool__Dynamic__False",
     "file": "score/json/internal/parser/vajson/virtual_parser_bool_test.cpp",
-    "line": "109",
+    "line": "110",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -22220,7 +22220,7 @@
   {
     "name": "UT__Parser__Bool__Dynamic__Bools",
     "file": "score/json/internal/parser/vajson/virtual_parser_bool_test.cpp",
-    "line": "123",
+    "line": "124",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -22234,7 +22234,7 @@
   {
     "name": "UT__Parser__Bool__Dynamic__ParseTrue_WrongFormat",
     "file": "score/json/internal/parser/vajson/virtual_parser_bool_test.cpp",
-    "line": "137",
+    "line": "138",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -22248,7 +22248,7 @@
   {
     "name": "UT__Parser__Bool__Dynamic__ParseFalse__WrongFormat",
     "file": "score/json/internal/parser/vajson/virtual_parser_bool_test.cpp",
-    "line": "153",
+    "line": "154",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -22262,7 +22262,7 @@
   {
     "name": "UT__Parser__Bool__Dynamic__ParseFalse__Error",
     "file": "score/json/internal/parser/vajson/virtual_parser_bool_test.cpp",
-    "line": "169",
+    "line": "170",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -22276,7 +22276,7 @@
   {
     "name": "UT__Parser__Bool__Dynamic__ParseTrue__Error",
     "file": "score/json/internal/parser/vajson/virtual_parser_bool_test.cpp",
-    "line": "185",
+    "line": "186",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -22290,7 +22290,7 @@
   {
     "name": "UT__Parser__Invalid__Dynamic__EmptyDocument",
     "file": "score/json/internal/parser/vajson/virtual_parser_invalid_test.cpp",
-    "line": "63",
+    "line": "64",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -22304,7 +22304,7 @@
   {
     "name": "UT__Parser__Invalid__Dynamic__NoData",
     "file": "score/json/internal/parser/vajson/virtual_parser_invalid_test.cpp",
-    "line": "68",
+    "line": "69",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -22318,7 +22318,7 @@
   {
     "name": "UT__Parser__Invalid__Dynamic__UnknownType3_truee",
     "file": "score/json/internal/parser/vajson/virtual_parser_invalid_test.cpp",
-    "line": "75",
+    "line": "76",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -22332,7 +22332,7 @@
   {
     "name": "UT__Parser__Invalid__Dynamic__UnknownType4_falsee",
     "file": "score/json/internal/parser/vajson/virtual_parser_invalid_test.cpp",
-    "line": "80",
+    "line": "81",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -22346,7 +22346,7 @@
   {
     "name": "UT__Parser__Invalid__Dynamic__UnknownType6_False",
     "file": "score/json/internal/parser/vajson/virtual_parser_invalid_test.cpp",
-    "line": "87",
+    "line": "88",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -22360,7 +22360,7 @@
   {
     "name": "UT__Parser__Invalid__Dynamic__UnknownType7_True",
     "file": "score/json/internal/parser/vajson/virtual_parser_invalid_test.cpp",
-    "line": "92",
+    "line": "93",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -22374,7 +22374,7 @@
   {
     "name": "UT__Parser__Invalid__Dynamic__UnknownType8_Null",
     "file": "score/json/internal/parser/vajson/virtual_parser_invalid_test.cpp",
-    "line": "97",
+    "line": "98",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -22388,7 +22388,7 @@
   {
     "name": "UT__Parser__Invalid__Dynamic__UnknownType9_nxyl",
     "file": "score/json/internal/parser/vajson/virtual_parser_invalid_test.cpp",
-    "line": "104",
+    "line": "105",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -22402,7 +22402,7 @@
   {
     "name": "UT__Parser__Invalid__Dynamic__UnknownType10_n00l",
     "file": "score/json/internal/parser/vajson/virtual_parser_invalid_test.cpp",
-    "line": "109",
+    "line": "110",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -22416,7 +22416,7 @@
   {
     "name": "UT__Parser__Invalid__Dynamic__UnknownType11_txye",
     "file": "score/json/internal/parser/vajson/virtual_parser_invalid_test.cpp",
-    "line": "114",
+    "line": "115",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -22430,7 +22430,7 @@
   {
     "name": "UT__Parser__Invalid__Dynamic__UnknownType12_t12e",
     "file": "score/json/internal/parser/vajson/virtual_parser_invalid_test.cpp",
-    "line": "119",
+    "line": "120",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -22444,7 +22444,7 @@
   {
     "name": "UT__Parser__Invalid__Dynamic__UnknownType13_fxyze",
     "file": "score/json/internal/parser/vajson/virtual_parser_invalid_test.cpp",
-    "line": "124",
+    "line": "125",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -22458,7 +22458,7 @@
   {
     "name": "UT__Parser__Invalid__Dynamic__UnknownType14_f456e",
     "file": "score/json/internal/parser/vajson/virtual_parser_invalid_test.cpp",
-    "line": "129",
+    "line": "130",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -22472,7 +22472,7 @@
   {
     "name": "UT__Parser__Invalid__Dynamic__KeyWithoutValue",
     "file": "score/json/internal/parser/vajson/virtual_parser_invalid_test.cpp",
-    "line": "136",
+    "line": "137",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -22486,7 +22486,7 @@
   {
     "name": "UT__Parser__Invalid__Dynamic__ValueWithoutKey",
     "file": "score/json/internal/parser/vajson/virtual_parser_invalid_test.cpp",
-    "line": "141",
+    "line": "142",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -22500,7 +22500,7 @@
   {
     "name": "UT__Parser__Invalid__Dynamic__EofAfterKey",
     "file": "score/json/internal/parser/vajson/virtual_parser_invalid_test.cpp",
-    "line": "146",
+    "line": "147",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -22514,7 +22514,7 @@
   {
     "name": "UT__Parser__Invalid__Dynamic__UnexpectedObjectClose1",
     "file": "score/json/internal/parser/vajson/virtual_parser_invalid_test.cpp",
-    "line": "151",
+    "line": "152",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -22528,7 +22528,7 @@
   {
     "name": "UT__Parser__Invalid__Dynamic__UnexpectedObjectClose2",
     "file": "score/json/internal/parser/vajson/virtual_parser_invalid_test.cpp",
-    "line": "156",
+    "line": "157",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -22542,7 +22542,7 @@
   {
     "name": "UT__Parser__Invalid__Dynamic__UnexpectedArrayOpen",
     "file": "score/json/internal/parser/vajson/virtual_parser_invalid_test.cpp",
-    "line": "161",
+    "line": "162",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -22556,7 +22556,7 @@
   {
     "name": "UT__Parser__Invalid__Dynamic__UnexpectedArrayClose",
     "file": "score/json/internal/parser/vajson/virtual_parser_invalid_test.cpp",
-    "line": "166",
+    "line": "167",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -22570,7 +22570,7 @@
   {
     "name": "UT__Parser__Invalid__Dynamic__NonterminatingString1",
     "file": "score/json/internal/parser/vajson/virtual_parser_invalid_test.cpp",
-    "line": "171",
+    "line": "172",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -22584,7 +22584,7 @@
   {
     "name": "UT__Parser__Invalid__Dynamic__NonterminatingString2",
     "file": "score/json/internal/parser/vajson/virtual_parser_invalid_test.cpp",
-    "line": "176",
+    "line": "177",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -22598,7 +22598,7 @@
   {
     "name": "UT__Parser__Invalid__Dynamic__NonterminatingNumber1",
     "file": "score/json/internal/parser/vajson/virtual_parser_invalid_test.cpp",
-    "line": "181",
+    "line": "182",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -22612,7 +22612,7 @@
   {
     "name": "UT__Parser__Invalid__Dynamic__NonterminatingNumber2",
     "file": "score/json/internal/parser/vajson/virtual_parser_invalid_test.cpp",
-    "line": "186",
+    "line": "187",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -22626,7 +22626,7 @@
   {
     "name": "UT__Parser__Invalid__Dynamic__NonterminatingNumber3",
     "file": "score/json/internal/parser/vajson/virtual_parser_invalid_test.cpp",
-    "line": "191",
+    "line": "192",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -22640,7 +22640,7 @@
   {
     "name": "UT__Parser__Invalid__Dynamic__NonterminatingNumber4",
     "file": "score/json/internal/parser/vajson/virtual_parser_invalid_test.cpp",
-    "line": "196",
+    "line": "197",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -22654,7 +22654,7 @@
   {
     "name": "UT__Parser__Invalid__Dynamic__NonTerminatingObject",
     "file": "score/json/internal/parser/vajson/virtual_parser_invalid_test.cpp",
-    "line": "201",
+    "line": "202",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -22668,7 +22668,7 @@
   {
     "name": "UT__Parser__Invalid__Dynamic__NonTerminatingArray",
     "file": "score/json/internal/parser/vajson/virtual_parser_invalid_test.cpp",
-    "line": "206",
+    "line": "207",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -22682,7 +22682,7 @@
   {
     "name": "UT__Parser__Invalid__Dynamic__TopLevelKeys",
     "file": "score/json/internal/parser/vajson/virtual_parser_invalid_test.cpp",
-    "line": "211",
+    "line": "212",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -22696,7 +22696,7 @@
   {
     "name": "UT__Parser__Invalid__Dynamic__MultipleTopLevelElements",
     "file": "score/json/internal/parser/vajson/virtual_parser_invalid_test.cpp",
-    "line": "216",
+    "line": "217",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -22710,7 +22710,7 @@
   {
     "name": "UT__Parser__Invalid__Dynamic__MultipleTopLevelObjects",
     "file": "score/json/internal/parser/vajson/virtual_parser_invalid_test.cpp",
-    "line": "221",
+    "line": "222",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -22724,7 +22724,7 @@
   {
     "name": "UT__Parser__Invalid__Dynamic__MultipleValues",
     "file": "score/json/internal/parser/vajson/virtual_parser_invalid_test.cpp",
-    "line": "226",
+    "line": "227",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -22738,7 +22738,7 @@
   {
     "name": "UT__Parser__Invalid__Dynamic__UnicodeEscape",
     "file": "score/json/internal/parser/vajson/virtual_parser_invalid_test.cpp",
-    "line": "231",
+    "line": "232",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -22752,7 +22752,7 @@
   {
     "name": "UT__Parser__Invalid__Dynamic__UnknownEscape",
     "file": "score/json/internal/parser/vajson/virtual_parser_invalid_test.cpp",
-    "line": "236",
+    "line": "237",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -22766,7 +22766,7 @@
   {
     "name": "UT__Parser__Invalid__Dynamic__OnlyWhitespace",
     "file": "score/json/internal/parser/vajson/virtual_parser_invalid_test.cpp",
-    "line": "241",
+    "line": "242",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -22780,7 +22780,7 @@
   {
     "name": "UT__Parser__Invalid__Dynamic__OnlyArrayClose",
     "file": "score/json/internal/parser/vajson/virtual_parser_invalid_test.cpp",
-    "line": "246",
+    "line": "247",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -22794,7 +22794,7 @@
   {
     "name": "UT__Parser__Invalid__Dynamic__OnlyObjectClose",
     "file": "score/json/internal/parser/vajson/virtual_parser_invalid_test.cpp",
-    "line": "251",
+    "line": "252",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -22808,7 +22808,7 @@
   {
     "name": "UT__Parser__Invalid__Dynamic__OctalNumber1",
     "file": "score/json/internal/parser/vajson/virtual_parser_invalid_test.cpp",
-    "line": "256",
+    "line": "257",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -22822,7 +22822,7 @@
   {
     "name": "UT__Parser__Invalid__Dynamic__OctalNumber2",
     "file": "score/json/internal/parser/vajson/virtual_parser_invalid_test.cpp",
-    "line": "261",
+    "line": "262",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -22836,7 +22836,7 @@
   {
     "name": "UT__Parser__Invalid__Dynamic__ObjectOpenInsteadOfKey",
     "file": "score/json/internal/parser/vajson/virtual_parser_invalid_test.cpp",
-    "line": "266",
+    "line": "267",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -22850,7 +22850,7 @@
   {
     "name": "UT__Parser__Invalid__Dynamic__ArrayOpenInsteadOfKey",
     "file": "score/json/internal/parser/vajson/virtual_parser_invalid_test.cpp",
-    "line": "271",
+    "line": "272",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -22864,7 +22864,7 @@
   {
     "name": "UT__Parser__Invalid__Dynamic__StringInsteadOfKey",
     "file": "score/json/internal/parser/vajson/virtual_parser_invalid_test.cpp",
-    "line": "276",
+    "line": "277",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -22878,7 +22878,7 @@
   {
     "name": "UT__Parser__Invalid__Dynamic__ValueInsteadOfKey",
     "file": "score/json/internal/parser/vajson/virtual_parser_invalid_test.cpp",
-    "line": "281",
+    "line": "282",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -22892,7 +22892,7 @@
   {
     "name": "UT__Parser__Invalid__Dynamic__NumberAndString",
     "file": "score/json/internal/parser/vajson/virtual_parser_invalid_test.cpp",
-    "line": "286",
+    "line": "287",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -22906,7 +22906,7 @@
   {
     "name": "UT__Parser__Invalid__Dynamic__MissingCommaInObject",
     "file": "score/json/internal/parser/vajson/virtual_parser_invalid_test.cpp",
-    "line": "291",
+    "line": "292",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -22920,7 +22920,7 @@
   {
     "name": "UT__Parser__Invalid__Dynamic__MissingCommaInArray",
     "file": "score/json/internal/parser/vajson/virtual_parser_invalid_test.cpp",
-    "line": "296",
+    "line": "297",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -22934,7 +22934,7 @@
   {
     "name": "UT__Parser__Invalid__Dynamic__UnquotedKey",
     "file": "score/json/internal/parser/vajson/virtual_parser_invalid_test.cpp",
-    "line": "301",
+    "line": "302",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -22948,7 +22948,7 @@
   {
     "name": "UT__Parser__Invalid__Dynamic__CommaAfterClose",
     "file": "score/json/internal/parser/vajson/virtual_parser_invalid_test.cpp",
-    "line": "306",
+    "line": "307",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -22962,7 +22962,7 @@
   {
     "name": "UT__Parser__Invalid__Dynamic__ExtraArrayAfterClose",
     "file": "score/json/internal/parser/vajson/virtual_parser_invalid_test.cpp",
-    "line": "311",
+    "line": "312",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -22976,7 +22976,7 @@
   {
     "name": "UT__Parser__Invalid__Dynamic__ExtraValueAfterClose",
     "file": "score/json/internal/parser/vajson/virtual_parser_invalid_test.cpp",
-    "line": "316",
+    "line": "317",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -22990,7 +22990,7 @@
   {
     "name": "UT__Parser__Invalid__Dynamic__IllegalExpression",
     "file": "score/json/internal/parser/vajson/virtual_parser_invalid_test.cpp",
-    "line": "321",
+    "line": "322",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -23004,7 +23004,7 @@
   {
     "name": "UT__Parser__Invalid__Dynamic__IllegalInvocation",
     "file": "score/json/internal/parser/vajson/virtual_parser_invalid_test.cpp",
-    "line": "326",
+    "line": "327",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -23018,7 +23018,7 @@
   {
     "name": "UT__Parser__Invalid__Dynamic__IllegalEscape",
     "file": "score/json/internal/parser/vajson/virtual_parser_invalid_test.cpp",
-    "line": "331",
+    "line": "332",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -23032,7 +23032,7 @@
   {
     "name": "UT__Parser__Invalid__Dynamic__Naked",
     "file": "score/json/internal/parser/vajson/virtual_parser_invalid_test.cpp",
-    "line": "336",
+    "line": "337",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -23046,7 +23046,7 @@
   {
     "name": "UT__Parser__Invalid__Dynamic__IllegalEscapeNumber",
     "file": "score/json/internal/parser/vajson/virtual_parser_invalid_test.cpp",
-    "line": "341",
+    "line": "342",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -23060,7 +23060,7 @@
   {
     "name": "UT__Parser__Invalid__Dynamic__MissingColon",
     "file": "score/json/internal/parser/vajson/virtual_parser_invalid_test.cpp",
-    "line": "346",
+    "line": "347",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -23074,7 +23074,7 @@
   {
     "name": "UT__Parser__Invalid__Dynamic__DoubleColon",
     "file": "score/json/internal/parser/vajson/virtual_parser_invalid_test.cpp",
-    "line": "351",
+    "line": "352",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -23088,7 +23088,7 @@
   {
     "name": "UT__Parser__Invalid__Dynamic__CommaInsteadOfColon",
     "file": "score/json/internal/parser/vajson/virtual_parser_invalid_test.cpp",
-    "line": "356",
+    "line": "357",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -23102,7 +23102,7 @@
   {
     "name": "UT__Parser__Invalid__Dynamic__ColonInsteadOfComma",
     "file": "score/json/internal/parser/vajson/virtual_parser_invalid_test.cpp",
-    "line": "361",
+    "line": "362",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -23116,7 +23116,7 @@
   {
     "name": "UT__Parser__Invalid__Dynamic__BadValue",
     "file": "score/json/internal/parser/vajson/virtual_parser_invalid_test.cpp",
-    "line": "366",
+    "line": "367",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -23130,7 +23130,7 @@
   {
     "name": "UT__Parser__Invalid__Dynamic__SingleQuote",
     "file": "score/json/internal/parser/vajson/virtual_parser_invalid_test.cpp",
-    "line": "371",
+    "line": "372",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -23144,7 +23144,7 @@
   {
     "name": "UT__Parser__Invalid__Dynamic__BackslashInString",
     "file": "score/json/internal/parser/vajson/virtual_parser_invalid_test.cpp",
-    "line": "376",
+    "line": "377",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -23158,7 +23158,7 @@
   {
     "name": "UT__Parser__Invalid__Dynamic__BackslashLineBreak",
     "file": "score/json/internal/parser/vajson/virtual_parser_invalid_test.cpp",
-    "line": "381",
+    "line": "382",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -23172,7 +23172,7 @@
   {
     "name": "UT__Parser__Invalid__Dynamic__CommaInsteadOfClosing",
     "file": "score/json/internal/parser/vajson/virtual_parser_invalid_test.cpp",
-    "line": "386",
+    "line": "387",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -23186,7 +23186,7 @@
   {
     "name": "UT__Parser__Invalid__Dynamic__ArrayWithoutComma",
     "file": "score/json/internal/parser/vajson/virtual_parser_invalid_test.cpp",
-    "line": "391",
+    "line": "392",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -23200,7 +23200,7 @@
   {
     "name": "UT__Parser__Invalid__Dynamic__TrailingValue",
     "file": "score/json/internal/parser/vajson/virtual_parser_invalid_test.cpp",
-    "line": "396",
+    "line": "397",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -23214,7 +23214,7 @@
   {
     "name": "UT__Parser__Invalid__Dynamic__TrailingKey",
     "file": "score/json/internal/parser/vajson/virtual_parser_invalid_test.cpp",
-    "line": "401",
+    "line": "402",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -23228,7 +23228,7 @@
   {
     "name": "UT__Parser__Key__Dynamic__SingleKey",
     "file": "score/json/internal/parser/vajson/virtual_parser_key_test.cpp",
-    "line": "66",
+    "line": "67",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -23242,7 +23242,7 @@
   {
     "name": "UT__Parser__Key__Dynamic__MultipleKeys",
     "file": "score/json/internal/parser/vajson/virtual_parser_key_test.cpp",
-    "line": "79",
+    "line": "80",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -23256,7 +23256,7 @@
   {
     "name": "UT__Parser__Key__Dynamic__NestedKeys",
     "file": "score/json/internal/parser/vajson/virtual_parser_key_test.cpp",
-    "line": "92",
+    "line": "93",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -23270,7 +23270,7 @@
   {
     "name": "UT__Parser__Null__Dynamic__SingleNull",
     "file": "score/json/internal/parser/vajson/virtual_parser_null_test.cpp",
-    "line": "81",
+    "line": "82",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -23284,7 +23284,7 @@
   {
     "name": "UT__Parser__Null__Dynamic__MultipleNulls",
     "file": "score/json/internal/parser/vajson/virtual_parser_null_test.cpp",
-    "line": "94",
+    "line": "95",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -23298,7 +23298,7 @@
   {
     "name": "UT__Parser__Null__Dynamic__NoNulls",
     "file": "score/json/internal/parser/vajson/virtual_parser_null_test.cpp",
-    "line": "107",
+    "line": "108",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -23312,7 +23312,7 @@
   {
     "name": "UT__Parser__Null__Dynamic__WrongFormat",
     "file": "score/json/internal/parser/vajson/virtual_parser_null_test.cpp",
-    "line": "120",
+    "line": "121",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -23326,7 +23326,7 @@
   {
     "name": "UT__Parser__Null__Dynamic__OnNull__Error",
     "file": "score/json/internal/parser/vajson/virtual_parser_null_test.cpp",
-    "line": "136",
+    "line": "137",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -23340,7 +23340,7 @@
   {
     "name": "UT__Parser__Number__Dynamic__IntegerArray",
     "file": "score/json/internal/parser/vajson/virtual_parser_number_test.cpp",
-    "line": "64",
+    "line": "65",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -23354,7 +23354,7 @@
   {
     "name": "UT__Parser__Number__Dynamic__FloatArray",
     "file": "score/json/internal/parser/vajson/virtual_parser_number_test.cpp",
-    "line": "77",
+    "line": "78",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -23368,7 +23368,7 @@
   {
     "name": "UT__Parser__Object__Dynamic__SingleObject",
     "file": "score/json/internal/parser/vajson/virtual_parser_object_test.cpp",
-    "line": "120",
+    "line": "121",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -23382,7 +23382,7 @@
   {
     "name": "UT__Parser__Object__Dynamic__NestedObjects",
     "file": "score/json/internal/parser/vajson/virtual_parser_object_test.cpp",
-    "line": "135",
+    "line": "136",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -23396,7 +23396,7 @@
   {
     "name": "UT__Parser__Object__Dynamic__NoObjects",
     "file": "score/json/internal/parser/vajson/virtual_parser_object_test.cpp",
-    "line": "150",
+    "line": "151",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -23410,7 +23410,7 @@
   {
     "name": "UT__Parser__Object__Error__Dynamic__OnEndObject",
     "file": "score/json/internal/parser/vajson/virtual_parser_object_test.cpp",
-    "line": "165",
+    "line": "166",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -23424,7 +23424,7 @@
   {
     "name": "UT__Parser__Object__Error__Dynamic__OnStartObject",
     "file": "score/json/internal/parser/vajson/virtual_parser_object_test.cpp",
-    "line": "181",
+    "line": "182",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -23438,7 +23438,7 @@
   {
     "name": "UT__Parser__String__Dynamic__StringArray",
     "file": "score/json/internal/parser/vajson/virtual_parser_string_test.cpp",
-    "line": "82",
+    "line": "83",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -23452,7 +23452,7 @@
   {
     "name": "UT__Parser__String__Dynamic__ParseUnescapedString__Error",
     "file": "score/json/internal/parser/vajson/virtual_parser_string_test.cpp",
-    "line": "95",
+    "line": "96",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -23466,7 +23466,7 @@
   {
     "name": "UT__Parser__Static__Empty",
     "file": "score/json/internal/parser/vajson/virtual_parser_test.cpp",
-    "line": "68",
+    "line": "69",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -23480,7 +23480,7 @@
   {
     "name": "UT__Parser__Valid__Dynamic__ParseInt",
     "file": "score/json/internal/parser/vajson/virtual_parser_valid_test.cpp",
-    "line": "54",
+    "line": "55",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -23494,7 +23494,7 @@
   {
     "name": "UT__Parser__Valid__Dynamic__ParseBool",
     "file": "score/json/internal/parser/vajson/virtual_parser_valid_test.cpp",
-    "line": "66",
+    "line": "67",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -23508,7 +23508,7 @@
   {
     "name": "UT__Parser__Valid__Dynamic__ParseNull",
     "file": "score/json/internal/parser/vajson/virtual_parser_valid_test.cpp",
-    "line": "78",
+    "line": "79",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -23522,7 +23522,7 @@
   {
     "name": "UT__Parser__Valid__Dynamic__ParseObject",
     "file": "score/json/internal/parser/vajson/virtual_parser_valid_test.cpp",
-    "line": "90",
+    "line": "91",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -23536,7 +23536,7 @@
   {
     "name": "UT__Parser__Valid__Dynamic__ParseArray",
     "file": "score/json/internal/parser/vajson/virtual_parser_valid_test.cpp",
-    "line": "102",
+    "line": "103",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -23550,7 +23550,7 @@
   {
     "name": "UT__Parser__Valid__Dynamic__ParseNested",
     "file": "score/json/internal/parser/vajson/virtual_parser_valid_test.cpp",
-    "line": "114",
+    "line": "115",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -23564,7 +23564,7 @@
   {
     "name": "SignedIntTest8bit/UT__Number__I8Success__ConvertsValidIntegers8bit/0",
     "file": "score/json/internal/parser/vajson/json_number_test.cpp",
-    "line": "549",
+    "line": "538",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -23578,7 +23578,7 @@
   {
     "name": "SignedIntTest8bit/UT__Number__I8Success__ConvertsValidIntegers8bit/1",
     "file": "score/json/internal/parser/vajson/json_number_test.cpp",
-    "line": "549",
+    "line": "538",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -23592,7 +23592,7 @@
   {
     "name": "SignedIntTest8bit/UT__Number__I8Success__ConvertsValidIntegers8bit/2",
     "file": "score/json/internal/parser/vajson/json_number_test.cpp",
-    "line": "549",
+    "line": "538",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -23606,7 +23606,7 @@
   {
     "name": "SignedIntTest8bit/UT__Number__I8Success__ConvertsValidIntegers8bit/3",
     "file": "score/json/internal/parser/vajson/json_number_test.cpp",
-    "line": "549",
+    "line": "538",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -23620,7 +23620,7 @@
   {
     "name": "SignedIntTest8bit/UT__Number__I8Success__ConvertsValidIntegers8bit/4",
     "file": "score/json/internal/parser/vajson/json_number_test.cpp",
-    "line": "549",
+    "line": "538",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -23634,7 +23634,7 @@
   {
     "name": "SignedIntTest8bit/UT__Number__I8Success__ConvertsValidIntegers8bit/5",
     "file": "score/json/internal/parser/vajson/json_number_test.cpp",
-    "line": "549",
+    "line": "538",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -23648,7 +23648,7 @@
   {
     "name": "SignedIntTest8bit/UT__Number__I8Success__ConvertsValidIntegers8bit/6",
     "file": "score/json/internal/parser/vajson/json_number_test.cpp",
-    "line": "549",
+    "line": "538",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -23662,7 +23662,7 @@
   {
     "name": "SignedIntTest8bit/UT__Number__I8Success__ConvertsValidIntegers8bit/7",
     "file": "score/json/internal/parser/vajson/json_number_test.cpp",
-    "line": "549",
+    "line": "538",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -23676,7 +23676,7 @@
   {
     "name": "SignedIntTest8bit/UT__Number__I8Success__ConvertsValidIntegers8bit/8",
     "file": "score/json/internal/parser/vajson/json_number_test.cpp",
-    "line": "549",
+    "line": "538",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -23690,7 +23690,7 @@
   {
     "name": "SignedIntTestFail8bit/UT__Number__I8Failure__FailsOnInvalidIntegers8bit/0",
     "file": "score/json/internal/parser/vajson/json_number_test.cpp",
-    "line": "578",
+    "line": "567",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -23704,7 +23704,7 @@
   {
     "name": "SignedIntTestFail8bit/UT__Number__I8Failure__FailsOnInvalidIntegers8bit/1",
     "file": "score/json/internal/parser/vajson/json_number_test.cpp",
-    "line": "578",
+    "line": "567",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -23718,7 +23718,7 @@
   {
     "name": "SignedIntTestFail8bit/UT__Number__I8Failure__FailsOnInvalidIntegers8bit/2",
     "file": "score/json/internal/parser/vajson/json_number_test.cpp",
-    "line": "578",
+    "line": "567",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -23732,7 +23732,7 @@
   {
     "name": "SignedIntTestFail8bit/UT__Number__I8Failure__FailsOnInvalidIntegers8bit/3",
     "file": "score/json/internal/parser/vajson/json_number_test.cpp",
-    "line": "578",
+    "line": "567",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -23746,7 +23746,7 @@
   {
     "name": "SignedIntTestFail8bit/UT__Number__I8Failure__FailsOnInvalidIntegers8bit/4",
     "file": "score/json/internal/parser/vajson/json_number_test.cpp",
-    "line": "578",
+    "line": "567",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -23760,7 +23760,7 @@
   {
     "name": "SignedIntTestFail8bit/UT__Number__I8Failure__FailsOnInvalidIntegers8bit/5",
     "file": "score/json/internal/parser/vajson/json_number_test.cpp",
-    "line": "578",
+    "line": "567",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -23774,7 +23774,7 @@
   {
     "name": "SignedIntTestFail8bit/UT__Number__I8Failure__FailsOnInvalidIntegers8bit/6",
     "file": "score/json/internal/parser/vajson/json_number_test.cpp",
-    "line": "578",
+    "line": "567",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -23788,7 +23788,7 @@
   {
     "name": "UnsignedIntTest8bit/UT__Number__U8Success__ConvertsValidIntegers8bit/0",
     "file": "score/json/internal/parser/vajson/json_number_test.cpp",
-    "line": "626",
+    "line": "615",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -23802,7 +23802,7 @@
   {
     "name": "UnsignedIntTest8bit/UT__Number__U8Success__ConvertsValidIntegers8bit/1",
     "file": "score/json/internal/parser/vajson/json_number_test.cpp",
-    "line": "626",
+    "line": "615",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -23816,7 +23816,7 @@
   {
     "name": "UnsignedIntTest8bit/UT__Number__U8Success__ConvertsValidIntegers8bit/2",
     "file": "score/json/internal/parser/vajson/json_number_test.cpp",
-    "line": "626",
+    "line": "615",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -23830,7 +23830,7 @@
   {
     "name": "UnsignedIntTest8bit/UT__Number__U8Success__ConvertsValidIntegers8bit/3",
     "file": "score/json/internal/parser/vajson/json_number_test.cpp",
-    "line": "626",
+    "line": "615",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -23844,7 +23844,7 @@
   {
     "name": "UnsignedIntTest8bit/UT__Number__U8Success__ConvertsValidIntegers8bit/4",
     "file": "score/json/internal/parser/vajson/json_number_test.cpp",
-    "line": "626",
+    "line": "615",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -23858,7 +23858,7 @@
   {
     "name": "UnsignedIntTest8bit/UT__Number__U8Success__ConvertsValidIntegers8bit/5",
     "file": "score/json/internal/parser/vajson/json_number_test.cpp",
-    "line": "626",
+    "line": "615",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -23872,7 +23872,7 @@
   {
     "name": "UnsignedIntTestFail8bit/UT__Number__U8Failure__FailsOnInvalidIntegers8bit/0",
     "file": "score/json/internal/parser/vajson/json_number_test.cpp",
-    "line": "652",
+    "line": "641",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -23886,7 +23886,7 @@
   {
     "name": "UnsignedIntTestFail8bit/UT__Number__U8Failure__FailsOnInvalidIntegers8bit/1",
     "file": "score/json/internal/parser/vajson/json_number_test.cpp",
-    "line": "652",
+    "line": "641",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -23900,7 +23900,7 @@
   {
     "name": "UnsignedIntTestFail8bit/UT__Number__U8Failure__FailsOnInvalidIntegers8bit/2",
     "file": "score/json/internal/parser/vajson/json_number_test.cpp",
-    "line": "652",
+    "line": "641",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -23914,7 +23914,7 @@
   {
     "name": "UnsignedIntTestFail8bit/UT__Number__U8Failure__FailsOnInvalidIntegers8bit/3",
     "file": "score/json/internal/parser/vajson/json_number_test.cpp",
-    "line": "652",
+    "line": "641",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -23928,7 +23928,7 @@
   {
     "name": "UnsignedIntTestFail8bit/UT__Number__U8Failure__FailsOnInvalidIntegers8bit/4",
     "file": "score/json/internal/parser/vajson/json_number_test.cpp",
-    "line": "652",
+    "line": "641",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -23942,7 +23942,7 @@
   {
     "name": "UnsignedIntTestFail8bit/UT__Number__U8Failure__FailsOnInvalidIntegers8bit/5",
     "file": "score/json/internal/parser/vajson/json_number_test.cpp",
-    "line": "652",
+    "line": "641",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -23956,7 +23956,7 @@
   {
     "name": "UnsignedIntTestFail8bit/UT__Number__U8Failure__FailsOnInvalidIntegers8bit/6",
     "file": "score/json/internal/parser/vajson/json_number_test.cpp",
-    "line": "652",
+    "line": "641",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -23970,7 +23970,7 @@
   {
     "name": "UnsignedIntTestFail8bit/UT__Number__U8Failure__FailsOnInvalidIntegers8bit/7",
     "file": "score/json/internal/parser/vajson/json_number_test.cpp",
-    "line": "652",
+    "line": "641",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -23984,7 +23984,7 @@
   {
     "name": "UnsignedIntTestFail8bit/UT__Number__U8Failure__FailsOnInvalidIntegers8bit/8",
     "file": "score/json/internal/parser/vajson/json_number_test.cpp",
-    "line": "652",
+    "line": "641",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -23998,7 +23998,7 @@
   {
     "name": "FloatTestDouble/UT__Number__DoubleSuccess__ConvertsValidDoubles/0",
     "file": "score/json/internal/parser/vajson/json_number_test.cpp",
-    "line": "702",
+    "line": "691",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -24012,7 +24012,7 @@
   {
     "name": "FloatTestDouble/UT__Number__DoubleSuccess__ConvertsValidDoubles/1",
     "file": "score/json/internal/parser/vajson/json_number_test.cpp",
-    "line": "702",
+    "line": "691",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -24026,7 +24026,7 @@
   {
     "name": "FloatTestDouble/UT__Number__DoubleSuccess__ConvertsValidDoubles/2",
     "file": "score/json/internal/parser/vajson/json_number_test.cpp",
-    "line": "702",
+    "line": "691",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -24040,7 +24040,7 @@
   {
     "name": "FloatTestDouble/UT__Number__DoubleSuccess__ConvertsValidDoubles/3",
     "file": "score/json/internal/parser/vajson/json_number_test.cpp",
-    "line": "702",
+    "line": "691",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -24054,7 +24054,7 @@
   {
     "name": "FloatTestDouble/UT__Number__DoubleSuccess__ConvertsValidDoubles/4",
     "file": "score/json/internal/parser/vajson/json_number_test.cpp",
-    "line": "702",
+    "line": "691",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -24068,7 +24068,7 @@
   {
     "name": "FloatTestDouble/UT__Number__DoubleSuccess__ConvertsValidDoubles/5",
     "file": "score/json/internal/parser/vajson/json_number_test.cpp",
-    "line": "702",
+    "line": "691",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -24082,7 +24082,7 @@
   {
     "name": "FloatTestDouble/UT__Number__DoubleSuccess__ConvertsValidDoubles/6",
     "file": "score/json/internal/parser/vajson/json_number_test.cpp",
-    "line": "702",
+    "line": "691",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -24096,7 +24096,7 @@
   {
     "name": "FloatTestDouble/UT__Number__DoubleSuccess__ConvertsValidDoubles/7",
     "file": "score/json/internal/parser/vajson/json_number_test.cpp",
-    "line": "702",
+    "line": "691",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -24110,7 +24110,7 @@
   {
     "name": "FloatTestDouble/UT__Number__DoubleSuccess__ConvertsValidDoubles/8",
     "file": "score/json/internal/parser/vajson/json_number_test.cpp",
-    "line": "702",
+    "line": "691",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -24124,7 +24124,7 @@
   {
     "name": "FloatTestDouble/UT__Number__DoubleSuccess__ConvertsValidDoubles/9",
     "file": "score/json/internal/parser/vajson/json_number_test.cpp",
-    "line": "702",
+    "line": "691",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -24138,7 +24138,7 @@
   {
     "name": "FloatTestDouble/UT__Number__DoubleSuccess__ConvertsValidDoubles/10",
     "file": "score/json/internal/parser/vajson/json_number_test.cpp",
-    "line": "702",
+    "line": "691",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -24152,7 +24152,7 @@
   {
     "name": "FloatTestDouble/UT__Number__DoubleSuccess__ConvertsValidDoubles/11",
     "file": "score/json/internal/parser/vajson/json_number_test.cpp",
-    "line": "702",
+    "line": "691",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -24166,7 +24166,7 @@
   {
     "name": "FloatTestFailDouble/UT__Number__DoubleFailure__FailsOnInvalidDoubles/0",
     "file": "score/json/internal/parser/vajson/json_number_test.cpp",
-    "line": "733",
+    "line": "722",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -24180,7 +24180,7 @@
   {
     "name": "FloatTestFailDouble/UT__Number__DoubleFailure__FailsOnInvalidDoubles/1",
     "file": "score/json/internal/parser/vajson/json_number_test.cpp",
-    "line": "733",
+    "line": "722",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -24194,7 +24194,7 @@
   {
     "name": "FloatTestFailDouble/UT__Number__DoubleFailure__FailsOnInvalidDoubles/2",
     "file": "score/json/internal/parser/vajson/json_number_test.cpp",
-    "line": "733",
+    "line": "722",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -24208,7 +24208,7 @@
   {
     "name": "FloatTestFailDouble/UT__Number__DoubleFailure__FailsOnInvalidDoubles/3",
     "file": "score/json/internal/parser/vajson/json_number_test.cpp",
-    "line": "733",
+    "line": "722",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -24222,7 +24222,7 @@
   {
     "name": "FloatTestFailDouble/UT__Number__DoubleFailure__FailsOnInvalidDoubles/4",
     "file": "score/json/internal/parser/vajson/json_number_test.cpp",
-    "line": "733",
+    "line": "722",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -24236,7 +24236,7 @@
   {
     "name": "FloatTestFailDouble/UT__Number__DoubleFailure__FailsOnInvalidDoubles/5",
     "file": "score/json/internal/parser/vajson/json_number_test.cpp",
-    "line": "733",
+    "line": "722",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -24250,7 +24250,7 @@
   {
     "name": "FloatTestFailDouble/UT__Number__DoubleFailure__FailsOnInvalidDoubles/6",
     "file": "score/json/internal/parser/vajson/json_number_test.cpp",
-    "line": "733",
+    "line": "722",
     "result": "passed",
     "repo_name": null,
     "hash": null,
