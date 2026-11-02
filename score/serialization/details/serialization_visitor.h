@@ -24,6 +24,7 @@
 
 #include <array>
 #include <cstddef>
+#include <limits>
 
 namespace score
 {
@@ -80,6 +81,10 @@ class CommonVisitorLogic
     /// @brief Maximum supported struct/array nesting depth for the field path below.
     static constexpr std::size_t kMaxNestingDepth{16U};
 
+    /// @brief Path marker standing for "descended into an array element" rather than a struct field index. Lets a
+    /// format tell array nesting apart from struct nesting when resolving per-level configuration.
+    static constexpr std::size_t kArrayElementMarker{std::numeric_limits<std::size_t>::max()};
+
     /// @brief Records that traversal descended into the field at the given index of the current struct. Together with
     /// PopField this maintains the full index path from the root to the element currently visited, letting a format
     /// resolve per-level configuration for arbitrarily nested types. is_last records whether this field is the last one
@@ -87,8 +92,8 @@ class CommonVisitorLogic
     void PushField(const std::size_t field_index, const bool is_last)
     {
         SCORE_LANGUAGE_FUTURECPP_ASSERT_PRD(field_depth_ < kMaxNestingDepth);
-        field_path_[field_depth_] = field_index;
-        last_path_[field_depth_] = is_last;
+        field_path_.at(field_depth_) = field_index;
+        last_path_.at(field_depth_) = is_last;
         ++field_depth_;
     }
 
@@ -98,17 +103,24 @@ class CommonVisitorLogic
         --field_depth_;
     }
 
-    const std::size_t* FieldPathData() const
+    /// @brief Records that traversal descended into an array element (as opposed to a struct field). is_last marks
+    /// whether this is the array's last element, so trailing padding behind variable-length elements is correct.
+    void PushArrayElement(const bool is_last)
+    {
+        PushField(kArrayElementMarker, is_last);
+    }
+
+    [[nodiscard]] const std::size_t* FieldPathData() const
     {
         return field_path_.data();
     }
 
-    const bool* LastPathData() const
+    [[nodiscard]] const bool* LastPathData() const
     {
         return last_path_.data();
     }
 
-    std::size_t FieldDepth() const
+    [[nodiscard]] std::size_t FieldDepth() const
     {
         return field_depth_;
     }
@@ -142,7 +154,7 @@ class SerializationVisitor : public CommonVisitorLogic
         strategy_.Serialize(*this, iterator_, value);
     }
 
-    Result<std::size_t> GetResult() const
+    [[nodiscard]] Result<std::size_t> GetResult() const
     {
         return iterator_.GetResult();
     }
@@ -192,7 +204,7 @@ class DeSerializationVisitor : public CommonVisitorLogic
         }
     }
 
-    Result<std::size_t> GetResult() const
+    [[nodiscard]] Result<std::size_t> GetResult() const
     {
         if (not result_.has_value())
         {
