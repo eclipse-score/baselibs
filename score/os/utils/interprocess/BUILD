@@ -23,8 +23,6 @@ cc_library(
     tags = ["FFI"],
     visibility = [
         "@score_baselibs//score/concurrency:__pkg__",
-        "@score_baselibs//score/memory/shared:__pkg__",
-        "@score_baselibs//score/memory/shared/test/sct:__pkg__",
         "@score_baselibs//score/os/utils/test:__pkg__",
     ],
     deps = [

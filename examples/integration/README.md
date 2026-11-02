@@ -38,10 +38,3 @@ deps = [
 #include "score/result/result.h"
 #include "score/json/json.h"
 ```
-
-## Configuration
-
-Required flags in `.bazelrc`:
-- `--@score_baselibs//score/memory/shared/flags:use_typedshmd=False`
-
-These must be set by consumers to properly configure Base Libraries.
