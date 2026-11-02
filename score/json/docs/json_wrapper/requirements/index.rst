@@ -28,7 +28,7 @@ Due to low complexity, the shared requirements of the JSON component were not sp
 requirements (only about ten).
 
 vaJson, being reused from a third-party vendor (Vector), additionally has backend-specific requirements (e.g.
-validation, trailing commas, hexadecimal integers, unicode) that do not apply to "JSON Wrapper". Those are documented
+validation, trailing commas, unicode) that do not apply to "JSON Wrapper". Those are documented
 separately in :need:`doc__vajson_requirements`.
 
 So the requirements for "JSON Wrapper" are documented in :need:`doc__json_requirements`

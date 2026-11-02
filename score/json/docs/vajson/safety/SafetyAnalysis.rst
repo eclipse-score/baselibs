@@ -101,12 +101,22 @@ Safety Analysis of vajson
                       This is verified by the following test cases:
                       - UT__JsonParser__Parsing__Parse
 
-        .. fm:: FM-VaJson-HexIntegers: Hexadecimal integers are treated as invalid JSON.
-            :effect:  Valid JSON as demanded by the CREQ is rejected as invalid and, thus, safety requirements are violated.
-            :measure: Add support for deserialization of hexadecimal integers.
+        .. fm:: FM-VaJson-NumberGrammar: Number literals outside the RFC 8259 number grammar are accepted.
+            :details: The standard conversion routines accept forms outside the grammar, e.g. hexadecimal numbers,
+                      leading zeros, ``inf`` or ``nan``.
+            :effect:  Invalid input is deserialized and, thus, safety requirements are violated.
+            :measure: Check every number against the RFC 8259 number grammar before conversion.
                       This is verified by the following test cases:
-                      - UT__Parser__Number__Static
-                      - UT__Parser__Number__Dynamic
+                      - UT__Number__InvalidNumber
+                      - UT__Parser__Invalid__Dynamic__HexNumber1
+                      - UT__Parser__Invalid__Dynamic__HexNumber2
+                      - JsonParserVajsonTest__RejectsNumbersOutsideRfc8259Grammar
+
+        .. fm:: FM-VaJson-NumberGrammarTooStrict: Numbers that match the RFC 8259 number grammar are rejected.
+            :effect:  Valid JSON as demanded by the CREQ is rejected as invalid and, thus, safety requirements are violated.
+            :measure: Check every number against the RFC 8259 number grammar before conversion.
+                      This is verified by the following test cases:
+                      - JsonParserVajsonTest__AcceptsNumbersMatchingRfc8259Grammar
 
         .. fm:: FM-VaJson-NumberConversion: Number conversion changes value.
             :details: Number conversion from textual JSON representation to a numerical value changes the value.

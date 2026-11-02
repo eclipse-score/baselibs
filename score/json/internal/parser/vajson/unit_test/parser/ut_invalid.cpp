@@ -263,6 +263,16 @@ TEST(UT__Parser__Invalid, Dynamic__OctalNumber2)
     AssertInvalid("-010");
 }
 
+TEST(UT__Parser__Invalid, Dynamic__HexNumber1)
+{
+    AssertInvalid("0xdd");
+}
+
+TEST(UT__Parser__Invalid, Dynamic__HexNumber2)
+{
+    AssertInvalid(R"({"key": -0X1F})");
+}
+
 TEST(UT__Parser__Invalid, Dynamic__ObjectOpenInsteadOfKey)
 {
     AssertInvalid("{{");
