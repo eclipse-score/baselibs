@@ -14,6 +14,7 @@
 #ifndef SCORE_LIB_JSON_JSON_PARSER_H
 #define SCORE_LIB_JSON_JSON_PARSER_H
 
+#include "score/filesystem/filestream/i_file_factory.h"
 #include "score/json/i_json_parser.h"
 #include "score/json/internal/model/any.h"
 #include "score/json/internal/model/error.h"
@@ -29,15 +30,26 @@ namespace json
 class JsonParser : public IJsonParser
 {
   public:
-    /// \brief Parses the underlying file and creates a tree of JSON data
+    /// @brief Creates a parser that reads files through score::filesystem::IFileFactory::instance().
+    JsonParser() noexcept;
+
+    /// @brief Creates a parser that reads files through the given file factory.
+    /// @param file_factory Opens the files read by FromFile(). Must outlive the parser.
+    explicit JsonParser(score::filesystem::IFileFactory& file_factory) noexcept;
+
+    /// \brief Reads the file through the file factory and parses its content like FromBuffer()
     /// \param file_path The path to the file that shall be parsed
-    /// \return root to the tree of JSON data, error on error
+    /// \return root to the tree of JSON data, kInvalidFilePath if the file cannot be opened, kParsingError otherwise
     score::Result<Any> FromFile(const std::string_view file_path) const noexcept override;
 
     /// \brief Parses the underlying buffer and creates a tree of JSON data
     /// \param buffer The string_view that shall be parsed
     /// \return root to the tree of JSON data, error on error
     score::Result<Any> FromBuffer(const std::string_view buffer) const noexcept override;
+
+  private:
+    /// @brief Opens the files read by FromFile().
+    score::filesystem::IFileFactory& file_factory_;
 };
 
 /// \brief Parses the underlying buffer and creates a tree of JSON data

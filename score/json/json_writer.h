@@ -58,6 +58,7 @@ class JsonWriter final : public IJsonWriter
      *
      *  The `ownership` parameter is ignored when kUnsynced mode is used.
      *
+     *  @param file_factory: Opens the files written by ToFile(). Must outlive the writer.
      *  @param file_sync_mode: Determines the synchronization mode (see above).
      *  @param ownership: When using kSynced mode, determines how to adjust the ownership
      *                    of the temporary file created.
@@ -65,6 +66,13 @@ class JsonWriter final : public IJsonWriter
      *                     readable (kPrettyPrint, the default) or compact without insignificant
      *                     whitespace (kCompact).
      */
+    explicit JsonWriter(score::filesystem::IFileFactory& file_factory,
+                        FileSyncMode file_sync_mode = FileSyncMode::kUnsynced,
+                        const score::filesystem::AtomicUpdateOwnershipFlags ownership =
+                            score::filesystem::kUseTargetFileUID | score::filesystem::kUseTargetFileGID,
+                        const Formatting formatting = Formatting::kPrettyPrint) noexcept;
+
+    /// @brief Creates a writer that writes files through score::filesystem::IFileFactory::instance().
     explicit JsonWriter(FileSyncMode file_sync_mode = FileSyncMode::kUnsynced,
                         const score::filesystem::AtomicUpdateOwnershipFlags ownership =
                             score::filesystem::kUseTargetFileUID | score::filesystem::kUseTargetFileGID,
@@ -74,14 +82,22 @@ class JsonWriter final : public IJsonWriter
     JsonWriter& operator=(const JsonWriter&) = delete;
     JsonWriter& operator=(JsonWriter&&) noexcept = delete;
     ~JsonWriter() noexcept override = default;
+    score::Result<void> ToFile(const score::json::Object& json_data, const std::string_view file_path) override;
+    score::Result<void> ToFile(const score::json::List& json_data, const std::string_view file_path) override;
+    score::Result<void> ToFile(const score::json::Any& json_data, const std::string_view file_path) override;
+
+    /// @brief Writes through file_factory instead of the injected one. Returns kInvalidFilePath if it is null.
+    [[deprecated("Inject the file factory via the constructor and use ToFile(json_data, file_path).")]]
     score::Result<void> ToFile(const score::json::Object& json_data,
                                const std::string_view& file_path,
                                std::shared_ptr<score::filesystem::IFileFactory> file_factory) override;
 
+    [[deprecated("Inject the file factory via the constructor and use ToFile(json_data, file_path).")]]
     score::Result<void> ToFile(const score::json::List& json_data,
                                const std::string_view& file_path,
                                std::shared_ptr<score::filesystem::IFileFactory> file_factory) override;
 
+    [[deprecated("Inject the file factory via the constructor and use ToFile(json_data, file_path).")]]
     score::Result<void> ToFile(const score::json::Any& json_data,
                                const std::string_view& file_path,
                                std::shared_ptr<score::filesystem::IFileFactory> file_factory) override;
@@ -91,6 +107,14 @@ class JsonWriter final : public IJsonWriter
     score::Result<std::string> ToBuffer(const score::json::Any& json_data) override;
 
   private:
+    /// @brief Writes json_data through file_factory according to the configured sync mode and formatting.
+    template <typename T>
+    score::Result<void> ToFileWith(const T& json_data,
+                                   const std::string_view file_path,
+                                   score::filesystem::IFileFactory& file_factory) const;
+
+    /// @brief Opens the files written by ToFile().
+    score::filesystem::IFileFactory& file_factory_;
     FileSyncMode file_sync_mode_;
     const score::filesystem::AtomicUpdateOwnershipFlags atomic_ownership_;
     const Formatting formatting_;

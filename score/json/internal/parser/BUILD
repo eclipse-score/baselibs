@@ -39,6 +39,7 @@ cc_test(
     ],
     deps = [
         "@googletest//:gtest_main",
+        "@score_baselibs//score/filesystem:mock",
         "@score_baselibs//score/json",
         "@score_baselibs//score/language/safecpp/coverage_termination_handler",
     ],

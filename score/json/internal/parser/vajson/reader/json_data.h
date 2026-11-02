@@ -76,19 +76,6 @@ class JsonData final
     /// \reentrant       FALSE
     explicit JsonData(std::unique_ptr<std::istream> input_stream) noexcept;
 
-    /// \brief           Initializes a JSON data object from a file
-    /// \param[in]       path
-    ///                  The path to the JSON file.
-    /// \return          A constructed JSON data object.
-    /// \error           score::json::vajson::JsonErrc::kStreamFailure
-    ///                  if the file could not be opened.
-    /// \context         ANY
-    /// \pre             -
-    /// \threadsafe      FALSE
-    /// \reentrant       FALSE
-    /// \synchronous     -
-    static auto FromFile(std::string_view path) noexcept -> Result<JsonData>;
-
     /// \brief           Initializes a JSON data object from a buffer
     /// \param[in]       buffer
     ///                  The buffer containing the JSON value.

@@ -19,6 +19,7 @@
 #include "score/result/result.h"
 
 #include <memory>
+#include <string_view>
 
 namespace score
 {
@@ -28,12 +29,19 @@ namespace json
 class IJsonWriter
 {
   public:
+    /// @brief Writes json_data to file_path through the file factory the implementation was constructed with.
+    virtual score::Result<void> ToFile(const score::json::Object& json_data, const std::string_view file_path) = 0;
+    virtual score::Result<void> ToFile(const score::json::List& json_data, const std::string_view file_path) = 0;
+    virtual score::Result<void> ToFile(const score::json::Any& json_data, const std::string_view file_path) = 0;
+    [[deprecated("Inject the file factory via the constructor and use ToFile(json_data, file_path).")]]
     virtual score::Result<void> ToFile(const score::json::Object& json_data,
                                        const std::string_view& file_path,
                                        std::shared_ptr<score::filesystem::IFileFactory> file_factory) = 0;
+    [[deprecated("Inject the file factory via the constructor and use ToFile(json_data, file_path).")]]
     virtual score::Result<void> ToFile(const score::json::List& json_data,
                                        const std::string_view& file_path,
                                        std::shared_ptr<score::filesystem::IFileFactory> file_factory) = 0;
+    [[deprecated("Inject the file factory via the constructor and use ToFile(json_data, file_path).")]]
     virtual score::Result<void> ToFile(const score::json::Any& json_data,
                                        const std::string_view& file_path,
                                        std::shared_ptr<score::filesystem::IFileFactory> file_factory) = 0;

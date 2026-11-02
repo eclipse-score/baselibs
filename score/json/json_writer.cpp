@@ -63,50 +63,83 @@ score::Result<void> ToFileInternalAtomic(const T& json_data,
 
 }  // namespace
 
+score::json::JsonWriter::JsonWriter(score::filesystem::IFileFactory& file_factory,
+                                    FileSyncMode file_sync_mode,
+                                    const score::filesystem::AtomicUpdateOwnershipFlags ownership,
+                                    const Formatting formatting) noexcept
+    : IJsonWriter{},
+      file_factory_{file_factory},
+      file_sync_mode_{file_sync_mode},
+      atomic_ownership_{ownership},
+      formatting_{formatting}
+{
+}
+
 score::json::JsonWriter::JsonWriter(FileSyncMode file_sync_mode,
                                     const score::filesystem::AtomicUpdateOwnershipFlags ownership,
                                     const Formatting formatting) noexcept
-    : IJsonWriter{}, file_sync_mode_{file_sync_mode}, atomic_ownership_{ownership}, formatting_{formatting}
+    : JsonWriter{score::filesystem::IFileFactory::instance(), file_sync_mode, ownership, formatting}
 {
+}
+
+score::Result<void> score::json::JsonWriter::ToFile(const score::json::Object& json_data,
+                                                    const std::string_view file_path)
+{
+    return ToFileWith(json_data, file_path, file_factory_);
+}
+
+score::Result<void> score::json::JsonWriter::ToFile(const score::json::List& json_data,
+                                                    const std::string_view file_path)
+{
+    return ToFileWith(json_data, file_path, file_factory_);
+}
+
+score::Result<void> score::json::JsonWriter::ToFile(const score::json::Any& json_data, const std::string_view file_path)
+{
+    return ToFileWith(json_data, file_path, file_factory_);
 }
 
 score::Result<void> score::json::JsonWriter::ToFile(const score::json::Object& json_data,
                                                     const std::string_view& file_path,
                                                     std::shared_ptr<score::filesystem::IFileFactory> file_factory)
 {
-    return (file_sync_mode_ == FileSyncMode::kSynced)
-               ? ToFileInternalAtomic(json_data,
-                                      std::string_view{file_path.begin(), file_path.size()},
-                                      *file_factory,
-                                      atomic_ownership_,
-                                      formatting_)
-               : ToFileInternal(json_data, file_path, *file_factory, formatting_);
+    if (file_factory == nullptr)
+    {
+        return score::MakeUnexpected(score::json::Error::kInvalidFilePath, "File factory is null");
+    }
+    return ToFileWith(json_data, file_path, *file_factory);
 }
 
 score::Result<void> score::json::JsonWriter::ToFile(const score::json::List& json_data,
                                                     const std::string_view& file_path,
                                                     std::shared_ptr<score::filesystem::IFileFactory> file_factory)
 {
-    return (file_sync_mode_ == FileSyncMode::kSynced)
-               ? ToFileInternalAtomic(json_data,
-                                      std::string_view{file_path.begin(), file_path.size()},
-                                      *file_factory,
-                                      atomic_ownership_,
-                                      formatting_)
-               : ToFileInternal(json_data, file_path, *file_factory, formatting_);
+    if (file_factory == nullptr)
+    {
+        return score::MakeUnexpected(score::json::Error::kInvalidFilePath, "File factory is null");
+    }
+    return ToFileWith(json_data, file_path, *file_factory);
 }
 
 score::Result<void> score::json::JsonWriter::ToFile(const score::json::Any& json_data,
                                                     const std::string_view& file_path,
                                                     std::shared_ptr<score::filesystem::IFileFactory> file_factory)
 {
+    if (file_factory == nullptr)
+    {
+        return score::MakeUnexpected(score::json::Error::kInvalidFilePath, "File factory is null");
+    }
+    return ToFileWith(json_data, file_path, *file_factory);
+}
+
+template <typename T>
+score::Result<void> score::json::JsonWriter::ToFileWith(const T& json_data,
+                                                        const std::string_view file_path,
+                                                        score::filesystem::IFileFactory& file_factory) const
+{
     return (file_sync_mode_ == FileSyncMode::kSynced)
-               ? ToFileInternalAtomic(json_data,
-                                      std::string_view{file_path.begin(), file_path.size()},
-                                      *file_factory,
-                                      atomic_ownership_,
-                                      formatting_)
-               : ToFileInternal(json_data, file_path, *file_factory, formatting_);
+               ? ToFileInternalAtomic(json_data, file_path, file_factory, atomic_ownership_, formatting_)
+               : ToFileInternal(json_data, file_path, file_factory, formatting_);
 }
 
 score::Result<std::string> score::json::JsonWriter::ToBuffer(const score::json::Object& json_data)

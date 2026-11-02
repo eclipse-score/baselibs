@@ -17,7 +17,6 @@
 /**********************************************************************************************************************
  *  INCLUDES
  *********************************************************************************************************************/
-#include <cstdio>
 #include <string>
 #include <utility>
 
@@ -35,20 +34,6 @@ namespace vajson
 {
 namespace unit_test
 {
-
-/*!
- * Test that JsonData can open a file.
- */
-TEST(UT__JsonOps__JsonData, ConstructFromFile)
-{
-    const std::string file{"/tmp/vajson_test.json"};
-    std::FILE* const fp{std::fopen(file.c_str(), "w")};
-    ASSERT_NE(fp, nullptr);
-    ASSERT_EQ(std::fclose(fp), 0);
-
-    const Result<JsonData> result{JsonData::FromFile(file)};
-    ASSERT_TRUE(result.has_value());
-}
 
 /*!
  * Test that JsonData can open a StringView character buffer.
@@ -87,17 +72,6 @@ TEST(UT__JsonOps__JsonData, ConstructFromSpan)
     const Result<JsonData> result{JsonData::FromBuffer(view)};
 
     ASSERT_TRUE(result.has_value());
-}
-
-/*!
- * Test that JsonData returns a JsonErrc if the file cannot be opened.
- */
-TEST(UT__JsonOps__JsonData, ConstructFromNonExistingFile)
-{
-    const Result<JsonData> result{JsonData::FromFile("doesnotexist")};
-
-    ASSERT_FALSE(result.has_value());
-    ASSERT_EQ(result.error(), JsonErrc::kStreamFailure);
 }
 
 /*!
