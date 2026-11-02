@@ -22,16 +22,20 @@ namespace os
 // therefore immune to wall-clock changes such as NTP steps.
 score::cpp::expected_blank<Error> SemaphoreImpl::sem_timedwait_monotonic(
     sem_t* const sem,
-    const std::chrono::time_point<std::chrono::steady_clock, std::chrono::nanoseconds> tp) const noexcept
+    const std::chrono::time_point<std::chrono::steady_clock, std::chrono::nanoseconds> tp,
+    const bool resume) const noexcept
 {
     // convert abstime to timespec
     struct timespec abs_time{};
     abs_time.tv_sec = std::chrono::duration_cast<std::chrono::seconds>(tp.time_since_epoch()).count();
     abs_time.tv_nsec = std::chrono::duration_cast<std::chrono::nanoseconds>(tp.time_since_epoch()).count() %
                        std::chrono::nanoseconds::period::den;
-    if (::sem_timedwait_monotonic(sem, &abs_time) != 0)
+    while (::sem_timedwait_monotonic(sem, &abs_time) != 0)
     {
-        return score::cpp::make_unexpected(score::os::Error::createFromErrno());
+        if (!resume || errno != EINTR)
+        {
+            return score::cpp::make_unexpected(score::os::Error::createFromErrno());
+        }
     }
     return {};
 }

@@ -45,15 +45,18 @@ class SemaphoreImpl final : public Semaphore
     score::cpp::expected_blank<Error> sem_unlink(const char* const pathname) const noexcept override;
 
     score::cpp::expected_blank<Error> sem_waittimeout(sem_t* const sem,
-                                                      const std::chrono::nanoseconds timeout) const noexcept override;
+                                                      const std::chrono::nanoseconds timeout,
+                                                      const bool resume) const noexcept override;
 
     score::cpp::expected_blank<Error> sem_timedwait(
         sem_t* const sem,
-        const std::chrono::time_point<std::chrono::system_clock, std::chrono::nanoseconds> tp) const noexcept override;
+        const std::chrono::time_point<std::chrono::system_clock, std::chrono::nanoseconds> tp,
+        const bool resume) const noexcept override;
 
     score::cpp::expected_blank<Error> sem_timedwait_monotonic(
         sem_t* const sem,
-        const std::chrono::time_point<std::chrono::steady_clock, std::chrono::nanoseconds> tp) const noexcept override;
+        const std::chrono::time_point<std::chrono::steady_clock, std::chrono::nanoseconds> tp,
+        const bool resume) const noexcept override;
 
     score::cpp::expected_blank<Error> sem_getvalue(sem_t* const sem, std::int32_t* const sval) const noexcept override;
 

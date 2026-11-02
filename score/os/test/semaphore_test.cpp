@@ -147,7 +147,7 @@ TEST_F(SemaphoreTestFixture, SuccessTimedWait)
         unit_.sem_open(m_name_.c_str(), Semaphore::OpenFlag::kCreate, Semaphore::ModeFlag::kReadUser, value_);
     ASSERT_TRUE(ret.has_value());
     ASSERT_TRUE(ret.value() != nullptr);
-    ASSERT_TRUE(unit_.sem_timedwait(ret.value(), tp).has_value());
+    ASSERT_TRUE(unit_.sem_timedwait(ret.value(), tp, true).has_value());
     unit_.sem_close(ret.value());
 }
 
@@ -238,7 +238,7 @@ TEST_F(SemaphoreTestFixture, TimeoutWaitTimeout)
     const auto ret = unit_.sem_open(m_name_.c_str(), Semaphore::OpenFlag::kCreate, Semaphore::ModeFlag::kReadUser, 0U);
     ASSERT_TRUE(ret.has_value());
     ASSERT_TRUE(ret.value() != nullptr);
-    ASSERT_FALSE(unit_.sem_waittimeout(ret.value(), std::chrono::milliseconds(10)).has_value());
+    ASSERT_FALSE(unit_.sem_waittimeout(ret.value(), std::chrono::milliseconds(10), true).has_value());
     unit_.sem_close(ret.value());
 }
 
@@ -256,7 +256,7 @@ TEST_F(SemaphoreTestFixture, SuccessTimedWaitFailure)
     const auto sem = ::sem_open(m_name_.c_str(), O_CREAT, S_IRUSR, value_);
     ASSERT_NE(sem, SEM_FAILED);
     ASSERT_TRUE(sem != nullptr);
-    ASSERT_FALSE(unit_.sem_timedwait(sem, abs_time).has_value());
+    ASSERT_FALSE(unit_.sem_timedwait(sem, abs_time, true).has_value());
     unit_.sem_close(sem);
 }
 
@@ -276,7 +276,7 @@ TEST_F(SemaphoreTestFixture, SuccessTimedWaitMonotonic)
         unit_.sem_open(m_name_.c_str(), Semaphore::OpenFlag::kCreate, Semaphore::ModeFlag::kReadUser, value_);
     ASSERT_TRUE(ret.has_value());
     ASSERT_TRUE(ret.value() != nullptr);
-    ASSERT_TRUE(unit_.sem_timedwait_monotonic(ret.value(), tp).has_value());
+    ASSERT_TRUE(unit_.sem_timedwait_monotonic(ret.value(), tp, true).has_value());
     unit_.sem_close(ret.value());
 }
 
@@ -295,7 +295,7 @@ TEST_F(SemaphoreTestFixture, FailureTimedWaitMonotonic)
     const auto sem = ::sem_open(m_name_.c_str(), O_CREAT, S_IRUSR, value_);
     ASSERT_NE(sem, SEM_FAILED);
     ASSERT_TRUE(sem != nullptr);
-    ASSERT_FALSE(unit_.sem_timedwait_monotonic(sem, abs_time).has_value());
+    ASSERT_FALSE(unit_.sem_timedwait_monotonic(sem, abs_time, true).has_value());
     unit_.sem_close(sem);
 }
 
@@ -314,7 +314,7 @@ TEST_F(SemaphoreTestFixture, TimeoutTimedWaitMonotonic)
     const auto ret = unit_.sem_open(m_name_.c_str(), Semaphore::OpenFlag::kCreate, Semaphore::ModeFlag::kReadUser, 0U);
     ASSERT_TRUE(ret.has_value());
     ASSERT_TRUE(ret.value() != nullptr);
-    ASSERT_FALSE(unit_.sem_timedwait_monotonic(ret.value(), tp).has_value());
+    ASSERT_FALSE(unit_.sem_timedwait_monotonic(ret.value(), tp, true).has_value());
     unit_.sem_close(ret.value());
 }
 
