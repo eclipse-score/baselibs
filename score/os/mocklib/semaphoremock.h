@@ -51,15 +51,19 @@ class SemaphoreMock : public Semaphore
                 (const, noexcept, override));
     MOCK_METHOD((score::cpp::expected_blank<Error>),
                 sem_waittimeout,
-                (sem_t*, const std::chrono::nanoseconds),
+                (sem_t*, const std::chrono::nanoseconds, const bool),
                 (const, noexcept, override));
     MOCK_METHOD((score::cpp::expected_blank<Error>),
                 sem_timedwait,
-                (sem_t*, (const std::chrono::time_point<std::chrono::system_clock, std::chrono::nanoseconds>)),
+                (sem_t*,
+                 (const std::chrono::time_point<std::chrono::system_clock, std::chrono::nanoseconds>),
+                 const bool),
                 (const, noexcept, override));
     MOCK_METHOD((score::cpp::expected_blank<Error>),
                 sem_timedwait_monotonic,
-                (sem_t*, (const std::chrono::time_point<std::chrono::steady_clock, std::chrono::nanoseconds>)),
+                (sem_t*,
+                 (const std::chrono::time_point<std::chrono::steady_clock, std::chrono::nanoseconds>),
+                 const bool),
                 (const, noexcept, override));
     MOCK_METHOD((score::cpp::expected_blank<Error>),
                 sem_getvalue,
