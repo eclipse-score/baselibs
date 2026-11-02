@@ -77,7 +77,6 @@ interface IOpensslLib {
   using StructDigestCtx = ::EVP_MD_CTX
   using Engine = ::ENGINE
   --
-  +DigestAlgoSha1() const: const StructDigest*
   +DigestAlgoSha256() const: const StructDigest*
   +DigestAlgoSha384() const: const StructDigest*
   +DigestAlgoSha512() const: const StructDigest*

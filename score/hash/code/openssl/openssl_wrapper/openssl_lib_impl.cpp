@@ -22,11 +22,6 @@ namespace hash
 namespace openssl
 {
 
-const StructDigest* OpensslLibImpl::DigestAlgoSha1() const noexcept
-{
-    return ::EVP_sha1();
-}
-
 const StructDigest* OpensslLibImpl::DigestAlgoSha256() const noexcept
 {
     return ::EVP_sha256();

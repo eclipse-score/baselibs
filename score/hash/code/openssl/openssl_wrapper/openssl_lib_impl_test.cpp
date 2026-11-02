@@ -52,18 +52,6 @@ void OpensslLibTest::TearDown()
     digest_context_ = nullptr;
 }
 
-TEST_F(OpensslLibTest, Sha1Test)
-{
-    RecordProperty("PartiallyVerifies", "comp_req__hash__sha_algorithms");
-    RecordProperty("TestType", "interface-test");
-    RecordProperty("DerivationTechnique", "equivalence-classes");
-    RecordProperty("Description", "Check that the OpenSSL wrapper resolves a non-null SHA-1 digest type.");
-
-    auto result = unit_.DigestAlgoSha1();
-
-    EXPECT_NE(result, nullptr);
-}
-
 TEST_F(OpensslLibTest, Sha256Test)
 {
     RecordProperty("PartiallyVerifies", "comp_req__hash__calculation_interface");
