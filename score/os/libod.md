@@ -272,6 +272,8 @@ This lib exports the following OS functions:
 
 * `sem_init` - This is a wrapper over the os sem_init(). This function is to initialize an unnamed semaphore. Reference: https://www.qnx.com/developers/docs/8.0/com.qnx.doc.neutrino.lib_ref/topic/s/sem_init.html
 * `sem_open` - This function after converting openflag to nativeflag and the modeflag to nativeflag(depending on the parameters) calls the os sem_open(). Reference: https://www.qnx.com/developers/docs/8.0/com.qnx.doc.neutrino.lib_ref/topic/s/sem_open.html
+* `sem_destroy` - This is a wrapper over the os sem_destroy(). This function destroys the unnamed semaphore which must have been previously initialized ny sem_init(). Reference: https://www.qnx.com/developers/docs/8.0/com.qnx.doc.neutrino.lib_ref/topic/s/sem_destroy.html
+* `sem_trywait` - This is a wrapper over the os sem_trywait(). This function decrements a semaphore if the value is greater than zero, otherwise returns with error. Reference: https://www.qnx.com/developers/docs/8.0/com.qnx.doc.neutrino.lib_ref/topic/s/sem_trywait.html
 * `sem_wait` - This is a wrapper over the os sem_wait(). This function wait on a named or unnamed semaphore. Reference: https://www.qnx.com/developers/docs/8.0/com.qnx.doc.neutrino.lib_ref/topic/s/sem_wait.html
 * `sem_post` - This is a wrapper over the os sem_post(). This function increment a named or unnamed semaphore. Reference: https://www.qnx.com/developers/docs/8.0/com.qnx.doc.neutrino.lib_ref/topic/s/sem_post.html
 * `sem_close` - This is a wrapper over the os sem_close(). This function is to close a named semaphore. Reference: https://www.qnx.com/developers/docs/8.0/com.qnx.doc.neutrino.lib_ref/topic/s/sem_close.html

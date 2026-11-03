@@ -37,6 +37,8 @@ class SemaphoreMock : public Semaphore
                 sem_open,
                 (const char*, const OpenFlag),
                 (const, noexcept, override));
+    MOCK_METHOD((score::cpp::expected_blank<Error>), sem_destroy, (sem_t*), (const, noexcept, override));
+    MOCK_METHOD((score::cpp::expected_blank<Error>), sem_trywait, (sem_t*), (const, noexcept, override));
     MOCK_METHOD((score::cpp::expected_blank<Error>), sem_wait, (sem_t*), (const, noexcept, override));
     MOCK_METHOD((score::cpp::expected_blank<Error>), sem_post, (sem_t*), (const, noexcept, override));
     MOCK_METHOD((score::cpp::expected_blank<Error>), sem_close, (sem_t*), (const, noexcept, override));

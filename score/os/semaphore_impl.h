@@ -36,6 +36,10 @@ class SemaphoreImpl final : public Semaphore
     score::cpp::expected<sem_t*, Error> sem_open(const char* const pathname,
                                                  const Semaphore::OpenFlag oflag) const noexcept override;
 
+    score::cpp::expected_blank<Error> sem_destroy(sem_t* const sem) const noexcept override;
+
+    score::cpp::expected_blank<Error> sem_trywait(sem_t* const sem) const noexcept override;
+
     score::cpp::expected_blank<Error> sem_wait(sem_t* const sem) const noexcept override;
 
     score::cpp::expected_blank<Error> sem_post(sem_t* const sem) const noexcept override;
