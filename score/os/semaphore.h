@@ -61,6 +61,8 @@ class Semaphore : public ObjectSeam<Semaphore>
                                                          const std::uint32_t value) const noexcept = 0;
     virtual score::cpp::expected<sem_t*, Error> sem_open(const char* const pathname,
                                                          const OpenFlag oflag) const noexcept = 0;
+    virtual score::cpp::expected_blank<Error> sem_destroy(sem_t* const sem) const noexcept = 0;
+    virtual score::cpp::expected_blank<Error> sem_trywait(sem_t* const sem) const noexcept = 0;
     virtual score::cpp::expected_blank<Error> sem_wait(sem_t* const sem) const noexcept = 0;
     virtual score::cpp::expected_blank<Error> sem_post(sem_t* const sem) const noexcept = 0;
     virtual score::cpp::expected_blank<Error> sem_close(sem_t* const sem) const noexcept = 0;

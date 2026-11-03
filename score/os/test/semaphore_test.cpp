@@ -205,6 +205,43 @@ TEST_F(SemaphoreTestFixture, SuccessSemWait)
     unit_.sem_close(sem);
 }
 
+TEST_F(SemaphoreTestFixture, SuccessSemTryWait)
+{
+    const auto sem = ::sem_open(m_name_.c_str(), O_CREAT, S_IRUSR, value_);
+    ASSERT_NE(sem, SEM_FAILED);
+
+    int sem_value{};
+    ASSERT_EQ(::sem_getvalue(sem, &sem_value), 0);
+    ASSERT_EQ(sem_value, value_);
+
+    auto wait_result = unit_.sem_trywait(sem);
+    ASSERT_TRUE(wait_result.has_value());
+
+    ASSERT_EQ(::sem_getvalue(sem, &sem_value), 0);
+    ASSERT_EQ(sem_value, value_ - 1);
+
+    unit_.sem_close(sem);
+}
+
+TEST_F(SemaphoreTestFixture, FailureSemTryWait)
+{
+    const auto sem = ::sem_open(m_name_.c_str(), O_CREAT, S_IRUSR, 0);
+    ASSERT_NE(sem, SEM_FAILED);
+
+    int sem_value{};
+    ASSERT_EQ(::sem_getvalue(sem, &sem_value), 0);
+    ASSERT_EQ(sem_value, 0);
+
+    auto try_wait_result = unit_.sem_trywait(sem);
+    ASSERT_FALSE(try_wait_result.has_value());
+    EXPECT_EQ(try_wait_result.error().GetOsDependentErrorCode(), EAGAIN);
+
+    ASSERT_EQ(::sem_getvalue(sem, &sem_value), 0);
+    ASSERT_EQ(sem_value, 0);
+
+    unit_.sem_close(sem);
+}
+
 // Positive test for sem_post()
 TEST_F(SemaphoreTestFixture, SuccessSemPost)
 {
@@ -327,6 +364,16 @@ TEST(Semaphore, get_instance)
     RecordProperty("DerivationTechnique", "equivalence-classes");  // equivalence classes
 
     EXPECT_NO_FATAL_FAILURE(Semaphore::instance());
+}
+
+// Positive test for sem_open()
+TEST_F(SemaphoreTestFixture, SuccessSemDestroy)
+{
+    sem_t sem;
+    auto ret = unit_.sem_init(&sem, 0, value_);
+    ASSERT_TRUE(ret.has_value());
+    ret = unit_.sem_destroy(&sem);
+    ASSERT_TRUE(ret.has_value());
 }
 
 }  // namespace test
