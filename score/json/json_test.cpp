@@ -65,3 +65,35 @@ TEST(JsonTest, ReadWrite)
                   .value(),
               4);
 }
+
+TEST(JsonTest, ReadsUnicodeEscapeSequences)
+{
+    RecordProperty("PartiallyVerifies", "comp_req__json__deserialization");
+    RecordProperty("Description",
+                   "Read a document whose strings use RFC 8259-required escapes and verify their decoded values.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
+
+    const auto read_json = score::json::JsonParser{}.FromBuffer(R"({"control":"a\u0001z","quote":"\u0022"})");
+    ASSERT_TRUE(read_json.has_value());
+    const auto& read_object = read_json->As<score::json::Object>().value().get();
+
+    EXPECT_EQ(read_object.at("control").As<std::string>().value().get(), std::string{"a\x01z"});
+    EXPECT_EQ(read_object.at("quote").As<std::string>().value().get(), std::string{"\""});
+}
+
+TEST(JsonTest, ReadsNonAsciiUnicodeEscapeSequences)
+{
+    RecordProperty("PartiallyVerifies", "comp_req__json__deserialization");
+    RecordProperty("Description",
+                   "Read a document whose strings use non-ASCII Unicode escapes, including a surrogate pair.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
+
+    const auto read_json = score::json::JsonParser{}.FromBuffer(R"({"umlaut":"\u00e4","emoji":"\ud83d\ude00"})");
+    ASSERT_TRUE(read_json.has_value());
+    const auto& read_object = read_json->As<score::json::Object>().value().get();
+
+    EXPECT_EQ(read_object.at("umlaut").As<std::string>().value().get(), std::string{"\xC3\xA4"});
+    EXPECT_EQ(read_object.at("emoji").As<std::string>().value().get(), std::string{"\xF0\x9F\x98\x80"});
+}
