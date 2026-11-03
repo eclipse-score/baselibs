@@ -13654,5 +13654,293 @@
         }
       ]
     }
+  },
+  {
+    "need": "comp_req__os__sem_open",
+    "links": {
+      "CodeLinks": [],
+      "TestLinks": [
+        {
+          "name": "SemaphoreTestFixture__SuccessSemOpen",
+          "file": "score/os/test/semaphore_test.cpp",
+          "line": 44,
+          "need": "comp_req__os__sem_open",
+          "verify_type": "partially",
+          "result": "passed",
+          "result_text": "",
+          "repo_name": "local_repo",
+          "hash": "",
+          "url": ""
+        },
+        {
+          "name": "SemaphoreTestFixture__FailureSemOpen",
+          "file": "score/os/test/semaphore_test.cpp",
+          "line": 66,
+          "need": "comp_req__os__sem_open",
+          "verify_type": "partially",
+          "result": "passed",
+          "result_text": "",
+          "repo_name": "local_repo",
+          "hash": "",
+          "url": ""
+        },
+        {
+          "name": "SemaphoreTestFixture__FailureSemOpenWithoutCreateFlag",
+          "file": "score/os/test/semaphore_test.cpp",
+          "line": 79,
+          "need": "comp_req__os__sem_open",
+          "verify_type": "partially",
+          "result": "passed",
+          "result_text": "",
+          "repo_name": "local_repo",
+          "hash": "",
+          "url": ""
+        },
+        {
+          "name": "SemaphoreTestFixture__SuccessSemOpenAllModes",
+          "file": "score/os/test/semaphore_test.cpp",
+          "line": 149,
+          "need": "comp_req__os__sem_open",
+          "verify_type": "partially",
+          "result": "passed",
+          "result_text": "",
+          "repo_name": "local_repo",
+          "hash": "",
+          "url": ""
+        }
+      ]
+    }
+  },
+  {
+    "need": "comp_req__os__sem_getvalue",
+    "links": {
+      "CodeLinks": [],
+      "TestLinks": [
+        {
+          "name": "SemaphoreTestFixture__SuccessGetValue",
+          "file": "score/os/test/semaphore_test.cpp",
+          "line": 92,
+          "need": "comp_req__os__sem_getvalue",
+          "verify_type": "partially",
+          "result": "passed",
+          "result_text": "",
+          "repo_name": "local_repo",
+          "hash": "",
+          "url": ""
+        }
+      ]
+    }
+  },
+  {
+    "need": "comp_req__os__sem_post",
+    "links": {
+      "CodeLinks": [],
+      "TestLinks": [
+        {
+          "name": "SemaphoreTestFixture__FailureSemPost",
+          "file": "score/os/test/semaphore_test.cpp",
+          "line": 112,
+          "need": "comp_req__os__sem_post",
+          "verify_type": "partially",
+          "result": "passed",
+          "result_text": "",
+          "repo_name": "local_repo",
+          "hash": "",
+          "url": ""
+        },
+        {
+          "name": "SemaphoreTestFixture__SuccessSemPost",
+          "file": "score/os/test/semaphore_test.cpp",
+          "line": 248,
+          "need": "comp_req__os__sem_post",
+          "verify_type": "partially",
+          "result": "passed",
+          "result_text": "",
+          "repo_name": "local_repo",
+          "hash": "",
+          "url": ""
+        },
+        {
+          "name": "SemaphoreTestFixture__TimeoutWaitTimeout",
+          "file": "score/os/test/semaphore_test.cpp",
+          "line": 272,
+          "need": "comp_req__os__sem_post",
+          "verify_type": "partially",
+          "result": "passed",
+          "result_text": "",
+          "repo_name": "local_repo",
+          "hash": "",
+          "url": ""
+        }
+      ]
+    }
+  },
+  {
+    "need": "comp_req__os__sem_timedwait",
+    "links": {
+      "CodeLinks": [],
+      "TestLinks": [
+        {
+          "name": "SemaphoreTestFixture__SuccessTimedWait",
+          "file": "score/os/test/semaphore_test.cpp",
+          "line": 132,
+          "need": "comp_req__os__sem_timedwait",
+          "verify_type": "partially",
+          "result": "passed",
+          "result_text": "",
+          "repo_name": "local_repo",
+          "hash": "",
+          "url": ""
+        },
+        {
+          "name": "SemaphoreTestFixture__SuccessTimedWaitFailure",
+          "file": "score/os/test/semaphore_test.cpp",
+          "line": 291,
+          "need": "comp_req__os__sem_timedwait",
+          "verify_type": "partially",
+          "result": "passed",
+          "result_text": "",
+          "repo_name": "local_repo",
+          "hash": "",
+          "url": ""
+        }
+      ]
+    }
+  },
+  {
+    "need": "comp_req__os__sem_wait",
+    "links": {
+      "CodeLinks": [],
+      "TestLinks": [
+        {
+          "name": "SemaphoreTestFixture__SuccessSemWait",
+          "file": "score/os/test/semaphore_test.cpp",
+          "line": 177,
+          "need": "comp_req__os__sem_wait",
+          "verify_type": "partially",
+          "result": "passed",
+          "result_text": "",
+          "repo_name": "local_repo",
+          "hash": "",
+          "url": ""
+        }
+      ]
+    }
+  },
+  {
+    "need": "comp_req__os__sem_trywait",
+    "links": {
+      "CodeLinks": [],
+      "TestLinks": [
+        {
+          "name": "SemaphoreTestFixture__SuccessSemTryWait",
+          "file": "score/os/test/semaphore_test.cpp",
+          "line": 200,
+          "need": "comp_req__os__sem_trywait",
+          "verify_type": "partially",
+          "result": "passed",
+          "result_text": "",
+          "repo_name": "local_repo",
+          "hash": "",
+          "url": ""
+        },
+        {
+          "name": "SemaphoreTestFixture__FailureSemTryWait",
+          "file": "score/os/test/semaphore_test.cpp",
+          "line": 223,
+          "need": "comp_req__os__sem_trywait",
+          "verify_type": "partially",
+          "result": "passed",
+          "result_text": "",
+          "repo_name": "local_repo",
+          "hash": "",
+          "url": ""
+        }
+      ]
+    }
+  },
+  {
+    "need": "comp_req__os__sem_timedwait_monotonic",
+    "links": {
+      "CodeLinks": [],
+      "TestLinks": [
+        {
+          "name": "SemaphoreTestFixture__SuccessTimedWaitMonotonic",
+          "file": "score/os/test/semaphore_test.cpp",
+          "line": 308,
+          "need": "comp_req__os__sem_timedwait_monotonic",
+          "verify_type": "partially",
+          "result": "passed",
+          "result_text": "",
+          "repo_name": "local_repo",
+          "hash": "",
+          "url": ""
+        },
+        {
+          "name": "SemaphoreTestFixture__FailureTimedWaitMonotonic",
+          "file": "score/os/test/semaphore_test.cpp",
+          "line": 327,
+          "need": "comp_req__os__sem_timedwait_monotonic",
+          "verify_type": "partially",
+          "result": "passed",
+          "result_text": "",
+          "repo_name": "local_repo",
+          "hash": "",
+          "url": ""
+        },
+        {
+          "name": "SemaphoreTestFixture__TimeoutTimedWaitMonotonic",
+          "file": "score/os/test/semaphore_test.cpp",
+          "line": 345,
+          "need": "comp_req__os__sem_timedwait_monotonic",
+          "verify_type": "partially",
+          "result": "passed",
+          "result_text": "",
+          "repo_name": "local_repo",
+          "hash": "",
+          "url": ""
+        }
+      ]
+    }
+  },
+  {
+    "need": "comp_req__os__sem_destroy",
+    "links": {
+      "CodeLinks": [],
+      "TestLinks": [
+        {
+          "name": "SemaphoreTestFixture__SuccessSemDestroy",
+          "file": "score/os/test/semaphore_test.cpp",
+          "line": 373,
+          "need": "comp_req__os__sem_destroy",
+          "verify_type": "partially",
+          "result": "passed",
+          "result_text": "",
+          "repo_name": "local_repo",
+          "hash": "",
+          "url": ""
+        }
+      ]
+    }
+  },
+  {
+    "need": "comp_req__os__sem_instance",
+    "links": {
+      "CodeLinks": [],
+      "TestLinks": [
+        {
+          "name": "Semaphore__get_instance",
+          "file": "score/os/test/semaphore_test.cpp",
+          "line": 362,
+          "need": "comp_req__os__sem_instance",
+          "verify_type": "partially",
+          "result": "passed",
+          "result_text": "",
+          "repo_name": "local_repo",
+          "hash": "",
+          "url": ""
+        }
+      ]
+    }
   }
 ]
