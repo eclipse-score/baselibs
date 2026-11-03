@@ -23,7 +23,7 @@ cc_library(
         "additional_warnings",
     ],
     tags = ["FFI"],
-    visibility = ["//score/serialization:__subpackages__"],
+    visibility = ["//visibility:public"],  # platform_only
     deps = [
         "//score/language/futurecpp",
         "//score/result",
