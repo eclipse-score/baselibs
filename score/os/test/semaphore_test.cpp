@@ -43,8 +43,7 @@ class SemaphoreTestFixture : public ::testing::Test
 // Positive test for sem_open()
 TEST_F(SemaphoreTestFixture, SuccessSemOpen)
 {
-    RecordProperty("Verifies", "SCR-46010294");
-    RecordProperty("ASIL", "B");
+    RecordProperty("PartiallyVerifies", "comp_req__osal__asil_b_operation_delegation");
     RecordProperty("Description", "SemaphoreTestFixture Success Sem Open");
     RecordProperty("TestType", "interface-test");
     RecordProperty("DerivationTechnique", "equivalence-classes");  // equivalence classes
@@ -66,8 +65,8 @@ TEST_F(SemaphoreTestFixture, SuccessSemOpen)
 // Negative test for sem_open()
 TEST_F(SemaphoreTestFixture, FailureSemOpen)
 {
-    RecordProperty("Verifies", "SCR-46010294");
-    RecordProperty("ASIL", "B");
+    RecordProperty("PartiallyVerifies",
+                   "comp_req__osal__asil_b_operation_delegation, comp_req__osal__error_information");
     RecordProperty("Description", "SemaphoreTestFixture Failure Sem Open");
     RecordProperty("TestType", "interface-test");
     RecordProperty("DerivationTechnique", "equivalence-classes");  // equivalence classes
@@ -80,8 +79,7 @@ TEST_F(SemaphoreTestFixture, FailureSemOpen)
 
 TEST_F(SemaphoreTestFixture, FailureSemOpenWithoutCreateFlag)
 {
-    RecordProperty("Verifies", "SCR-46010294");
-    RecordProperty("ASIL", "B");
+    RecordProperty("PartiallyVerifies", "comp_req__osal__asil_b_operation_delegation");
     RecordProperty("Description", "SemaphoreTestFixture Failure Sem Open Without Create Flag");
     RecordProperty("TestType", "interface-test");
     RecordProperty("DerivationTechnique", "equivalence-classes");  // equivalence classes
@@ -94,8 +92,7 @@ TEST_F(SemaphoreTestFixture, FailureSemOpenWithoutCreateFlag)
 // Positive test for sem_getvalue()
 TEST_F(SemaphoreTestFixture, SuccessGetValue)
 {
-    RecordProperty("Verifies", "SCR-46010294");
-    RecordProperty("ASIL", "B");
+    RecordProperty("PartiallyVerifies", "comp_req__osal__asil_b_operation_delegation");
     RecordProperty("Description", "SemaphoreTestFixture Success Get Value");
     RecordProperty("TestType", "interface-test");
     RecordProperty("DerivationTechnique", "equivalence-classes");  // equivalence classes
@@ -115,8 +112,8 @@ TEST_F(SemaphoreTestFixture, SuccessGetValue)
 // Negative test for sem_post()
 TEST_F(SemaphoreTestFixture, FailureSemPost)
 {
-    RecordProperty("Verifies", "SCR-46010294");
-    RecordProperty("ASIL", "B");
+    RecordProperty("PartiallyVerifies",
+                   "comp_req__osal__asil_b_operation_delegation, comp_req__osal__error_information");
     RecordProperty("Description", "SemaphoreTestFixture Failure Sem Post");
     RecordProperty("TestType", "interface-test");
     RecordProperty("DerivationTechnique", "equivalence-classes");  // equivalence classes
@@ -136,8 +133,7 @@ TEST_F(SemaphoreTestFixture, FailureSemPost)
 // Positive test for sem_timedwait()
 TEST_F(SemaphoreTestFixture, SuccessTimedWait)
 {
-    RecordProperty("Verifies", "SCR-46010294");
-    RecordProperty("ASIL", "B");
+    RecordProperty("PartiallyVerifies", "comp_req__osal__asil_b_operation_delegation");
     RecordProperty("Description", "SemaphoreTestFixture Success Timed Wait");
     RecordProperty("TestType", "interface-test");
     RecordProperty("DerivationTechnique", "equivalence-classes");  // equivalence classes
@@ -155,8 +151,7 @@ TEST_F(SemaphoreTestFixture, SuccessTimedWait)
 // Testing all modes in for Loop
 TEST_F(SemaphoreTestFixture, SuccessSemOpenAllModes)
 {
-    RecordProperty("Verifies", "SCR-46010294");
-    RecordProperty("ASIL", "B");
+    RecordProperty("PartiallyVerifies", "comp_req__osal__asil_b_operation_delegation");
     RecordProperty("Description", "SemaphoreTestFixture Success Sem Open All Modes");
     RecordProperty("TestType", "interface-test");
     RecordProperty("DerivationTechnique", "equivalence-classes");  // equivalence classes
@@ -184,8 +179,7 @@ TEST_F(SemaphoreTestFixture, SuccessSemOpenAllModes)
 // Positive test for sem_wait()
 TEST_F(SemaphoreTestFixture, SuccessSemWait)
 {
-    RecordProperty("Verifies", "SCR-46010294");
-    RecordProperty("ASIL", "B");
+    RecordProperty("PartiallyVerifies", "comp_req__osal__asil_b_operation_delegation");
     RecordProperty("Description", "SemaphoreTestFixture Success Sem Wait");
     RecordProperty("TestType", "interface-test");
     RecordProperty("DerivationTechnique", "equivalence-classes");  // equivalence classes
@@ -208,6 +202,11 @@ TEST_F(SemaphoreTestFixture, SuccessSemWait)
 
 TEST_F(SemaphoreTestFixture, SuccessSemTryWait)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__osal__asil_b_operation_delegation");
+    RecordProperty("Description", "SemaphoreTestFixture Success Sem Trywait");
+    RecordProperty("TestType", "interface-test");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
+
     const auto sem = ::sem_open(m_name_.c_str(), O_CREAT, S_IRUSR, value_);
     ASSERT_NE(sem, SEM_FAILED);
 
@@ -226,6 +225,12 @@ TEST_F(SemaphoreTestFixture, SuccessSemTryWait)
 
 TEST_F(SemaphoreTestFixture, FailureSemTryWait)
 {
+    RecordProperty("PartiallyVerifies",
+                   "comp_req__osal__asil_b_operation_delegation, comp_req__osal__error_information");
+    RecordProperty("Description", "SemaphoreTestFixture Failure Sem Trywait");
+    RecordProperty("TestType", "interface-test");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
+
     const auto sem = ::sem_open(m_name_.c_str(), O_CREAT, S_IRUSR, 0);
     ASSERT_NE(sem, SEM_FAILED);
 
@@ -246,8 +251,7 @@ TEST_F(SemaphoreTestFixture, FailureSemTryWait)
 // Positive test for sem_post()
 TEST_F(SemaphoreTestFixture, SuccessSemPost)
 {
-    RecordProperty("Verifies", "SCR-46010294");
-    RecordProperty("ASIL", "B");
+    RecordProperty("PartiallyVerifies", "comp_req__osal__asil_b_operation_delegation");
     RecordProperty("Description", "SemaphoreTestFixture Success Sem Post");
     RecordProperty("TestType", "interface-test");
     RecordProperty("DerivationTechnique", "equivalence-classes");  // equivalence classes
@@ -271,20 +275,28 @@ TEST_F(SemaphoreTestFixture, SuccessSemPost)
 // Timeout test for sem_waittimeout()
 TEST_F(SemaphoreTestFixture, TimeoutWaitTimeout)
 {
-    // Semaphore starts at 0 and nobody posts to it, so sem_timedwait_monotonic() must block and
+    RecordProperty("PartiallyVerifies",
+                   "comp_req__osal__asil_b_operation_delegation, comp_req__osal__error_information");
+    RecordProperty("Description", "SemaphoreTestFixture Failure Wait Timeout");
+    RecordProperty("TestType", "interface-test");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
+
+    // Semaphore starts at 0 and nobody posts to it, so sem_waittimeout() must block and
     // return ETIMEDOUT once the deadline passes. Deadline is 10 ms from now on CLOCK_MONOTONIC.
     const auto ret = unit_.sem_open(m_name_.c_str(), Semaphore::OpenFlag::kCreate, Semaphore::ModeFlag::kReadUser, 0U);
     ASSERT_TRUE(ret.has_value());
     ASSERT_TRUE(ret.value() != nullptr);
-    ASSERT_FALSE(unit_.sem_waittimeout(ret.value(), std::chrono::milliseconds(10), true).has_value());
+    const auto wait = unit_.sem_waittimeout(ret.value(), std::chrono::milliseconds(10), true);
+    ASSERT_FALSE(wait.has_value());
+    EXPECT_EQ(wait.error().GetOsDependentErrorCode(), ETIMEDOUT);
     unit_.sem_close(ret.value());
 }
 
 // Positive Negative for sem_timedwait()
 TEST_F(SemaphoreTestFixture, SuccessTimedWaitFailure)
 {
-    RecordProperty("Verifies", "SCR-46010294");
-    RecordProperty("ASIL", "B");
+    RecordProperty("PartiallyVerifies",
+                   "comp_req__osal__asil_b_operation_delegation, comp_req__osal__error_information");
     RecordProperty("Description", "SemaphoreTestFixture Success Timed Wait Failure");
     RecordProperty("TestType", "interface-test");
     RecordProperty("DerivationTechnique", "equivalence-classes");  // equivalence classes
@@ -300,7 +312,7 @@ TEST_F(SemaphoreTestFixture, SuccessTimedWaitFailure)
 // Positive test for sem_timedwait_monotonic()
 TEST_F(SemaphoreTestFixture, SuccessTimedWaitMonotonic)
 {
-    RecordProperty("Verifies", "SCR-46010294");
+    RecordProperty("PartiallyVerifies", "comp_req__osal__asil_b_operation_delegation");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "SemaphoreTestFixture Success Timed Wait Monotonic");
     RecordProperty("TestType", "interface-test");
@@ -340,7 +352,8 @@ TEST_F(SemaphoreTestFixture, FailureTimedWaitMonotonic)
 // Timeout test for sem_timedwait_monotonic()
 TEST_F(SemaphoreTestFixture, TimeoutTimedWaitMonotonic)
 {
-    RecordProperty("Verifies", "SCR-46010294");
+    RecordProperty("PartiallyVerifies",
+                   "comp_req__osal__asil_b_operation_delegation, comp_req__osal__error_information");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "SemaphoreTestFixture Timeout Timed Wait Monotonic");
     RecordProperty("TestType", "interface-test");
@@ -366,7 +379,7 @@ TEST_F(SemaphoreTestFixture, TimeoutTimedWaitMonotonic)
 // Positive test for chrono wrapper of sem_timedwait()
 TEST_F(SemaphoreTestFixture, SuccessTimedWaitChrono)
 {
-    RecordProperty("Verifies", "SCR-46010294");
+    RecordProperty("PartiallyVerifies", "comp_req__osal__asil_b_operation_delegation");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "SemaphoreTestFixture Success Timed Wait");
     RecordProperty("TestType", "interface-test");
@@ -384,7 +397,8 @@ TEST_F(SemaphoreTestFixture, SuccessTimedWaitChrono)
 // Positive Negative for chrono wrapper of sem_timedwait()
 TEST_F(SemaphoreTestFixture, SuccessTimedWaitFailureChrono)
 {
-    RecordProperty("Verifies", "SCR-46010294");
+    RecordProperty("PartiallyVerifies",
+                   "comp_req__osal__asil_b_operation_delegation, comp_req__osal__error_information");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "SemaphoreTestFixture Success Timed Wait Failure");
     RecordProperty("TestType", "interface-test");
@@ -402,8 +416,7 @@ TEST_F(SemaphoreTestFixture, SuccessTimedWaitFailureChrono)
 // Positive test for chrono wrapper of sem_timedwait_monotonic()
 TEST_F(SemaphoreTestFixture, SuccessTimedWaitMonotonicChrono)
 {
-    RecordProperty("Verifies", "SCR-46010294");
-    RecordProperty("ASIL", "B");
+    RecordProperty("PartiallyVerifies", "comp_req__osal__asil_b_operation_delegation");
     RecordProperty("Description", "SemaphoreTestFixture Success Timed Wait Monotonic");
     RecordProperty("TestType", "interface-test");
     RecordProperty("DerivationTechnique", "equivalence-classes");  // equivalence classes
@@ -422,8 +435,8 @@ TEST_F(SemaphoreTestFixture, SuccessTimedWaitMonotonicChrono)
 // Timeout test for chrono wrapper of sem_timedwait_monotonic()
 TEST_F(SemaphoreTestFixture, TimeoutTimedWaitMonotonicChrono)
 {
-    RecordProperty("Verifies", "SCR-46010294");
-    RecordProperty("ASIL", "B");
+    RecordProperty("PartiallyVerifies",
+                   "comp_req__osal__asil_b_operation_delegation, comp_req__osal__error_information");
     RecordProperty("Description", "SemaphoreTestFixture Timeout Timed Wait Monotonic");
     RecordProperty("TestType", "interface-test");
     RecordProperty("DerivationTechnique", "equivalence-classes");
@@ -441,8 +454,8 @@ TEST_F(SemaphoreTestFixture, TimeoutTimedWaitMonotonicChrono)
 // Negative test for chrono wrapper of sem_timedwait_monotonic()
 TEST_F(SemaphoreTestFixture, FailureTimedWaitMonotonicChrono)
 {
-    RecordProperty("Verifies", "SCR-46010294");
-    RecordProperty("ASIL", "B");
+    RecordProperty("PartiallyVerifies",
+                   "comp_req__osal__asil_b_operation_delegation, comp_req__osal__error_information");
     RecordProperty("Description", "SemaphoreTestFixture Failure Timed Wait Monotonic");
     RecordProperty("TestType", "interface-test");
     RecordProperty("DerivationTechnique", "equivalence-classes");  // equivalence classes
@@ -459,8 +472,7 @@ TEST_F(SemaphoreTestFixture, FailureTimedWaitMonotonicChrono)
 
 TEST(Semaphore, get_instance)
 {
-    RecordProperty("Verifies", "SCR-46010294");
-    RecordProperty("ASIL", "B");
+    RecordProperty("PartiallyVerifies", "comp_req__osal__asil_b_operation_delegation");
     RecordProperty("Description", "Semaphore get_instance");
     RecordProperty("TestType", "interface-test");
     RecordProperty("DerivationTechnique", "equivalence-classes");  // equivalence classes
@@ -471,6 +483,11 @@ TEST(Semaphore, get_instance)
 // Positive test for sem_open()
 TEST_F(SemaphoreTestFixture, SuccessSemDestroy)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__osal__asil_b_operation_delegation");
+    RecordProperty("Description", "SemaphoreTestFixture Destroy");
+    RecordProperty("TestType", "interface-test");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
+
     sem_t sem;
     auto ret = unit_.sem_init(&sem, 0, value_);
     ASSERT_TRUE(ret.has_value());
