@@ -13,11 +13,14 @@
 
 load("@rules_cc//cc:defs.bzl", "cc_library")
 load("@score_baselibs//:bazel/unit_tests.bzl", "cc_gtest_unit_test")
+load("@score_baselibs//score/language/safecpp:toolchain_features.bzl", "COMPILER_WARNING_FEATURES")
 
 cc_library(
     name = "arguments",
     srcs = ["arguments.cpp"],
     hdrs = ["arguments.h"],
+    features = COMPILER_WARNING_FEATURES,
+    implementation_deps = ["//score/language/futurecpp"],
     visibility = ["//visibility:public"],
     deps = ["@score_baselibs//score/language/safecpp/string_view:zstring_view"],
 )

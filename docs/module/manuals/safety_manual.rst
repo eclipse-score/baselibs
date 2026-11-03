@@ -52,7 +52,7 @@ So for Baselibs the definition of the assumed safety requirement(s) of each of t
 - flatbuffers library: :need:`feat_req__baselibs__flatbuffers_library`
 - json library: :need:`feat_req__baselibs__json_library`
 - memory library: :need:`feat_req__baselibs__memory_library`
-- os library:
+- os library: feat_req__baselibs__osal
 - result library: :need:`feat_req__baselibs__result_library`
 - safecpp, utils: :need:`feat_req__baselibs__utils_library`
 - static_reflection_with_serialization: :need:`feat_req__baselibs__static_reflection_library`
@@ -62,11 +62,14 @@ Assumptions of Use
 
 Assumptions on the Environment
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-| Generally the assumption of the project platform SEooC is that it is integrated in a safe system, i.e. the POSIX OS it runs on is qualified and also the HW related failures are taken into account by the system integrator, if not otherwise stated in the module's safety concept.
-| The platform-wide AoUs are collected in :need:`doc__platform_assumptions`
-|
-| To support :need:`aou_req__platform__safety_matching`:
-| <List here all the OS/libcxx calls the module expects to be safe.>
+
+Generally the assumption of the project platform SEooC is that it is integrated in a safe system, i.e. the POSIX OS it runs on is qualified and also the HW related failures are taken into account by the system integrator, if not otherwise stated in the module's safety concept.
+
+The platform-wide AoUs are collected in :need:`doc__platform_assumptions`
+
+To support :need:`aou_req__platform__safety_matching`, here are all the OS/libcxx calls the module expects to be safe:
+
+- climits, cstdint, functional, optional, ostream, string_view, type_traits, utility, variant (this list is not complete, it is based on currently performed component DFA)
 
 List of additional AoUs expected from the environment the module runs on:
 

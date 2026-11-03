@@ -28,13 +28,15 @@ namespace concurrency
 
 /**
  * @brief RAII smart pointer that allows for thread-safe access to an object guarded by a lock.
- *        The Lock is held during the lifetime of LockedPtr. On destruction, lock is destroyed which would release the
- * lock. LockedPtr provides pointer-like semantics (operator*, operator->) to access the underlying object.
+ *        If constructed with a held lock and a non-null pointer, the lock remains held for the lifetime of the
+ *        LockedPtr. On destruction, the lock is destroyed and released. LockedPtr provides pointer-like semantics
+ *        (operator*, operator->) to access the underlying object.
+ *        If constructed with a nullptr and a held lock, the lock is immediately unlocked.
  *        Additionally, LockedPtr provides an unlock_guard() method that returns an UnlockGuard which can be used to
  * temporarily unlock the Lock while ensuring it gets locked again when the UnlockGuard goes out of scope.
  *
  * @tparam T Type of the object being pointed to.
- * @tparam Lock Type of the lock that manages access to the object. Must satisfy the BasicLockable concept.
+ * @tparam Lock Type of the lock that manages access to the object. Must satisfy LockWithOwnsLock.
  *
  * @details
  * LockedPtr is a smart pointer that combines a raw pointer to an object of type T and a lock of type Lock.
@@ -55,14 +57,22 @@ namespace concurrency
 template <typename T,
           typename Lock,
           typename =
-              std::enable_if_t<std::conjunction_v<is_basic_lockable<Lock>, std::negation<std::is_reference<Lock>>>>>
+              std::enable_if_t<std::conjunction_v<LockWithOwnsLock<Lock>, std::negation<std::is_reference<Lock>>>>>
 class LockedPtr
 {
   public:
     /**
      * @brief Constructs a LockedPtr that manages the given pointer and lock.
+     * @post If ptr is nullptr and lock owns its lock on construction, the constructor unlocks it.
+     * @post If ptr is non-null and lock is held, the lock remains held for the lifetime of the LockedPtr.
      */
-    LockedPtr(T* ptr, Lock lock) : ptr_(ptr), lock_(std::move(lock)) {}
+    LockedPtr(T* ptr, Lock lock) : ptr_(ptr), lock_(std::move(lock))
+    {
+        if ((ptr_ == nullptr) && lock_.owns_lock())
+        {
+            lock_.unlock();
+        }
+    }
 
     /**
      * @brief Destructor that destroys the lock thereby releasing the lock.
@@ -354,6 +364,67 @@ class LockedPtr
         }
         return std::invoke(std::forward<Func>(f), std::move(*this));
     }
+
+    /**
+     * @brief Invokes a callable if the pointer is null, returning the callable's result.
+     *        If non-null, returns a mutable reference to this LockedPtr.
+     *        The callable must return a mutable LockedPtr reference.
+     * @tparam Func Callable type that takes no arguments and returns a LockedPtr&.
+     * @param f The callable to invoke when ptr_ is null.
+     * @return *this if non-null, std::invoke(f) otherwise.
+     */
+    template <typename Func, typename = std::enable_if_t<std::is_same_v<std::invoke_result_t<Func>, LockedPtr&>>>
+    [[nodiscard]] auto or_else(Func&& f) & -> LockedPtr&
+    {
+        if (ptr_ == nullptr)
+        {
+            return std::invoke(std::forward<Func>(f));
+        }
+        return *this;
+    }
+
+    /**
+     * @brief Invokes a callable if the pointer is null, returning the callable's result.
+     *        If non-null, moves *this into the return value.
+     *        The callable must return a LockedPtr.
+     * @tparam Func Callable type that takes no arguments and returns a LockedPtr.
+     * @param f The callable to invoke when ptr_ is null.
+     * @return std::move(*this) if non-null, std::invoke(f) otherwise.
+     */
+    template <typename Func, typename = std::enable_if_t<std::is_same_v<std::invoke_result_t<Func>, LockedPtr>>>
+    [[nodiscard]] auto or_else(Func&& f) && -> LockedPtr
+    {
+        if (ptr_ == nullptr)
+        {
+            return std::invoke(std::forward<Func>(f));
+        }
+        return std::move(*this);
+    }
+
+    /**
+     * @brief Const lvalue overload. Invokes a callable if the pointer is null.
+     *        If non-null, returns a const reference to *this, otherwise returns the result of the callable.
+     *        The callable must return a const LockedPtr reference.
+     * @tparam Func Callable type that takes no arguments and returns const LockedPtr&.
+     * @param f The callable to invoke when ptr_ is null.
+     * @return *this if non-null, std::invoke(f) otherwise.
+     */
+    template <typename Func, typename = std::enable_if_t<std::is_same_v<std::invoke_result_t<Func>, const LockedPtr&>>>
+    [[nodiscard]] auto or_else(Func&& f) const& -> const LockedPtr&
+    {
+        if (ptr_ == nullptr)
+        {
+            return std::invoke(std::forward<Func>(f));
+        }
+        return *this;
+    }
+
+    /**
+     * @brief Disables or_else on const rvalues because lock ownership cannot be moved from a const object and returning
+     * a reference to a non-null temporary would dangle.
+     */
+    template <typename Func, typename = std::enable_if_t<std::is_same_v<std::invoke_result_t<Func>, const LockedPtr&>>>
+    [[nodiscard]] auto or_else(Func&&) const&& -> const LockedPtr& = delete;
 
     /**
      * @brief Equality comparison with another LockedPtr.

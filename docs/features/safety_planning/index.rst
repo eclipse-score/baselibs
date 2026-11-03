@@ -88,19 +88,16 @@ Feature Documents Status
 ------------------------
 
 For all the work product documents the status can be seen by following the "Link to WP".
-A summary of the status is also documented in the project's documentation management plan.
+A summary of the status is also documented in the project's documentation management plan
+and in :ref:`documents_docs_feature_baselibs_docs`.
 
-.. TODO: Add document status here. The documentation management plan cannot list baselibs WPs anymore.
-.. See :ref:`documents_docs_features_baselibs`
 
 Feature Requirements Status
 ---------------------------
 
 .. needtable::
-   :filter: docname is not None and "baselibs" in docname and "requirements" in docname
+   :filter: type == "feat_req" and id.startswith("feat_req__baselibs__")
    :style: table
-   :types: feat_req
-   :tags: baselibs
    :columns: id;status;tags
    :colwidths: 25,25,25
    :sort: title
@@ -109,10 +106,8 @@ Feature AoU Status
 ------------------
 
 .. needtable::
-   :filter: docname is not None and "baselibs" in docname and "requirements" and "features" in docname
+   :filter: type == "aou_req" and id.startswith("aou_req__baselibs__")
    :style: table
-   :types: aou_req
-   :tags: baselibs
    :columns: id;status;tags
    :colwidths: 25,25,25
    :sort: title
@@ -121,10 +116,9 @@ Feature Architecture Status
 ---------------------------
 
 .. needtable::
-   :filter: docname is not None and "baselibs" in docname and "architecture" in docname
+   :filter: docname is not None and "architecture" in docname
    :style: table
    :types: feat_arc_sta; feat_arc_dyn
-   :tags: baselibs
    :columns: id;status;tags
    :colwidths: 25,25,25
    :sort: title

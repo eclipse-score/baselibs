@@ -28,6 +28,9 @@
 #define DISABLE_WARNING_USELESS_CAST                            DISABLE_WARNING(-Wuseless-cast)
 #define DISABLE_WARNING_CONVERSION                              DISABLE_WARNING(-Wconversion)
 #define DISABLE_WARNING_CLASS_MEM_ACCESS                        DISABLE_WARNING(-Wclass-memaccess)
+// Use only for intentional deprecated API calls, such as compatibility tests.
+// Do not use in ordinary code; migrate to the supported API instead.
+#define DISABLE_WARNING_DEPRECATED                              DISABLE_WARNING(-Wdeprecated-declarations)
 #define DISABLE_WARNING_OLD_STYLE_CAST                          DISABLE_WARNING(-Wold-style-cast)
 #define DISABLE_WARNING_SHADOW                                  DISABLE_WARNING(-Wshadow)
 #define DISABLE_WARNING_TYPE_LIMITS                             DISABLE_WARNING(-Wtype-limits)
@@ -66,6 +69,7 @@
 #define DISABLE_WARNING_USELESS_CAST
 #define DISABLE_WARNING_CONVERSION
 #define DISABLE_WARNING_CLASS_MEM_ACCESS
+#define DISABLE_WARNING_DEPRECATED
 #define DISABLE_WARNING_OLD_STYLE_CAST
 #define DISABLE_WARNING_SHADOW
 #define DISABLE_WARNING_TYPE_LIMITS

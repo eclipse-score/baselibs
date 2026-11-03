@@ -75,7 +75,8 @@ class score::json::JsonWriter {
 }
 
 score::json::JsonWriter --> score::json::Error : use
-score::json::JsonWriter --> score::json::VajsonSerialize : use
+score::json::JsonWriter --> score::json::Formatting : use
+score::json::JsonWriter --> score::json::internal::writer::Serializer : use
 
 
 interface score::json::IJsonParser {
@@ -92,22 +93,32 @@ class score::json::JsonParser {
   +FromBuffer(buffer: std::string_view): score::Result<Any>
 }
 
-score::json::JsonParser --> score::json::VajsonParser : use
+score::json::JsonParser --> score::json::Error : use
+score::json::JsonParser --> amsr::json::JsonData : use
 
 
-class score::json::VajsonSerialize #LightSteelBlue {
-  +VajsonSerialize(out_stream: std::ostream, formatting: score::json::vajson::VajsonFormatting)
-  +operator<<(json_data: score::json::Object): score::Result<void>
-  +operator<<(json_data: score::json::List): score::Result<void>
-  +operator<<(json_data: score::json::Any): score::Result<void>
+enum score::json::Formatting {
+  kCompact
+  kPrettyPrint
 }
 
-score::json::VajsonSerialize --> score::json::Any : use
-score::json::VajsonSerialize --> score::json::Object : use
-score::json::VajsonSerialize --> score::json::List : use
-score::json::VajsonSerialize --> score::json::Null : use
-score::json::VajsonSerialize --> score::json::Error : use
-score::json::VajsonSerialize --> score::Result : use
+
+class score::json::internal::writer::Serializer <<free functions>> #LightSteelBlue {
+  {static}+SerializeToStream(out_stream: std::ostream, json_data: score::json::Object, formatting: score::json::Formatting): score::Result<void>
+  {static}+SerializeToStream(out_stream: std::ostream, json_data: score::json::List, formatting: score::json::Formatting): score::Result<void>
+  {static}+SerializeToStream(out_stream: std::ostream, json_data: score::json::Any, formatting: score::json::Formatting): score::Result<void>
+  {static}+SerializeToBuffer(json_data: score::json::Object, formatting: score::json::Formatting): score::Result<std::string>
+  {static}+SerializeToBuffer(json_data: score::json::List, formatting: score::json::Formatting): score::Result<std::string>
+  {static}+SerializeToBuffer(json_data: score::json::Any, formatting: score::json::Formatting): score::Result<std::string>
+}
+
+score::json::internal::writer::Serializer --> score::json::Formatting : use
+score::json::internal::writer::Serializer --> score::json::Any : use
+score::json::internal::writer::Serializer --> score::json::Object : use
+score::json::internal::writer::Serializer --> score::json::List : use
+score::json::internal::writer::Serializer --> score::json::Null : use
+score::json::internal::writer::Serializer --> score::json::Error : use
+score::json::internal::writer::Serializer --> score::Result : use
 
 
 enum amsr::json::ParserState #LightSteelBlue
@@ -119,26 +130,25 @@ enum amsr::json::JsonErrc #LightSteelBlue
 class amsr::json::ParserResult <<typedef>> #LightSteelBlue
 
 
-class amsr::json::v2::Parser #LightSteelBlue
+class amsr::json::internal::VirtualParser #LightSteelBlue
 
 
 class amsr::json::JsonData #LightSteelBlue
 
-amsr::json::v2::Parser <|-- score::json::VajsonParser
+amsr::json::internal::VirtualParser <|-- AnyTreeBuilder
 
 
-class score::json::VajsonParser #LightSteelBlue {
-  {static}+FromFile(file_path: std::string_view): score::Result<Any>
-  {static}+FromBuffer(buffer: std::string_view): score::Result<Any>
+class AnyTreeBuilder <<internal to JsonParser>> #LightSteelBlue {
+  +GetData(): score::Result<Any>
 }
 
-score::json::VajsonParser *-- score::json::Any
-score::json::VajsonParser --> score::json::Error : use
-score::json::VajsonParser --> score::Result : use
-score::json::VajsonParser --> amsr::json::ParserResult : use
-score::json::VajsonParser --> amsr::json::ParserState : use
-score::json::VajsonParser --> amsr::json::JsonErrc : use
-score::json::VajsonParser --> amsr::json::JsonData : use
+score::json::JsonParser --> AnyTreeBuilder : use
+AnyTreeBuilder *-- score::json::Any
+AnyTreeBuilder --> score::json::Error : use
+AnyTreeBuilder --> score::Result : use
+AnyTreeBuilder --> amsr::json::ParserResult : use
+AnyTreeBuilder --> amsr::json::ParserState : use
+AnyTreeBuilder --> amsr::json::JsonErrc : use
 
 
 class score::json::Any {

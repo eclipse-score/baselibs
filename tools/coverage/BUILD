@@ -49,8 +49,6 @@ SCOPE_DEPS_COMMON = [
     # directly; has a coverage grant.
     "//score/json:interface",
     "//score/json:json_serializer",
-    "//score/json/internal/parser/vajson:vajson_parser",
-    "//score/json/internal/writer/vajson:vajson_backend",
     "//score/language/safecpp/aborts_upon_exception:abortsuponexception",
     "//score/language/safecpp/safe_atomics:try_atomic_add",
     "//score/language/safecpp/safe_math",
@@ -108,6 +106,9 @@ SCOPE_DEPS_COMMON = [
     "//score/os/utils/interprocess:interprocess_notification",
     "//score/result:result_for_rust",
     "//score/scope_exit",
+    "//score/serialization",
+    "//score/serialization/strategies:hex_string_to_bytes",
+    "//score/serialization/strategies:uds_strategy",
     "//score/static_reflection_with_serialization/serialization",
     "//score/static_reflection_with_serialization/visitor/examples/ostream:visitor_examples",
     "//score/string_manipulation/arguments",
@@ -210,5 +211,14 @@ score_coverage_reporter(
     gcov = "@score_qcc_x86_64_toolchain_pkg//:gcov",
     # Manual: depends on the QNX SDP package, which a wildcard build on a
     # Linux host without QNX credentials must not try to fetch.
+    tags = ["manual"],
+)
+
+score_coverage_reporter(
+    name = "gcov_reporter_wrapper_805",
+    testonly = True,
+    backend = "gcov",
+    coverage_scope = ":coverage_scope_qnx",
+    gcov = "@score_qcc_x86_64_toolchain_805_pkg//:gcov",
     tags = ["manual"],
 )

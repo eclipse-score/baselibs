@@ -12,12 +12,14 @@
  ********************************************************************************/
 
 #include "score/string_manipulation/arguments/arguments.h"
+#include <score/assert.hpp>
 #include <cstring>
 
 std::vector<score::safecpp::zstring_view> score::string_manipulation::GetArguments(int argc, const char* argv[])
 {
+    SCORE_LANGUAGE_FUTURECPP_PRECONDITION(argc >= 0);
     std::vector<safecpp::zstring_view> arguments;
-    arguments.reserve(argc);
+    arguments.reserve(static_cast<std::size_t>(argc));
     for (int i = 0; i < argc; i++)
     {
         // We need to use strlen because zstring_view does not support char* construct

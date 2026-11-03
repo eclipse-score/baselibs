@@ -56,7 +56,6 @@ Reader -down-> JsonErrc
 Reader -down-> JsonData
 
 Writer -down-> JsonErrorDomain
-Writer -down-> EncodingType
 
 JsonOps --> Ref
 Ref --> JsonData

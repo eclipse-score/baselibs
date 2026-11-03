@@ -33,6 +33,7 @@ cc_library(
         # package is reached transitively or keeps the package default.
         "//tools/coverage:__pkg__",
         "@score_baselibs//score/memory:__subpackages__",
+        "@score_baselibs//score/serialization:__subpackages__",
     ],
     deps = ["@score_baselibs//score/language/futurecpp"],
 )

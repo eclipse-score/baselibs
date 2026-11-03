@@ -37,9 +37,6 @@ class NeutrinoImpl final : public Neutrino
 
     std::int32_t InterruptUnmask(std::int32_t intr, std::int32_t id) override;
 
-    [[deprecated("SPP_DEPRECATION: Please use \'ChannelCreate(const Neutrino::ChannelFlag flags)\'")]] std::int32_t
-    ChannelCreate(std::uint32_t flags) const noexcept override;
-
     score::cpp::expected<std::int32_t, Error> ChannelCreate(const Neutrino::ChannelFlag flags) const noexcept override;
 
     score::cpp::expected<std::int32_t, Error> ChannelDestroy(const std::int32_t channel_id) const noexcept override;
@@ -51,30 +48,6 @@ class NeutrinoImpl final : public Neutrino
     std::uint64_t ClockCycles() const noexcept override;
 
     score::cpp::expected<std::int32_t, Error> ClockId(pid_t pid, std::int32_t tid) const noexcept override;
-
-    [[deprecated(
-        "SPP_DEPRECATION: Please use other overloads of the \'TimerTimeout\'")]] score::cpp::expected<std::int32_t,
-                                                                                                      Error>
-    TimerTimeout(clockid_t id,
-                 TimerFlagsType flags,
-                 const sigevent* notify,
-                 const std::uint64_t* ntime,
-                 std::uint64_t* otime) const noexcept override;
-
-    // NOLINTBEGIN(google-default-arguments): See rationale below
-    // Suppress "AUTOSAR C++14 M8-3-1" rule finding: "Parameters in an overriding virtual function shall either use the
-    // same default arguments as the function they override, or else shall not specify any default arguments.”
-    // Rationale: This is intented, we don't force users to fill the otime parameter unless needed
-    [[deprecated(
-        "SPP_DEPRECATION: Please use the latest overload of the \'TimerTimeout\'")]] score::cpp::expected<std::int32_t,
-                                                                                                          Error>
-    TimerTimeout(const Neutrino::ClockType clock_type,
-                 const Neutrino::TimerTimeoutFlag flags,
-                 const struct sigevent* notify,
-                 const std::chrono::nanoseconds& ntime,
-                 // coverity[autosar_cpp14_m8_3_1_violation]
-                 std::optional<std::chrono::nanoseconds> otime = std::nullopt) const noexcept override;
-    // NOLINTEND(google-default-arguments)
 
     // NOLINTBEGIN(google-default-arguments): See rationale below
     // Suppress "AUTOSAR C++14 M8-3-1" rule finding: "Parameters in an overriding virtual function shall either use the

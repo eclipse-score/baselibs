@@ -26,6 +26,7 @@
 //score/hash/code/common:common_test  # shared test helper lib
 //score/language/rust/libcpp:ffi_test_helpers  # FFI test helpers
 //score/language/rust/libcpp_derive:unit_test_helpers  # proc-macro test helpers
+//score/serialization/strategies:uds_strategy_serialization_test_helper
 
 # --- examples (not production) ---
 //score/language/rust/memres/example:example_helpers  # example crate helpers

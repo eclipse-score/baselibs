@@ -11,7 +11,7 @@
 # SPDX-License-Identifier: Apache-2.0
 # *******************************************************************************
 # Component labels: applied when a PR changes files in the mapped folder.
-comp-abi-types:
+comp-shared_layout:
   - changed-files:
       - any-glob-to-any-file:
           - 'score/containers_rust/**'
@@ -75,6 +75,9 @@ comp-safecpp:
 comp-scope_exit:
   - changed-files:
       - any-glob-to-any-file: 'score/scope_exit/**'
+comp-serialization:
+  - changed-files:
+      - any-glob-to-any-file: 'score/serialization/**'
 comp-static_reflection_with_serialization:
   - changed-files:
       - any-glob-to-any-file: 'score/static_reflection_with_serialization/**'
@@ -96,13 +99,17 @@ documentation:
       - any-glob-to-any-file:
           - 'docs/**'
           - 'score/**/docs/**'
-# CI label: applied when a PR changes GitHub Actions or workflows.
+          - '**/*.md'
+          - '**/*.rst'
+# CI label: applied when a PR changes GitHub Actions, workflows, or CI tooling.
 ci:
   - changed-files:
       - any-glob-to-any-file:
           - '.github/actions/**'
           - '.github/workflows/**'
-# Language labels: applied based on the type of code files changed.
+          - '.github/tools/**'
+          - '.github/labeler.yml'
+# Language labels: applied based on code files and language configuration.
 c++:
   - changed-files:
       - any-glob-to-any-file:
@@ -113,12 +120,20 @@ c++:
           - '**/*.cxx'
 rust:
   - changed-files:
-      - any-glob-to-any-file: '**/*.rs'
+      - any-glob-to-any-file:
+          - '**/*.rs'
+          - '**/Cargo.toml'
+          - '**/Cargo.lock'
+          - 'rust-toolchain.toml'
+          - 'rustfmt.toml'
 bazel:
   - changed-files:
       - any-glob-to-any-file:
           - '**/*.bzl'
           - '**/*.bazel'
+          - '**/*.bazelrc'
+          - '**/MODULE.bazel.lock'
+          - '.bazelignore'
           - '**/BUILD'
           - '**/WORKSPACE'
           - '**/.bazelrc'

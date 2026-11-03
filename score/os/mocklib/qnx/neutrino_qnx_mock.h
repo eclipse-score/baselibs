@@ -39,7 +39,6 @@ class NeutrinoMock : public Neutrino
                 (override));
     MOCK_METHOD((std::int32_t), InterruptDetach, (std::int32_t id), (override));
     MOCK_METHOD((std::int32_t), InterruptUnmask, (std::int32_t intr, std::int32_t id), (override));
-    MOCK_METHOD((std::int32_t), ChannelCreate, (std::uint32_t flags), (const, noexcept, override));
     MOCK_METHOD((score::cpp::expected<std::int32_t, Error>),
                 ChannelCreate,
                 (ChannelFlag flags),
@@ -52,23 +51,10 @@ class NeutrinoMock : public Neutrino
                 ClockAdjust,
                 (clockid_t id, const _clockadjust* _new, _clockadjust* old),
                 (const, noexcept, override));
-    MOCK_METHOD(
-        (score::cpp::expected<std::int32_t, Error>),
-        TimerTimeout,
-        (clockid_t id, TimerFlagsType flags, const sigevent* notify, const std::uint64_t* ntime, std::uint64_t* otime),
-        (const, noexcept, override));
     MOCK_METHOD(std::uint64_t, ClockCycles, (), (const, noexcept, override));
     MOCK_METHOD((score::cpp::expected<std::int32_t, Error>),
                 ClockId,
                 (pid_t pid, std::int32_t tid),
-                (const, noexcept, override));
-    MOCK_METHOD((score::cpp::expected<std::int32_t, Error>),
-                TimerTimeout,
-                (const ClockType clock_type,
-                 const TimerTimeoutFlag flags,
-                 const sigevent* notify,
-                 const std::chrono::nanoseconds& ntime,
-                 std::optional<std::chrono::nanoseconds> otime),
                 (const, noexcept, override));
     MOCK_METHOD((score::cpp::expected<std::int32_t, Error>),
                 TimerTimeout,

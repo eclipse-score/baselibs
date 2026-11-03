@@ -90,21 +90,15 @@ jobs:
             ${{ matrix.working-directory }}/bazel-testlogs/**/test.xml
           retention-days: 5
           if-no-files-found: warn
-  docs-verify:
-    uses: eclipse-score/cicd-workflows/.github/workflows/docs-verify.yml@33842dcb0a19ca700d159101a34a7f078bada023
-    permissions:
-      contents: read
-    with:
-      bazel-docs-verify-target: "//:docs_check"
+  coverage-report:
+    uses: ./.github/workflows/coverage_report.yml
   docs-build:
-    needs: [docs-verify, linux-build-and-test]
-    # Still build docs (with whatever test results were uploaded) even if
-    # linux-build-and-test failed; only skip if docs-verify itself failed.
-    if: always() && needs.docs-verify.result == 'success'
-    uses: eclipse-score/cicd-workflows/.github/workflows/docs.yml@33842dcb0a19ca700d159101a34a7f078bada023
+    needs: [linux-build-and-test, coverage-report]
+    uses: eclipse-score/cicd-workflows/.github/workflows/docs.yml@3f61217cfa69b1d40b366049ace7fc63932e63c2
     permissions:
       contents: read
     with:
       bazel-target: "//:docs"
       retention-days: 5
       tests-report-artifact: "test-report-x86_64-linux"
+      coverage-report-artifact: ${{ github.event.repository.name }}_cpp_coverage_report

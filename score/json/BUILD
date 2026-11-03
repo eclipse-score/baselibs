@@ -51,6 +51,16 @@ cc_library(
 )
 
 cc_library(
+    name = "formatting",
+    hdrs = ["formatting.h"],
+    features = COMPILER_WARNING_FEATURES,
+    tags = ["FFI"],
+    visibility = [
+        "@score_baselibs//score/json:__subpackages__",
+    ],
+)
+
+cc_library(
     name = "writer_interface",
     srcs = ["i_json_writer.cpp"],
     hdrs = [
@@ -63,6 +73,7 @@ cc_library(
         "@score_baselibs//score/json:__subpackages__",
     ],
     deps = [
+        ":formatting",
         "@score_baselibs//score/filesystem/filestream",
         "@score_baselibs//score/json/internal/model",
         "@score_baselibs//score/language/futurecpp",
@@ -89,11 +100,15 @@ cc_library(
     name = "json_parser_impl",
     srcs = ["json_parser.cpp"],
     features = COMPILER_WARNING_FEATURES,
+    implementation_deps = [
+        "@score_baselibs//score/json/internal/model",
+        "@score_baselibs//score/json/internal/parser/vajson",
+        "@score_baselibs//score/result",
+    ],
     tags = ["FFI"],
     visibility = ["@score_baselibs//score/json:__subpackages__"],
     deps = [
         ":parser_interface",
-        "@score_baselibs//score/json/internal/parser",
     ],
 )
 
@@ -101,12 +116,13 @@ cc_library(
     name = "json_writer_impl",
     srcs = ["json_writer.cpp"],
     features = COMPILER_WARNING_FEATURES,
+    implementation_deps = [
+        "@score_baselibs//score/json/internal/writer:serializer",
+    ],
     tags = ["FFI"],
     visibility = ["@score_baselibs//score/json:__subpackages__"],
     deps = [
         ":writer_interface",
-        "@score_baselibs//score/json/internal/writer:writer_backend",
-        "@score_baselibs//score/json/internal/writer/vajson:vajson_backend",
     ],
 )
 
@@ -183,9 +199,24 @@ cc_test(
     ],
 )
 
+cc_test(
+    name = "json_parser_test",
+    srcs = ["json_parser_test.cpp"],
+    features = COMPILER_WARNING_FEATURES + ["aborts_upon_exception"],
+    tags = ["unit"],
+    visibility = [
+        "@score_baselibs//score/json:__pkg__",
+    ],
+    deps = [
+        ":json",
+        "@googletest//:gtest_main",
+        "@score_baselibs//score/language/safecpp/coverage_termination_handler",
+    ],
+)
+
 # The coverage tool only picks up this test when it lives in the same directory as json_writer.cpp.
 cc_test(
-    name = "json_writer_unit_test",
+    name = "json_writer_test",
     srcs = [
         "json_writer_test.cpp",
     ],

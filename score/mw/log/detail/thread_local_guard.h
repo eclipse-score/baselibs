@@ -31,7 +31,7 @@ namespace detail
 ///  custom stack. For that, we utilize a thread-local variable. For each call to a recorder, we mark this as true, once
 ///  the call left, we mark it as false. This way we are also able to support recursive calls to logging within the user
 ///  space. Whenever we then are logging in the logging stack, we need to fallback to a simpler recorder (e.g. console)
-///  which does not rely on any common libraries (like e.g. lib/memory/shared).
+///  which does not rely on any common libraries.
 class ThreadLocalGuard
 {
   public:

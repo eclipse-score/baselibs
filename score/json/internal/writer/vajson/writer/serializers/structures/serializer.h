@@ -18,7 +18,7 @@
 #include <functional>
 #include <ostream>
 
-#include "score/json/internal/parser/vajson/vajson_impl/util/types.h"
+#include "score/json/internal/parser/vajson/util/types.h"
 #include "score/json/internal/writer/vajson/writer/serializers/util/formatting_writer.h"
 
 namespace score::json::vajson

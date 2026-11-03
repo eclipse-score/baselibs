@@ -115,10 +115,6 @@ class Neutrino : public ObjectSeam<Neutrino>
 
     virtual std::int32_t InterruptUnmask(std::int32_t intr, std::int32_t id) = 0;
 
-    [[deprecated(
-        "SPP_DEPRECATION: Please use \'ChannelCreate(const Neutrino::ChannelFlag flags)\'")]] virtual std::int32_t
-    ChannelCreate(std::uint32_t flags) const noexcept = 0;
-
     virtual score::cpp::expected<std::int32_t, Error> ChannelCreate(
         const Neutrino::ChannelFlag flags) const noexcept = 0;
 
@@ -131,24 +127,6 @@ class Neutrino : public ObjectSeam<Neutrino>
     virtual std::uint64_t ClockCycles() const noexcept = 0;
 
     virtual score::cpp::expected<std::int32_t, Error> ClockId(pid_t pid, std::int32_t tid) const noexcept = 0;
-
-    [[deprecated("SPP_DEPRECATION: Please use other overloads of the \'TimerTimeout\'")]] virtual score::cpp::
-        expected<std::int32_t, Error>
-        TimerTimeout(clockid_t id,
-                     TimerFlagsType flags,
-                     const sigevent* notify,
-                     const std::uint64_t* ntime,
-                     std::uint64_t* otime) const noexcept = 0;
-
-    [[deprecated("SPP_DEPRECATION: Please use the latest overload of the \'TimerTimeout\'")]]
-    // This is intented, we don't force users to fill the otime parameter unless needed
-    // NOLINTNEXTLINE(google-default-arguments): See above
-    virtual score::cpp::expected<std::int32_t, Error> TimerTimeout(
-        const ClockType clock_type,
-        const TimerTimeoutFlag flags,
-        const sigevent* notify,
-        const std::chrono::nanoseconds& ntime,
-        std::optional<std::chrono::nanoseconds> otime = std::nullopt) const noexcept = 0;
 
     // This is intented, we don't force users to fill the otime parameter unless needed
     // NOLINTNEXTLINE(google-default-arguments): See above

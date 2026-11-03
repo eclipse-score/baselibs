@@ -50,14 +50,3 @@ Templates and Polymorphism
 
   Disadvantages:
   - There may be a performance impact due to virtual method table (VMU) organization
-
-
-Parser Mixins
-=============
-
-..
-  Concept:: DSGN-Concept-Parser-Mixins
-
-  The class CompositionParser is intended to provide pre-defined parser functions to an existing class for commonly
-  occurring JSON elements (single values and compounds).
-  These pre-defined functions can be called by the user at any time to parse the following JSON element.

@@ -22,6 +22,7 @@ reduces code duplication, and promotes interoperability between components.
 Libraries are developed following the `Eclipse S-CORE Process Description <https://github.com/eclipse-score/process_description>`_
 at ISO 26262 integrity levels from QM up to ASIL-B, depending on their intended use cases.
 
+.. _documents_docs_feature_baselibs_docs:
 
 Feature Documentation
 ---------------------
@@ -32,6 +33,16 @@ The Feature documentation covers the feature-level definition of Base Libraries,
    :maxdepth: 1
 
    features/index
+
+.. needtable::
+   :filter: docname is not None and docname.startswith("features/")
+   :style: table
+   :types: document
+   :columns: title;id;safety;security;status
+   :colwidths: 25,35,15,15,15
+   :sort: title
+
+.. _documents_docs_modules_baselibs_docs:
 
 Module Documentation
 --------------------
@@ -44,6 +55,15 @@ The Module documentation covers the module-level view, including architecture, s
    module/index
    verification_report/module_verification_report
 
+.. needtable::
+   :filter: docname is not None and (docname.startswith("module/") or docname.startswith("verification_report/"))
+   :style: table
+   :types: document
+   :columns: title;id;safety;security;status
+   :colwidths: 25,35,15,15,15
+   :sort: title
+
+.. _documents_docs_modules_baselibs_components:
 
 Component Documentation
 -----------------------
@@ -55,6 +75,13 @@ The Components documentation provides detailed documentation for each individual
 
    baselibs/components/index
 
+.. needtable::
+   :filter: docname is not None and docname.startswith("baselibs/components/")
+   :style: table
+   :types: document
+   :columns: title;id;safety;security;status
+   :colwidths: 25,35,15,15,15
+   :sort: title
 
 Quick Start - Building and Testing
 ----------------------------------

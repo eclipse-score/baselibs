@@ -16,22 +16,14 @@
 #ifndef SCORE_LIB_JSON_INTERNAL_WRITER_VAJSON_WRITER_SERIALIZERS_UTIL_FORMATTING_WRITER_H
 #define SCORE_LIB_JSON_INTERNAL_WRITER_VAJSON_WRITER_SERIALIZERS_UTIL_FORMATTING_WRITER_H
 
+#include "score/json/formatting.h"
+
 #include <cstddef>
-#include <cstdint>
 #include <ostream>
 #include <string_view>
 
 namespace score::json::vajson
 {
-/// \brief Layout of the JSON representation emitted by the vaJSON serializer
-enum class VajsonFormatting : std::uint8_t
-{
-    /// \brief No insignificant whitespace is emitted
-    kCompact,
-    /// \brief The output is indented and spread over multiple lines to be human readable
-    kPrettyPrint,
-};
-
 /// \brief Writes the structural characters of a JSON document, cf. RFC 8259 section 2
 /// \details In compact mode no insignificant whitespace is emitted.
 ///     In pretty print mode every array element and object member is placed on its own line, indented by four spaces
@@ -44,7 +36,7 @@ class FormattingWriter final
     /// \brief Constructs a FormattingWriter
     /// \param[in] stream Output stream to write into. It must outlive this instance.
     /// \param[in] formatting Whether insignificant whitespace is emitted to make the output human readable.
-    FormattingWriter(std::ostream& stream, const VajsonFormatting formatting) noexcept
+    FormattingWriter(std::ostream& stream, const Formatting formatting) noexcept
         : stream_{stream}, formatting_{formatting}
     {
     }
@@ -88,7 +80,7 @@ class FormattingWriter final
     void WriteNameSeparator() const noexcept
     {
         static_cast<void>(stream_.put(':'));
-        if (formatting_ == VajsonFormatting::kPrettyPrint)
+        if (formatting_ == Formatting::kPrettyPrint)
         {
             static_cast<void>(stream_.put(' '));
         }
@@ -113,7 +105,7 @@ class FormattingWriter final
     /// \brief Starts a new line indented to the current nesting level, if pretty printing is enabled
     void WriteLineBreak() const noexcept
     {
-        if (formatting_ == VajsonFormatting::kPrettyPrint)
+        if (formatting_ == Formatting::kPrettyPrint)
         {
             static_cast<void>(stream_.put('\n'));
             for (std::size_t level{0U}; level < depth_; ++level)
@@ -131,7 +123,7 @@ class FormattingWriter final
     std::ostream& stream_;
 
     /// \brief Whether insignificant whitespace is emitted
-    VajsonFormatting formatting_;
+    Formatting formatting_;
 
     /// \brief Number of arrays and objects that enclose the current position
     std::size_t depth_{0U};

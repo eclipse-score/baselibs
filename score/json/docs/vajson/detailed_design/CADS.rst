@@ -12,9 +12,19 @@
    # SPDX-License-Identifier: Apache-2.0
    # *******************************************************************************
 
-======
-Design
-======
+VaJson Detailed Design
+======================
+
+.. document:: VaJson Detailed Design
+   :id: doc__vajson_detailed_design
+   :status: draft
+   :version: 1
+   :safety: ASIL_B
+   :security: YES
+   :realizes: wp__sw_implementation
+
+Description
+-----------
 
 .. toctree::
 

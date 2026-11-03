@@ -11,19 +11,33 @@
 # SPDX-License-Identifier: Apache-2.0
 # *******************************************************************************
 
-load("@rules_cc//cc:defs.bzl", "cc_library")
+load("@rules_cc//cc:defs.bzl", "cc_library", "cc_test")
 load("@score_baselibs//score/language/safecpp:toolchain_features.bzl", "COMPILER_WARNING_FEATURES")
 
-# Declarations of the serialization functions, defined by `//score/json/internal/writer/vajson:vajson_backend`.
 cc_library(
-    name = "writer_backend",
-    hdrs = ["writer_backend.h"],
+    name = "serializer",
+    srcs = ["serializer.cpp"],
+    hdrs = ["serializer.h"],
     features = COMPILER_WARNING_FEATURES,
+    implementation_deps = [
+        "@score_baselibs//score/json/internal/writer/vajson:any_serializer",
+    ],
     tags = ["FFI"],
-    visibility = ["@score_baselibs//score/json:__subpackages__"],
+    visibility = ["@score_baselibs//score/json:__pkg__"],
     deps = [
-        "@score_baselibs//score/json:writer_interface",
+        "@score_baselibs//score/json:formatting",
         "@score_baselibs//score/json/internal/model",
         "@score_baselibs//score/result",
+    ],
+)
+
+cc_test(
+    name = "serializer_test",
+    srcs = ["serializer_test.cpp"],
+    features = COMPILER_WARNING_FEATURES + ["aborts_upon_exception"],
+    tags = ["unit"],
+    deps = [
+        ":serializer",
+        "@googletest//:gtest_main",
     ],
 )

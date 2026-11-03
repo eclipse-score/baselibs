@@ -115,6 +115,7 @@ cc_gtest_unit_test(
         "aborts_upon_exception",
     ],
     deps = [
+        ":test_types",
         ":type_traits",
     ],
 )

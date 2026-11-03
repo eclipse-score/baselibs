@@ -26,7 +26,6 @@ std::function<std::int32_t(std::int32_t*, std::int32_t)> pipe2_callback;
 std::function<std::int32_t(const char*, struct statfs*)> statfs2_callback;
 std::function<std::int32_t(struct ifaddrs** ifa)> getifaddrs_callback;
 std::function<void(struct ifaddrs* ifa)> freeifaddrs_callback;
-std::function<bool(std::size_t i)> pthread_setaffinity_np_callback;
 std::function<std::int32_t(__clockid_t, std::int32_t)> timerfd_create_callback;
 std::function<std::int32_t(std::int32_t, struct itimerspec*)> timerfd_gettime_callback;
 std::function<std::int32_t(std::int32_t, std::int32_t, const struct itimerspec*, struct itimerspec*)>
@@ -54,9 +53,6 @@ NonPosixWrapperMock::NonPosixWrapperMock()
     };
     freeifaddrs_callback = [this](struct ifaddrs* ifa) {
         return this->freeifaddrs(ifa);
-    };
-    pthread_setaffinity_np_callback = [this](std::size_t i) {
-        return this->pthread_setaffinity_np(i);
     };
     timerfd_create_callback = [this](__clockid_t clock_id, std::int32_t flags) {
         return this->timerfd_create(clock_id, flags);
@@ -105,11 +101,6 @@ std::int32_t getifaddrs(struct ifaddrs** ifa)
 void freeifaddrs(struct ifaddrs* ifa)
 {
     return freeifaddrs_callback(ifa);
-}
-
-bool pthread_setaffinity_np(std::size_t i)
-{
-    return pthread_setaffinity_np_callback(i);
 }
 
 std::int32_t timerfd_create(__clockid_t clock_id, std::int32_t flags)
