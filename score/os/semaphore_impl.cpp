@@ -77,6 +77,22 @@ score::cpp::expected<sem_t*, Error> SemaphoreImpl::sem_open(const char* const pa
     }
     return ret;
 }
+score::cpp::expected_blank<Error> SemaphoreImpl::sem_destroy(sem_t* const sem) const noexcept
+{
+    if (::sem_destroy(sem) != 0)
+    {
+        return score::cpp::make_unexpected(score::os::Error::createFromErrno());
+    }
+    return {};
+}
+score::cpp::expected_blank<Error> SemaphoreImpl::sem_trywait(sem_t* const sem) const noexcept
+{
+    if (::sem_trywait(sem) != 0)
+    {
+        return score::cpp::make_unexpected(score::os::Error::createFromErrno());
+    }
+    return {};
+}
 score::cpp::expected_blank<Error> SemaphoreImpl::sem_wait(sem_t* const sem) const noexcept
 {
     // Manual code analysis:
