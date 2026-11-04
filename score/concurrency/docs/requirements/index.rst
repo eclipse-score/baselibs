@@ -172,7 +172,7 @@ Functional Requirements
    The concurrency module shall provide a thread-safe container facilitating FIFO transmission of data in a N:1 communication pattern.
 
 .. comp_req:: Timed Synchronized Access
-   :id: comp_req__concurrency__synchronized_try_lock_for
+   :id: comp_req__concurrency__synchronized_lock_for
    :reqtype: Functional
    :security: YES
    :safety: ASIL_B
@@ -184,7 +184,7 @@ Functional Requirements
    Synchronized object access shall provide a timed lock acquisition operation that returns an empty pointer when the lock cannot be acquired within the specified duration.
 
 .. comp_req:: Deadline-Based Synchronized Access
-   :id: comp_req__concurrency__synchronized_try_lock_until
+   :id: comp_req__concurrency__synchronized_lock_until
    :reqtype: Functional
    :security: YES
    :safety: ASIL_B
