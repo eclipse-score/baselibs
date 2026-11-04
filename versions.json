@@ -218,5 +218,9 @@
   {
     "version": "pr-776",
     "url": "https://eclipse-score.github.io/baselibs/pr-776/"
+  },
+  {
+    "version": "pr-778",
+    "url": "https://eclipse-score.github.io/baselibs/pr-778/"
   }
 ]
