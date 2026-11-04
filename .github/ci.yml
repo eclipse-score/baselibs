@@ -1,0 +1,40 @@
+# Copyright (c) 2026 Contributors to the Eclipse Foundation
+#
+# See the NOTICE file(s) distributed with this work for additional
+# information regarding copyright ownership.
+#
+# This program and the accompanying materials are made available under the
+# terms of the Apache License Version 2.0 which is available at
+# https://www.apache.org/licenses/LICENSE-2.0
+#
+# SPDX-License-Identifier: Apache-2.0
+# This opt-in POC exercises a focused dependency graph through the shared CI.
+# Existing module workflows remain the required coverage for the complete module.
+# Bazel configs select module-owned platforms and toolchains explicitly.
+schema-version: 2
+variants:
+  - name: linux-native
+    architecture:
+      - name: x86_64
+    os:
+      - name: linux
+    checks:
+      tests:
+        # Build the library explicitly before executing its native unit tests.
+        # Both commands must produce Bazel evidence for the shared gate to pass.
+        - test-type: unit
+          bazel-configs: score-linux-x86_64
+          bazel-build-targets: //score/result:result //score/result:error
+          bazel-test-targets: //score/result:tests //score/result:error_msg_mapping_test
+  - name: linux-cross
+    architecture:
+      - name: aarch64
+    os:
+      - name: linux
+    checks:
+      builds:
+        # Cross-compilation checks the ARM toolchain without pretending that
+        # native unit tests have run on ARM or requiring an emulation setup.
+        - name: compiler
+          bazel-configs: score-linux-aarch64
+          bazel-build-targets: //score/result:result //score/result:error

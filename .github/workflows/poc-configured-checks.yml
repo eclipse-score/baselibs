@@ -1,0 +1,31 @@
+# Copyright (c) 2026 Contributors to the Eclipse Foundation
+#
+# See the NOTICE file(s) distributed with this work for additional
+# information regarding copyright ownership.
+#
+# This program and the accompanying materials are made available under the
+# terms of the Apache License Version 2.0 which is available at
+# https://www.apache.org/licenses/LICENSE-2.0
+#
+# SPDX-License-Identifier: Apache-2.0
+# Run this comparison manually against the experimental central workflow.
+# Keeping it manual avoids replacing the module's established required checks
+# before the central contract and the selected targets have been reviewed.
+name: Configured checks POC
+on:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  checks:
+    # Experimental upstream branch reference for this comparison.
+    # A released adoption must pin the workflow and helper together.
+    uses: eclipse-score/cicd-workflows/.github/workflows/on-pr.yml@central-workflow
+    with:
+      workflow-config-yaml: .github/ci.yml
+      # Match the module's existing common-check profile during the comparison.
+      skip-pre-commit: true
+      skip-python-tests: true
+      require-bzlmod-lock: true
+      format-target: "//tools:format.check"
+      copyright-target: "//tools:copyright-check"
