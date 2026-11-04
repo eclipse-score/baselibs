@@ -86,12 +86,11 @@ TEST_F(SignalHandlingTest, PThreadBlockSigTerm_PthreadSigMaskFails_ReturnsError)
 
 TEST_F(SignalHandlingTest, PThreadBlockSigTerm_AllSucceed_ReturnsSuccess)
 {
-    RecordProperty("PartiallyVerifies", "comp_req__log__avoid_signal_processing");
     RecordProperty("Description",
-                   "Check that the logging implementation blocks SIGTERM via the signal mask instead of registering a "
-                   "signal handler.");
-    RecordProperty("TestType", "requirements-based");
-    RecordProperty("DerivationTechnique", "requirements-analysis");
+                   "Check that PThreadBlockSigTerm requests SIG_BLOCK for SIGTERM and returns success when the OSAL "
+                   "calls succeed.");
+    RecordProperty("TestType", "interface-test");
+    RecordProperty("DerivationTechnique", "design-analysis");
 
     EXPECT_CALL(*signal_mock_, SigEmptySet(_)).WillOnce(Return(score::cpp::expected<std::int32_t, score::os::Error>{0}));
 

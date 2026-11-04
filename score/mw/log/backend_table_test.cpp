@@ -154,11 +154,10 @@ TEST_F(BackendTableTest, IsBackendAvailableReturnsTrueWhenRegistered)
 
 TEST_F(BackendTableTest, SystemBackendActivationRegistersSystemMode)
 {
-    RecordProperty("PartiallyVerifies", "comp_req__log__system_backend_activation");
     RecordProperty("Description",
                    "The system backend becomes available when a backend is registered for LogMode::kSystem.");
-    RecordProperty("TestType", "requirements-based");
-    RecordProperty("DerivationTechnique", "requirements-analysis");
+    RecordProperty("TestType", "interface-test");
+    RecordProperty("DerivationTechnique", "design-analysis");
 
     auto creator = [](const Configuration&, score::cpp::pmr::memory_resource*) -> std::unique_ptr<Recorder> {
         return std::make_unique<EmptyRecorder>();
@@ -215,13 +214,10 @@ TEST_F(BackendTableTest, CreateRecorderForModeReturnsRecorderWhenRegistered)
 
 TEST_F(BackendTableTest, SystemModeUsesRegisteredBackendCreator)
 {
-    RecordProperty("PartiallyVerifies", "comp_req__log__forward_to_system_logger");
     RecordProperty("Description",
-                   "CreateRecorderForMode routes system-mode logging to the registered system backend creator.");
-    RecordProperty("TestType", "requirements-based");
-    RecordProperty("DerivationTechnique", "requirements-analysis");
-    RecordProperty("TestingTechnique", "Requirements-based test");
-    RecordProperty("lobster-tracing", "MwLog.ForwardToSystemLogger");
+                   "Check that creating a recorder for the registered system mode returns a non-null recorder.");
+    RecordProperty("TestType", "interface-test");
+    RecordProperty("DerivationTechnique", "design-analysis");
 
     auto creator = [](const Configuration&, score::cpp::pmr::memory_resource*) -> std::unique_ptr<Recorder> {
         return std::make_unique<EmptyRecorder>();
