@@ -14,8 +14,8 @@
 /// \brief A serializer for arrays.
 /// \details Provides the serializer for ad-hoc defined tuples.
 
-#ifndef SCORE_LIB_JSON_INTERNAL_WRITER_VAJSON_WRITER_TYPES_ARRAY_TYPE_H
-#define SCORE_LIB_JSON_INTERNAL_WRITER_VAJSON_WRITER_TYPES_ARRAY_TYPE_H
+#ifndef SCORE_JSON_INTERNAL_WRITER_VAJSON_J_ARRAY_TYPE_H
+#define SCORE_JSON_INTERNAL_WRITER_VAJSON_J_ARRAY_TYPE_H
 
 #include <type_traits>
 #include <utility>
@@ -45,11 +45,7 @@ auto JArray(Fn&& fn) noexcept -> JArrayType<Fn>
     return {std::forward<Fn>(fn)};
 }
 
-// clang-format off
-}  // inline namespace types
-// clang-format off
-} // namespace score::json::vajson
+}  // namespace types
+}  // namespace score::json::vajson
 
-
-
-#endif  // SCORE_LIB_JSON_INTERNAL_WRITER_VAJSON_WRITER_TYPES_ARRAY_TYPE_H
+#endif  // SCORE_JSON_INTERNAL_WRITER_VAJSON_J_ARRAY_TYPE_H

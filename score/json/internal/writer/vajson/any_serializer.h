@@ -10,12 +10,12 @@
  *
  * SPDX-License-Identifier: Apache-2.0
  ********************************************************************************/
-#ifndef SCORE_LIB_JSON_INTERNAL_WRITER_VAJSON_ANY_SERIALIZER_H
-#define SCORE_LIB_JSON_INTERNAL_WRITER_VAJSON_ANY_SERIALIZER_H
+#ifndef SCORE_JSON_INTERNAL_WRITER_VAJSON_ANY_SERIALIZER_H
+#define SCORE_JSON_INTERNAL_WRITER_VAJSON_ANY_SERIALIZER_H
 
 #include "score/json/internal/model/any.h"
-#include "score/json/internal/writer/vajson/writer/serializers/structures/generic_value_serializer_impl.h"
-#include "score/json/internal/writer/vajson/writer/serializers/structures/key_serializer.h"
+#include "score/json/internal/writer/vajson/generic_value_serializer_impl.h"
+#include "score/json/internal/writer/vajson/key_serializer.h"
 #include "score/string_manipulation/string_comparison_adaptor.h"
 
 #include <score/utility.hpp>
@@ -144,4 +144,4 @@ auto SerializeValue(score::json::vajson::GenericValueSerializer<Next>&& serializ
 }
 }  // namespace score::json::internal::writer::vajson
 
-#endif  // SCORE_LIB_JSON_INTERNAL_WRITER_VAJSON_ANY_SERIALIZER_H
+#endif  // SCORE_JSON_INTERNAL_WRITER_VAJSON_ANY_SERIALIZER_H

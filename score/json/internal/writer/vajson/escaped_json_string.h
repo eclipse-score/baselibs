@@ -13,8 +13,8 @@
 /// \file
 /// \brief Serializer for JSON string literals.
 
-#ifndef SCORE_LIB_JSON_INTERNAL_WRITER_VAJSON_WRITER_SERIALIZERS_UTIL_ESCAPED_JSON_STRING_H
-#define SCORE_LIB_JSON_INTERNAL_WRITER_VAJSON_WRITER_SERIALIZERS_UTIL_ESCAPED_JSON_STRING_H
+#ifndef SCORE_JSON_INTERNAL_WRITER_VAJSON_ESCAPED_JSON_STRING_H
+#define SCORE_JSON_INTERNAL_WRITER_VAJSON_ESCAPED_JSON_STRING_H
 
 #include <array>
 #include <cstddef>
@@ -24,8 +24,9 @@
 #include <utility>
 
 #include "score/json/internal/parser/vajson/types.h"
-#include "score/json/internal/writer/vajson/writer/serializers/structures/serializer.h"
-#include "score/json/internal/writer/vajson/writer/types/basic_types.h"
+#include "score/json/internal/writer/vajson/j_key_type.h"
+#include "score/json/internal/writer/vajson/j_string_type.h"
+#include "score/json/internal/writer/vajson/serializer_types.h"
 
 namespace score::json::vajson::internal
 {
@@ -157,4 +158,4 @@ auto inline operator<<(std::ostream& os, EscapedJsonString string) noexcept -> s
 
 }  // namespace score::json::vajson::internal
 
-#endif  // SCORE_LIB_JSON_INTERNAL_WRITER_VAJSON_WRITER_SERIALIZERS_UTIL_ESCAPED_JSON_STRING_H
+#endif  // SCORE_JSON_INTERNAL_WRITER_VAJSON_ESCAPED_JSON_STRING_H

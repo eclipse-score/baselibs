@@ -12,14 +12,14 @@
  ********************************************************************************/
 /// \file
 /// \brief Contains common types and forward declarations for JSON serializers.
-#ifndef SCORE_LIB_JSON_INTERNAL_WRITER_VAJSON_WRITER_SERIALIZERS_STRUCTURES_SERIALIZER_H
-#define SCORE_LIB_JSON_INTERNAL_WRITER_VAJSON_WRITER_SERIALIZERS_STRUCTURES_SERIALIZER_H
+#ifndef SCORE_JSON_INTERNAL_WRITER_VAJSON_SERIALIZER_TYPES_H
+#define SCORE_JSON_INTERNAL_WRITER_VAJSON_SERIALIZER_TYPES_H
 
 #include <functional>
 #include <ostream>
 
 #include "score/json/internal/parser/vajson/types.h"
-#include "score/json/internal/writer/vajson/writer/serializers/util/formatting_writer.h"
+#include "score/json/internal/writer/vajson/formatting_writer.h"
 
 namespace score::json::vajson
 {
@@ -79,4 +79,4 @@ using ArrayStart = ArraySerializer;
 using WriterType = std::reference_wrapper<FormattingWriter>;
 }  // namespace score::json::vajson
 
-#endif  // SCORE_LIB_JSON_INTERNAL_WRITER_VAJSON_WRITER_SERIALIZERS_STRUCTURES_SERIALIZER_H
+#endif  // SCORE_JSON_INTERNAL_WRITER_VAJSON_SERIALIZER_TYPES_H

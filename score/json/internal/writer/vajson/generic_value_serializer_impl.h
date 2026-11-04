@@ -13,11 +13,11 @@
 /// \file
 /// \brief Implementation of methods for generic value serializer type.
 
-#ifndef SCORE_LIB_JSON_INTERNAL_WRITER_VAJSON_WRITER_SERIALIZERS_STRUCTURES_GENERIC_VALUE_SERIALIZER_IMPL_H
-#define SCORE_LIB_JSON_INTERNAL_WRITER_VAJSON_WRITER_SERIALIZERS_STRUCTURES_GENERIC_VALUE_SERIALIZER_IMPL_H
+#ifndef SCORE_JSON_INTERNAL_WRITER_VAJSON_GENERIC_VALUE_SERIALIZER_IMPL_H
+#define SCORE_JSON_INTERNAL_WRITER_VAJSON_GENERIC_VALUE_SERIALIZER_IMPL_H
 
-#include "score/json/internal/writer/vajson/writer/serializers/structures/generic_value_serializer.h"
-#include "score/json/internal/writer/vajson/writer/serializers/structures/key_serializer.h"
+#include "score/json/internal/writer/vajson/generic_value_serializer.h"
+#include "score/json/internal/writer/vajson/key_serializer.h"
 
 namespace score::json::vajson
 {
@@ -46,4 +46,4 @@ auto GenericValueSerializer<Return>::operator<<(JObjectType<Fn> object) && noexc
 
 }  // namespace score::json::vajson
 
-#endif  // SCORE_LIB_JSON_INTERNAL_WRITER_VAJSON_WRITER_SERIALIZERS_STRUCTURES_GENERIC_VALUE_SERIALIZER_IMPL_H
+#endif  // SCORE_JSON_INTERNAL_WRITER_VAJSON_GENERIC_VALUE_SERIALIZER_IMPL_H

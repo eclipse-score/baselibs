@@ -13,8 +13,8 @@
 /// \file
 /// \brief Output stream wrapper that emits the structural characters and the optional insignificant whitespace.
 
-#ifndef SCORE_LIB_JSON_INTERNAL_WRITER_VAJSON_WRITER_SERIALIZERS_UTIL_FORMATTING_WRITER_H
-#define SCORE_LIB_JSON_INTERNAL_WRITER_VAJSON_WRITER_SERIALIZERS_UTIL_FORMATTING_WRITER_H
+#ifndef SCORE_JSON_INTERNAL_WRITER_VAJSON_FORMATTING_WRITER_H
+#define SCORE_JSON_INTERNAL_WRITER_VAJSON_FORMATTING_WRITER_H
 
 #include "score/json/formatting.h"
 
@@ -134,4 +134,4 @@ class FormattingWriter final
 
 }  // namespace score::json::vajson
 
-#endif  // SCORE_LIB_JSON_INTERNAL_WRITER_VAJSON_WRITER_SERIALIZERS_UTIL_FORMATTING_WRITER_H
+#endif  // SCORE_JSON_INTERNAL_WRITER_VAJSON_FORMATTING_WRITER_H

@@ -14,8 +14,8 @@
 /// \brief A collection of serializers for objects.
 /// \details Provides serializers for Object types.
 
-#ifndef SCORE_LIB_JSON_INTERNAL_WRITER_VAJSON_WRITER_TYPES_OBJECT_TYPE_H
-#define SCORE_LIB_JSON_INTERNAL_WRITER_VAJSON_WRITER_TYPES_OBJECT_TYPE_H
+#ifndef SCORE_JSON_INTERNAL_WRITER_VAJSON_J_OBJECT_TYPE_H
+#define SCORE_JSON_INTERNAL_WRITER_VAJSON_J_OBJECT_TYPE_H
 
 #include <type_traits>
 #include <utility>
@@ -44,9 +44,7 @@ auto JObject(Fn&& fn) noexcept -> JObjectType<Fn>
     return {std::forward<Fn>(fn)};
 }
 
-// clang-format off
-}  // inline namespace types
-// clang-format on
+}  // namespace types
 }  // namespace score::json::vajson
 
-#endif  // SCORE_LIB_JSON_INTERNAL_WRITER_VAJSON_WRITER_TYPES_OBJECT_TYPE_H
+#endif  // SCORE_JSON_INTERNAL_WRITER_VAJSON_J_OBJECT_TYPE_H

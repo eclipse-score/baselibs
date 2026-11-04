@@ -13,13 +13,13 @@
 /// \file
 /// \brief Serializer for JSON keys.
 
-#ifndef SCORE_LIB_JSON_INTERNAL_WRITER_VAJSON_WRITER_SERIALIZERS_STRUCTURES_KEY_SERIALIZER_H
-#define SCORE_LIB_JSON_INTERNAL_WRITER_VAJSON_WRITER_SERIALIZERS_STRUCTURES_KEY_SERIALIZER_H
+#ifndef SCORE_JSON_INTERNAL_WRITER_VAJSON_KEY_SERIALIZER_H
+#define SCORE_JSON_INTERNAL_WRITER_VAJSON_KEY_SERIALIZER_H
 
 #include "score/json/internal/parser/vajson/types.h"
-#include "score/json/internal/writer/vajson/writer/serializers/structures/serializer.h"
-#include "score/json/internal/writer/vajson/writer/serializers/util/escaped_json_string.h"
-#include "score/json/internal/writer/vajson/writer/types/basic_types.h"
+#include "score/json/internal/writer/vajson/escaped_json_string.h"
+#include "score/json/internal/writer/vajson/j_key_type.h"
+#include "score/json/internal/writer/vajson/serializer_types.h"
 
 namespace score::json::vajson
 {
@@ -34,7 +34,7 @@ class KeySerializer final
 
     /// \brief Constructs a KeySerializer from a writer
     /// \details Do not create an instance of KeySerializer directly, use the aliases in
-    ///     score/json/internal/writer/vajson/writer/serializers/structures/serializer.h
+    ///     score/json/internal/writer/vajson/serializer_types.h
     /// \param[in] os Writer to write into. It must outlive the serializer.
     /// \param[in] state of the Serializer.
     explicit KeySerializer(WriterType os, SerializerState state = SerializerState::kEmpty) noexcept
@@ -85,4 +85,4 @@ class KeySerializer final
 
 }  // namespace score::json::vajson
 
-#endif  // SCORE_LIB_JSON_INTERNAL_WRITER_VAJSON_WRITER_SERIALIZERS_STRUCTURES_KEY_SERIALIZER_H
+#endif  // SCORE_JSON_INTERNAL_WRITER_VAJSON_KEY_SERIALIZER_H

@@ -14,8 +14,8 @@
 /// \brief Serializer for generic JSON value types.
 /// \details Provides serializers for Null, Bool, Number, String, Array, and Object types.
 
-#ifndef SCORE_LIB_JSON_INTERNAL_WRITER_VAJSON_WRITER_SERIALIZERS_STRUCTURES_GENERIC_VALUE_SERIALIZER_H
-#define SCORE_LIB_JSON_INTERNAL_WRITER_VAJSON_WRITER_SERIALIZERS_STRUCTURES_GENERIC_VALUE_SERIALIZER_H
+#ifndef SCORE_JSON_INTERNAL_WRITER_VAJSON_GENERIC_VALUE_SERIALIZER_H
+#define SCORE_JSON_INTERNAL_WRITER_VAJSON_GENERIC_VALUE_SERIALIZER_H
 
 #include <charconv>
 #include <array>
@@ -26,11 +26,14 @@
 
 #include "score/json/internal/parser/vajson/json_error_domain.h"
 #include "score/json/internal/parser/vajson/types.h"
-#include "score/json/internal/writer/vajson/writer/serializers/structures/serializer.h"
-#include "score/json/internal/writer/vajson/writer/serializers/util/escaped_json_string.h"
-#include "score/json/internal/writer/vajson/writer/types/array_type.h"
-#include "score/json/internal/writer/vajson/writer/types/basic_types.h"
-#include "score/json/internal/writer/vajson/writer/types/object_type.h"
+#include "score/json/internal/writer/vajson/escaped_json_string.h"
+#include "score/json/internal/writer/vajson/j_array_type.h"
+#include "score/json/internal/writer/vajson/j_bool_type.h"
+#include "score/json/internal/writer/vajson/j_null_type.h"
+#include "score/json/internal/writer/vajson/j_number_type.h"
+#include "score/json/internal/writer/vajson/j_object_type.h"
+#include "score/json/internal/writer/vajson/j_string_type.h"
+#include "score/json/internal/writer/vajson/serializer_types.h"
 
 namespace score::json::vajson
 {
@@ -49,7 +52,7 @@ class GenericValueSerializer final
 
     /// \brief Constructs a GenericValueSerializer from a writer
     /// \details Do not create an instance of GenericValueSerializer directly, use the aliases in
-    ///     score/json/internal/writer/vajson/writer/serializers/structures/serializer.h
+    ///     score/json/internal/writer/vajson/serializer_types.h
     /// \param[in] os Writer to write into. It must outlive the serializer.
     /// \param[in] state of the Serializer.
     explicit GenericValueSerializer(WriterType os, SerializerState state = SerializerState::kEmpty) noexcept
@@ -219,4 +222,4 @@ class GenericValueSerializer final
 
 }  // namespace score::json::vajson
 
-#endif  // SCORE_LIB_JSON_INTERNAL_WRITER_VAJSON_WRITER_SERIALIZERS_STRUCTURES_GENERIC_VALUE_SERIALIZER_H
+#endif  // SCORE_JSON_INTERNAL_WRITER_VAJSON_GENERIC_VALUE_SERIALIZER_H
