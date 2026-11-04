@@ -62,6 +62,24 @@ class LockWithIntOwnsLock
     }
 };
 
+class TryLockableArchetype : public test::BasicLockableArchetype
+{
+  public:
+    bool try_lock()
+    {
+        return true;
+    }
+};
+
+class TryLockWithoutBasicLocking
+{
+  public:
+    bool try_lock()
+    {
+        return true;
+    }
+};
+
 }  // namespace
 
 TEST(TypeTraitsTest, IsBasicLockableCompileTimeChecks)
@@ -107,4 +125,21 @@ TEST(TypeTraitsTest, LockWithOwnsLockCompileTimeChecks)
         << "std::unique_lock<std::mutex> should satisfy LockWithOwnsLock";
     EXPECT_TRUE((LockWithOwnsLock<std::shared_lock<std::shared_mutex>>::value))
         << "std::shared_lock<std::shared_mutex> should satisfy LockWithOwnsLock";
+}
+
+TEST(TypeTraitsTest, IsTryLockableCompileTimeChecks)
+{
+    EXPECT_TRUE((is_try_lockable_v<TryLockableArchetype>))
+        << "a basic lockable with try_lock should satisfy is_try_lockable";
+    EXPECT_FALSE((is_try_lockable_v<test::BasicLockableArchetype>))
+        << "a basic lockable without try_lock should not satisfy is_try_lockable";
+    EXPECT_FALSE((is_try_lockable_v<TryLockWithoutBasicLocking>))
+        << "a type without lock and unlock should not satisfy is_try_lockable";
+
+    EXPECT_TRUE((is_try_lockable_v<std::mutex>)) << "std::mutex should be try_lockable";
+    EXPECT_TRUE((is_try_lockable_v<std::recursive_mutex>)) << "std::recursive_mutex should be try_lockable";
+    EXPECT_TRUE((is_try_lockable_v<std::timed_mutex>)) << "std::timed_mutex should be try_lockable";
+    EXPECT_TRUE((is_try_lockable_v<std::recursive_timed_mutex>)) << "std::recursive_timed_mutex should be try_lockable";
+    EXPECT_TRUE((is_try_lockable_v<std::shared_mutex>)) << "std::shared_mutex should be try_lockable";
+    EXPECT_TRUE((is_try_lockable_v<std::shared_timed_mutex>)) << "std::shared_timed_mutex should be try_lockable";
 }
