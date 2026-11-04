@@ -16,6 +16,7 @@
 #include "gmock/gmock.h"
 #include "gtest/gtest.h"
 
+#include <chrono>
 #include <mutex>
 #include <shared_mutex>
 
@@ -71,6 +72,16 @@ class TryLockableArchetype : public test::BasicLockableArchetype
     }
 };
 
+class TimedLockableArchetype : public test::BasicLockableArchetype
+{
+  public:
+    template <typename Rep, typename Period>
+    bool try_lock_for(const std::chrono::duration<Rep, Period>&)
+    {
+        return true;
+    }
+};
+
 class TryLockableIncorrectTryLockReturn : public test::BasicLockableArchetype
 {
   public:
@@ -92,6 +103,30 @@ class TryLockWithoutBasicLocking
 {
   public:
     bool try_lock()
+    {
+        return true;
+    }
+};
+
+class TimedLockableUntilArchetype : public test::BasicLockableArchetype
+{
+  public:
+    template <typename Clock, typename Duration>
+    bool try_lock_until(const std::chrono::time_point<Clock, Duration>&)
+    {
+        return true;
+    }
+};
+
+class TimedLockWithoutBasicLocking
+{
+  public:
+    bool try_lock_for(const std::chrono::milliseconds&)
+    {
+        return true;
+    }
+
+    bool try_lock_until(const std::chrono::steady_clock::time_point&)
     {
         return true;
     }
@@ -169,4 +204,38 @@ TEST(TypeTraitsTest, IsTryLockableCompileTimeChecks)
     EXPECT_TRUE((is_try_lockable_v<std::recursive_timed_mutex>)) << "std::recursive_timed_mutex should be try_lockable";
     EXPECT_TRUE((is_try_lockable_v<std::shared_mutex>)) << "std::shared_mutex should be try_lockable";
     EXPECT_TRUE((is_try_lockable_v<std::shared_timed_mutex>)) << "std::shared_timed_mutex should be try_lockable";
+}
+
+TEST(TypeTraitsTest, IsTimedLockableForCompileTimeChecks)
+{
+    using FractionalDuration = std::chrono::duration<double, std::ratio<1, 3>>;
+
+    EXPECT_TRUE((is_timed_lockable_for_v<TimedLockableArchetype>));
+    EXPECT_TRUE((is_timed_lockable_for_v<TimedLockableArchetype, FractionalDuration>));
+    EXPECT_FALSE((is_timed_lockable_for_v<test::BasicLockableArchetype>));
+    EXPECT_FALSE((is_timed_lockable_for_v<TimedLockWithoutBasicLocking>));
+
+    EXPECT_TRUE((is_timed_lockable_for_v<std::timed_mutex>));
+    EXPECT_TRUE((is_timed_lockable_for_v<std::recursive_timed_mutex>));
+    EXPECT_TRUE((is_timed_lockable_for_v<std::shared_timed_mutex>));
+    EXPECT_FALSE((is_timed_lockable_for_v<std::mutex>));
+    EXPECT_FALSE((is_timed_lockable_for_v<std::recursive_mutex>));
+    EXPECT_FALSE((is_timed_lockable_for_v<std::shared_mutex>));
+}
+
+TEST(TypeTraitsTest, IsTimedLockableUntilCompileTimeChecks)
+{
+    using TimePoint = std::chrono::time_point<std::chrono::steady_clock>;
+
+    EXPECT_TRUE((is_timed_lockable_until_v<TimedLockableUntilArchetype>));
+    EXPECT_TRUE((is_timed_lockable_until_v<TimedLockableUntilArchetype, TimePoint>));
+    EXPECT_FALSE((is_timed_lockable_until_v<test::BasicLockableArchetype>));
+    EXPECT_FALSE((is_timed_lockable_until_v<TimedLockWithoutBasicLocking>));
+
+    EXPECT_TRUE((is_timed_lockable_until_v<std::timed_mutex>));
+    EXPECT_TRUE((is_timed_lockable_until_v<std::recursive_timed_mutex>));
+    EXPECT_TRUE((is_timed_lockable_until_v<std::shared_timed_mutex>));
+    EXPECT_FALSE((is_timed_lockable_until_v<std::mutex>));
+    EXPECT_FALSE((is_timed_lockable_until_v<std::recursive_mutex>));
+    EXPECT_FALSE((is_timed_lockable_until_v<std::shared_mutex>));
 }
