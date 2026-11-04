@@ -57,7 +57,7 @@ auto GetWithLockMember()
 }
 
 template <typename Sync, typename Func>
-decltype(auto) InvokeDeprecatedWithLock(Sync& sync, Func func)
+decltype(auto) WithLock(Sync& sync, Func func)
 {
     const auto with_lock = GetWithLockMember<Sync, Func>();
     return score::InvokeDeprecated(with_lock, sync, std::move(func));
@@ -72,7 +72,7 @@ constexpr auto clone = [](auto ptr) noexcept(std::is_nothrow_copy_constructible_
 template <template <typename> class Synced, typename T>
 auto clone_synced(const Synced<T>& sync)
 {
-    return InvokeDeprecatedWithLock(sync, clone);
+    return WithLock(sync, clone);
 }
 }  // namespace
 
@@ -205,13 +205,13 @@ TEST(SynchronizedTest, TestSynchronizedWrapperTemplate)
 {
     Syncint_t sync_value(42);
 
-    EXPECT_EQ(InvokeDeprecatedWithLock(sync_value, clone), 42);
+    EXPECT_EQ(*sync_value.lock(), 42);
 
-    InvokeDeprecatedWithLock(sync_value, [](Syncint_t::pointer ptr) noexcept {
+    WithLock(sync_value, [](Syncint_t::pointer ptr) noexcept {
         *ptr = 100;
     });
 
-    EXPECT_EQ(InvokeDeprecatedWithLock(sync_value, clone), 100);
+    EXPECT_EQ(*sync_value.lock(), 100);
 }
 
 // Test for thread safety with multiple threads accessing a synchronized wrapper
@@ -225,9 +225,7 @@ TEST(SynchronizedTest, TestConcurrency)
         return std::async(std::launch::async, [&counter]() noexcept {
             for (int i = 0; i < increments_per_task; ++i)
             {
-                InvokeDeprecatedWithLock(counter, [](Syncint_t::pointer ptr) noexcept {
-                    ++(*ptr);
-                });
+                ++(*counter.lock());
             }
         });
     };
@@ -241,7 +239,7 @@ TEST(SynchronizedTest, TestConcurrency)
         future.wait();
     }
 
-    EXPECT_EQ(InvokeDeprecatedWithLock(counter, clone), num_tasks * increments_per_task);
+    EXPECT_EQ(*counter.lock(), num_tasks * increments_per_task);
 }
 
 TEST(SynchronizedTest, LockMethodBasic)
@@ -255,7 +253,7 @@ TEST(SynchronizedTest, LockMethodBasic)
         EXPECT_EQ(*locked_ptr, 100);
     }
 
-    EXPECT_EQ(InvokeDeprecatedWithLock(sync_int, clone), 100);
+    EXPECT_EQ(*sync_int.lock(), 100);
 }
 
 TEST(SynchronizedTest, TestStructLockReturnValue)
@@ -286,44 +284,44 @@ TEST(SynchronizedTest, TestStructConstLockBehavior)
         EXPECT_EQ((*const_locked_ptr).plus_50(), 92);
     }
 
-    EXPECT_EQ(InvokeDeprecatedWithLock(const_sync_struct, clone), 42);
+    EXPECT_EQ(*const_sync_struct.lock(), 42);
 }
 
 TEST(SynchronizedTest, TestStructWithLockVariations)
 {
     SyncTS_t sync_struct(TestStruct{42});
 
-    InvokeDeprecatedWithLock(sync_struct, [](SyncTS_t::pointer s) noexcept {
+    WithLock(sync_struct, [](SyncTS_t::pointer s) noexcept {
         s->value = 100;
     });
 
-    EXPECT_EQ(InvokeDeprecatedWithLock(sync_struct, clone), 100);
+    EXPECT_EQ(WithLock(sync_struct, clone), 100);
 
-    InvokeDeprecatedWithLock(sync_struct, [](SyncTS_t::pointer s) noexcept {
+    WithLock(sync_struct, [](SyncTS_t::pointer s) noexcept {
         s->value = s->value * 2;
     });
 
-    EXPECT_EQ(InvokeDeprecatedWithLock(sync_struct, clone), 200);
+    EXPECT_EQ(WithLock(sync_struct, clone), 200);
 }
 
 TEST(SynchronizedTest, TestStructMemberFunctionPointers)
 {
     SyncTS_t sync_struct(TestStruct{42});
-    EXPECT_EQ(InvokeDeprecatedWithLock(sync_struct, std::mem_fn(&TestStruct::plus_50)), 92);
-    EXPECT_EQ(InvokeDeprecatedWithLock(sync_struct, &TestStruct::plus_50), 92);
+    EXPECT_EQ(WithLock(sync_struct, std::mem_fn(&TestStruct::plus_50)), 92);
+    EXPECT_EQ(WithLock(sync_struct, &TestStruct::plus_50), 92);
 
     const SyncTS_t sync_const(42);
-    EXPECT_EQ(InvokeDeprecatedWithLock(sync_const, std::mem_fn(&TestStruct::plus_50)), 92);
-    EXPECT_EQ(InvokeDeprecatedWithLock(sync_const, &TestStruct::plus_50), 92);
+    EXPECT_EQ(WithLock(sync_const, std::mem_fn(&TestStruct::plus_50)), 92);
+    EXPECT_EQ(WithLock(sync_const, &TestStruct::plus_50), 92);
 }
 
 TEST(SynchronizedTest, TestStructFreeFunctionPointers)
 {
     SyncTS_t sync_struct(TestStruct{42});
 
-    InvokeDeprecatedWithLock(sync_struct, &set_999);
+    WithLock(sync_struct, &set_999);
 
-    EXPECT_EQ(InvokeDeprecatedWithLock(sync_struct, &get_value), 999);
+    EXPECT_EQ(WithLock(sync_struct, &get_value), 999);
 }
 
 TEST(SynchronizedTest, TestStructLockNonConst)
@@ -336,7 +334,7 @@ TEST(SynchronizedTest, TestStructLockNonConst)
         EXPECT_EQ(locked_ptr->value, 77);
     }
 
-    EXPECT_EQ(InvokeDeprecatedWithLock(sync_struct, clone), 77);
+    EXPECT_EQ(WithLock(sync_struct, clone), 77);
 }
 
 TEST(SynchronizedTest, TestStructLockConst)
@@ -348,7 +346,7 @@ TEST(SynchronizedTest, TestStructLockConst)
         EXPECT_EQ(const_locked_ptr->value, 42);
     }
 
-    EXPECT_EQ(InvokeDeprecatedWithLock(const_sync_struct, clone), 42);
+    EXPECT_EQ(WithLock(const_sync_struct, clone), 42);
 }
 
 TEST(SynchronizedTest, TestStructLambdaCaptureModes)
@@ -358,140 +356,90 @@ TEST(SynchronizedTest, TestStructLambdaCaptureModes)
     int external_value = 10;
 
     // Test lambda with value capture
-    InvokeDeprecatedWithLock(sync_struct, [external_value](SyncTS_t::pointer s) noexcept {
+    WithLock(sync_struct, [external_value](SyncTS_t::pointer s) noexcept {
         s->value = external_value * 5;
     });
 
-    auto result = InvokeDeprecatedWithLock(sync_struct, [](SyncTS_t::const_pointer s) noexcept {
+    auto result = WithLock(sync_struct, [](SyncTS_t::const_pointer s) noexcept {
         return s->value;
     });
     EXPECT_EQ(result, 50);
 
     // Test lambda with reference capture
     int multiplier = 4;
-    InvokeDeprecatedWithLock(sync_struct, [&multiplier](SyncTS_t::pointer s) noexcept {
+    WithLock(sync_struct, [&multiplier](SyncTS_t::pointer s) noexcept {
         s->value = s->value * multiplier;
     });
 
-    EXPECT_EQ(InvokeDeprecatedWithLock(sync_struct, clone), 200);
+    EXPECT_EQ(WithLock(sync_struct, clone), 200);
 }
 
 TEST(SynchronizedTest, TestStructVoidReturningLambdas)
 {
     SyncTS_t sync_struct(TestStruct{42});
 
-    InvokeDeprecatedWithLock(sync_struct, [](SyncTS_t::pointer s) noexcept -> void {
+    WithLock(sync_struct, [](SyncTS_t::pointer s) noexcept -> void {
         s->value = 123;
     });
 
-    EXPECT_EQ(InvokeDeprecatedWithLock(sync_struct, clone), 123);
+    EXPECT_EQ(WithLock(sync_struct, clone), 123);
 }
 
 TEST(SynchronizedTest, TestStructCopyVsMoveSemantics)
 {
     // Test construction from temporary (move semantics)
     SyncTS_t sync_struct1(TestStruct{42});
-    auto val = InvokeDeprecatedWithLock(sync_struct1, [](SyncTS_t::const_pointer s) noexcept {
-        return s->value;
-    });
-    EXPECT_EQ(val, 42);
+    EXPECT_EQ(sync_struct1.lock()->value, 42);
 
     // Test construction from lvalue (copy semantics)
-    TestStruct temp_struct{55};
-    SyncTS_t sync_struct2(temp_struct);
-    auto val1 = InvokeDeprecatedWithLock(sync_struct2, [](SyncTS_t::const_pointer s) noexcept {
-        return s->value;
-    });
-    EXPECT_EQ(val1, 55);
+    TestStruct local_struct{55};
+    SyncTS_t sync_struct2(local_struct);
+    EXPECT_EQ(sync_struct2.lock()->value, 55);
 
     // Test in-place construction
     SyncTS_t sync_struct3(TestStruct{77});
-    auto val2 = InvokeDeprecatedWithLock(sync_struct3, [](SyncTS_t::const_pointer s) noexcept {
-        return s->value;
-    });
-    EXPECT_EQ(val2, 77);
+    EXPECT_EQ(sync_struct3.lock()->value, 77);
 }
 
 TEST(SynchronizedTest, TestMoveOnlyObject)
 {
     SyncMoveOnly_t sync_obj(150);
+    EXPECT_EQ(sync_obj.lock()->value, 150);
 
-    auto result = InvokeDeprecatedWithLock(sync_obj, [](SyncMoveOnly_t::const_pointer ptr) noexcept {
-        return ptr->value;
-    });
-    EXPECT_EQ(result, 150);
-
-    InvokeDeprecatedWithLock(sync_obj, [](SyncMoveOnly_t::pointer ptr) noexcept {
-        ptr->value = 300;
-    });
-
-    auto val = InvokeDeprecatedWithLock(sync_obj, [](SyncMoveOnly_t::const_pointer ptr) noexcept {
-        return ptr->value;
-    });
-    EXPECT_EQ(val, 300);
+    sync_obj.lock()->value = 300;
+    EXPECT_EQ(sync_obj.lock()->value, 300);
 }
 
 TEST(SynchronizedTest, TestNoCopyNoMoveObject)
 {
     SyncNoCopyNoMove_t sync_obj(250);
+    EXPECT_EQ(sync_obj.lock()->value, 250);
 
-    auto result = InvokeDeprecatedWithLock(sync_obj, [](SyncNoCopyNoMove_t::const_pointer ptr) noexcept {
-        return ptr->value;
-    });
-    EXPECT_EQ(result, 250);
-
-    InvokeDeprecatedWithLock(sync_obj, [](SyncNoCopyNoMove_t::pointer ptr) noexcept {
-        ptr->value = 500;
-    });
-
-    auto val = InvokeDeprecatedWithLock(sync_obj, [](SyncNoCopyNoMove_t::const_pointer ptr) noexcept {
-        return ptr->value;
-    });
-    EXPECT_EQ(val, 500);
+    sync_obj.lock()->value = 500;
+    EXPECT_EQ(sync_obj.lock()->value, 500);
 }
 
 TEST(SynchronizedTest, TestDefaultConstructedObject)
 {
     SyncDefaultConstructible_t sync_obj{};
+    EXPECT_EQ(sync_obj.lock()->value, 42);
 
-    auto result = InvokeDeprecatedWithLock(sync_obj, [](SyncDefaultConstructible_t::const_pointer ptr) noexcept {
-        return ptr->value;
-    });
-    EXPECT_EQ(result, 42);
-
-    InvokeDeprecatedWithLock(sync_obj, [](SyncDefaultConstructible_t::pointer ptr) noexcept {
-        ptr->value = 100;
-    });
-
-    auto val = InvokeDeprecatedWithLock(sync_obj, [](SyncDefaultConstructible_t::const_pointer ptr) noexcept {
-        return ptr->value;
-    });
-    EXPECT_EQ(val, 100);
+    sync_obj.lock()->value = 100;
+    EXPECT_EQ(sync_obj.lock()->value, 100);
 }
 
 TEST(SynchronizedTest, TestParameterizedConstruction)
 {
     SyncParameterized_t sync_obj(10, 20, "test_object");
+    EXPECT_EQ(sync_obj.lock()->x_plus_y(), 30);
+    EXPECT_EQ(sync_obj.lock()->GetName(), "test_object");
 
-    auto result = InvokeDeprecatedWithLock(sync_obj, [](SyncParameterized_t::const_pointer ptr) noexcept {
-        return ptr->x_plus_y();
+    [[maybe_unused]] auto result = sync_obj.lock().transform([](SyncParameterized_t::pointer p) noexcept {
+        p->x = 15;
+        p->y = 25;
+        return 0;
     });
-    EXPECT_EQ(result, 30);
-
-    auto name = InvokeDeprecatedWithLock(sync_obj, [](SyncParameterized_t::const_pointer ptr) noexcept {
-        return ptr->GetName();
-    });
-    EXPECT_EQ(name, "test_object");
-
-    InvokeDeprecatedWithLock(sync_obj, [](SyncParameterized_t::pointer ptr) noexcept {
-        ptr->x = 15;
-        ptr->y = 25;
-    });
-
-    result = InvokeDeprecatedWithLock(sync_obj, [](SyncParameterized_t::const_pointer ptr) noexcept {
-        return ptr->x_plus_y();
-    });
-    EXPECT_EQ(result, 40);
+    EXPECT_EQ(sync_obj.lock()->x_plus_y(), 40);
 }
 
 TEST(SynchronizedTest, TestCtadConstruction)
@@ -528,17 +476,13 @@ TEST(SynchronizedTest, TestPiecewiseConstruction)
         std::forward_as_tuple(5, 'Z'),                      // string args
         std::forward_as_tuple("Literal for mutex"s, 100));  // MockMutexParameterized args
 
-    EXPECT_EQ(InvokeDeprecatedWithLock(sync_piecewise, clone), "ZZZZZ");
+    EXPECT_EQ(*sync_piecewise.lock(), "ZZZZZ");
 }
 
 TEST(SynchronizedTest, TestConstOperations)
 {
     const SyncTS_t const_sync_struct(TestStruct{42});
-
-    auto result = InvokeDeprecatedWithLock(const_sync_struct, [](SyncTS_t::const_pointer s) noexcept {
-        return s->value;
-    });
-    EXPECT_EQ(result, 42);
+    EXPECT_EQ(const_sync_struct.lock()->value, 42);
 
     {
         auto const_locked = const_sync_struct.lock();
@@ -556,26 +500,26 @@ TEST(SynchronizedTest, LockAndWithLock)
         EXPECT_EQ(locked_ptr->value, 150);
     }
 
-    InvokeDeprecatedWithLock(sync_struct, [](SyncTS_t::pointer s) noexcept {
+    WithLock(sync_struct, [](SyncTS_t::pointer s) noexcept {
         s->value = 200;
     });
 
-    auto result = InvokeDeprecatedWithLock(sync_struct, [](SyncTS_t::const_pointer s) {
+    auto result = WithLock(sync_struct, [](SyncTS_t::const_pointer s) {
         return s->plus_50();
     });
     EXPECT_EQ(result, 250);
-    auto val1 = InvokeDeprecatedWithLock(sync_struct, [](SyncTS_t::const_pointer s) noexcept {
+    auto val1 = WithLock(sync_struct, [](SyncTS_t::const_pointer s) noexcept {
         return s->value;
     });
     EXPECT_EQ(val1, 200);
 
     EXPECT_NO_THROW({
-        InvokeDeprecatedWithLock(sync_struct, [](SyncTS_t::const_pointer s) noexcept {
+        WithLock(sync_struct, [](SyncTS_t::const_pointer s) noexcept {
             EXPECT_EQ(s->value, 200);
         });
     });
 
-    auto val2 = InvokeDeprecatedWithLock(sync_struct, [](SyncTS_t::const_pointer s) noexcept {
+    auto val2 = WithLock(sync_struct, [](SyncTS_t::const_pointer s) noexcept {
         return s->value;
     });
     EXPECT_EQ(val2, 200);
@@ -585,26 +529,26 @@ TEST(SynchronizedTest, ConstNonConstCallableTest)
 {
     {
         Synchronized<TestStruct> sync(TestStruct{42});
-        EXPECT_EQ(InvokeDeprecatedWithLock(sync, ConstNonConstCallable<TestStruct>{}), 42);
-        EXPECT_EQ(InvokeDeprecatedWithLock(sync, NonConstCallable{}), "42");
+        EXPECT_EQ(WithLock(sync, ConstNonConstCallable<TestStruct>{}), 42);
+        EXPECT_EQ(WithLock(sync, NonConstCallable{}), "42");
 
         ConstNonConstCallable<TestStruct> cnc_callable;
-        EXPECT_EQ(InvokeDeprecatedWithLock(sync, cnc_callable), 42);
+        EXPECT_EQ(WithLock(sync, cnc_callable), 42);
 
         NonConstCallable nc_callable;
-        EXPECT_EQ(InvokeDeprecatedWithLock(sync, nc_callable), "42");
+        EXPECT_EQ(WithLock(sync, nc_callable), "42");
     }
 
     {
         const SyncTS_t const_sync(TestStruct{42});
-        EXPECT_EQ(InvokeDeprecatedWithLock(const_sync, ConstNonConstCallable<TestStruct>{}), "42");
-        EXPECT_EQ(InvokeDeprecatedWithLock(const_sync, NonConstCallable{}), "42");
+        EXPECT_EQ(WithLock(const_sync, ConstNonConstCallable<TestStruct>{}), "42");
+        EXPECT_EQ(WithLock(const_sync, NonConstCallable{}), "42");
 
         ConstNonConstCallable<TestStruct> cnc_callable;
-        EXPECT_EQ(InvokeDeprecatedWithLock(const_sync, cnc_callable), "42");
+        EXPECT_EQ(WithLock(const_sync, cnc_callable), "42");
 
         NonConstCallable nc_callable;
-        EXPECT_EQ(InvokeDeprecatedWithLock(const_sync, nc_callable), "42");
+        EXPECT_EQ(WithLock(const_sync, nc_callable), "42");
     }
 }
 
@@ -612,26 +556,26 @@ TEST(SynchronizedTest, TestStructExceptionSafetyDetailed)
 {
     SyncTS_t sync_struct(TestStruct{42});
 
-    InvokeDeprecatedWithLock(sync_struct, [](SyncTS_t::pointer s) noexcept {
+    WithLock(sync_struct, [](SyncTS_t::pointer s) noexcept {
         s->value = 100;
     });
 
     EXPECT_NO_THROW({
-        InvokeDeprecatedWithLock(sync_struct, [](SyncTS_t::pointer s) noexcept {
+        WithLock(sync_struct, [](SyncTS_t::pointer s) noexcept {
             s->value = 999;
             EXPECT_EQ(s->value, 999);
         });
     });
 
-    auto val = InvokeDeprecatedWithLock(sync_struct, [](SyncTS_t::const_pointer s) noexcept {
+    auto val = WithLock(sync_struct, [](SyncTS_t::const_pointer s) noexcept {
         return s->value;
     });
     EXPECT_EQ(val, 999);
 
-    InvokeDeprecatedWithLock(sync_struct, [](SyncTS_t::pointer s) noexcept {
+    WithLock(sync_struct, [](SyncTS_t::pointer s) noexcept {
         s->value = 200;
     });
-    auto val2 = InvokeDeprecatedWithLock(sync_struct, [](SyncTS_t::const_pointer s) noexcept {
+    auto val2 = WithLock(sync_struct, [](SyncTS_t::const_pointer s) noexcept {
         return s->value;
     });
     EXPECT_EQ(val2, 200);
