@@ -10,8 +10,8 @@
  *
  * SPDX-License-Identifier: Apache-2.0
  ********************************************************************************/
-/// \file
-/// \brief Serializer type for JSON null.
+/// @file
+/// @brief Serializer type for JSON null.
 
 #ifndef SCORE_JSON_INTERNAL_WRITER_VAJSON_J_NULL_TYPE_H
 #define SCORE_JSON_INTERNAL_WRITER_VAJSON_J_NULL_TYPE_H
@@ -20,13 +20,13 @@ namespace score::json::vajson
 {
 inline namespace types
 {
-/// \brief A Null type
+/// @brief A Null type
 struct JNullType final
 {
 };
 
-/// \brief Serializes a Null value
-/// \return The serializable null type.
+/// @brief Serializes a Null value
+/// @return The serializable null type.
 constexpr auto JNull() noexcept -> JNullType
 {
     return JNullType{};

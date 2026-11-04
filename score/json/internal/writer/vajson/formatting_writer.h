@@ -10,8 +10,8 @@
  *
  * SPDX-License-Identifier: Apache-2.0
  ********************************************************************************/
-/// \file
-/// \brief Output stream wrapper that emits the structural characters and the optional insignificant whitespace.
+/// @file
+/// @brief Output stream wrapper that emits the structural characters and the optional insignificant whitespace.
 
 #ifndef SCORE_JSON_INTERNAL_WRITER_VAJSON_FORMATTING_WRITER_H
 #define SCORE_JSON_INTERNAL_WRITER_VAJSON_FORMATTING_WRITER_H
@@ -24,8 +24,8 @@
 
 namespace score::json::vajson
 {
-/// \brief Writes the structural characters of a JSON document, cf. RFC 8259 section 2
-/// \details In compact mode no insignificant whitespace is emitted.
+/// @brief Writes the structural characters of a JSON document, cf. RFC 8259 section 2
+/// @details In compact mode no insignificant whitespace is emitted.
 ///     In pretty print mode every array element and object member is placed on its own line, indented by four spaces
 ///     per nesting level, and the name separator is followed by a single space.
 ///     Empty arrays and objects are written as `[]` and `{}` in both modes.
@@ -33,9 +33,9 @@ namespace score::json::vajson
 class FormattingWriter final
 {
   public:
-    /// \brief Constructs a FormattingWriter
-    /// \param[in] stream Output stream to write into. It must outlive this instance.
-    /// \param[in] formatting Whether insignificant whitespace is emitted to make the output human readable.
+    /// @brief Constructs a FormattingWriter
+    /// @param[in] stream Output stream to write into. It must outlive this instance.
+    /// @param[in] formatting Whether insignificant whitespace is emitted to make the output human readable.
     FormattingWriter(std::ostream& stream, const Formatting formatting) noexcept
         : stream_{stream}, formatting_{formatting}
     {
@@ -47,16 +47,16 @@ class FormattingWriter final
     auto operator=(FormattingWriter&&) -> FormattingWriter& = delete;
     ~FormattingWriter() noexcept = default;
 
-    /// \brief Returns the underlying output stream to write scalar values into
-    /// \return The output stream passed on construction.
+    /// @brief Returns the underlying output stream to write scalar values into
+    /// @return The output stream passed on construction.
     [[nodiscard]]
     auto Stream() const noexcept -> std::ostream&
     {
         return stream_;
     }
 
-    /// \brief Writes the begin of an array or object and enters its nesting level
-    /// \param[in] begin The structural character opening the container, either '[' or '{'.
+    /// @brief Writes the begin of an array or object and enters its nesting level
+    /// @param[in] begin The structural character opening the container, either '[' or '{'.
     void BeginContainer(const char begin) noexcept
     {
         static_cast<void>(stream_.put(begin));
@@ -64,8 +64,8 @@ class FormattingWriter final
         container_empty_ = true;
     }
 
-    /// \brief Writes the separation in front of an array element or object member
-    /// \param[in] preceded_by_element Whether another element of the same container was written before.
+    /// @brief Writes the separation in front of an array element or object member
+    /// @param[in] preceded_by_element Whether another element of the same container was written before.
     void BeginElement(const bool preceded_by_element) noexcept
     {
         if (preceded_by_element)
@@ -76,7 +76,7 @@ class FormattingWriter final
         container_empty_ = false;
     }
 
-    /// \brief Writes the name separator between an object member's name and its value
+    /// @brief Writes the name separator between an object member's name and its value
     void WriteNameSeparator() const noexcept
     {
         static_cast<void>(stream_.put(':'));
@@ -86,10 +86,10 @@ class FormattingWriter final
         }
     }
 
-    /// \brief Leaves the nesting level of an array or object and writes its end
-    /// \details The enclosing container, if any, is non-empty afterwards, since the closed container is one of its
+    /// @brief Leaves the nesting level of an array or object and writes its end
+    /// @details The enclosing container, if any, is non-empty afterwards, since the closed container is one of its
     ///     elements.
-    /// \param[in] end The structural character closing the container, either ']' or '}'.
+    /// @param[in] end The structural character closing the container, either ']' or '}'.
     void EndContainer(const char end) noexcept
     {
         --depth_;
@@ -102,7 +102,7 @@ class FormattingWriter final
     }
 
   private:
-    /// \brief Starts a new line indented to the current nesting level, if pretty printing is enabled
+    /// @brief Starts a new line indented to the current nesting level, if pretty printing is enabled
     void WriteLineBreak() const noexcept
     {
         if (formatting_ == Formatting::kPrettyPrint)
@@ -116,19 +116,19 @@ class FormattingWriter final
         }
     }
 
-    /// \brief Indentation written per nesting level
+    /// @brief Indentation written per nesting level
     static constexpr std::string_view kIndentation{"    "};
 
-    /// \brief Output stream to write into
+    /// @brief Output stream to write into
     std::ostream& stream_;
 
-    /// \brief Whether insignificant whitespace is emitted
+    /// @brief Whether insignificant whitespace is emitted
     Formatting formatting_;
 
-    /// \brief Number of arrays and objects that enclose the current position
+    /// @brief Number of arrays and objects that enclose the current position
     std::size_t depth_{0U};
 
-    /// \brief Whether no element was written into the innermost open container yet
+    /// @brief Whether no element was written into the innermost open container yet
     bool container_empty_{false};
 };
 

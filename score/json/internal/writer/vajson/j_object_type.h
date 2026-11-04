@@ -10,9 +10,9 @@
  *
  * SPDX-License-Identifier: Apache-2.0
  ********************************************************************************/
-/// \file
-/// \brief A collection of serializers for objects.
-/// \details Provides serializers for Object types.
+/// @file
+/// @brief A collection of serializers for objects.
+/// @details Provides serializers for Object types.
 
 #ifndef SCORE_JSON_INTERNAL_WRITER_VAJSON_J_OBJECT_TYPE_H
 #define SCORE_JSON_INTERNAL_WRITER_VAJSON_J_OBJECT_TYPE_H
@@ -24,20 +24,20 @@ namespace score::json::vajson
 {
 inline namespace types
 {
-/// \brief An Object type
-/// \tparam Fn Type of serializer function.
+/// @brief An Object type
+/// @tparam Fn Type of serializer function.
 template <typename Fn>
 struct JObjectType final
 {
-    /// \brief Function used to serialize the object
+    /// @brief Function used to serialize the object
     Fn fn;
 };
 
-/// \brief Serializes an object value
-/// \tparam Fn Type of serializer function. Must take an ObjectStart&& and return the follow-up serializer.
-/// \param[in] fn Function used to serialize the object.
-/// \return The serializable object type.
-/// \pre The passed function does not throw any exceptions
+/// @brief Serializes an object value
+/// @tparam Fn Type of serializer function. Must take an ObjectStart&& and return the follow-up serializer.
+/// @param[in] fn Function used to serialize the object.
+/// @return The serializable object type.
+/// @pre The passed function does not throw any exceptions
 template <typename Fn, typename = std::enable_if_t<std::is_rvalue_reference_v<Fn&&>>>
 auto JObject(Fn&& fn) noexcept -> JObjectType<Fn>
 {  // coverity[autosar_cpp14_a13_3_1_violation]

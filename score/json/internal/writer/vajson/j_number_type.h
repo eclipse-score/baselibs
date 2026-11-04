@@ -10,8 +10,8 @@
  *
  * SPDX-License-Identifier: Apache-2.0
  ********************************************************************************/
-/// \file
-/// \brief Serializer type for JSON numbers.
+/// @file
+/// @brief Serializer type for JSON numbers.
 
 #ifndef SCORE_JSON_INTERNAL_WRITER_VAJSON_J_NUMBER_TYPE_H
 #define SCORE_JSON_INTERNAL_WRITER_VAJSON_J_NUMBER_TYPE_H
@@ -22,35 +22,35 @@ namespace score::json::vajson
 {
 inline namespace types
 {
-/// \brief A Number type
-/// \details bool is excluded: it is a JSON boolean, not a JSON number, and has no std::to_chars overload.
+/// @brief A Number type
+/// @details bool is excluded: it is a JSON boolean, not a JSON number, and has no std::to_chars overload.
 ///     Use JBool instead.
-/// \tparam N Type of number.
+/// @tparam N Type of number.
 template <typename N, typename = std::enable_if_t<std::is_arithmetic_v<N> && !std::is_same_v<N, bool>>>
 class JNumberType final
 {
   public:
-    /// \brief Constructs a Number type
-    /// \param[in] num Number to serialize.
+    /// @brief Constructs a Number type
+    /// @param[in] num Number to serialize.
     constexpr explicit JNumberType(N num) noexcept : value_{num} {}
 
-    /// \brief Returns the contained value
-    /// \return The value.
+    /// @brief Returns the contained value
+    /// @return The value.
     [[nodiscard]] auto GetValue() const noexcept -> N
     {
         return this->value_;
     }
 
   private:
-    /// \brief Wrapped number value
+    /// @brief Wrapped number value
     N value_;
 };
 
-/// \brief Serializes a Number value
-/// \details bool is excluded: it is a JSON boolean, not a JSON number. Use JBool instead.
-/// \tparam N Type of number.
-/// \param[in] n The number to serialize.
-/// \return The serializable number type.
+/// @brief Serializes a Number value
+/// @details bool is excluded: it is a JSON boolean, not a JSON number. Use JBool instead.
+/// @tparam N Type of number.
+/// @param[in] n The number to serialize.
+/// @return The serializable number type.
 template <typename N, typename = std::enable_if_t<std::is_arithmetic_v<N> && !std::is_same_v<N, bool>>>
 constexpr auto JNumber(N n) noexcept -> JNumberType<N>
 {

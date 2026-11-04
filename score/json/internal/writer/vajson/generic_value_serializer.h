@@ -10,9 +10,9 @@
  *
  * SPDX-License-Identifier: Apache-2.0
  ********************************************************************************/
-/// \file
-/// \brief Serializer for generic JSON value types.
-/// \details Provides serializers for Null, Bool, Number, String, Array, and Object types.
+/// @file
+/// @brief Serializer for generic JSON value types.
+/// @details Provides serializers for Null, Bool, Number, String, Array, and Object types.
 
 #ifndef SCORE_JSON_INTERNAL_WRITER_VAJSON_GENERIC_VALUE_SERIALIZER_H
 #define SCORE_JSON_INTERNAL_WRITER_VAJSON_GENERIC_VALUE_SERIALIZER_H
@@ -37,45 +37,45 @@
 
 namespace score::json::vajson
 {
-/// \brief A serializer for JSON value types
-/// \tparam Return Type of the return value of a << operation. Must be one of the following types: - Unit: Serializer
+/// @brief A serializer for JSON value types
+/// @tparam Return Type of the return value of a << operation. Must be one of the following types: - Unit: Serializer
 ///     has no follow-up state (outermost element). - Self or GenericValueSerializer<T>: Next element is another value
 ///     (e.g. inside arrays). - KeySerializer: Next element is a key.
 template <typename Return>
 class GenericValueSerializer final
 {
   public:
-    /// \brief Type of the return value
-    /// \details Set the type of the return value to be either its own type GenericValueSerializer (for arrays or a
+    /// @brief Type of the return value
+    /// @details Set the type of the return value to be either its own type GenericValueSerializer (for arrays or a
     ///     specified type) or the type specified by Return.
     using Next = typename std::conditional_t<std::is_same_v<Return, Self>, GenericValueSerializer, Return>;
 
-    /// \brief Constructs a GenericValueSerializer from a writer
-    /// \details Do not create an instance of GenericValueSerializer directly, use the aliases in
+    /// @brief Constructs a GenericValueSerializer from a writer
+    /// @details Do not create an instance of GenericValueSerializer directly, use the aliases in
     ///     score/json/internal/writer/vajson/serializer_types.h
-    /// \param[in] os Writer to write into. It must outlive the serializer.
-    /// \param[in] state of the Serializer.
+    /// @param[in] os Writer to write into. It must outlive the serializer.
+    /// @param[in] state of the Serializer.
     explicit GenericValueSerializer(WriterType os, SerializerState state = SerializerState::kEmpty) noexcept
         : os_{os}, serializer_state_{state}
     {
     }
 
-    /// \brief Default move constructor
+    /// @brief Default move constructor
     GenericValueSerializer(GenericValueSerializer&&) noexcept = default;
 
-    /// \brief Default move assignment
-    /// \return A reference to the moved into object.
+    /// @brief Default move assignment
+    /// @return A reference to the moved into object.
     auto operator=(GenericValueSerializer&&) & noexcept -> GenericValueSerializer& = default;
 
     // Deleted copy constructor/assignment operator.
     GenericValueSerializer(const GenericValueSerializer&) = delete;
     auto operator=(const GenericValueSerializer&) -> GenericValueSerializer& = delete;
 
-    /// \brief Default DTOR
+    /// @brief Default DTOR
     ~GenericValueSerializer() noexcept = default;
 
-    /// \brief Serializes a null value
-    /// \return The succeeding serializer.
+    /// @brief Serializes a null value
+    /// @return The succeeding serializer.
     // coverity[autosar_cpp14_m9_3_3_violation]
     auto operator<<(JNullType) && noexcept -> Next
     {
@@ -85,9 +85,9 @@ class GenericValueSerializer final
         });
     }
 
-    /// \brief Serializes a boolean value
-    /// \param[in] b Boolean value to serialize.
-    /// \return The succeeding serializer.
+    /// @brief Serializes a boolean value
+    /// @param[in] b Boolean value to serialize.
+    /// @return The succeeding serializer.
     // coverity[autosar_cpp14_m9_3_3_violation]
     auto operator<<(JBoolType b) && noexcept -> Next
     {
@@ -99,13 +99,13 @@ class GenericValueSerializer final
         });
     }
 
-    /// \brief Serializes a number value
-    /// \details The JSON grammar of RFC 8259, section 6 only covers finite numbers, so infinity and NaN have no
+    /// @brief Serializes a number value
+    /// @details The JSON grammar of RFC 8259, section 6 only covers finite numbers, so infinity and NaN have no
     ///     representation. Such a value is not written at all, instead the output stream is put into the failed
     ///     state, which the enclosing serializer reports as an error to its caller.
-    /// \tparam T Type of number.
-    /// \param[in] number value to serialize.
-    /// \return The succeeding serializer.
+    /// @tparam T Type of number.
+    /// @param[in] number value to serialize.
+    /// @return The succeeding serializer.
     template <typename T>
     // coverity[autosar_cpp14_m9_3_3_violation]
     auto operator<<(JNumberType<T> number) && noexcept -> Next
@@ -134,12 +134,12 @@ class GenericValueSerializer final
         });
     }
 
-    /// \brief Serializes a string value
-    /// \details
+    /// @brief Serializes a string value
+    /// @details
     /// - Add quotes to the begin and end of the string.
     /// - Serialize the escaped string as a JSON string value.
-    /// \param[in] string value to serialize.
-    /// \return The succeeding serializer.
+    /// @param[in] string value to serialize.
+    /// @return The succeeding serializer.
     // coverity[autosar_cpp14_m9_3_3_violation]
     auto operator<<(JStringType string) && noexcept -> Next
     {
@@ -150,15 +150,15 @@ class GenericValueSerializer final
         });
     }
 
-    /// \brief Serializes a series of serializable values
-    /// \details
+    /// @brief Serializes a series of serializable values
+    /// @details
     /// - Add an opening square bracket.
     /// - Serialize every value as a JSON value.
     /// - Add a closing square bracket.
-    /// \tparam Fn Type of serializer function.
-    /// \param[in] tuple to serialize.
-    /// \return The succeeding serializer.
-    /// \pre The function contained in the argument does not throw any exceptions
+    /// @tparam Fn Type of serializer function.
+    /// @param[in] tuple to serialize.
+    /// @return The succeeding serializer.
+    /// @pre The function contained in the argument does not throw any exceptions
     template <typename Fn>
     // coverity[autosar_cpp14_m9_3_3_violation]
     auto operator<<(JArrayType<Fn> tuple) && noexcept -> Next
@@ -170,22 +170,22 @@ class GenericValueSerializer final
         });
     }
 
-    /// \brief Serializes an object
-    /// \details
+    /// @brief Serializes an object
+    /// @details
     /// - Assert that the current state allows adding an object.
     /// - Add an opening curly bracket.
     /// - Serialize the object as a JSON object.
     /// - Add a closing curly bracket.
-    /// \tparam Fn Type of serializer function.
-    /// \param[in] object to serialize.
-    /// \return The succeeding serializer.
-    /// \pre The function contained in the argument does not throw any exceptions
+    /// @tparam Fn Type of serializer function.
+    /// @param[in] object to serialize.
+    /// @return The succeeding serializer.
+    /// @pre The function contained in the argument does not throw any exceptions
     template <typename Fn>
     // coverity[autosar_cpp14_m9_3_3_violation]
     auto operator<<(JObjectType<Fn> object) && noexcept -> Next
     {
         return this->Serialize([this, &object]() noexcept {
-            /// \brief Defines the return value type
+            /// @brief Defines the return value type
             using ReturnType = decltype(object.fn(ObjectStart(this->os_.get())));
             static_assert(std::is_same<ReturnType, KeySerializer>::value, "Cannot close object in current state");
 
@@ -196,28 +196,28 @@ class GenericValueSerializer final
     }
 
   private:
-    /// \brief Checks whether a number is representable as a JSON number
-    /// \details RFC 8259, section 6 only allows finite numbers. Only floating point values can be non-finite,
+    /// @brief Checks whether a number is representable as a JSON number
+    /// @details RFC 8259, section 6 only allows finite numbers. Only floating point values can be non-finite,
     ///     integral values are always representable.
-    /// \tparam T Type of number.
-    /// \param[in] value Number to check.
-    /// \return True if the value is finite, false otherwise.
+    /// @tparam T Type of number.
+    /// @param[in] value Number to check.
+    /// @return True if the value is finite, false otherwise.
     template <typename T>
     static auto IsFinite(const T value) noexcept -> bool
     {
         return !std::is_floating_point_v<T> || std::isfinite(value);
     }
 
-    /// \brief Serializes a value
-    /// \details
+    /// @brief Serializes a value
+    /// @details
     /// - If the value is an array element:
     /// - Add a comma if another element was serialized before.
     /// - Start a new, indented line if pretty printing is enabled.
     /// - Execute the given serializer function.
-    /// \tparam Fn Type of function.
-    /// \param[in] fn Serializer call function.
-    /// \return The succeeding serializer.
-    /// \pre The passed function does not throw any exceptions
+    /// @tparam Fn Type of function.
+    /// @param[in] fn Serializer call function.
+    /// @return The succeeding serializer.
+    /// @pre The passed function does not throw any exceptions
     template <typename Fn>
     auto Serialize(Fn&& fn) const noexcept -> Next
     {
@@ -230,10 +230,10 @@ class GenericValueSerializer final
         return Next(this->os_.get(), SerializerState::kNonEmpty);
     }
 
-    /// \brief Writer to write into
+    /// @brief Writer to write into
     WriterType os_;
 
-    /// \brief Serializer state
+    /// @brief Serializer state
     SerializerState serializer_state_;
 };
 

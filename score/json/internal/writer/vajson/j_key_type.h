@@ -10,8 +10,8 @@
  *
  * SPDX-License-Identifier: Apache-2.0
  ********************************************************************************/
-/// \file
-/// \brief Serializer type for JSON object keys.
+/// @file
+/// @brief Serializer type for JSON object keys.
 
 #ifndef SCORE_JSON_INTERNAL_WRITER_VAJSON_J_KEY_TYPE_H
 #define SCORE_JSON_INTERNAL_WRITER_VAJSON_J_KEY_TYPE_H
@@ -22,29 +22,29 @@ namespace score::json::vajson
 {
 inline namespace types
 {
-/// \brief A Key type
+/// @brief A Key type
 class JKeyType final
 {
   public:
-    /// \brief Constructs a Key type
-    /// \param[in] s Key to serialize.
+    /// @brief Constructs a Key type
+    /// @param[in] s Key to serialize.
     explicit constexpr JKeyType(std::string_view s) noexcept : value_{s} {}
 
-    /// \brief Returns the contained value
-    /// \return The value.
+    /// @brief Returns the contained value
+    /// @return The value.
     [[nodiscard]] auto GetValue() const noexcept -> std::string_view
     {
         return this->value_;
     }
 
   private:
-    /// \brief Wrapped string value
+    /// @brief Wrapped string value
     std::string_view value_;
 };
 
-/// \brief Serializes a Key value
-/// \param[in] s Key to serialize.
-/// \return The serializable key type.
+/// @brief Serializes a Key value
+/// @param[in] s Key to serialize.
+/// @return The serializable key type.
 constexpr auto JKey(std::string_view s) noexcept -> JKeyType
 {
     return JKeyType{s};

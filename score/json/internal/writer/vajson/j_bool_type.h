@@ -10,8 +10,8 @@
  *
  * SPDX-License-Identifier: Apache-2.0
  ********************************************************************************/
-/// \file
-/// \brief Serializer type for JSON booleans.
+/// @file
+/// @brief Serializer type for JSON booleans.
 
 #ifndef SCORE_JSON_INTERNAL_WRITER_VAJSON_J_BOOL_TYPE_H
 #define SCORE_JSON_INTERNAL_WRITER_VAJSON_J_BOOL_TYPE_H
@@ -20,16 +20,16 @@ namespace score::json::vajson
 {
 inline namespace types
 {
-/// \brief A Bool type
+/// @brief A Bool type
 struct JBoolType final
 {
-    /// \brief Wrapped bool value
+    /// @brief Wrapped bool value
     bool value;
 };
 
-/// \brief Serializes a Bool value
-/// \param[in] b Bool value to serialize.
-/// \return The serializable bool type.
+/// @brief Serializes a Bool value
+/// @param[in] b Bool value to serialize.
+/// @return The serializable bool type.
 constexpr auto JBool(bool b) noexcept -> JBoolType
 {
     return {b};
