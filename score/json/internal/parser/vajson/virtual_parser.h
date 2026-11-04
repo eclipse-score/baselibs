@@ -85,7 +85,6 @@ class VirtualParser
     /// @brief            Friend declaration, in order to make StructureParser able to access private methods of
     /// VirtualParser
     template <typename T>
-
     friend class StructureParser;
 
     /// @brief           Default event for Null

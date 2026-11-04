@@ -81,6 +81,7 @@ TEST(JsonParserTest, ViaLiteral)
     RecordProperty("DerivationTechnique", "equivalence-classes");  // boundary values
     RecordProperty("Priority", "3");
 
+    // Same JSON as kJsonInput; the _json operator only accepts a string literal.
     auto parsed_json{R"({ "num": 1, "string": "foo" })"_json};
     VerifyJson(parsed_json);
 }

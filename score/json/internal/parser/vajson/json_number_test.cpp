@@ -34,8 +34,7 @@ namespace vajson
 {
 namespace unit_test
 {
-/// @brief           Unqualified access to gtest classes
-
+// Unqualified access to gtest classes.
 using namespace ::testing;  // NOLINT(build/namespaces)
 
 namespace
@@ -74,7 +73,7 @@ template <typename T>
 class TestValue
 {
   public:
-    /// @brief           Constructor from string - view will end with \0
+    /// @brief           Constructor from string - view will end with the null terminator
     /// @param[in]       str
     ///                  the string to be used for the conversion
     /// @param[in]       expected
@@ -87,7 +86,7 @@ class TestValue
         ShortenView();
     }
 
-    /// @brief           Constructor from string - view will end with \0
+    /// @brief           Constructor from string - view will end with the null terminator
     /// @param[in]       str
     ///                  the string to be used for the conversion
     /// @context         ANY
@@ -98,7 +97,7 @@ class TestValue
         ShortenView();
     }
 
-    /// @brief           Get a TestValue without \0
+    /// @brief           Get a TestValue without the null terminator
     /// @param[in]       str
     ///                  the string to convert
     /// @return          a constructed TestValue
@@ -110,7 +109,7 @@ class TestValue
         return TestValue<T>(std::move(str), false, score::cpp::optional<T>{});
     }
 
-    /// @brief           Get a TestValue without \0
+    /// @brief           Get a TestValue without the null terminator
     /// @param[in]       str
     ///                  the string to convert
     /// @param[in]       expected
@@ -159,7 +158,7 @@ class TestValue
     /// @param[in]       str
     ///                  the string to be used for the conversion
     /// @param[in]       with_zero
-    ///                  if true, the whole string will be used (with \0)
+    ///                  if true, the whole string will be used (with the null terminator)
     /// @param[in]       expected
     ///                  the expected converted value
     /// @context         ANY

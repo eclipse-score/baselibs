@@ -172,7 +172,7 @@ auto JsonOps::SkipWhitespace() noexcept -> bool
         }
         else
         {
-            char c{std::char_traits<char>::to_char_type(static_cast<std::int32_t>(ch))};
+            const char c{std::char_traits<char>::to_char_type(static_cast<std::int32_t>(ch))};
 
             const bool is_whitespace =
                 std::any_of(kWhitespaceChars.cbegin(), kWhitespaceChars.cend(), [c](char wc) noexcept {
