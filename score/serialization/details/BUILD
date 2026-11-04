@@ -11,7 +11,7 @@
 # SPDX-License-Identifier: Apache-2.0
 # *******************************************************************************
 
-load("@rules_cc//cc:defs.bzl", "cc_library")
+load("@rules_cc//cc:defs.bzl", "cc_library", "cc_test")
 
 cc_library(
     name = "type_traits",
@@ -48,5 +48,22 @@ cc_library(
         "//score/language/futurecpp",
         "//score/serialization:strategy_interface",
         "//score/static_reflection_with_serialization/visitor",
+    ],
+)
+
+cc_test(
+    name = "unit_test",
+    srcs = ["serialization_visitor_test.cpp"],
+    features = [
+        "aborts_upon_exception",
+        "treat_warnings_as_errors",
+        "strict_warnings",
+        "additional_warnings",
+    ],
+    tags = ["unit"],
+    visibility = ["//score/serialization:__pkg__"],
+    deps = [
+        ":details",
+        "@googletest//:gtest_main",
     ],
 )

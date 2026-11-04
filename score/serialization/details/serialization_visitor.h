@@ -20,6 +20,7 @@
 #include "static_reflection_with_serialization/visitor/visit.h"
 
 #include <score/assert.hpp>
+#include <score/span.hpp>
 #include <score/type_traits.hpp>
 
 #include <array>
@@ -110,14 +111,14 @@ class CommonVisitorLogic
         PushField(kArrayElementMarker, is_last);
     }
 
-    [[nodiscard]] const std::size_t* FieldPathData() const
+    [[nodiscard]] score::cpp::span<const std::size_t> FieldPath() const
     {
-        return field_path_.data();
+        return {field_path_.data(), field_depth_};
     }
 
-    [[nodiscard]] const bool* LastPathData() const
+    [[nodiscard]] score::cpp::span<const bool> LastPath() const
     {
-        return last_path_.data();
+        return {last_path_.data(), field_depth_};
     }
 
     [[nodiscard]] std::size_t FieldDepth() const
