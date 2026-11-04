@@ -81,7 +81,7 @@ class ErrorNullParser final : public internal::VirtualParser
  */
 TEST(UT__Parser__Null, Dynamic__SingleNull)
 {
-    auto data = JsonData::FromBuffer(std::string_view{"null"});
+    auto data{JsonData::FromBuffer(std::string_view{"null"})};
     ASSERT_TRUE(data.has_value());
     DynamicNullParser parser{data.value()};
     ASSERT_TRUE(parser.Parse().has_value());
@@ -94,7 +94,7 @@ TEST(UT__Parser__Null, Dynamic__SingleNull)
  */
 TEST(UT__Parser__Null, Dynamic__MultipleNulls)
 {
-    auto data = JsonData::FromBuffer(std::string_view{"[null,null,null]"});
+    auto data{JsonData::FromBuffer(std::string_view{"[null,null,null]"})};
     ASSERT_TRUE(data.has_value());
     DynamicNullParser parser{data.value()};
     ASSERT_TRUE(parser.Parse().has_value());
@@ -107,7 +107,7 @@ TEST(UT__Parser__Null, Dynamic__MultipleNulls)
  */
 TEST(UT__Parser__Null, Dynamic__NoNulls)
 {
-    auto data = JsonData::FromBuffer(std::string_view{"true"});
+    auto data{JsonData::FromBuffer(std::string_view{"true"})};
     ASSERT_TRUE(data.has_value());
     DynamicNullParser parser{data.value()};
     ASSERT_TRUE(parser.Parse().has_value());
@@ -120,12 +120,12 @@ TEST(UT__Parser__Null, Dynamic__NoNulls)
  */
 TEST(UT__Parser__Null, Dynamic__WrongFormat)
 {
-    auto result = JsonData::FromBuffer(std::string_view{R"({null:123})"});
+    auto result{JsonData::FromBuffer(std::string_view{R"({null:123})"})};
     ASSERT_TRUE(result.has_value());
     JsonData data{std::move(result).value()};
 
     DynamicNullParser parser{data};
-    const auto parse_result = parser.Parse();
+    const auto parse_result{parser.Parse()};
     ASSERT_FALSE(parse_result.has_value());
     ASSERT_EQ(parse_result.error(), JsonErrc::kInvalidJson);
 }
@@ -136,11 +136,11 @@ TEST(UT__Parser__Null, Dynamic__WrongFormat)
  */
 TEST(UT__Parser__Null, Dynamic__OnNull__Error)
 {
-    auto doc = JsonData::FromBuffer(std::string_view{"null"});
+    auto doc{JsonData::FromBuffer(std::string_view{"null"})};
     ASSERT_TRUE(doc.has_value());
-    ErrorNullParser parser(doc.value());
+    ErrorNullParser parser{doc.value()};
 
-    const auto parser_result = parser.Parse();
+    const auto parser_result{parser.Parse()};
     ASSERT_FALSE(parser_result.has_value());
     ASSERT_EQ(parser_result.error(), JsonErrc::kUserValidationFailed);
     ASSERT_EQ(parser_result.error().UserMessage(), std::string_view{"OnNull called."});

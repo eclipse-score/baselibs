@@ -26,7 +26,6 @@
 #include "score/json/internal/parser/vajson/json_data.h"
 #include "score/json/internal/parser/vajson/json_error_domain.h"
 #include "score/json/internal/parser/vajson/structure_parser.h"
-#include "score/json/internal/parser/vajson/structure_parser_impl.h"
 #include "score/json/internal/parser/vajson/types.h"
 
 namespace score
@@ -47,12 +46,6 @@ namespace internal
 class VirtualParser
 {
   public:
-    /// \brief            Friend declaration, in order to make StructureParser able to access private methods of
-    /// VirtualParser
-    template <typename T>
-
-    friend class StructureParser;
-
     /// \brief           Constructs a VirtualParser
     /// \param[in]       doc
     ///                  to parse.
@@ -94,6 +87,12 @@ class VirtualParser
     virtual auto Parse() noexcept -> Result<void>;
 
   private:
+    /// \brief            Friend declaration, in order to make StructureParser able to access private methods of
+    /// VirtualParser
+    template <typename T>
+
+    friend class StructureParser;
+
     /// \brief           Default event for Null
     /// \return          The result of the OnUnexpectedEvent callback or its error.
     /// \context         ANY

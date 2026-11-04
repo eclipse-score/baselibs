@@ -66,8 +66,8 @@ auto JsonOps::Take() noexcept -> char
 
 auto JsonOps::TryTake() noexcept -> Result<char>
 {
-    std::istream& stream = this->GetStream();
-    std::int64_t c = stream.get();
+    std::istream& stream{this->GetStream()};
+    std::int64_t c{stream.get()};
     Result<char> result{MakeErrorResult<char>(JsonErrc::kStreamFailure, "JsonOps::TryTake: EOF.")};
 
     if (c != std::char_traits<char>::eof())
@@ -80,7 +80,7 @@ auto JsonOps::TryTake() noexcept -> Result<char>
 
 auto JsonOps::Move() noexcept -> bool
 {
-    std::istream& stream = this->GetStream();
+    std::istream& stream{this->GetStream()};
     stream.seekg(1, std::ios::cur);
     return !stream.fail();
 }
@@ -96,8 +96,8 @@ auto JsonOps::Move() noexcept -> bool
  */
 auto JsonOps::Skip(const char character) noexcept -> bool
 {
-    std::istream& stream = this->GetStream();
-    std::int64_t peek_val = stream.peek();
+    std::istream& stream{this->GetStream()};
+    std::int64_t peek_val{stream.peek()};
     bool result{false};
     if (peek_val != std::char_traits<char>::eof() && peek_val == std::char_traits<char>::to_int_type(character))
     {
@@ -166,42 +166,19 @@ auto JsonOps::ReadString(const std::string_view string) noexcept -> Result<bool>
 
 /*!
  * \internal
- * - If the condition holds
- *  - Seek back the number of bytes passed from the current position.
- * \endinternal
- */
-auto JsonOps::RewindIf(const bool condition, const std::size_t num) noexcept -> score::Result<void>
-{
-    score::Result<void> result{};
-    if (condition)
-    {
-        std::istream& stream = this->GetStream();
-        stream.seekg(-1 * static_cast<std::int64_t>(num), std::ios::cur);
-
-        if (stream.fail())
-        {
-            result = MakeErrorResult<void>(JsonErrc::kStreamFailure, "JsonOps::RewindIf: Could not seek back.");
-        }
-    }
-
-    return result;
-}
-
-/*!
- * \internal
  * - Skip all white space characters.
  * \endinternal
  */
 auto JsonOps::SkipWhitespace() noexcept -> bool
 {
     constexpr static StringView kWhitespaceChars{" \n\r\t"sv};
-    std::istream& stream = this->GetStream();
+    std::istream& stream{this->GetStream()};
     bool done{false};
     bool result{false};
 
     while (!done)
     {
-        std::int64_t ch = stream.peek();
+        std::int64_t ch{stream.peek()};
 
         if (ch == std::char_traits<char>::eof())
         {
@@ -210,7 +187,7 @@ auto JsonOps::SkipWhitespace() noexcept -> bool
         }
         else
         {
-            char c = std::char_traits<char>::to_char_type(static_cast<std::int32_t>(ch));
+            char c{std::char_traits<char>::to_char_type(static_cast<std::int32_t>(ch))};
 
             const bool is_whitespace =
                 std::any_of(kWhitespaceChars.cbegin(), kWhitespaceChars.cend(), [c](char wc) noexcept {
@@ -244,11 +221,11 @@ auto JsonOps::Read(const std::uint64_t num_to_read,
                    const score::cpp::move_only_function<void(std::string_view), 40>& callback) noexcept
     -> Result<std::uint64_t>
 {
-    std::istream& stream = this->GetStream();
+    std::istream& stream{this->GetStream()};
     std::vector<char> buffer(num_to_read);
 
     stream.read(buffer.data(), static_cast<std::streamsize>(num_to_read));
-    std::uint64_t bytes_read = static_cast<std::uint64_t>(stream.gcount());
+    std::uint64_t bytes_read{static_cast<std::uint64_t>(stream.gcount())};
 
     if (bytes_read > 0)
     {
@@ -271,7 +248,7 @@ auto JsonOps::ReadUntil(const std::string_view delimiter,
                         const score::cpp::move_only_function<void(std::string_view)>& callback) noexcept
     -> Result<OptChar>
 {
-    std::istream& stream = this->GetStream();
+    std::istream& stream{this->GetStream()};
     std::string buffer;
     bool done{false};
     Result<OptChar> result{OptChar{-1}};
@@ -325,6 +302,29 @@ auto JsonOps::GetJsonDocument() & noexcept -> JsonData&
 {
 
     return this->data_.get();
+}
+
+/*!
+ * \internal
+ * - If the condition holds
+ *  - Seek back the number of bytes passed from the current position.
+ * \endinternal
+ */
+auto JsonOps::RewindIf(const bool condition, const std::size_t num) noexcept -> score::Result<void>
+{
+    score::Result<void> result{};
+    if (condition)
+    {
+        std::istream& stream{this->GetStream()};
+        stream.seekg(-1 * static_cast<std::int64_t>(num), std::ios::cur);
+
+        if (stream.fail())
+        {
+            result = MakeErrorResult<void>(JsonErrc::kStreamFailure, "JsonOps::RewindIf: Could not seek back.");
+        }
+    }
+
+    return result;
 }
 
 auto JsonOps::GetStream() & noexcept -> std::istream&

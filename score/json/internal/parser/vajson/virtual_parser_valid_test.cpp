@@ -54,7 +54,7 @@ class DynamicAnyParser final : public internal::VirtualParser
  */
 TEST(UT__Parser__Valid, Dynamic__ParseInt)
 {
-    auto data = JsonData::FromBuffer(std::string_view{"42"});
+    auto data{JsonData::FromBuffer(std::string_view{"42"})};
     ASSERT_TRUE(data.has_value());
     DynamicAnyParser parser{data.value()};
     ASSERT_TRUE(parser.Parse().has_value());
@@ -66,7 +66,7 @@ TEST(UT__Parser__Valid, Dynamic__ParseInt)
  */
 TEST(UT__Parser__Valid, Dynamic__ParseBool)
 {
-    auto data = JsonData::FromBuffer(std::string_view{"true"});
+    auto data{JsonData::FromBuffer(std::string_view{"true"})};
     ASSERT_TRUE(data.has_value());
     DynamicAnyParser parser{data.value()};
     ASSERT_TRUE(parser.Parse().has_value());
@@ -78,7 +78,7 @@ TEST(UT__Parser__Valid, Dynamic__ParseBool)
  */
 TEST(UT__Parser__Valid, Dynamic__ParseNull)
 {
-    auto data = JsonData::FromBuffer(std::string_view{"null"});
+    auto data{JsonData::FromBuffer(std::string_view{"null"})};
     ASSERT_TRUE(data.has_value());
     DynamicAnyParser parser{data.value()};
     ASSERT_TRUE(parser.Parse().has_value());
@@ -90,7 +90,7 @@ TEST(UT__Parser__Valid, Dynamic__ParseNull)
  */
 TEST(UT__Parser__Valid, Dynamic__ParseObject)
 {
-    auto data = JsonData::FromBuffer(std::string_view{R"({"key": 42, "flag": true, "name": "test"})"});
+    auto data{JsonData::FromBuffer(std::string_view{R"({"key": 42, "flag": true, "name": "test"})"})};
     ASSERT_TRUE(data.has_value());
     DynamicAnyParser parser{data.value()};
     ASSERT_TRUE(parser.Parse().has_value());
@@ -102,7 +102,7 @@ TEST(UT__Parser__Valid, Dynamic__ParseObject)
  */
 TEST(UT__Parser__Valid, Dynamic__ParseArray)
 {
-    auto data = JsonData::FromBuffer(std::string_view{R"([1, 2, 3, null, true, false, "str"])"});
+    auto data{JsonData::FromBuffer(std::string_view{R"([1, 2, 3, null, true, false, "str"])"})};
     ASSERT_TRUE(data.has_value());
     DynamicAnyParser parser{data.value()};
     ASSERT_TRUE(parser.Parse().has_value());
@@ -114,7 +114,7 @@ TEST(UT__Parser__Valid, Dynamic__ParseArray)
  */
 TEST(UT__Parser__Valid, Dynamic__ParseNested)
 {
-    auto data = JsonData::FromBuffer(std::string_view{R"({"a": [1, {"b": 2}], "c": null})"});
+    auto data{JsonData::FromBuffer(std::string_view{R"({"a": [1, {"b": 2}], "c": null})"})};
     ASSERT_TRUE(data.has_value());
     DynamicAnyParser parser{data.value()};
     ASSERT_TRUE(parser.Parse().has_value());

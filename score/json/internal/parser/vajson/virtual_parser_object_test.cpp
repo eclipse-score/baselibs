@@ -120,7 +120,7 @@ class StartObjectParser final : public internal::VirtualParser
  */
 TEST(UT__Parser__Object, Dynamic__SingleObject)
 {
-    auto data = JsonData::FromBuffer(std::string_view{R"({"a":1})"});
+    auto data{JsonData::FromBuffer(std::string_view{R"({"a":1})"})};
     ASSERT_TRUE(data.has_value());
     DynamicObjectParser parser{data.value()};
     ASSERT_TRUE(parser.Parse().has_value());
@@ -135,7 +135,7 @@ TEST(UT__Parser__Object, Dynamic__SingleObject)
  */
 TEST(UT__Parser__Object, Dynamic__NestedObjects)
 {
-    auto data = JsonData::FromBuffer(std::string_view{R"({"a":{"b":1},"c":{"d":2}})"});
+    auto data{JsonData::FromBuffer(std::string_view{R"({"a":{"b":1},"c":{"d":2}})"})};
     ASSERT_TRUE(data.has_value());
     DynamicObjectParser parser{data.value()};
     ASSERT_TRUE(parser.Parse().has_value());
@@ -150,7 +150,7 @@ TEST(UT__Parser__Object, Dynamic__NestedObjects)
  */
 TEST(UT__Parser__Object, Dynamic__NoObjects)
 {
-    auto data = JsonData::FromBuffer(std::string_view{"[1,2,3]"});
+    auto data{JsonData::FromBuffer(std::string_view{"[1,2,3]"})};
     ASSERT_TRUE(data.has_value());
     DynamicObjectParser parser{data.value()};
     ASSERT_TRUE(parser.Parse().has_value());
@@ -165,11 +165,11 @@ TEST(UT__Parser__Object, Dynamic__NoObjects)
  */
 TEST(UT__Parser__Object__Error, Dynamic__OnEndObject)
 {
-    auto doc = JsonData::FromBuffer(std::string_view{R"({})"});
+    auto doc{JsonData::FromBuffer(std::string_view{R"({})"})};
     ASSERT_TRUE(doc.has_value());
-    EndObjectParser parser(doc.value());
+    EndObjectParser parser{doc.value()};
 
-    const auto parser_result = parser.Parse();
+    const auto parser_result{parser.Parse()};
     ASSERT_FALSE(parser_result.has_value());
     ASSERT_EQ(parser_result.error(), JsonErrc::kUserValidationFailed);
     ASSERT_EQ(parser_result.error().UserMessage(), std::string_view{"OnEndObject called."});
@@ -181,11 +181,11 @@ TEST(UT__Parser__Object__Error, Dynamic__OnEndObject)
  */
 TEST(UT__Parser__Object__Error, Dynamic__OnStartObject)
 {
-    auto doc = JsonData::FromBuffer(std::string_view{R"({})"});
+    auto doc{JsonData::FromBuffer(std::string_view{R"({})"})};
     ASSERT_TRUE(doc.has_value());
-    StartObjectParser parser(doc.value());
+    StartObjectParser parser{doc.value()};
 
-    const auto parser_result = parser.Parse();
+    const auto parser_result{parser.Parse()};
     ASSERT_FALSE(parser_result.has_value());
     ASSERT_EQ(parser_result.error(), JsonErrc::kUserValidationFailed);
     ASSERT_EQ(parser_result.error().UserMessage(), std::string_view{"OnStartObject called."});

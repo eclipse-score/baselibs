@@ -50,13 +50,46 @@ template <typename Implementer>
 
 class StructureParser : public StructureParserBase
 {
-    /// \brief           Callback implementer
-    std::reference_wrapper<Implementer> implementer_;
-
-    /// \brief           Operations on JSON document
-    JsonOps json_ops_;
-
   public:
+    /// \brief           Constructs a StructureParser
+    /// \param[in]       implementer
+    ///                  The implementer for this parser.
+    /// \param[in]       doc
+    ///                  JSON document to parse.
+    /// \context         ANY
+    /// \pre             Implementer does not throw exceptions.
+    /// \threadsafe      FALSE
+    /// \reentrant       FALSE
+    StructureParser(Implementer& implementer, JsonData& doc) noexcept;
+
+    /// \brief           Default move constructor
+    /// \context         ANY
+    /// \pre             -
+    /// \threadsafe      FALSE
+    /// \reentrant       FALSE
+    StructureParser(StructureParser&&) noexcept = default;
+
+    /// \brief           Default move assignment
+    /// \return          A reference to the moved into object.
+    /// \context         ANY
+    /// \pre             -
+    /// \threadsafe      FALSE
+    /// \reentrant       FALSE
+    auto operator=(StructureParser&&) & noexcept -> StructureParser& = default;
+
+    /// \brief           Deleted copy constructor
+    StructureParser(const StructureParser&) = delete;
+
+    /// \brief           Deleted copy assignment
+    auto operator=(const StructureParser&) -> StructureParser& = delete;
+
+    /// \brief           Default destructor
+    /// \context         ANY
+    /// \pre             -
+    /// \threadsafe      FALSE
+    /// \reentrant       FALSE
+    ~StructureParser() noexcept override = default;
+
     /// \brief           Default event for Null
     /// \return          The result of the OnUnexpectedEvent callback or its error.
     /// \context         ANY
@@ -137,45 +170,6 @@ class StructureParser : public StructureParserBase
     /// \reentrant       FALSE
     auto OnEndArray(std::size_t) noexcept -> ParserResult override;
 
-    /// \brief           Constructs a StructureParser
-    /// \param[in]       implementer
-    ///                  The implementer for this parser.
-    /// \param[in]       doc
-    ///                  JSON document to parse.
-    /// \context         ANY
-    /// \pre             Implementer does not throw exceptions.
-    /// \threadsafe      FALSE
-    /// \reentrant       FALSE
-    StructureParser(Implementer& implementer, JsonData& doc) noexcept;
-
-    /// \brief           Default move constructor
-    /// \context         ANY
-    /// \pre             -
-    /// \threadsafe      FALSE
-    /// \reentrant       FALSE
-    StructureParser(StructureParser&&) noexcept = default;
-
-    /// \brief           Default move assignment
-    /// \return          A reference to the moved into object.
-    /// \context         ANY
-    /// \pre             -
-    /// \threadsafe      FALSE
-    /// \reentrant       FALSE
-    auto operator=(StructureParser&&) & noexcept -> StructureParser& = default;
-
-    /// \brief           Deleted copy constructor
-    StructureParser(const StructureParser&) = delete;
-
-    /// \brief           Deleted copy assignment
-    auto operator=(const StructureParser&) -> StructureParser& = delete;
-
-    /// \brief           Default destructor
-    /// \context         ANY
-    /// \pre             -
-    /// \threadsafe      FALSE
-    /// \reentrant       FALSE
-    ~StructureParser() noexcept override = default;
-
   private:
     /// \brief           Returns the reference to the encoded file
     /// \return          Reference to the encoded file.
@@ -193,7 +187,87 @@ class StructureParser : public StructureParserBase
 
     // Deleted rvalue-qualified version to prevent dangling reference
     auto GetJsonOps() const&& noexcept -> const JsonOps& = delete;
+
+    /// \brief           Callback implementer
+    std::reference_wrapper<Implementer> implementer_;
+
+    /// \brief           Operations on JSON document
+    JsonOps json_ops_;
 };
+
+template <typename Implementer>
+StructureParser<Implementer>::StructureParser(Implementer& implementer, JsonData& doc) noexcept
+
+    : StructureParserBase(), implementer_{implementer}, json_ops_(doc)
+{
+}
+
+/// \brief           Callbacks to an implementer
+template <typename Implementer>
+auto StructureParser<Implementer>::OnNull() noexcept -> ParserResult
+{
+
+    return ParserResult(this->implementer_.get().OnNull());
+}
+template <typename Implementer>
+auto StructureParser<Implementer>::OnBool(bool v) noexcept -> ParserResult
+{
+
+    return ParserResult(this->implementer_.get().OnBool(v));
+}
+template <typename Implementer>
+auto StructureParser<Implementer>::OnNumber(JsonNumber v) noexcept -> ParserResult
+{
+
+    return ParserResult(this->implementer_.get().OnNumber(v));
+}
+template <typename Implementer>
+auto StructureParser<Implementer>::OnString(CStringView v) noexcept -> ParserResult
+{
+
+    return ParserResult(this->implementer_.get().OnString(v));
+}
+template <typename Implementer>
+auto StructureParser<Implementer>::OnKey(CStringView v) noexcept -> ParserResult
+{
+
+    return ParserResult(this->implementer_.get().OnKey(v));
+}
+template <typename Implementer>
+auto StructureParser<Implementer>::OnStartObject() noexcept -> ParserResult
+{
+
+    return ParserResult(this->implementer_.get().OnStartObject());
+}
+template <typename Implementer>
+auto StructureParser<Implementer>::OnEndObject(std::size_t v) noexcept -> ParserResult
+{
+
+    return ParserResult(this->implementer_.get().OnEndObject(v));
+}
+template <typename Implementer>
+auto StructureParser<Implementer>::OnStartArray() noexcept -> ParserResult
+{
+
+    return ParserResult(this->implementer_.get().OnStartArray());
+}
+template <typename Implementer>
+auto StructureParser<Implementer>::OnEndArray(std::size_t v) noexcept -> ParserResult
+{
+
+    return ParserResult(this->implementer_.get().OnEndArray(v));
+}
+
+template <typename Implementer>
+auto StructureParser<Implementer>::GetJsonOps() & noexcept -> JsonOps&
+{
+    return this->json_ops_;
+}
+template <typename Implementer>
+auto StructureParser<Implementer>::GetJsonOps() const& noexcept -> const JsonOps&
+{
+    return this->json_ops_;
+}
 
 }  // namespace internal
 }  // namespace vajson

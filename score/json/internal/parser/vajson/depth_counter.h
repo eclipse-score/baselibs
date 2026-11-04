@@ -43,16 +43,6 @@ namespace internal
 /// \brief           A counter to track the nesting depth of the JSON parser
 class DepthCounter final
 {
-    /// \brief            Stores the stack items
-    /// \details         Intentionally a string to make use of SSO.
-    std::stack<char, std::string> stack_{};
-    /// \brief           Stores the element count of arrays and objects on the stack
-    std::stack<std::size_t> counter_{};
-    /// \brief           Flag to indicate if a comma must appear before the next value
-    bool comma_expected_{false};
-    /// \brief           Flag to indicate if all elements are closed
-    bool is_finished_{false};
-
   public:
     /// \brief           CTOR
     /// \details         Cannot be defaulted because then it gets deleted by the compiler.
@@ -471,6 +461,16 @@ class DepthCounter final
             this->is_finished_ = true;
         }
     }
+
+    /// \brief            Stores the stack items
+    /// \details         Intentionally a string to make use of SSO.
+    std::stack<char, std::string> stack_{};
+    /// \brief           Stores the element count of arrays and objects on the stack
+    std::stack<std::size_t> counter_{};
+    /// \brief           Flag to indicate if a comma must appear before the next value
+    bool comma_expected_{false};
+    /// \brief           Flag to indicate if all elements are closed
+    bool is_finished_{false};
 };
 
 }  // namespace internal

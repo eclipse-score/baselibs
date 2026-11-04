@@ -76,8 +76,8 @@ auto JsonData::FromFile(const std::string_view path) noexcept -> Result<JsonData
     score::filesystem::FileFactory factory{};
     score::filesystem::Path file_path{std::string(path.data(), path.size())};
 
-    auto file_result = factory.Open(file_path, std::ios::in | std::ios::binary);
-    auto result = MakeErrorResult<JsonData>(JsonErrc::kStreamFailure, "Could not open file");
+    auto file_result{factory.Open(file_path, std::ios::in | std::ios::binary)};
+    auto result{MakeErrorResult<JsonData>(JsonErrc::kStreamFailure, "Could not open file")};
     if (file_result.has_value())
     {
         // Read the whole file into an owned buffer once, then parse it through the same in-memory istringstream
@@ -170,7 +170,7 @@ void JsonData::ParseBom() noexcept
     {
         // ReadString failed (e.g., stream shorter than BOM).
         // Ensure stream is in a usable state for subsequent parsing.
-        auto& stream = this->stream_.get();
+        auto& stream{this->stream_.get()};
         stream.clear(stream.rdstate() & ~(std::ios::failbit | std::ios::eofbit));
         stream.seekg(0, std::ios::beg);
     }

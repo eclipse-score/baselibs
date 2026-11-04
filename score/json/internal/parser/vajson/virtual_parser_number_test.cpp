@@ -64,7 +64,7 @@ class DynamicNumberParser final : public internal::VirtualParser
  */
 TEST(UT__Parser__Number, Dynamic__IntegerArray)
 {
-    auto data = JsonData::FromBuffer(std::string_view{"[1,2,3,4,5]"});
+    auto data{JsonData::FromBuffer(std::string_view{"[1,2,3,4,5]"})};
     ASSERT_TRUE(data.has_value());
     DynamicNumberParser parser{data.value()};
     ASSERT_TRUE(parser.Parse().has_value());
@@ -77,7 +77,7 @@ TEST(UT__Parser__Number, Dynamic__IntegerArray)
  */
 TEST(UT__Parser__Number, Dynamic__FloatArray)
 {
-    auto data = JsonData::FromBuffer(std::string_view{"[1.0,-1.5,3.14]"});
+    auto data{JsonData::FromBuffer(std::string_view{"[1.0,-1.5,3.14]"})};
     ASSERT_TRUE(data.has_value());
     DynamicNumberParser parser{data.value()};
     ASSERT_TRUE(parser.Parse().has_value());

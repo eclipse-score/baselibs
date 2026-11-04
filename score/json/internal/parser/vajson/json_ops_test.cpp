@@ -84,17 +84,17 @@ TEST(UT__JsonOps, TryTake__Error)
     TestStream ts{"ab"};
 
     {
-        const auto r1 = ts.ops.TryTake();
+        const auto r1{ts.ops.TryTake()};
         ASSERT_TRUE(r1.has_value());
         ASSERT_EQ(r1.value(), 'a');
     }
     {
-        const auto r2 = ts.ops.TryTake();
+        const auto r2{ts.ops.TryTake()};
         ASSERT_TRUE(r2.has_value());
         ASSERT_EQ(r2.value(), 'b');
     }
     {
-        const auto r3 = ts.ops.TryTake();
+        const auto r3{ts.ops.TryTake()};
         ASSERT_FALSE(r3.has_value());
         ASSERT_EQ(r3.error(), JsonErrc::kStreamFailure);
     }
@@ -125,13 +125,13 @@ TEST(UT__JsonOps, CheckString)
 
     {
         TestStream ts{std::string{expected}};
-        const auto result = ts.ops.CheckString(expected, "No error");
+        const auto result{ts.ops.CheckString(expected, "No error")};
         ASSERT_TRUE(result.has_value());
     }
 
     {
         TestStream ts{std::string{expected}};
-        const auto result = ts.ops.CheckString("different string", "No error");
+        const auto result{ts.ops.CheckString("different string", "No error")};
         ASSERT_FALSE(result.has_value());
         ASSERT_EQ(result.error(), JsonErrc::kStreamFailure);
     }
@@ -180,9 +180,9 @@ TEST(UT__JsonOps, ReadUntil)
 
     const std::string_view expected_content{input.data(), input.size() - 1};
 
-    const auto result = ts.ops.ReadUntil(":", [&expected_content](std::string_view view) noexcept {
+    const auto result{ts.ops.ReadUntil(":", [&expected_content](std::string_view view) noexcept {
         ASSERT_EQ(view, expected_content);
-    });
+    })};
     ASSERT_TRUE(result.has_value());
     ASSERT_EQ(result.value().Value(), ':');
 }

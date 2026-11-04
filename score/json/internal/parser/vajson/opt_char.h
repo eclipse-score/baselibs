@@ -37,9 +37,6 @@ namespace internal
 /// \brief           Contains either the character value or an EOF value
 class OptChar
 {
-    /// \brief           The optional character value
-    std::int64_t char_;
-
   public:
     /// \brief           Construct the object with a value
     /// \param[in]       val
@@ -92,6 +89,10 @@ class OptChar
 
         return this->HasValue() && (this->Value() == candidate);
     }
+
+  private:
+    /// \brief           The optional character value
+    std::int64_t char_;
 };
 
 }  // namespace internal

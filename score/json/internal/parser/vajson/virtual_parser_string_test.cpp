@@ -82,7 +82,7 @@ class ErrorStringParser final : public internal::VirtualParser
  */
 TEST(UT__Parser__String, Dynamic__StringArray)
 {
-    auto data = JsonData::FromBuffer(std::string_view{R"(["hello","world"])"});
+    auto data{JsonData::FromBuffer(std::string_view{R"(["hello","world"])"})};
     ASSERT_TRUE(data.has_value());
     DynamicStringParser parser{data.value()};
     ASSERT_TRUE(parser.Parse().has_value());
@@ -95,11 +95,11 @@ TEST(UT__Parser__String, Dynamic__StringArray)
  */
 TEST(UT__Parser__String, Dynamic__ParseUnescapedString__Error)
 {
-    auto doc = JsonData::FromBuffer(std::string_view{R"("SomeString")"});
+    auto doc{JsonData::FromBuffer(std::string_view{R"("SomeString")"})};
     ASSERT_TRUE(doc.has_value());
-    ErrorStringParser parser(doc.value());
+    ErrorStringParser parser{doc.value()};
 
-    const auto parser_result = parser.Parse();
+    const auto parser_result{parser.Parse()};
     ASSERT_FALSE(parser_result.has_value());
     ASSERT_EQ(parser_result.error(), JsonErrc::kUserValidationFailed);
     ASSERT_EQ(parser_result.error().UserMessage(), std::string_view{"OnString called."});

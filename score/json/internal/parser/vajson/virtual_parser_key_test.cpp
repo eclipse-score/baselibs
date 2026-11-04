@@ -66,7 +66,7 @@ struct DynamicKeyParser final : public internal::VirtualParser
  */
 TEST(UT__Parser__Key, Dynamic__SingleKey)
 {
-    auto data = JsonData::FromBuffer(std::string_view{R"({"key":42})"});
+    auto data{JsonData::FromBuffer(std::string_view{R"({"key":42})"})};
     ASSERT_TRUE(data.has_value());
     DynamicKeyParser parser{data.value()};
     ASSERT_TRUE(parser.Parse().has_value());
@@ -79,7 +79,7 @@ TEST(UT__Parser__Key, Dynamic__SingleKey)
  */
 TEST(UT__Parser__Key, Dynamic__MultipleKeys)
 {
-    auto data = JsonData::FromBuffer(std::string_view{R"({"a":1,"b":2,"c":3})"});
+    auto data{JsonData::FromBuffer(std::string_view{R"({"a":1,"b":2,"c":3})"})};
     ASSERT_TRUE(data.has_value());
     DynamicKeyParser parser{data.value()};
     ASSERT_TRUE(parser.Parse().has_value());
@@ -92,7 +92,7 @@ TEST(UT__Parser__Key, Dynamic__MultipleKeys)
  */
 TEST(UT__Parser__Key, Dynamic__NestedKeys)
 {
-    auto data = JsonData::FromBuffer(std::string_view{R"({"outer":{"inner":1}})"});
+    auto data{JsonData::FromBuffer(std::string_view{R"({"outer":{"inner":1}})"})};
     ASSERT_TRUE(data.has_value());
     DynamicKeyParser parser{data.value()};
     ASSERT_TRUE(parser.Parse().has_value());

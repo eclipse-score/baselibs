@@ -43,21 +43,7 @@ namespace vajson
 /// \trace           DSGN-JSON-Reader-Deserialization
 class JsonData final
 {
-    /// \brief           Stream buffer
-    std::reference_wrapper<std::istream> stream_;
-    /// \brief           The potentially owned stream
-    std::unique_ptr<std::istream> owned_stream_{nullptr};
-    /// \brief           JSON structure state
-    internal::DepthCounter depth_counter_{};
-    /// \brief           Current buffer
-    String current_buffer_{};
-    /// \brief           Flag to indicate if the document has a UTF-8 BOM
-    EncodingType encoding_{EncodingType::kNone};
-
   public:
-    /// \brief           Class JsonOps must have access to the InputStream but no other classes
-    friend class internal::JsonOps;  // VECTOR SL AutosarC++17_10-A11.3.1: MD_JSON_AutosarC++17_10-A11.3.1_json_ops
-
     /// \brief           Initializes a JSON data object using a constructed reader
     /// \param[in]       input_stream
     ///                  to operate on.
@@ -75,6 +61,36 @@ class JsonData final
     /// \threadsafe      FALSE
     /// \reentrant       FALSE
     explicit JsonData(std::unique_ptr<std::istream> input_stream) noexcept;
+
+    /// \brief           Move constructor
+    /// \param[in]       other
+    ///                  The moved from object.
+    /// \context         ANY
+    /// \pre             -
+    /// \threadsafe      FALSE
+    /// \reentrant       FALSE
+    JsonData(JsonData&& other) noexcept = default;
+
+    /// \brief           Default move assignment
+    /// \return          A reference to the moved into object.
+    /// \context         ANY
+    /// \pre             -
+    /// \threadsafe      FALSE
+    /// \reentrant       FALSE
+    auto operator=(JsonData&&) & noexcept -> JsonData& = default;
+
+    /// \brief           Deleted copy constructor
+    JsonData(const JsonData&) = delete;
+
+    /// \brief           Deleted copy assignment
+    auto operator=(const JsonData&) -> JsonData& = delete;
+
+    /// \brief           Default destructor
+    /// \context         ANY
+    /// \pre             -
+    /// \threadsafe      FALSE
+    /// \reentrant       FALSE
+    ~JsonData() noexcept = default;
 
     /// \brief           Initializes a JSON data object from a file
     /// \param[in]       path
@@ -121,36 +137,6 @@ class JsonData final
     /// \reentrant       FALSE
     /// \synchronous     -
     static auto FromBuffer(score::cpp::span<const char> buffer) noexcept -> Result<JsonData>;
-
-    /// \brief           Move constructor
-    /// \param[in]       other
-    ///                  The moved from object.
-    /// \context         ANY
-    /// \pre             -
-    /// \threadsafe      FALSE
-    /// \reentrant       FALSE
-    JsonData(JsonData&& other) noexcept = default;
-
-    /// \brief           Default move assignment
-    /// \return          A reference to the moved into object.
-    /// \context         ANY
-    /// \pre             -
-    /// \threadsafe      FALSE
-    /// \reentrant       FALSE
-    auto operator=(JsonData&&) & noexcept -> JsonData& = default;
-
-    /// \brief           Deleted copy constructor
-    JsonData(const JsonData&) = delete;
-
-    /// \brief           Deleted copy assignment
-    auto operator=(const JsonData&) -> JsonData& = delete;
-
-    /// \brief           Default destructor
-    /// \context         ANY
-    /// \pre             -
-    /// \threadsafe      FALSE
-    /// \reentrant       FALSE
-    ~JsonData() noexcept = default;
 
     /// \brief           Returns the JSON structure state
     /// \return          The current state.
@@ -208,6 +194,9 @@ class JsonData final
     }
 
   private:
+    /// \brief           Class JsonOps must have access to the InputStream but no other classes
+    friend class internal::JsonOps;  // VECTOR SL AutosarC++17_10-A11.3.1: MD_JSON_AutosarC++17_10-A11.3.1_json_ops
+
     /// \brief           Returns the stream
     /// \return          The stream.
     /// \context         ANY
@@ -224,6 +213,17 @@ class JsonData final
     /// \threadsafe      FALSE
     /// \reentrant       FALSE
     void ParseBom() noexcept;
+
+    /// \brief           Stream buffer
+    std::reference_wrapper<std::istream> stream_;
+    /// \brief           The potentially owned stream
+    std::unique_ptr<std::istream> owned_stream_{nullptr};
+    /// \brief           JSON structure state
+    internal::DepthCounter depth_counter_{};
+    /// \brief           Current buffer
+    String current_buffer_{};
+    /// \brief           Flag to indicate if the document has a UTF-8 BOM
+    EncodingType encoding_{EncodingType::kNone};
 };
 
 }  // namespace vajson

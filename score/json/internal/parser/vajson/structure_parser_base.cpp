@@ -42,6 +42,17 @@ namespace vajson
 namespace internal
 {
 
+auto StructureParserBase::GetState() noexcept -> DepthCounter&
+{
+    return this->GetJsonDocument().GetState();
+}
+
+auto StructureParserBase::GetJsonDocument() noexcept -> JsonData&
+{
+
+    return this->GetJsonOps().GetJsonDocument();
+}
+
 auto StructureParserBase::Parse() noexcept -> Result<void>
 {
     // Skip all whitespace to so that we will detect empty documents immediately.
@@ -204,13 +215,13 @@ auto StructureParserBase::ReadJsonString() noexcept -> Result<CStringView>
 {
     String& buffer{this->GetJsonDocument().GetClearedStringBuffer()};
 
-    const auto reader = [this, &buffer]() noexcept {
+    const auto reader{[this, &buffer]() noexcept {
         return this->GetJsonOps().ReadUntil(R"("\)"sv,
 
                                             [&buffer](StringView buf) noexcept {
                                                 static_cast<void>(buffer.append(buf.begin(), buf.end()));
                                             });
-    };
+    }};
 
     Result<OptChar> ret_val{reader()};
     while (ret_val.has_value())
@@ -483,17 +494,6 @@ auto StructureParserBase::GetNumber(const char first) noexcept -> CStringView
 
     // Create a string view from the number-string
     return this->GetJsonDocument().GetCurrentString();
-}
-
-auto StructureParserBase::GetJsonDocument() noexcept -> JsonData&
-{
-
-    return this->GetJsonOps().GetJsonDocument();
-}
-
-auto StructureParserBase::GetState() noexcept -> DepthCounter&
-{
-    return this->GetJsonDocument().GetState();
 }
 
 }  // namespace internal

@@ -95,7 +95,7 @@ class ErrorBoolParser final : public internal::VirtualParser
  */
 TEST(UT__Parser__Bool, Dynamic__True)
 {
-    auto data = JsonData::FromBuffer(std::string_view{"true"});
+    auto data{JsonData::FromBuffer(std::string_view{"true"})};
     ASSERT_TRUE(data.has_value());
     DynamicBoolParser parser{data.value()};
     ASSERT_TRUE(parser.Parse().has_value());
@@ -109,7 +109,7 @@ TEST(UT__Parser__Bool, Dynamic__True)
  */
 TEST(UT__Parser__Bool, Dynamic__False)
 {
-    auto data = JsonData::FromBuffer(std::string_view{"false"});
+    auto data{JsonData::FromBuffer(std::string_view{"false"})};
     ASSERT_TRUE(data.has_value());
     DynamicBoolParser parser{data.value()};
     ASSERT_TRUE(parser.Parse().has_value());
@@ -123,7 +123,7 @@ TEST(UT__Parser__Bool, Dynamic__False)
  */
 TEST(UT__Parser__Bool, Dynamic__Bools)
 {
-    auto data = JsonData::FromBuffer(std::string_view{"[true,true,false,false,false]"});
+    auto data{JsonData::FromBuffer(std::string_view{"[true,true,false,false,false]"})};
     ASSERT_TRUE(data.has_value());
     DynamicBoolParser parser{data.value()};
     ASSERT_TRUE(parser.Parse().has_value());
@@ -137,12 +137,12 @@ TEST(UT__Parser__Bool, Dynamic__Bools)
  */
 TEST(UT__Parser__Bool, Dynamic__ParseTrue_WrongFormat)
 {
-    auto result = JsonData::FromBuffer(std::string_view{R"({true:123})"});
+    auto result{JsonData::FromBuffer(std::string_view{R"({true:123})"})};
     ASSERT_TRUE(result.has_value());
     JsonData data{std::move(result).value()};
 
     DynamicBoolParser parser{data};
-    const auto parse_result = parser.Parse();
+    const auto parse_result{parser.Parse()};
     ASSERT_FALSE(parse_result.has_value());
     ASSERT_EQ(parse_result.error(), JsonErrc::kInvalidJson);
 }
@@ -153,12 +153,12 @@ TEST(UT__Parser__Bool, Dynamic__ParseTrue_WrongFormat)
  */
 TEST(UT__Parser__Bool, Dynamic__ParseFalse__WrongFormat)
 {
-    auto result = JsonData::FromBuffer(std::string_view{R"({false:123})"});
+    auto result{JsonData::FromBuffer(std::string_view{R"({false:123})"})};
     ASSERT_TRUE(result.has_value());
     JsonData data{std::move(result).value()};
 
     DynamicBoolParser parser{data};
-    const auto parse_result = parser.Parse();
+    const auto parse_result{parser.Parse()};
     ASSERT_FALSE(parse_result.has_value());
     ASSERT_EQ(parse_result.error(), JsonErrc::kInvalidJson);
 }
@@ -169,11 +169,11 @@ TEST(UT__Parser__Bool, Dynamic__ParseFalse__WrongFormat)
  */
 TEST(UT__Parser__Bool, Dynamic__ParseFalse__Error)
 {
-    auto doc = JsonData::FromBuffer(std::string_view{"false"});
+    auto doc{JsonData::FromBuffer(std::string_view{"false"})};
     ASSERT_TRUE(doc.has_value());
-    ErrorBoolParser parser(doc.value());
+    ErrorBoolParser parser{doc.value()};
 
-    const auto parser_result = parser.Parse();
+    const auto parser_result{parser.Parse()};
     ASSERT_FALSE(parser_result.has_value());
     ASSERT_EQ(parser_result.error(), JsonErrc::kUserValidationFailed);
     ASSERT_EQ(parser_result.error().UserMessage(), std::string_view{"OnBool called."});
@@ -185,11 +185,11 @@ TEST(UT__Parser__Bool, Dynamic__ParseFalse__Error)
  */
 TEST(UT__Parser__Bool, Dynamic__ParseTrue__Error)
 {
-    auto doc = JsonData::FromBuffer(std::string_view{"true"});
+    auto doc{JsonData::FromBuffer(std::string_view{"true"})};
     ASSERT_TRUE(doc.has_value());
-    ErrorBoolParser parser(doc.value());
+    ErrorBoolParser parser{doc.value()};
 
-    const auto parser_result = parser.Parse();
+    const auto parser_result{parser.Parse()};
     ASSERT_FALSE(parser_result.has_value());
     ASSERT_EQ(parser_result.error(), JsonErrc::kUserValidationFailed);
     ASSERT_EQ(parser_result.error().UserMessage(), std::string_view{"OnBool called."});

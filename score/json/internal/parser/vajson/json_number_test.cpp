@@ -42,16 +42,6 @@ namespace unit_test
 
 using namespace ::testing;  // NOLINT(build/namespaces)
 
-/*!
- * \brief           Unqualified access to the string view
- */
-using view = std::string_view;
-
-/*!
- * \brief           A ASCII number
- */
-using UUT = JsonNumber;
-
 namespace
 {
 
@@ -153,9 +143,9 @@ class TestValue
     /*!
      * \brief           Gets a view of the string with potentially manipulated length
      */
-    view View() const
+    StringView View() const
     {
-        return view(this->mod_value_.data(), this->mod_value_.size());
+        return StringView(this->mod_value_.data(), this->mod_value_.size());
     }
 
     /*!
@@ -176,8 +166,8 @@ class TestValue
      */
     void Debug(::std::ostream& os) const noexcept
     {
-        auto v = this->View();
-        auto exp = this->Expected();
+        auto v{this->View()};
+        auto exp{this->Expected()};
         os << "Value{Input: " << std::string(v.data(), v.size());
         if (exp.has_value())
         {
@@ -210,7 +200,7 @@ class TestValue
      */
     void ShortenView() noexcept
     {
-        std::size_t len = this->value_.size();
+        std::size_t len{this->value_.size()};
         if (!this->with_zero_)
         {
             len -= 1;
@@ -274,7 +264,7 @@ class NumberTest : public testing::TestWithParam<TestValue<Num>>
     /*!
      * \brief           Gets the Input into the Conversion function
      */
-    view Input() const
+    StringView Input() const
     {
         return this->params_->View();
     }
@@ -282,9 +272,9 @@ class NumberTest : public testing::TestWithParam<TestValue<Num>>
     /*!
      * \brief           Gets the constructed number
      */
-    UUT GetNumber() const
+    JsonNumber GetNumber() const
     {
-        return UUT(Input());
+        return JsonNumber(Input());
     }
 
     /*!
@@ -301,7 +291,7 @@ class NumberTest : public testing::TestWithParam<TestValue<Num>>
     template <typename Signed = Num, typename = typename std::enable_if_t<std::is_signed<Signed>::value>>
     Optional<Signed> ActualSigned() const
     {
-        return ToOptional(UUT::New(Input()).and_then([](UUT num) noexcept {
+        return ToOptional(JsonNumber::New(Input()).and_then([](JsonNumber num) noexcept {
             return num.TryAs<Signed>();
         }));
     }
@@ -312,7 +302,7 @@ class NumberTest : public testing::TestWithParam<TestValue<Num>>
     template <typename Unsigned = Num, typename = typename std::enable_if_t<std::is_unsigned<Unsigned>::value>>
     Optional<Unsigned> ActualUnsigned() const
     {
-        return ToOptional(UUT::New(Input()).and_then([](UUT num) noexcept {
+        return ToOptional(JsonNumber::New(Input()).and_then([](JsonNumber num) noexcept {
             return num.TryAs<Unsigned>();
         }));
     }
@@ -323,7 +313,7 @@ class NumberTest : public testing::TestWithParam<TestValue<Num>>
     template <typename Float = Num, typename = typename std::enable_if_t<std::is_floating_point<Float>::value>>
     Optional<Float> ActualFloat() const
     {
-        return ToOptional(UUT::New(Input()).and_then([](UUT num) noexcept {
+        return ToOptional(JsonNumber::New(Input()).and_then([](JsonNumber num) noexcept {
             return num.TryAs<Float>();
         }));
     }
@@ -341,7 +331,7 @@ class UT__Number : public ::testing::Test
 template <typename T>
 std::optional<T> ParseNumberAs(const std::string& json_number)
 {
-    const auto result = UUT::New(json_number).value().As<T>();
+    const auto result{JsonNumber::New(json_number).value().As<T>()};
     if (result.has_value())
     {
         return result.value();
@@ -351,7 +341,7 @@ std::optional<T> ParseNumberAs(const std::string& json_number)
 
 /// @brief Smoke tests that the values just below and just above the range of T are rejected.
 template <typename T>
-void range_test(const ::std::string& underflow, const std::string& overflow)
+void ExpectOutOfRangeRejected(const ::std::string& underflow, const std::string& overflow)
 {
     EXPECT_FALSE(ParseNumberAs<T>(underflow).has_value());
     EXPECT_FALSE(ParseNumberAs<T>(overflow).has_value());
@@ -368,25 +358,25 @@ void range_test(const ::std::string& underflow, const std::string& overflow)
  */
 TEST_F(UT__Number, OnesAndZerosCanBeParsedToBool)
 {
-    Result<bool> result{UUT::New("1").and_then([](JsonNumber num) noexcept {
+    Result<bool> result{JsonNumber::New("1").and_then([](JsonNumber num) noexcept {
         return num.TryAs<bool>();
     })};
     ASSERT_TRUE(result.has_value());
     ASSERT_EQ(result.value(), true);
 
-    result = UUT::New("0").and_then([](JsonNumber num) noexcept {
+    result = JsonNumber::New("0").and_then([](JsonNumber num) noexcept {
         return num.TryAs<bool>();
     });
     ASSERT_TRUE(result.has_value());
     ASSERT_EQ(result.value(), false);
 
-    result = UUT::New("2").and_then([](JsonNumber num) noexcept {
+    result = JsonNumber::New("2").and_then([](JsonNumber num) noexcept {
         return num.TryAs<bool>();
     });
     ASSERT_FALSE(result.has_value());
     ASSERT_EQ(result.error(), JsonErrc::kInvalidJson);
 
-    result = UUT::New("-1").and_then([](JsonNumber num) noexcept {
+    result = JsonNumber::New("-1").and_then([](JsonNumber num) noexcept {
         return num.TryAs<bool>();
     });
     ASSERT_FALSE(result.has_value());
@@ -399,37 +389,37 @@ TEST_F(UT__Number, OnesAndZerosCanBeParsedToBool)
  */
 TEST_F(UT__Number, ErrnoIsUnsetBeforeConversion)
 {
-    Result<std::uint64_t> result_64{UUT::New("0x1FFFFFFFFFFFFFFFF").and_then([](JsonNumber num) noexcept {
+    Result<std::uint64_t> result_64{JsonNumber::New("0x1FFFFFFFFFFFFFFFF").and_then([](JsonNumber num) noexcept {
         return num.TryAs<std::uint64_t>();
     })};
     ASSERT_FALSE(result_64.has_value());
     ASSERT_EQ(result_64.error(), JsonErrc::kInvalidJson);
 
-    Result<std::uint8_t> result_8{UUT::New("1").and_then([](JsonNumber num) noexcept {
+    Result<std::uint8_t> result_8{JsonNumber::New("1").and_then([](JsonNumber num) noexcept {
         return num.TryAs<std::uint8_t>();
     })};
     ASSERT_TRUE(result_8.has_value());
     ASSERT_EQ(result_8.value(), 1);
 
-    result_64 = UUT::New("0x1FFFFFFFFFFFFFFFF").and_then([](JsonNumber num) noexcept {
+    result_64 = JsonNumber::New("0x1FFFFFFFFFFFFFFFF").and_then([](JsonNumber num) noexcept {
         return num.TryAs<std::uint64_t>();
     });
     ASSERT_FALSE(result_64.has_value());
     ASSERT_EQ(result_64.error(), JsonErrc::kInvalidJson);
 
-    result_8 = UUT::New("1").and_then([](JsonNumber num) noexcept {
+    result_8 = JsonNumber::New("1").and_then([](JsonNumber num) noexcept {
         return num.TryAs<std::uint8_t>();
     });
     ASSERT_TRUE(result_8.has_value());
     ASSERT_EQ(result_8.value(), 1);
 
-    const Result<std::double_t> result_d{UUT::New("this_is_no_double").and_then([](JsonNumber num) noexcept {
+    const Result<std::double_t> result_d{JsonNumber::New("this_is_no_double").and_then([](JsonNumber num) noexcept {
         return num.TryAs<std::double_t>();
     })};
     ASSERT_FALSE(result_d.has_value());
     ASSERT_EQ(result_d.error(), JsonErrc::kInvalidJson);
 
-    result_8 = UUT::New("1").and_then([](JsonNumber num) noexcept {
+    result_8 = JsonNumber::New("1").and_then([](JsonNumber num) noexcept {
         return num.TryAs<std::uint8_t>();
     });
     ASSERT_TRUE(result_8.has_value());
@@ -442,14 +432,14 @@ TEST_F(UT__Number, ErrnoIsUnsetBeforeConversion)
  */
 TEST_F(UT__Number, StringsCanBeCustomParsed)
 {
-    view sv = "1234567890";
-    Result<UUT> uut{UUT::New(sv)};
+    StringView sv{"1234567890"};
+    Result<JsonNumber> uut{JsonNumber::New(sv)};
     ASSERT_TRUE(uut.has_value());
 
-    const auto result = uut.value().Convert([&sv](view v) noexcept {
+    const auto result{uut.value().Convert([&sv](StringView v) noexcept {
         EXPECT_EQ(v, sv);
         return Optional<int>{10};
-    });
+    })};
     EXPECT_EQ(result, Optional<int>{10});
 }
 
@@ -459,11 +449,11 @@ TEST_F(UT__Number, StringsCanBeCustomParsed)
  */
 TEST_F(UT__Number, AsJsonNumber)
 {
-    view sv = "1234567890";
-    Result<UUT> uut{UUT::New(sv)};
+    StringView sv{"1234567890"};
+    Result<JsonNumber> uut{JsonNumber::New(sv)};
     ASSERT_TRUE(uut.has_value());
 
-    const auto result = uut.value().As<JsonNumber>();
+    const auto result{uut.value().As<JsonNumber>()};
     ASSERT_TRUE(result.has_value());
 }
 
@@ -479,20 +469,20 @@ TEST_F(UT__Number, AsJsonNumber)
 TEST_F(UT__Number, InvalidNumber)
 {
     {
-        view sv = "0a";
-        Result<UUT> uut{UUT::New(sv)};
+        StringView sv{"0a"};
+        Result<JsonNumber> uut{JsonNumber::New(sv)};
         ASSERT_FALSE(uut.has_value());
         ASSERT_EQ(uut.error(), JsonErrc::kInvalidJson);
     }
     {
-        view sv = "-";
-        Result<UUT> uut{UUT::New(sv)};
+        StringView sv{"-"};
+        Result<JsonNumber> uut{JsonNumber::New(sv)};
         ASSERT_FALSE(uut.has_value());
         ASSERT_EQ(uut.error(), JsonErrc::kInvalidJson);
     }
     {
-        view sv = "";
-        Result<UUT> uut{UUT::New(sv)};
+        StringView sv{""};
+        Result<JsonNumber> uut{JsonNumber::New(sv)};
         ASSERT_FALSE(uut.has_value());
         ASSERT_EQ(uut.error(), JsonErrc::kInvalidJson);
     }
@@ -502,9 +492,9 @@ TEST_F(UT__Number, InvalidNumber)
         // 'a' is 0b0110'0001 so after the shift the most significant bit is 1.
         ch = static_cast<unsigned char>(ch << 1);
         const std::string str(1, static_cast<char>(ch));
-        view sv{str};
+        StringView sv{str};
 
-        Result<UUT> uut{UUT::New(sv)};
+        Result<JsonNumber> uut{JsonNumber::New(sv)};
         ASSERT_FALSE(uut.has_value());
         ASSERT_EQ(uut.error(), JsonErrc::kInvalidJson);
     }
@@ -537,7 +527,7 @@ class UT__Number__I8Failure : public NumberTest<std::int8_t>
  */
 TEST_P(UT__Number__I8Success, ConvertsValidIntegers8bit)
 {
-    auto actual = ActualSigned();
+    auto actual{ActualSigned()};
     ASSERT_TRUE(actual.has_value());
     EXPECT_EQ(actual, Expected());
 }
@@ -566,7 +556,7 @@ INSTANTIATE_TEST_SUITE_P(SignedIntTest8bit,
  */
 TEST_P(UT__Number__I8Failure, FailsOnInvalidIntegers8bit)
 {
-    auto actual = ActualSigned();
+    auto actual{ActualSigned()};
 
     ASSERT_FALSE(actual.has_value());
 }
@@ -614,7 +604,7 @@ class UT__Number__U8Failure : public NumberTest<std::uint8_t>
  */
 TEST_P(UT__Number__U8Success, ConvertsValidIntegers8bit)
 {
-    auto actual = ActualUnsigned();
+    auto actual{ActualUnsigned()};
     ASSERT_TRUE(actual.has_value());
     EXPECT_EQ(actual, Expected());
 }
@@ -640,7 +630,7 @@ INSTANTIATE_TEST_SUITE_P(UnsignedIntTest8bit,
  */
 TEST_P(UT__Number__U8Failure, FailsOnInvalidIntegers8bit)
 {
-    auto actual = ActualUnsigned();
+    auto actual{ActualUnsigned()};
 
     ASSERT_FALSE(actual.has_value());
 }
@@ -690,7 +680,7 @@ class UT__Number__DoubleFailure : public NumberTest<double>
  */
 TEST_P(UT__Number__DoubleSuccess, ConvertsValidDoubles)
 {
-    auto actual = ActualFloat();
+    auto actual{ActualFloat()};
     ASSERT_TRUE(actual.has_value());
     ASSERT_TRUE(CompareFloat(actual.value(), Expected().value()));
 }
@@ -721,7 +711,7 @@ INSTANTIATE_TEST_SUITE_P(FloatTestDouble,
  */
 TEST_P(UT__Number__DoubleFailure, FailsOnInvalidDoubles)
 {
-    auto actual = ActualFloat();
+    auto actual{ActualFloat()};
 
     ASSERT_FALSE(actual.has_value());
 }
@@ -750,7 +740,7 @@ TEST(Number, Bool)
     RecordProperty("TestType", "requirements-based");          // requirements test
     RecordProperty("DerivationTechnique", "boundary-values");  // requirements
 
-    range_test<bool>("-1", "2");
+    ExpectOutOfRangeRejected<bool>("-1", "2");
 }
 
 TEST(Number, Uint8)
@@ -761,7 +751,7 @@ TEST(Number, Uint8)
     RecordProperty("TestType", "requirements-based");          // requirements test
     RecordProperty("DerivationTechnique", "boundary-values");  // requirements
 
-    range_test<std::uint8_t>("-1", "256");
+    ExpectOutOfRangeRejected<std::uint8_t>("-1", "256");
 }
 
 TEST(Number, Uint16)
@@ -772,7 +762,7 @@ TEST(Number, Uint16)
     RecordProperty("TestType", "requirements-based");          // requirements test
     RecordProperty("DerivationTechnique", "boundary-values");  // requirements
 
-    range_test<std::uint16_t>("-1", "65536");
+    ExpectOutOfRangeRejected<std::uint16_t>("-1", "65536");
 }
 
 TEST(Number, Uint32)
@@ -783,7 +773,7 @@ TEST(Number, Uint32)
     RecordProperty("TestType", "requirements-based");          // requirements test
     RecordProperty("DerivationTechnique", "boundary-values");  // requirements
 
-    range_test<std::uint32_t>("-1", "4294967296");
+    ExpectOutOfRangeRejected<std::uint32_t>("-1", "4294967296");
 }
 
 TEST(Number, Uint64)
@@ -794,7 +784,7 @@ TEST(Number, Uint64)
     RecordProperty("TestType", "requirements-based");          // requirements test
     RecordProperty("DerivationTechnique", "boundary-values");  // requirements
 
-    range_test<std::uint64_t>("-1", "18446744073709551616");
+    ExpectOutOfRangeRejected<std::uint64_t>("-1", "18446744073709551616");
 }
 
 TEST(Number, Int8)
@@ -805,7 +795,7 @@ TEST(Number, Int8)
     RecordProperty("TestType", "requirements-based");          // requirements test
     RecordProperty("DerivationTechnique", "boundary-values");  // requirements
 
-    range_test<std::int8_t>("-129", "128");
+    ExpectOutOfRangeRejected<std::int8_t>("-129", "128");
 }
 
 TEST(Number, Int16)
@@ -816,7 +806,7 @@ TEST(Number, Int16)
     RecordProperty("TestType", "requirements-based");          // requirements test
     RecordProperty("DerivationTechnique", "boundary-values");  // requirements
 
-    range_test<std::int16_t>("-32769", "32768");
+    ExpectOutOfRangeRejected<std::int16_t>("-32769", "32768");
 }
 
 TEST(Number, Int32)
@@ -827,7 +817,7 @@ TEST(Number, Int32)
     RecordProperty("TestType", "requirements-based");          // requirements test
     RecordProperty("DerivationTechnique", "boundary-values");  // requirements
 
-    range_test<std::int32_t>("-2147483649", "2147483648");
+    ExpectOutOfRangeRejected<std::int32_t>("-2147483649", "2147483648");
 }
 
 TEST(Number, Int64)
@@ -838,7 +828,7 @@ TEST(Number, Int64)
     RecordProperty("TestType", "requirements-based");          // requirements test
     RecordProperty("DerivationTechnique", "boundary-values");  // requirements
 
-    range_test<std::int64_t>("-9223372036854775809", "9223372036854775808");
+    ExpectOutOfRangeRejected<std::int64_t>("-9223372036854775809", "9223372036854775808");
 }
 
 TEST(Number, Float)
@@ -849,7 +839,7 @@ TEST(Number, Float)
     RecordProperty("TestType", "requirements-based");          // requirements test
     RecordProperty("DerivationTechnique", "boundary-values");  // requirements
 
-    range_test<float>("-3.402823476385288598117e+38", "3.402823476385288598117e+38");
+    ExpectOutOfRangeRejected<float>("-3.402823476385288598117e+38", "3.402823476385288598117e+38");
 }
 
 TEST(Number, Double)
@@ -860,7 +850,7 @@ TEST(Number, Double)
     RecordProperty("TestType", "requirements-based");          // requirements test
     RecordProperty("DerivationTechnique", "boundary-values");  // requirements
 
-    range_test<double>("-1.797693134862415708145e+308", "1.797693134862415708145e+308");
+    ExpectOutOfRangeRejected<double>("-1.797693134862415708145e+308", "1.797693134862415708145e+308");
 }
 
 TEST(Number, WithDecimalPointWithoutFractionalPartCannotBeParsedAsInteger)

@@ -64,9 +64,9 @@ inline void ResetErrno() noexcept
 /// \brief Helper function to check if character is a digit, in ASCII/UTF-8.
 inline auto IsDigit(const char chr) noexcept -> bool
 {
-    constexpr auto zero = std::char_traits<char>::to_int_type('0');
-    constexpr auto nine = std::char_traits<char>::to_int_type('9');
-    const auto intchr = std::char_traits<char>::to_int_type(chr);
+    constexpr auto zero{std::char_traits<char>::to_int_type('0')};
+    constexpr auto nine{std::char_traits<char>::to_int_type('9')};
+    const auto intchr{std::char_traits<char>::to_int_type(chr)};
     return (intchr >= zero) && (intchr <= nine);
 }
 

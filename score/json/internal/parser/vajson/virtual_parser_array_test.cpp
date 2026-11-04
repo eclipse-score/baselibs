@@ -131,7 +131,7 @@ class LimitedStartArrayParser final : public internal::VirtualParser
  */
 TEST(UT__Parser__Array, Dynamic__Ints)
 {
-    auto data = JsonData::FromBuffer(std::string_view{"[1,2,3]"});
+    auto data{JsonData::FromBuffer(std::string_view{"[1,2,3]"})};
     ASSERT_TRUE(data.has_value());
     DynamicArrayParser parser{data.value()};
     ASSERT_TRUE(parser.Parse().has_value());
@@ -146,7 +146,7 @@ TEST(UT__Parser__Array, Dynamic__Ints)
  */
 TEST(UT__Parser__Array, Dynamic__Nested)
 {
-    auto data = JsonData::FromBuffer(std::string_view{"[[1,2],[3,4]]"});
+    auto data{JsonData::FromBuffer(std::string_view{"[[1,2],[3,4]]"})};
     ASSERT_TRUE(data.has_value());
     DynamicArrayParser parser{data.value()};
     ASSERT_TRUE(parser.Parse().has_value());
@@ -161,7 +161,7 @@ TEST(UT__Parser__Array, Dynamic__Nested)
  */
 TEST(UT__Parser__Array, Dynamic__NoArrays)
 {
-    auto data = JsonData::FromBuffer(std::string_view{R"({"a":1,"b":2})"});
+    auto data{JsonData::FromBuffer(std::string_view{R"({"a":1,"b":2})"})};
     ASSERT_TRUE(data.has_value());
     DynamicArrayParser parser{data.value()};
     ASSERT_TRUE(parser.Parse().has_value());
@@ -176,11 +176,11 @@ TEST(UT__Parser__Array, Dynamic__NoArrays)
  */
 TEST(UT__Parser__Array__Error, Dynamic__OnEndArray)
 {
-    auto doc = JsonData::FromBuffer(std::string_view{R"([1,2])"});
+    auto doc{JsonData::FromBuffer(std::string_view{R"([1,2])"})};
     ASSERT_TRUE(doc.has_value());
-    LimitedEndArrayParser parser(doc.value());
+    LimitedEndArrayParser parser{doc.value()};
 
-    const auto parser_result = parser.Parse();
+    const auto parser_result{parser.Parse()};
     ASSERT_FALSE(parser_result.has_value());
     ASSERT_EQ(parser_result.error(), JsonErrc::kUserValidationFailed);
     ASSERT_EQ(parser_result.error().UserMessage(), std::string_view{"OnEndArray called with array size >=2."});
@@ -192,11 +192,11 @@ TEST(UT__Parser__Array__Error, Dynamic__OnEndArray)
  */
 TEST(UT__Parser__Array__Error, Dynamic__OnStartArray)
 {
-    auto doc = JsonData::FromBuffer(std::string_view{R"([[]])"});
+    auto doc{JsonData::FromBuffer(std::string_view{R"([[]])"})};
     ASSERT_TRUE(doc.has_value());
-    LimitedStartArrayParser parser(doc.value());
+    LimitedStartArrayParser parser{doc.value()};
 
-    const auto parser_result = parser.Parse();
+    const auto parser_result{parser.Parse()};
     ASSERT_FALSE(parser_result.has_value());
     ASSERT_EQ(parser_result.error(), JsonErrc::kUserValidationFailed);
     ASSERT_EQ(parser_result.error().UserMessage(), std::string_view{"OnStartArray called a second time."});

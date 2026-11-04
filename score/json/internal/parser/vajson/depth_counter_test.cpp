@@ -38,7 +38,7 @@ TEST(UT__DepthCounter, MoveAssignment)
     internal::DepthCounter dc{};
     score::cpp::ignore = dc.AddArray();
     score::cpp::ignore = dc.AddValue();
-    auto result = dc.CheckEndOfFile();
+    auto result{dc.CheckEndOfFile()};
     ASSERT_EQ(result.error(), JsonErrc::kInvalidJson);
     ASSERT_EQ(result.error().UserMessage(),
               std::string_view{"DepthCounter::CheckEndOfFile: Expected closing brackets."});
@@ -66,7 +66,7 @@ TEST(UT__DepthCounter, MoveConstruction)
     score::cpp::ignore = dc.AddArray();
     score::cpp::ignore = dc.AddValue();
 
-    const auto result = dc.CheckEndOfFile();
+    const auto result{dc.CheckEndOfFile()};
     ASSERT_EQ(result.error(), JsonErrc::kInvalidJson);
     ASSERT_EQ(result.error().UserMessage(),
               std::string_view{"DepthCounter::CheckEndOfFile: Expected closing brackets."});
@@ -84,7 +84,7 @@ TEST(UT__DepthCounter, MoveConstruction)
 TEST(UT__DepthCounter, CheckEndOfFile__EmptyDocument)
 {
     internal::DepthCounter dc{};
-    const auto result = dc.CheckEndOfFile();
+    const auto result{dc.CheckEndOfFile()};
     ASSERT_EQ(result.error(), JsonErrc::kInvalidJson);
     ASSERT_EQ(result.error().UserMessage(), std::string_view{"DepthCounter::CheckEndOfFile: Empty document."});
 }
@@ -97,7 +97,7 @@ TEST(UT__DepthCounter, CheckEndOfFile__ArrayOpen)
 {
     internal::DepthCounter dc{};
     ASSERT_TRUE(dc.AddArray().has_value());
-    const auto result = dc.CheckEndOfFile();
+    const auto result{dc.CheckEndOfFile()};
     ASSERT_EQ(result.error(), JsonErrc::kInvalidJson);
     ASSERT_EQ(result.error().UserMessage(),
               std::string_view{"DepthCounter::CheckEndOfFile: Expected closing brackets."});
@@ -111,7 +111,7 @@ TEST(UT__DepthCounter, CheckEndOfFile__ObjectOpen)
 {
     internal::DepthCounter dc{};
     ASSERT_TRUE(dc.AddObject().has_value());
-    const auto result = dc.CheckEndOfFile();
+    const auto result{dc.CheckEndOfFile()};
     ASSERT_EQ(result.error(), JsonErrc::kInvalidJson);
     ASSERT_EQ(result.error().UserMessage(), std::string_view{"DepthCounter::CheckEndOfFile: Expected closing braces."});
 }
@@ -148,7 +148,7 @@ TEST(UT__DepthCounter, CheckEndOfFile__SingleValue)
 TEST(UT__DepthCounter, AddKey__OnlyKey)
 {
     internal::DepthCounter dc{};
-    const auto result = dc.AddKey();
+    const auto result{dc.AddKey()};
     ASSERT_EQ(result.error(), JsonErrc::kInvalidJson);
     ASSERT_EQ(result.error().UserMessage(), std::string_view{"DepthCounter::AddKey: Expected a value."});
 }
@@ -174,7 +174,7 @@ TEST(UT__DepthCounter, AddKey__NoComma)
     ASSERT_TRUE(dc.AddObject().has_value());
     ASSERT_TRUE(dc.AddKey().has_value());
     ASSERT_TRUE(dc.AddValue().has_value());
-    const auto result = dc.AddKey();
+    const auto result{dc.AddKey()};
     ASSERT_EQ(result.error(), JsonErrc::kInvalidJson);
     ASSERT_EQ(result.error().UserMessage(), std::string_view{"DepthCounter::AddKey: Missing comma."});
 }
@@ -188,7 +188,7 @@ TEST(UT__DepthCounter, AddKey__MultipleTopLevel)
     internal::DepthCounter dc{};
     ASSERT_TRUE(dc.AddObject().has_value());
     ASSERT_TRUE(dc.PopObject().has_value());
-    const auto result = dc.AddKey();
+    const auto result{dc.AddKey()};
     ASSERT_EQ(result.error(), JsonErrc::kInvalidJson);
     ASSERT_EQ(result.error().UserMessage(), std::string_view{"DepthCounter::AddKey: Multiple top level elements."});
 }
@@ -201,7 +201,7 @@ TEST(UT__DepthCounter, AddValue__SingleValue)
 {
     internal::DepthCounter dc{};
     ASSERT_TRUE(dc.AddValue().has_value());
-    const auto result = dc.AddValue();
+    const auto result{dc.AddValue()};
     ASSERT_EQ(result.error(), JsonErrc::kInvalidJson);
     ASSERT_EQ(result.error().UserMessage(), std::string_view{"DepthCounter::AddValue: Multiple top level elements."});
 }
@@ -225,7 +225,7 @@ TEST(UT__DepthCounter, AddValue__NoKey)
 {
     internal::DepthCounter dc{};
     ASSERT_TRUE(dc.AddObject().has_value());
-    const auto result = dc.AddValue();
+    const auto result{dc.AddValue()};
     ASSERT_EQ(result.error(), JsonErrc::kInvalidJson);
     ASSERT_EQ(result.error().UserMessage(), std::string_view{"DepthCounter::AddValue: Expected a key."});
 }
@@ -239,7 +239,7 @@ TEST(UT__DepthCounter, AddValue__NoComma)
     internal::DepthCounter dc{};
     ASSERT_TRUE(dc.AddArray().has_value());
     ASSERT_TRUE(dc.AddValue().has_value());
-    const auto result = dc.AddValue();
+    const auto result{dc.AddValue()};
     ASSERT_EQ(result.error(), JsonErrc::kInvalidJson);
     ASSERT_EQ(result.error().UserMessage(), std::string_view{"DepthCounter::AddValue: Missing comma."});
 }
@@ -252,7 +252,7 @@ TEST(UT__DepthCounter, AddValue__MultipleTopLevel)
 {
     internal::DepthCounter dc{};
     ASSERT_TRUE(dc.AddValue().has_value());
-    const auto result = dc.AddValue();
+    const auto result{dc.AddValue()};
     ASSERT_EQ(result.error(), JsonErrc::kInvalidJson);
     ASSERT_EQ(result.error().UserMessage(), std::string_view{"DepthCounter::AddValue: Multiple top level elements."});
 }
@@ -265,7 +265,7 @@ TEST(UT__DepthCounter, AddElement__MultipleTopLevel)
 {
     internal::DepthCounter dc{};
     ASSERT_TRUE(dc.AddValue().has_value());
-    const auto result = dc.AddArray();
+    const auto result{dc.AddArray()};
     ASSERT_EQ(result.error(), JsonErrc::kInvalidJson);
     ASSERT_EQ(result.error().UserMessage(), std::string_view{"DepthCounter::AddElement: Multiple top level elements."});
 }
@@ -278,7 +278,7 @@ TEST(UT__DepthCounter, AddElement__NoKey)
 {
     internal::DepthCounter dc{};
     ASSERT_TRUE(dc.AddObject().has_value());
-    const auto result = dc.AddArray();
+    const auto result{dc.AddArray()};
     ASSERT_EQ(result.error(), JsonErrc::kInvalidJson);
     ASSERT_EQ(result.error().UserMessage(), std::string_view{"DepthCounter::AddElement: Expected a key."});
 }
@@ -293,7 +293,7 @@ TEST(UT__DepthCounter, AddElement__NoComma)
     ASSERT_TRUE(dc.AddArray().has_value());
     ASSERT_TRUE(dc.AddObject().has_value());
     ASSERT_TRUE(dc.PopObject().has_value());
-    const auto result = dc.AddObject();
+    const auto result{dc.AddObject()};
     ASSERT_EQ(result.error(), JsonErrc::kInvalidJson);
     ASSERT_EQ(result.error().UserMessage(), std::string_view{"DepthCounter::AddElement: Missing comma."});
 }
@@ -320,10 +320,10 @@ TEST(UT__DepthCounter, Pop)
     ASSERT_TRUE(dc.AddObject().has_value());
     ASSERT_TRUE(dc.AddKey().has_value());
     ASSERT_TRUE(dc.AddObject().has_value());
-    const auto pop_result1 = dc.PopObject();
+    const auto pop_result1{dc.PopObject()};
     ASSERT_TRUE(pop_result1.has_value());
     ASSERT_EQ(pop_result1.value(), 0);
-    const auto pop_result2 = dc.PopObject();
+    const auto pop_result2{dc.PopObject()};
     ASSERT_TRUE(pop_result2.has_value());
     ASSERT_EQ(pop_result2.value(), 1);
 }
