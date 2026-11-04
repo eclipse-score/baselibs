@@ -32804,7 +32804,7 @@
   {
     "name": "SynchronizedTest__LockMethodBasic",
     "file": "score/concurrency/synchronized_test.cpp",
-    "line": "247",
+    "line": "245",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -32818,7 +32818,7 @@
   {
     "name": "SynchronizedTest__TestStructLockReturnValue",
     "file": "score/concurrency/synchronized_test.cpp",
-    "line": "261",
+    "line": "259",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -32832,7 +32832,7 @@
   {
     "name": "SynchronizedTest__TestStructConstLockBehavior",
     "file": "score/concurrency/synchronized_test.cpp",
-    "line": "278",
+    "line": "276",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -32846,7 +32846,7 @@
   {
     "name": "SynchronizedTest__TestStructWithLockVariations",
     "file": "score/concurrency/synchronized_test.cpp",
-    "line": "292",
+    "line": "290",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -32860,7 +32860,7 @@
   {
     "name": "SynchronizedTest__TestStructMemberFunctionPointers",
     "file": "score/concurrency/synchronized_test.cpp",
-    "line": "309",
+    "line": "307",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -32874,7 +32874,7 @@
   {
     "name": "SynchronizedTest__TestStructFreeFunctionPointers",
     "file": "score/concurrency/synchronized_test.cpp",
-    "line": "320",
+    "line": "318",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -32888,7 +32888,7 @@
   {
     "name": "SynchronizedTest__TestStructLockNonConst",
     "file": "score/concurrency/synchronized_test.cpp",
-    "line": "329",
+    "line": "327",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -32902,7 +32902,7 @@
   {
     "name": "SynchronizedTest__TestStructLockConst",
     "file": "score/concurrency/synchronized_test.cpp",
-    "line": "342",
+    "line": "340",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -32916,7 +32916,7 @@
   {
     "name": "SynchronizedTest__TestStructLambdaCaptureModes",
     "file": "score/concurrency/synchronized_test.cpp",
-    "line": "354",
+    "line": "352",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -32930,7 +32930,7 @@
   {
     "name": "SynchronizedTest__TestStructVoidReturningLambdas",
     "file": "score/concurrency/synchronized_test.cpp",
-    "line": "379",
+    "line": "377",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -32944,7 +32944,7 @@
   {
     "name": "SynchronizedTest__TestStructCopyVsMoveSemantics",
     "file": "score/concurrency/synchronized_test.cpp",
-    "line": "390",
+    "line": "388",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -32958,7 +32958,7 @@
   {
     "name": "SynchronizedTest__TestMoveOnlyObject",
     "file": "score/concurrency/synchronized_test.cpp",
-    "line": "415",
+    "line": "404",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -32972,7 +32972,7 @@
   {
     "name": "SynchronizedTest__TestNoCopyNoMoveObject",
     "file": "score/concurrency/synchronized_test.cpp",
-    "line": "434",
+    "line": "413",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -32986,7 +32986,7 @@
   {
     "name": "SynchronizedTest__TestDefaultConstructedObject",
     "file": "score/concurrency/synchronized_test.cpp",
-    "line": "453",
+    "line": "422",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -33000,7 +33000,7 @@
   {
     "name": "SynchronizedTest__TestParameterizedConstruction",
     "file": "score/concurrency/synchronized_test.cpp",
-    "line": "472",
+    "line": "431",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -33014,7 +33014,7 @@
   {
     "name": "SynchronizedTest__TestCtadConstruction",
     "file": "score/concurrency/synchronized_test.cpp",
-    "line": "497",
+    "line": "445",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -33028,7 +33028,7 @@
   {
     "name": "SynchronizedTest__TestInitializerListConstruction",
     "file": "score/concurrency/synchronized_test.cpp",
-    "line": "504",
+    "line": "452",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -33042,7 +33042,7 @@
   {
     "name": "SynchronizedTest__TestPiecewiseConstruction",
     "file": "score/concurrency/synchronized_test.cpp",
-    "line": "522",
+    "line": "470",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -33056,7 +33056,7 @@
   {
     "name": "SynchronizedTest__TestConstOperations",
     "file": "score/concurrency/synchronized_test.cpp",
-    "line": "534",
+    "line": "482",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -33070,7 +33070,7 @@
   {
     "name": "SynchronizedTest__LockAndWithLock",
     "file": "score/concurrency/synchronized_test.cpp",
-    "line": "549",
+    "line": "493",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -33084,7 +33084,7 @@
   {
     "name": "SynchronizedTest__ConstNonConstCallableTest",
     "file": "score/concurrency/synchronized_test.cpp",
-    "line": "584",
+    "line": "528",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -33098,7 +33098,7 @@
   {
     "name": "SynchronizedTest__TestStructExceptionSafetyDetailed",
     "file": "score/concurrency/synchronized_test.cpp",
-    "line": "611",
+    "line": "555",
     "result": "passed",
     "repo_name": null,
     "hash": null,
