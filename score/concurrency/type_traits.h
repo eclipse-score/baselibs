@@ -41,7 +41,8 @@ struct is_try_lockable : std::false_type
 };
 
 template <typename T>
-struct is_try_lockable<T, std::void_t<decltype(static_cast<bool>(std::declval<T&>().try_lock()))>> : std::true_type
+struct is_try_lockable<T, std::void_t<decltype(static_cast<bool>(std::declval<T&>().try_lock()))>>
+    : is_basic_lockable<T>
 {
 };
 
