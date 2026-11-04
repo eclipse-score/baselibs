@@ -44,6 +44,20 @@ class BasicLockableArchetype
     void unlock() {}
 };
 
+class SharedLockableArchetype : public BasicLockableArchetype
+{
+  public:
+    void lock_shared() {}
+    void unlock_shared() {}
+};
+
+class SharedLockWithoutBasicLocking
+{
+  public:
+    void lock_shared() {}
+    void unlock_shared() {}
+};
+
 class LockableWithOwnsLock : public BasicLockableArchetype
 {
   public:
