@@ -10375,7 +10375,7 @@
         {
           "name": "ParserTest__CanParseObjectBool",
           "file": "score/json/json_parser_test.cpp",
-          "line": 199,
+          "line": 200,
           "need": "comp_req__json__deserialization",
           "verify_type": "partially",
           "result": "passed",
@@ -10387,7 +10387,7 @@
         {
           "name": "ParserTest__CanParseObjectString",
           "file": "score/json/json_parser_test.cpp",
-          "line": 216,
+          "line": 217,
           "need": "comp_req__json__deserialization",
           "verify_type": "partially",
           "result": "passed",
@@ -10399,7 +10399,7 @@
         {
           "name": "ParserTest__CanParseObjectNull",
           "file": "score/json/json_parser_test.cpp",
-          "line": 233,
+          "line": 234,
           "need": "comp_req__json__deserialization",
           "verify_type": "partially",
           "result": "passed",
@@ -10411,7 +10411,7 @@
         {
           "name": "ParserTest__CanParseObjectNumber",
           "file": "score/json/json_parser_test.cpp",
-          "line": 250,
+          "line": 251,
           "need": "comp_req__json__deserialization",
           "verify_type": "partially",
           "result": "passed",
@@ -10423,7 +10423,7 @@
         {
           "name": "ParserTest__CanParseObjectFloatingPointNumber",
           "file": "score/json/json_parser_test.cpp",
-          "line": 267,
+          "line": 268,
           "need": "comp_req__json__deserialization",
           "verify_type": "partially",
           "result": "passed",
@@ -10435,7 +10435,7 @@
         {
           "name": "ParserTest__CanParseObjectInObject",
           "file": "score/json/json_parser_test.cpp",
-          "line": 288,
+          "line": 289,
           "need": "comp_req__json__deserialization",
           "verify_type": "partially",
           "result": "passed",
@@ -10447,7 +10447,7 @@
         {
           "name": "ParserTest__CanParseListInObject",
           "file": "score/json/json_parser_test.cpp",
-          "line": 305,
+          "line": 306,
           "need": "comp_req__json__deserialization",
           "verify_type": "partially",
           "result": "passed",
@@ -10459,7 +10459,7 @@
         {
           "name": "ParserTest__CanParseObjectInObjectAndIterateOverKeys",
           "file": "score/json/json_parser_test.cpp",
-          "line": 324,
+          "line": 325,
           "need": "comp_req__json__deserialization",
           "verify_type": "partially",
           "result": "passed",
@@ -10471,7 +10471,7 @@
         {
           "name": "ParserTest__EmitsErrorWhenParsingObjectWithValueButNoKey",
           "file": "score/json/json_parser_test.cpp",
-          "line": 373,
+          "line": 374,
           "need": "comp_req__json__deserialization",
           "verify_type": "partially",
           "result": "passed",
@@ -10483,7 +10483,7 @@
         {
           "name": "ParserTest__EmitsErrorWhenParsingObjectWithBinaryValue",
           "file": "score/json/json_parser_test.cpp",
-          "line": 393,
+          "line": 394,
           "need": "comp_req__json__deserialization",
           "verify_type": "partially",
           "result": "passed",
@@ -10495,7 +10495,7 @@
         {
           "name": "ParserTest__EmitsErrorWhenParsingTooLargeNumber",
           "file": "score/json/json_parser_test.cpp",
-          "line": 425,
+          "line": 426,
           "need": "comp_req__json__deserialization",
           "verify_type": "partially",
           "result": "passed",
@@ -10507,7 +10507,7 @@
         {
           "name": "ParserTest__FromFileFail",
           "file": "score/json/json_parser_test.cpp",
-          "line": 442,
+          "line": 443,
           "need": "comp_req__json__deserialization",
           "verify_type": "partially",
           "result": "passed",
@@ -10519,7 +10519,7 @@
         {
           "name": "ParserTest__ParsingFromFileWorks",
           "file": "score/json/json_parser_test.cpp",
-          "line": 454,
+          "line": 455,
           "need": "comp_req__json__deserialization",
           "verify_type": "partially",
           "result": "passed",
@@ -10531,7 +10531,7 @@
         {
           "name": "JsonParserVajsonTest__CanParseObjectHexadecimalNumber",
           "file": "score/json/json_parser_test.cpp",
-          "line": 474,
+          "line": 475,
           "need": "comp_req__json__deserialization",
           "verify_type": "partially",
           "result": "passed",
@@ -10543,7 +10543,7 @@
         {
           "name": "JsonParserVajsonTest__CanParseTwoByteBuffer",
           "file": "score/json/json_parser_test.cpp",
-          "line": 524,
+          "line": 525,
           "need": "comp_req__json__deserialization",
           "verify_type": "partially",
           "result": "passed",
@@ -10555,7 +10555,7 @@
         {
           "name": "JsonParserVajsonTest__CanParseBufferWithUtf8Bom",
           "file": "score/json/json_parser_test.cpp",
-          "line": 543,
+          "line": 544,
           "need": "comp_req__json__deserialization",
           "verify_type": "partially",
           "result": "passed",
@@ -10567,7 +10567,7 @@
         {
           "name": "NumberTest__WhenParsingABoolStoredInAJsonThenParsingIsSuccessfulAndCorrectValueIsReturned",
           "file": "score/json/json_parser_test.cpp",
-          "line": 615,
+          "line": 616,
           "need": "comp_req__json__deserialization",
           "verify_type": "partially",
           "result": "passed",
@@ -10579,7 +10579,7 @@
         {
           "name": "NumberTest__WhenParsingAUint8StoredInAJsonThenParsingIsSuccessfulAndCorrectValueIsReturned",
           "file": "score/json/json_parser_test.cpp",
-          "line": 637,
+          "line": 638,
           "need": "comp_req__json__deserialization",
           "verify_type": "partially",
           "result": "passed",
@@ -10591,7 +10591,7 @@
         {
           "name": "NumberTest__WhenParsingAUint16StoredInAJsonThenParsingIsSuccessfulAndCorrectValueIsReturned",
           "file": "score/json/json_parser_test.cpp",
-          "line": 660,
+          "line": 661,
           "need": "comp_req__json__deserialization",
           "verify_type": "partially",
           "result": "passed",
@@ -10603,7 +10603,7 @@
         {
           "name": "NumberTest__WhenParsingAUint32StoredInAJsonThenParsingIsSuccessfulAndCorrectValueIsReturned",
           "file": "score/json/json_parser_test.cpp",
-          "line": 683,
+          "line": 684,
           "need": "comp_req__json__deserialization",
           "verify_type": "partially",
           "result": "passed",
@@ -10615,7 +10615,7 @@
         {
           "name": "NumberTest__WhenParsingAUint64StoredInAJsonThenParsingIsSuccessfulAndCorrectValueIsReturned",
           "file": "score/json/json_parser_test.cpp",
-          "line": 706,
+          "line": 707,
           "need": "comp_req__json__deserialization",
           "verify_type": "partially",
           "result": "passed",
@@ -10627,7 +10627,7 @@
         {
           "name": "NumberTest__WhenParsingAInt8StoredInAJsonThenParsingIsSuccessfulAndCorrectValueIsReturned",
           "file": "score/json/json_parser_test.cpp",
-          "line": 729,
+          "line": 730,
           "need": "comp_req__json__deserialization",
           "verify_type": "partially",
           "result": "passed",
@@ -10639,7 +10639,7 @@
         {
           "name": "NumberTest__WhenParsingAInt16StoredInAJsonThenParsingIsSuccessfulAndCorrectValueIsReturned",
           "file": "score/json/json_parser_test.cpp",
-          "line": 752,
+          "line": 753,
           "need": "comp_req__json__deserialization",
           "verify_type": "partially",
           "result": "passed",
@@ -10651,7 +10651,7 @@
         {
           "name": "NumberTest__WhenParsingAInt32StoredInAJsonThenParsingIsSuccessfulAndCorrectValueIsReturned",
           "file": "score/json/json_parser_test.cpp",
-          "line": 775,
+          "line": 776,
           "need": "comp_req__json__deserialization",
           "verify_type": "partially",
           "result": "passed",
@@ -10663,7 +10663,7 @@
         {
           "name": "NumberTest__WhenParsingAInt64StoredInAJsonThenParsingIsSuccessfulAndCorrectValueIsReturned",
           "file": "score/json/json_parser_test.cpp",
-          "line": 798,
+          "line": 799,
           "need": "comp_req__json__deserialization",
           "verify_type": "partially",
           "result": "passed",
@@ -10675,7 +10675,7 @@
         {
           "name": "NumberTest__WhenParsingAFloatStoredInAJsonThenParsingIsSuccessfulAndCorrectValueIsReturned",
           "file": "score/json/json_parser_test.cpp",
-          "line": 820,
+          "line": 821,
           "need": "comp_req__json__deserialization",
           "verify_type": "partially",
           "result": "passed",
@@ -10687,7 +10687,7 @@
         {
           "name": "NumberTest__WhenParsingADoubleStoredInAJsonThenParsingIsSuccessfulAndCorrectValueIsReturned",
           "file": "score/json/json_parser_test.cpp",
-          "line": 843,
+          "line": 844,
           "need": "comp_req__json__deserialization",
           "verify_type": "partially",
           "result": "passed",
@@ -10699,7 +10699,7 @@
         {
           "name": "Number__Bool",
           "file": "score/json/internal/parser/vajson/json_number_test.cpp",
-          "line": 621,
+          "line": 620,
           "need": "comp_req__json__deserialization",
           "verify_type": "partially",
           "result": "passed",
@@ -10711,7 +10711,7 @@
         {
           "name": "Number__Uint8",
           "file": "score/json/internal/parser/vajson/json_number_test.cpp",
-          "line": 632,
+          "line": 631,
           "need": "comp_req__json__deserialization",
           "verify_type": "partially",
           "result": "passed",
@@ -10723,7 +10723,7 @@
         {
           "name": "Number__Uint16",
           "file": "score/json/internal/parser/vajson/json_number_test.cpp",
-          "line": 643,
+          "line": 642,
           "need": "comp_req__json__deserialization",
           "verify_type": "partially",
           "result": "passed",
@@ -10735,7 +10735,7 @@
         {
           "name": "Number__Uint32",
           "file": "score/json/internal/parser/vajson/json_number_test.cpp",
-          "line": 654,
+          "line": 653,
           "need": "comp_req__json__deserialization",
           "verify_type": "partially",
           "result": "passed",
@@ -10747,7 +10747,7 @@
         {
           "name": "Number__Uint64",
           "file": "score/json/internal/parser/vajson/json_number_test.cpp",
-          "line": 665,
+          "line": 664,
           "need": "comp_req__json__deserialization",
           "verify_type": "partially",
           "result": "passed",
@@ -10759,7 +10759,7 @@
         {
           "name": "Number__Int8",
           "file": "score/json/internal/parser/vajson/json_number_test.cpp",
-          "line": 676,
+          "line": 675,
           "need": "comp_req__json__deserialization",
           "verify_type": "partially",
           "result": "passed",
@@ -10771,7 +10771,7 @@
         {
           "name": "Number__Int16",
           "file": "score/json/internal/parser/vajson/json_number_test.cpp",
-          "line": 687,
+          "line": 686,
           "need": "comp_req__json__deserialization",
           "verify_type": "partially",
           "result": "passed",
@@ -10783,7 +10783,7 @@
         {
           "name": "Number__Int32",
           "file": "score/json/internal/parser/vajson/json_number_test.cpp",
-          "line": 698,
+          "line": 697,
           "need": "comp_req__json__deserialization",
           "verify_type": "partially",
           "result": "passed",
@@ -10795,7 +10795,7 @@
         {
           "name": "Number__Int64",
           "file": "score/json/internal/parser/vajson/json_number_test.cpp",
-          "line": 709,
+          "line": 708,
           "need": "comp_req__json__deserialization",
           "verify_type": "partially",
           "result": "passed",
@@ -10807,7 +10807,7 @@
         {
           "name": "Number__Float",
           "file": "score/json/internal/parser/vajson/json_number_test.cpp",
-          "line": 720,
+          "line": 719,
           "need": "comp_req__json__deserialization",
           "verify_type": "partially",
           "result": "passed",
@@ -10819,7 +10819,7 @@
         {
           "name": "Number__Double",
           "file": "score/json/internal/parser/vajson/json_number_test.cpp",
-          "line": 731,
+          "line": 730,
           "need": "comp_req__json__deserialization",
           "verify_type": "partially",
           "result": "passed",
@@ -10831,7 +10831,7 @@
         {
           "name": "Number__WithDecimalPointWithoutFractionalPartCannotBeParsedAsInteger",
           "file": "score/json/internal/parser/vajson/json_number_test.cpp",
-          "line": 742,
+          "line": 741,
           "need": "comp_req__json__deserialization",
           "verify_type": "partially",
           "result": "passed",
@@ -10843,7 +10843,7 @@
         {
           "name": "Number__WithExponentialNotationWithoutFractionalPartCannotBeParsedAsInteger",
           "file": "score/json/internal/parser/vajson/json_number_test.cpp",
-          "line": 754,
+          "line": 753,
           "need": "comp_req__json__deserialization",
           "verify_type": "partially",
           "result": "passed",
@@ -10855,7 +10855,7 @@
         {
           "name": "Number__FloatingPointWithoutDecimalPoint",
           "file": "score/json/internal/parser/vajson/json_number_test.cpp",
-          "line": 767,
+          "line": 766,
           "need": "comp_req__json__deserialization",
           "verify_type": "partially",
           "result": "passed",
@@ -10867,7 +10867,7 @@
         {
           "name": "Number__NearDoubleLimitsIsParsable",
           "file": "score/json/internal/parser/vajson/json_number_test.cpp",
-          "line": 779,
+          "line": 778,
           "need": "comp_req__json__deserialization",
           "verify_type": "partially",
           "result": "passed",
@@ -10879,7 +10879,7 @@
         {
           "name": "Number__FloatingPointOverflowIsRejected",
           "file": "score/json/internal/parser/vajson/json_number_test.cpp",
-          "line": 790,
+          "line": 789,
           "need": "comp_req__json__deserialization",
           "verify_type": "partially",
           "result": "passed",
