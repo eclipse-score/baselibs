@@ -33,25 +33,24 @@ namespace json
 namespace
 {
 
-#define JSON_INPUT R"({ "num": 1, "string": "foo" })"
-#define JSON_ERROR_INPUT R"({"something"})"
+constexpr std::string_view kJsonInput{R"({ "num": 1, "string": "foo" })"};
 
-void json_verify(const score::json::Any& parsed_json)
+void VerifyJson(const score::json::Any& parsed_json)
 {
 
-    const auto& obj_result = parsed_json.As<score::json::Object>();
+    const auto& obj_result{parsed_json.As<score::json::Object>()};
     ASSERT_TRUE(obj_result.has_value());
-    const auto& obj = obj_result.value().get();
+    const auto& obj{obj_result.value().get()};
 
-    const auto num = obj.find("num");
+    const auto num{obj.find("num")};
     ASSERT_TRUE(num != obj.end());
-    const auto num_value = num->second.As<int>();
+    const auto num_value{num->second.As<int>()};
     ASSERT_TRUE(num_value.has_value());
     EXPECT_EQ(num_value.value(), 1);
 
-    const auto foo = obj.find("string");
+    const auto foo{obj.find("string")};
     ASSERT_TRUE(foo != obj.end());
-    const auto foo_value = foo->second.As<std::string>();
+    const auto foo_value{foo->second.As<std::string>()};
     ASSERT_TRUE(foo_value.has_value());
     EXPECT_EQ(foo_value.value().get(), "foo");
 }
@@ -66,9 +65,9 @@ TEST(JsonParserTest, FromBuffer)
     RecordProperty("Priority", "3");
 
     json::JsonParser json_parser{};
-    auto result = json_parser.FromBuffer(JSON_INPUT);
+    auto result{json_parser.FromBuffer(kJsonInput)};
     ASSERT_TRUE(result.has_value());
-    json_verify(result.value());
+    VerifyJson(result.value());
 }
 
 TEST(JsonParserTest, ViaLiteral)
@@ -82,8 +81,8 @@ TEST(JsonParserTest, ViaLiteral)
     RecordProperty("DerivationTechnique", "equivalence-classes");  // boundary values
     RecordProperty("Priority", "3");
 
-    auto parsed_json = JSON_INPUT ""_json;
-    json_verify(parsed_json);
+    auto parsed_json{R"({ "num": 1, "string": "foo" })"_json};
+    VerifyJson(parsed_json);
 }
 
 TEST(JsonParserTest, ViaErrorLiteral)
@@ -95,7 +94,7 @@ TEST(JsonParserTest, ViaErrorLiteral)
     RecordProperty("DerivationTechnique", "error-guessing");
     RecordProperty("Priority", "3");
 
-    EXPECT_EXIT(JSON_ERROR_INPUT ""_json, ::testing::KilledBySignal(SIGABRT), "");
+    EXPECT_EXIT(R"({"something"})"_json, ::testing::KilledBySignal(SIGABRT), "");
 }
 
 TEST(JsonParserTest, FromFileSuceess)
@@ -107,18 +106,18 @@ TEST(JsonParserTest, FromFileSuceess)
     RecordProperty("DerivationTechnique", "equivalence-classes");  // boundary values
     RecordProperty("Priority", "3");
 
-    const std::string file_path = std::tmpnam(nullptr);
-    std::ofstream file(file_path);
+    const std::string file_path{std::tmpnam(nullptr)};
+    std::ofstream file{file_path};
     if (file.is_open())
     {
-        file << JSON_INPUT;
+        file << kJsonInput;
         file.close();
     }
 
     json::JsonParser json_parser{};
-    auto result = json_parser.FromFile(file_path);
+    auto result{json_parser.FromFile(file_path)};
     ASSERT_TRUE(result.has_value());
-    json_verify(result.value());
+    VerifyJson(result.value());
 }
 
 TEST(JsonParserTest, FromFileParseError)
@@ -130,17 +129,17 @@ TEST(JsonParserTest, FromFileParseError)
     RecordProperty("DerivationTechnique", "error-guessing");
     RecordProperty("Priority", "3");
 
-    const std::string file_path = std::tmpnam(nullptr);
-    std::ofstream file(file_path);
+    const std::string file_path{std::tmpnam(nullptr)};
+    std::ofstream file{file_path};
     if (file.is_open())
     {
-        file << JSON_INPUT;
+        file << kJsonInput;
         file << "!";  // append garbage
         file.close();
     }
 
     json::JsonParser json_parser{};
-    auto result = json_parser.FromFile(file_path);
+    auto result{json_parser.FromFile(file_path)};
     ASSERT_FALSE(result.has_value());
     EXPECT_EQ(result.error(), score::json::Error::kParsingError);
 }
@@ -157,7 +156,7 @@ T GetValueOfObject(const score::json::Any& any, const std::string& key)
     return any.As<score::json::Object>().value().get().at(key).As<T>().value();
 }
 
-std::string buffer_simple_json{R"(
+constexpr std::string_view kSimpleJsonBuffer{R"(
 {
   "boolean": true,
   "color": "gold",
@@ -189,7 +188,7 @@ class ParserTest : public testing::Test
   protected:
     std::string CreateJsonFile(const std::string_view filename, const std::string_view json_string)
     {
-        const auto file_path = ::testing::TempDir() + std::string{filename};
+        const auto file_path{::testing::TempDir() + std::string{filename}};
         std::ofstream ofstream{file_path};
         ofstream << json_string.data();
         ofstream.close();
@@ -205,10 +204,10 @@ TEST_F(ParserTest, CanParseObjectBool)
     RecordProperty("DerivationTechnique", "requirements-analysis");
 
     // Given a simple JSON buffer
-    auto root = JsonParser{}.FromBuffer(buffer_simple_json);
+    auto root{JsonParser{}.FromBuffer(kSimpleJsonBuffer)};
 
     // When reading a key of an object that is interpreted as bool
-    auto value = GetValueOfObject<bool>(root.value(), "boolean");
+    auto value{GetValueOfObject<bool>(root.value(), "boolean")};
 
     // Then the correct value is returned
     EXPECT_EQ(value, true);
@@ -222,10 +221,10 @@ TEST_F(ParserTest, CanParseObjectString)
     RecordProperty("DerivationTechnique", "requirements-analysis");
 
     // Given a simple JSON buffer
-    auto root = JsonParser{}.FromBuffer(buffer_simple_json);
+    auto root{JsonParser{}.FromBuffer(kSimpleJsonBuffer)};
 
     // When reading a key of an object that is interpreted as std::string
-    auto& value = GetValueOfObject<std::string>(root.value(), "color");
+    auto& value{GetValueOfObject<std::string>(root.value(), "color")};
 
     // Then the correct value is returned
     EXPECT_EQ(value, "gold");
@@ -239,10 +238,10 @@ TEST_F(ParserTest, CanParseObjectNull)
     RecordProperty("DerivationTechnique", "requirements-analysis");
 
     // Given a simple JSON buffer
-    auto root = JsonParser{}.FromBuffer(buffer_simple_json);
+    auto root{JsonParser{}.FromBuffer(kSimpleJsonBuffer)};
 
     // When reading a key of an object that is interpreted as Null
-    auto& value = GetValueOfObject<Null>(root.value(), "null");
+    auto& value{GetValueOfObject<Null>(root.value(), "null")};
 
     // Then the correct value is returned
     EXPECT_EQ(value, Null{});
@@ -256,10 +255,10 @@ TEST_F(ParserTest, CanParseObjectNumber)
     RecordProperty("DerivationTechnique", "requirements-analysis");
 
     // Given a simple JSON buffer
-    auto root = JsonParser{}.FromBuffer(buffer_simple_json);
+    auto root{JsonParser{}.FromBuffer(kSimpleJsonBuffer)};
 
     // When reading a key of an object that is interpreted as number
-    auto value = GetValueOfObject<std::uint64_t>(root.value(), "number");
+    auto value{GetValueOfObject<std::uint64_t>(root.value(), "number")};
 
     // Then the correct value is returned
     EXPECT_EQ(value, 123);
@@ -273,12 +272,12 @@ TEST_F(ParserTest, CanParseObjectFloatingPointNumber)
     RecordProperty("DerivationTechnique", "requirements-analysis");
 
     // Given a simple JSON buffer
-    auto root = JsonParser{}.FromBuffer(buffer_simple_json);
+    auto root{JsonParser{}.FromBuffer(kSimpleJsonBuffer)};
 
     // When reading a key of an object that is interpreted as floating point number
-    auto float_value = GetValueOfObject<float>(root.value(), "float");
-    double double_value = GetValueOfObject<double>(root.value(), "double");
-    auto double_as_float_value = root->As<score::json::Object>().value().get().at("double").As<float>().has_value();
+    auto float_value{GetValueOfObject<float>(root.value(), "float")};
+    double double_value{GetValueOfObject<double>(root.value(), "double")};
+    auto double_as_float_value{root->As<score::json::Object>().value().get().at("double").As<float>().has_value()};
 
     // Then the correct value is returned
     EXPECT_FLOAT_EQ(float_value, 2.3F);
@@ -294,10 +293,10 @@ TEST_F(ParserTest, CanParseObjectInObject)
     RecordProperty("DerivationTechnique", "requirements-analysis");
 
     // Given a simple JSON buffer
-    auto root = JsonParser{}.FromBuffer(buffer_simple_json);
+    auto root{JsonParser{}.FromBuffer(kSimpleJsonBuffer)};
 
     // When reading a key of an object that is interpreted as number
-    auto& value = GetValueOfObject<Object>(root.value(), "object");
+    auto& value{GetValueOfObject<Object>(root.value(), "object")};
 
     // Then the correct value is returned
     EXPECT_EQ(value.at("a").As<std::string>().value().get(), "b");
@@ -311,10 +310,10 @@ TEST_F(ParserTest, CanParseListInObject)
     RecordProperty("DerivationTechnique", "requirements-analysis");
 
     // Given a simple JSON buffer
-    auto root = JsonParser{}.FromBuffer(buffer_simple_json);
+    auto root{JsonParser{}.FromBuffer(kSimpleJsonBuffer)};
 
     // When reading a key of an object that is interpreted as number
-    auto& value = GetValueOfObject<List>(*root, "list");
+    auto& value{GetValueOfObject<List>(*root, "list")};
 
     // Then the correct value is returned
     EXPECT_EQ(value[0].As<std::string>().value().get(), "first");
@@ -355,10 +354,10 @@ TEST_F(ParserTest, CanParseObjectInObjectAndIterateOverKeys)
    }
 }
 )"};
-    auto root = JsonParser{}.FromBuffer(buffer);
+    auto root{JsonParser{}.FromBuffer(buffer)};
 
     // When iterating over the unknown keys
-    const auto& storage_list = root.value().As<Object>().value().get()["storage_list"];
+    const auto& storage_list{root.value().As<Object>().value().get()["storage_list"]};
     std::vector<std::string> collected_paths{};
     for (const auto& element : storage_list.As<Object>().value().get())
     {
@@ -447,7 +446,7 @@ TEST_F(ParserTest, FromFileFail)
     RecordProperty("TestType", "requirements-based");
     RecordProperty("DerivationTechnique", "error-guessing");
     // Pass invalid file path
-    auto foo = JsonParser{}.FromFile("foo");
+    auto foo{JsonParser{}.FromFile("foo")};
 
     EXPECT_FALSE(foo.has_value());
 }
@@ -460,13 +459,13 @@ TEST_F(ParserTest, ParsingFromFileWorks)
     RecordProperty("DerivationTechnique", "requirements-analysis");
     // Given a simple JSON File
     std::string file_name{"test.json"};
-    auto root = JsonParser{}.FromFile(CreateJsonFile(file_name, buffer_simple_json));
+    auto root{JsonParser{}.FromFile(CreateJsonFile(file_name, kSimpleJsonBuffer))};
 
     // Then json file is successfully parsed
     EXPECT_TRUE(root.has_value());
 
     // When reading a key of an object that is interpreted as bool
-    auto value = GetValueOfObject<bool>(root.value(), "boolean");
+    auto value{GetValueOfObject<bool>(root.value(), "boolean")};
 
     // Then the correct value is returned
     EXPECT_EQ(value, true);
@@ -513,10 +512,10 @@ TEST(JsonParserVajsonTest, CanParseObjectHexadecimalNumber)
         )"};
 
     // Given a simple JSON buffer
-    auto root = JsonParser{}.FromBuffer(buffer_json_hex);
+    auto root{JsonParser{}.FromBuffer(buffer_json_hex)};
 
     // When reading a key of an object that is interpreted as floating point number
-    auto value = GetValueOfObject<std::uint64_t>(root.value(), "hex");
+    auto value{GetValueOfObject<std::uint64_t>(root.value(), "hex")};
 
     // Then the correct value is returned
     EXPECT_EQ(value, 0xdd);
@@ -532,11 +531,11 @@ TEST(JsonParserVajsonTest, CanParseTwoByteBuffer)
     RecordProperty("DerivationTechnique", "boundary-values");
 
     // Given a valid JSON buffer of exactly 2 bytes (shorter than BOM)
-    auto root = JsonParser{}.FromBuffer("{}");
+    auto root{JsonParser{}.FromBuffer("{}")};
 
     // Then parsing succeeds and returns an empty object
     ASSERT_TRUE(root.has_value());
-    auto obj = root->As<Object>();
+    auto obj{root->As<Object>()};
     ASSERT_TRUE(obj.has_value());
     EXPECT_TRUE(obj->get().empty());
 }
@@ -551,15 +550,15 @@ TEST(JsonParserVajsonTest, CanParseBufferWithUtf8Bom)
 
     // Given a JSON buffer with a UTF-8 BOM prefix
     std::string bom_json{"\xEF\xBB\xBF{\"key\": 123}"};
-    auto root = JsonParser{}.FromBuffer(bom_json);
+    auto root{JsonParser{}.FromBuffer(bom_json)};
 
     // Then parsing succeeds and the value is correct
     ASSERT_TRUE(root.has_value());
-    auto value = GetValueOfObject<std::uint64_t>(root.value(), "key");
+    auto value{GetValueOfObject<std::uint64_t>(root.value(), "key")};
     EXPECT_EQ(value, 123U);
 }
 
-std::string buffer_json{R"(
+constexpr std::string_view kNumberLimitsJsonBuffer{R"(
 {
     "bool_min":false,
     "bool_max":true,
@@ -605,7 +604,7 @@ template <typename T, std::enable_if_t<std::is_floating_point<T>::value, bool> =
 void CheckReturnedValues(score::Result<T> min, score::Result<T> max)
 {
     EXPECT_TRUE(min.has_value());
-    auto diff = std::abs(min.value() - std::numeric_limits<T>::min());
+    auto diff{std::abs(min.value() - std::numeric_limits<T>::min())};
     EXPECT_TRUE(diff < std::numeric_limits<T>::epsilon());
 
     EXPECT_TRUE(max.has_value());
@@ -622,14 +621,14 @@ TEST(NumberTest, WhenParsingABoolStoredInAJsonThenParsingIsSuccessfulAndCorrectV
     RecordProperty("DerivationTechnique", "boundary-values");
 
     // Given a simple JSON buffer and parsing it
-    auto root = JsonParser{}.FromBuffer(buffer_json);
+    auto root{JsonParser{}.FromBuffer(kNumberLimitsJsonBuffer)};
 
     // Then parsing is successful
     EXPECT_TRUE(root.has_value());
 
     // When reading key values of an object that is interpreted as bool
-    auto min = GetNumberOfObject<bool>(root.value(), "bool_min");
-    auto max = GetNumberOfObject<bool>(root.value(), "bool_max");
+    auto min{GetNumberOfObject<bool>(root.value(), "bool_min")};
+    auto max{GetNumberOfObject<bool>(root.value(), "bool_max")};
 
     // Then the correct values are returned
     CheckReturnedValues<bool>(min, max);
@@ -645,14 +644,14 @@ TEST(NumberTest, WhenParsingAUint8StoredInAJsonThenParsingIsSuccessfulAndCorrect
     RecordProperty("DerivationTechnique", "boundary-values");
 
     // Given a simple JSON buffer and parsing it
-    auto root = JsonParser{}.FromBuffer(buffer_json);
+    auto root{JsonParser{}.FromBuffer(kNumberLimitsJsonBuffer)};
 
     // Then parsing is successful
     EXPECT_TRUE(root.has_value());
 
     // When reading key values of an object that is interpreted as std::uint8_t
-    auto min = GetNumberOfObject<std::uint8_t>(root.value(), "uint8_min");
-    auto max = GetNumberOfObject<std::uint8_t>(root.value(), "uint8_max");
+    auto min{GetNumberOfObject<std::uint8_t>(root.value(), "uint8_min")};
+    auto max{GetNumberOfObject<std::uint8_t>(root.value(), "uint8_max")};
 
     // Then the correct values are returned
     CheckReturnedValues<std::uint8_t>(min, max);
@@ -668,14 +667,14 @@ TEST(NumberTest, WhenParsingAUint16StoredInAJsonThenParsingIsSuccessfulAndCorrec
     RecordProperty("DerivationTechnique", "boundary-values");
 
     // Given a simple JSON buffer and parsing it
-    auto root = JsonParser{}.FromBuffer(buffer_json);
+    auto root{JsonParser{}.FromBuffer(kNumberLimitsJsonBuffer)};
 
     // Then parsing is successful
     EXPECT_TRUE(root.has_value());
 
     // When reading key values of an object that is interpreted as bool
-    auto min = GetNumberOfObject<std::uint16_t>(root.value(), "uint16_min");
-    auto max = GetNumberOfObject<std::uint16_t>(root.value(), "uint16_max");
+    auto min{GetNumberOfObject<std::uint16_t>(root.value(), "uint16_min")};
+    auto max{GetNumberOfObject<std::uint16_t>(root.value(), "uint16_max")};
 
     // Then the correct values are returned
     CheckReturnedValues<std::uint16_t>(min, max);
@@ -691,14 +690,14 @@ TEST(NumberTest, WhenParsingAUint32StoredInAJsonThenParsingIsSuccessfulAndCorrec
     RecordProperty("DerivationTechnique", "boundary-values");
 
     // Given a simple JSON buffer and parsing it
-    auto root = JsonParser{}.FromBuffer(buffer_json);
+    auto root{JsonParser{}.FromBuffer(kNumberLimitsJsonBuffer)};
 
     // Then parsing is successful
     EXPECT_TRUE(root.has_value());
 
     // When reading key values of an object that is interpreted as bool
-    auto min = GetNumberOfObject<std::uint32_t>(root.value(), "uint32_min");
-    auto max = GetNumberOfObject<std::uint32_t>(root.value(), "uint32_max");
+    auto min{GetNumberOfObject<std::uint32_t>(root.value(), "uint32_min")};
+    auto max{GetNumberOfObject<std::uint32_t>(root.value(), "uint32_max")};
 
     // Then the correct values are returned
     CheckReturnedValues<std::uint32_t>(min, max);
@@ -714,14 +713,14 @@ TEST(NumberTest, WhenParsingAUint64StoredInAJsonThenParsingIsSuccessfulAndCorrec
     RecordProperty("DerivationTechnique", "boundary-values");
 
     // Given a simple JSON buffer and parsing it
-    auto root = JsonParser{}.FromBuffer(buffer_json);
+    auto root{JsonParser{}.FromBuffer(kNumberLimitsJsonBuffer)};
 
     // Then parsing is successful
     EXPECT_TRUE(root.has_value());
 
     // When reading key values of an object that is interpreted as bool
-    auto min = GetNumberOfObject<std::uint64_t>(root.value(), "uint64_min");
-    auto max = GetNumberOfObject<std::uint64_t>(root.value(), "uint64_max");
+    auto min{GetNumberOfObject<std::uint64_t>(root.value(), "uint64_min")};
+    auto max{GetNumberOfObject<std::uint64_t>(root.value(), "uint64_max")};
 
     // Then the correct values are returned
     CheckReturnedValues<std::uint64_t>(min, max);
@@ -737,14 +736,14 @@ TEST(NumberTest, WhenParsingAInt8StoredInAJsonThenParsingIsSuccessfulAndCorrectV
     RecordProperty("DerivationTechnique", "boundary-values");
 
     // Given a simple JSON buffer and parsing it
-    auto root = JsonParser{}.FromBuffer(buffer_json);
+    auto root{JsonParser{}.FromBuffer(kNumberLimitsJsonBuffer)};
 
     // Then parsing is successful
     EXPECT_TRUE(root.has_value());
 
     // When reading key values of an object that is interpreted as bool
-    auto min = GetNumberOfObject<std::int8_t>(root.value(), "int8_min");
-    auto max = GetNumberOfObject<std::int8_t>(root.value(), "int8_max");
+    auto min{GetNumberOfObject<std::int8_t>(root.value(), "int8_min")};
+    auto max{GetNumberOfObject<std::int8_t>(root.value(), "int8_max")};
 
     // Then the correct values are returned
     CheckReturnedValues<std::int8_t>(min, max);
@@ -760,14 +759,14 @@ TEST(NumberTest, WhenParsingAInt16StoredInAJsonThenParsingIsSuccessfulAndCorrect
     RecordProperty("DerivationTechnique", "boundary-values");
 
     // Given a simple JSON buffer and parsing it
-    auto root = JsonParser{}.FromBuffer(buffer_json);
+    auto root{JsonParser{}.FromBuffer(kNumberLimitsJsonBuffer)};
 
     // Then parsing is successful
     EXPECT_TRUE(root.has_value());
 
     // When reading key values of an object that is interpreted as bool
-    auto min = GetNumberOfObject<std::int16_t>(root.value(), "int16_min");
-    auto max = GetNumberOfObject<std::int16_t>(root.value(), "int16_max");
+    auto min{GetNumberOfObject<std::int16_t>(root.value(), "int16_min")};
+    auto max{GetNumberOfObject<std::int16_t>(root.value(), "int16_max")};
 
     // Then the correct values are returned
     CheckReturnedValues<std::int16_t>(min, max);
@@ -783,14 +782,14 @@ TEST(NumberTest, WhenParsingAInt32StoredInAJsonThenParsingIsSuccessfulAndCorrect
     RecordProperty("DerivationTechnique", "boundary-values");
 
     // Given a simple JSON buffer and parsing it
-    auto root = JsonParser{}.FromBuffer(buffer_json);
+    auto root{JsonParser{}.FromBuffer(kNumberLimitsJsonBuffer)};
 
     // Then parsing is successful
     EXPECT_TRUE(root.has_value());
 
     // When reading key values of an object that is interpreted as bool
-    auto min = GetNumberOfObject<std::int32_t>(root.value(), "int32_min");
-    auto max = GetNumberOfObject<std::int32_t>(root.value(), "int32_max");
+    auto min{GetNumberOfObject<std::int32_t>(root.value(), "int32_min")};
+    auto max{GetNumberOfObject<std::int32_t>(root.value(), "int32_max")};
 
     // Then the correct values are returned
     CheckReturnedValues<std::int32_t>(min, max);
@@ -806,14 +805,14 @@ TEST(NumberTest, WhenParsingAInt64StoredInAJsonThenParsingIsSuccessfulAndCorrect
     RecordProperty("DerivationTechnique", "boundary-values");
 
     // Given a simple JSON buffer and parsing it
-    auto root = JsonParser{}.FromBuffer(buffer_json);
+    auto root{JsonParser{}.FromBuffer(kNumberLimitsJsonBuffer)};
 
     // Then parsing is successful
     EXPECT_TRUE(root.has_value());
 
     // When reading key values of an object that is interpreted as bool
-    auto min = GetNumberOfObject<std::int64_t>(root.value(), "int64_min");
-    auto max = GetNumberOfObject<std::int64_t>(root.value(), "int64_max");
+    auto min{GetNumberOfObject<std::int64_t>(root.value(), "int64_min")};
+    auto max{GetNumberOfObject<std::int64_t>(root.value(), "int64_max")};
 
     // Then the correct values are returned
     CheckReturnedValues<std::int64_t>(min, max);
@@ -828,14 +827,14 @@ TEST(NumberTest, WhenParsingAFloatStoredInAJsonThenParsingIsSuccessfulAndCorrect
     RecordProperty("DerivationTechnique", "boundary-values");
 
     // Given a simple JSON buffer and parsing it
-    auto root = JsonParser{}.FromBuffer(buffer_json);
+    auto root{JsonParser{}.FromBuffer(kNumberLimitsJsonBuffer)};
 
     // Then parsing is successful
     EXPECT_TRUE(root.has_value());
 
     // When reading key values of an object that is interpreted as double
-    auto min = GetNumberOfObject<double>(root.value(), "float_min");
-    auto max = GetNumberOfObject<double>(root.value(), "float_max");
+    auto min{GetNumberOfObject<double>(root.value(), "float_min")};
+    auto max{GetNumberOfObject<double>(root.value(), "float_max")};
 
     // Then the correct values are returned
     CheckReturnedValues<float>(min, max);
@@ -851,14 +850,14 @@ TEST(NumberTest, WhenParsingADoubleStoredInAJsonThenParsingIsSuccessfulAndCorrec
     RecordProperty("DerivationTechnique", "boundary-values");
 
     // Given a simple JSON buffer and parsing it
-    auto root = JsonParser{}.FromBuffer(buffer_json);
+    auto root{JsonParser{}.FromBuffer(kNumberLimitsJsonBuffer)};
 
     // Then parsing is successful
     EXPECT_TRUE(root.has_value());
 
     // When reading key values of an object that is interpreted as double
-    auto min = GetNumberOfObject<double>(root.value(), "double_min");
-    auto max = GetNumberOfObject<double>(root.value(), "double_max");
+    auto min{GetNumberOfObject<double>(root.value(), "double_min")};
+    auto max{GetNumberOfObject<double>(root.value(), "double_max")};
 
     // Then the correct values are returned
     CheckReturnedValues<double>(min, max);
