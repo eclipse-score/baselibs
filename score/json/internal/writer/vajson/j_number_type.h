@@ -32,7 +32,7 @@ class JNumberType final
   public:
     /// \brief Constructs a Number type
     /// \param[in] num Number to serialize.
-    constexpr explicit JNumberType(N num) noexcept : value_(num) {}
+    constexpr explicit JNumberType(N num) noexcept : value_{num} {}
 
     /// \brief Returns the contained value
     /// \return The value.

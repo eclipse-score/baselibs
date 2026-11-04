@@ -36,11 +36,11 @@ class EscapedJsonString
   public:
     /// \brief Constructs an EscapedJsonString from a JSON key
     /// \param[in] key to serialize.
-    explicit EscapedJsonString(JKeyType key) noexcept : EscapedJsonString(key.GetValue()) {}
+    explicit EscapedJsonString(JKeyType key) noexcept : EscapedJsonString{key.GetValue()} {}
 
     /// \brief Constructs an EscapedJsonString from a JSON string
     /// \param[in] string to serialize.
-    explicit EscapedJsonString(JStringType string) noexcept : EscapedJsonString(string.GetValue()) {}
+    explicit EscapedJsonString(JStringType string) noexcept : EscapedJsonString{string.GetValue()} {}
 
     /// \brief Returns the contained string
     /// \return The contained string.
@@ -98,11 +98,11 @@ inline void WriteUnicodeEscape(std::ostream& os, const std::char_traits<char>::i
 /// \param[in] os Output stream to write into.
 /// \param[in] string to escape and serialize.
 /// \return A reference to the output stream.
-auto inline operator<<(std::ostream& os, EscapedJsonString string) noexcept -> std::ostream&
+inline auto operator<<(std::ostream& os, EscapedJsonString string) noexcept -> std::ostream&
 {
     for (const char ch : string.GetValue())
     {
-        const auto value = std::char_traits<char>::to_int_type(ch);
+        const auto value{std::char_traits<char>::to_int_type(ch)};
         switch (value)
         {
             case std::char_traits<char>::to_int_type('"'):

@@ -21,7 +21,6 @@ cc_library(
         "escaped_json_string.h",
         "formatting_writer.h",
         "generic_value_serializer.h",
-        "generic_value_serializer_impl.h",
         "j_array_type.h",
         "j_bool_type.h",
         "j_key_type.h",

@@ -28,7 +28,7 @@ class JKeyType final
   public:
     /// \brief Constructs a Key type
     /// \param[in] s Key to serialize.
-    explicit constexpr JKeyType(std::string_view s) noexcept : value_(s) {}
+    explicit constexpr JKeyType(std::string_view s) noexcept : value_{s} {}
 
     /// \brief Returns the contained value
     /// \return The value.

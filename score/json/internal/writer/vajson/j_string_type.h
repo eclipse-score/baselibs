@@ -29,7 +29,7 @@ class JStringType final
   public:
     /// \brief Constructs a String type
     /// \param[in] s String to serialize.
-    constexpr explicit JStringType(std::string_view s) noexcept : value_(s) {}
+    constexpr explicit JStringType(std::string_view s) noexcept : value_{s} {}
 
     /// \brief Returns the contained value
     /// \return The value.

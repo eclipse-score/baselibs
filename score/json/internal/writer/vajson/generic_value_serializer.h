@@ -56,7 +56,7 @@ class GenericValueSerializer final
     /// \param[in] os Writer to write into. It must outlive the serializer.
     /// \param[in] state of the Serializer.
     explicit GenericValueSerializer(WriterType os, SerializerState state = SerializerState::kEmpty) noexcept
-        : os_(os), serializer_state_{state}
+        : os_{os}, serializer_state_{state}
     {
     }
 
@@ -80,7 +80,7 @@ class GenericValueSerializer final
     auto operator<<(JNullType) && noexcept -> Next
     {
         return this->Serialize([this]() noexcept {
-            constexpr auto null_str = "null"sv;
+            constexpr auto null_str{"null"sv};
             this->os_.get().Stream().write(null_str.data(), null_str.size());
         });
     }
@@ -111,7 +111,7 @@ class GenericValueSerializer final
     auto operator<<(JNumberType<T> number) && noexcept -> Next
     {
         return this->Serialize([this, number]() noexcept {
-            const T value = number.GetValue();
+            const T value{number.GetValue()};
 
             if (!IsFinite(value))
             {
@@ -123,7 +123,7 @@ class GenericValueSerializer final
                 static constexpr std::size_t kBufferSize{64};
                 std::array<char, kBufferSize> buffer{};
 
-                const auto conversion_result = std::to_chars(buffer.data(), buffer.data() + buffer.size(), value);
+                const auto conversion_result{std::to_chars(buffer.data(), buffer.data() + buffer.size(), value)};
 
                 AssertCondition(conversion_result.ec == std::errc{},
                                 "GenericValueSerializer: Could not convert number to textual representation.");
@@ -171,12 +171,29 @@ class GenericValueSerializer final
     }
 
     /// \brief Serializes an object
+    /// \details
+    /// - Assert that the current state allows adding an object.
+    /// - Add an opening curly bracket.
+    /// - Serialize the object as a JSON object.
+    /// - Add a closing curly bracket.
     /// \tparam Fn Type of serializer function.
     /// \param[in] object to serialize.
     /// \return The succeeding serializer.
     /// \pre The function contained in the argument does not throw any exceptions
     template <typename Fn>
-    auto operator<<(JObjectType<Fn> object) && noexcept -> Next;
+    // coverity[autosar_cpp14_m9_3_3_violation]
+    auto operator<<(JObjectType<Fn> object) && noexcept -> Next
+    {
+        return this->Serialize([this, &object]() noexcept {
+            /// \brief Defines the return value type
+            using ReturnType = decltype(object.fn(ObjectStart(this->os_.get())));
+            static_assert(std::is_same<ReturnType, KeySerializer>::value, "Cannot close object in current state");
+
+            this->os_.get().BeginContainer('{');
+            static_cast<void>(object.fn(ObjectStart(this->os_.get())));
+            this->os_.get().EndContainer('}');
+        });
+    }
 
   private:
     /// \brief Checks whether a number is representable as a JSON number
