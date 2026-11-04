@@ -17,8 +17,13 @@
 #include "gmock/gmock.h"
 #include "gtest/gtest.h"
 
+#include <chrono>
 #include <future>
+#include <mutex>
+#include <shared_mutex>
 #include <string>
+#include <type_traits>
+#include <utility>
 #include <vector>
 
 using score::concurrency::Synchronized;
@@ -28,6 +33,28 @@ namespace test
 
 namespace
 {
+template <typename T, typename Duration = std::chrono::milliseconds, typename = void>
+struct HasTryLockFor : std::false_type
+{
+};
+
+template <typename T, typename Duration>
+struct HasTryLockFor<T, Duration, std::void_t<decltype(std::declval<T&>().try_lock_for(Duration{}))>> : std::true_type
+{
+};
+
+template <typename T, typename = void>
+struct HasTryLockUntil : std::false_type
+{
+};
+
+template <typename T>
+struct HasTryLockUntil<
+    T,
+    std::void_t<decltype(std::declval<T&>().try_lock_until(std::chrono::steady_clock::time_point{}))>> : std::true_type
+{
+};
+
 constexpr auto clone = [](auto ptr) noexcept(std::is_nothrow_copy_constructible_v<std::decay_t<decltype(*ptr)>>) {
     static_assert(std::is_copy_constructible_v<std::decay_t<decltype(*ptr)>>,
                   "clone requires a copy-constructible type");
@@ -221,6 +248,120 @@ TEST(SynchronizedTest, LockMethodBasic)
     }
 
     EXPECT_EQ(sync_int.WithLock(clone), 100);
+}
+
+TEST(SynchronizedTest, TryLockForSupportsMutableConstAndTimedLockables)
+{
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
+    RecordProperty("FullyVerifies", "comp_req__concurrency__synchronized_try_lock_for");
+    RecordProperty("Description",
+                   "Check that try_lock_for grants mutable and const access when acquired, times out under "
+                   "contention, and is available only for Lockable types that support timed acquisition.");
+
+    static_assert(HasTryLockFor<Synchronized<int, std::timed_mutex>>::value);
+    static_assert(HasTryLockFor<const Synchronized<int, std::timed_mutex>>::value);
+    using FractionalDuration = std::chrono::duration<double, std::ratio<1, 3>>;
+    static_assert(HasTryLockFor<Synchronized<int, std::timed_mutex>, FractionalDuration>::value);
+    static_assert(HasTryLockFor<const Synchronized<int, std::timed_mutex>, FractionalDuration>::value);
+    static_assert(HasTryLockFor<Synchronized<int, std::recursive_timed_mutex>>::value);
+    static_assert(HasTryLockFor<const Synchronized<int, std::recursive_timed_mutex>>::value);
+    static_assert(HasTryLockFor<Synchronized<int, std::shared_timed_mutex>>::value);
+    static_assert(HasTryLockFor<const Synchronized<int, std::shared_timed_mutex>>::value);
+    static_assert(!HasTryLockFor<Synchronized<int, std::mutex>>::value);
+    static_assert(!HasTryLockFor<Synchronized<int, std::recursive_mutex>>::value);
+    static_assert(!HasTryLockFor<Synchronized<int, std::shared_mutex>>::value);
+    static_assert(!HasTryLockFor<Synchronized<int, MockMutex>>::value);
+
+    Synchronized<int, std::timed_mutex> sync_value(42);
+    const int* sync_value_ptr = sync_value.lock().get();
+
+    {
+        auto locked_ptr = sync_value.try_lock_for(FractionalDuration{0.3});
+        ASSERT_EQ(locked_ptr.get(), sync_value_ptr);
+        EXPECT_EQ(*locked_ptr, 42);
+        *locked_ptr = 100;
+    }
+
+    {
+        auto locked_ptr = std::as_const(sync_value).try_lock_for(std::chrono::milliseconds{100});
+        ASSERT_EQ(locked_ptr.get(), sync_value_ptr);
+        EXPECT_EQ(*locked_ptr, 100);
+    }
+
+    {
+        auto held_lock = sync_value.lock();
+        ASSERT_EQ(held_lock.get(), sync_value_ptr);
+        auto try_lock_result = std::async(std::launch::async, [&sync_value]() {
+            return sync_value.try_lock_for(std::chrono::milliseconds{1}) == nullptr;
+        });
+        EXPECT_TRUE(try_lock_result.get());
+    }
+
+    {
+        auto held_lock = sync_value.lock();
+        ASSERT_EQ(held_lock.get(), sync_value_ptr);
+        auto try_lock_result = std::async(std::launch::async, [&sync_value]() {
+            return std::as_const(sync_value).try_lock_for(std::chrono::milliseconds{1}) == nullptr;
+        });
+        EXPECT_TRUE(try_lock_result.get());
+    }
+}
+
+TEST(SynchronizedTest, TryLockUntilSupportsMutableConstAndTimedLockables)
+{
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
+    RecordProperty("FullyVerifies", "comp_req__concurrency__synchronized_try_lock_until");
+    RecordProperty("Description",
+                   "Check that try_lock_until grants mutable and const access when acquired, times out under "
+                   "contention, and is available only for Lockable types that support deadline acquisition.");
+
+    static_assert(HasTryLockUntil<Synchronized<int, std::timed_mutex>>::value);
+    static_assert(HasTryLockUntil<const Synchronized<int, std::timed_mutex>>::value);
+    static_assert(HasTryLockUntil<Synchronized<int, std::recursive_timed_mutex>>::value);
+    static_assert(HasTryLockUntil<const Synchronized<int, std::recursive_timed_mutex>>::value);
+    static_assert(HasTryLockUntil<Synchronized<int, std::shared_timed_mutex>>::value);
+    static_assert(HasTryLockUntil<const Synchronized<int, std::shared_timed_mutex>>::value);
+    static_assert(!HasTryLockUntil<Synchronized<int, std::mutex>>::value);
+    static_assert(!HasTryLockUntil<Synchronized<int, std::recursive_mutex>>::value);
+    static_assert(!HasTryLockUntil<Synchronized<int, std::shared_mutex>>::value);
+    static_assert(!HasTryLockUntil<Synchronized<int, MockMutex>>::value);
+
+    using Clock = std::chrono::steady_clock;
+    Synchronized<int, std::timed_mutex> sync_value(42);
+    const int* sync_value_ptr = sync_value.lock().get();
+
+    {
+        auto locked_ptr = sync_value.try_lock_until(Clock::now() + std::chrono::milliseconds{100});
+        ASSERT_EQ(locked_ptr.get(), sync_value_ptr);
+        EXPECT_EQ(*locked_ptr, 42);
+        *locked_ptr = 100;
+    }
+
+    {
+        auto locked_ptr = std::as_const(sync_value).try_lock_until(Clock::now() + std::chrono::milliseconds{100});
+        ASSERT_EQ(locked_ptr.get(), sync_value_ptr);
+        EXPECT_EQ(*locked_ptr, 100);
+    }
+
+    {
+        auto held_lock = sync_value.lock();
+        ASSERT_EQ(held_lock.get(), sync_value_ptr);
+        auto try_lock_result = std::async(std::launch::async, [&sync_value]() {
+            return sync_value.try_lock_until(Clock::now() + std::chrono::milliseconds{1}) == nullptr;
+        });
+        EXPECT_TRUE(try_lock_result.get());
+    }
+
+    {
+        auto held_lock = sync_value.lock();
+        ASSERT_EQ(held_lock.get(), sync_value_ptr);
+        auto try_lock_result = std::async(std::launch::async, [&sync_value]() {
+            return std::as_const(sync_value).try_lock_until(Clock::now() + std::chrono::milliseconds{1}) == nullptr;
+        });
+        EXPECT_TRUE(try_lock_result.get());
+    }
 }
 
 TEST(SynchronizedTest, TestStructLockReturnValue)
