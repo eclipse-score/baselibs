@@ -10,14 +10,9 @@
  *
  * SPDX-License-Identifier: Apache-2.0
  ********************************************************************************/
-/*!        \file
- *        \brief  Contains tests concerning the parsing of strings.
- *
- *********************************************************************************************************************/
+/// @file
+/// @brief  Contains tests concerning the parsing of strings.
 
-/**********************************************************************************************************************
- *  INCLUDES
- *********************************************************************************************************************/
 #include "score/json/internal/parser/vajson/virtual_parser.h"
 
 #include "gtest/gtest.h"
@@ -76,10 +71,8 @@ class ErrorStringParser final : public internal::VirtualParser
 
 }  // namespace
 
-/*!
- * Test that string callbacks are called for a string array.
- * \trace           CREQ-Json-EventCallbacks
- */
+/// Test that string callbacks are called for a string array.
+/// @trace           CREQ-Json-EventCallbacks
 TEST(UT__Parser__String, Dynamic__StringArray)
 {
     auto data{JsonData::FromBuffer(std::string_view{R"(["hello","world"])"})};
@@ -89,10 +82,8 @@ TEST(UT__Parser__String, Dynamic__StringArray)
     EXPECT_EQ(parser.strings, (Strings{"hello", "world"}));
 }
 
-/*!
- * Tests that when the overridden OnString method returns an error, that error is propagated.
- * \trace           score::json::vajson::internal::StructureParserBase::ParseUnescapedString
- */
+/// Tests that when the overridden OnString method returns an error, that error is propagated.
+/// @trace           score::json::vajson::internal::StructureParserBase::ParseUnescapedString
 TEST(UT__Parser__String, Dynamic__ParseUnescapedString__Error)
 {
     auto doc{JsonData::FromBuffer(std::string_view{R"("SomeString")"})};

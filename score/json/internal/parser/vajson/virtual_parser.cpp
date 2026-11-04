@@ -10,16 +10,11 @@
  *
  * SPDX-License-Identifier: Apache-2.0
  ********************************************************************************/
-/*!        \file
- *        \brief  Contains the implementation of a SAX-style JSON parser.
- *
- *      \details  Provides callbacks for implementing parsers.
- *
- *********************************************************************************************************************/
+/// @file
+/// @brief  Contains the implementation of a SAX-style JSON parser.
+///
+/// @details  Provides callbacks for implementing parsers.
 
-/**********************************************************************************************************************
- *  INCLUDES
- *********************************************************************************************************************/
 #include "score/json/internal/parser/vajson/virtual_parser.h"
 #include "score/json/internal/parser/vajson/json_data.h"
 #include "score/json/internal/parser/vajson/json_error_domain.h"
@@ -40,69 +35,69 @@ auto VirtualParser::Parse() noexcept -> Result<void>
     return this->parser_.Parse();
 }
 
-/// \brief Call the OnUnexpectedEvent callback that determines how to handle the unexpected event and return its result
+/// @brief Call the OnUnexpectedEvent callback that determines how to handle the unexpected event and return its result
 auto VirtualParser::OnNull() noexcept -> ParserResult
 {
 
     return this->OnUnexpectedEvent();
 }
 
-/// \brief Call the OnUnexpectedEvent callback that determines how to handle the unexpected event and return its result
+/// @brief Call the OnUnexpectedEvent callback that determines how to handle the unexpected event and return its result
 auto VirtualParser::OnBool(bool) noexcept -> ParserResult
 {  // NOLINT(readability/casting)
 
     return this->OnUnexpectedEvent();
 }
 
-/// \brief Call the OnUnexpectedEvent callback that determines how to handle the unexpected event and return its result
+/// @brief Call the OnUnexpectedEvent callback that determines how to handle the unexpected event and return its result
 auto VirtualParser::OnNumber(JsonNumber) noexcept -> ParserResult
 {
 
     return this->OnUnexpectedEvent();
 }
 
-/// \brief Call the OnUnexpectedEvent callback that determines how to handle the unexpected event and return its result
+/// @brief Call the OnUnexpectedEvent callback that determines how to handle the unexpected event and return its result
 auto VirtualParser::OnString(StringView) noexcept -> ParserResult
 {
 
     return this->OnUnexpectedEvent();
 }
 
-/// \brief Call the OnUnexpectedEvent callback that determines how to handle the unexpected event and return its result
+/// @brief Call the OnUnexpectedEvent callback that determines how to handle the unexpected event and return its result
 auto VirtualParser::OnKey(StringView) noexcept -> ParserResult
 {
 
     return this->OnUnexpectedEvent();
 }
 
-/// \brief Call the OnUnexpectedEvent callback that determines how to handle the unexpected event and return its result
+/// @brief Call the OnUnexpectedEvent callback that determines how to handle the unexpected event and return its result
 auto VirtualParser::OnStartObject() noexcept -> ParserResult
 {
 
     return this->OnUnexpectedEvent();
 }
 
-/// \brief Call the OnUnexpectedEvent callback that determines how to handle the unexpected event and return its result
+/// @brief Call the OnUnexpectedEvent callback that determines how to handle the unexpected event and return its result
 auto VirtualParser::OnEndObject(std::size_t) noexcept -> ParserResult
 {
 
     return this->OnUnexpectedEvent();
 }
 
-/// \brief Call the OnUnexpectedEvent callback that determines how to handle the unexpected event and return its result
+/// @brief Call the OnUnexpectedEvent callback that determines how to handle the unexpected event and return its result
 auto VirtualParser::OnStartArray() noexcept -> ParserResult
 {
 
     return this->OnUnexpectedEvent();
 }
 
-/// \brief Call the OnUnexpectedEvent callback that determines how to handle the unexpected event and return its result
+/// @brief Call the OnUnexpectedEvent callback that determines how to handle the unexpected event and return its result
 auto VirtualParser::OnEndArray(std::size_t) noexcept -> ParserResult
 {
 
     return this->OnUnexpectedEvent();
 }
-/// \brief Call the OnUnexpectedEvent callback that determines how to handle the unexpected event and return its result
+/// @brief Call the OnUnexpectedEvent callback that determines how to handle the unexpected event and return its result
 auto VirtualParser::OnUnexpectedEvent() noexcept -> ParserResult
 {
     return MakeErrorResult<ParserState>(JsonErrc::kUserValidationFailed,

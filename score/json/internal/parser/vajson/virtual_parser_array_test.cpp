@@ -10,14 +10,9 @@
  *
  * SPDX-License-Identifier: Apache-2.0
  ********************************************************************************/
-/*!        \file
- *        \brief  Contains tests concerning the parsing of arrays.
- *
- *********************************************************************************************************************/
+/// @file
+/// @brief  Contains tests concerning the parsing of arrays.
 
-/**********************************************************************************************************************
- *  INCLUDES
- *********************************************************************************************************************/
 #include "score/json/internal/parser/vajson/virtual_parser.h"
 
 #include "gtest/gtest.h"
@@ -125,10 +120,8 @@ class LimitedStartArrayParser final : public internal::VirtualParser
 
 }  // namespace
 
-/*!
- * Test array start/end counting — integers in array.
- * \trace           CREQ-Json-EventCallbacks
- */
+/// Test array start/end counting — integers in array.
+/// @trace           CREQ-Json-EventCallbacks
 TEST(UT__Parser__Array, Dynamic__Ints)
 {
     auto data{JsonData::FromBuffer(std::string_view{"[1,2,3]"})};
@@ -140,10 +133,8 @@ TEST(UT__Parser__Array, Dynamic__Ints)
     EXPECT_EQ(parser.balance_, 0);
 }
 
-/*!
- * Test array start/end counting — nested arrays.
- * \trace           CREQ-Json-EventCallbacks
- */
+/// Test array start/end counting — nested arrays.
+/// @trace           CREQ-Json-EventCallbacks
 TEST(UT__Parser__Array, Dynamic__Nested)
 {
     auto data{JsonData::FromBuffer(std::string_view{"[[1,2],[3,4]]"})};
@@ -155,10 +146,8 @@ TEST(UT__Parser__Array, Dynamic__Nested)
     EXPECT_EQ(parser.balance_, 0);
 }
 
-/*!
- * Test array start/end counting — no arrays present.
- * \trace           CREQ-Json-EventCallbacks
- */
+/// Test array start/end counting — no arrays present.
+/// @trace           CREQ-Json-EventCallbacks
 TEST(UT__Parser__Array, Dynamic__NoArrays)
 {
     auto data{JsonData::FromBuffer(std::string_view{R"({"a":1,"b":2})"})};
@@ -170,10 +159,8 @@ TEST(UT__Parser__Array, Dynamic__NoArrays)
     EXPECT_EQ(parser.balance_, 0);
 }
 
-/*!
- * Tests that when the overridden OnEndArray method returns an error, that error is propagated.
- * \trace           score::json::vajson::internal::StructureParserBase::ParseEndArray
- */
+/// Tests that when the overridden OnEndArray method returns an error, that error is propagated.
+/// @trace           score::json::vajson::internal::StructureParserBase::ParseEndArray
 TEST(UT__Parser__Array__Error, Dynamic__OnEndArray)
 {
     auto doc{JsonData::FromBuffer(std::string_view{R"([1,2])"})};
@@ -186,10 +173,8 @@ TEST(UT__Parser__Array__Error, Dynamic__OnEndArray)
     ASSERT_EQ(parser_result.error().UserMessage(), std::string_view{"OnEndArray called with array size >=2."});
 }
 
-/*!
- * Tests that when the overridden OnStartArray method returns an error, that error is propagated.
- * \trace           score::json::vajson::internal::StructureParserBase::ParseStartArray
- */
+/// Tests that when the overridden OnStartArray method returns an error, that error is propagated.
+/// @trace           score::json::vajson::internal::StructureParserBase::ParseStartArray
 TEST(UT__Parser__Array__Error, Dynamic__OnStartArray)
 {
     auto doc{JsonData::FromBuffer(std::string_view{R"([[]])"})};

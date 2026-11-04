@@ -23,10 +23,8 @@ namespace vajson
 namespace unit_test
 {
 
-/*!
- * \brief           Tests if IsDigit works as expected.
- * \trace           CREQ-Json-ProvidedSerializers
- */
+/// @brief           Tests if IsDigit works as expected.
+/// @trace           CREQ-Json-ProvidedSerializers
 TEST(UT__NumberParser, IsDigit)
 {
     ASSERT_FALSE(internal::util::IsDigit('/'));

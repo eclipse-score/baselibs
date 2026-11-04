@@ -10,10 +10,8 @@
  *
  * SPDX-License-Identifier: Apache-2.0
  ********************************************************************************/
-/*!        \file
- *        \brief  Unit tests for Number
- *
- *********************************************************************************************************************/
+/// @file
+/// @brief  Unit tests for Number
 #include "score/json/internal/parser/vajson/json_number.h"
 
 #include <gtest/gtest.h>
@@ -36,9 +34,7 @@ namespace vajson
 {
 namespace unit_test
 {
-/*!
- * \brief           Unqualified access to gtest classes
- */
+/// @brief           Unqualified access to gtest classes
 
 using namespace ::testing;  // NOLINT(build/namespaces)
 
@@ -51,19 +47,17 @@ constexpr inline auto CompareFloat(T lhs, T rhs) noexcept -> bool
     return (std::abs(lhs - rhs) < std::numeric_limits<T>::epsilon());
 }
 
-/*!
- * \brief           Creates an Optional from a Result
- * \tparam          T
- *                  Type of value.
- * \tparam          E
- *                  Type of error.
- * \tparam          Opt
- *                  Type of Optional.
- * \param[in]       result
- *                  to convert.
- * \return          The Optional containing the value of the Result, or an empty Optional if the Result contains an
- *                  error.
- */
+/// @brief           Creates an Optional from a Result
+/// @tparam          T
+///                  Type of value.
+/// @tparam          E
+///                  Type of error.
+/// @tparam          Opt
+///                  Type of Optional.
+/// @param[in]       result
+///                  to convert.
+/// @return          The Optional containing the value of the Result, or an empty Optional if the Result contains an
+///                  error.
 template <typename T, typename Opt = score::cpp::optional<T>>
 auto ToOptional(const Result<T>& result) noexcept -> Opt
 {
@@ -75,95 +69,79 @@ auto ToOptional(const Result<T>& result) noexcept -> Opt
     return optional;
 }
 
-/*!
- * \brief           Small abstraction for test values consisting of a string & number value
- */
+/// @brief           Small abstraction for test values consisting of a string & number value
 template <typename T>
 class TestValue
 {
   public:
-    /*!
-     * \brief           Constructor from string - view will end with \0
-     * \param[in]       str
-     *                  the string to be used for the conversion
-     * \param[in]       expected
-     *                  the expected converted value
-     * \context         ANY
-     * \pre             -
-     * \threadsafe      TRUE, for different this pointer
-     */
+    /// @brief           Constructor from string - view will end with \0
+    /// @param[in]       str
+    ///                  the string to be used for the conversion
+    /// @param[in]       expected
+    ///                  the expected converted value
+    /// @context         ANY
+    /// @pre             -
+    /// @threadsafe      TRUE, for different this pointer
     TestValue(std::string&& str, T expected) : value_{str}, with_zero_{true}, expected_{expected}
     {
         ShortenView();
     }
 
-    /*!
-     * \brief           Constructor from string - view will end with \0
-     * \param[in]       str
-     *                  the string to be used for the conversion
-     * \context         ANY
-     * \pre             -
-     * \threadsafe      TRUE, for different this pointer
-     */
+    /// @brief           Constructor from string - view will end with \0
+    /// @param[in]       str
+    ///                  the string to be used for the conversion
+    /// @context         ANY
+    /// @pre             -
+    /// @threadsafe      TRUE, for different this pointer
     explicit TestValue(std::string&& str) : value_{str}, with_zero_{true}, expected_{}
     {
         ShortenView();
     }
 
-    /*!
-     * \brief           Get a TestValue without \0
-     * \param[in]       str
-     *                  the string to convert
-     * \return          a constructed TestValue
-     * \context         ANY
-     * \pre             -
-     * \threadsafe      TRUE, for different this pointer
-     */
+    /// @brief           Get a TestValue without \0
+    /// @param[in]       str
+    ///                  the string to convert
+    /// @return          a constructed TestValue
+    /// @context         ANY
+    /// @pre             -
+    /// @threadsafe      TRUE, for different this pointer
     static TestValue<T> Nonzeroed(std::string&& str)
     {
         return TestValue<T>(std::move(str), false, score::cpp::optional<T>{});
     }
 
-    /*!
-     * \brief           Get a TestValue without \0
-     * \param[in]       str
-     *                  the string to convert
-     * \param[in]       expected
-     *                  the expected converted value
-     * \return          a constructed TestValue
-     * \context         ANY
-     * \pre             -
-     * \threadsafe      TRUE, for different this pointer
-     */
+    /// @brief           Get a TestValue without \0
+    /// @param[in]       str
+    ///                  the string to convert
+    /// @param[in]       expected
+    ///                  the expected converted value
+    /// @return          a constructed TestValue
+    /// @context         ANY
+    /// @pre             -
+    /// @threadsafe      TRUE, for different this pointer
     static TestValue<T> Nonzeroed(std::string&& str, T expected)
     {
         return TestValue<T>(std::move(str), false, score::cpp::optional<T>{expected});
     }
 
-    /*!
-     * \brief           Gets a view of the string with potentially manipulated length
-     */
+    /// @brief           Gets a view of the string with potentially manipulated length
     StringView View() const
     {
         return StringView(this->mod_value_.data(), this->mod_value_.size());
     }
 
-    /*!
-     * \brief           Gets the expected output from the Conversion function
-     */
+    /// @brief           Gets the expected output from the Conversion function
     score::cpp::optional<T> Expected() const
     {
         return this->expected_;
     }
 
-    /*!
-     * \brief           Enable GTest to print the type without resorting to bytes
-     * \param[in]       os
-     *                  the out stream
-     * \context         ANY
-     * \pre             -
-     * \threadsafe      TRUE, for different this pointer
-     */
+    /// @brief           Enable GTest to print the type without resorting to bytes
+    /// @param[in]       os
+    ///                  the out stream
+    /// @context         ANY
+    /// @pre             -
+    /// @threadsafe      TRUE, for different this pointer
     void Debug(::std::ostream& os) const noexcept
     {
         auto v{this->View()};
@@ -177,27 +155,23 @@ class TestValue
     }
 
   private:
-    /*!
-     * \brief           Constructor from string
-     * \param[in]       str
-     *                  the string to be used for the conversion
-     * \param[in]       with_zero
-     *                  if true, the whole string will be used (with \0)
-     * \param[in]       expected
-     *                  the expected converted value
-     * \context         ANY
-     * \pre             -
-     * \threadsafe      TRUE, for different this pointer
-     */
+    /// @brief           Constructor from string
+    /// @param[in]       str
+    ///                  the string to be used for the conversion
+    /// @param[in]       with_zero
+    ///                  if true, the whole string will be used (with \0)
+    /// @param[in]       expected
+    ///                  the expected converted value
+    /// @context         ANY
+    /// @pre             -
+    /// @threadsafe      TRUE, for different this pointer
     TestValue(std::string&& str, bool with_zero, score::cpp::optional<T>&& expected)
         : value_{str}, with_zero_{with_zero}, expected_{std::move(expected)}
     {
         ShortenView();
     }
 
-    /*!
-     * \brief           Shorten the data and the length of the input by 1
-     */
+    /// @brief           Shorten the data and the length of the input by 1
     void ShortenView() noexcept
     {
         std::size_t len{this->value_.size()};
@@ -208,38 +182,28 @@ class TestValue
         this->mod_value_ = this->value_.substr(0, len);
     }
 
-    /*!
-     * \brief           the stored string
-     */
+    /// @brief           the stored string
     std::string value_;
 
-    /*!
-     * \brief           The modified string
-     */
+    /// @brief           The modified string
     std::string mod_value_{};
 
-    /*!
-     * \brief           should have zero?
-     */
+    /// @brief           should have zero?
     bool with_zero_;
 
-    /*!
-     * \brief           The expected value
-     */
+    /// @brief           The expected value
     score::cpp::optional<T> expected_;
 };
 
-/*!
- * \brief           Enable GTest to print the type without resorting to bytes
- * \param[in]       os
- *                  the out stream
- * \param[in]       val
- *                  the testvalue to print
- * \return          the out stream
- * \context         ANY
- * \pre             -
- * \threadsafe      TRUE, for different this pointer
- */
+/// @brief           Enable GTest to print the type without resorting to bytes
+/// @param[in]       os
+///                  the out stream
+/// @param[in]       val
+///                  the testvalue to print
+/// @return          the out stream
+/// @context         ANY
+/// @pre             -
+/// @threadsafe      TRUE, for different this pointer
 template <typename T>
 ::std::ostream& operator<<(::std::ostream& os, const TestValue<T>& val)
 {
@@ -247,47 +211,35 @@ template <typename T>
     return os;
 }
 
-/*!
- * \brief           Fixture for all parameterized number tests
- */
+/// @brief           Fixture for all parameterized number tests
 template <typename Num, typename = typename std::enable_if_t<std::is_arithmetic<Num>::value>>
 class NumberTest : public testing::TestWithParam<TestValue<Num>>
 {
   protected:
-    /*!
-     * \brief           Sets up the fixture
-     */
+    /// @brief           Sets up the fixture
     void SetUp() noexcept override
     {
         params_.emplace(this->GetParam());
     }
-    /*!
-     * \brief           Gets the Input into the Conversion function
-     */
+    /// @brief           Gets the Input into the Conversion function
     StringView Input() const
     {
         return this->params_->View();
     }
 
-    /*!
-     * \brief           Gets the constructed number
-     */
+    /// @brief           Gets the constructed number
     JsonNumber GetNumber() const
     {
         return JsonNumber(Input());
     }
 
-    /*!
-     * \brief           Gets the expected output from the Conversion function
-     */
+    /// @brief           Gets the expected output from the Conversion function
     Optional<Num> Expected() const
     {
         return this->params_->Expected();
     }
 
-    /*!
-     * \brief           Gets the actual output from the Conversion function As<Signed>
-     */
+    /// @brief           Gets the actual output from the Conversion function As<Signed>
     template <typename Signed = Num, typename = typename std::enable_if_t<std::is_signed<Signed>::value>>
     Optional<Signed> ActualSigned() const
     {
@@ -296,9 +248,7 @@ class NumberTest : public testing::TestWithParam<TestValue<Num>>
         }));
     }
 
-    /*!
-     * \brief           Gets the actual output from the Conversion function As<Unsigned>
-     */
+    /// @brief           Gets the actual output from the Conversion function As<Unsigned>
     template <typename Unsigned = Num, typename = typename std::enable_if_t<std::is_unsigned<Unsigned>::value>>
     Optional<Unsigned> ActualUnsigned() const
     {
@@ -307,9 +257,7 @@ class NumberTest : public testing::TestWithParam<TestValue<Num>>
         }));
     }
 
-    /*!
-     * \brief           Gets the actual output from the Conversion function As<Float>
-     */
+    /// @brief           Gets the actual output from the Conversion function As<Float>
     template <typename Float = Num, typename = typename std::enable_if_t<std::is_floating_point<Float>::value>>
     Optional<Float> ActualFloat() const
     {
@@ -318,9 +266,7 @@ class NumberTest : public testing::TestWithParam<TestValue<Num>>
         }));
     }
 
-    /*!
-     * \brief           Container for test in/out parameters
-     */
+    /// @brief           Container for test in/out parameters
     Optional<TestValue<Num>> params_;
 };
 
@@ -348,14 +294,10 @@ void ExpectOutOfRangeRejected(const ::std::string& underflow, const std::string&
 }
 }  // namespace
 
-/*
- * General & Misc Tests
- */
+// General & Misc Tests
 
-/*!
- * \brief           Tests if ones ans zeros can be parsed into boolean values
- * \trace           CREQ-Json-ProvidedSerializers
- */
+/// @brief           Tests if ones ans zeros can be parsed into boolean values
+/// @trace           CREQ-Json-ProvidedSerializers
 TEST_F(UT__Number, OnesAndZerosCanBeParsedToBool)
 {
     Result<bool> result{JsonNumber::New("1").and_then([](JsonNumber num) noexcept {
@@ -383,10 +325,8 @@ TEST_F(UT__Number, OnesAndZerosCanBeParsedToBool)
     ASSERT_EQ(result.error(), JsonErrc::kInvalidJson);
 }
 
-/*!
- * \brief           Tests that errno is unset before the next conversion
- * \trace           score::json::vajson::JsonNumber::New
- */
+/// @brief           Tests that errno is unset before the next conversion
+/// @trace           score::json::vajson::JsonNumber::New
 TEST_F(UT__Number, ErrnoIsUnsetBeforeConversion)
 {
     Result<std::uint64_t> result_64{JsonNumber::New("0x1FFFFFFFFFFFFFFFF").and_then([](JsonNumber num) noexcept {
@@ -426,10 +366,8 @@ TEST_F(UT__Number, ErrnoIsUnsetBeforeConversion)
     ASSERT_EQ(result_8.value(), 1);
 }
 
-/*!
- * \brief           Tests if numbers can be manually parsed by the user
- * \trace           score::json::vajson::JsonNumber::New
- */
+/// @brief           Tests if numbers can be manually parsed by the user
+/// @trace           score::json::vajson::JsonNumber::New
 TEST_F(UT__Number, StringsCanBeCustomParsed)
 {
     StringView sv{"1234567890"};
@@ -443,10 +381,8 @@ TEST_F(UT__Number, StringsCanBeCustomParsed)
     EXPECT_EQ(result, Optional<int>{10});
 }
 
-/*!
- * \brief           Tests if numbers can be requested as JsonNumber
- * \trace           score::json::vajson::JsonNumber
- */
+/// @brief           Tests if numbers can be requested as JsonNumber
+/// @trace           score::json::vajson::JsonNumber
 TEST_F(UT__Number, AsJsonNumber)
 {
     StringView sv{"1234567890"};
@@ -457,15 +393,13 @@ TEST_F(UT__Number, AsJsonNumber)
     ASSERT_TRUE(result.has_value());
 }
 
-/*!
- * Tests that certain invalid numbers are detected.
- *
- * - Assert that octal numbers are detected as invalid.
- * - Assert that a single minus sign is detected as invalid.
- * - Assert that an empty view is detected as invalid.
- * - Assert that a number to a negative char is detected as invalid.
- * \trace           score::json::vajson::JsonNumber::New
- */
+/// Tests that certain invalid numbers are detected.
+///
+/// - Assert that octal numbers are detected as invalid.
+/// - Assert that a single minus sign is detected as invalid.
+/// - Assert that an empty view is detected as invalid.
+/// - Assert that a number to a negative char is detected as invalid.
+/// @trace           score::json::vajson::JsonNumber::New
 TEST_F(UT__Number, InvalidNumber)
 {
     {
@@ -500,31 +434,21 @@ TEST_F(UT__Number, InvalidNumber)
     }
 }
 
-/*
- * Signed integer tests
- */
+// Signed integer tests
 
-/*!
- * \brief           Test value for Int8
- */
+/// @brief           Test value for Int8
 using I8Value = TestValue<std::int8_t>;
-/*!
- * \brief           Test fixture for Int8 Success
- */
+/// @brief           Test fixture for Int8 Success
 class UT__Number__I8Success : public NumberTest<std::int8_t>
 {
 };
-/*!
- * \brief           Test fixture for Int8 Failure
- */
+/// @brief           Test fixture for Int8 Failure
 class UT__Number__I8Failure : public NumberTest<std::int8_t>
 {
 };
 
-/*!
- * \brief           Test that checks that conversions succeed if valid values are passed
- * \trace           score::json::vajson::JsonNumber::TryAs
- */
+/// @brief           Test that checks that conversions succeed if valid values are passed
+/// @trace           score::json::vajson::JsonNumber::TryAs
 TEST_P(UT__Number__I8Success, ConvertsValidIntegers8bit)
 {
     auto actual{ActualSigned()};
@@ -532,12 +456,10 @@ TEST_P(UT__Number__I8Success, ConvertsValidIntegers8bit)
     EXPECT_EQ(actual, Expected());
 }
 
-/*!
- * \brief           Instanciation of testcases for multiple values with successful conversion
- * \details         Input data:
- *                  - Positive and negative integers within the range of a std::int8_t, including min, max,
- *                    intermediate, and zero values
- */
+/// @brief           Instanciation of testcases for multiple values with successful conversion
+/// @details         Input data:
+///                  - Positive and negative integers within the range of a std::int8_t, including min, max,
+///                    intermediate, and zero values
 INSTANTIATE_TEST_SUITE_P(SignedIntTest8bit,
                          UT__Number__I8Success,
                          Values(I8Value::Nonzeroed("0,", 0),
@@ -550,10 +472,8 @@ INSTANTIATE_TEST_SUITE_P(SignedIntTest8bit,
                                 I8Value("-128", -128),
                                 I8Value("127", 127)));
 
-/*!
- * \brief           Test that checks that conversions fail if invalid values are passed
- * \trace           score::json::vajson::JsonNumber::TryAs
- */
+/// @brief           Test that checks that conversions fail if invalid values are passed
+/// @trace           score::json::vajson::JsonNumber::TryAs
 TEST_P(UT__Number__I8Failure, FailsOnInvalidIntegers8bit)
 {
     auto actual{ActualSigned()};
@@ -561,12 +481,10 @@ TEST_P(UT__Number__I8Failure, FailsOnInvalidIntegers8bit)
     ASSERT_FALSE(actual.has_value());
 }
 
-/*!
- * \brief           Instanciation of testcases for multiple values where conversion fails
- * \details         Input data:
- *                  - Numbers that cannot be converted to a std::int8_t, such as floating point, scientific notation,
- *                    invalid characters, and to integers that are too big
- */
+/// @brief           Instanciation of testcases for multiple values where conversion fails
+/// @details         Input data:
+///                  - Numbers that cannot be converted to a std::int8_t, such as floating point, scientific notation,
+///                    invalid characters, and to integers that are too big
 INSTANTIATE_TEST_SUITE_P(SignedIntTestFail8bit,
                          UT__Number__I8Failure,
                          Values(I8Value::Nonzeroed(";,"),
@@ -577,31 +495,21 @@ INSTANTIATE_TEST_SUITE_P(SignedIntTestFail8bit,
                                 I8Value("128"),
                                 I8Value("-129")));
 
-/*
- * Unsigned integer tests
- */
+// Unsigned integer tests
 
-/*!
- * \brief           Test value for Uint8
- */
+/// @brief           Test value for Uint8
 using U8Value = TestValue<std::uint8_t>;
-/*!
- * \brief           Test fixture for Int8 Success
- */
+/// @brief           Test fixture for Int8 Success
 class UT__Number__U8Success : public NumberTest<std::uint8_t>
 {
 };
-/*!
- * \brief           Test fixture for Int8 Failure
- */
+/// @brief           Test fixture for Int8 Failure
 class UT__Number__U8Failure : public NumberTest<std::uint8_t>
 {
 };
 
-/*!
- * \brief           Test that checks that conversions succeed if valid values are passed
- * \trace           score::json::vajson::JsonNumber::TryAs
- */
+/// @brief           Test that checks that conversions succeed if valid values are passed
+/// @trace           score::json::vajson::JsonNumber::TryAs
 TEST_P(UT__Number__U8Success, ConvertsValidIntegers8bit)
 {
     auto actual{ActualUnsigned()};
@@ -609,12 +517,10 @@ TEST_P(UT__Number__U8Success, ConvertsValidIntegers8bit)
     EXPECT_EQ(actual, Expected());
 }
 
-/*!
- * \brief           Instanciation of testcases for multiple values with successful conversion
- * \details         Input data:
- *                  - Positive integers within the range of a std::uint8_t including min, max, intermediate, and zero
- *                    values
- */
+/// @brief           Instanciation of testcases for multiple values with successful conversion
+/// @details         Input data:
+///                  - Positive integers within the range of a std::uint8_t including min, max, intermediate, and zero
+///                    values
 INSTANTIATE_TEST_SUITE_P(UnsignedIntTest8bit,
                          UT__Number__U8Success,
                          Values(U8Value::Nonzeroed("0,", 0),
@@ -624,10 +530,8 @@ INSTANTIATE_TEST_SUITE_P(UnsignedIntTest8bit,
                                 U8Value("127", 127),
                                 U8Value("255", 255)));
 
-/*!
- * \brief           Test that checks that conversions fail if invalid values are passed
- * \trace           CREQ-Json-Validation
- */
+/// @brief           Test that checks that conversions fail if invalid values are passed
+/// @trace           CREQ-Json-Validation
 TEST_P(UT__Number__U8Failure, FailsOnInvalidIntegers8bit)
 {
     auto actual{ActualUnsigned()};
@@ -635,12 +539,10 @@ TEST_P(UT__Number__U8Failure, FailsOnInvalidIntegers8bit)
     ASSERT_FALSE(actual.has_value());
 }
 
-/*!
- * \brief           Instanciation of testcases for multiple values where conversion fails
- * \details         Input data:
- *                  - Numbers that cannot be converted to a std::uint8_t, such as negative values, floating point,
- *                    scientific notation, invalid characters, and integers that are too big
- */
+/// @brief           Instanciation of testcases for multiple values where conversion fails
+/// @details         Input data:
+///                  - Numbers that cannot be converted to a std::uint8_t, such as negative values, floating point,
+///                    scientific notation, invalid characters, and integers that are too big
 INSTANTIATE_TEST_SUITE_P(UnsignedIntTestFail8bit,
                          UT__Number__U8Failure,
                          Values(U8Value::Nonzeroed("-1;"),
@@ -653,31 +555,21 @@ INSTANTIATE_TEST_SUITE_P(UnsignedIntTestFail8bit,
                                 U8Value("-0.0"),
                                 U8Value("256")));
 
-/*
- * Floating point number tests
- */
+// Floating point number tests
 
-/*!
- * \brief           Test value for Double
- */
+/// @brief           Test value for Double
 using DoubleValue = TestValue<double>;
-/*!
- * \brief           Test fixture for Int8 Success
- */
+/// @brief           Test fixture for Int8 Success
 class UT__Number__DoubleSuccess : public NumberTest<double>
 {
 };
-/*!
- * \brief           Test fixture for Int8 Failure
- */
+/// @brief           Test fixture for Int8 Failure
 class UT__Number__DoubleFailure : public NumberTest<double>
 {
 };
 
-/*!
- * \brief           Test that checks that conversions succeed if valid values are passed
- * \trace           score::json::vajson::JsonNumber::TryAs
- */
+/// @brief           Test that checks that conversions succeed if valid values are passed
+/// @trace           score::json::vajson::JsonNumber::TryAs
 TEST_P(UT__Number__DoubleSuccess, ConvertsValidDoubles)
 {
     auto actual{ActualFloat()};
@@ -685,11 +577,9 @@ TEST_P(UT__Number__DoubleSuccess, ConvertsValidDoubles)
     ASSERT_TRUE(CompareFloat(actual.value(), Expected().value()));
 }
 
-/*!
- * \brief           Instanciation of testcases for multiple values with successful conversion
- * \details         Input data:
- *                  - Positive and negative numbers, such as integers and floats, including zero
- */
+/// @brief           Instanciation of testcases for multiple values with successful conversion
+/// @details         Input data:
+///                  - Positive and negative numbers, such as integers and floats, including zero
 INSTANTIATE_TEST_SUITE_P(FloatTestDouble,
                          UT__Number__DoubleSuccess,
                          Values(DoubleValue("0", 0),
@@ -705,10 +595,8 @@ INSTANTIATE_TEST_SUITE_P(FloatTestDouble,
                                 DoubleValue("-0.0", 0.0),
                                 DoubleValue::Nonzeroed("-0.1E+2;", -10)));
 
-/*!
- * \brief           Test that checks that conversions fail if invalid values are passed
- * \trace           score::json::vajson::JsonNumber::TryAs
- */
+/// @brief           Test that checks that conversions fail if invalid values are passed
+/// @trace           score::json::vajson::JsonNumber::TryAs
 TEST_P(UT__Number__DoubleFailure, FailsOnInvalidDoubles)
 {
     auto actual{ActualFloat()};
@@ -716,12 +604,10 @@ TEST_P(UT__Number__DoubleFailure, FailsOnInvalidDoubles)
     ASSERT_FALSE(actual.has_value());
 }
 
-/*!
- * \brief           Instanciation of testcases for multiple values where conversion fails
- * \details         Input data:
- *                  - Numbers that cannot be converted to a double, such as invalid characters, bases without exponent,
- *                    exponent with a base of zero, exponent in octal notation
- */
+/// @brief           Instanciation of testcases for multiple values where conversion fails
+/// @details         Input data:
+///                  - Numbers that cannot be converted to a double, such as invalid characters, bases without exponent,
+///                    exponent with a base of zero, exponent in octal notation
 INSTANTIATE_TEST_SUITE_P(FloatTestFailDouble,
                          UT__Number__DoubleFailure,
                          Values(DoubleValue("-0."),

@@ -10,14 +10,9 @@
  *
  * SPDX-License-Identifier: Apache-2.0
  ********************************************************************************/
-/*!        \file
- *        \brief  Contains tests concerning the parsing of valid JSON.
- *
- *********************************************************************************************************************/
+/// @file
+/// @brief  Contains tests concerning the parsing of valid JSON.
 
-/**********************************************************************************************************************
- *  INCLUDES
- *********************************************************************************************************************/
 #include "score/json/internal/parser/vajson/virtual_parser.h"
 
 #include "gtest/gtest.h"
@@ -48,10 +43,8 @@ class DynamicAnyParser final : public internal::VirtualParser
 
 }  // namespace
 
-/*!
- * Test that vaJson can parse a simple integer value.
- * \trace           CREQ-Json-Deserialization
- */
+/// Test that vaJson can parse a simple integer value.
+/// @trace           CREQ-Json-Deserialization
 TEST(UT__Parser__Valid, Dynamic__ParseInt)
 {
     auto data{JsonData::FromBuffer(std::string_view{"42"})};
@@ -60,10 +53,8 @@ TEST(UT__Parser__Valid, Dynamic__ParseInt)
     ASSERT_TRUE(parser.Parse().has_value());
 }
 
-/*!
- * Test that vaJson can parse a simple boolean value.
- * \trace           CREQ-Json-Deserialization
- */
+/// Test that vaJson can parse a simple boolean value.
+/// @trace           CREQ-Json-Deserialization
 TEST(UT__Parser__Valid, Dynamic__ParseBool)
 {
     auto data{JsonData::FromBuffer(std::string_view{"true"})};
@@ -72,10 +63,8 @@ TEST(UT__Parser__Valid, Dynamic__ParseBool)
     ASSERT_TRUE(parser.Parse().has_value());
 }
 
-/*!
- * Test that vaJson can parse a null value.
- * \trace           CREQ-Json-Deserialization
- */
+/// Test that vaJson can parse a null value.
+/// @trace           CREQ-Json-Deserialization
 TEST(UT__Parser__Valid, Dynamic__ParseNull)
 {
     auto data{JsonData::FromBuffer(std::string_view{"null"})};
@@ -84,10 +73,8 @@ TEST(UT__Parser__Valid, Dynamic__ParseNull)
     ASSERT_TRUE(parser.Parse().has_value());
 }
 
-/*!
- * Test that vaJson can parse a JSON object.
- * \trace           CREQ-Json-Deserialization
- */
+/// Test that vaJson can parse a JSON object.
+/// @trace           CREQ-Json-Deserialization
 TEST(UT__Parser__Valid, Dynamic__ParseObject)
 {
     auto data{JsonData::FromBuffer(std::string_view{R"({"key": 42, "flag": true, "name": "test"})"})};
@@ -96,10 +83,8 @@ TEST(UT__Parser__Valid, Dynamic__ParseObject)
     ASSERT_TRUE(parser.Parse().has_value());
 }
 
-/*!
- * Test that vaJson can parse a JSON array.
- * \trace           CREQ-Json-Deserialization
- */
+/// Test that vaJson can parse a JSON array.
+/// @trace           CREQ-Json-Deserialization
 TEST(UT__Parser__Valid, Dynamic__ParseArray)
 {
     auto data{JsonData::FromBuffer(std::string_view{R"([1, 2, 3, null, true, false, "str"])"})};
@@ -108,10 +93,8 @@ TEST(UT__Parser__Valid, Dynamic__ParseArray)
     ASSERT_TRUE(parser.Parse().has_value());
 }
 
-/*!
- * Test that vaJson can parse a nested JSON structure.
- * \trace           CREQ-Json-Deserialization
- */
+/// Test that vaJson can parse a nested JSON structure.
+/// @trace           CREQ-Json-Deserialization
 TEST(UT__Parser__Valid, Dynamic__ParseNested)
 {
     auto data{JsonData::FromBuffer(std::string_view{R"({"a": [1, {"b": 2}], "c": null})"})};

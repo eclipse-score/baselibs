@@ -10,17 +10,12 @@
  *
  * SPDX-License-Identifier: Apache-2.0
  ********************************************************************************/
-/*!        \file
- *        \brief  A representation of a parsed JSON number.
- *
- *********************************************************************************************************************/
+/// @file
+/// @brief  A representation of a parsed JSON number.
 
 #ifndef SCORE_JSON_INTERNAL_PARSER_VAJSON_JSON_NUMBER_H
 #define SCORE_JSON_INTERNAL_PARSER_VAJSON_JSON_NUMBER_H
 
-/**********************************************************************************************************************
- *  INCLUDES
- *********************************************************************************************************************/
 #include <algorithm>
 #include <cerrno>
 #include <cmath>
@@ -42,28 +37,28 @@ namespace json
 {
 namespace vajson
 {
-/// \brief           A representation of a parsed JSON number
-/// \trace           DSGN-JSON-Reader-Number-Formatting
+/// @brief           A representation of a parsed JSON number
+/// @trace           DSGN-JSON-Reader-Number-Formatting
 class JsonNumber final
 {
   public:
-    /// \brief           Creates a new number
-    /// \param[in]       view
+    /// @brief           Creates a new number
+    /// @param[in]       view
     ///                  to parse.
-    /// \return          A Result containing the number or the error that occurred.
-    /// \error           score::json::vajson::JsonErrc::kInvalidJson
+    /// @return          A Result containing the number or the error that occurred.
+    /// @error           score::json::vajson::JsonErrc::kInvalidJson
     ///                  if the number contains invalid characters
-    /// \context         ANY
-    /// \pre             All whitespace must have been stripped.
-    /// \threadsafe      FALSE
-    /// \reentrant       FALSE
-    /// \synchronous     TRUE
-    /// \internal
+    /// @context         ANY
+    /// @pre             All whitespace must have been stripped.
+    /// @threadsafe      FALSE
+    /// @reentrant       FALSE
+    /// @synchronous     TRUE
+    /// @internal
     /// - If the input is not empty and a valid JSON number:
     ///   - Return the number.
     /// - Otherwise:
     ///   - Return an error.
-    /// \endinternal
+    /// @endinternal
     static auto New(StringView view) noexcept -> Result<JsonNumber>
     {
         return Filter(
@@ -80,45 +75,45 @@ class JsonNumber final
                       "JsonNumber::New: Number contains invalid characters."));
     };
 
-    /// \brief           Tries to convert the number to a type
-    /// \tparam          T
+    /// @brief           Tries to convert the number to a type
+    /// @tparam          T
     ///                  Type to convert to.
-    /// \return          The Result containing the converted number if the conversion was successful, or an error.
-    /// \error           score::json::vajson::JsonErrc::kInvalidJson
+    /// @return          The Result containing the converted number if the conversion was successful, or an error.
+    /// @error           score::json::vajson::JsonErrc::kInvalidJson
     ///                  Could not convert number
-    /// \context         ANY
-    /// \pre             -
-    /// \threadsafe      FALSE
-    /// \reentrant       FALSE
-    /// \synchronous     TRUE
-    /// \internal
+    /// @context         ANY
+    /// @pre             -
+    /// @threadsafe      FALSE
+    /// @reentrant       FALSE
+    /// @synchronous     TRUE
+    /// @internal
     /// - Convert the number to type T.
     /// - If the conversion was successful:
     ///   - Return a Result containing the number.
     /// - Otherwise:
     ///   - Return an error.
-    /// \endinternal
+    /// @endinternal
     template <typename T>
     auto TryAs() const noexcept -> Result<T>
     {
         return MakeResult(this->As<T>(), {JsonErrc::kInvalidJson, "Could not convert number."});
     }
 
-    /// \brief           Tries to convert the number to a bool
-    /// \details         Maps "1" to true and "0" to false.
-    /// \return          The Optional containing the bool if the conversion was successful, or empty.
-    /// \context         ANY
-    /// \pre             -
-    /// \threadsafe      FALSE
-    /// \reentrant       FALSE
-    /// \synchronous     TRUE
-    /// \internal
+    /// @brief           Tries to convert the number to a bool
+    /// @details         Maps "1" to true and "0" to false.
+    /// @return          The Optional containing the bool if the conversion was successful, or empty.
+    /// @context         ANY
+    /// @pre             -
+    /// @threadsafe      FALSE
+    /// @reentrant       FALSE
+    /// @synchronous     TRUE
+    /// @internal
     /// - If the number is a single '1' or '0' character:
     ///   - Convert to true or false respectively.
     ///   - Return a Result containing the bool.
     /// - Otherwise:
     ///   - Return an error.
-    /// \endinternal
+    /// @endinternal
     template <typename Bool, std::enable_if_t<std::is_same<Bool, bool>::value>* = nullptr>
     auto As() const noexcept -> Optional<bool>
     {
@@ -142,22 +137,20 @@ class JsonNumber final
         return opt;
     }
 
-    /// \brief            Tries to convert the number to a signed integer
-    /// \tparam          Integer Type of signed integer to convert to.
-    /// \return          The Optional containing the signed integer if the conversion was successful, or empty.
-    /// \context         ANY
-    /// \pre             -
-    /// \threadsafe      FALSE
-    /// \reentrant       FALSE
-    /*!
-     * \internal
-     * - Convert the number to a signed number.
-     * - If the conversion was successful:
-     *   - Return a Result containing the number.
-     * - Otherwise:
-     *   - Return an error.
-     * \endinternal
-     */
+    /// @brief            Tries to convert the number to a signed integer
+    /// @tparam          Integer Type of signed integer to convert to.
+    /// @return          The Optional containing the signed integer if the conversion was successful, or empty.
+    /// @context         ANY
+    /// @pre             -
+    /// @threadsafe      FALSE
+    /// @reentrant       FALSE
+    /// @internal
+    /// - Convert the number to a signed number.
+    /// - If the conversion was successful:
+    ///   - Return a Result containing the number.
+    /// - Otherwise:
+    ///   - Return an error.
+    /// @endinternal
     template <typename Integer,
               std::enable_if_t<internal::IsInt<Integer>::value && std::is_signed<Integer>::value>* = nullptr>
     auto As() const noexcept -> Optional<Integer>
@@ -168,22 +161,22 @@ class JsonNumber final
         return this->ExtractIfIntegerSuccessful<Integer>(result, parser.End());
     }
 
-    /// \brief           Tries to convert the number to an unsigned integer
-    /// \tparam          Integer
+    /// @brief           Tries to convert the number to an unsigned integer
+    /// @tparam          Integer
     ///                  Type of unsigned integer to convert to.
-    /// \return          The Optional containing the unsigned integer if the conversion was successful, or empty.
-    /// \context         ANY
-    /// \pre             -
-    /// \threadsafe      FALSE
-    /// \reentrant       FALSE
-    /// \synchronous     TRUE
-    /// \internal
+    /// @return          The Optional containing the unsigned integer if the conversion was successful, or empty.
+    /// @context         ANY
+    /// @pre             -
+    /// @threadsafe      FALSE
+    /// @reentrant       FALSE
+    /// @synchronous     TRUE
+    /// @internal
     /// - Convert the number to an unsigned number.
     /// - If the conversion was successful:
     ///   - Return a Result containing the number.
     /// - Otherwise:
     ///   - Return an error.
-    /// \endinternal
+    /// @endinternal
     template <typename Integer,
               std::enable_if_t<internal::IsInt<Integer>::value && (!std::is_signed<Integer>::value)>* = nullptr>
 
@@ -195,22 +188,22 @@ class JsonNumber final
         return this->ExtractIfIntegerSuccessful<Integer>(result, parser.End());
     }
 
-    /// \brief           Tries to convert the number to a floating point type
-    /// \tparam          Float
+    /// @brief           Tries to convert the number to a floating point type
+    /// @tparam          Float
     ///                  Floating point type to convert to.
-    /// \return          The Optional containing the floating point number if the conversion was successful, or empty.
-    /// \context         ANY
-    /// \pre             -
-    /// \threadsafe      FALSE
-    /// \reentrant       FALSE
-    /// \synchronous     TRUE
-    /// \internal
+    /// @return          The Optional containing the floating point number if the conversion was successful, or empty.
+    /// @context         ANY
+    /// @pre             -
+    /// @threadsafe      FALSE
+    /// @reentrant       FALSE
+    /// @synchronous     TRUE
+    /// @internal
     /// - Convert the number to the desired floating point type.
     /// - If the conversion was successful:
     ///   - Return a Result containing the number.
     /// - Otherwise:
     ///   - Return an error.
-    /// \endinternal
+    /// @endinternal
     template <typename Float, std::enable_if_t<std::is_floating_point<Float>::value>* = nullptr>
     auto As() const noexcept -> Optional<Float>
     {
@@ -220,37 +213,37 @@ class JsonNumber final
         return this->ExtractIfFloatingSuccessful<Float>(conversion_result, parser.End());
     }
 
-    /// \brief           Converts the number to a JsonNumber
-    /// \return          The Optional containing the JsonNumber.
-    /// \context         ANY
-    /// \pre             -
-    /// \threadsafe      FALSE
-    /// \reentrant       FALSE
-    /// \internal
+    /// @brief           Converts the number to a JsonNumber
+    /// @return          The Optional containing the JsonNumber.
+    /// @context         ANY
+    /// @pre             -
+    /// @threadsafe      FALSE
+    /// @reentrant       FALSE
+    /// @internal
     /// - Return the number as a Number type.
-    /// \endinternal
+    /// @endinternal
     template <typename Num, std::enable_if_t<std::is_same<JsonNumber, Num>::value>* = nullptr>
     auto As() const noexcept -> Optional<Num>
     {
         return Optional<Num>{JsonNumber(this->view_)};
     }
 
-    /// \brief           Converts the number using a user defined parser
-    /// \details         Parser function must take the string representation of the number as std::string_view and
+    /// @brief           Converts the number using a user defined parser
+    /// @details         Parser function must take the string representation of the number as std::string_view and
     ///                  return the desired number type.
-    /// \tparam          Fn
+    /// @tparam          Fn
     ///                  Type of function parser.
-    /// \param[in]       parser
+    /// @param[in]       parser
     ///                  function to convert the string view into a number.
-    /// \return          The parsed number.
-    /// \context         ANY
-    /// \pre             Parser does not throw exceptions.
-    /// \threadsafe      FALSE
-    /// \reentrant       FALSE
-    /// \synchronous     TRUE
-    /// \internal
+    /// @return          The parsed number.
+    /// @context         ANY
+    /// @pre             Parser does not throw exceptions.
+    /// @threadsafe      FALSE
+    /// @reentrant       FALSE
+    /// @synchronous     TRUE
+    /// @internal
     /// - Convert the number using the given function.
-    /// \endinternal
+    /// @endinternal
     template <typename Fn>
     auto Convert(Fn&& parser) const noexcept -> decltype(parser(std::declval<StringView>()))
     {
@@ -259,44 +252,44 @@ class JsonNumber final
     }
 
   private:
-    /// \brief           Constructs a Number from a StringView
-    /// \param[in]       view
+    /// @brief           Constructs a Number from a StringView
+    /// @param[in]       view
     ///                  to parse.
-    /// \context         ANY
-    /// \pre             -
-    /// \threadsafe      FALSE
-    /// \reentrant       FALSE
+    /// @context         ANY
+    /// @pre             -
+    /// @threadsafe      FALSE
+    /// @reentrant       FALSE
     explicit constexpr JsonNumber(StringView view) noexcept : view_{view} {}
 
-    /// \brief           Gets the number of characters
-    /// \return          The number of characters.
-    /// \context         ANY
-    /// \pre             -
-    /// \threadsafe      TRUE, for different this pointer
+    /// @brief           Gets the number of characters
+    /// @return          The number of characters.
+    /// @context         ANY
+    /// @pre             -
+    /// @threadsafe      TRUE, for different this pointer
     auto GetNumberOfChars() const noexcept -> std::size_t
     {
         return this->view_.size();
     }
 
-    /// \brief           Casts the passed number to a smaller number type if still valid
-    /// \tparam          TargetType
+    /// @brief           Casts the passed number to a smaller number type if still valid
+    /// @tparam          TargetType
     ///                  Type to cast to.
-    /// \tparam          SourceType
+    /// @tparam          SourceType
     ///                  Type to cast from.
-    /// \param[in]       number
+    /// @param[in]       number
     ///                  to cast.
-    /// \return          The Optional containing the number if the cast was successful, or empty.
-    /// \context         ANY
-    /// \pre             -
-    /// \threadsafe      FALSE
-    /// \reentrant       FALSE
-    /// \internal
+    /// @return          The Optional containing the number if the cast was successful, or empty.
+    /// @context         ANY
+    /// @pre             -
+    /// @threadsafe      FALSE
+    /// @reentrant       FALSE
+    /// @internal
     /// - If the number does not exceed the numeric limits of the target type:
     ///   - Cast the number to the target type.
     ///   - Return an Optional containing the number.
     /// - Otherwise:
     ///   - Return an empty Optional.
-    /// \endinternal
+    /// @endinternal
     template <typename TargetType, typename SourceType>
     static auto Cast(SourceType number) noexcept -> Optional<TargetType>
     {
@@ -314,14 +307,14 @@ class JsonNumber final
         return opt;
     }
 
-    /// \brief           Checks if the parsed token format is valid
-    /// \param[in]       end
+    /// @brief           Checks if the parsed token format is valid
+    /// @param[in]       end
     ///                  The end-pointer that is used to verify the parse.
-    /// \return          True if parsing consumed the whole token and does not end with '.'.
-    /// \context         ANY
-    /// \pre             -
-    /// \threadsafe      FALSE
-    /// \reentrant       FALSE
+    /// @return          True if parsing consumed the whole token and does not end with '.'.
+    /// @context         ANY
+    /// @pre             -
+    /// @threadsafe      FALSE
+    /// @reentrant       FALSE
     auto ParseFormatSuccessful(const char* end) const noexcept -> bool
     {
         // std::strtod uncomplainingly parses input that ends with a period, although that is invalid JSON!
@@ -342,26 +335,26 @@ class JsonNumber final
                 JsonNumber::Cast<Float>(conversion_result).has_value());
     }
 
-    /// \brief           Converts the parsed integer to target type when parsing was successful
-    /// \tparam          TargetType
+    /// @brief           Converts the parsed integer to target type when parsing was successful
+    /// @tparam          TargetType
     ///                  Type to convert to.
-    /// \tparam          SourceType
+    /// @tparam          SourceType
     ///                  Type to convert from.
-    /// \param[in]       num
+    /// @param[in]       num
     ///                  The source value.
-    /// \param[in]       end
+    /// @param[in]       end
     ///                  The end iterator of the buffer.
-    /// \return          The Optional containing the number if the conversion was successful, or empty.
-    /// \context         ANY
-    /// \pre             -
-    /// \threadsafe      FALSE
-    /// \reentrant       FALSE
-    /// \internal
+    /// @return          The Optional containing the number if the conversion was successful, or empty.
+    /// @context         ANY
+    /// @pre             -
+    /// @threadsafe      FALSE
+    /// @reentrant       FALSE
+    /// @internal
     /// - If the number has been successfully parsed and casted to the target type:
     ///   - Return an Optional containing the number.
     /// - Otherwise:
     ///   - Return an empty Optional.
-    /// \endinternal
+    /// @endinternal
     template <typename TargetType, typename SourceType>
     auto ExtractIfIntegerSuccessful(SourceType num, const char* end) const noexcept -> Optional<TargetType>
     {
@@ -388,18 +381,18 @@ class JsonNumber final
         return opt;
     }
 
-    /// \brief           Validates the contained number
-    /// \return          True if the number is valid, otherwise false.
-    /// \context         ANY
-    /// \pre             -
-    /// \threadsafe      FALSE
-    /// \reentrant       FALSE
-    /// \internal
+    /// @brief           Validates the contained number
+    /// @return          True if the number is valid, otherwise false.
+    /// @context         ANY
+    /// @pre             -
+    /// @threadsafe      FALSE
+    /// @reentrant       FALSE
+    /// @internal
     /// - If the number has multiple digits:
     ///   - Check that if it has a leading zero, it is a valid hex or float number.
     /// - Otherwise:
     ///   - Check that it is a valid digit.
-    /// \endinternal
+    /// @endinternal
     auto Validate() const noexcept -> bool
     {
         const std::size_t size{this->view_.size()};
@@ -428,7 +421,7 @@ class JsonNumber final
         return is_valid;
     }
 
-    /// \brief           Stored view onto the buffer
+    /// @brief           Stored view onto the buffer
     StringView view_;
 };
 

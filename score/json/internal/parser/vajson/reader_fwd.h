@@ -10,10 +10,8 @@
  *
  * SPDX-License-Identifier: Apache-2.0
  ********************************************************************************/
-/*!        \file
- *        \brief  Forward declarations of public JSON types.
- *
- *********************************************************************************************************************/
+/// @file
+/// @brief  Forward declarations of public JSON types.
 #ifndef SCORE_JSON_INTERNAL_PARSER_VAJSON_READER_FWD_H
 #define SCORE_JSON_INTERNAL_PARSER_VAJSON_READER_FWD_H
 
@@ -24,12 +22,12 @@ namespace json
 namespace vajson
 {
 
-/// \brief           Forward declaration for JsonData
+/// @brief           Forward declaration for JsonData
 class JsonData;
 
 namespace internal
 {
-/// \brief           Forward declaration for JsonOps
+/// @brief           Forward declaration for JsonOps
 class JsonOps;
 }  // namespace internal
 }  // namespace vajson

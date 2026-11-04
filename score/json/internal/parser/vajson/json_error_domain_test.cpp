@@ -10,13 +10,8 @@
  *
  * SPDX-License-Identifier: Apache-2.0
  ********************************************************************************/
-/*!        \file
- *        \brief  Contains tests concerning the vaJson error domain.
- *
- *********************************************************************************************************************/
-/**********************************************************************************************************************
- *  INCLUDES
- *********************************************************************************************************************/
+/// @file
+/// @brief  Contains tests concerning the vaJson error domain.
 #include "score/json/internal/parser/vajson/json_error_domain.h"
 
 #include <string>
@@ -33,9 +28,7 @@ namespace vajson
 namespace unit_test
 {
 
-/*!
- * Test vaJson error domain messages.
- */
+/// Test vaJson error domain messages.
 TEST(UT__ErrorDomain, General)
 {
     // Unknown error code (below range)
@@ -49,11 +42,9 @@ TEST(UT__ErrorDomain, General)
     ASSERT_EQ(GetJsonDomain().MessageFor(4242), std::string_view{"Unknown error."});
 }
 
-/*!
- * Test that MakeResult creates an error from an empty Optional, and a value from a non-empty Optional.
- *
- * \trace           score::json::vajson::MakeResult
- */
+/// Test that MakeResult creates an error from an empty Optional, and a value from a non-empty Optional.
+///
+/// @trace           score::json::vajson::MakeResult
 TEST(UT__ErrorDomain, MakeResult__FromOptional)
 {
     {
@@ -75,11 +66,9 @@ TEST(UT__ErrorDomain, MakeResult__FromOptional)
     }
 }
 
-/*!
- * Test that MakeResult creates an error from boolean false, and succeeds from boolean true.
- *
- * \trace           score::json::vajson::MakeResult
- */
+/// Test that MakeResult creates an error from boolean false, and succeeds from boolean true.
+///
+/// @trace           score::json::vajson::MakeResult
 TEST(UT__ErrorDomain, MakeResult__FromValue)
 {
     const Result<void> result{MakeResult(false, MakeError(JsonErrc::kNotInitialized, "This is my error message"))};
@@ -92,11 +81,9 @@ TEST(UT__ErrorDomain, MakeResult__FromValue)
     ASSERT_TRUE(result2.has_value());
 }
 
-/*!
- * Test that AssertCondition aborts with the correct message if passed 'false' and does not abort if passed 'true'.
- *
- * \trace           score::json::vajson::AssertCondition
- */
+/// Test that AssertCondition aborts with the correct message if passed 'false' and does not abort if passed 'true'.
+///
+/// @trace           score::json::vajson::AssertCondition
 TEST(UT__ErrorDomain__DeathTest, AssertCondition)
 {
     ASSERT_DEATH(AssertCondition(false, "Message to abort with"), "Message to abort with");

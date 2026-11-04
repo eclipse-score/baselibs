@@ -10,14 +10,9 @@
  *
  * SPDX-License-Identifier: Apache-2.0
  ********************************************************************************/
-/*!        \file
- *        \brief  Contains tests concerning the parsing of null values.
- *
- *********************************************************************************************************************/
+/// @file
+/// @brief  Contains tests concerning the parsing of null values.
 
-/**********************************************************************************************************************
- *  INCLUDES
- *********************************************************************************************************************/
 #include "score/json/internal/parser/vajson/virtual_parser.h"
 
 #include "gtest/gtest.h"
@@ -75,10 +70,8 @@ class ErrorNullParser final : public internal::VirtualParser
 
 }  // namespace
 
-/*!
- * Test that null is counted — single null value.
- * \trace           CREQ-Json-EventCallbacks
- */
+/// Test that null is counted — single null value.
+/// @trace           CREQ-Json-EventCallbacks
 TEST(UT__Parser__Null, Dynamic__SingleNull)
 {
     auto data{JsonData::FromBuffer(std::string_view{"null"})};
@@ -88,10 +81,8 @@ TEST(UT__Parser__Null, Dynamic__SingleNull)
     EXPECT_EQ(parser.null_, 1U);
 }
 
-/*!
- * Test that null is counted — multiple null values.
- * \trace           CREQ-Json-EventCallbacks
- */
+/// Test that null is counted — multiple null values.
+/// @trace           CREQ-Json-EventCallbacks
 TEST(UT__Parser__Null, Dynamic__MultipleNulls)
 {
     auto data{JsonData::FromBuffer(std::string_view{"[null,null,null]"})};
@@ -101,10 +92,8 @@ TEST(UT__Parser__Null, Dynamic__MultipleNulls)
     EXPECT_EQ(parser.null_, 3U);
 }
 
-/*!
- * Test that no nulls are counted when not present.
- * \trace           CREQ-Json-EventCallbacks
- */
+/// Test that no nulls are counted when not present.
+/// @trace           CREQ-Json-EventCallbacks
 TEST(UT__Parser__Null, Dynamic__NoNulls)
 {
     auto data{JsonData::FromBuffer(std::string_view{"true"})};
@@ -114,10 +103,8 @@ TEST(UT__Parser__Null, Dynamic__NoNulls)
     EXPECT_EQ(parser.null_, 0U);
 }
 
-/*!
- * Test that parsing fails if 'null' is used as key without quotation marks.
- * \trace           score::json::vajson::internal::StructureParserBase::ParseValue
- */
+/// Test that parsing fails if 'null' is used as key without quotation marks.
+/// @trace           score::json::vajson::internal::StructureParserBase::ParseValue
 TEST(UT__Parser__Null, Dynamic__WrongFormat)
 {
     auto result{JsonData::FromBuffer(std::string_view{R"({null:123})"})};
@@ -130,10 +117,8 @@ TEST(UT__Parser__Null, Dynamic__WrongFormat)
     ASSERT_EQ(parse_result.error(), JsonErrc::kInvalidJson);
 }
 
-/*!
- * Tests that when the overridden OnNull method returns an error, that error is propagated.
- * \trace           score::json::vajson::internal::StructureParserBase::ParseNull
- */
+/// Tests that when the overridden OnNull method returns an error, that error is propagated.
+/// @trace           score::json::vajson::internal::StructureParserBase::ParseNull
 TEST(UT__Parser__Null, Dynamic__OnNull__Error)
 {
     auto doc{JsonData::FromBuffer(std::string_view{"null"})};

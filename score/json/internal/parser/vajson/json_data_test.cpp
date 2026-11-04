@@ -10,13 +10,8 @@
  *
  * SPDX-License-Identifier: Apache-2.0
  ********************************************************************************/
-/*!        \file
- *        \brief  Contains tests concerning the JsonData class.
- *
- *********************************************************************************************************************/
-/**********************************************************************************************************************
- *  INCLUDES
- *********************************************************************************************************************/
+/// @file
+/// @brief  Contains tests concerning the JsonData class.
 #include "score/json/internal/parser/vajson/json_data.h"
 
 #include <cstdio>
@@ -37,9 +32,7 @@ namespace vajson
 namespace unit_test
 {
 
-/*!
- * Test that JsonData can open a file.
- */
+/// Test that JsonData can open a file.
 TEST(UT__JsonOps__JsonData, ConstructFromFile)
 {
     const std::string file{"/tmp/vajson_test.json"};
@@ -51,9 +44,7 @@ TEST(UT__JsonOps__JsonData, ConstructFromFile)
     ASSERT_TRUE(result.has_value());
 }
 
-/*!
- * Test that JsonData can open a StringView character buffer.
- */
+/// Test that JsonData can open a StringView character buffer.
 TEST(UT__JsonOps__JsonData, ConstructFromStringView)
 {
     const StringView view{"doesntmatter"};
@@ -63,11 +54,9 @@ TEST(UT__JsonOps__JsonData, ConstructFromStringView)
     ASSERT_TRUE(result.has_value());
 }
 
-/*!
- * Test that JsonData can open a CStringView character buffer.
- *
- * \trace           score::json::vajson::JsonData::FromBuffer
- */
+/// Test that JsonData can open a CStringView character buffer.
+///
+/// @trace           score::json::vajson::JsonData::FromBuffer
 TEST(UT__JsonOps__JsonData, ConstructFromCStringView)
 {
     const CStringView view{"doesntmatter"};
@@ -77,9 +66,7 @@ TEST(UT__JsonOps__JsonData, ConstructFromCStringView)
     ASSERT_TRUE(result.has_value());
 }
 
-/*!
- * Test that JsonData can open a span of characters.
- */
+/// Test that JsonData can open a span of characters.
 TEST(UT__JsonOps__JsonData, ConstructFromSpan)
 {
     const std::string data{"doesntmatter"};
@@ -90,9 +77,7 @@ TEST(UT__JsonOps__JsonData, ConstructFromSpan)
     ASSERT_TRUE(result.has_value());
 }
 
-/*!
- * Test that JsonData returns a JsonErrc if the file cannot be opened.
- */
+/// Test that JsonData returns a JsonErrc if the file cannot be opened.
 TEST(UT__JsonOps__JsonData, ConstructFromNonExistingFile)
 {
     const Result<JsonData> result{JsonData::FromFile("doesnotexist")};
@@ -101,13 +86,11 @@ TEST(UT__JsonOps__JsonData, ConstructFromNonExistingFile)
     ASSERT_EQ(result.error(), JsonErrc::kStreamFailure);
 }
 
-/*!
- * Test that a document with an UTF-8 BOM can be parsed.
- *
- * - Create a document that contains a UTF-8 BOM.
- * - Parse the document.
- * - Assert that the UTF-8 BOM is recognized.
- */
+/// Test that a document with an UTF-8 BOM can be parsed.
+///
+/// - Create a document that contains a UTF-8 BOM.
+/// - Parse the document.
+/// - Assert that the UTF-8 BOM is recognized.
 TEST(UT__JsonOps__JsonData, ReadsUtf8Bom)
 {
     // The UTF-8 BOM.
@@ -120,12 +103,10 @@ TEST(UT__JsonOps__JsonData, ReadsUtf8Bom)
     ASSERT_EQ(doc.GetEncoding(), EncodingType::kUtf8);
 }
 
-/*!
- * Test that the parser correctly handles a document without a UTF-8 BOM.
- *
- * - Create a document without a BOM.
- * - Assert that encoding is kNone.
- */
+/// Test that the parser correctly handles a document without a UTF-8 BOM.
+///
+/// - Create a document without a BOM.
+/// - Assert that encoding is kNone.
 TEST(UT__JsonOps__JsonData, FailsOnUnknownBom)
 {
     // The UTF-16 BE BOM (not UTF-8, should not be recognized).
@@ -138,11 +119,9 @@ TEST(UT__JsonOps__JsonData, FailsOnUnknownBom)
     ASSERT_EQ(doc.GetEncoding(), EncodingType::kNone);
 }
 
-/*!
- * Test that JsonData returns the underlying DepthCounter.
- *
- * - Assert that initially the DepthCounter is empty.
- */
+/// Test that JsonData returns the underlying DepthCounter.
+///
+/// - Assert that initially the DepthCounter is empty.
 TEST(UT__JsonOps__JsonData, GetState)
 {
     Result<JsonData> result{JsonData::FromBuffer(std::string_view{""})};
@@ -154,14 +133,12 @@ TEST(UT__JsonOps__JsonData, GetState)
     ASSERT_EQ(state.CheckEndOfFile().error(), JsonErrc::kInvalidJson);
 }
 
-/*!
- * Test that JsonData can store/retrieve the current string buffer.
- *
- * - Assert that initially the string buffer is empty.
- * - Request the string buffer and add data to it.
- * - Assert that the string buffer contains the data.
- * - Assert that GetClearedStringBuffer empties the string buffer.
- */
+/// Test that JsonData can store/retrieve the current string buffer.
+///
+/// - Assert that initially the string buffer is empty.
+/// - Request the string buffer and add data to it.
+/// - Assert that the string buffer contains the data.
+/// - Assert that GetClearedStringBuffer empties the string buffer.
 TEST(UT__JsonOps__JsonData, CurrentStringBuffer)
 {
     Result<JsonData> result{JsonData::FromBuffer(std::string_view{""})};
