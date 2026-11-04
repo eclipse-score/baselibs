@@ -11,8 +11,8 @@
  * SPDX-License-Identifier: Apache-2.0
  ********************************************************************************/
 
-#ifndef SCORE_LIB_JSON_FORMATTING_H
-#define SCORE_LIB_JSON_FORMATTING_H
+#ifndef SCORE_JSON_FORMATTING_H
+#define SCORE_JSON_FORMATTING_H
 
 #include <cstdint>
 
@@ -30,4 +30,4 @@ enum class Formatting : std::uint8_t
 
 }  // namespace score::json
 
-#endif  // SCORE_LIB_JSON_FORMATTING_H
+#endif  // SCORE_JSON_FORMATTING_H
