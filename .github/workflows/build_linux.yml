@@ -26,10 +26,10 @@ on:
     types: [checks_requested]
   workflow_call:
 jobs:
-  # The shared entry point owns common checks and the native Linux build/test
-  # graph. The remaining matrix needs module-specific execution environments.
+  # The shared entry point owns common checks and every Linux build/test row.
+  # Module YAML selects native, QEMU and nested-workspace execution.
   checks:
-    name: Common checks and native Linux
+    name: Common checks and Linux builds
     uses: eclipse-score/cicd-workflows/.github/workflows/on-pr.yml@central-workflow
     permissions:
       contents: read
@@ -40,69 +40,10 @@ jobs:
       require-bzlmod-lock: true
       format-target: "//tools:format.check"
       copyright-target: "//tools:copyright-check"
-  # ARM runtime tests need QEMU, and integration has its own Bazel workspace.
-  # Keep both here until the shared runner/cache contract supports those needs.
-  linux-build-and-test:
-    name: Build and Test ${{ matrix.name }}
-    runs-on: ubuntu-24.04
-    strategy:
-      fail-fast: false
-      matrix:
-        include:
-          - name: score-linux-aarch64
-            artifact-name: aarch64-linux
-            bazel-config: score-linux-aarch64
-            working-directory: "."
-            bazel-build-target: "//..."
-            bazel-test-target: >-
-              //...
-              -//score/os/test:acl_test
-              -//score/os/test:errno_test
-              -//score/os/test:socket_test
-            bazel-test-extra-flags: "--test_timeout=180,900,2700,10800 --test_tag_filters=-no_rust_doc_test" # Increase test timeout due to QEMU emulation
-          - name: x86_64-linux (examples/integration)
-            artifact-name: x86_64-linux-integration
-            bazel-config: x86_64-linux
-            working-directory: "examples/integration"
-            bazel-build-target: "//..."
-            bazel-test-target: "//..."
-    steps:
-      - uses: eclipse-score/more-disk-space@6a3b48901846bf7f8cc985925157d71a8973e61f # v1
-        with:
-          level: 4
-      - name: Checkout Repository
-        uses: actions/checkout@v6
-      - name: Setup Bazel Cache
-        uses: eclipse-score/cicd-actions/setup-bazel-cache@659dcbed63f6b7fbde88c7850125ea0a0a92f939
-        with:
-          unique-cache-name: ${{ github.workflow }}-${{ github.job }}-${{ matrix.name }}
-      - name: Install QEMU
-        if: matrix.bazel-config == 'score-linux-aarch64'
-        run: |
-          sudo apt-get update
-          sudo apt install -y qemu-user
-      - name: Bazel Build
-        working-directory: ${{ matrix.working-directory }}
-        run: |
-          bazel build --config ${{ matrix.bazel-config }} -- ${{ matrix.bazel-build-target }}
-      - name: Bazel Test
-        working-directory: ${{ matrix.working-directory }}
-        run: |
-          bazel test --config ${{ matrix.bazel-config }} ${{ matrix.bazel-test-extra-flags }} -- ${{ matrix.bazel-test-target }}
-      - name: Upload test report
-        if: always()
-        uses: actions/upload-artifact@v7
-        with:
-          name: test-report-${{ matrix.artifact-name }}
-          path: |
-            ${{ matrix.working-directory }}/bazel-testlogs/**/test.log
-            ${{ matrix.working-directory }}/bazel-testlogs/**/test.xml
-          retention-days: 5
-          if-no-files-found: warn
   coverage-report:
     uses: ./.github/workflows/coverage_report.yml
   docs-build:
-    needs: [checks, linux-build-and-test, coverage-report]
+    needs: [checks, coverage-report]
     uses: eclipse-score/cicd-workflows/.github/workflows/docs.yml@3f61217cfa69b1d40b366049ace7fc63932e63c2
     permissions:
       contents: read

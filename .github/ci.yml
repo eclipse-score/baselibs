@@ -1,3 +1,4 @@
+# *******************************************************************************
 # Copyright (c) 2026 Contributors to the Eclipse Foundation
 #
 # See the NOTICE file(s) distributed with this work for additional
@@ -8,8 +9,9 @@
 # https://www.apache.org/licenses/LICENSE-2.0
 #
 # SPDX-License-Identifier: Apache-2.0
-# The shared workflow owns the complete native Linux build and test selection.
-# ARM runtime tests and the nested integration workspace have dedicated jobs.
+# *******************************************************************************
+# The shared workflow owns all Linux builds and tests, including ARM emulation
+# and the separate integration workspace. No local execution matrix is needed.
 # Bazel configs select module-owned platforms and toolchains explicitly.
 schema-version: 2
 variants:
@@ -26,3 +28,39 @@ variants:
           bazel-configs: score-linux-x86_64
           bazel-build-targets: //...
           bazel-test-targets: //...
+  - name: linux-arm
+    architecture:
+      - name: aarch64
+    os:
+      - name: linux
+    checks:
+      tests:
+        # Bazel selects the cross-toolchain and run_under wrapper. The shared
+        # profile installs QEMU and applies longer emulation test timeouts.
+        - test-type: unit
+          bazel-configs: score-linux-aarch64
+          bazel-build-targets: //...
+          # These OS tests are excluded from the established emulated test set.
+          bazel-test-targets: >-
+            //...
+            -//score/os/test:acl_test
+            -//score/os/test:errno_test
+            -//score/os/test:socket_test
+          workflow-config:
+            execution: qemu-user
+            bazel-test-custom-cli-args: --test_tag_filters=-no_rust_doc_test
+  - name: linux-integration
+    architecture:
+      - name: x86_64
+    os:
+      - name: linux
+    checks:
+      tests:
+        # This module consumes baselibs through a local_path_override. Checkout
+        # stays at the repository root while Bazel and its cache use this module.
+        - test-type: integration
+          bazel-configs: x86_64-linux
+          bazel-build-targets: //...
+          bazel-test-targets: //...
+          workflow-config:
+            working-directory: examples/integration
