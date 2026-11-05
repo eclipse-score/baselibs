@@ -65,6 +65,21 @@ General Requirements
 
    Note: The user format shall be a regular type and not defined within the library.
 
+.. comp_req:: Duplicate object member names
+   :id: comp_req__json__duplicate_member_names
+   :reqtype: Functional
+   :security: YES
+   :safety: ASIL_B
+   :derived_from: feat_req__baselibs__json_library[version==2]
+   :status: valid
+   :version: 1
+   :satisfied_by: comp__baselibs_json_wrapper[version==1]
+
+   The JSON-Library shall reject JSON data that contains an object with two or more members of the same name
+   with a parsing error.
+
+   Note: RFC 8259 recommends unique member names and leaves the handling of duplicates to the implementation.
+
 User friendly API for information exchange
 ==========================================
 
