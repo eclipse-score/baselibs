@@ -16,9 +16,21 @@ load("@score_baselibs//score/language/safecpp:toolchain_features.bzl", "COMPILER
 
 cc_library(
     name = "any_serializer",
-    hdrs = ["any_serializer.h"] + glob([
-        "writer/**/*.h",
-    ]),
+    hdrs = [
+        "any_serializer.h",
+        "escaped_json_string.h",
+        "formatting_writer.h",
+        "generic_value_serializer.h",
+        "j_array_type.h",
+        "j_bool_type.h",
+        "j_key_type.h",
+        "j_null_type.h",
+        "j_number_type.h",
+        "j_object_type.h",
+        "j_string_type.h",
+        "key_serializer.h",
+        "serializer_types.h",
+    ],
     features = COMPILER_WARNING_FEATURES,
     tags = ["FFI"],
     visibility = ["@score_baselibs//score/json/internal/writer:__pkg__"],

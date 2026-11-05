@@ -10,11 +10,11 @@
  *
  * SPDX-License-Identifier: Apache-2.0
  ********************************************************************************/
-/// \file
-/// \brief Serializer for JSON string literals.
+/// @file
+/// @brief Serializer for JSON string literals.
 
-#ifndef SCORE_LIB_JSON_INTERNAL_WRITER_VAJSON_WRITER_SERIALIZERS_UTIL_ESCAPED_JSON_STRING_H
-#define SCORE_LIB_JSON_INTERNAL_WRITER_VAJSON_WRITER_SERIALIZERS_UTIL_ESCAPED_JSON_STRING_H
+#ifndef SCORE_JSON_INTERNAL_WRITER_VAJSON_ESCAPED_JSON_STRING_H
+#define SCORE_JSON_INTERNAL_WRITER_VAJSON_ESCAPED_JSON_STRING_H
 
 #include <array>
 #include <cstddef>
@@ -24,47 +24,48 @@
 #include <utility>
 
 #include "score/json/internal/parser/vajson/types.h"
-#include "score/json/internal/writer/vajson/writer/serializers/structures/serializer.h"
-#include "score/json/internal/writer/vajson/writer/types/basic_types.h"
+#include "score/json/internal/writer/vajson/j_key_type.h"
+#include "score/json/internal/writer/vajson/j_string_type.h"
+#include "score/json/internal/writer/vajson/serializer_types.h"
 
 namespace score::json::vajson::internal
 {
-/// \brief An escaped JSON string type
+/// @brief An escaped JSON string type
 class EscapedJsonString
 {
   public:
-    /// \brief Constructs an EscapedJsonString from a JSON key
-    /// \param[in] key to serialize.
-    explicit EscapedJsonString(JKeyType key) noexcept : EscapedJsonString(key.GetValue()) {}
+    /// @brief Constructs an EscapedJsonString from a JSON key
+    /// @param[in] key to serialize.
+    explicit EscapedJsonString(JKeyType key) noexcept : EscapedJsonString{key.GetValue()} {}
 
-    /// \brief Constructs an EscapedJsonString from a JSON string
-    /// \param[in] string to serialize.
-    explicit EscapedJsonString(JStringType string) noexcept : EscapedJsonString(string.GetValue()) {}
+    /// @brief Constructs an EscapedJsonString from a JSON string
+    /// @param[in] string to serialize.
+    explicit EscapedJsonString(JStringType string) noexcept : EscapedJsonString{string.GetValue()} {}
 
-    /// \brief Returns the contained string
-    /// \return The contained string.
+    /// @brief Returns the contained string
+    /// @return The contained string.
     [[nodiscard]] auto GetValue() const noexcept -> std::string_view
     {
         return this->value_;
     }
 
   private:
-    /// \brief Constructs an EscapedJsonString from a StringView
-    /// \param[in] value The value to serialize.
+    /// @brief Constructs an EscapedJsonString from a StringView
+    /// @param[in] value The value to serialize.
     explicit EscapedJsonString(std::string_view value) noexcept : value_{value} {}
 
-    /// \brief Value to write as a JSON string literal
+    /// @brief Value to write as a JSON string literal
     std::string_view value_;
 };
 
-/// \brief First character that RFC 8259, section 7 allows to appear unescaped in a JSON string
+/// @brief First character that RFC 8259, section 7 allows to appear unescaped in a JSON string
 constexpr std::char_traits<char>::int_type kFirstUnescapedCharacter{0x20};
 
-/// \brief Writes a control character as a six character \uXXXX escape sequence
-/// \details RFC 8259, section 7 requires characters in the range U+0000 to U+001F to be escaped. Those without a
+/// @brief Writes a control character as a six character \uXXXX escape sequence
+/// @details RFC 8259, section 7 requires characters in the range U+0000 to U+001F to be escaped. Those without a
 ///     two character escape sequence must be written in the \uXXXX notation.
-/// \param[in] os Output stream to write into.
-/// \param[in] value Value of the control character to escape, must be below kFirstUnescapedCharacter.
+/// @param[in] os Output stream to write into.
+/// @param[in] value Value of the control character to escape, must be below kFirstUnescapedCharacter.
 inline void WriteUnicodeEscape(std::ostream& os, const std::char_traits<char>::int_type value) noexcept
 {
     constexpr std::string_view kHexDigits{"0123456789abcdef"};
@@ -85,8 +86,8 @@ inline void WriteUnicodeEscape(std::ostream& os, const std::char_traits<char>::i
 
 // NOLINTNEXTLINE(whitespace/line_length)
 // coverity[autosar_cpp14_m5_0_16_violation]
-/// \brief Serializes an escaped string literal type
-/// \details
+/// @brief Serializes an escaped string literal type
+/// @details
 /// - If the string contains a character that has a two character escape sequence in JSON:
 /// - Serialize the escaped character.
 /// - Otherwise, if the character is a control character (U+0000 to U+001F), which RFC 8259, section 7 does not
@@ -94,14 +95,14 @@ inline void WriteUnicodeEscape(std::ostream& os, const std::char_traits<char>::i
 /// - Serialize the character as a \uXXXX escape sequence.
 /// - Otherwise:
 /// - Serialize the character directly.
-/// \param[in] os Output stream to write into.
-/// \param[in] string to escape and serialize.
-/// \return A reference to the output stream.
-auto inline operator<<(std::ostream& os, EscapedJsonString string) noexcept -> std::ostream&
+/// @param[in] os Output stream to write into.
+/// @param[in] string to escape and serialize.
+/// @return A reference to the output stream.
+inline auto operator<<(std::ostream& os, EscapedJsonString string) noexcept -> std::ostream&
 {
     for (const char ch : string.GetValue())
     {
-        const auto value = std::char_traits<char>::to_int_type(ch);
+        const auto value{std::char_traits<char>::to_int_type(ch)};
         switch (value)
         {
             case std::char_traits<char>::to_int_type('"'):
@@ -157,4 +158,4 @@ auto inline operator<<(std::ostream& os, EscapedJsonString string) noexcept -> s
 
 }  // namespace score::json::vajson::internal
 
-#endif  // SCORE_LIB_JSON_INTERNAL_WRITER_VAJSON_WRITER_SERIALIZERS_UTIL_ESCAPED_JSON_STRING_H
+#endif  // SCORE_JSON_INTERNAL_WRITER_VAJSON_ESCAPED_JSON_STRING_H

@@ -207,22 +207,11 @@ cc_gtest_unit_test(
     deps = [":json"],
 )
 
-# The coverage tool only picks up this test when it lives in the same directory as json_writer.cpp.
-cc_test(
+cc_gtest_unit_test(
     name = "json_writer_test",
-    srcs = [
-        "json_writer_test.cpp",
-    ],
-    features = COMPILER_WARNING_FEATURES + [
-        "test_warnings",
-        "aborts_upon_exception",
-    ],
-    tags = ["unit"],
-    visibility = [
-        "@score_baselibs//score/json:__pkg__",
-    ],
+    srcs = ["json_writer_test.cpp"],
+    features = COMPILER_WARNING_FEATURES + ["test_warnings"],
     deps = [
-        "@googletest//:gtest_main",
         "@score_baselibs//score/filesystem:mock",
         "@score_baselibs//score/json",
     ],

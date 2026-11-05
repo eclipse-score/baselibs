@@ -11,8 +11,8 @@
  * SPDX-License-Identifier: Apache-2.0
  ********************************************************************************/
 
-#ifndef SCORE_LIB_JSON_INTERNAL_WRITER_SERIALIZER_H
-#define SCORE_LIB_JSON_INTERNAL_WRITER_SERIALIZER_H
+#ifndef SCORE_JSON_INTERNAL_WRITER_SERIALIZER_H
+#define SCORE_JSON_INTERNAL_WRITER_SERIALIZER_H
 
 #include "score/json/formatting.h"
 #include "score/json/internal/model/any.h"
@@ -33,9 +33,11 @@ namespace score::json::internal::writer
 score::Result<void> SerializeToStream(std::ostream& out_stream,
                                       const score::json::Object& json_data,
                                       const score::json::Formatting formatting);
+/// @brief Serializes a JSON list into out_stream, see the Object overload
 score::Result<void> SerializeToStream(std::ostream& out_stream,
                                       const score::json::List& json_data,
                                       const score::json::Formatting formatting);
+/// @brief Serializes a JSON value into out_stream, see the Object overload
 score::Result<void> SerializeToStream(std::ostream& out_stream,
                                       const score::json::Any& json_data,
                                       const score::json::Formatting formatting);
@@ -46,11 +48,13 @@ score::Result<void> SerializeToStream(std::ostream& out_stream,
 /// @return the serialized representation on success, error otherwise
 score::Result<std::string> SerializeToBuffer(const score::json::Object& json_data,
                                              const score::json::Formatting formatting);
+/// @brief Serializes a JSON list into a string, see the Object overload
 score::Result<std::string> SerializeToBuffer(const score::json::List& json_data,
                                              const score::json::Formatting formatting);
+/// @brief Serializes a JSON value into a string, see the Object overload
 score::Result<std::string> SerializeToBuffer(const score::json::Any& json_data,
                                              const score::json::Formatting formatting);
 
 }  // namespace score::json::internal::writer
 
-#endif  // SCORE_LIB_JSON_INTERNAL_WRITER_SERIALIZER_H
+#endif  // SCORE_JSON_INTERNAL_WRITER_SERIALIZER_H

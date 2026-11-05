@@ -10,12 +10,12 @@
  *
  * SPDX-License-Identifier: Apache-2.0
  ********************************************************************************/
-#ifndef SCORE_LIB_JSON_INTERNAL_WRITER_VAJSON_ANY_SERIALIZER_H
-#define SCORE_LIB_JSON_INTERNAL_WRITER_VAJSON_ANY_SERIALIZER_H
+#ifndef SCORE_JSON_INTERNAL_WRITER_VAJSON_ANY_SERIALIZER_H
+#define SCORE_JSON_INTERNAL_WRITER_VAJSON_ANY_SERIALIZER_H
 
 #include "score/json/internal/model/any.h"
-#include "score/json/internal/writer/vajson/writer/serializers/structures/generic_value_serializer_impl.h"
-#include "score/json/internal/writer/vajson/writer/serializers/structures/key_serializer.h"
+#include "score/json/internal/writer/vajson/generic_value_serializer.h"
+#include "score/json/internal/writer/vajson/key_serializer.h"
 #include "score/string_manipulation/string_comparison_adaptor.h"
 
 #include <score/utility.hpp>
@@ -31,19 +31,25 @@
 
 namespace score::json::internal::writer::vajson
 {
+/// @brief Turns an Object key into a vaJson key.
 class ObjectKeySerializer final
 {
   public:
+    /// @brief Returns the vaJson key for the given Object key.
     auto operator()(const score::string_manipulation::StringComparisonAdaptor& key) const noexcept
         -> score::json::vajson::JKeyType
     {
         return score::json::vajson::JKey(key.GetAsStringView());
     }
 };
+
+/// @brief Serializes any JSON value.
 template <typename Next>
 auto SerializeValue(score::json::vajson::GenericValueSerializer<Next>&& serializer,
                     const score::json::Any& value) noexcept ->
     typename score::json::vajson::GenericValueSerializer<Next>::Next;
+
+/// @brief Serializes a JSON number in the type it is stored in.
 template <typename Next>
 auto SerializeNumber(score::json::vajson::GenericValueSerializer<Next>&& serializer,
                      const score::json::Number& value) noexcept ->
@@ -69,6 +75,8 @@ auto SerializeNumber(score::json::vajson::GenericValueSerializer<Next>&& seriali
         }
     });
 }
+
+/// @brief Serializes a JSON list.
 template <typename Next>
 auto SerializeList(score::json::vajson::GenericValueSerializer<Next>&& serializer,
                    const score::json::List& list) noexcept ->
@@ -76,13 +84,15 @@ auto SerializeList(score::json::vajson::GenericValueSerializer<Next>&& serialize
 {
     return std::move(serializer) << score::json::vajson::JArray(
                [&list](score::json::vajson::ArrayStart array_serializer) noexcept {
-                   auto next = std::move(array_serializer);
+                   auto next{std::move(array_serializer)};
                    for (const auto& value : list)
                    {
                        next = SerializeValue(std::move(next), value);
                    }
                });
 }
+
+/// @brief Serializes a JSON object.
 template <typename Next>
 auto SerializeObject(score::json::vajson::GenericValueSerializer<Next>&& serializer,
                      const score::json::Object& object) noexcept ->
@@ -90,15 +100,16 @@ auto SerializeObject(score::json::vajson::GenericValueSerializer<Next>&& seriali
 {
     return std::move(serializer) << score::json::vajson::JObject(
                [&object](score::json::vajson::ObjectStart object_serializer) noexcept {
-                   auto next = std::move(object_serializer);
+                   auto next{std::move(object_serializer)};
                    for (const auto& element : object)
                    {
-                       auto value_serializer = std::move(next) << ObjectKeySerializer{}(element.first);
+                       auto value_serializer{std::move(next) << ObjectKeySerializer{}(element.first)};
                        next = SerializeValue(std::move(value_serializer), element.second);
                    }
                    return next;
                });
 }
+
 template <typename Next>
 auto SerializeValue(score::json::vajson::GenericValueSerializer<Next>&& serializer,
                     const score::json::Any& value) noexcept ->
@@ -144,4 +155,4 @@ auto SerializeValue(score::json::vajson::GenericValueSerializer<Next>&& serializ
 }
 }  // namespace score::json::internal::writer::vajson
 
-#endif  // SCORE_LIB_JSON_INTERNAL_WRITER_VAJSON_ANY_SERIALIZER_H
+#endif  // SCORE_JSON_INTERNAL_WRITER_VAJSON_ANY_SERIALIZER_H
