@@ -18,7 +18,7 @@
 #ifndef SCORE_JSON_INTERNAL_PARSER_VAJSON_STRUCTURE_PARSER_H
 #define SCORE_JSON_INTERNAL_PARSER_VAJSON_STRUCTURE_PARSER_H
 
-#include <string>
+#include <cstddef>
 
 #include "score/json/internal/parser/vajson/depth_counter.h"
 #include "score/json/internal/parser/vajson/json_number.h"
@@ -48,15 +48,16 @@ class StructureParser
     /// @threadsafe      FALSE
     /// @reentrant       FALSE
     explicit StructureParser(JsonData& doc) noexcept;
+
     /// @brief           Deleted copy constructor
     StructureParser(const StructureParser&) = delete;
     /// @brief           Deleted move constructor
     StructureParser(StructureParser&&) = delete;
 
-    //  Deleted copy assignment.
+    /// @brief           Deleted copy assignment
     StructureParser& operator=(const StructureParser&) = delete;
 
-    // Deleted move assignment.
+    /// @brief           Deleted move assignment
     StructureParser& operator=(StructureParser&&) = delete;
 
     /// @brief           Default destructor
@@ -101,6 +102,7 @@ class StructureParser
     /// @threadsafe      FALSE
     /// @reentrant       FALSE
     virtual auto OnNumber(JsonNumber) noexcept -> ParserResult = 0;
+
     /// @brief           Called for a string value
     /// @details         The provided StringView is only valid until any other method or parser operating on the same
     ///                  document is called.
@@ -168,7 +170,7 @@ class StructureParser
     auto GetJsonDocument() noexcept -> JsonData&;
 
     /// @brief           Parses a "null" value
-    /// @return          The Result of the implementer callback, or an error.
+    /// @return          The Result of the callback, or an error.
     /// @error           score::json::vajson::JsonErrc::kInvalidJson
     ///                  if no valid 'null' literal was encountered.
     /// @context         ANY
@@ -178,7 +180,7 @@ class StructureParser
     auto ParseNull() noexcept -> ParserResult;
 
     /// @brief           Parses a "true" value
-    /// @return          The Result of the implementer callback, or an error.
+    /// @return          The Result of the callback, or an error.
     /// @error           score::json::vajson::JsonErrc::kInvalidJson
     ///                  if no valid string was encountered.
     /// @context         ANY
@@ -188,8 +190,8 @@ class StructureParser
     auto ParseTrue() noexcept -> ParserResult;
 
     /// @brief           Parses a "false" value
-    /// @return          The Result of the implementer callback, or an error.
-    /// @error           score::json::vajsonJsonErrc::kInvalidJson
+    /// @return          The Result of the callback, or an error.
+    /// @error           score::json::vajson::JsonErrc::kInvalidJson
     ///                  if the 'false' literal cannot be parsed
     /// @context         ANY
     /// @pre             -
@@ -200,7 +202,7 @@ class StructureParser
     /// @brief           Parses a number value
     /// @param[in]       cur
     ///                  The current character.
-    /// @return          The Result of the implementer callback, or an error.
+    /// @return          The Result of the callback, or an error.
     /// @error           score::json::vajson::JsonErrc::kInvalidJson
     ///                  if the number literal cannot be parsed
     /// @context         ANY
@@ -210,7 +212,7 @@ class StructureParser
     auto ParseNumber(char cur) noexcept -> ParserResult;
 
     /// @brief           Parses a string value
-    /// @return          The Result of the implementer callback, or an error.
+    /// @return          The Result of the callback, or an error.
     /// @error           score::json::vajson::JsonErrc::kInvalidJson
     ///                  if the next token is no valid string.
     /// @context         ANY
@@ -222,7 +224,7 @@ class StructureParser
     /// @brief           Parses an unescaped string value
     /// @param[in]       string
     ///                  The unescaped string to parse.
-    /// @return          The Result of the implementer callback, or an error.
+    /// @return          The Result of the callback, or an error.
     /// @error           score::json::vajson::JsonErrc::kInvalidJson
     ///                  if the next token is no valid string.
     /// @context         ANY
@@ -254,7 +256,7 @@ class StructureParser
     static auto UnescapeChar(char escaped) noexcept -> Result<char>;
 
     /// @brief           Parses the start of an Object
-    /// @return          The Result of the implementer callback, or an error.
+    /// @return          The Result of the callback, or an error.
     /// @error           score::json::vajson::JsonErrc::kInvalidJson
     ///                  if the object cannot be opened
     /// @context         ANY
@@ -264,7 +266,7 @@ class StructureParser
     auto ParseStartObject() noexcept -> ParserResult;
 
     /// @brief           Parses the end of an Object
-    /// @return          The Result of the implementer callback, or an error.
+    /// @return          The Result of the callback, or an error.
     /// @error           score::json::vajson::JsonErrc::kInvalidJson
     ///                  If no end of an object can be parsed
     /// @context         ANY
@@ -274,7 +276,7 @@ class StructureParser
     auto ParseEndObject() noexcept -> ParserResult;
 
     /// @brief           Parses the start of an Array
-    /// @return          The Result of the implementer callback, or an error.
+    /// @return          The Result of the callback, or an error.
     /// @error           score::json::vajson::JsonErrc::kInvalidJson
     ///                  If no end of an object can be parsed
     /// @context         ANY
@@ -284,7 +286,7 @@ class StructureParser
     auto ParseStartArray() noexcept -> ParserResult;
 
     /// @brief           Parses the end of an Array
-    /// @return          The Result of the implementer callback, or an error.
+    /// @return          The Result of the callback, or an error.
     /// @error           score::json::vajson::JsonErrc::kInvalidJson
     ///                  If no end of an object can be parsed
     /// @context         ANY

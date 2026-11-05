@@ -39,13 +39,14 @@ class DynamicNullParser final : public StructureParserStub
   public:
     using StructureParserStub::StructureParserStub;
 
+    Count null_{0};
+
+  private:
     auto OnNull() noexcept -> ParserResult override
     {
         this->null_ += 1;
         return ParserState::kRunning;
     }
-
-    Count null_{0};
 };
 
 class ErrorNullParser final : public StructureParserStub
@@ -53,6 +54,7 @@ class ErrorNullParser final : public StructureParserStub
   public:
     using StructureParserStub::StructureParserStub;
 
+  private:
     auto OnNull() noexcept -> ParserResult override
     {
         return MakeErrorResult<ParserState>(JsonErrc::kUserValidationFailed, "OnNull called.");

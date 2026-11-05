@@ -38,6 +38,11 @@ class DynamicArrayParser final : public StructureParserStub
   public:
     using StructureParserStub::StructureParserStub;
 
+    Count start_{0};
+    Count end_{0};
+    Count balance_{0};
+
+  private:
     auto OnStartArray() noexcept -> ParserResult override
     {
         this->start_ += 1;
@@ -55,10 +60,6 @@ class DynamicArrayParser final : public StructureParserStub
         this->balance_ -= 1;
         return ParserResult{ParserState::kRunning};
     }
-
-    Count start_{0};
-    Count end_{0};
-    Count balance_{0};
 };
 
 class LimitedEndArrayParser final : public StructureParserStub
@@ -66,6 +67,7 @@ class LimitedEndArrayParser final : public StructureParserStub
   public:
     using StructureParserStub::StructureParserStub;
 
+  private:
     auto OnStartArray() noexcept -> ParserResult override
     {
         return ParserState::kRunning;
@@ -87,6 +89,7 @@ class LimitedStartArrayParser final : public StructureParserStub
   public:
     using StructureParserStub::StructureParserStub;
 
+  private:
     auto OnStartArray() noexcept -> ParserResult override
     {
         static std::uint8_t call_cnt{0};

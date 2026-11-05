@@ -40,6 +40,10 @@ class DynamicBoolParser final : public StructureParserStub
   public:
     using StructureParserStub::StructureParserStub;
 
+    Count true_{0};
+    Count false_{0};
+
+  private:
     auto OnBool(bool b) noexcept -> ParserResult override
     {
         if (b)
@@ -52,9 +56,6 @@ class DynamicBoolParser final : public StructureParserStub
         }
         return ParserState::kRunning;
     }
-
-    Count true_{0};
-    Count false_{0};
 };
 
 /// @brief           Parser that always returns an error on call of OnBool
@@ -63,6 +64,7 @@ class ErrorBoolParser final : public StructureParserStub
   public:
     using StructureParserStub::StructureParserStub;
 
+  private:
     auto OnBool(bool) noexcept -> ParserResult override
     {
         return MakeErrorResult<ParserState>(JsonErrc::kUserValidationFailed, "OnBool called.");

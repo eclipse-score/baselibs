@@ -38,13 +38,14 @@ class DynamicNumberParser final : public StructureParserStub
   public:
     using StructureParserStub::StructureParserStub;
 
+    Count number_{0};
+
+  private:
     auto OnNumber(JsonNumber) noexcept -> ParserResult override
     {
         this->number_ += 1;
         return ParserState::kRunning;
     }
-
-    Count number_{0};
 };
 
 }  // namespace

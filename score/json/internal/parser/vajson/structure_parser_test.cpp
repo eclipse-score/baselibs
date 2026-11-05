@@ -40,6 +40,11 @@ class FailingParser final : public internal::StructureParser
     {
     }
 
+    auto GetCount() const noexcept -> std::size_t
+    {
+        return this->count_;
+    }
+
   private:
     auto OnNull() noexcept -> ParserResult override
     {
@@ -108,10 +113,11 @@ class FailingParser final : public internal::StructureParser
 TEST(UT__Parser, Static__CallbackError)
 {
     constexpr std::string_view doc{R"({"key": [123, "string", null, true]})"};
-    const std::size_t num_elements{9};
+    const std::size_t num_events{9};
 
-    for (std::size_t idx{0}; idx < num_elements; ++idx)
+    for (std::size_t idx{0}; idx < num_events; ++idx)
     {
+        SCOPED_TRACE(idx);
         auto result{JsonData::FromBuffer(doc)};
         ASSERT_TRUE(result.has_value());
         JsonData data{std::move(result).value()};
@@ -120,7 +126,16 @@ TEST(UT__Parser, Static__CallbackError)
         const auto parse_result{parser.Parse()};
         ASSERT_FALSE(parse_result.has_value());
         ASSERT_EQ(parse_result.error(), JsonErrc::kUserValidationFailed);
+        EXPECT_EQ(parser.GetCount(), idx + 1U);
     }
+
+    auto result{JsonData::FromBuffer(doc)};
+    ASSERT_TRUE(result.has_value());
+    JsonData data{std::move(result).value()};
+
+    FailingParser parser{data, num_events};
+    ASSERT_TRUE(parser.Parse().has_value());
+    EXPECT_EQ(parser.GetCount(), num_events);
 }
 
 }  // namespace unit_test

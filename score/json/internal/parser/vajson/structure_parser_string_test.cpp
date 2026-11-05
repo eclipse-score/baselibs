@@ -40,13 +40,14 @@ class DynamicStringParser final : public StructureParserStub
   public:
     using StructureParserStub::StructureParserStub;
 
+    Strings strings;
+
+  private:
     auto OnString(CStringView str) noexcept -> ParserResult override
     {
         this->strings.push_back(std::string(str));
         return ParserState::kRunning;
     }
-
-    Strings strings;
 };
 
 class ErrorStringParser final : public StructureParserStub
@@ -54,6 +55,7 @@ class ErrorStringParser final : public StructureParserStub
   public:
     using StructureParserStub::StructureParserStub;
 
+  private:
     auto OnString(CStringView) noexcept -> ParserResult override
     {
         return MakeErrorResult<ParserState>(JsonErrc::kUserValidationFailed, "OnString called.");
