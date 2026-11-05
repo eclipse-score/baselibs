@@ -17,6 +17,7 @@
 #include "score/json/internal/parser/vajson/virtual_parser.h"
 
 #include <iostream>
+#include <optional>
 #include <stack>
 #include <string>
 #include <string_view>
@@ -82,7 +83,6 @@ class AnyTreeBuilder final : private score::json::vajson::internal::VirtualParse
                                            std::forward_as_tuple(std::forward<T>(value)))};
         if (!it.second)
         {
-            // Duplicate member names are rejected.
             return MakeUnexpected(Error::kParsingError);
         }
         return &((*(it.first)).second);
@@ -111,20 +111,28 @@ class AnyTreeBuilder final : private score::json::vajson::internal::VirtualParse
     // NOLINTNEXTLINE(bugprone-exception-escape) an exception terminates, as required by the safety concept
     auto OnNumber(score::json::vajson::JsonNumber& value) noexcept -> score::json::vajson::ParserResult
     {
-        auto try_store_result{[this](auto result) -> bool {
-            return result.has_value() && Store(score::json::Number{result.value()}).has_value();
+        std::optional<score::json::Number> number{};
+        auto try_convert{[&number](auto result) -> bool {
+            if (result.has_value())
+            {
+                number.emplace(result.value());
+            }
+            return result.has_value();
         }};
 
         // Coverity warning: The operands of a logical && or || shall be parenthesized if the operands contain binary
         // operators. Fold expression automatically sets parenthesis when expression is unfolded. In this case we are
         // using Unary right fold '(E op ...) becomes (E1 op (... op (En-1 op En)))'. That means for OnNumber<int,
-        // float, double>(value) fold expression will be: ( (try_store_result(value.As<int>())) || (
-        // (try_store_result(value.As<float>())) || (try_store_result(value.As<double>())) ) )
+        // float, double>(value) fold expression will be: ( (try_convert(value.As<int>())) || (
+        // (try_convert(value.As<float>())) || (try_convert(value.As<double>())) ) )
         // coverity[autosar_cpp14_a5_2_6_violation]
-        return ((try_store_result(value.As<NumberType>())) || ...)
-                   ? score::json::vajson::ParserState::kRunning
-                   : score::json::vajson::MakeErrorResult<score::json::vajson::ParserState>(
-                         score::json::vajson::JsonErrc::kInvalidJson);
+        static_cast<void>(((try_convert(value.As<NumberType>())) || ...));
+        if ((!number.has_value()) || (!Store(*number).has_value()))
+        {
+            return score::json::vajson::MakeErrorResult<score::json::vajson::ParserState>(
+                score::json::vajson::JsonErrc::kInvalidJson);
+        }
+        return score::json::vajson::ParserState::kRunning;
     }
 
     /// @brief Stores the most recently parsed object key.

@@ -21,6 +21,7 @@
 #include <fstream>
 #include <iostream>
 #include <limits>
+#include <ostream>
 #include <string>
 #include <string_view>
 #include <type_traits>
@@ -478,6 +479,12 @@ struct DuplicateMemberNameParam
     std::string_view json;
 };
 
+// Found by gtest via ADL to print GetParam() in failure messages.
+void PrintTo(const DuplicateMemberNameParam& param, std::ostream* os)
+{
+    *os << param.json;
+}
+
 class DuplicateMemberNameTest : public testing::TestWithParam<DuplicateMemberNameParam>
 {
 };
@@ -525,7 +532,7 @@ TEST_F(ParserTest, EmitsErrorWhenParsingObjectWithDuplicateEscapedMemberName)
     RecordProperty("TestType", "requirements-based");
     RecordProperty("DerivationTechnique", "error-guessing");
 
-    const auto root{JsonParser{}.FromBuffer(R"({"a": 1, "\u0061": 2})")};
+    const auto root{JsonParser{}.FromBuffer(R"({"a/b": 1, "a\/b": 2})")};
 
     ASSERT_FALSE(root.has_value());
     EXPECT_EQ(root.error(), score::json::Error::kParsingError);
