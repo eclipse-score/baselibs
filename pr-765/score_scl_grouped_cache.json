@@ -5,7 +5,7 @@
       "CodeLinks": [],
       "TestLinks": [
         {
-          "name": "HashCalculatorTest__RejectsRetiredSha1Identifier",
+          "name": "HashCalculatorTest__HashAlgorithmsSimpleSha256Test",
           "file": "score/hash/code/openssl/openssl_hash_calculator_test.cpp",
           "line": 79,
           "need": "comp_req__hash__sha_algorithms",
@@ -17,21 +17,9 @@
           "url": ""
         },
         {
-          "name": "HashCalculatorTest__HashAlgorithmsSimpleSha256Test",
-          "file": "score/hash/code/openssl/openssl_hash_calculator_test.cpp",
-          "line": 97,
-          "need": "comp_req__hash__sha_algorithms",
-          "verify_type": "partially",
-          "result": "passed",
-          "result_text": "",
-          "repo_name": "local_repo",
-          "hash": "",
-          "url": ""
-        },
-        {
           "name": "HashCalculatorTest__HashAlgorithmsSimpleSha384Test",
           "file": "score/hash/code/openssl/openssl_hash_calculator_test.cpp",
-          "line": 112,
+          "line": 94,
           "need": "comp_req__hash__sha_algorithms",
           "verify_type": "partially",
           "result": "passed",
@@ -43,7 +31,7 @@
         {
           "name": "HashCalculatorTest__HashAlgorithmsSimpleSha512Test",
           "file": "score/hash/code/openssl/openssl_hash_calculator_test.cpp",
-          "line": 135,
+          "line": 117,
           "need": "comp_req__hash__sha_algorithms",
           "verify_type": "partially",
           "result": "passed",
@@ -55,7 +43,7 @@
         {
           "name": "HashCalculatorSHATest__HashAlgorithmsSimpleTestSha256",
           "file": "score/hash/code/openssl/openssl_hash_calculator_test.cpp",
-          "line": 422,
+          "line": 404,
           "need": "comp_req__hash__sha_algorithms",
           "verify_type": "partially",
           "result": "passed",
@@ -89,21 +77,9 @@
           "url": ""
         },
         {
-          "name": "HashTest__RejectsRetiredSha1Identifier",
-          "file": "score/hash/code/core/hash_test.cpp",
-          "line": 59,
-          "need": "comp_req__hash__sha_algorithms",
-          "verify_type": "partially",
-          "result": "passed",
-          "result_text": "",
-          "repo_name": "local_repo",
-          "hash": "",
-          "url": ""
-        },
-        {
-          "name": "TypedHashTest__RejectsRetiredSha1Identifier",
+          "name": "TypedHashTest__CanCreateFromValidString",
           "file": "score/hash/code/core/typed_hash_test.cpp",
-          "line": 77,
+          "line": 57,
           "need": "comp_req__hash__sha_algorithms",
           "verify_type": "partially",
           "result": "passed",
@@ -137,45 +113,9 @@
           "url": ""
         },
         {
-          "name": "HashCalculatorFactory__RejectsRetiredSha1Identifier",
-          "file": "score/hash/code/core/factory/impl/hash_calculator_factory_ieee_test.cpp",
-          "line": 345,
-          "need": "comp_req__hash__sha_algorithms",
-          "verify_type": "partially",
-          "result": "passed",
-          "result_text": "",
-          "repo_name": "local_repo",
-          "hash": "",
-          "url": ""
-        },
-        {
-          "name": "SafeHashCalculatorFactory__TryToInstantiateNonexistentHash",
-          "file": "score/hash/code/core/factory/impl/hash_calculator_factory_ieee_test.cpp",
-          "line": 363,
-          "need": "comp_req__hash__sha_algorithms",
-          "verify_type": "partially",
-          "result": "passed",
-          "result_text": "",
-          "repo_name": "local_repo",
-          "hash": "",
-          "url": ""
-        },
-        {
-          "name": "HashIdentify__DoesNotIdentifySha1Digest",
-          "file": "score/hash/code/common/algorithms_test.cpp",
-          "line": 71,
-          "need": "comp_req__hash__sha_algorithms",
-          "verify_type": "partially",
-          "result": "passed",
-          "result_text": "",
-          "repo_name": "local_repo",
-          "hash": "",
-          "url": ""
-        },
-        {
           "name": "HashIdentify__CorrectSizes",
           "file": "score/hash/code/common/algorithms_test.cpp",
-          "line": 131,
+          "line": 118,
           "need": "comp_req__hash__sha_algorithms",
           "verify_type": "partially",
           "result": "passed",
@@ -195,7 +135,7 @@
         {
           "name": "HashCalculatorTest__NullDigestTypeCreateAlgoTest",
           "file": "score/hash/code/openssl/openssl_hash_calculator_test.cpp",
-          "line": 167,
+          "line": 149,
           "need": "comp_req__hash__safe_computation",
           "verify_type": "partially",
           "result": "passed",
@@ -207,7 +147,7 @@
         {
           "name": "HashCalculatorTest__InvalidDigestCtxCreateAlgoTest",
           "file": "score/hash/code/openssl/openssl_hash_calculator_test.cpp",
-          "line": 182,
+          "line": 164,
           "need": "comp_req__hash__safe_computation",
           "verify_type": "partially",
           "result": "passed",
@@ -219,7 +159,7 @@
         {
           "name": "HashCalculatorTest__InvalidDigestInitCreateAlgoTest",
           "file": "score/hash/code/openssl/openssl_hash_calculator_test.cpp",
-          "line": 199,
+          "line": 181,
           "need": "comp_req__hash__safe_computation",
           "verify_type": "partially",
           "result": "passed",
@@ -231,7 +171,7 @@
         {
           "name": "HashCalculatorTest__InvalidCreateAlgorthimTest",
           "file": "score/hash/code/openssl/openssl_hash_calculator_test.cpp",
-          "line": 217,
+          "line": 199,
           "need": "comp_req__hash__safe_computation",
           "verify_type": "partially",
           "result": "passed",
@@ -299,6 +239,18 @@
           "repo_name": "local_repo",
           "hash": "",
           "url": ""
+        },
+        {
+          "name": "SafeHashCalculatorFactory__TryToInstantiateNonexistentHash",
+          "file": "score/hash/code/core/factory/impl/hash_calculator_factory_ieee_test.cpp",
+          "line": 345,
+          "need": "comp_req__hash__safe_computation",
+          "verify_type": "partially",
+          "result": "passed",
+          "result_text": "",
+          "repo_name": "local_repo",
+          "hash": "",
+          "url": ""
         }
       ]
     }
@@ -311,7 +263,7 @@
         {
           "name": "HashCalculatorTest__UpdateStreamTest",
           "file": "score/hash/code/openssl/openssl_hash_calculator_test.cpp",
-          "line": 235,
+          "line": 217,
           "need": "comp_req__hash__calculation_interface",
           "verify_type": "partially",
           "result": "passed",
@@ -323,7 +275,7 @@
         {
           "name": "HashCalculatorTest__InvalidDigestUpdateTest",
           "file": "score/hash/code/openssl/openssl_hash_calculator_test.cpp",
-          "line": 266,
+          "line": 248,
           "need": "comp_req__hash__calculation_interface",
           "verify_type": "partially",
           "result": "passed",
@@ -335,7 +287,7 @@
         {
           "name": "HashCalculatorTest__UpdateFromStreamTest",
           "file": "score/hash/code/openssl/openssl_hash_calculator_test.cpp",
-          "line": 288,
+          "line": 270,
           "need": "comp_req__hash__calculation_interface",
           "verify_type": "partially",
           "result": "passed",
@@ -347,7 +299,7 @@
         {
           "name": "HashCalculatorTest__InvalidUpdateFromStreamTest",
           "file": "score/hash/code/openssl/openssl_hash_calculator_test.cpp",
-          "line": 307,
+          "line": 289,
           "need": "comp_req__hash__calculation_interface",
           "verify_type": "partially",
           "result": "passed",
@@ -359,7 +311,7 @@
         {
           "name": "HashCalculatorTest__UpdateFromStreamGoesBadTest",
           "file": "score/hash/code/openssl/openssl_hash_calculator_test.cpp",
-          "line": 330,
+          "line": 312,
           "need": "comp_req__hash__calculation_interface",
           "verify_type": "partially",
           "result": "passed",
@@ -371,7 +323,7 @@
         {
           "name": "HashCalculatorTest__BadInputUpdateFromStreamTest",
           "file": "score/hash/code/openssl/openssl_hash_calculator_test.cpp",
-          "line": 358,
+          "line": 340,
           "need": "comp_req__hash__calculation_interface",
           "verify_type": "partially",
           "result": "passed",
@@ -383,7 +335,7 @@
         {
           "name": "HashCalculatorTest__EmptyInputUpdateFromStreamTest",
           "file": "score/hash/code/openssl/openssl_hash_calculator_test.cpp",
-          "line": 379,
+          "line": 361,
           "need": "comp_req__hash__calculation_interface",
           "verify_type": "partially",
           "result": "passed",
@@ -395,7 +347,7 @@
         {
           "name": "HashCalculatorTest__InvalidFinalizeTest",
           "file": "score/hash/code/openssl/openssl_hash_calculator_test.cpp",
-          "line": 403,
+          "line": 385,
           "need": "comp_req__hash__calculation_interface",
           "verify_type": "partially",
           "result": "passed",
@@ -407,7 +359,7 @@
         {
           "name": "HashCalculatorSHATest__HashAlgorithmsSimpleTestSha256",
           "file": "score/hash/code/openssl/openssl_hash_calculator_test.cpp",
-          "line": 422,
+          "line": 404,
           "need": "comp_req__hash__calculation_interface",
           "verify_type": "partially",
           "result": "passed",
@@ -607,7 +559,7 @@
         {
           "name": "HashTest__CanCreateFromValidStringCompleteSetOfAlgorithms",
           "file": "score/hash/code/core/hash_test.cpp",
-          "line": 85,
+          "line": 96,
           "need": "comp_req__hash__value_retrieval_bytes",
           "verify_type": "partially",
           "result": "passed",
@@ -637,9 +589,21 @@
       "CodeLinks": [],
       "TestLinks": [
         {
+          "name": "HashTest__CanCreateFromValidString",
+          "file": "score/hash/code/core/hash_test.cpp",
+          "line": 59,
+          "need": "comp_req__hash__value_retrieval_hex",
+          "verify_type": "partially",
+          "result": "passed",
+          "result_text": "",
+          "repo_name": "local_repo",
+          "hash": "",
+          "url": ""
+        },
+        {
           "name": "HashTest__ToStringEmptyValueTest",
           "file": "score/hash/code/core/hash_test.cpp",
-          "line": 73,
+          "line": 84,
           "need": "comp_req__hash__value_retrieval_hex",
           "verify_type": "partially",
           "result": "passed",
@@ -651,43 +615,7 @@
         {
           "name": "HashTest__CanCreateFromValidStringCompleteSetOfAlgorithms",
           "file": "score/hash/code/core/hash_test.cpp",
-          "line": 85,
-          "need": "comp_req__hash__value_retrieval_hex",
-          "verify_type": "partially",
-          "result": "passed",
-          "result_text": "",
-          "repo_name": "local_repo",
-          "hash": "",
-          "url": ""
-        },
-        {
-          "name": "HashTest__ValidateAlgorithm",
-          "file": "score/hash/code/core/hash_test.cpp",
-          "line": 144,
-          "need": "comp_req__hash__value_retrieval_hex",
-          "verify_type": "partially",
-          "result": "passed",
-          "result_text": "",
-          "repo_name": "local_repo",
-          "hash": "",
-          "url": ""
-        },
-        {
-          "name": "HashTest__ValidateSize",
-          "file": "score/hash/code/core/hash_test.cpp",
-          "line": 156,
-          "need": "comp_req__hash__value_retrieval_hex",
-          "verify_type": "partially",
-          "result": "passed",
-          "result_text": "",
-          "repo_name": "local_repo",
-          "hash": "",
-          "url": ""
-        },
-        {
-          "name": "HashTest__ValidateContents",
-          "file": "score/hash/code/core/hash_test.cpp",
-          "line": 170,
+          "line": 96,
           "need": "comp_req__hash__value_retrieval_hex",
           "verify_type": "partially",
           "result": "passed",
@@ -711,7 +639,7 @@
         {
           "name": "TypedHashTest__ToStringEmptyValueTest",
           "file": "score/hash/code/core/typed_hash_test.cpp",
-          "line": 91,
+          "line": 82,
           "need": "comp_req__hash__value_retrieval_hex",
           "verify_type": "partially",
           "result": "passed",
@@ -723,7 +651,7 @@
         {
           "name": "TypedHashTest__CanSerializeToJsonAny",
           "file": "score/hash/code/core/typed_hash_test.cpp",
-          "line": 103,
+          "line": 94,
           "need": "comp_req__hash__value_retrieval_hex",
           "verify_type": "partially",
           "result": "passed",
@@ -837,21 +765,9 @@
           "url": ""
         },
         {
-          "name": "HashCalculatorFactory__RejectsRetiredSha1Identifier",
-          "file": "score/hash/code/core/factory/impl/hash_calculator_factory_ieee_test.cpp",
-          "line": 345,
-          "need": "comp_req__hash__factory_interface",
-          "verify_type": "partially",
-          "result": "passed",
-          "result_text": "",
-          "repo_name": "local_repo",
-          "hash": "",
-          "url": ""
-        },
-        {
           "name": "SafeHashCalculatorFactory__TryToInstantiateNonexistentHash",
           "file": "score/hash/code/core/factory/impl/hash_calculator_factory_ieee_test.cpp",
-          "line": 363,
+          "line": 345,
           "need": "comp_req__hash__factory_interface",
           "verify_type": "partially",
           "result": "passed",
@@ -919,7 +835,7 @@
         {
           "name": "HashIdentify__CorrectSizes",
           "file": "score/hash/code/common/algorithms_test.cpp",
-          "line": 131,
+          "line": 118,
           "need": "comp_req__hash__crc32_algorithm",
           "verify_type": "partially",
           "result": "passed",
@@ -10770,8 +10686,8 @@
         },
         {
           "name": "Number__Bool",
-          "file": "score/json/internal/parser/vajson/unit_test/ut_number.cpp",
-          "line": 756,
+          "file": "score/json/internal/parser/vajson/json_number_test.cpp",
+          "line": 620,
           "need": "comp_req__json__deserialization",
           "verify_type": "partially",
           "result": "passed",
@@ -10782,8 +10698,8 @@
         },
         {
           "name": "Number__Uint8",
-          "file": "score/json/internal/parser/vajson/unit_test/ut_number.cpp",
-          "line": 767,
+          "file": "score/json/internal/parser/vajson/json_number_test.cpp",
+          "line": 631,
           "need": "comp_req__json__deserialization",
           "verify_type": "partially",
           "result": "passed",
@@ -10794,8 +10710,8 @@
         },
         {
           "name": "Number__Uint16",
-          "file": "score/json/internal/parser/vajson/unit_test/ut_number.cpp",
-          "line": 778,
+          "file": "score/json/internal/parser/vajson/json_number_test.cpp",
+          "line": 642,
           "need": "comp_req__json__deserialization",
           "verify_type": "partially",
           "result": "passed",
@@ -10806,8 +10722,8 @@
         },
         {
           "name": "Number__Uint32",
-          "file": "score/json/internal/parser/vajson/unit_test/ut_number.cpp",
-          "line": 789,
+          "file": "score/json/internal/parser/vajson/json_number_test.cpp",
+          "line": 653,
           "need": "comp_req__json__deserialization",
           "verify_type": "partially",
           "result": "passed",
@@ -10818,8 +10734,8 @@
         },
         {
           "name": "Number__Uint64",
-          "file": "score/json/internal/parser/vajson/unit_test/ut_number.cpp",
-          "line": 800,
+          "file": "score/json/internal/parser/vajson/json_number_test.cpp",
+          "line": 664,
           "need": "comp_req__json__deserialization",
           "verify_type": "partially",
           "result": "passed",
@@ -10830,8 +10746,8 @@
         },
         {
           "name": "Number__Int8",
-          "file": "score/json/internal/parser/vajson/unit_test/ut_number.cpp",
-          "line": 811,
+          "file": "score/json/internal/parser/vajson/json_number_test.cpp",
+          "line": 675,
           "need": "comp_req__json__deserialization",
           "verify_type": "partially",
           "result": "passed",
@@ -10842,8 +10758,8 @@
         },
         {
           "name": "Number__Int16",
-          "file": "score/json/internal/parser/vajson/unit_test/ut_number.cpp",
-          "line": 822,
+          "file": "score/json/internal/parser/vajson/json_number_test.cpp",
+          "line": 686,
           "need": "comp_req__json__deserialization",
           "verify_type": "partially",
           "result": "passed",
@@ -10854,8 +10770,8 @@
         },
         {
           "name": "Number__Int32",
-          "file": "score/json/internal/parser/vajson/unit_test/ut_number.cpp",
-          "line": 833,
+          "file": "score/json/internal/parser/vajson/json_number_test.cpp",
+          "line": 697,
           "need": "comp_req__json__deserialization",
           "verify_type": "partially",
           "result": "passed",
@@ -10866,8 +10782,8 @@
         },
         {
           "name": "Number__Int64",
-          "file": "score/json/internal/parser/vajson/unit_test/ut_number.cpp",
-          "line": 844,
+          "file": "score/json/internal/parser/vajson/json_number_test.cpp",
+          "line": 708,
           "need": "comp_req__json__deserialization",
           "verify_type": "partially",
           "result": "passed",
@@ -10878,8 +10794,8 @@
         },
         {
           "name": "Number__Float",
-          "file": "score/json/internal/parser/vajson/unit_test/ut_number.cpp",
-          "line": 855,
+          "file": "score/json/internal/parser/vajson/json_number_test.cpp",
+          "line": 719,
           "need": "comp_req__json__deserialization",
           "verify_type": "partially",
           "result": "passed",
@@ -10890,8 +10806,8 @@
         },
         {
           "name": "Number__Double",
-          "file": "score/json/internal/parser/vajson/unit_test/ut_number.cpp",
-          "line": 866,
+          "file": "score/json/internal/parser/vajson/json_number_test.cpp",
+          "line": 730,
           "need": "comp_req__json__deserialization",
           "verify_type": "partially",
           "result": "passed",
@@ -10902,8 +10818,8 @@
         },
         {
           "name": "Number__WithDecimalPointWithoutFractionalPartCannotBeParsedAsInteger",
-          "file": "score/json/internal/parser/vajson/unit_test/ut_number.cpp",
-          "line": 877,
+          "file": "score/json/internal/parser/vajson/json_number_test.cpp",
+          "line": 741,
           "need": "comp_req__json__deserialization",
           "verify_type": "partially",
           "result": "passed",
@@ -10914,8 +10830,8 @@
         },
         {
           "name": "Number__WithExponentialNotationWithoutFractionalPartCannotBeParsedAsInteger",
-          "file": "score/json/internal/parser/vajson/unit_test/ut_number.cpp",
-          "line": 889,
+          "file": "score/json/internal/parser/vajson/json_number_test.cpp",
+          "line": 753,
           "need": "comp_req__json__deserialization",
           "verify_type": "partially",
           "result": "passed",
@@ -10926,8 +10842,8 @@
         },
         {
           "name": "Number__FloatingPointWithoutDecimalPoint",
-          "file": "score/json/internal/parser/vajson/unit_test/ut_number.cpp",
-          "line": 902,
+          "file": "score/json/internal/parser/vajson/json_number_test.cpp",
+          "line": 766,
           "need": "comp_req__json__deserialization",
           "verify_type": "partially",
           "result": "passed",
@@ -10938,8 +10854,8 @@
         },
         {
           "name": "Number__NearDoubleLimitsIsParsable",
-          "file": "score/json/internal/parser/vajson/unit_test/ut_number.cpp",
-          "line": 914,
+          "file": "score/json/internal/parser/vajson/json_number_test.cpp",
+          "line": 778,
           "need": "comp_req__json__deserialization",
           "verify_type": "partially",
           "result": "passed",
@@ -10950,8 +10866,8 @@
         },
         {
           "name": "Number__FloatingPointOverflowIsRejected",
-          "file": "score/json/internal/parser/vajson/unit_test/ut_number.cpp",
-          "line": 925,
+          "file": "score/json/internal/parser/vajson/json_number_test.cpp",
+          "line": 789,
           "need": "comp_req__json__deserialization",
           "verify_type": "partially",
           "result": "passed",
