@@ -70,12 +70,9 @@ class AnyTreeBuilder final : private score::json::vajson::internal::VirtualParse
         auto node_object{current_node->As<score::json::Object>()};
         if (!node_object.has_value())  // LCOV_EXCL_BR_LINE (see comment below)
         {
-            // This case in production can't happen.
-            // the hierarchy_ stack is filled via StartContainer()
-            // StartContainer is only called with score::json::List and score::json::Object
-            // Thus the hiearchy only holds such objects.
-            // score::json::List is handled in the branch above. Thus in the current branch
-            // the node can only be of type score::json::Object
+            // This case can't happen: hierarchy_ only holds the List or Object values newly inserted by
+            // StartContainer(), since Store() never returns an existing node for a duplicate key.
+            // List is handled in the branch above, so the node can only be an Object.
             return MakeUnexpected(Error::kParsingError); /* LCOV_EXCL_LINE */
         }
         // False positive, all values passed as rvalue.
@@ -83,6 +80,11 @@ class AnyTreeBuilder final : private score::json::vajson::internal::VirtualParse
         auto it{node_object->get().emplace(std::piecewise_construct_t(std::piecewise_construct),
                                            std::forward_as_tuple(std::string{last_key_}),
                                            std::forward_as_tuple(std::forward<T>(value)))};
+        if (!it.second)
+        {
+            // Duplicate member names are rejected.
+            return MakeUnexpected(Error::kParsingError);
+        }
         return &((*(it.first)).second);
     }
 
@@ -151,13 +153,10 @@ auto AnyTreeBuilder::GetData() noexcept -> score::Result<score::json::Any>
 auto AnyTreeBuilder::OnNull() noexcept -> score::json::vajson::ParserResult
 {
     auto result{Store(Null{})};
-    if (!result.has_value())  // LCOV_EXCL_BR_LINE (Decision Coverage: Not reachable. Branch excluded from
-                              // coverage report. See comment below)
+    if (!result.has_value())
     {
-        // Coverage: Not reachable. Line excluded from coverage report.
-        // This case never happens, because condition can't be fulfilled due to Store implementation
         return score::json::vajson::MakeErrorResult<score::json::vajson::ParserState>(
-            score::json::vajson::JsonErrc::kInvalidJson); /* LCOV_EXCL_LINE */
+            score::json::vajson::JsonErrc::kInvalidJson);
     }
     return score::json::vajson::ParserState::kRunning;
 }
@@ -165,13 +164,10 @@ auto AnyTreeBuilder::OnNull() noexcept -> score::json::vajson::ParserResult
 auto AnyTreeBuilder::OnBool(bool value) noexcept -> score::json::vajson::ParserResult
 {
     auto result{Store(value)};
-    if (!result.has_value())  // LCOV_EXCL_BR_LINE (Decision Coverage: Not reachable. Branch excluded from
-                              // coverage report. See comment below)
+    if (!result.has_value())
     {
-        // Coverage: Not reachable. Line excluded from coverage report.
-        // This case never happens, because condition can't be fulfilled due to Store implementation
         return score::json::vajson::MakeErrorResult<score::json::vajson::ParserState>(
-            score::json::vajson::JsonErrc::kInvalidJson); /* LCOV_EXCL_LINE */
+            score::json::vajson::JsonErrc::kInvalidJson);
     }
     return score::json::vajson::ParserState::kRunning;
 }
@@ -189,13 +185,10 @@ auto AnyTreeBuilder::OnNumber(score::json::vajson::JsonNumber value) noexcept ->
 auto AnyTreeBuilder::OnString(std::string_view value) noexcept -> score::json::vajson::ParserResult
 {
     auto result{Store(std::string(value))};
-    if (!result.has_value())  // LCOV_EXCL_BR_LINE (Decision Coverage: Not reachable. Branch excluded from
-                              // coverage report. See comment below)
+    if (!result.has_value())
     {
-        // Coverage: Not reachable. Line excluded from coverage report.
-        // This case never happens, because condition can't be fulfilled due to Store implementation
         return score::json::vajson::MakeErrorResult<score::json::vajson::ParserState>(
-            score::json::vajson::JsonErrc::kInvalidJson); /* LCOV_EXCL_LINE */
+            score::json::vajson::JsonErrc::kInvalidJson);
     }
     return score::json::vajson::ParserState::kRunning;
 }
@@ -214,13 +207,10 @@ template <typename T>
 auto AnyTreeBuilder::StartContainer(T&& value) noexcept -> score::json::vajson::ParserResult
 {
     auto result{Store(std::forward<T>(value))};
-    if (!result.has_value())  // LCOV_EXCL_BR_LINE (Decision Coverage: Not reachable. Branch excluded from
-                              // coverage report. See comment below)
+    if (!result.has_value())
     {
-        // Coverage: Not reachable. Line excluded from coverage report.
-        // This case never happens, because condition can't be fulfilled due to Store implementation
         return score::json::vajson::MakeErrorResult<score::json::vajson::ParserState>(
-            score::json::vajson::JsonErrc::kInvalidJson); /* LCOV_EXCL_LINE */
+            score::json::vajson::JsonErrc::kInvalidJson);
     }
 
     // Justification for autosar_cpp14_a18_9_2: Using std::move or std::forward on a raw pointer does not provide
