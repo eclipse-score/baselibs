@@ -86,6 +86,12 @@ TEST_F(SignalHandlingTest, PThreadBlockSigTerm_PthreadSigMaskFails_ReturnsError)
 
 TEST_F(SignalHandlingTest, PThreadBlockSigTerm_AllSucceed_ReturnsSuccess)
 {
+    RecordProperty("Description",
+                   "Check that PThreadBlockSigTerm requests SIG_BLOCK for SIGTERM and returns success when the OSAL "
+                   "calls succeed.");
+    RecordProperty("TestType", "interface-test");
+    RecordProperty("DerivationTechnique", "design-analysis");
+
     EXPECT_CALL(*signal_mock_, SigEmptySet(_)).WillOnce(Return(score::cpp::expected<std::int32_t, score::os::Error>{0}));
 
     EXPECT_CALL(*signal_mock_, SigAddSet(_, SIGTERM)).WillOnce(Return(score::cpp::expected<std::int32_t, score::os::Error>{0}));

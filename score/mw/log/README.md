@@ -635,7 +635,7 @@ Overloads of `mw::log::LogStream` for other `ara::core` could be provided congru
 - **KFile_Logging** : for enabling/disabling KFile log mode, by default is enabled.
 - **KConsole_Logging** : for enabling/disabling KConsole log mode, by default is enabled.
 - **KRemote_Logging** : for enabling/disabling KRemote log mode, but this additionally requires a daemon process that gathers log mesages and forwards them to external systems for Analysis. E.g.: datarouter (DLT daemon)
-- **shm_dma_enabled** : when enabled, the KRemote backend uses Generic Trace Library (GTL) implementation that supports shared memory (Shm) with Direct Memory Access (DMA) capability. When disabled, only POSIX Shm is used.
+- **shm_dma_enabled** : when enabled, the KRemote backend uses Generic Trace Library (GTL) implementation that supports shared memory (Shm) with Direct Memory Access (DMA) capability. When disabled, only POSIX Shm is used. See the [DltTraceBackend (DLTv2) design document](./design/backend/dlt_trace_backend.md) for details on this backend.
 
 ### Building mw::log with/out feature flags.
 
