@@ -36,17 +36,19 @@ namespace
 using Key = std::string;
 using Keys = std::vector<Key>;
 
-struct DynamicKeyParser final : public IgnoringParser
+class DynamicKeyParser final : public IgnoringParser
 {
+  public:
     using IgnoringParser::IgnoringParser;
 
+    Keys keys{};
+
+  private:
     auto OnKey(CStringView key) noexcept -> ParserResult override
     {
         this->keys.push_back(std::string(key));
         return ParserState::kRunning;
     }
-
-    Keys keys{};
 };
 
 }  // namespace

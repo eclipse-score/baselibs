@@ -40,6 +40,10 @@ class DynamicBoolParser final : public IgnoringParser
   public:
     using IgnoringParser::IgnoringParser;
 
+    Count true_{0};
+    Count false_{0};
+
+  private:
     auto OnBool(bool b) noexcept -> ParserResult override
     {
         if (b)
@@ -52,9 +56,6 @@ class DynamicBoolParser final : public IgnoringParser
         }
         return ParserState::kRunning;
     }
-
-    Count true_{0};
-    Count false_{0};
 };
 
 /// @brief           Parser that always returns an error on call of OnBool
@@ -63,6 +64,7 @@ class ErrorBoolParser final : public IgnoringParser
   public:
     using IgnoringParser::IgnoringParser;
 
+  private:
     auto OnBool(bool) noexcept -> ParserResult override
     {
         return MakeErrorResult<ParserState>(JsonErrc::kUserValidationFailed, "OnBool called.");

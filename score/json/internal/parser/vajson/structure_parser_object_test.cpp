@@ -38,6 +38,11 @@ class DynamicObjectParser final : public IgnoringParser
   public:
     using IgnoringParser::IgnoringParser;
 
+    Count start_{0};
+    Count end_{0};
+    Count balance_{0};
+
+  private:
     auto OnStartObject() noexcept -> ParserResult override
     {
         this->start_ += 1;
@@ -55,10 +60,6 @@ class DynamicObjectParser final : public IgnoringParser
         this->balance_ -= 1;
         return ParserResult{ParserState::kRunning};
     }
-
-    Count start_{0};
-    Count end_{0};
-    Count balance_{0};
 };
 
 class EndObjectParser final : public IgnoringParser
@@ -66,6 +67,7 @@ class EndObjectParser final : public IgnoringParser
   public:
     using IgnoringParser::IgnoringParser;
 
+  private:
     auto OnStartObject() noexcept -> ParserResult override
     {
         return ParserState::kRunning;
@@ -82,6 +84,7 @@ class StartObjectParser final : public IgnoringParser
   public:
     using IgnoringParser::IgnoringParser;
 
+  private:
     auto OnStartObject() noexcept -> ParserResult override
     {
         return MakeErrorResult<ParserState>(JsonErrc::kUserValidationFailed, "OnStartObject called.");
