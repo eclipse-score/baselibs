@@ -36,8 +36,5 @@ jobs:
       contents: read
     with:
       workflow-config-yaml: .github/ci.yml
+      # These hooks only auto-fix formatting/copyright; common checks verify both.
       skip-pre-commit: true
-      skip-python-tests: true
-      require-bzlmod-lock: true
-      format-target: "//tools:format.check"
-      copyright-target: "//tools:copyright-check"

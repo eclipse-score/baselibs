@@ -14,55 +14,38 @@
 # and the separate integration workspace. No local execution matrix is needed.
 # Bazel configs select module-owned platforms and toolchains explicitly.
 schema-version: 2
-variants:
-  - name: linux-native
-    checks:
-      tests:
-        # Build all native targets before running the complete module test set.
-        # Both commands must produce Bazel evidence for the shared gate to pass.
-        - bazel-configs: score-linux-x86_64
-          bazel-build-targets: //...
-      # The LLVM job keeps the established exclusions and report-only policy.
-      # The central scope check rejects missing production targets and stale exclusions.
-      llvm-coverage:
-        bazel-targets: >-
-          //score/...
-          -//score/language/safecpp/aborts_upon_exception/...
-          -//score/language/safecpp/safe_math/details:floating_point_environment_test
-          -//score/os/linux/utils/test:network_interface_test
-        coverage-threshold: 0
-        testlogs-subdir: score
-        scope-check: {}
-        workflow-config:
-          # release.yml downloads this name directly.
-          artifact-name: "{repository}_cpp_coverage_report"
-  - name: linux-arm
-    architecture:
-      - name: aarch64
-    checks:
-      tests:
-        # Bazel selects the cross-toolchain and run_under wrapper. The shared
-        # profile installs QEMU and applies longer emulation test timeouts.
-        - bazel-configs: score-linux-aarch64
-          bazel-build-targets: //...
-          # These OS tests are excluded from the established emulated test set.
-          bazel-test-targets: >-
-            //...
-            -//score/os/test:acl_test
-            -//score/os/test:errno_test
-            -//score/os/test:socket_test
-          workflow-config:
-            execution: qemu-user
-            bazel-test-custom-cli-args: --test_tag_filters=-no_rust_doc_test
-  - name: linux-integration
-    checks:
-      tests:
-        # This module consumes baselibs through a local_path_override. Checkout
-        # stays at the repository root while Bazel and its cache use this module.
-        - test-type: integration
-          bazel-configs: x86_64-linux
-          bazel-build-targets: //...
-          workflow-config:
-            working-directory: examples/integration
-# Docs uses the sole native root test row and coverage row automatically.
+tests:
+  linux-native:
+    bazel-configs: score-linux-x86_64
+    bazel-build-targets: //...
+  # These OS tests stay excluded from the established emulated test set.
+  linux-arm:
+    bazel-configs: score-linux-aarch64
+    bazel-build-targets: //...
+    bazel-test-targets: >-
+      //...
+      -//score/os/test:acl_test
+      -//score/os/test:errno_test
+      -//score/os/test:socket_test
+    architecture: aarch64
+    execution: qemu-user
+    bazel-test-custom-cli-args: --test_tag_filters=-no_rust_doc_test
+  # The separate Bazel module consumes baselibs through a local_path_override.
+  linux-integration:
+    test-type: integration
+    bazel-configs: x86_64-linux
+    bazel-build-targets: //...
+    working-directory: examples/integration
+# These Clang-specific exclusions keep running in the GCC test profiles.
+llvm-coverage:
+  bazel-targets: >-
+    //score/...
+    -//score/language/safecpp/aborts_upon_exception/...
+    -//score/language/safecpp/safe_math/details:floating_point_environment_test
+    -//score/os/linux/utils/test:network_interface_test
+  coverage-threshold: 0
+  testlogs-subdir: score
+  scope-check: {}
+  # release.yml downloads this artifact by name.
+  artifact-name: '{repository}_cpp_coverage_report'
 docs: {}
