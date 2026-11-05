@@ -45,9 +45,8 @@ SCOPE_DEPS_COMMON = [
     "//score/hash/code/core/factory:factory_mock",
     "//score/hash/code/core/factory/impl:factory_headers",
     "//score/hash/code/crc:mocks",
-    # Parser/writer-facing interface: not reachable from the impl libs
-    # directly; has a coverage grant.
-    "//score/json:interface",
+    # Keep both the parser and writer in scope; JsonSerializer only uses the parser.
+    "//score/json",
     "//score/json:json_serializer",
     "//score/language/safecpp/aborts_upon_exception:abortsuponexception",
     "//score/language/safecpp/safe_atomics:try_atomic_add",

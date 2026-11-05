@@ -29,12 +29,12 @@
 #include <cstring>
 #include <utility>
 
+#include "score/json/internal/common/json_error_domain.h"
+#include "score/json/internal/common/types.h"
 #include "score/json/internal/parser/vajson/depth_counter.h"
-#include "score/json/internal/parser/vajson/json_error_domain.h"
 #include "score/json/internal/parser/vajson/json_number.h"
 #include "score/json/internal/parser/vajson/json_ops.h"
 #include "score/json/internal/parser/vajson/parser_state.h"
-#include "score/json/internal/parser/vajson/types.h"
 
 namespace score
 {

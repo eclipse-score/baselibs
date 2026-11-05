@@ -21,8 +21,8 @@
 #include "score/json/internal/parser/vajson/virtual_parser.h"
 
 #include "gtest/gtest.h"
+#include "score/json/internal/common/json_error_domain.h"
 #include "score/json/internal/parser/vajson/json_data.h"
-#include "score/json/internal/parser/vajson/json_error_domain.h"
 
 namespace score
 {

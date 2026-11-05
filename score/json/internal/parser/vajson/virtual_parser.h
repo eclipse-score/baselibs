@@ -23,11 +23,11 @@
 /**********************************************************************************************************************
  *  INCLUDES
  *********************************************************************************************************************/
+#include "score/json/internal/common/json_error_domain.h"
+#include "score/json/internal/common/types.h"
 #include "score/json/internal/parser/vajson/json_data.h"
-#include "score/json/internal/parser/vajson/json_error_domain.h"
 #include "score/json/internal/parser/vajson/structure_parser.h"
 #include "score/json/internal/parser/vajson/structure_parser_impl.h"
-#include "score/json/internal/parser/vajson/types.h"
 
 namespace score
 {

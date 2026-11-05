@@ -24,7 +24,7 @@
  *  INCLUDES
  *********************************************************************************************************************/
 #include "score/functional.hpp"
-#include "score/json/internal/parser/vajson/json_error_domain.h"
+#include "score/json/internal/common/json_error_domain.h"
 #include "score/json/internal/parser/vajson/opt_char.h"
 #include "score/json/internal/parser/vajson/reader_config.h"
 #include "score/json/internal/parser/vajson/reader_fwd.h"
