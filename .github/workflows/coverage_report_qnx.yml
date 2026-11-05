@@ -13,7 +13,7 @@
 # QNX on-target coverage (C++): the gcov backend of score_coverage. Tests run
 # in QEMU through score_qnx_unit_tests, which brings the .gcda counters back;
 # Bazel's collector turns them into LCOV and the gcov reporter produces the
-# same archive layout as the Linux job in coverage_report.yml.
+# same archive layout as the central Linux coverage job.
 #
 # Separate workflow on pull_request_target, like build_qnx.yml: the QNX SDP
 # secrets are needed, and fork PRs only get them after a maintainer approved

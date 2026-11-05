@@ -16,29 +16,34 @@
 schema-version: 2
 variants:
   - name: linux-native
-    architecture:
-      - name: x86_64
-    os:
-      - name: linux
     checks:
       tests:
         # Build all native targets before running the complete module test set.
         # Both commands must produce Bazel evidence for the shared gate to pass.
-        - test-type: unit
-          bazel-configs: score-linux-x86_64
+        - bazel-configs: score-linux-x86_64
           bazel-build-targets: //...
-          bazel-test-targets: //...
+      # The LLVM job keeps the established exclusions and report-only policy.
+      # The central scope check rejects missing production targets and stale exclusions.
+      llvm-coverage:
+        bazel-targets: >-
+          //score/...
+          -//score/language/safecpp/aborts_upon_exception/...
+          -//score/language/safecpp/safe_math/details:floating_point_environment_test
+          -//score/os/linux/utils/test:network_interface_test
+        coverage-threshold: 0
+        testlogs-subdir: score
+        scope-check: {}
+        workflow-config:
+          # release.yml downloads this name directly.
+          artifact-name: "{repository}_cpp_coverage_report"
   - name: linux-arm
     architecture:
       - name: aarch64
-    os:
-      - name: linux
     checks:
       tests:
         # Bazel selects the cross-toolchain and run_under wrapper. The shared
         # profile installs QEMU and applies longer emulation test timeouts.
-        - test-type: unit
-          bazel-configs: score-linux-aarch64
+        - bazel-configs: score-linux-aarch64
           bazel-build-targets: //...
           # These OS tests are excluded from the established emulated test set.
           bazel-test-targets: >-
@@ -50,10 +55,6 @@ variants:
             execution: qemu-user
             bazel-test-custom-cli-args: --test_tag_filters=-no_rust_doc_test
   - name: linux-integration
-    architecture:
-      - name: x86_64
-    os:
-      - name: linux
     checks:
       tests:
         # This module consumes baselibs through a local_path_override. Checkout
@@ -61,6 +62,7 @@ variants:
         - test-type: integration
           bazel-configs: x86_64-linux
           bazel-build-targets: //...
-          bazel-test-targets: //...
           workflow-config:
             working-directory: examples/integration
+# Docs uses the sole native root test row and coverage row automatically.
+docs: {}

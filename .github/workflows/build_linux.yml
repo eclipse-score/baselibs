@@ -15,6 +15,7 @@ permissions:
   contents: read
   actions: write
 on:
+  workflow_dispatch:
   pull_request:
     types: [opened, reopened, synchronize]
   push:
@@ -29,7 +30,7 @@ jobs:
   # The shared entry point owns common checks and every Linux build/test row.
   # Module YAML selects native, QEMU and nested-workspace execution.
   checks:
-    name: Common checks and Linux builds
+    name: Common checks, Linux builds, coverage and docs
     uses: eclipse-score/cicd-workflows/.github/workflows/on-pr.yml@central-workflow
     permissions:
       contents: read
@@ -40,17 +41,3 @@ jobs:
       require-bzlmod-lock: true
       format-target: "//tools:format.check"
       copyright-target: "//tools:copyright-check"
-  coverage-report:
-    uses: ./.github/workflows/coverage_report.yml
-  docs-build:
-    needs: [checks, coverage-report]
-    uses: eclipse-score/cicd-workflows/.github/workflows/docs.yml@3f61217cfa69b1d40b366049ace7fc63932e63c2
-    permissions:
-      contents: read
-    with:
-      bazel-target: "//:docs"
-      retention-days: 5
-      # Use the central native test archive; package-relative paths remain
-      # unchanged so the docs source linker reconstructs the correct labels.
-      tests-report-artifact: ${{ fromJSON(needs.checks.outputs.configured-artifacts)['linux-native-tests-unit'].testlogs }}
-      coverage-report-artifact: ${{ github.event.repository.name }}_cpp_coverage_report
