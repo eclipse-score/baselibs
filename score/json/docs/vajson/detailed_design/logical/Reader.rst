@@ -22,15 +22,10 @@ Reader
 
     Contains all logic of the Parser.
 
-    .. Unit:: VirtualParser
-      :safety: ASIL_D
-
-      Contains the logic for a SAX-style JSON parser based on dynamic polymorphism.
-
     .. Unit:: StructureParser
       :safety: ASIL_D
 
-      Contains the logic for an SAX-style JSON parser.
+      Contains the logic for a SAX-style JSON parser based on dynamic polymorphism.
 
 ..
     LogicalUnit:: Util
@@ -87,47 +82,6 @@ Reader
 Diagrams
 --------
 
-VirtualParser
-^^^^^^^^^^^^^
-
-.. uml::
-
-    @startuml
-    hide empty members
-
-    package "score" {
-      package "json" {
-        package "vajson" {
-        class VirtualParser {
-          + VirtualParser(JsonData&)
-          + virtual auto Parse() -> Result<void>
-
-          - virtual auto OnNull() -> ParserResult
-          - virtual auto OnBool(bool) -> ParserResult
-          - virtual auto OnNumber(util::JsonNumber) -> ParserResult
-          - virtual auto OnString(StringView) -> ParserResult
-          - virtual auto OnKey(StringView) -> ParserResult
-          - virtual auto OnStartObject() -> ParserResult
-          - virtual auto OnEndObject(std::size_t) -> ParserResult
-          - virtual auto OnStartArray() -> ParserResult
-          - virtual auto OnEndArray(std::size_t) -> ParserResult
-          - virtual auto OnBinary(Bytes) -> ParserResult
-          - virtual auto OnUnexpectedEvent() -> ParserResult
-
-          - auto OnString(CStringView) -> ParserResult
-          - auto OnBinaryString(StringView) -> ParserResult
-          - auto OnKey(CStringView) -> ParserResult
-          - auto OnBinaryKey(StringView) -> ParserResult
-        }
-
-        class StructureParser<VirtualParser>
-        }
-      }
-    }
-
-    VirtualParser --> StructureParser
-    @enduml
-
 StructureParser
 ^^^^^^^^^^^^^^^
 
@@ -139,11 +93,19 @@ StructureParser
     package "score" {
       package "json" {
         package "vajson" {
-          class StructureParser<Implementer> {
-            + StructureParser(Implementer&, JsonData&)
-          }
-          class StructureParserBase<logic> {
-          + auto Parse() -> Result<void>
+          abstract class StructureParser {
+            + StructureParser(JsonData&)
+            + auto Parse() -> Result<void>
+
+            - {abstract} virtual auto OnNull() -> ParserResult
+            - {abstract} virtual auto OnBool(bool) -> ParserResult
+            - {abstract} virtual auto OnNumber(JsonNumber) -> ParserResult
+            - {abstract} virtual auto OnString(CStringView) -> ParserResult
+            - {abstract} virtual auto OnKey(CStringView) -> ParserResult
+            - {abstract} virtual auto OnStartObject() -> ParserResult
+            - {abstract} virtual auto OnEndObject(std::size_t) -> ParserResult
+            - {abstract} virtual auto OnStartArray() -> ParserResult
+            - {abstract} virtual auto OnEndArray(std::size_t) -> ParserResult
           }
 
           class OptChar {}
@@ -156,7 +118,6 @@ StructureParser
     }
 
     StructureParser --> JsonOps
-    StructureParser --|> StructureParserBase
 
     StructureParser --> JsonData
 

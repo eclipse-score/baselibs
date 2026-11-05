@@ -50,10 +50,7 @@ deactivate JsonData
 Application --> Parser : Parser(JsonData&)
 
 activate Parser
-Parser --> VirtualParser : Parser(JsonData&)
-
-activate VirtualParser
-VirtualParser --> StructureParser : StructureParser(JsonData&)
+Parser --> StructureParser : StructureParser(JsonData&)
 
 activate StructureParser
 StructureParser --> JsonOps : JsonOps(JsonData&)
@@ -62,11 +59,8 @@ activate JsonOps
 JsonOps --> StructureParser
 deactivate JsonOps
 
-StructureParser --> VirtualParser
+StructureParser --> Parser
 deactivate StructureParser
-
-VirtualParser --> Parser
-deactivate VirtualParser
 
 Parser --> Application
 deactivate Parser
@@ -74,10 +68,7 @@ deactivate Parser
 Application --> Parser : Parse()
 
 activate Parser
-Parser --> VirtualParser : Parse()
-
-activate VirtualParser
-VirtualParser --> StructureParser : Parse()
+Parser --> StructureParser : Parse()
 
 activate StructureParser
 StructureParser --> JsonOps : SkipWhitespace()
@@ -155,29 +146,20 @@ else
   deactivate DepthCounter
 end
 
-StructureParser --> VirtualParser : OnStartObject()
-
-activate VirtualParser #LightGrey
-VirtualParser --> Parser : OnStartObject()
+StructureParser --> Parser : OnStartObject()
 
 activate Parser #LightGrey
 note left : Call to user implementation
 ...
-Parser --> VirtualParser
+Parser --> StructureParser
 deactivate Parser
-
-VirtualParser --> StructureParser
-deactivate VirtualParser
 
 deactivate StructureParser
 deactivate StructureParser
 end
 
-StructureParser --> VirtualParser
+StructureParser --> Parser
 deactivate StructureParser
-
-VirtualParser --> Parser
-deactivate VirtualParser
 
 Parser --> Application
 deactivate Parser
