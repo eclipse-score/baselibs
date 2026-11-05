@@ -8,8 +8,8 @@
 # https://www.apache.org/licenses/LICENSE-2.0
 #
 # SPDX-License-Identifier: Apache-2.0
-# This opt-in POC exercises a focused dependency graph through the shared CI.
-# Existing module workflows remain the required coverage for the complete module.
+# The shared workflow owns the complete native Linux build and test selection.
+# ARM runtime tests and the nested integration workspace have dedicated jobs.
 # Bazel configs select module-owned platforms and toolchains explicitly.
 schema-version: 2
 variants:
@@ -20,21 +20,9 @@ variants:
       - name: linux
     checks:
       tests:
-        # Build the library explicitly before executing its native unit tests.
+        # Build all native targets before running the complete module test set.
         # Both commands must produce Bazel evidence for the shared gate to pass.
         - test-type: unit
           bazel-configs: score-linux-x86_64
-          bazel-build-targets: //score/result:result //score/result:error
-          bazel-test-targets: //score/result:tests //score/result:error_msg_mapping_test
-  - name: linux-cross
-    architecture:
-      - name: aarch64
-    os:
-      - name: linux
-    checks:
-      builds:
-        # Cross-compilation checks the ARM toolchain without pretending that
-        # native unit tests have run on ARM or requiring an emulation setup.
-        - name: compiler
-          bazel-configs: score-linux-aarch64
-          bazel-build-targets: //score/result:result //score/result:error
+          bazel-build-targets: //...
+          bazel-test-targets: //...

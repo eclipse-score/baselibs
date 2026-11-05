@@ -26,6 +26,22 @@ on:
     types: [checks_requested]
   workflow_call:
 jobs:
+  # The shared entry point owns common checks and the native Linux build/test
+  # graph. The remaining matrix needs module-specific execution environments.
+  checks:
+    name: Common checks and native Linux
+    uses: eclipse-score/cicd-workflows/.github/workflows/on-pr.yml@central-workflow
+    permissions:
+      contents: read
+    with:
+      workflow-config-yaml: .github/ci.yml
+      skip-pre-commit: true
+      skip-python-tests: true
+      require-bzlmod-lock: true
+      format-target: "//tools:format.check"
+      copyright-target: "//tools:copyright-check"
+  # ARM runtime tests need QEMU, and integration has its own Bazel workspace.
+  # Keep both here until the shared runner/cache contract supports those needs.
   linux-build-and-test:
     name: Build and Test ${{ matrix.name }}
     runs-on: ubuntu-24.04
@@ -33,13 +49,6 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          - name: score-linux-x86_64
-            artifact-name: x86_64-linux
-            bazel-config: score-linux-x86_64
-            working-directory: "."
-            bazel-build-target: "//..."
-            bazel-test-target: >-
-              //...
           - name: score-linux-aarch64
             artifact-name: aarch64-linux
             bazel-config: score-linux-aarch64
@@ -93,12 +102,14 @@ jobs:
   coverage-report:
     uses: ./.github/workflows/coverage_report.yml
   docs-build:
-    needs: [linux-build-and-test, coverage-report]
+    needs: [checks, linux-build-and-test, coverage-report]
     uses: eclipse-score/cicd-workflows/.github/workflows/docs.yml@3f61217cfa69b1d40b366049ace7fc63932e63c2
     permissions:
       contents: read
     with:
       bazel-target: "//:docs"
       retention-days: 5
-      tests-report-artifact: "test-report-x86_64-linux"
+      # Use the central native test archive; package-relative paths remain
+      # unchanged so the docs source linker reconstructs the correct labels.
+      tests-report-artifact: ${{ fromJSON(needs.checks.outputs.configured-artifacts)['linux-native-tests-unit'].testlogs }}
       coverage-report-artifact: ${{ github.event.repository.name }}_cpp_coverage_report
