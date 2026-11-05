@@ -184,7 +184,7 @@ Functional Requirements
    Synchronized object access shall provide a non-blocking lock acquisition operation that returns an empty pointer when the lock cannot be acquired immediately.
 
 .. comp_req:: Shared Synchronized Access
-   :id: comp_req__concurrency__synchronized_shared_access
+   :id: comp_req__concurrency__synchronized_shared
    :reqtype: Functional
    :security: YES
    :safety: ASIL_B
@@ -193,7 +193,7 @@ Functional Requirements
    :version: 1
    :satisfied_by: comp__baselibs_concurrency[version==1]
 
-   Synchronized object access shall provide shared-lock acquisition for lockable types that support shared locking, with access protected for the lifetime of the returned pointer.
+   Synchronized object access shall provide shared-lock acquisition for lockable types that support shared locking, with non-modifiable access protected for the lifetime of the returned pointer.
 
 .. comp_req:: Long-Running Threads Container
    :id: comp_req__concurrency__long_running_threads
