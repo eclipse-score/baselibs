@@ -25228,9 +25228,23 @@
     "FullyVerifies": null
   },
   {
-    "name": "BackendTableTest__IsBackendAvailableReturnsFalseForInvalidMode",
+    "name": "BackendTableTest__SystemBackendActivationRegistersSystemMode",
     "file": "score/mw/log/backend_table_test.cpp",
     "line": "155",
+    "result": "passed",
+    "repo_name": "local_repo",
+    "hash": "",
+    "url": "",
+    "TestType": "interface-test",
+    "DerivationTechnique": "design-analysis",
+    "result_text": "",
+    "PartiallyVerifies": null,
+    "FullyVerifies": null
+  },
+  {
+    "name": "BackendTableTest__IsBackendAvailableReturnsFalseForInvalidMode",
+    "file": "score/mw/log/backend_table_test.cpp",
+    "line": "177",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -25244,7 +25258,7 @@
   {
     "name": "BackendTableTest__CreateRecorderForModeReturnsNullptrWhenNotRegistered",
     "file": "score/mw/log/backend_table_test.cpp",
-    "line": "165",
+    "line": "187",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -25258,7 +25272,7 @@
   {
     "name": "BackendTableTest__CreateRecorderForModeReturnsRecorderWhenRegistered",
     "file": "score/mw/log/backend_table_test.cpp",
-    "line": "176",
+    "line": "198",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -25270,9 +25284,23 @@
     "FullyVerifies": null
   },
   {
+    "name": "BackendTableTest__SystemModeUsesRegisteredBackendCreator",
+    "file": "score/mw/log/backend_table_test.cpp",
+    "line": "215",
+    "result": "passed",
+    "repo_name": "local_repo",
+    "hash": "",
+    "url": "",
+    "TestType": "interface-test",
+    "DerivationTechnique": "design-analysis",
+    "result_text": "",
+    "PartiallyVerifies": null,
+    "FullyVerifies": null
+  },
+  {
     "name": "BackendTableTest__CreateRecorderForModeReturnsNullptrForInvalidMode",
     "file": "score/mw/log/backend_table_test.cpp",
-    "line": "193",
+    "line": "234",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -25286,7 +25314,7 @@
   {
     "name": "BackendTableTest__BackendRegistrantRegistersCreatorDuringConstruction",
     "file": "score/mw/log/backend_table_test.cpp",
-    "line": "206",
+    "line": "247",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -25300,7 +25328,7 @@
   {
     "name": "BackendTableTest__MultipleBackendsCanBeRegistered",
     "file": "score/mw/log/backend_table_test.cpp",
-    "line": "224",
+    "line": "265",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -25314,7 +25342,7 @@
   {
     "name": "BackendTableTest__RegisterBackendOverwritesPreviousRegistration",
     "file": "score/mw/log/backend_table_test.cpp",
-    "line": "246",
+    "line": "287",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -30482,11 +30510,11 @@
     "file": "score/mw/log/detail/utils/signal_handling/signal_handling_test.cpp",
     "line": "87",
     "result": "passed",
-    "repo_name": null,
-    "hash": null,
-    "url": null,
-    "TestType": null,
-    "DerivationTechnique": null,
+    "repo_name": "local_repo",
+    "hash": "",
+    "url": "",
+    "TestType": "interface-test",
+    "DerivationTechnique": "design-analysis",
     "result_text": "",
     "PartiallyVerifies": null,
     "FullyVerifies": null
@@ -30494,7 +30522,7 @@
   {
     "name": "SignalHandlingTest__PThreadUnblockSigTerm_SigEmptySetFails_ReturnsError",
     "file": "score/mw/log/detail/utils/signal_handling/signal_handling_test.cpp",
-    "line": "105",
+    "line": "111",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -30508,7 +30536,7 @@
   {
     "name": "SignalHandlingTest__PThreadUnblockSigTerm_SigAddSetFails_ReturnsError",
     "file": "score/mw/log/detail/utils/signal_handling/signal_handling_test.cpp",
-    "line": "117",
+    "line": "123",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -30522,7 +30550,7 @@
   {
     "name": "SignalHandlingTest__PThreadUnblockSigTerm_PthreadSigMaskFails_ReturnsError",
     "file": "score/mw/log/detail/utils/signal_handling/signal_handling_test.cpp",
-    "line": "130",
+    "line": "136",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -30536,7 +30564,7 @@
   {
     "name": "SignalHandlingTest__PThreadUnblockSigTerm_AllSucceed_ReturnsSuccess",
     "file": "score/mw/log/detail/utils/signal_handling/signal_handling_test.cpp",
-    "line": "143",
+    "line": "149",
     "result": "passed",
     "repo_name": null,
     "hash": null,
