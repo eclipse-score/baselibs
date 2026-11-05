@@ -41,8 +41,7 @@ namespace score::concurrency
  * - value_type: The type T of the synchronized object.
  * - pointer: LockedPtr<T, std::unique_lock<Lockable>>
  * - const_pointer: LockedPtr<const T, std::unique_lock<Lockable>>
- * - shared_pointer: LockedPtr<T, std::shared_lock<Lockable>>
- * - const_shared_pointer: LockedPtr<const T, std::shared_lock<Lockable>>
+ * - shared_pointer: LockedPtr<const T, std::shared_lock<Lockable>>
  *
  * @section how How does it work?
  * - Internally stores:
@@ -54,8 +53,8 @@ namespace score::concurrency
  *       with the lock held which is released when the returned pointer goes out of scope.
  * - lock_shared() (when Lockable supports shared locking):
  *     - Acquires a shared lock on mut.
- *     - Returns a shared_pointer (or const_shared_pointer for const Synchronized) that releases the shared lock when
- *       the returned pointer goes out of scope.
+ *     - Returns a shared_pointer providing const access; it releases the shared lock when the returned pointer goes out
+ *       of scope. The const-qualified method is callable on both const and non-const Synchronized objects.
  * - WithLock(Func&& f):
  *     - Acquires the lock.
  *     - Invokes the callable f(pointer) or f(const_pointer) with the lock held.
@@ -115,8 +114,7 @@ class Synchronized
     using value_type = T;
     using pointer = LockedPtr<T, std::unique_lock<Lockable>>;
     using const_pointer = LockedPtr<const T, std::unique_lock<Lockable>>;
-    using shared_pointer = LockedPtr<T, std::shared_lock<Lockable>>;
-    using const_shared_pointer = LockedPtr<const T, std::shared_lock<Lockable>>;
+    using shared_pointer = LockedPtr<const T, std::shared_lock<Lockable>>;
 
     /**
      * @brief Constructs a Synchronized object with a T obj constructed by forwarding t_args to T's constructor.
@@ -201,29 +199,17 @@ class Synchronized
 
     /**
      * @brief Acquires a shared lock on the internal Lockable.
-     * @return An RAII shared_pointer that provides access to the synchronized object while the shared lock is held.
-     * @remarks This function is available only when Lockable supports lock_shared() and unlock_shared(). The returned
-     *          pointer must not outlive the Synchronized object.
+     * @return An RAII shared_pointer that provides const access to the synchronized object while the shared lock is
+     *         held.
+     * @remarks This const-qualified function is available on const and non-const Synchronized objects when Lockable
+     *          supports lock_shared() and unlock_shared(). The returned pointer must not outlive the Synchronized
+     *          object.
      */
     template <typename LockableType = Lockable,
               typename = std::enable_if_t<is_shared_lockable_v<LockableType> && std::is_same_v<LockableType, Lockable>>>
-    [[nodiscard]] shared_pointer lock_shared()
+    [[nodiscard]] shared_pointer lock_shared() const
     {
         return shared_pointer{&obj, std::shared_lock<Lockable>{mut}};
-    }
-
-    /**
-     * @brief Acquires a shared lock on the internal Lockable.
-     * @return An RAII const_shared_pointer that provides const access to the synchronized object while the shared lock
-     *         is held.
-     * @remarks This function is available only when Lockable supports lock_shared() and unlock_shared(). The returned
-     *          pointer must not outlive the Synchronized object.
-     */
-    template <typename LockableType = Lockable,
-              typename = std::enable_if_t<is_shared_lockable_v<LockableType> && std::is_same_v<LockableType, Lockable>>>
-    [[nodiscard]] const_shared_pointer lock_shared() const
-    {
-        return const_shared_pointer{&obj, std::shared_lock<Lockable>{mut}};
     }
 
     /**

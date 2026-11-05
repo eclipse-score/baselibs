@@ -237,19 +237,17 @@ TEST(SynchronizedTest, LockMethodBasic)
     EXPECT_EQ(sync_int.WithLock(clone), 100);
 }
 
-TEST(SynchronizedTest, SharedLockSupportsMutableConstAndSharedMutexes)
+TEST(SynchronizedTest, SharedLockProvidesConstAccessAndRequiresSharedMutexes)
 {
     RecordProperty("TestType", "requirements-based");
     RecordProperty("DerivationTechnique", "requirements-analysis");
-    RecordProperty("FullyVerifies", "comp_req__concurrency__synchronized_shared_access");
+    RecordProperty("FullyVerifies", "comp_req__concurrency__synchronized_shared");
     RecordProperty("Description",
-                   "Check that shared locking provides mutable and const pointer access for shared-lockable mutexes "
+                   "Check that shared locking provides const pointer access for shared-lockable mutexes "
                    "and is unavailable for mutexes without shared locking.");
 
     using SharedSynchronized = Synchronized<int, std::shared_mutex>;
     static_assert(std::is_same_v<SharedSynchronized::shared_pointer,
-                                 score::concurrency::LockedPtr<int, std::shared_lock<std::shared_mutex>>>);
-    static_assert(std::is_same_v<SharedSynchronized::const_shared_pointer,
                                  score::concurrency::LockedPtr<const int, std::shared_lock<std::shared_mutex>>>);
     static_assert(HasLockShared<SharedSynchronized>::value);
     static_assert(HasLockShared<const SharedSynchronized>::value);
