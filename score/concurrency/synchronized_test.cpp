@@ -13,7 +13,6 @@
 #include "score/concurrency/synchronized.h"
 #include "score/concurrency/test_types.h"
 
-#include "score/quality/compiler_warnings/deprecation.h"
 #include "score/quality/compiler_warnings/warnings.h"
 
 #include "gmock/gmock.h"
@@ -34,33 +33,12 @@ namespace test
 namespace
 {
 template <typename Sync, typename Func>
-auto GetWithLockMember()
-{
-    using SyncType = std::remove_cv_t<std::remove_reference_t<Sync>>;
-
-    DISABLE_WARNING_PUSH
-    DISABLE_WARNING_DEPRECATED
-    if constexpr (std::is_const_v<std::remove_reference_t<Sync>> ||
-                  !std::is_invocable_v<Func, typename SyncType::pointer>)
-    {
-        using ReturnType = std::decay_t<std::invoke_result_t<Func, typename SyncType::const_pointer>>;
-        using WithLockMember = ReturnType (SyncType::*)(Func&&) const;
-        return static_cast<WithLockMember>(&SyncType::template WithLock<Func>);
-    }
-    else
-    {
-        using ReturnType = std::decay_t<std::invoke_result_t<Func, typename SyncType::pointer>>;
-        using WithLockMember = ReturnType (SyncType::*)(Func&&);
-        return static_cast<WithLockMember>(&SyncType::template WithLock<Func>);
-    }
-    DISABLE_WARNING_POP
-}
-
-template <typename Sync, typename Func>
 decltype(auto) WithLock(Sync& sync, Func func)
 {
-    const auto with_lock = GetWithLockMember<Sync, Func>();
-    return score::InvokeDeprecated(with_lock, sync, std::move(func));
+    DISABLE_WARNING_PUSH
+    DISABLE_WARNING_DEPRECATED
+    return sync.WithLock(std::move(func));
+    DISABLE_WARNING_POP
 }
 
 constexpr auto clone = [](auto ptr) noexcept(std::is_nothrow_copy_constructible_v<std::decay_t<decltype(*ptr)>>) {

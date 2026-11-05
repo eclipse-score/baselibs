@@ -147,7 +147,6 @@ cc_gtest_unit_test(
         ":type_traits",
         ":unlock_guard",
         "@score_baselibs//score/quality/compiler_warnings",
-        "@score_baselibs//score/quality/compiler_warnings:deprecation",
     ],
 )
 
