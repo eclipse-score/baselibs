@@ -32,7 +32,6 @@ tests:
     bazel-test-custom-cli-args: --test_tag_filters=-no_rust_doc_test
   # The separate Bazel module consumes baselibs through a local_path_override.
   linux-integration:
-    test-type: integration
     bazel-configs: x86_64-linux
     bazel-build-targets: //...
     working-directory: examples/integration
