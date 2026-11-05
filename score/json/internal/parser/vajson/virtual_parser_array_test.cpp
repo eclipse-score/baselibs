@@ -13,7 +13,7 @@
 /// @file
 /// @brief  Contains tests concerning the parsing of arrays.
 
-#include "score/json/internal/parser/vajson/virtual_parser.h"
+#include "score/json/internal/parser/vajson/structure_parser.h"
 
 #include "gtest/gtest.h"
 #include "score/json/internal/parser/vajson/json_data.h"
@@ -146,7 +146,7 @@ TEST(UT__Parser__Array, Dynamic__NoArrays)
 }
 
 /// Tests that when the overridden OnEndArray method returns an error, that error is propagated.
-/// @trace           score::json::vajson::internal::StructureParserBase::ParseEndArray
+/// @trace           score::json::vajson::internal::StructureParser::ParseEndArray
 TEST(UT__Parser__Array__Error, Dynamic__OnEndArray)
 {
     auto doc{JsonData::FromBuffer(std::string_view{R"([1,2])"})};
@@ -160,7 +160,7 @@ TEST(UT__Parser__Array__Error, Dynamic__OnEndArray)
 }
 
 /// Tests that when the overridden OnStartArray method returns an error, that error is propagated.
-/// @trace           score::json::vajson::internal::StructureParserBase::ParseStartArray
+/// @trace           score::json::vajson::internal::StructureParser::ParseStartArray
 TEST(UT__Parser__Array__Error, Dynamic__OnStartArray)
 {
     auto doc{JsonData::FromBuffer(std::string_view{R"([[]])"})};

@@ -21,8 +21,7 @@ cc_library(
     srcs = [
         "json_data.cpp",
         "json_ops.cpp",
-        "structure_parser_base.cpp",
-        "virtual_parser.cpp",
+        "structure_parser.cpp",
     ],
     hdrs = [
         "depth_counter.h",
@@ -36,9 +35,7 @@ cc_library(
         "reader_config.h",
         "reader_fwd.h",
         "structure_parser.h",
-        "structure_parser_base.h",
         "types.h",
-        "virtual_parser.h",
     ],
     features = COMPILER_WARNING_FEATURES,
     tags = ["FFI"],

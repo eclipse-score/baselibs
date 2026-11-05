@@ -13,7 +13,7 @@
 #ifndef SCORE_JSON_INTERNAL_PARSER_VAJSON_STRUCTURE_PARSER_STUB_H
 #define SCORE_JSON_INTERNAL_PARSER_VAJSON_STRUCTURE_PARSER_STUB_H
 
-#include "score/json/internal/parser/vajson/virtual_parser.h"
+#include "score/json/internal/parser/vajson/structure_parser.h"
 
 namespace score
 {
@@ -25,10 +25,10 @@ namespace unit_test
 {
 
 /// @brief Test stub that accepts every event, so that tests only override the callbacks they observe.
-class StructureParserStub : public internal::VirtualParser
+class StructureParserStub : public internal::StructureParser
 {
   public:
-    using internal::VirtualParser::VirtualParser;
+    using internal::StructureParser::StructureParser;
 
   private:
     auto OnNull() noexcept -> ParserResult override
@@ -46,12 +46,12 @@ class StructureParserStub : public internal::VirtualParser
         return ParserState::kRunning;
     }
 
-    auto OnString(StringView) noexcept -> ParserResult override
+    auto OnString(CStringView) noexcept -> ParserResult override
     {
         return ParserState::kRunning;
     }
 
-    auto OnKey(StringView) noexcept -> ParserResult override
+    auto OnKey(CStringView) noexcept -> ParserResult override
     {
         return ParserState::kRunning;
     }
