@@ -10,19 +10,14 @@
  *
  * SPDX-License-Identifier: Apache-2.0
  ********************************************************************************/
-/*!        \file
- *        \brief  Representation of JSON data.
- *
- *      \details  Provides handling methods for JSON data.
- *
- *********************************************************************************************************************/
+/// @file
+/// @brief  Representation of JSON data.
+///
+/// @details  Provides handling methods for JSON data.
 
 #ifndef SCORE_JSON_INTERNAL_PARSER_VAJSON_JSON_DATA_H
 #define SCORE_JSON_INTERNAL_PARSER_VAJSON_JSON_DATA_H
 
-/**********************************************************************************************************************
- *  INCLUDES
- *********************************************************************************************************************/
 #include "score/json/internal/parser/vajson/depth_counter.h"
 #include "score/json/internal/parser/vajson/parser_state.h"
 #include "score/json/internal/parser/vajson/reader_config.h"
@@ -38,145 +33,131 @@ namespace json
 namespace vajson
 {
 
-/// \brief           A JSON data representation
-/// \details         Handles the state of the data, such as the current position in the file and nesting of JSON tree.
-/// \trace           DSGN-JSON-Reader-Deserialization
+/// @brief           A JSON data representation
+/// @details         Handles the state of the data, such as the current position in the file and nesting of JSON tree.
+/// @trace           DSGN-JSON-Reader-Deserialization
 class JsonData final
 {
-    /// \brief           Stream buffer
-    std::reference_wrapper<std::istream> stream_;
-    /// \brief           The potentially owned stream
-    std::unique_ptr<std::istream> owned_stream_{nullptr};
-    /// \brief           JSON structure state
-    internal::DepthCounter depth_counter_{};
-    /// \brief           Current buffer
-    String current_buffer_{};
-    /// \brief           Flag to indicate if the document has a UTF-8 BOM
-    EncodingType encoding_{EncodingType::kNone};
-
   public:
-    /// \brief           Class JsonOps must have access to the InputStream but no other classes
-    friend class internal::JsonOps;  // VECTOR SL AutosarC++17_10-A11.3.1: MD_JSON_AutosarC++17_10-A11.3.1_json_ops
-
-    /// \brief           Initializes a JSON data object using a constructed reader
-    /// \param[in]       input_stream
+    /// @brief           Initializes a JSON data object using a constructed reader
+    /// @param[in]       input_stream
     ///                  to operate on.
-    /// \context         ANY
-    /// \pre             input_stream has to be open.
-    /// \threadsafe      FALSE
-    /// \reentrant       FALSE
+    /// @context         ANY
+    /// @pre             input_stream has to be open.
+    /// @threadsafe      FALSE
+    /// @reentrant       FALSE
     explicit JsonData(std::istream& input_stream) noexcept;
 
-    /// \brief           Initializes a JSON data object using a constructed reader
-    /// \param[in]       input_stream
+    /// @brief           Initializes a JSON data object using a constructed reader
+    /// @param[in]       input_stream
     ///                  to operate on.
-    /// \context         ANY
-    /// \pre             input_stream has to be open.
-    /// \threadsafe      FALSE
-    /// \reentrant       FALSE
+    /// @context         ANY
+    /// @pre             input_stream has to be open.
+    /// @threadsafe      FALSE
+    /// @reentrant       FALSE
     explicit JsonData(std::unique_ptr<std::istream> input_stream) noexcept;
 
-    /// \brief           Initializes a JSON data object from a file
-    /// \param[in]       path
-    ///                  The path to the JSON file.
-    /// \return          A constructed JSON data object.
-    /// \error           score::json::vajson::JsonErrc::kStreamFailure
-    ///                  if the file could not be opened.
-    /// \context         ANY
-    /// \pre             -
-    /// \threadsafe      FALSE
-    /// \reentrant       FALSE
-    /// \synchronous     -
-    static auto FromFile(std::string_view path) noexcept -> Result<JsonData>;
-
-    /// \brief           Initializes a JSON data object from a buffer
-    /// \param[in]       buffer
-    ///                  The buffer containing the JSON value.
-    /// \return          A constructed JSON data object.
-    /// \context         ANY
-    /// \pre             -
-    /// \threadsafe      FALSE
-    /// \reentrant       FALSE
-    /// \synchronous     -
-    static auto FromBuffer(std::string_view buffer) noexcept -> Result<JsonData>;
-
-    /// \brief           Initializes a JSON data object from a buffer
-    /// \param[in]       buffer
-    ///                  The buffer containing the JSON value.
-    /// \return          A constructed JSON data object.
-    /// \context         ANY
-    /// \pre             -
-    /// \threadsafe      FALSE
-    /// \reentrant       FALSE
-    /// \synchronous     -
-    static auto FromBuffer(score::safecpp::zstring_view buffer) noexcept -> Result<JsonData>;
-
-    /// \brief           Initializes a JSON data object from a buffer
-    /// \param[in]       buffer
-    ///                  The buffer containing the JSON value.
-    /// \return          A constructed JSON data object.
-    /// \context         ANY
-    /// \pre             -
-    /// \threadsafe      FALSE
-    /// \reentrant       FALSE
-    /// \synchronous     -
-    static auto FromBuffer(score::cpp::span<const char> buffer) noexcept -> Result<JsonData>;
-
-    /// \brief           Move constructor
-    /// \param[in]       other
+    /// @brief           Move constructor
+    /// @param[in]       other
     ///                  The moved from object.
-    /// \context         ANY
-    /// \pre             -
-    /// \threadsafe      FALSE
-    /// \reentrant       FALSE
+    /// @context         ANY
+    /// @pre             -
+    /// @threadsafe      FALSE
+    /// @reentrant       FALSE
     JsonData(JsonData&& other) noexcept = default;
 
-    /// \brief           Default move assignment
-    /// \return          A reference to the moved into object.
-    /// \context         ANY
-    /// \pre             -
-    /// \threadsafe      FALSE
-    /// \reentrant       FALSE
+    /// @brief           Default move assignment
+    /// @return          A reference to the moved into object.
+    /// @context         ANY
+    /// @pre             -
+    /// @threadsafe      FALSE
+    /// @reentrant       FALSE
     auto operator=(JsonData&&) & noexcept -> JsonData& = default;
 
-    /// \brief           Deleted copy constructor
+    /// @brief           Deleted copy constructor
     JsonData(const JsonData&) = delete;
 
-    /// \brief           Deleted copy assignment
+    /// @brief           Deleted copy assignment
     auto operator=(const JsonData&) -> JsonData& = delete;
 
-    /// \brief           Default destructor
-    /// \context         ANY
-    /// \pre             -
-    /// \threadsafe      FALSE
-    /// \reentrant       FALSE
+    /// @brief           Default destructor
+    /// @context         ANY
+    /// @pre             -
+    /// @threadsafe      FALSE
+    /// @reentrant       FALSE
     ~JsonData() noexcept = default;
 
-    /// \brief           Returns the JSON structure state
-    /// \return          The current state.
-    /// \context         ANY
-    /// \pre             -
-    /// \threadsafe      TRUE, for different this pointer
+    /// @brief           Initializes a JSON data object from a file
+    /// @param[in]       path
+    ///                  The path to the JSON file.
+    /// @return          A constructed JSON data object.
+    /// @error           score::json::vajson::JsonErrc::kStreamFailure
+    ///                  if the file could not be opened.
+    /// @context         ANY
+    /// @pre             -
+    /// @threadsafe      FALSE
+    /// @reentrant       FALSE
+    /// @synchronous     -
+    static auto FromFile(std::string_view path) noexcept -> Result<JsonData>;
+
+    /// @brief           Initializes a JSON data object from a buffer
+    /// @param[in]       buffer
+    ///                  The buffer containing the JSON value.
+    /// @return          A constructed JSON data object.
+    /// @context         ANY
+    /// @pre             -
+    /// @threadsafe      FALSE
+    /// @reentrant       FALSE
+    /// @synchronous     -
+    static auto FromBuffer(std::string_view buffer) noexcept -> Result<JsonData>;
+
+    /// @brief           Initializes a JSON data object from a buffer
+    /// @param[in]       buffer
+    ///                  The buffer containing the JSON value.
+    /// @return          A constructed JSON data object.
+    /// @context         ANY
+    /// @pre             -
+    /// @threadsafe      FALSE
+    /// @reentrant       FALSE
+    /// @synchronous     -
+    static auto FromBuffer(score::safecpp::zstring_view buffer) noexcept -> Result<JsonData>;
+
+    /// @brief           Initializes a JSON data object from a buffer
+    /// @param[in]       buffer
+    ///                  The buffer containing the JSON value.
+    /// @return          A constructed JSON data object.
+    /// @context         ANY
+    /// @pre             -
+    /// @threadsafe      FALSE
+    /// @reentrant       FALSE
+    /// @synchronous     -
+    static auto FromBuffer(score::cpp::span<const char> buffer) noexcept -> Result<JsonData>;
+
+    /// @brief           Returns the JSON structure state
+    /// @return          The current state.
+    /// @context         ANY
+    /// @pre             -
+    /// @threadsafe      TRUE, for different this pointer
     auto GetState() & noexcept -> internal::DepthCounter&
     {
         return this->depth_counter_;
     }
 
-    /// \brief           Returns the current string
-    /// \return          The current string.
-    /// \context         ANY
-    /// \pre             -
-    /// \threadsafe      TRUE, for different this pointer
+    /// @brief           Returns the current string
+    /// @return          The current string.
+    /// @context         ANY
+    /// @pre             -
+    /// @threadsafe      TRUE, for different this pointer
     auto GetCurrentString() const noexcept -> CStringView
     {
         return CStringView{this->current_buffer_};
     }
 
-    /// \brief           Gets the emptied string buffer
-    /// \return          The emptied string buffer.
-    /// \context         ANY
-    /// \pre             -
-    /// \threadsafe      TRUE, for different this pointer
+    /// @brief           Gets the emptied string buffer
+    /// @return          The emptied string buffer.
+    /// @context         ANY
+    /// @pre             -
+    /// @threadsafe      TRUE, for different this pointer
     auto GetClearedStringBuffer() & noexcept -> String&
     {
 
@@ -184,46 +165,60 @@ class JsonData final
         return this->current_buffer_;
     }
 
-    /// \brief           Gets the string buffer
-    /// \return          The string buffer.
-    /// \context         ANY
-    /// \pre             -
-    /// \threadsafe      TRUE, for different this pointer
+    /// @brief           Gets the string buffer
+    /// @return          The string buffer.
+    /// @context         ANY
+    /// @pre             -
+    /// @threadsafe      TRUE, for different this pointer
     auto GetStringBuffer() & noexcept -> String&
     {
         return this->current_buffer_;
     }
 
-    /// \brief           Returns the detected encoding type
-    /// \return          The encoding type.
-    /// \context         ANY
-    /// \pre             -
-    /// \threadsafe      TRUE, for different this pointer
-    /// \reentrant       TRUE, for different this pointer
-    /// \synchronous     -
-    /// \trace           DSGN-JSON-Reader-Encoding
+    /// @brief           Returns the detected encoding type
+    /// @return          The encoding type.
+    /// @context         ANY
+    /// @pre             -
+    /// @threadsafe      TRUE, for different this pointer
+    /// @reentrant       TRUE, for different this pointer
+    /// @synchronous     -
+    /// @trace           DSGN-JSON-Reader-Encoding
     auto GetEncoding() & noexcept -> EncodingType&
     {
         return this->encoding_;
     }
 
   private:
-    /// \brief           Returns the stream
-    /// \return          The stream.
-    /// \context         ANY
-    /// \pre             -
-    /// \threadsafe      TRUE, for different this pointer
+    /// @brief           Class JsonOps must have access to the InputStream but no other classes
+    friend class internal::JsonOps;  // VECTOR SL AutosarC++17_10-A11.3.1: MD_JSON_AutosarC++17_10-A11.3.1_json_ops
+
+    /// @brief           Returns the stream
+    /// @return          The stream.
+    /// @context         ANY
+    /// @pre             -
+    /// @threadsafe      TRUE, for different this pointer
     auto GetStream() noexcept -> std::istream&
     {
         return this->stream_.get();
     }
 
-    /// \brief           Inspects the document's BOM
-    /// \context         ANY
-    /// \pre             The read pointer must be at the beginning of the document.
-    /// \threadsafe      FALSE
-    /// \reentrant       FALSE
+    /// @brief           Inspects the document's BOM
+    /// @context         ANY
+    /// @pre             The read pointer must be at the beginning of the document.
+    /// @threadsafe      FALSE
+    /// @reentrant       FALSE
     void ParseBom() noexcept;
+
+    /// @brief           Stream buffer
+    std::reference_wrapper<std::istream> stream_;
+    /// @brief           The potentially owned stream
+    std::unique_ptr<std::istream> owned_stream_{nullptr};
+    /// @brief           JSON structure state
+    internal::DepthCounter depth_counter_{};
+    /// @brief           Current buffer
+    String current_buffer_{};
+    /// @brief           Flag to indicate if the document has a UTF-8 BOM
+    EncodingType encoding_{EncodingType::kNone};
 };
 
 }  // namespace vajson

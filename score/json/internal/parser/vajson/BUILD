@@ -37,7 +37,6 @@ cc_library(
         "reader_fwd.h",
         "structure_parser.h",
         "structure_parser_base.h",
-        "structure_parser_impl.h",
         "types.h",
         "virtual_parser.h",
     ],

@@ -10,19 +10,14 @@
  *
  * SPDX-License-Identifier: Apache-2.0
  ********************************************************************************/
-/*!        \file
- *        \brief  Keeps track of the nesting depth inside the JSON document.
- *
- *      \details  Provides methods to check and modify the current nesting depth.
- *
- *********************************************************************************************************************/
+/// @file
+/// @brief  Keeps track of the nesting depth inside the JSON document.
+///
+/// @details  Provides methods to check and modify the current nesting depth.
 
 #ifndef SCORE_JSON_INTERNAL_PARSER_VAJSON_DEPTH_COUNTER_H
 #define SCORE_JSON_INTERNAL_PARSER_VAJSON_DEPTH_COUNTER_H
 
-/**********************************************************************************************************************
- *  INCLUDES
- *********************************************************************************************************************/
 #include <cstdint>
 #include <stack>
 #include <string>
@@ -40,74 +35,64 @@ namespace vajson
 {
 namespace internal
 {
-/// \brief           A counter to track the nesting depth of the JSON parser
+/// @brief           A counter to track the nesting depth of the JSON parser
 class DepthCounter final
 {
-    /// \brief            Stores the stack items
-    /// \details         Intentionally a string to make use of SSO.
-    std::stack<char, std::string> stack_{};
-    /// \brief           Stores the element count of arrays and objects on the stack
-    std::stack<std::size_t> counter_{};
-    /// \brief           Flag to indicate if a comma must appear before the next value
-    bool comma_expected_{false};
-    /// \brief           Flag to indicate if all elements are closed
-    bool is_finished_{false};
-
   public:
-    /// \brief           CTOR
-    /// \details         Cannot be defaulted because then it gets deleted by the compiler.
-    /// \context         ANY
-    /// \pre             -
-    /// \threadsafe      FALSE
-    /// \reentrant       FALSE
+    /// @brief           CTOR
+    /// @details         Cannot be defaulted because then it gets deleted by the compiler.
+    /// @context         ANY
+    /// @pre             -
+    /// @threadsafe      FALSE
+    /// @reentrant       FALSE
     DepthCounter() noexcept {}
 
-    /// \brief           Move constructor
-    /// \param[in]       that
+    /// @brief           Move constructor
+    /// @param[in]       that
     ///                  The other DepthCounter to move from.
-    /// \context         ANY
-    /// \pre             -
-    /// \threadsafe      FALSE
-    /// \reentrant       FALSE
+    /// @context         ANY
+    /// @pre             -
+    /// @threadsafe      FALSE
+    /// @reentrant       FALSE
     DepthCounter(DepthCounter&& that) noexcept : stack_{std::move(that.stack_)}, counter_{std::move(that.counter_)} {}
 
-    /// \brief           Deleted copy constructor
+    /// @brief           Deleted copy constructor
     DepthCounter(const DepthCounter&) = delete;
 
-    /// \brief           Move assignment
-    /// \return          Reference to the moved to object.
-    /// \context         ANY
-    /// \pre             -
-    /// \threadsafe      TRUE, for different this pointer
+    /// @brief           Move assignment
+    /// @return          Reference to the moved to object.
+    /// @context         ANY
+    /// @pre             -
+    /// @threadsafe      TRUE, for different this pointer
     auto operator=(DepthCounter&&) & noexcept -> DepthCounter& = default;
 
-    /// \brief           Deleted copy assignment
+    /// @brief           Deleted copy assignment
     auto operator=(const DepthCounter&) -> DepthCounter& = delete;
 
-    /// \brief           Default destructor
-    /// \context         ANY
-    /// \pre             -
-    /// \threadsafe      FALSE
-    /// \reentrant       FALSE
+    /// @brief           Default destructor
+    /// @context         ANY
+    /// @pre             -
+    /// @threadsafe      FALSE
+    /// @reentrant       FALSE
     ~DepthCounter() noexcept = default;
 
-    /// \brief           Checks if an EOF is correct
-    /// \details         An EOF is correct when there are no more elements on the stack, i.e. no arrays, objects, or
+    /// @brief           Checks if an EOF is correct
+    /// @details         An EOF is correct when there are no more elements on the stack, i.e. no arrays, objects, or
     /// keys
     ///                  are left open, or there is only a single value, in case the document consists of only a single
     ///                  value.
-    /// \return          The empty Result if the stack is empty, or an error.
-    /// \error           score::json::vajson::JsonErrc::kInvalidJson
+    /// @return          The empty Result if the stack is empty, or an error.
+    /// @error           score::json::vajson::JsonErrc::kInvalidJson
     ///                  if no EOF was encountered.
-    /// \context         ANY
-    /// \pre             -
-    /// \threadsafe      FALSE
-    /// \reentrant       FALSE
-    /// \internal
+    /// @context         ANY
+    /// @pre             -
+    /// @threadsafe      FALSE
+    /// @reentrant       FALSE
+    /// @internal
     /// - If there are no elements in the stack or there is only a single value:
     ///   - Return an empty Result.
     /// - Otherwise return kInvalidJson.
-    /// \endinternal
+    /// @endinternal
     auto CheckEndOfFile() const noexcept -> ParserResult
     {
         ParserResult result{ParserState::kFinished};
@@ -133,47 +118,47 @@ class DepthCounter final
         return result;
     }
 
-    /// \brief           Adds an Array to the stack
-    /// \return          The empty Result if an array can be added, or an error.
-    /// \error           score::json::vajson::JsonErrc::kInvalidJson,
+    /// @brief           Adds an Array to the stack
+    /// @return          The empty Result if an array can be added, or an error.
+    /// @error           score::json::vajson::JsonErrc::kInvalidJson,
     ///                  if a key was expected
-    /// \context         ANY
-    /// \pre             -
-    /// \threadsafe      FALSE
-    /// \reentrant       FALSE
+    /// @context         ANY
+    /// @pre             -
+    /// @threadsafe      FALSE
+    /// @reentrant       FALSE
     auto AddArray() noexcept -> score::Result<void>
     {
         return this->AddElement('[');
     }
 
-    /// \brief           Adds an Object to the stack
-    /// \return          The empty Result if an object can be added, or an error.
-    /// \error           score::json::vajson::JsonErrc::kInvalidJson
+    /// @brief           Adds an Object to the stack
+    /// @return          The empty Result if an object can be added, or an error.
+    /// @error           score::json::vajson::JsonErrc::kInvalidJson
     ///                  if a key was expected
-    /// \context         ANY
-    /// \pre             -
-    /// \threadsafe      FALSE
-    /// \reentrant       FALSE
+    /// @context         ANY
+    /// @pre             -
+    /// @threadsafe      FALSE
+    /// @reentrant       FALSE
     auto AddObject() noexcept -> score::Result<void>
     {
         return this->AddElement('{');
     }
 
-    /// \brief           Adds a single key to the stack
-    /// \return          The empty Result if a key can be added, or an error.
-    /// \error           score::json::vajson::JsonErrc::kInvalidJson
+    /// @brief           Adds a single key to the stack
+    /// @return          The empty Result if a key can be added, or an error.
+    /// @error           score::json::vajson::JsonErrc::kInvalidJson
     ///                  if a value was expected
-    /// \context         ANY
-    /// \pre             -
-    /// \threadsafe      FALSE
-    /// \reentrant       FALSE
-    /// \internal
+    /// @context         ANY
+    /// @pre             -
+    /// @threadsafe      FALSE
+    /// @reentrant       FALSE
+    /// @internal
     /// - If the last element is an object:
     ///   - Add a key to the stack.
     ///   - Return an empty Result.
     /// - Otherwise:
     ///   - Return an error.
-    /// \endinternal
+    /// @endinternal
     auto AddKey() noexcept -> score::Result<void>
     {
         score::Result<void> result{};
@@ -201,17 +186,17 @@ class DepthCounter final
         return result;
     }
 
-    /// \brief           Adds a single value to the stack
-    /// \return          The empty Result if a value can be added, or an error.
-    /// \error           score::json::vajson::JsonErrc::kInvalidJson
+    /// @brief           Adds a single value to the stack
+    /// @return          The empty Result if a value can be added, or an error.
+    /// @error           score::json::vajson::JsonErrc::kInvalidJson
     ///                  if a key was expected
-    /// \error           score::json::vajson::JsonErrc::kInvalidJson
+    /// @error           score::json::vajson::JsonErrc::kInvalidJson
     ///                  if a value is already present on the stack
-    /// \context         ANY
-    /// \pre             -
-    /// \threadsafe      FALSE
-    /// \reentrant       FALSE
-    /// \internal
+    /// @context         ANY
+    /// @pre             -
+    /// @threadsafe      FALSE
+    /// @reentrant       FALSE
+    /// @internal
     /// - If the stack contains elements:
     ///   - If the last element is an array:
     ///     - Increase the element count for the array.
@@ -222,7 +207,7 @@ class DepthCounter final
     ///     - Return an error.
     /// - Otherwise:
     ///   - Return an empty Result, because a single value is valid JSON.
-    /// \endinternal
+    /// @endinternal
     auto AddValue() noexcept -> score::Result<void>
     {
         score::Result<void> result{};
@@ -271,20 +256,20 @@ class DepthCounter final
         return result;
     }
 
-    /// \brief           Pops an Object from the stack
-    /// \return          The number of keys in the object if the end object call was valid, or an error.
-    /// \error           score::json::vajson::JsonErrc::kInvalidJson
+    /// @brief           Pops an Object from the stack
+    /// @return          The number of keys in the object if the end object call was valid, or an error.
+    /// @error           score::json::vajson::JsonErrc::kInvalidJson
     ///                  If the object cannot be closed.
-    /// \context         ANY
-    /// \pre             -
-    /// \threadsafe      FALSE
-    /// \reentrant       FALSE
-    /// \internal
+    /// @context         ANY
+    /// @pre             -
+    /// @threadsafe      FALSE
+    /// @reentrant       FALSE
+    /// @internal
     /// - If the last element is an object:
     ///   - Pop the Object from the stack.
     /// - Otherwise:
     ///   - Return an error.
-    /// \endinternal
+    /// @endinternal
     auto PopObject() noexcept -> Result<std::size_t>
     {
         const bool expected_key{this->CheckLastElement('{')};
@@ -297,20 +282,20 @@ class DepthCounter final
             });
     }
 
-    /// \brief           Pops an Array from the stack
-    /// \return          The number of elements in the array if the end array call was valid, or an error.
-    /// \error           score::json::vajson::JsonErrc::kInvalidJson
+    /// @brief           Pops an Array from the stack
+    /// @return          The number of elements in the array if the end array call was valid, or an error.
+    /// @error           score::json::vajson::JsonErrc::kInvalidJson
     ///                  if in an object or on toplevel.
-    /// \context         ANY
-    /// \pre             -
-    /// \threadsafe      FALSE
-    /// \reentrant       FALSE
-    /// \internal
+    /// @context         ANY
+    /// @pre             -
+    /// @threadsafe      FALSE
+    /// @reentrant       FALSE
+    /// @internal
     /// - If the last element is an array:
     ///   - Pop the Array from the stack.
     /// - Otherwise:
     ///   - Return an error.
-    /// \endinternal
+    /// @endinternal
     auto PopArray() noexcept -> Result<std::size_t>
     {
         const bool expected_key{this->CheckLastElement('[')};
@@ -323,13 +308,13 @@ class DepthCounter final
             });
     }
 
-    /// \brief           Adds a comma
-    /// \return          True if a comma at the current position is valid, or false otherwise.
-    /// \context         ANY
-    /// \pre             -
-    /// \threadsafe      FALSE
-    /// \reentrant       FALSE
-    /// \internal
+    /// @brief           Adds a comma
+    /// @return          True if a comma at the current position is valid, or false otherwise.
+    /// @context         ANY
+    /// @pre             -
+    /// @threadsafe      FALSE
+    /// @reentrant       FALSE
+    /// @internal
     /// - If a comma is expected:
     ///   - Reset the flag.
     /// - If the stack is empty:
@@ -338,7 +323,7 @@ class DepthCounter final
     ///   - Return true, because in this case we must be inside an array or object and empty elements are fine.
     /// - Otherwise:
     ///   - Return false.
-    /// \endinternal
+    /// @endinternal
     auto AddComma() noexcept -> bool
     {
         // Found at least the expected comma, ignore any succeeding commas (i.e. empty elements).
@@ -351,28 +336,28 @@ class DepthCounter final
     }
 
   private:
-    /// \brief           Checks if the stack is empty
-    /// \return          True if empty.
-    /// \context         ANY
-    /// \pre             -
-    /// \threadsafe      TRUE, for different this pointer
+    /// @brief           Checks if the stack is empty
+    /// @return          True if empty.
+    /// @context         ANY
+    /// @pre             -
+    /// @threadsafe      TRUE, for different this pointer
     auto IsEmpty() const noexcept -> bool
     {
         return this->stack_.empty();
     }
 
-    /// \brief           Pops an element from the stack
-    /// \details         Calling on empty counter invokes undefined behaviour.
-    /// \return          The value of the removed element.
-    /// \context         ANY
-    /// \pre             The stack contains at least one element.
-    /// \threadsafe      FALSE
-    /// \reentrant       FALSE
-    /// \internal
+    /// @brief           Pops an element from the stack
+    /// @details         Calling on empty counter invokes undefined behaviour.
+    /// @return          The value of the removed element.
+    /// @context         ANY
+    /// @pre             The stack contains at least one element.
+    /// @threadsafe      FALSE
+    /// @reentrant       FALSE
+    /// @internal
     /// - Remove the element at the last position from the stack.
     /// - Remove the counter at the last position and return its value.
     /// - If the element was inside another element, increase the outer element's count.
-    /// \endinternal
+    /// @endinternal
     auto Pop() noexcept -> std::size_t
     {
 
@@ -393,19 +378,19 @@ class DepthCounter final
         return count;
     }
 
-    /// \brief           Adds an element to the stack
-    /// \param[in]       element
+    /// @brief           Adds an element to the stack
+    /// @param[in]       element
     ///                  The element to add.
-    /// \return          The empty Result if the element could be added, or an error.
-    /// \error           score::json::vajson::JsonErrc::kInvalidJson
+    /// @return          The empty Result if the element could be added, or an error.
+    /// @error           score::json::vajson::JsonErrc::kInvalidJson
     ///                  if a key was expected
-    /// \error           score::json::vajson::JsonErrc::kInvalidJson
+    /// @error           score::json::vajson::JsonErrc::kInvalidJson
     ///                  if a value is already present on the stack
-    /// \context         ANY
-    /// \pre             -
-    /// \threadsafe      FALSE
-    /// \reentrant       FALSE
-    /// \internal
+    /// @context         ANY
+    /// @pre             -
+    /// @threadsafe      FALSE
+    /// @reentrant       FALSE
+    /// @internal
     /// - If the last element is not an object and not a value:
     ///   - If the last element is a key, pop it from the stack, because the pair is complete.
     ///   - Add the element to the stack.
@@ -413,7 +398,7 @@ class DepthCounter final
     ///   - Return an empty Result.
     /// - Otherwise:
     ///   - Return an error.
-    /// \endinternal
+    /// @endinternal
     auto AddElement(char element) noexcept -> score::Result<void>
     {
         score::Result<void> result{};
@@ -450,20 +435,20 @@ class DepthCounter final
         return result;
     }
 
-    /// \brief           Compares the given element to the last element on the stack if it is not empty
-    /// \param[in]       item
+    /// @brief           Compares the given element to the last element on the stack if it is not empty
+    /// @param[in]       item
     ///                  to check for.
-    /// \return          True if the last element equals the given item.
-    /// \context         ANY
-    /// \pre             -
-    /// \threadsafe      TRUE, for different this pointer
+    /// @return          True if the last element equals the given item.
+    /// @context         ANY
+    /// @pre             -
+    /// @threadsafe      TRUE, for different this pointer
     auto CheckLastElement(char item) const noexcept -> bool
     {
 
         return (!this->IsEmpty()) && (this->stack_.top() == item);
     }
 
-    /// \brief           Sets the finished flag if the stack is empty
+    /// @brief           Sets the finished flag if the stack is empty
     void CheckIfFinished() noexcept
     {
         if (this->IsEmpty())
@@ -471,6 +456,16 @@ class DepthCounter final
             this->is_finished_ = true;
         }
     }
+
+    /// @brief            Stores the stack items
+    /// @details         Intentionally a string to make use of SSO.
+    std::stack<char, std::string> stack_{};
+    /// @brief           Stores the element count of arrays and objects on the stack
+    std::stack<std::size_t> counter_{};
+    /// @brief           Flag to indicate if a comma must appear before the next value
+    bool comma_expected_{false};
+    /// @brief           Flag to indicate if all elements are closed
+    bool is_finished_{false};
 };
 
 }  // namespace internal

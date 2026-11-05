@@ -10,19 +10,14 @@
  *
  * SPDX-License-Identifier: Apache-2.0
  ********************************************************************************/
-/*!        \file
- *        \brief  Contains error handling related types.
- *
- *      \details  Contains Result alias, error domain & error codes.
- *
- *********************************************************************************************************************/
+/// @file
+/// @brief  Contains error handling related types.
+///
+/// @details  Contains Result alias, error domain & error codes.
 
 #ifndef SCORE_JSON_INTERNAL_PARSER_VAJSON_JSON_ERROR_DOMAIN_H
 #define SCORE_JSON_INTERNAL_PARSER_VAJSON_JSON_ERROR_DOMAIN_H
 
-/**********************************************************************************************************************
- *  INCLUDES
- *********************************************************************************************************************/
 #include <iostream>
 #include <utility>
 
@@ -37,16 +32,16 @@ namespace json
 {
 namespace vajson
 {
-/// \brief           Null-terminated C-string
+/// @brief           Null-terminated C-string
 using CStr = const char*;
 
-/// \brief           Unqualified access to ErrorDomain
+/// @brief           Unqualified access to ErrorDomain
 using ErrorDomain = score::result::ErrorDomain;
 
-/// \brief           Unqualified access to ErrorCode
+/// @brief           Unqualified access to ErrorCode
 using ErrorCode = score::result::ErrorCode;
 
-/// \brief           All error codes used by vaJson
+/// @brief           All error codes used by vaJson
 enum class JsonErrc : ErrorCode
 {
     kNotInitialized = 1,
@@ -56,34 +51,34 @@ enum class JsonErrc : ErrorCode
     kInvalidApiUsage,
 };
 
-/// \brief           An error domain for all JSON related errors
+/// @brief           An error domain for all JSON related errors
 class JsonErrorDomain final : public ErrorDomain
 {
   public:
-    /// \brief           Implements the Errc interface-type
+    /// @brief           Implements the Errc interface-type
     using Errc = ErrorCode;
 
-    /// \brief           Constructs a JsonErrorDomain type
-    /// \pre             -
-    /// \context         ANY
-    /// \threadsafe      FALSE
-    /// \reentrant       FALSE
+    /// @brief           Constructs a JsonErrorDomain type
+    /// @pre             -
+    /// @context         ANY
+    /// @threadsafe      FALSE
+    /// @reentrant       FALSE
     constexpr JsonErrorDomain() noexcept : ErrorDomain() {}
 
-    /// \brief           Converts an error code into a message
-    /// \param[in]       error_code
+    /// @brief           Converts an error code into a message
+    /// @param[in]       error_code
     ///                  to transform.
-    /// \return          The transformed message.
-    /// \pre             -
-    /// \context         ANY
-    /// \threadsafe      FALSE
-    /// \reentrant       FALSE
-    /// \internal
+    /// @return          The transformed message.
+    /// @pre             -
+    /// @context         ANY
+    /// @threadsafe      FALSE
+    /// @reentrant       FALSE
+    /// @internal
     /// - If the error code is within bounds of the messages array:
     ///   - Return the message from the array.
     /// - Otherwise:
     ///   - Return "unknown error".
-    /// \endinternal
+    /// @endinternal
     auto MessageFor(const Errc& error_code) const noexcept -> std::string_view override final
     {
         Errc errc{error_code};
@@ -107,7 +102,7 @@ class JsonErrorDomain final : public ErrorDomain
 
 namespace detail
 {
-/// \brief           JsonErrorDomain singleton
+/// @brief           JsonErrorDomain singleton
 constexpr JsonErrorDomain kJsonErrorDomain;
 }  // namespace detail
 
@@ -134,13 +129,13 @@ inline Result<T> MakeErrorResult(const JsonErrc error_code, const std::string_vi
     return MakeErrorResult<T>(static_cast<ErrorCode>(error_code), user_message);
 }
 
-/// \brief           Filters a Result based on a predicate
-/// \tparam          T  Value type of the Result.
-/// \tparam          Pred  Predicate type.
-/// \param[in,out]   result  The Result to filter.
-/// \param[in]       pred    Predicate: if false, the result becomes an error.
-/// \param[in]       error   Error to use if the predicate returns false.
-/// \return          The filtered Result.
+/// @brief           Filters a Result based on a predicate
+/// @tparam          T  Value type of the Result.
+/// @tparam          Pred  Predicate type.
+/// @param[in,out]   result  The Result to filter.
+/// @param[in]       pred    Predicate: if false, the result becomes an error.
+/// @param[in]       error   Error to use if the predicate returns false.
+/// @return          The filtered Result.
 template <typename T, typename Pred>
 auto Filter(Result<T> result, Pred pred, score::result::Error error) noexcept -> Result<T>
 {
@@ -151,10 +146,10 @@ auto Filter(Result<T> result, Pred pred, score::result::Error error) noexcept ->
     return result;
 }
 
-/// \brief           Discards the value of a Result (converts to score::Result<void>)
-/// \tparam          T  Value type of the Result.
-/// \param[in]       result  The Result to drop.
-/// \return          score::Result<void> with same error state.
+/// @brief           Discards the value of a Result (converts to score::Result<void>)
+/// @tparam          T  Value type of the Result.
+/// @param[in]       result  The Result to drop.
+/// @return          score::Result<void> with same error state.
 template <typename T>
 auto Drop(Result<T> result) noexcept -> score::Result<void>
 {
@@ -165,12 +160,12 @@ auto Drop(Result<T> result) noexcept -> score::Result<void>
     return score::Result<void>{score::unexpect, result.error()};
 }
 
-/// \brief           Inspects (peeks at) a Result without transforming it
-/// \tparam          T   Value type of the Result.
-/// \tparam          Fn  Side-effect function type.
-/// \param[in]       result  The Result to inspect.
-/// \param[in]       fn      Side-effect function called with the value if present.
-/// \return          The original Result unchanged.
+/// @brief           Inspects (peeks at) a Result without transforming it
+/// @tparam          T   Value type of the Result.
+/// @tparam          Fn  Side-effect function type.
+/// @param[in]       result  The Result to inspect.
+/// @param[in]       fn      Side-effect function called with the value if present.
+/// @return          The original Result unchanged.
 template <typename T, typename Fn>
 auto Inspect(Result<T> result, Fn fn) noexcept -> Result<T>
 {
@@ -181,12 +176,12 @@ auto Inspect(Result<T> result, Fn fn) noexcept -> Result<T>
     return result;
 }
 
-/// \brief           Returns the second Result if the first has a value, otherwise propagates the error
-/// \tparam          T  Value type of the first Result.
-/// \tparam          U  Value type of the second Result.
-/// \param[in]       first   The first Result.
-/// \param[in]       second  The second Result.
-/// \return          The second Result if first has a value, else the first error.
+/// @brief           Returns the second Result if the first has a value, otherwise propagates the error
+/// @tparam          T  Value type of the first Result.
+/// @tparam          U  Value type of the second Result.
+/// @param[in]       first   The first Result.
+/// @param[in]       second  The second Result.
+/// @return          The second Result if first has a value, else the first error.
 template <typename T, typename U>
 auto And(Result<T> first, Result<U> second) noexcept -> Result<U>
 {
@@ -196,88 +191,88 @@ auto And(Result<T> first, Result<U> second) noexcept -> Result<U>
     }
     return second;
 }
-/// \brief           Gets the error domain singleton
-/// \return          The error domain singleton.
-/// \pre             -
-/// \context         ANY
-/// \threadsafe      TRUE, for different this pointer
+/// @brief           Gets the error domain singleton
+/// @return          The error domain singleton.
+/// @pre             -
+/// @context         ANY
+/// @threadsafe      TRUE, for different this pointer
 inline constexpr auto GetJsonDomain() noexcept -> const ErrorDomain&
 {
     return detail::kJsonErrorDomain;
 }
 
-/// \brief           Creates a Result
-/// \tparam          T
+/// @brief           Creates a Result
+/// @tparam          T
 ///                  Type of Result.
-/// \param[in]       value
+/// @param[in]       value
 ///                  to put into the Result.
-/// \return          The Result.
-/// \pre             -
-/// \context         ANY
-/// \threadsafe      FALSE
-/// \reentrant       FALSE
-/// \internal
+/// @return          The Result.
+/// @pre             -
+/// @context         ANY
+/// @threadsafe      FALSE
+/// @reentrant       FALSE
+/// @internal
 /// - Return a Result created from the given value.
-/// \endinternal
+/// @endinternal
 template <typename T>
 constexpr auto Ok(T value) noexcept -> Result<T>
 {
     return Result<T>{value};
 }
 
-/// \brief           Creates a Result from a boolean value
-/// \param[in]       value
+/// @brief           Creates a Result from a boolean value
+/// @param[in]       value
 ///                  to check.
-/// \param[in]       error
+/// @param[in]       error
 ///                  Specific error code.
-/// \return          The empty Result if true, or the specified error.
-/// \pre             -
-/// \context         ANY
-/// \threadsafe      FALSE
-/// \reentrant       FALSE
-/// \internal
+/// @return          The empty Result if true, or the specified error.
+/// @pre             -
+/// @context         ANY
+/// @threadsafe      FALSE
+/// @reentrant       FALSE
+/// @internal
 /// - If the value is true:
 ///   - Return an empty Result.
 /// - Otherwise:
 ///   - Return an Error created from the given arguments.
-/// \endinternal
+/// @endinternal
 inline auto MakeResult(bool value, ErrorCode error) noexcept -> score::Result<void>
 {
     return value ? score::Result<void>{} : score::MakeUnexpected<void>(MakeError(error, ""));
 }
 
-/// \brief           Creates a Result from a boolean value
-/// \param[in]       value
+/// @brief           Creates a Result from a boolean value
+/// @param[in]       value
 ///                  to check.
-/// \param[in]       error
+/// @param[in]       error
 ///                  Specific error code.
-/// \return          The empty Result if true, or the specified error.
-/// \pre             -
-/// \context         ANY
-/// \threadsafe      FALSE
-/// \reentrant       FALSE
-/// \internal
+/// @return          The empty Result if true, or the specified error.
+/// @pre             -
+/// @context         ANY
+/// @threadsafe      FALSE
+/// @reentrant       FALSE
+/// @internal
 /// - If the value is true:
 ///   - Return an empty Result.
 /// - Otherwise:
 ///   - Return an Error created from the given arguments.
-/// \endinternal
+/// @endinternal
 inline auto MakeResult(bool value, score::result::Error error) noexcept -> score::Result<void>
 {
     return value ? score::Result<void>{} : score::MakeUnexpected<void>(error);
 }
-/// \brief           Creates a Result from an Optional
-///     \tparam          T
+/// @brief           Creates a Result from an Optional
+///     @tparam          T
 ///                  Type of Optional.
-/// \param[in]       value
+/// @param[in]       value
 ///                  to check.
-/// \param[in]       error
+/// @param[in]       error
 ///                  Specific error code.
-/// \return          The empty Result if true, or the specified error.
-/// \pre             -
-/// \context         ANY
-/// \threadsafe      FALSE
-/// \reentrant       FALSE
+/// @return          The empty Result if true, or the specified error.
+/// @pre             -
+/// @context         ANY
+/// @threadsafe      FALSE
+/// @reentrant       FALSE
 template <typename T>
 inline auto MakeResult(Optional<T> value, score::result::Error error) noexcept -> Result<T>
 {
@@ -285,19 +280,19 @@ inline auto MakeResult(Optional<T> value, score::result::Error error) noexcept -
     return value.has_value() ? Result<T>{value.value()} : score::MakeUnexpected<T>(error);
 }
 
-/// \brief           Assert that a condition holds
-/// \param[in]       value
+/// @brief           Assert that a condition holds
+/// @param[in]       value
 ///                  to check.
-/// \param[in]       message
+/// @param[in]       message
 ///                  Optional message for this error.
-/// \pre             -
-/// \context         ANY
-/// \threadsafe      FALSE
-/// \reentrant       FALSE
-/// \internal
+/// @pre             -
+/// @context         ANY
+/// @threadsafe      FALSE
+/// @reentrant       FALSE
+/// @internal
 /// - If the value is false:
 ///   - Abort printing the passed message.
-/// \endinternal
+/// @endinternal
 inline void AssertCondition(bool value, CStr message = "") noexcept
 {
     if (!value)

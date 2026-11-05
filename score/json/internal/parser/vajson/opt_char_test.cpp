@@ -10,13 +10,8 @@
  *
  * SPDX-License-Identifier: Apache-2.0
  ********************************************************************************/
-/*!        \file
- *        \brief  Contains tests concerning the OptChar class.
- *
- *********************************************************************************************************************/
-/**********************************************************************************************************************
- *  INCLUDES
- *********************************************************************************************************************/
+/// @file
+/// @brief  Contains tests concerning the OptChar class.
 #include "score/json/internal/parser/vajson/opt_char.h"
 
 #include "gtest/gtest.h"
@@ -30,9 +25,7 @@ namespace vajson
 namespace unit_test
 {
 
-/*!
- * Test OptChar with a valid char.
- */
+/// Test OptChar with a valid char.
 TEST(UT__JsonOps__OptChar, ValidChar)
 {
     char constexpr value{'a'};
@@ -42,9 +35,7 @@ TEST(UT__JsonOps__OptChar, ValidChar)
     ASSERT_EQ(opt.Value(), value);
 }
 
-/*!
- * Test OptChar with an EOF char.
- */
+/// Test OptChar with an EOF char.
 TEST(UT__JsonOps__OptChar, EofChar)
 {
     const internal::OptChar opt{static_cast<std::int64_t>(-1)};
@@ -53,9 +44,7 @@ TEST(UT__JsonOps__OptChar, EofChar)
     ASSERT_DEATH(opt.Value(), ".*");
 }
 
-/*!
- * Test OptChar comparison operator.
- */
+/// Test OptChar comparison operator.
 TEST(UT__JsonOps__OptChar, Comparison)
 {
     const internal::OptChar opt1{'a'};

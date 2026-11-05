@@ -50,13 +50,13 @@ class AnyTreeBuilder final : private score::json::vajson::internal::VirtualParse
             return &root_;
         }
 
-        Any* current_node = hierarchy_.top();
-        auto current_node_list = current_node->As<score::json::List>();
+        Any* current_node{hierarchy_.top()};
+        auto current_node_list{current_node->As<score::json::List>()};
         if (current_node_list.has_value())
         {
             // False positive, we are not forwarding a value to other functions.
             // coverity[autosar_cpp14_a18_9_2_violation : FALSE]
-            auto& current_node_list_ref = current_node_list->get();
+            auto& current_node_list_ref{current_node_list->get()};
             return &(current_node_list_ref.emplace_back(std::forward<T>(value)));
         }
 
@@ -67,7 +67,7 @@ class AnyTreeBuilder final : private score::json::vajson::internal::VirtualParse
             return MakeUnexpected(Error::kParsingError); /* LCOV_EXCL_LINE */
         }
 
-        auto node_object = current_node->As<score::json::Object>();
+        auto node_object{current_node->As<score::json::Object>()};
         if (!node_object.has_value())  // LCOV_EXCL_BR_LINE (see comment below)
         {
             // This case in production can't happen.
@@ -80,11 +80,17 @@ class AnyTreeBuilder final : private score::json::vajson::internal::VirtualParse
         }
         // False positive, all values passed as rvalue.
         // coverity[autosar_cpp14_a18_9_2_violation : FALSE]
-        auto it = node_object->get().emplace(std::piecewise_construct_t(std::piecewise_construct),
-                                             std::forward_as_tuple(std::string{last_key_}),
-                                             std::forward_as_tuple(std::forward<T>(value)));
+        auto it{node_object->get().emplace(std::piecewise_construct_t(std::piecewise_construct),
+                                           std::forward_as_tuple(std::string{last_key_}),
+                                           std::forward_as_tuple(std::forward<T>(value)))};
         return &((*(it.first)).second);
     }
+
+    auto OnNull() noexcept -> score::json::vajson::ParserResult override;
+    auto OnBool(bool value) noexcept -> score::json::vajson::ParserResult override;
+    auto OnNumber(score::json::vajson::JsonNumber value) noexcept -> score::json::vajson::ParserResult override;
+    auto OnString(std::string_view value) noexcept -> score::json::vajson::ParserResult override;
+    auto OnKey(std::string_view key) noexcept -> score::json::vajson::ParserResult override;
 
     /// @brief Updates the state of the parser to store any newly parsed data in the provided container
     template <typename T>
@@ -93,11 +99,6 @@ class AnyTreeBuilder final : private score::json::vajson::internal::VirtualParse
     /// @brief Updates the state of the parser to store any newly parsed data in the previous container
     auto EndContainer() noexcept -> score::json::vajson::ParserResult;
 
-    auto OnNull() noexcept -> score::json::vajson::ParserResult override;
-    auto OnBool(bool value) noexcept -> score::json::vajson::ParserResult override;
-    auto OnNumber(score::json::vajson::JsonNumber value) noexcept -> score::json::vajson::ParserResult override;
-    auto OnString(std::string_view value) noexcept -> score::json::vajson::ParserResult override;
-    auto OnKey(std::string_view key) noexcept -> score::json::vajson::ParserResult override;
     auto OnStartObject() noexcept -> score::json::vajson::ParserResult override;
     auto OnEndObject(std::size_t) noexcept -> score::json::vajson::ParserResult override;
     auto OnStartArray() noexcept -> score::json::vajson::ParserResult override;
@@ -108,17 +109,17 @@ class AnyTreeBuilder final : private score::json::vajson::internal::VirtualParse
     // NOLINTNEXTLINE(bugprone-exception-escape) an exception terminates, as required by the safety concept
     auto OnNumber(score::json::vajson::JsonNumber& value) noexcept -> score::json::vajson::ParserResult
     {
-        auto TryStoreResult = [this](auto result) -> bool {
-            return (result.has_value() && Store(score::json::Number{result.value()}).has_value());
-        };
+        auto try_store_result{[this](auto result) -> bool {
+            return result.has_value() && Store(score::json::Number{result.value()}).has_value();
+        }};
 
         // Coverity warning: The operands of a logical && or || shall be parenthesized if the operands contain binary
         // operators. Fold expression automatically sets parenthesis when expression is unfolded. In this case we are
         // using Unary right fold '(E op ...) becomes (E1 op (... op (En-1 op En)))'. That means for OnNumber<int,
-        // float, double>(value) fold expression will be: ( (TryStoreResult(value.As<int>())) || (
-        // (TryStoreResult(value.As<float>())) || (TryStoreResult(value.As<double>())) ) )
+        // float, double>(value) fold expression will be: ( (try_store_result(value.As<int>())) || (
+        // (try_store_result(value.As<float>())) || (try_store_result(value.As<double>())) ) )
         // coverity[autosar_cpp14_a5_2_6_violation]
-        return ((TryStoreResult(value.As<NumberType>())) || ...)
+        return ((try_store_result(value.As<NumberType>())) || ...)
                    ? score::json::vajson::ParserState::kRunning
                    : score::json::vajson::MakeErrorResult<score::json::vajson::ParserState>(
                          score::json::vajson::JsonErrc::kInvalidJson);
@@ -134,7 +135,7 @@ class AnyTreeBuilder final : private score::json::vajson::internal::VirtualParse
 
 auto AnyTreeBuilder::GetData() noexcept -> score::Result<score::json::Any>
 {
-    const auto parse_result = Parse();
+    const auto parse_result{Parse()};
     score::Result<score::json::Any> result{};
     if (parse_result.has_value())
     {
@@ -149,7 +150,7 @@ auto AnyTreeBuilder::GetData() noexcept -> score::Result<score::json::Any>
 
 auto AnyTreeBuilder::OnNull() noexcept -> score::json::vajson::ParserResult
 {
-    auto result = Store(Null{});
+    auto result{Store(Null{})};
     if (!result.has_value())  // LCOV_EXCL_BR_LINE (Decision Coverage: Not reachable. Branch excluded from
                               // coverage report. See comment below)
     {
@@ -163,7 +164,7 @@ auto AnyTreeBuilder::OnNull() noexcept -> score::json::vajson::ParserResult
 
 auto AnyTreeBuilder::OnBool(bool value) noexcept -> score::json::vajson::ParserResult
 {
-    auto result = Store(value);
+    auto result{Store(value)};
     if (!result.has_value())  // LCOV_EXCL_BR_LINE (Decision Coverage: Not reachable. Branch excluded from
                               // coverage report. See comment below)
     {
@@ -187,7 +188,7 @@ auto AnyTreeBuilder::OnNumber(score::json::vajson::JsonNumber value) noexcept ->
 
 auto AnyTreeBuilder::OnString(std::string_view value) noexcept -> score::json::vajson::ParserResult
 {
-    auto result = Store(std::string(value));
+    auto result{Store(std::string(value))};
     if (!result.has_value())  // LCOV_EXCL_BR_LINE (Decision Coverage: Not reachable. Branch excluded from
                               // coverage report. See comment below)
     {
@@ -212,7 +213,7 @@ template <typename T>
 // coverity[autosar_cpp14_a15_5_3_violation : FALSE]
 auto AnyTreeBuilder::StartContainer(T&& value) noexcept -> score::json::vajson::ParserResult
 {
-    auto result = Store(std::forward<T>(value));
+    auto result{Store(std::forward<T>(value))};
     if (!result.has_value())  // LCOV_EXCL_BR_LINE (Decision Coverage: Not reachable. Branch excluded from
                               // coverage report. See comment below)
     {
@@ -277,12 +278,12 @@ auto AnyTreeBuilder::OnUnexpectedEvent() noexcept -> score::json::vajson::Parser
 // NOLINTNEXTLINE(bugprone-exception-escape) an exception terminates, as required by the safety concept
 auto JsonParser::FromFile(const std::string_view file_path) const noexcept -> score::Result<Any>
 {
-    score::Result<Any> result = MakeUnexpected(Error::kParsingError);
+    score::Result<Any> result{MakeUnexpected(Error::kParsingError)};
     // NOLINTNEXTLINE(score-banned-function) Tolerated because JsonParser::FromFile is also on the banned function list
-    auto json_data = score::json::vajson::JsonData::FromFile(file_path);
+    auto json_data{score::json::vajson::JsonData::FromFile(file_path)};
     if (json_data.has_value())
     {
-        score::Result<Any> json_object = AnyTreeBuilder{json_data.value()}.GetData();
+        score::Result<Any> json_object{AnyTreeBuilder{json_data.value()}.GetData()};
         if (json_object.has_value())
         {
             result = std::move(*json_object);
@@ -294,14 +295,14 @@ auto JsonParser::FromFile(const std::string_view file_path) const noexcept -> sc
 // NOLINTNEXTLINE(bugprone-exception-escape) an exception terminates, as required by the safety concept
 auto JsonParser::FromBuffer(const std::string_view buffer) const noexcept -> score::Result<Any>
 {
-    score::Result<Any> result = MakeUnexpected(Error::kParsingError);
-    auto json_data = score::json::vajson::JsonData::FromBuffer(std::string_view{buffer.data(), buffer.size()});
+    score::Result<Any> result{MakeUnexpected(Error::kParsingError)};
+    auto json_data{score::json::vajson::JsonData::FromBuffer(std::string_view{buffer.data(), buffer.size()})};
     if (json_data.has_value())  // LCOV_EXCL_BR_LINE (Decision Coverage: Not reachable. Branch excluded from coverage
                                 // report.)
     // (else branch can't be hit due to internal implementation of JsonData::FromBuffer function that accepts all kind
     // of strings.)
     {
-        auto json_object = AnyTreeBuilder{json_data.value()}.GetData();
+        auto json_object{AnyTreeBuilder{json_data.value()}.GetData()};
         if (json_object.has_value())
         {
             result = std::move(*json_object);
@@ -315,7 +316,7 @@ auto JsonParser::FromBuffer(const std::string_view buffer) const noexcept -> sco
 auto operator""_json(const char* const data, const size_t size) -> Any
 {
     const JsonParser json_parser_obj;
-    auto result = json_parser_obj.FromBuffer(std::string_view{data, size});
+    auto result{json_parser_obj.FromBuffer(std::string_view{data, size})};
     if (!result.has_value())
     {
         // False positive, no function call.

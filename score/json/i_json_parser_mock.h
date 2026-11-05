@@ -10,8 +10,8 @@
  *
  * SPDX-License-Identifier: Apache-2.0
  ********************************************************************************/
-#ifndef SCORE_LIB_JSON_I_JSON_PARSER_MOCK_H
-#define SCORE_LIB_JSON_I_JSON_PARSER_MOCK_H
+#ifndef SCORE_JSON_I_JSON_PARSER_MOCK_H
+#define SCORE_JSON_I_JSON_PARSER_MOCK_H
 
 #include "score/json/i_json_parser.h"
 
@@ -22,6 +22,7 @@ namespace score
 namespace json
 {
 
+/// @brief gMock implementation of IJsonParser for tests.
 class IJsonParserMock : public IJsonParser
 {
   public:
@@ -32,4 +33,4 @@ class IJsonParserMock : public IJsonParser
 }  // namespace json
 }  // namespace score
 
-#endif  // SCORE_LIB_JSON_I_JSON_PARSER_MOCK_H
+#endif  // SCORE_JSON_I_JSON_PARSER_MOCK_H

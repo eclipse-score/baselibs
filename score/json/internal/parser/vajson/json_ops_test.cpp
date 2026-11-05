@@ -10,13 +10,8 @@
  *
  * SPDX-License-Identifier: Apache-2.0
  ********************************************************************************/
-/*!        \file
- *        \brief  Contains tests concerning the JsonOps class.
- *
- *********************************************************************************************************************/
-/**********************************************************************************************************************
- *  INCLUDES
- *********************************************************************************************************************/
+/// @file
+/// @brief  Contains tests concerning the JsonOps class.
 #include "score/json/internal/parser/vajson/json_ops.h"
 
 #include <sstream>
@@ -39,7 +34,7 @@ namespace unit_test
 
 namespace
 {
-/// \brief Helper to create a JsonData + JsonOps pair from a string literal.
+/// @brief Helper to create a JsonData + JsonOps pair from a string literal.
 struct TestStream
 {
     std::istringstream iss;
@@ -50,10 +45,8 @@ struct TestStream
 };
 }  // namespace
 
-/*!
- * \brief           Test that Skip can skip characters and handles eof.
- * \trace           score::json::vajson::internal::JsonOps::Skip
- */
+/// @brief           Test that Skip can skip characters and handles eof.
+/// @trace           score::json::vajson::internal::JsonOps::Skip
 TEST(UT__JsonOps, Skip)
 {
     TestStream ts{"ab"};
@@ -64,10 +57,8 @@ TEST(UT__JsonOps, Skip)
     ASSERT_FALSE(ts.ops.Skip('b'));  // EOF
 }
 
-/*!
- * Test that Take can take characters.
- * \trace           score::json::vajson::internal::JsonOps::Take
- */
+/// Test that Take can take characters.
+/// @trace           score::json::vajson::internal::JsonOps::Take
 TEST(UT__JsonOps, Take)
 {
     TestStream ts{"ab"};
@@ -75,35 +66,31 @@ TEST(UT__JsonOps, Take)
     ASSERT_EQ(ts.ops.Take(), 'a');
 }
 
-/*!
- * Test that TryTake returns an error if position is at end of string.
- * \trace           score::json::vajson::internal::JsonOps::TryTake
- */
+/// Test that TryTake returns an error if position is at end of string.
+/// @trace           score::json::vajson::internal::JsonOps::TryTake
 TEST(UT__JsonOps, TryTake__Error)
 {
     TestStream ts{"ab"};
 
     {
-        const auto r1 = ts.ops.TryTake();
+        const auto r1{ts.ops.TryTake()};
         ASSERT_TRUE(r1.has_value());
         ASSERT_EQ(r1.value(), 'a');
     }
     {
-        const auto r2 = ts.ops.TryTake();
+        const auto r2{ts.ops.TryTake()};
         ASSERT_TRUE(r2.has_value());
         ASSERT_EQ(r2.value(), 'b');
     }
     {
-        const auto r3 = ts.ops.TryTake();
+        const auto r3{ts.ops.TryTake()};
         ASSERT_FALSE(r3.has_value());
         ASSERT_EQ(r3.error(), JsonErrc::kStreamFailure);
     }
 }
 
-/*!
- * Test that Move skips the current character.
- * \trace           score::json::vajson::internal::JsonOps::Move
- */
+/// Test that Move skips the current character.
+/// @trace           score::json::vajson::internal::JsonOps::Move
 TEST(UT__JsonOps, Move)
 {
     TestStream ts{"ab"};
@@ -112,35 +99,31 @@ TEST(UT__JsonOps, Move)
     ASSERT_EQ(ts.ops.Take(), 'b');
 }
 
-/*!
- * Test that CheckString can check the next characters.
- *
- * - Assert that CheckString succeeds if the expected string comes next.
- * - Assert that CheckString fails if the next string is not as expected.
- * \trace           score::json::vajson::internal::JsonOps::CheckString
- */
+/// Test that CheckString can check the next characters.
+///
+/// - Assert that CheckString succeeds if the expected string comes next.
+/// - Assert that CheckString fails if the next string is not as expected.
+/// @trace           score::json::vajson::internal::JsonOps::CheckString
 TEST(UT__JsonOps, CheckString)
 {
     const std::string_view expected{"expected string"};
 
     {
         TestStream ts{std::string{expected}};
-        const auto result = ts.ops.CheckString(expected, "No error");
+        const auto result{ts.ops.CheckString(expected, "No error")};
         ASSERT_TRUE(result.has_value());
     }
 
     {
         TestStream ts{std::string{expected}};
-        const auto result = ts.ops.CheckString("different string", "No error");
+        const auto result{ts.ops.CheckString("different string", "No error")};
         ASSERT_FALSE(result.has_value());
         ASSERT_EQ(result.error(), JsonErrc::kStreamFailure);
     }
 }
 
-/*!
- * Test that ReadString aborts if the requested string is empty.
- * \trace           score::json::vajson::internal::JsonOps::ReadString
- */
+/// Test that ReadString aborts if the requested string is empty.
+/// @trace           score::json::vajson::internal::JsonOps::ReadString
 TEST(UT__JsonOps, ReadStringAbortsOnEmpty)
 {
     TestStream ts{"Does not matter"};
@@ -148,13 +131,11 @@ TEST(UT__JsonOps, ReadStringAbortsOnEmpty)
     ASSERT_DEATH(score::cpp::ignore = ts.ops.ReadString(""), "JsonOps::ReadString: Cannot check for empty string");
 }
 
-/*!
- * Test that SkipWhitespace skips whitespace characters.
- *
- * - Assert that all whitespace characters are skipped.
- * - Assert that an EOF after whitespace characters is recognized.
- * \trace           score::json::vajson::internal::JsonOps::SkipWhitespace
- */
+/// Test that SkipWhitespace skips whitespace characters.
+///
+/// - Assert that all whitespace characters are skipped.
+/// - Assert that an EOF after whitespace characters is recognized.
+/// @trace           score::json::vajson::internal::JsonOps::SkipWhitespace
 TEST(UT__JsonOps, SkipWhitespace)
 {
     {
@@ -167,12 +148,10 @@ TEST(UT__JsonOps, SkipWhitespace)
     }
 }
 
-/*!
- * Test that ReadUntil reads until the specified delimiter.
- *
- * - Assert that the callback is invoked and gets all characters excluding the specified delimiter.
- * \trace           score::json::vajson::internal::JsonOps::ReadUntil
- */
+/// Test that ReadUntil reads until the specified delimiter.
+///
+/// - Assert that the callback is invoked and gets all characters excluding the specified delimiter.
+/// @trace           score::json::vajson::internal::JsonOps::ReadUntil
 TEST(UT__JsonOps, ReadUntil)
 {
     const std::string input{"123456789:"};
@@ -180,9 +159,9 @@ TEST(UT__JsonOps, ReadUntil)
 
     const std::string_view expected_content{input.data(), input.size() - 1};
 
-    const auto result = ts.ops.ReadUntil(":", [&expected_content](std::string_view view) noexcept {
+    const auto result{ts.ops.ReadUntil(":", [&expected_content](std::string_view view) noexcept {
         ASSERT_EQ(view, expected_content);
-    });
+    })};
     ASSERT_TRUE(result.has_value());
     ASSERT_EQ(result.value().Value(), ':');
 }
