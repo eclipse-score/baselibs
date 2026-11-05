@@ -16,6 +16,7 @@
 #include "score/json/internal/parser/vajson/virtual_parser.h"
 
 #include "gtest/gtest.h"
+#include "score/json/internal/parser/vajson/ignoring_parser.h"
 #include "score/json/internal/parser/vajson/json_data.h"
 #include "score/json/internal/parser/vajson/json_error_domain.h"
 #include <string>
@@ -34,10 +35,10 @@ namespace
 
 using Strings = std::vector<std::string>;
 
-class DynamicStringParser final : public internal::VirtualParser
+class DynamicStringParser final : public IgnoringParser
 {
   public:
-    using internal::VirtualParser::VirtualParser;
+    using IgnoringParser::IgnoringParser;
 
     auto OnString(StringView str) noexcept -> ParserResult override
     {
@@ -45,27 +46,17 @@ class DynamicStringParser final : public internal::VirtualParser
         return ParserState::kRunning;
     }
 
-    auto OnUnexpectedEvent() noexcept -> ParserResult override
-    {
-        return ParserState::kRunning;
-    }
-
     Strings strings;
 };
 
-class ErrorStringParser final : public internal::VirtualParser
+class ErrorStringParser final : public IgnoringParser
 {
   public:
-    using internal::VirtualParser::VirtualParser;
+    using IgnoringParser::IgnoringParser;
 
     auto OnString(StringView) noexcept -> ParserResult override
     {
         return MakeErrorResult<ParserState>(JsonErrc::kUserValidationFailed, "OnString called.");
-    }
-
-    auto OnUnexpectedEvent() noexcept -> ParserResult override
-    {
-        return ParserState::kRunning;
     }
 };
 

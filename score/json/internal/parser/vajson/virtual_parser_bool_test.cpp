@@ -16,6 +16,7 @@
 #include "score/json/internal/parser/vajson/virtual_parser.h"
 
 #include "gtest/gtest.h"
+#include "score/json/internal/parser/vajson/ignoring_parser.h"
 #include "score/json/internal/parser/vajson/json_data.h"
 #include "score/json/internal/parser/vajson/json_error_domain.h"
 #include <utility>
@@ -34,10 +35,10 @@ namespace
 using Count = std::size_t;
 
 /// @brief           Parser that is only interested in bools
-class DynamicBoolParser final : public internal::VirtualParser
+class DynamicBoolParser final : public IgnoringParser
 {
   public:
-    using internal::VirtualParser::VirtualParser;
+    using IgnoringParser::IgnoringParser;
 
     auto OnBool(bool b) noexcept -> ParserResult override
     {
@@ -52,29 +53,19 @@ class DynamicBoolParser final : public internal::VirtualParser
         return ParserState::kRunning;
     }
 
-    auto OnUnexpectedEvent() noexcept -> ParserResult override
-    {
-        return ParserState::kRunning;
-    }
-
     Count true_{0};
     Count false_{0};
 };
 
 /// @brief           Parser that always returns an error on call of OnBool
-class ErrorBoolParser final : public internal::VirtualParser
+class ErrorBoolParser final : public IgnoringParser
 {
   public:
-    using internal::VirtualParser::VirtualParser;
+    using IgnoringParser::IgnoringParser;
 
     auto OnBool(bool) noexcept -> ParserResult override
     {
         return MakeErrorResult<ParserState>(JsonErrc::kUserValidationFailed, "OnBool called.");
-    }
-
-    auto OnUnexpectedEvent() noexcept -> ParserResult override
-    {
-        return ParserState::kRunning;
     }
 };
 

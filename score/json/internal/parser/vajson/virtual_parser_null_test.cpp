@@ -16,6 +16,7 @@
 #include "score/json/internal/parser/vajson/virtual_parser.h"
 
 #include "gtest/gtest.h"
+#include "score/json/internal/parser/vajson/ignoring_parser.h"
 #include "score/json/internal/parser/vajson/json_data.h"
 #include "score/json/internal/parser/vajson/json_error_domain.h"
 #include <utility>
@@ -33,10 +34,10 @@ namespace
 
 using Count = std::size_t;
 
-class DynamicNullParser final : public internal::VirtualParser
+class DynamicNullParser final : public IgnoringParser
 {
   public:
-    using internal::VirtualParser::VirtualParser;
+    using IgnoringParser::IgnoringParser;
 
     auto OnNull() noexcept -> ParserResult override
     {
@@ -44,27 +45,17 @@ class DynamicNullParser final : public internal::VirtualParser
         return ParserState::kRunning;
     }
 
-    auto OnUnexpectedEvent() noexcept -> ParserResult override
-    {
-        return ParserState::kRunning;
-    }
-
     Count null_{0};
 };
 
-class ErrorNullParser final : public internal::VirtualParser
+class ErrorNullParser final : public IgnoringParser
 {
   public:
-    using internal::VirtualParser::VirtualParser;
+    using IgnoringParser::IgnoringParser;
 
     auto OnNull() noexcept -> ParserResult override
     {
         return MakeErrorResult<ParserState>(JsonErrc::kUserValidationFailed, "OnNull called.");
-    }
-
-    auto OnUnexpectedEvent() noexcept -> ParserResult override
-    {
-        return ParserState::kRunning;
     }
 };
 

@@ -31,17 +31,64 @@ namespace unit_test
 namespace
 {
 
-class EmptyParser final : public internal::VirtualParser
+/// @brief Parser that accepts the first num_accepted events and fails on the next one.
+class FailingParser final : public internal::VirtualParser
 {
   public:
-    explicit EmptyParser(JsonData& doc, std::size_t num_ignore) noexcept
-        : internal::VirtualParser(doc), num_ignore_{num_ignore}
+    explicit FailingParser(JsonData& doc, std::size_t num_accepted) noexcept
+        : internal::VirtualParser(doc), num_accepted_{num_accepted}
     {
     }
 
-    auto OnUnexpectedEvent() noexcept -> ParserResult override
+  private:
+    auto OnNull() noexcept -> ParserResult override
     {
-        if (this->count_ >= this->num_ignore_)
+        return this->OnEvent();
+    }
+
+    auto OnBool(bool) noexcept -> ParserResult override  // NOLINT(readability/casting)
+    {
+        return this->OnEvent();
+    }
+
+    auto OnNumber(JsonNumber) noexcept -> ParserResult override
+    {
+        return this->OnEvent();
+    }
+
+    auto OnString(StringView) noexcept -> ParserResult override
+    {
+        return this->OnEvent();
+    }
+
+    auto OnKey(StringView) noexcept -> ParserResult override
+    {
+        return this->OnEvent();
+    }
+
+    auto OnStartObject() noexcept -> ParserResult override
+    {
+        return this->OnEvent();
+    }
+
+    auto OnEndObject(std::size_t) noexcept -> ParserResult override
+    {
+        return this->OnEvent();
+    }
+
+    auto OnStartArray() noexcept -> ParserResult override
+    {
+        return this->OnEvent();
+    }
+
+    auto OnEndArray(std::size_t) noexcept -> ParserResult override
+    {
+        return this->OnEvent();
+    }
+
+    auto OnEvent() noexcept -> ParserResult
+    {
+        if (this->count_ >= this->num_accepted_)
         {
             ++this->count_;
             return MakeErrorResult<ParserState>(JsonErrc::kUserValidationFailed);
@@ -50,16 +97,15 @@ class EmptyParser final : public internal::VirtualParser
         return ParserResult{ParserState::kRunning};
     }
 
-  private:
-    std::size_t num_ignore_;
+    std::size_t num_accepted_;
     std::size_t count_{0};
 };
 
 }  // namespace
 
-/// Test that a parser that does not overwrite any methods uses the default methods which return an error.
+/// Test that an error returned by any callback aborts parsing with that error.
 /// @trace           score::json::vajson::internal::VirtualParser
-TEST(UT__Parser, Static__Empty)
+TEST(UT__Parser, Static__CallbackError)
 {
     constexpr std::string_view doc{R"({"key": [123, "string", null, true]})"};
     const std::size_t num_elements{9};
@@ -70,7 +116,7 @@ TEST(UT__Parser, Static__Empty)
         ASSERT_TRUE(result.has_value());
         JsonData data{std::move(result).value()};
 
-        EmptyParser parser{data, idx};
+        FailingParser parser{data, idx};
         const auto parse_result{parser.Parse()};
         ASSERT_FALSE(parse_result.has_value());
         ASSERT_EQ(parse_result.error(), JsonErrc::kUserValidationFailed);

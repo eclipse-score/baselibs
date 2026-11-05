@@ -16,6 +16,7 @@
 #include "score/json/internal/parser/vajson/virtual_parser.h"
 
 #include "gtest/gtest.h"
+#include "score/json/internal/parser/vajson/ignoring_parser.h"
 #include "score/json/internal/parser/vajson/json_data.h"
 #include "score/json/internal/parser/vajson/json_error_domain.h"
 
@@ -30,16 +31,7 @@ namespace unit_test
 namespace
 {
 
-class DynamicAnyParser final : public internal::VirtualParser
-{
-  public:
-    using internal::VirtualParser::VirtualParser;
-
-    auto OnUnexpectedEvent() noexcept -> ParserResult override
-    {
-        return ParserState::kRunning;
-    }
-};
+using DynamicAnyParser = IgnoringParser;
 
 }  // namespace
 

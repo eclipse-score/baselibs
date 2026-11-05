@@ -1,0 +1,85 @@
+/********************************************************************************
+ * Copyright (c) 2026 Contributors to the Eclipse Foundation
+ *
+ * See the NOTICE file(s) distributed with this work for additional
+ * information regarding copyright ownership.
+ *
+ * This program and the accompanying materials are made available under the
+ * terms of the Apache License Version 2.0 which is available at
+ * https://www.apache.org/licenses/LICENSE-2.0
+ *
+ * SPDX-License-Identifier: Apache-2.0
+ ********************************************************************************/
+#ifndef SCORE_JSON_INTERNAL_PARSER_VAJSON_IGNORING_PARSER_H
+#define SCORE_JSON_INTERNAL_PARSER_VAJSON_IGNORING_PARSER_H
+
+#include "score/json/internal/parser/vajson/virtual_parser.h"
+
+namespace score
+{
+namespace json
+{
+namespace vajson
+{
+namespace unit_test
+{
+
+/// @brief Test parser that accepts every event, so that tests only override the callbacks they observe.
+class IgnoringParser : public internal::VirtualParser
+{
+  public:
+    using internal::VirtualParser::VirtualParser;
+
+  private:
+    auto OnNull() noexcept -> ParserResult override
+    {
+        return ParserState::kRunning;
+    }
+
+    auto OnBool(bool) noexcept -> ParserResult override  // NOLINT(readability/casting)
+    {
+        return ParserState::kRunning;
+    }
+
+    auto OnNumber(JsonNumber) noexcept -> ParserResult override
+    {
+        return ParserState::kRunning;
+    }
+
+    auto OnString(StringView) noexcept -> ParserResult override
+    {
+        return ParserState::kRunning;
+    }
+
+    auto OnKey(StringView) noexcept -> ParserResult override
+    {
+        return ParserState::kRunning;
+    }
+
+    auto OnStartObject() noexcept -> ParserResult override
+    {
+        return ParserState::kRunning;
+    }
+
+    auto OnEndObject(std::size_t) noexcept -> ParserResult override
+    {
+        return ParserState::kRunning;
+    }
+
+    auto OnStartArray() noexcept -> ParserResult override
+    {
+        return ParserState::kRunning;
+    }
+
+    auto OnEndArray(std::size_t) noexcept -> ParserResult override
+    {
+        return ParserState::kRunning;
+    }
+};
+
+}  // namespace unit_test
+}  // namespace vajson
+}  // namespace json
+}  // namespace score
+
+#endif  // SCORE_JSON_INTERNAL_PARSER_VAJSON_IGNORING_PARSER_H

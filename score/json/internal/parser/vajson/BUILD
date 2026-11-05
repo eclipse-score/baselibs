@@ -72,5 +72,17 @@ cc_gtest_unit_test(
         "virtual_parser_valid_test.cpp",
     ],
     features = COMPILER_WARNING_FEATURES,
+    deps = [
+        ":ignoring_parser",
+        ":vajson",
+    ],
+)
+
+cc_library(
+    name = "ignoring_parser",
+    testonly = True,
+    hdrs = ["ignoring_parser.h"],
+    features = COMPILER_WARNING_FEATURES,
+    visibility = ["//visibility:private"],
     deps = [":vajson"],
 )
