@@ -13,7 +13,7 @@
 /// @file
 /// @brief  Contains tests concerning the parsing of strings.
 
-#include "score/json/internal/parser/vajson/virtual_parser.h"
+#include "score/json/internal/parser/vajson/structure_parser.h"
 
 #include "gtest/gtest.h"
 #include "score/json/internal/parser/vajson/ignoring_parser.h"
@@ -40,7 +40,7 @@ class DynamicStringParser final : public IgnoringParser
   public:
     using IgnoringParser::IgnoringParser;
 
-    auto OnString(StringView str) noexcept -> ParserResult override
+    auto OnString(CStringView str) noexcept -> ParserResult override
     {
         this->strings.push_back(std::string(str));
         return ParserState::kRunning;
@@ -54,7 +54,7 @@ class ErrorStringParser final : public IgnoringParser
   public:
     using IgnoringParser::IgnoringParser;
 
-    auto OnString(StringView) noexcept -> ParserResult override
+    auto OnString(CStringView) noexcept -> ParserResult override
     {
         return MakeErrorResult<ParserState>(JsonErrc::kUserValidationFailed, "OnString called.");
     }
@@ -74,7 +74,7 @@ TEST(UT__Parser__String, Dynamic__StringArray)
 }
 
 /// Tests that when the overridden OnString method returns an error, that error is propagated.
-/// @trace           score::json::vajson::internal::StructureParserBase::ParseUnescapedString
+/// @trace           score::json::vajson::internal::StructureParser::ParseUnescapedString
 TEST(UT__Parser__String, Dynamic__ParseUnescapedString__Error)
 {
     auto doc{JsonData::FromBuffer(std::string_view{R"("SomeString")"})};

@@ -13,7 +13,7 @@
 /// @file
 /// @brief  Contains tests concerning the parsing of null values.
 
-#include "score/json/internal/parser/vajson/virtual_parser.h"
+#include "score/json/internal/parser/vajson/structure_parser.h"
 
 #include "gtest/gtest.h"
 #include "score/json/internal/parser/vajson/ignoring_parser.h"
@@ -95,7 +95,7 @@ TEST(UT__Parser__Null, Dynamic__NoNulls)
 }
 
 /// Test that parsing fails if 'null' is used as key without quotation marks.
-/// @trace           score::json::vajson::internal::StructureParserBase::ParseValue
+/// @trace           score::json::vajson::internal::StructureParser::ParseValue
 TEST(UT__Parser__Null, Dynamic__WrongFormat)
 {
     auto result{JsonData::FromBuffer(std::string_view{R"({null:123})"})};
@@ -109,7 +109,7 @@ TEST(UT__Parser__Null, Dynamic__WrongFormat)
 }
 
 /// Tests that when the overridden OnNull method returns an error, that error is propagated.
-/// @trace           score::json::vajson::internal::StructureParserBase::ParseNull
+/// @trace           score::json::vajson::internal::StructureParser::ParseNull
 TEST(UT__Parser__Null, Dynamic__OnNull__Error)
 {
     auto doc{JsonData::FromBuffer(std::string_view{"null"})};

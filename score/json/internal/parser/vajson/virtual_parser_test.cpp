@@ -11,9 +11,9 @@
  * SPDX-License-Identifier: Apache-2.0
  ********************************************************************************/
 /// @file
-/// @brief  Contains tests concerning the VirtualParser class.
+/// @brief  Contains tests concerning the StructureParser class.
 
-#include "score/json/internal/parser/vajson/virtual_parser.h"
+#include "score/json/internal/parser/vajson/structure_parser.h"
 
 #include "gtest/gtest.h"
 #include "score/json/internal/parser/vajson/json_data.h"
@@ -32,11 +32,11 @@ namespace
 {
 
 /// @brief Parser that accepts the first num_accepted events and fails on the next one.
-class FailingParser final : public internal::VirtualParser
+class FailingParser final : public internal::StructureParser
 {
   public:
     explicit FailingParser(JsonData& doc, std::size_t num_accepted) noexcept
-        : internal::VirtualParser(doc), num_accepted_{num_accepted}
+        : internal::StructureParser(doc), num_accepted_{num_accepted}
     {
     }
 
@@ -56,12 +56,12 @@ class FailingParser final : public internal::VirtualParser
         return this->OnEvent();
     }
 
-    auto OnString(StringView) noexcept -> ParserResult override
+    auto OnString(CStringView) noexcept -> ParserResult override
     {
         return this->OnEvent();
     }
 
-    auto OnKey(StringView) noexcept -> ParserResult override
+    auto OnKey(CStringView) noexcept -> ParserResult override
     {
         return this->OnEvent();
     }
@@ -104,7 +104,7 @@ class FailingParser final : public internal::VirtualParser
 }  // namespace
 
 /// Test that an error returned by any callback aborts parsing with that error.
-/// @trace           score::json::vajson::internal::VirtualParser
+/// @trace           score::json::vajson::internal::StructureParser
 TEST(UT__Parser, Static__CallbackError)
 {
     constexpr std::string_view doc{R"({"key": [123, "string", null, true]})"};
