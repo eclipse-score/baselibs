@@ -165,7 +165,7 @@ class GenericValueSerializer final
     {
         return this->Serialize([this, tuple]() noexcept {
             this->os_.get().BeginContainer('[');
-            static_cast<void>(tuple.fn(ArrayStart(this->os_.get())));
+            static_cast<void>(tuple.fn(ArrayStart{this->os_.get()}));
             this->os_.get().EndContainer(']');
         });
     }
@@ -176,6 +176,8 @@ class GenericValueSerializer final
     /// - Add an opening curly bracket.
     /// - Serialize the object as a JSON object.
     /// - Add a closing curly bracket.
+    ///
+    /// Needs the complete KeySerializer, so include key_serializer.h when serializing objects.
     /// @tparam Fn Type of serializer function.
     /// @param[in] object to serialize.
     /// @return The succeeding serializer.
@@ -185,7 +187,7 @@ class GenericValueSerializer final
     auto operator<<(JObjectType<Fn> object) && noexcept -> Next
     {
         return this->Serialize([this, &object]() noexcept {
-            /// @brief Defines the return value type
+            // Type the object function returns after its last member
             using ReturnType = decltype(object.fn(ObjectStart(this->os_.get())));
             static_assert(std::is_same<ReturnType, KeySerializer>::value, "Cannot close object in current state");
 
@@ -227,7 +229,7 @@ class GenericValueSerializer final
             this->os_.get().BeginElement(this->serializer_state_ == SerializerState::kNonEmpty);
         }
         std::forward<Fn>(fn)();
-        return Next(this->os_.get(), SerializerState::kNonEmpty);
+        return Next{this->os_.get(), SerializerState::kNonEmpty};
     }
 
     /// @brief Writer to write into

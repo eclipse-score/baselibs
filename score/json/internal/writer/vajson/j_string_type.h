@@ -48,7 +48,7 @@ class JStringType final
 /// @return The serializable string type.
 constexpr auto JString(std::string_view s) noexcept -> JStringType
 {
-    return JStringType(s);
+    return JStringType{s};
 }
 
 /// @brief Serializes a String value

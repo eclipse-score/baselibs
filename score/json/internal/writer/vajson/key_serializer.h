@@ -73,7 +73,7 @@ class KeySerializer final
         this->os_.get().Stream().put('"');
         this->os_.get().WriteNameSeparator();
 
-        return Next(this->os_.get());
+        return Next{this->os_.get()};
     }
 
   private:

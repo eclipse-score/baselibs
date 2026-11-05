@@ -36,36 +36,36 @@ enum class FileSyncMode
 class JsonWriter final : public IJsonWriter
 {
   public:
-    /// @brief There are two usage modes: kUnsynced (default) updates the files directly,
-    ///        whereas kSynced will create a temporary file first, what guarantees
-    ///        that either the file will be completely replaced with the new contents
-    ///        or no changes will be seen if the operation fails or is interrupted
-    ///        (say, due to a power loss). Therefore, this mode is also referred to as
-    ///        `Atomic Update`.
+    /// @brief Constructs a JsonWriter.
+    /// @details There are two usage modes: kUnsynced (default) updates the files directly,
+    ///     whereas kSynced will create a temporary file first, which guarantees
+    ///     that either the file will be completely replaced with the new contents
+    ///     or no changes will be seen if the operation fails or is interrupted
+    ///     (say, due to a power loss). Therefore, this mode is also referred to as
+    ///     `Atomic Update`.
     ///
-    /// When using the kSynced option, if the process creating the temporary file
-    /// does not have the same UID/GID of the original file, one could end up with
-    /// a different ownership for the resulting file.
-    /// To avoid that, there's the extra parameter `ownership`,
-    /// that can be set to specify what properties have to be kept.
+    ///     When using the kSynced option, if the process creating the temporary file
+    ///     does not have the same UID/GID of the original file, one could end up with
+    ///     a different ownership for the resulting file.
+    ///     To avoid that, there's the extra parameter `ownership`,
+    ///     that can be set to specify what properties have to be kept.
     ///
-    /// Notice that changing the UID of the temporary file to reflect the one from
-    /// the original file would require the process to have the privilege of executing
-    /// chown operations. As that's usually not the case, it's advised that, if the
-    /// user has this use-case where the ownership will differ, then all processes
-    /// involved into updating the file shall share the same extra group, and the
-    /// ownerhip flag should be set as `kUseCurrentProcessUID | kUseTargetFileGID`,
-    /// such that even if there would be different UIDs, all processes
-    /// could still access the file through the shared group.
+    ///     Notice that changing the UID of the temporary file to reflect the one from
+    ///     the original file would require the process to have the privilege of executing
+    ///     chown operations. As that's usually not the case, it's advised that, if the
+    ///     user has this use-case where the ownership will differ, then all processes
+    ///     involved into updating the file shall share the same extra group, and the
+    ///     ownership flag should be set as `kUseCurrentProcessUID | kUseTargetFileGID`,
+    ///     such that even if there would be different UIDs, all processes
+    ///     could still access the file through the shared group.
     ///
-    /// The `ownership` parameter is ignored when kUnsynced mode is used.
+    ///     The `ownership` parameter is ignored when kUnsynced mode is used.
     ///
-    /// @param file_sync_mode: Determines the synchronization mode (see above).
-    /// @param ownership: When using kSynced mode, determines how to adjust the ownership
-    ///                   of the temporary file created.
-    /// @param formatting: Layout of the output, either indented and spread over multiple lines to be human
-    ///                    readable (kPrettyPrint, the default) or compact without insignificant
-    ///                    whitespace (kCompact).
+    /// @param file_sync_mode Determines the synchronization mode (see above).
+    /// @param ownership When using kSynced mode, determines how to adjust the ownership
+    ///     of the temporary file created.
+    /// @param formatting Layout of the output, either indented and spread over multiple lines to be human
+    ///     readable (kPrettyPrint, the default) or compact without insignificant whitespace (kCompact).
     explicit JsonWriter(FileSyncMode file_sync_mode = FileSyncMode::kUnsynced,
                         const score::filesystem::AtomicUpdateOwnershipFlags ownership =
                             score::filesystem::kUseTargetFileUID | score::filesystem::kUseTargetFileGID,
