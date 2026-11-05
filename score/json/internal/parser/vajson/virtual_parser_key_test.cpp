@@ -18,6 +18,7 @@
 #include "gtest/gtest.h"
 #include "score/json/internal/parser/vajson/json_data.h"
 #include "score/json/internal/parser/vajson/json_error_domain.h"
+#include "score/json/internal/parser/vajson/structure_parser_stub.h"
 #include <string>
 #include <vector>
 
@@ -35,18 +36,13 @@ namespace
 using Key = std::string;
 using Keys = std::vector<Key>;
 
-struct DynamicKeyParser final : public internal::VirtualParser
+struct DynamicKeyParser final : public StructureParserStub
 {
-    using internal::VirtualParser::VirtualParser;
+    using StructureParserStub::StructureParserStub;
 
     auto OnKey(StringView key) noexcept -> ParserResult override
     {
         this->keys.push_back(std::string(key));
-        return ParserState::kRunning;
-    }
-
-    auto OnUnexpectedEvent() noexcept -> ParserResult override
-    {
         return ParserState::kRunning;
     }
 

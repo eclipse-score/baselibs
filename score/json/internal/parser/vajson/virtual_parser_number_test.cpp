@@ -18,6 +18,7 @@
 #include "gtest/gtest.h"
 #include "score/json/internal/parser/vajson/json_data.h"
 #include "score/json/internal/parser/vajson/json_error_domain.h"
+#include "score/json/internal/parser/vajson/structure_parser_stub.h"
 
 namespace score
 {
@@ -32,19 +33,14 @@ namespace
 
 using Count = std::size_t;
 
-class DynamicNumberParser final : public internal::VirtualParser
+class DynamicNumberParser final : public StructureParserStub
 {
   public:
-    using internal::VirtualParser::VirtualParser;
+    using StructureParserStub::StructureParserStub;
 
     auto OnNumber(JsonNumber) noexcept -> ParserResult override
     {
         this->number_ += 1;
-        return ParserState::kRunning;
-    }
-
-    auto OnUnexpectedEvent() noexcept -> ParserResult override
-    {
         return ParserState::kRunning;
     }
 

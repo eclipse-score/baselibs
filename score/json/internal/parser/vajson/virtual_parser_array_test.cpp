@@ -18,6 +18,7 @@
 #include "gtest/gtest.h"
 #include "score/json/internal/parser/vajson/json_data.h"
 #include "score/json/internal/parser/vajson/json_error_domain.h"
+#include "score/json/internal/parser/vajson/structure_parser_stub.h"
 
 namespace score
 {
@@ -32,10 +33,10 @@ namespace
 
 using Count = std::streamsize;
 
-class DynamicArrayParser final : public internal::VirtualParser
+class DynamicArrayParser final : public StructureParserStub
 {
   public:
-    using internal::VirtualParser::VirtualParser;
+    using StructureParserStub::StructureParserStub;
 
     auto OnStartArray() noexcept -> ParserResult override
     {
@@ -55,20 +56,15 @@ class DynamicArrayParser final : public internal::VirtualParser
         return ParserResult{ParserState::kRunning};
     }
 
-    auto OnUnexpectedEvent() noexcept -> ParserResult override
-    {
-        return ParserState::kRunning;
-    }
-
     Count start_{0};
     Count end_{0};
     Count balance_{0};
 };
 
-class LimitedEndArrayParser final : public internal::VirtualParser
+class LimitedEndArrayParser final : public StructureParserStub
 {
   public:
-    using internal::VirtualParser::VirtualParser;
+    using StructureParserStub::StructureParserStub;
 
     auto OnStartArray() noexcept -> ParserResult override
     {
@@ -84,17 +80,12 @@ class LimitedEndArrayParser final : public internal::VirtualParser
         }
         return ParserResult{ParserState::kRunning};
     }
-
-    auto OnUnexpectedEvent() noexcept -> ParserResult override
-    {
-        return ParserState::kRunning;
-    }
 };
 
-class LimitedStartArrayParser final : public internal::VirtualParser
+class LimitedStartArrayParser final : public StructureParserStub
 {
   public:
-    using internal::VirtualParser::VirtualParser;
+    using StructureParserStub::StructureParserStub;
 
     auto OnStartArray() noexcept -> ParserResult override
     {
@@ -108,11 +99,6 @@ class LimitedStartArrayParser final : public internal::VirtualParser
     }
 
     auto OnEndArray(std::size_t) noexcept -> ParserResult override
-    {
-        return ParserState::kRunning;
-    }
-
-    auto OnUnexpectedEvent() noexcept -> ParserResult override
     {
         return ParserState::kRunning;
     }
