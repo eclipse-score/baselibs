@@ -66,15 +66,6 @@
               "result_text": ""
             },
             {
-              "name": "TypedHashTest__CanCreateFromValidString",
-              "file": "score/hash/code/core/typed_hash_test.cpp",
-              "line": 57,
-              "need": "comp_req__hash__sha_algorithms",
-              "verify_type": "partially",
-              "result": "passed",
-              "result_text": ""
-            },
-            {
               "name": "WorkingDigests/HashCalculatorFactoryCreationTest/0__CalculateSha256",
               "file": "score/hash/code/core/factory/impl/hash_calculator_factory_ieee_test.cpp",
               "line": 91,
@@ -496,7 +487,7 @@
             {
               "name": "TypedHashTest__ToStringEmptyValueTest",
               "file": "score/hash/code/core/typed_hash_test.cpp",
-              "line": 82,
+              "line": 86,
               "need": "comp_req__hash__value_retrieval_hex",
               "verify_type": "partially",
               "result": "passed",
@@ -505,7 +496,7 @@
             {
               "name": "TypedHashTest__CanSerializeToJsonAny",
               "file": "score/hash/code/core/typed_hash_test.cpp",
-              "line": 94,
+              "line": 98,
               "need": "comp_req__hash__value_retrieval_hex",
               "verify_type": "partially",
               "result": "passed",

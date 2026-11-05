@@ -526,15 +526,15 @@
     "hash": "",
     "url": "",
     "TestType": "requirements-based",
-    "DerivationTechnique": "requirements-analysis",
+    "DerivationTechnique": "equivalence-classes",
     "result_text": "",
-    "PartiallyVerifies": "comp_req__hash__value_retrieval_hex, comp_req__hash__sha_algorithms",
+    "PartiallyVerifies": "comp_req__hash__value_retrieval_hex",
     "FullyVerifies": null
   },
   {
     "name": "TypedHashTest__ToStringEmptyValueTest",
     "file": "score/hash/code/core/typed_hash_test.cpp",
-    "line": "82",
+    "line": "86",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -548,7 +548,7 @@
   {
     "name": "TypedHashTest__CanSerializeToJsonAny",
     "file": "score/hash/code/core/typed_hash_test.cpp",
-    "line": "94",
+    "line": "98",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -562,7 +562,7 @@
   {
     "name": "TypedHashTest__CanDeserializeFromJsonAny",
     "file": "score/hash/code/core/typed_hash_test.cpp",
-    "line": "118",
+    "line": "122",
     "result": "passed",
     "repo_name": null,
     "hash": null,
