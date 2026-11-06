@@ -132,7 +132,7 @@ TEST_F(AttributeGettersTest, GetFloatingPointUsingResult)
 {
     RecordProperty("Verifies", "::score::json::GetAttribute");
     RecordProperty("ASIL", "B");
-    RecordProperty("Description", "Get float attribute using Result<>; double retrieval is forbidden.");
+    RecordProperty("Description", "Get float attribute using Result<>; double retrieval widens the value.");
     RecordProperty("TestType", "interface-test");
     RecordProperty("DerivationTechnique", "equivalence-classes");  // boundary values
     RecordProperty("Priority", "3");
@@ -141,16 +141,16 @@ TEST_F(AttributeGettersTest, GetFloatingPointUsingResult)
     ASSERT_TRUE(float_result.has_value());
     EXPECT_TRUE(abs(float_result.value() - 3.14159265359f) < 1e-3f);
 
-    // Floating-point numbers are always stored as double. Having input as a float
-    // and trying to get it as a double throws assertion since this should be unreachable case.
-    ASSERT_DEATH(std::ignore = GetAttribute<double>(test_data_result_, "float"), "");
+    Result<double> double_result = GetAttribute<double>(test_data_result_, "float");
+    ASSERT_TRUE(double_result.has_value());
+    EXPECT_EQ(double_result.value(), static_cast<double>(float_result.value()));
 }
 
 TEST_F(AttributeGettersTest, GetFloatingPointDirectValue)
 {
     RecordProperty("Verifies", "::score::json::GetAttribute");
     RecordProperty("ASIL", "B");
-    RecordProperty("Description", "Get float attribute from direct value; double retrieval is forbidden.");
+    RecordProperty("Description", "Get float attribute from direct value; double retrieval widens the value.");
     RecordProperty("TestType", "interface-test");
     RecordProperty("DerivationTechnique", "equivalence-classes");  // boundary values
     RecordProperty("Priority", "3");
@@ -159,9 +159,9 @@ TEST_F(AttributeGettersTest, GetFloatingPointDirectValue)
     ASSERT_TRUE(float_result.has_value());
     EXPECT_TRUE(abs(float_result.value() - 3.14159265359f) < 1e-3f);
 
-    // Floating-point numbers are always stored as double. Having input as a float
-    // and trying to get it as a double throws assertion since this should be unreachable case.
-    ASSERT_DEATH(std::ignore = GetAttribute<double>(test_data_value_, "float"), "");
+    Result<double> double_result = GetAttribute<double>(test_data_value_, "float");
+    ASSERT_TRUE(double_result.has_value());
+    EXPECT_EQ(double_result.value(), static_cast<double>(float_result.value()));
 }
 
 TEST_F(AttributeGettersTest, GetStringUsingResult)

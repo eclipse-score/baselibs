@@ -15,6 +15,7 @@
 #include "gtest/gtest.h"
 
 #include <cfloat>
+#include <cmath>
 #include <limits>
 
 namespace score
@@ -322,18 +323,8 @@ void TestValueToAnyOtherType(Input input,
     CheckResult(Number{input}.As<int32_t>(), input, int32_ok);
     CheckResult(Number{input}.As<int64_t>(), input, int64_ok);
     CheckResult(Number{input}.As<float>(), input, float_ok);
+    CheckResult(Number{input}.As<double>(), input, double_ok);
     CheckResult(Number{input}.As<bool>(), input, bool_ok);
-
-    // Floating-point numbers are always stored as double. Having input as a float
-    // and trying to get it as a double throws assertion since this should be unreachable case.
-    if (std::is_same<Input, float>::value == true)
-    {
-        EXPECT_DEATH(std::ignore = Number{input}.As<double>(), "");
-    }
-    else
-    {
-        CheckResult(Number{input}.As<double>(), input, double_ok);
-    }
 }
 
 constexpr float GetMaximumIntegerInFloat()
@@ -619,6 +610,98 @@ TEST(Number, FromDoubleToAnyOtherType)
     RecordProperty("Priority", "3");
 
     TestFloatingPointValues<double>(GetMaximumIntegerInDouble());
+}
+
+template <typename Result>
+void ExpectWrongType(const Result& result)
+{
+    ASSERT_FALSE(result.has_value());
+    EXPECT_EQ(result.error(), Error::kWrongType);
+}
+
+template <typename FloatingPoint>
+void TestNanToAnyOtherType()
+{
+    const Number nan{std::numeric_limits<FloatingPoint>::quiet_NaN()};
+
+    ExpectWrongType(nan.As<std::uint8_t>());
+    ExpectWrongType(nan.As<std::uint16_t>());
+    ExpectWrongType(nan.As<std::uint32_t>());
+    ExpectWrongType(nan.As<std::uint64_t>());
+    ExpectWrongType(nan.As<std::int8_t>());
+    ExpectWrongType(nan.As<std::int16_t>());
+    ExpectWrongType(nan.As<std::int32_t>());
+    ExpectWrongType(nan.As<std::int64_t>());
+    ExpectWrongType(nan.As<bool>());
+
+    const auto as_float = nan.As<float>();
+    ASSERT_TRUE(as_float.has_value());
+    EXPECT_TRUE(std::isnan(as_float.value()));
+
+    const auto as_double = nan.As<double>();
+    ASSERT_TRUE(as_double.has_value());
+    EXPECT_TRUE(std::isnan(as_double.value()));
+}
+
+TEST(Number, FromNanToAnyOtherType)
+{
+    RecordProperty("Verifies", "::score::json::Number::As");
+    RecordProperty("ASIL", "B");
+    RecordProperty("Description", "Tests that NaN converts only to floating-point types.");
+    RecordProperty("TestType", "interface-test");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
+    RecordProperty("Priority", "3");
+
+    TestNanToAnyOtherType<float>();
+    TestNanToAnyOtherType<double>();
+}
+
+TEST(Number, NarrowingIntegerIsRejectedByType)
+{
+    RecordProperty("Verifies", "::score::json::Number::As");
+    RecordProperty("ASIL", "B");
+    RecordProperty("Description", "Tests that narrowing integer conversions fail even if the value fits.");
+    RecordProperty("TestType", "interface-test");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
+    RecordProperty("Priority", "3");
+
+    ExpectWrongType(Number{std::uint64_t{1}}.As<std::uint8_t>());
+    ExpectWrongType(Number{std::int64_t{-1}}.As<std::int8_t>());
+    ExpectWrongType(Number{std::int32_t{0}}.As<float>());
+    ExpectWrongType(Number{std::int64_t{0}}.As<double>());
+
+    // Unsigned to signed is the exception and is checked by value.
+    CheckResult(Number{std::uint64_t{1}}.As<std::int8_t>(), 1, true);
+}
+
+template <typename FloatingPoint>
+void TestFloatingPointEdgeCases(FloatingPoint maximum_integer)
+{
+    constexpr FloatingPoint kInfinity{std::numeric_limits<FloatingPoint>::infinity()};
+    const FloatingPoint above_maximum_integer{std::nextafter(maximum_integer, kInfinity)};
+
+    ExpectWrongType(Number{above_maximum_integer}.As<std::int64_t>());
+    ExpectWrongType(Number{-above_maximum_integer}.As<std::int64_t>());
+    ExpectWrongType(Number{kInfinity}.As<std::int64_t>());
+    ExpectWrongType(Number{-kInfinity}.As<std::int64_t>());
+
+    CheckResult(Number{FloatingPoint{-0.0}}.As<std::uint8_t>(), 0, true);
+    CheckResult(Number{kInfinity}.As<float>(), kInfinity, true);
+    CheckResult(Number{-kInfinity}.As<double>(), -kInfinity, true);
+}
+
+TEST(Number, FloatingPointEdgeCases)
+{
+    RecordProperty("Verifies", "::score::json::Number::As");
+    RecordProperty("ASIL", "B");
+    RecordProperty("Description",
+                   "Tests floating-point conversions just beyond the exact integer range, -0 and infinity.");
+    RecordProperty("TestType", "interface-test");
+    RecordProperty("DerivationTechnique", "boundary-values");
+    RecordProperty("Priority", "3");
+
+    TestFloatingPointEdgeCases<float>(GetMaximumIntegerInFloat());
+    TestFloatingPointEdgeCases<double>(GetMaximumIntegerInDouble());
 }
 
 template <typename T1, typename T2>
