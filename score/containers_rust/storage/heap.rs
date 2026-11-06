@@ -35,6 +35,9 @@ pub struct Heap<T, A: BasicAllocator> {
 // SAFETY: `Heap<T>` can be sent to another thread if `T` can be sent to another thread and used allocator is send-safe.
 unsafe impl<T: Send, A: BasicAllocator + Send> Send for Heap<T, A> {}
 
+// SAFETY: `Heap<T>` can be shared across threads if `T` can be shared across threads and the used allocator is share-safe.
+unsafe impl<T: Sync, A: BasicAllocator + Sync> Sync for Heap<T, A> {}
+
 impl<T, A: BasicAllocator> Heap<T, A> {
     fn layout(capacity: u32) -> Option<Layout> {
         (capacity as usize)
