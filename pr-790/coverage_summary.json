@@ -17,7 +17,7 @@
     },
     {
       "branches": {
-        "percent": 95,
+        "percent": 96,
         "total": 270
       },
       "files": {
@@ -116,7 +116,7 @@
       },
       "lines": {
         "percent": 97,
-        "total": 749
+        "total": 719
       },
       "primary_need_id": "comp__baselibs_json"
     },
