@@ -27,7 +27,7 @@ cc_library(
     features = COMPILER_WARNING_FEATURES,
     tags = ["FFI"],
     visibility = [
-        "//score/analysis:__subpackages__",
+        "//visibility:public",
     ],
     deps = [
         "//score/analysis/tracing/common/interface_types:shared_memory_chunk",

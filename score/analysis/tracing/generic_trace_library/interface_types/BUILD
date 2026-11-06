@@ -63,7 +63,7 @@ cc_library(
     features = COMPILER_WARNING_FEATURES,
     tags = ["FFI"],
     visibility = [
-        "//score/analysis/tracing:__subpackages__",
+        "//visibility:public",
     ],
     deps = [
         ":type_definitions",
