@@ -69,9 +69,9 @@ jobs:
           unique-cache-name: ${{ github.workflow }}-${{ github.job }}-${{ matrix.name }}
       - name: Install QEMU
         if: matrix.bazel-config == 'score-linux-aarch64'
-        run: |
-          sudo apt-get update
-          sudo apt install -y qemu-user
+        uses: awalsh128/cache-apt-pkgs-action@553a35bb8ebd9fcabcb1c9451aa4c98e1b4ca8a9 # v1.6.3
+        with:
+          packages: qemu-user
       - name: Bazel Build
         working-directory: ${{ matrix.working-directory }}
         run: |
