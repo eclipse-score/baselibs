@@ -215,14 +215,14 @@ std::int64_t score::os::internal::UnistdImpl::gettid() const noexcept
 #endif  // __QNX__
 }
 
-uid_t score::os::internal::UnistdImpl::getuid() const noexcept
+score::os::UserId score::os::internal::UnistdImpl::getuid() const noexcept
 {
-    return ::getuid();
+    return UserId{::getuid()};
 }
 
-gid_t score::os::internal::UnistdImpl::getgid() const noexcept
+score::os::GroupId score::os::internal::UnistdImpl::getgid() const noexcept
 {
-    return ::getgid();
+    return GroupId{::getgid()};
 }
 
 pid_t score::os::internal::UnistdImpl::getppid() const noexcept
@@ -230,13 +230,13 @@ pid_t score::os::internal::UnistdImpl::getppid() const noexcept
     return ::getppid();
 }
 
-score::cpp::expected_blank<score::os::Error> score::os::internal::UnistdImpl::setuid(const uid_t uid) const noexcept
+score::cpp::expected_blank<score::os::Error> score::os::internal::UnistdImpl::setuid(const UserId uid) const noexcept
 {
     /* It is immposible to cover the return statement */
     /* Hence, added suppression */
     // Suppressed here because usage of this OSAL method is on banned list
     // NOLINTNEXTLINE(score-banned-function) see comment above
-    if (::setuid(uid) == -1)  // LCOV_EXCL_BR_LINE
+    if (::setuid(uid.native()) == -1)  // LCOV_EXCL_BR_LINE
     {
         return score::cpp::make_unexpected(score::os::Error::createFromErrno());
     }
@@ -249,11 +249,11 @@ score::cpp::expected_blank<score::os::Error> score::os::internal::UnistdImpl::se
     return {};  // LCOV_EXCL_LINE
 }
 
-score::cpp::expected_blank<score::os::Error> score::os::internal::UnistdImpl::setgid(const gid_t gid) const noexcept
+score::cpp::expected_blank<score::os::Error> score::os::internal::UnistdImpl::setgid(const GroupId gid) const noexcept
 {
     // Suppressed here because usage of this OSAL method is on banned list
     // NOLINTNEXTLINE(score-banned-function) see comment above
-    if (::setgid(gid) == -1)
+    if (::setgid(gid.native()) == -1)
     {
         return score::cpp::make_unexpected(score::os::Error::createFromErrno());
     }
@@ -349,10 +349,10 @@ score::cpp::expected_blank<score::os::Error> score::os::internal::UnistdImpl::ch
 }
 
 score::cpp::expected_blank<score::os::Error> score::os::internal::UnistdImpl::chown(const char* const path,
-                                                                                    const uid_t uid,
-                                                                                    const gid_t gid) const noexcept
+                                                                                    const UserId uid,
+                                                                                    const GroupId gid) const noexcept
 {
-    if (0 != ::chown(path, uid, gid))
+    if (0 != ::chown(path, uid.native(), gid.native()))
     {
         return score::cpp::make_unexpected(score::os::Error::createFromErrno());
     }
@@ -387,6 +387,24 @@ score::cpp::expected_blank<score::os::Error> score::os::internal::UnistdImpl::ge
         return score::cpp::make_unexpected(score::os::Error::createFromErrno());
     }
     return {};
+}
+
+score::cpp::expected<score::cpp::optional<score::os::Unistd::PasswdIdentity>, score::os::Error>
+score::os::internal::UnistdImpl::getpwnam_r(const char* name, char* buffer, size_t bufsize) const noexcept
+{
+    struct passwd pwd{};
+    struct passwd* result{nullptr};
+    // getpwnam_r() reports failures through its return value, not errno.
+    const std::int32_t error_number = ::getpwnam_r(name, &pwd, buffer, bufsize, &result);
+    if (error_number != 0)
+    {
+        return score::cpp::make_unexpected(score::os::Error::createFromErrno(error_number));
+    }
+    if (result == nullptr)
+    {
+        return score::cpp::optional<PasswdIdentity>{};
+    }
+    return score::cpp::optional<PasswdIdentity>{PasswdIdentity{UserId{result->pw_uid}, GroupId{result->pw_gid}}};
 }
 
 score::os::Unistd& score::os::Unistd::instance() noexcept

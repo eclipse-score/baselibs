@@ -213,13 +213,13 @@ Result<void> FileUtils::ChangeGroup(const Path& path, const std::string& group_n
         return MakeUnexpected(ErrorCode::kCouldNotChangeGroup, "Unable to get group file entry");
     }
     const auto gid = group_name_result.value().gid;
-    return ChangeGroup(path, gid);
+    return ChangeGroup(path, gid.native());
 }
 
 Result<void> FileUtils::ChangeGroup(const Path& path, const gid_t group_id) const noexcept
 {
     const auto uid = os::Unistd::instance().getuid();
-    const auto result = os::Unistd::instance().chown(path.CStr(), uid, group_id);
+    const auto result = os::Unistd::instance().chown(path.CStr(), uid, os::GroupId{group_id});
     if (!result.has_value())
     {
         return MakeUnexpected(ErrorCode::kCouldNotChangeGroup, "Unable to change group ownership");

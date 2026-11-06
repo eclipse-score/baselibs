@@ -15,6 +15,7 @@
 
 #include <unistd.h>
 #include <algorithm>
+#include <climits>
 #include <vector>
 
 #include "score/callback.hpp"
@@ -72,8 +73,10 @@ TEST_F(QnxUnistdImplFixture, SetgroupspidReturnsErrorIfPassInvalidParams)
     RecordProperty("TestingTechnique", "Interface test");
     RecordProperty("DerivationTechnique", "equivalence-classes");  // equivalence classes
 
-    const auto val = unit_->setgroupspid(-1, nullptr, 0);
+    const std::vector<score::os::GroupId> too_many_groups(static_cast<std::size_t>(NGROUPS_MAX) + 1U);
+    const auto val = unit_->setgroupspid({too_many_groups.data(), too_many_groups.size()}, 0);
     ASSERT_FALSE(val.has_value());
+    EXPECT_EQ(val.error(), score::os::Error::Code::kInvalidArgument);
 }
 
 TEST_F(QnxUnistdImplFixture, SetgroupspidNewGroupAdded)
@@ -94,18 +97,24 @@ TEST_F(QnxUnistdImplFixture, SetgroupspidNewGroupAdded)
             return false;
         }
 
-        std::vector<gid_t> groups;
+        std::vector<gid_t> native_groups;
 
         if (n_groups > 0)
         {
-            groups.resize(n_groups);
-            ::getgroups(n_groups, groups.data());  // fill groups with data
+            native_groups.resize(n_groups);
+            ::getgroups(n_groups, native_groups.data());  // fill groups with data
         }
 
-        const gid_t supplied_group_id = n_groups > 0 ? *std::max_element(groups.begin(), groups.end()) + 1 : 1;
-        groups.push_back(supplied_group_id);
+        const gid_t supplied_group_id =
+            n_groups > 0 ? *std::max_element(native_groups.begin(), native_groups.end()) + 1 : 1;
+        std::vector<score::os::GroupId> groups;
+        for (const gid_t native_group : native_groups)
+        {
+            groups.emplace_back(native_group);
+        }
+        groups.emplace_back(supplied_group_id);
         // set +1 group in addition to existing
-        const auto val = unistd_inst.setgroupspid(n_groups + 1, groups.data(), 0);
+        const auto val = unistd_inst.setgroupspid({groups.data(), groups.size()}, 0);
         if (val.has_value() == false)
         {
             return false;
@@ -142,7 +151,7 @@ TEST_F(QnxUnistdFixture, SetuidChangesUidIfPassValidId)
 
     ForkAndExpectTrue([this]() noexcept {
         uid_t expected_uid{1};
-        const auto val = unit_->setuid(expected_uid);
+        const auto val = unit_->setuid(score::os::UserId{expected_uid});
         return val.has_value() && (::getuid() == expected_uid);
     });
 }
@@ -161,7 +170,7 @@ TEST_F(QnxUnistdFixture, SetGidSetsGidIfPassValidId)
 
     ForkAndExpectTrue([this]() noexcept {
         gid_t expected_gid{1};
-        const auto val = unit_->setgid(expected_gid);
+        const auto val = unit_->setgid(score::os::GroupId{expected_gid});
         return val.has_value() && (::getgid() == expected_gid);
     });
 }
