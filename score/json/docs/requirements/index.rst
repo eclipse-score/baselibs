@@ -39,6 +39,25 @@ General Requirements
    The JSON-Library shall provide a service to deserialize JSON data according to RFC8259, i.e.
    parse and check for well-formedness.
 
+.. comp_req:: JSON nesting depth
+   :id: comp_req__json__nesting_depth
+   :reqtype: Functional
+   :security: YES
+   :safety: ASIL_B
+   :derived_from: feat_req__baselibs__json_library[version==2]
+   :status: valid
+   :version: 1
+   :satisfied_by: comp__baselibs_json[version==2]
+   :covers: aou_req__json__stack_budget[version==1]
+
+   The JSON parser shall support an immutable, per-instance maximum nesting depth with a default of 64.
+   Depth shall count arrays and objects along a root-to-value path, including the root container.
+   Scalar values, object keys and container delimiters inside strings shall not increase depth.
+   The configured limit shall be inclusive; zero shall permit only scalar roots, not unlimited nesting.
+   Both buffer and file parsing shall return the regular parsing error before inserting a container that would exceed the limit into the partial tree.
+   Rejected input shall not affect the nesting budget of subsequent parse calls or other parser instances.
+   The JSON literal shall use the default limit and retain its terminate-on-parse-error behavior.
+
 .. comp_req:: JSON Serialization
    :id: comp_req__json__serialization
    :reqtype: Functional
@@ -144,6 +163,20 @@ Safety Impact
 
 AoU Requirements
 =================
+.. aou_req:: JSON stack budget
+   :id: aou_req__json__stack_budget
+   :reqtype: Non-Functional
+   :security: NO
+   :safety: ASIL_B
+   :status: valid
+   :version: 1
+
+   The integrator shall validate the chosen maximum nesting depth, including the default, against the available thread stack for parsing cleanup and subsequent tree operations.
+   This validation shall include destruction, cloning, comparison and serialization on the deployed platform and toolchain.
+
+   Note: The default is not a platform-qualified stack bound.
+   The parser limit does not constrain manually constructed or subsequently modified trees, document size, container width or heap consumption.
+
 .. aou_req:: JSON data integrity
    :id: aou_req__json__data_integrity
    :reqtype: Non-Functional

@@ -70,6 +70,159 @@ TEST(JsonParserTest, FromBuffer)
     VerifyJson(result.value());
 }
 
+TEST(JsonParserTest, EnforcesConfiguredNestingDepth)
+{
+    RecordProperty("PartiallyVerifies", "comp_req__json__nesting_depth");
+    RecordProperty("Description", "Check that the configured container depth is inclusive for arrays and objects.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "boundary-values");
+
+    constexpr std::size_t kMaxNestingDepth{2U};
+    const JsonParser parser{kMaxNestingDepth};
+    for (const auto input : {std::string_view{"[0]"},
+                             std::string_view{R"({"value":0})"},
+                             std::string_view{"[[0]]"},
+                             std::string_view{R"({"outer":{"value":0}})"},
+                             std::string_view{"[{}]"},
+                             std::string_view{R"({"outer":[]})"}})
+    {
+        EXPECT_TRUE(parser.FromBuffer(input).has_value()) << input;
+    }
+    for (const auto input : {std::string_view{"[[[0]]]"},
+                             std::string_view{R"({"outer":{"inner":{"value":0}}})"},
+                             std::string_view{R"([{"inner":[]}])"}})
+    {
+        const auto result{parser.FromBuffer(input)};
+        ASSERT_FALSE(result.has_value()) << input;
+        EXPECT_EQ(result.error(), Error::kParsingError);
+    }
+}
+
+TEST(JsonParserTest, EnforcesDefaultAndLargerNestingLimits)
+{
+    RecordProperty("PartiallyVerifies", "comp_req__json__nesting_depth");
+    RecordProperty("Description", "Check the default depth boundary and a larger per-instance limit.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "boundary-values");
+
+    constexpr std::size_t kExpectedDefault{64U};
+    EXPECT_EQ(JsonParser::kDefaultMaxNestingDepth, kExpectedDefault);
+    const JsonParser parser{};
+    for (const auto depth : {kExpectedDefault - 1U, kExpectedDefault, kExpectedDefault + 1U})
+    {
+        const auto input{std::string(depth, '[') + "0" + std::string(depth, ']')};
+        const auto result{parser.FromBuffer(input)};
+        EXPECT_EQ(result.has_value(), depth <= kExpectedDefault) << depth;
+        if (!result.has_value())
+        {
+            EXPECT_EQ(result.error(), Error::kParsingError);
+        }
+    }
+
+    const JsonParser larger_parser{kExpectedDefault + 1U};
+    const auto accepted{std::string(kExpectedDefault + 1U, '[') + "0" + std::string(kExpectedDefault + 1U, ']')};
+    EXPECT_TRUE(larger_parser.FromBuffer(accepted).has_value());
+    const auto result{larger_parser.FromBuffer("[" + accepted + "]")};
+    ASSERT_FALSE(result.has_value());
+    EXPECT_EQ(result.error(), Error::kParsingError);
+}
+
+TEST(JsonParserTest, ZeroNestingLimitAllowsOnlyScalars)
+{
+    RecordProperty("PartiallyVerifies", "comp_req__json__nesting_depth");
+    RecordProperty("Description", "Check that depth zero accepts scalar roots and rejects even empty containers.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "boundary-values");
+
+    const JsonParser parser{0U};
+    for (const auto* const input : {"null", "true", "false", "0", "1.5", R"("[{}]")"})
+    {
+        EXPECT_TRUE(parser.FromBuffer(input).has_value()) << input;
+    }
+    for (const auto* const input : {"[]", "{}", "[0]", R"({"value":0})"})
+    {
+        const auto result{parser.FromBuffer(input)};
+        ASSERT_FALSE(result.has_value()) << input;
+        EXPECT_EQ(result.error(), Error::kParsingError);
+    }
+}
+
+TEST(JsonParserTest, CountsOnlyOpenContainers)
+{
+    RecordProperty("PartiallyVerifies", "comp_req__json__nesting_depth");
+    RecordProperty("Description",
+                   "Check that sibling containers, keys and string delimiters do not consume extra depth.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
+
+    const JsonParser parser{2U};
+    for (const auto* const input : {"[[0],[1],[2]]", R"({"[{}]":[0],"siblings":[]})", R"([{"key":"[{}]"},{}])"})
+    {
+        EXPECT_TRUE(parser.FromBuffer(input).has_value()) << input;
+    }
+}
+
+TEST(JsonParserTest, ReusesNestingBudgetAfterErrors)
+{
+    RecordProperty("PartiallyVerifies", "comp_req__json__nesting_depth, comp_req__json__deserialization");
+    RecordProperty("Description",
+                   "Check that depth and syntax errors leave the parser reusable and instances independent.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
+
+    const JsonParser parser{2U};
+    const JsonParser shallower_parser{1U};
+    for (const auto* const input : {"[[[0]]]", "[[0]", "[{", "[{\"value\":["})
+    {
+        const auto result{parser.FromBuffer(input)};
+        ASSERT_FALSE(result.has_value()) << input;
+        EXPECT_EQ(result.error(), Error::kParsingError);
+        EXPECT_TRUE(parser.FromBuffer("[[0]]").has_value());
+        EXPECT_FALSE(shallower_parser.FromBuffer("[[0]]").has_value());
+    }
+}
+
+TEST(JsonParserTest, RejectsDeepInputWithoutRetainingState)
+{
+    RecordProperty("PartiallyVerifies", "comp_req__json__nesting_depth");
+    RecordProperty("Description", "Check normal rejection and reuse for deeply nested valid arrays and objects.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "error-guessing");
+
+    constexpr std::size_t kInputDepth{20000U};
+    const auto deep_array{std::string(kInputDepth, '[') + "0" + std::string(kInputDepth, ']')};
+    std::string deep_object{};
+    for (std::size_t depth{0U}; depth < kInputDepth; ++depth)
+    {
+        deep_object += R"({"value":)";
+    }
+    deep_object += "0";
+    deep_object.append(kInputDepth, '}');
+
+    const JsonParser parser{};
+    for (const auto input : {std::string_view{deep_array}, std::string_view{deep_object}})
+    {
+        const auto result{parser.FromBuffer(input)};
+        ASSERT_FALSE(result.has_value());
+        EXPECT_EQ(result.error(), Error::kParsingError);
+        EXPECT_TRUE(parser.FromBuffer("[]").has_value());
+    }
+}
+
+TEST(JsonParserTest, LiteralUsesDefaultNestingLimit)
+{
+    RecordProperty("PartiallyVerifies", "comp_req__json__nesting_depth");
+    RecordProperty("Description", "Check that the literal accepts the default boundary and terminates above it.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "boundary-values");
+
+    constexpr auto kDepth{JsonParser::kDefaultMaxNestingDepth};
+    const auto accepted{std::string(kDepth, '[') + "0" + std::string(kDepth, ']')};
+    EXPECT_TRUE(operator""_json(accepted.data(), accepted.size()).As<List>().has_value());
+    const auto rejected{"[" + accepted + "]"};
+    EXPECT_DEATH(static_cast<void>(operator""_json(rejected.data(), rejected.size())), "JSON could not be parsed!");
+}
+
 TEST(JsonParserTest, ViaLiteral)
 {
     RecordProperty("Verifies", "::score::json::operator\"\"_json");
@@ -196,6 +349,32 @@ class ParserTest : public testing::Test
         return file_path;
     }
 };
+
+TEST_F(ParserTest, AppliesConfiguredNestingLimitToFiles)
+{
+    RecordProperty("PartiallyVerifies", "comp_req__json__nesting_depth");
+    RecordProperty("Description", "Check that files and buffers share the inclusive array and object depth limit.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "boundary-values");
+
+    const JsonParser parser{2U};
+    for (const auto* const input : {"[[0]]", R"({"outer":{"value":0}})", "[[[0]]]", R"({"outer":{"inner":{}}})"})
+    {
+        const auto file_path{CreateJsonFile("configured_depth.json", input)};
+        const auto from_buffer{parser.FromBuffer(input)};
+        const auto from_file{parser.FromFile(file_path)};
+        ASSERT_EQ(from_file.has_value(), from_buffer.has_value()) << input;
+        if (from_buffer.has_value())
+        {
+            EXPECT_EQ(from_file.value(), from_buffer.value());
+        }
+        else
+        {
+            EXPECT_EQ(from_file.error(), Error::kParsingError);
+        }
+    }
+    EXPECT_TRUE(parser.FromFile(CreateJsonFile("configured_depth.json", "[]")).has_value());
+}
 
 TEST_F(ParserTest, CanParseObjectBool)
 {
