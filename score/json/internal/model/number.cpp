@@ -84,13 +84,6 @@ constexpr bool IsLosslessCast(const In value) noexcept
         return !((value > kMax) || (value < kMin)) &&
                std::equal_to<In>{}(static_cast<In>(static_cast<Out>(value)), value);
     }
-    else if constexpr (std::is_same_v<In, float>)
-    {
-        // LCOV_EXCL_START Floating-point numbers are always stored as double.
-        SCORE_LANGUAGE_FUTURECPP_UNREACHABLE_MESSAGE("Input is float and Output is double - impossible case");
-        return true;
-        // LCOV_EXCL_STOP
-    }
     else
     {
         // Precision loss and underflow are accepted, overflow to infinity is not.

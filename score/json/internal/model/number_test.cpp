@@ -322,18 +322,8 @@ void TestValueToAnyOtherType(Input input,
     CheckResult(Number{input}.As<int32_t>(), input, int32_ok);
     CheckResult(Number{input}.As<int64_t>(), input, int64_ok);
     CheckResult(Number{input}.As<float>(), input, float_ok);
+    CheckResult(Number{input}.As<double>(), input, double_ok);
     CheckResult(Number{input}.As<bool>(), input, bool_ok);
-
-    // Floating-point numbers are always stored as double. Having input as a float
-    // and trying to get it as a double throws assertion since this should be unreachable case.
-    if (std::is_same<Input, float>::value == true)
-    {
-        EXPECT_DEATH(std::ignore = Number{input}.As<double>(), "");
-    }
-    else
-    {
-        CheckResult(Number{input}.As<double>(), input, double_ok);
-    }
 }
 
 constexpr float GetMaximumIntegerInFloat()
