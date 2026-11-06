@@ -23,7 +23,7 @@
 #include <type_traits>
 #include <utility>
 
-#include "score/json/internal/parser/vajson/types.h"
+#include "score/json/internal/common/types.h"
 #include "score/language/futurecpp/include/score/optional.hpp"
 
 namespace score

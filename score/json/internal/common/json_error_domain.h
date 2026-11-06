@@ -15,13 +15,13 @@
 ///
 /// @details  Contains Result alias, error domain & error codes.
 
-#ifndef SCORE_JSON_INTERNAL_PARSER_VAJSON_JSON_ERROR_DOMAIN_H
-#define SCORE_JSON_INTERNAL_PARSER_VAJSON_JSON_ERROR_DOMAIN_H
+#ifndef SCORE_JSON_INTERNAL_COMMON_JSON_ERROR_DOMAIN_H
+#define SCORE_JSON_INTERNAL_COMMON_JSON_ERROR_DOMAIN_H
 
 #include <iostream>
 #include <utility>
 
-#include "score/json/internal/parser/vajson/types.h"
+#include "score/json/internal/common/types.h"
 #include "score/result/error_code.h"
 #include "score/result/error_domain.h"
 #include "score/result/result.h"
@@ -306,4 +306,4 @@ inline void AssertCondition(bool value, CStr message = "") noexcept
 }  // namespace json
 }  // namespace score
 
-#endif  // SCORE_JSON_INTERNAL_PARSER_VAJSON_JSON_ERROR_DOMAIN_H
+#endif  // SCORE_JSON_INTERNAL_COMMON_JSON_ERROR_DOMAIN_H

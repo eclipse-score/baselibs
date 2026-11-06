@@ -13,8 +13,8 @@
 /// @file
 /// @brief  Type definitions for vaJson.
 
-#ifndef SCORE_JSON_INTERNAL_PARSER_VAJSON_TYPES_H
-#define SCORE_JSON_INTERNAL_PARSER_VAJSON_TYPES_H
+#ifndef SCORE_JSON_INTERNAL_COMMON_TYPES_H
+#define SCORE_JSON_INTERNAL_COMMON_TYPES_H
 
 #include <string>
 #include <string_view>
@@ -60,4 +60,4 @@ enum class EncodingType : std::uint8_t
 }  // namespace json
 }  // namespace score
 
-#endif  // SCORE_JSON_INTERNAL_PARSER_VAJSON_TYPES_H
+#endif  // SCORE_JSON_INTERNAL_COMMON_TYPES_H

@@ -12,7 +12,7 @@
  ********************************************************************************/
 /// @file
 /// @brief  Contains tests concerning the vaJson error domain.
-#include "score/json/internal/parser/vajson/json_error_domain.h"
+#include "score/json/internal/common/json_error_domain.h"
 
 #include <string>
 #include <utility>

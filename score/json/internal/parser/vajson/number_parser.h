@@ -18,7 +18,7 @@
 #ifndef SCORE_JSON_INTERNAL_PARSER_VAJSON_NUMBER_PARSER_H
 #define SCORE_JSON_INTERNAL_PARSER_VAJSON_NUMBER_PARSER_H
 
-#include "score/json/internal/parser/vajson/types.h"
+#include "score/json/internal/common/types.h"
 
 #include <cerrno>
 #include <cstdlib>

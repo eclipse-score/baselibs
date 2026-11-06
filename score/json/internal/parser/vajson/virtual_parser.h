@@ -18,10 +18,10 @@
 #ifndef SCORE_JSON_INTERNAL_PARSER_VAJSON_VIRTUAL_PARSER_H
 #define SCORE_JSON_INTERNAL_PARSER_VAJSON_VIRTUAL_PARSER_H
 
+#include "score/json/internal/common/json_error_domain.h"
+#include "score/json/internal/common/types.h"
 #include "score/json/internal/parser/vajson/json_data.h"
-#include "score/json/internal/parser/vajson/json_error_domain.h"
 #include "score/json/internal/parser/vajson/structure_parser.h"
-#include "score/json/internal/parser/vajson/types.h"
 
 namespace score
 {

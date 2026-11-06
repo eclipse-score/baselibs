@@ -18,12 +18,12 @@
 #ifndef SCORE_JSON_INTERNAL_PARSER_VAJSON_STRUCTURE_PARSER_H
 #define SCORE_JSON_INTERNAL_PARSER_VAJSON_STRUCTURE_PARSER_H
 
+#include "score/json/internal/common/types.h"
 #include "score/json/internal/parser/vajson/depth_counter.h"
 #include "score/json/internal/parser/vajson/json_number.h"
 #include "score/json/internal/parser/vajson/json_ops.h"
 #include "score/json/internal/parser/vajson/parser_state.h"
 #include "score/json/internal/parser/vajson/structure_parser_base.h"
-#include "score/json/internal/parser/vajson/types.h"
 #include <functional>
 #include <string>
 

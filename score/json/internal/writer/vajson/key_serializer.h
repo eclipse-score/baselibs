@@ -16,7 +16,7 @@
 #ifndef SCORE_JSON_INTERNAL_WRITER_VAJSON_KEY_SERIALIZER_H
 #define SCORE_JSON_INTERNAL_WRITER_VAJSON_KEY_SERIALIZER_H
 
-#include "score/json/internal/parser/vajson/types.h"
+#include "score/json/internal/common/types.h"
 #include "score/json/internal/writer/vajson/escaped_json_string.h"
 #include "score/json/internal/writer/vajson/generic_value_serializer.h"
 #include "score/json/internal/writer/vajson/j_key_type.h"

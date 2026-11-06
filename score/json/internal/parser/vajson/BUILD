@@ -27,7 +27,6 @@ cc_library(
     hdrs = [
         "depth_counter.h",
         "json_data.h",
-        "json_error_domain.h",
         "json_number.h",
         "json_ops.h",
         "number_parser.h",
@@ -37,13 +36,13 @@ cc_library(
         "reader_fwd.h",
         "structure_parser.h",
         "structure_parser_base.h",
-        "types.h",
         "virtual_parser.h",
     ],
     features = COMPILER_WARNING_FEATURES,
     tags = ["FFI"],
     deps = [
         "@score_baselibs//score/filesystem",
+        "@score_baselibs//score/json/internal/common",
         "@score_baselibs//score/language/futurecpp",
         "@score_baselibs//score/language/safecpp/string_view:zstring_view",
         "@score_baselibs//score/result",
@@ -55,7 +54,6 @@ cc_gtest_unit_test(
     srcs = [
         "depth_counter_test.cpp",
         "json_data_test.cpp",
-        "json_error_domain_test.cpp",
         "json_number_test.cpp",
         "json_ops_test.cpp",
         "number_parser_test.cpp",
@@ -72,5 +70,8 @@ cc_gtest_unit_test(
         "virtual_parser_valid_test.cpp",
     ],
     features = COMPILER_WARNING_FEATURES,
-    deps = [":vajson"],
+    deps = [
+        ":vajson",
+        "@score_baselibs//score/json/internal/common",
+    ],
 )

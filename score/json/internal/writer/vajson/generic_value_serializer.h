@@ -24,8 +24,8 @@
 #include <system_error>
 #include <type_traits>
 
-#include "score/json/internal/parser/vajson/json_error_domain.h"
-#include "score/json/internal/parser/vajson/types.h"
+#include "score/json/internal/common/json_error_domain.h"
+#include "score/json/internal/common/types.h"
 #include "score/json/internal/writer/vajson/escaped_json_string.h"
 #include "score/json/internal/writer/vajson/j_array_type.h"
 #include "score/json/internal/writer/vajson/j_bool_type.h"

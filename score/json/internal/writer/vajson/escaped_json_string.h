@@ -23,7 +23,7 @@
 #include <string_view>
 #include <utility>
 
-#include "score/json/internal/parser/vajson/types.h"
+#include "score/json/internal/common/types.h"
 #include "score/json/internal/writer/vajson/j_key_type.h"
 #include "score/json/internal/writer/vajson/j_string_type.h"
 #include "score/json/internal/writer/vajson/serializer_types.h"

@@ -16,8 +16,8 @@
 /// @details  Provides callbacks for implementing parsers.
 
 #include "score/json/internal/parser/vajson/virtual_parser.h"
+#include "score/json/internal/common/json_error_domain.h"
 #include "score/json/internal/parser/vajson/json_data.h"
-#include "score/json/internal/parser/vajson/json_error_domain.h"
 #include "score/json/internal/parser/vajson/structure_parser.h"
 
 namespace score
