@@ -125,7 +125,7 @@ docs_bundle(
         ":endianness",
         ":pmr_ring_buffer",
     ],
-    primary_need_id = "comp__baselibs_memory_shared",
+    primary_need_id = "comp__baselibs_memory",
     source_dir = "docs",
     visibility = ["//visibility:public"],
 )
