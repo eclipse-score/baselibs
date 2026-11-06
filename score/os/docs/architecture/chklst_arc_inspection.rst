@@ -13,8 +13,8 @@
    # *******************************************************************************
 
 
-.. document:: OS Architecture Inspection Checklist
-   :id: doc__os_arc_inspection
+.. document:: OSAL Architecture Inspection Checklist
+   :id: doc__osal_arc_inspection
    :status: valid
    :version: 1
    :safety: ASIL_B
