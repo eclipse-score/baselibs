@@ -15,6 +15,7 @@
 #include "gtest/gtest.h"
 
 #include <cfloat>
+#include <cmath>
 #include <limits>
 
 namespace score
@@ -609,6 +610,50 @@ TEST(Number, FromDoubleToAnyOtherType)
     RecordProperty("Priority", "3");
 
     TestFloatingPointValues<double>(GetMaximumIntegerInDouble());
+}
+
+template <typename Result>
+void ExpectWrongType(const Result& result)
+{
+    ASSERT_FALSE(result.has_value());
+    EXPECT_EQ(result.error(), Error::kWrongType);
+}
+
+template <typename FloatingPoint>
+void TestNanToAnyOtherType()
+{
+    const Number nan{std::numeric_limits<FloatingPoint>::quiet_NaN()};
+
+    ExpectWrongType(nan.As<std::uint8_t>());
+    ExpectWrongType(nan.As<std::uint16_t>());
+    ExpectWrongType(nan.As<std::uint32_t>());
+    ExpectWrongType(nan.As<std::uint64_t>());
+    ExpectWrongType(nan.As<std::int8_t>());
+    ExpectWrongType(nan.As<std::int16_t>());
+    ExpectWrongType(nan.As<std::int32_t>());
+    ExpectWrongType(nan.As<std::int64_t>());
+    ExpectWrongType(nan.As<bool>());
+
+    const auto as_float = nan.As<float>();
+    ASSERT_TRUE(as_float.has_value());
+    EXPECT_TRUE(std::isnan(as_float.value()));
+
+    const auto as_double = nan.As<double>();
+    ASSERT_TRUE(as_double.has_value());
+    EXPECT_TRUE(std::isnan(as_double.value()));
+}
+
+TEST(Number, FromNanToAnyOtherType)
+{
+    RecordProperty("Verifies", "::score::json::Number::As");
+    RecordProperty("ASIL", "B");
+    RecordProperty("Description", "Tests that NaN converts only to floating-point types.");
+    RecordProperty("TestType", "interface-test");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
+    RecordProperty("Priority", "3");
+
+    TestNanToAnyOtherType<float>();
+    TestNanToAnyOtherType<double>();
 }
 
 template <typename T1, typename T2>

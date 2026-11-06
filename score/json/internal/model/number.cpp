@@ -80,8 +80,8 @@ constexpr bool IsLosslessCast(const In value) noexcept
                                                        static_cast<std::int64_t>(std::numeric_limits<Out>::min())));
         constexpr auto kMax = static_cast<In>(
             std::min(kMaxExactInteger<In>, static_cast<std::uint64_t>(std::numeric_limits<Out>::max())));
-        // The range check makes the cast below defined.
-        return !((value > kMax) || (value < kMin)) &&
+        // The range check makes the cast below defined and also rejects NaN.
+        return (value >= kMin) && (value <= kMax) &&
                std::equal_to<In>{}(static_cast<In>(static_cast<Out>(value)), value);
     }
     else
