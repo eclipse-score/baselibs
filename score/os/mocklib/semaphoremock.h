@@ -37,17 +37,27 @@ class SemaphoreMock : public Semaphore
                 sem_open,
                 (const char*, const OpenFlag),
                 (const, noexcept, override));
+    MOCK_METHOD((score::cpp::expected_blank<Error>), sem_destroy, (sem_t*), (const, noexcept, override));
+    MOCK_METHOD((score::cpp::expected_blank<Error>), sem_trywait, (sem_t*), (const, noexcept, override));
     MOCK_METHOD((score::cpp::expected_blank<Error>), sem_wait, (sem_t*), (const, noexcept, override));
     MOCK_METHOD((score::cpp::expected_blank<Error>), sem_post, (sem_t*), (const, noexcept, override));
     MOCK_METHOD((score::cpp::expected_blank<Error>), sem_close, (sem_t*), (const, noexcept, override));
     MOCK_METHOD((score::cpp::expected_blank<Error>), sem_unlink, (const char*), (const, noexcept, override));
     MOCK_METHOD((score::cpp::expected_blank<Error>),
+                sem_waittimeout,
+                (sem_t*, const std::chrono::nanoseconds, const bool),
+                (const, noexcept, override));
+    MOCK_METHOD((score::cpp::expected_blank<Error>),
                 sem_timedwait,
-                (sem_t*, const struct timespec*),
+                (sem_t*,
+                 (const std::chrono::time_point<std::chrono::system_clock, std::chrono::nanoseconds>),
+                 const bool),
                 (const, noexcept, override));
     MOCK_METHOD((score::cpp::expected_blank<Error>),
                 sem_timedwait_monotonic,
-                (sem_t*, const struct timespec*),
+                (sem_t*,
+                 (const std::chrono::time_point<std::chrono::steady_clock, std::chrono::nanoseconds>),
+                 const bool),
                 (const, noexcept, override));
     MOCK_METHOD((score::cpp::expected_blank<Error>),
                 sem_getvalue,

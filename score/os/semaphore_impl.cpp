@@ -77,6 +77,22 @@ score::cpp::expected<sem_t*, Error> SemaphoreImpl::sem_open(const char* const pa
     }
     return ret;
 }
+score::cpp::expected_blank<Error> SemaphoreImpl::sem_destroy(sem_t* const sem) const noexcept
+{
+    if (::sem_destroy(sem) != 0)
+    {
+        return score::cpp::make_unexpected(score::os::Error::createFromErrno());
+    }
+    return {};
+}
+score::cpp::expected_blank<Error> SemaphoreImpl::sem_trywait(sem_t* const sem) const noexcept
+{
+    if (::sem_trywait(sem) != 0)
+    {
+        return score::cpp::make_unexpected(score::os::Error::createFromErrno());
+    }
+    return {};
+}
 score::cpp::expected_blank<Error> SemaphoreImpl::sem_wait(sem_t* const sem) const noexcept
 {
     // Manual code analysis:
@@ -115,13 +131,29 @@ score::cpp::expected_blank<Error> SemaphoreImpl::sem_unlink(const char* const pa
     }
     return {};
 }
-score::cpp::expected_blank<Error> SemaphoreImpl::sem_timedwait(sem_t* const sem,
-                                                               const struct timespec* const abs_time) const noexcept
+score::cpp::expected_blank<Error> SemaphoreImpl::sem_waittimeout(sem_t* const sem,
+                                                                 const std::chrono::nanoseconds timeout,
+                                                                 const bool resume) const noexcept
 {
-
-    if (::sem_timedwait(sem, abs_time) != 0)
+    const auto tp = std::chrono::steady_clock::now() + timeout;
+    return sem_timedwait_monotonic(sem, tp, resume);
+}
+score::cpp::expected_blank<Error> SemaphoreImpl::sem_timedwait(
+    sem_t* const sem,
+    const std::chrono::time_point<std::chrono::system_clock, std::chrono::nanoseconds> tp,
+    const bool resume) const noexcept
+{
+    // convert abstime to timespec
+    struct timespec abs_time{};
+    abs_time.tv_sec = std::chrono::duration_cast<std::chrono::seconds>(tp.time_since_epoch()).count();
+    abs_time.tv_nsec = std::chrono::duration_cast<std::chrono::nanoseconds>(tp.time_since_epoch()).count() %
+                       std::chrono::nanoseconds::period::den;
+    while (::sem_timedwait(sem, &abs_time) != 0)
     {
-        return score::cpp::make_unexpected(score::os::Error::createFromErrno());
+        if (!resume || errno != EINTR)
+        {
+            return score::cpp::make_unexpected(score::os::Error::createFromErrno());
+        }
     }
     return {};
 }

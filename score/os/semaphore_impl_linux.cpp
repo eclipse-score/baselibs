@@ -26,14 +26,23 @@ namespace os
 // visible.
 score::cpp::expected_blank<Error> SemaphoreImpl::sem_timedwait_monotonic(
     sem_t* const sem,
-    const struct timespec* const abs_time) const noexcept
+    const std::chrono::time_point<std::chrono::steady_clock, std::chrono::nanoseconds> tp,
+    const bool resume) const noexcept
 {
     // A16-0-1: version guard avoids a compile error on glibc < 2.30 (no sem_clockwait()).
     // coverity[autosar_cpp14_a16_0_1_violation]
 #if defined(__GLIBC__) && ((__GLIBC__ > 2) || ((__GLIBC__ == 2) && (__GLIBC_MINOR__ >= 30)))
-    if (::sem_clockwait(sem, CLOCK_MONOTONIC, abs_time) != 0)
+    // convert abstime to timespec
+    struct timespec abs_time{};
+    abs_time.tv_sec = std::chrono::duration_cast<std::chrono::seconds>(tp.time_since_epoch()).count();
+    abs_time.tv_nsec = std::chrono::duration_cast<std::chrono::nanoseconds>(tp.time_since_epoch()).count() %
+                       std::chrono::nanoseconds::period::den;
+    while (::sem_clockwait(sem, CLOCK_MONOTONIC, &abs_time) != 0)
     {
-        return score::cpp::make_unexpected(score::os::Error::createFromErrno());
+        if (!resume || errno != EINTR)
+        {
+            return score::cpp::make_unexpected(score::os::Error::createFromErrno());
+        }
     }
     return {};
 // coverity[autosar_cpp14_a16_0_1_violation], see above rationale

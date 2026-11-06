@@ -36,6 +36,10 @@ class SemaphoreImpl final : public Semaphore
     score::cpp::expected<sem_t*, Error> sem_open(const char* const pathname,
                                                  const Semaphore::OpenFlag oflag) const noexcept override;
 
+    score::cpp::expected_blank<Error> sem_destroy(sem_t* const sem) const noexcept override;
+
+    score::cpp::expected_blank<Error> sem_trywait(sem_t* const sem) const noexcept override;
+
     score::cpp::expected_blank<Error> sem_wait(sem_t* const sem) const noexcept override;
 
     score::cpp::expected_blank<Error> sem_post(sem_t* const sem) const noexcept override;
@@ -44,11 +48,19 @@ class SemaphoreImpl final : public Semaphore
 
     score::cpp::expected_blank<Error> sem_unlink(const char* const pathname) const noexcept override;
 
-    score::cpp::expected_blank<Error> sem_timedwait(sem_t* const sem,
-                                                    const struct timespec* const abs_time) const noexcept override;
+    score::cpp::expected_blank<Error> sem_waittimeout(sem_t* const sem,
+                                                      const std::chrono::nanoseconds timeout,
+                                                      const bool resume) const noexcept override;
 
-    score::cpp::expected_blank<Error> sem_timedwait_monotonic(sem_t* const sem, const struct timespec* const abs_time)
-        const noexcept override;
+    score::cpp::expected_blank<Error> sem_timedwait(
+        sem_t* const sem,
+        const std::chrono::time_point<std::chrono::system_clock, std::chrono::nanoseconds> tp,
+        const bool resume) const noexcept override;
+
+    score::cpp::expected_blank<Error> sem_timedwait_monotonic(
+        sem_t* const sem,
+        const std::chrono::time_point<std::chrono::steady_clock, std::chrono::nanoseconds> tp,
+        const bool resume) const noexcept override;
 
     score::cpp::expected_blank<Error> sem_getvalue(sem_t* const sem, std::int32_t* const sval) const noexcept override;
 
