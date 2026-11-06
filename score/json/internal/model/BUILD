@@ -19,14 +19,12 @@ cc_library(
     srcs = [
         "any.cpp",
         "error.cpp",
-        "lossless_cast.cpp",
         "null.cpp",
         "number.cpp",
     ],
     hdrs = [
         "any.h",
         "error.h",
-        "lossless_cast.h",
         "null.h",
         "number.h",
         "object.h",

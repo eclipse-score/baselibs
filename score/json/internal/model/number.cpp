@@ -13,9 +13,9 @@
 
 #include "number.h"
 
-#include "score/json/internal/model/lossless_cast.h"
-
+#include <algorithm>
 #include <cstdint>
+#include <functional>
 #include <limits>
 
 #include "score/overload.hpp"
@@ -26,6 +26,89 @@ namespace score
 {
 namespace json
 {
+namespace
+{
+
+static_assert(std::numeric_limits<float>::is_iec559 && std::numeric_limits<double>::is_iec559, "IEEE-754 required");
+
+// Every integer with a magnitude up to this bound is exactly representable in Floating.
+template <typename Floating>
+constexpr std::uint64_t kMaxExactInteger{std::uint64_t{1} << std::numeric_limits<Floating>::digits};
+
+template <typename Floating>
+constexpr bool IsInfinite(const Floating value) noexcept
+{
+    return (value > std::numeric_limits<Floating>::max()) || (value < std::numeric_limits<Floating>::lowest());
+}
+
+// Integer narrowing is rejected by type, except unsigned to signed, which is checked by value.
+template <typename Out, typename In>
+constexpr bool IsLosslessCast(const In value) noexcept
+{
+    if constexpr (std::is_same_v<Out, In>)
+    {
+        return true;
+    }
+    else if constexpr (std::is_same_v<Out, bool>)
+    {
+        return std::equal_to<In>{}(value, In{0}) || std::equal_to<In>{}(value, In{1});
+    }
+    else if constexpr (std::is_integral_v<In> && std::is_integral_v<Out>)
+    {
+        if constexpr (std::is_signed_v<In> == std::is_signed_v<Out>)
+        {
+            return std::numeric_limits<Out>::max() > std::numeric_limits<In>::max();
+        }
+        else if constexpr (std::is_unsigned_v<In>)
+        {
+            return static_cast<std::uint64_t>(value) <= static_cast<std::uint64_t>(std::numeric_limits<Out>::max());
+        }
+        else
+        {
+            return false;
+        }
+    }
+    else if constexpr (std::is_integral_v<In>)
+    {
+        constexpr auto kLimit = kMaxExactInteger<Out>;
+        return (static_cast<std::int64_t>(std::numeric_limits<In>::min()) >= -static_cast<std::int64_t>(kLimit)) &&
+               (static_cast<std::uint64_t>(std::numeric_limits<In>::max()) <= kLimit);
+    }
+    else if constexpr (std::is_integral_v<Out>)
+    {
+        constexpr auto kMin = static_cast<In>(std::max(-static_cast<std::int64_t>(kMaxExactInteger<In>),
+                                                       static_cast<std::int64_t>(std::numeric_limits<Out>::min())));
+        constexpr auto kMax = static_cast<In>(
+            std::min(kMaxExactInteger<In>, static_cast<std::uint64_t>(std::numeric_limits<Out>::max())));
+        // The range check makes the cast below defined.
+        return !((value > kMax) || (value < kMin)) &&
+               std::equal_to<In>{}(static_cast<In>(static_cast<Out>(value)), value);
+    }
+    else if constexpr (std::is_same_v<In, float>)
+    {
+        // LCOV_EXCL_START Floating-point numbers are always stored as double.
+        SCORE_LANGUAGE_FUTURECPP_UNREACHABLE_MESSAGE("Input is float and Output is double - impossible case");
+        return true;
+        // LCOV_EXCL_STOP
+    }
+    else
+    {
+        // Precision loss and underflow are accepted, overflow to infinity is not.
+        return IsInfinite(value) || !IsInfinite(static_cast<Out>(value));
+    }
+}
+
+template <typename Out, typename In>
+score::Result<Out> TryLosslessCast(const In value)
+{
+    if (IsLosslessCast<Out>(value))
+    {
+        return static_cast<Out>(value);
+    }
+    return score::MakeUnexpected(Error::kWrongType);
+}
+
+}  // namespace
 
 class VariantComparator
 {
