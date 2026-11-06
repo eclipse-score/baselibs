@@ -16,6 +16,13 @@ cd examples/integration
 bazel build //...
 ```
 
+### QNX Configurations
+
+The `x86_64-qnx` and `aarch64-qnx` configs use QNX SDP 8.0.4 for local builds and tests.
+CI uses the parallel `x86_64-qnx-sdp_8.0.5` and `aarch64-qnx-sdp_8.0.5` configs, which select both compiler and IFS toolchains from SDP 8.0.5.
+Fetching SDP 8.0.5 requires a GitHub token with read access to `eclipse-score/qnx_sdp_pkg` (`GH_TOKEN` or `~/.netrc`).
+The parallel configs are temporary and will be collapsed when SDP 8.0.5 becomes the default.
+
 ## Modifying the Example
 
 To add additional base libraries features to test:
