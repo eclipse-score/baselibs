@@ -35,7 +35,11 @@ namespace
 class AnyTreeBuilder final : private score::json::vajson::internal::StructureParser
 {
   public:
-    using score::json::vajson::internal::StructureParser::StructureParser;
+    /// @brief Creates a tree builder with the parser instance's container depth limit.
+    AnyTreeBuilder(score::json::vajson::JsonData& data, const std::size_t max_nesting_depth) noexcept
+        : score::json::vajson::internal::StructureParser{data}, max_nesting_depth_{max_nesting_depth}
+    {
+    }
 
     /// @brief Parses the data given to the constructor
     /// @return Any as root of the tree, error on error
@@ -134,6 +138,8 @@ class AnyTreeBuilder final : private score::json::vajson::internal::StructurePar
         return score::json::vajson::ParserState::kRunning;
     }
 
+    /// @brief Maximum number of containers permitted on the hierarchy stack.
+    const std::size_t max_nesting_depth_;
     /// @brief Stores the most recently parsed object key.
     std::string last_key_{};
     /// @brief Tracks the hierarchy of containers currently being parsed.
@@ -213,6 +219,12 @@ template <typename T>
 // coverity[autosar_cpp14_a15_5_3_violation : FALSE]
 auto AnyTreeBuilder::StartContainer(T&& value) noexcept -> score::json::vajson::ParserResult
 {
+    if (hierarchy_.size() >= max_nesting_depth_)
+    {
+        return score::json::vajson::MakeErrorResult<score::json::vajson::ParserState>(
+            score::json::vajson::JsonErrc::kInvalidJson);
+    }
+
     auto result{Store(std::forward<T>(value))};
     if (!result.has_value())
     {
@@ -272,7 +284,7 @@ auto JsonParser::FromFile(const std::string_view file_path) const noexcept -> sc
     auto json_data{score::json::vajson::JsonData::FromFile(file_path)};
     if (json_data.has_value())
     {
-        score::Result<Any> json_object{AnyTreeBuilder{json_data.value()}.GetData()};
+        score::Result<Any> json_object{AnyTreeBuilder{json_data.value(), max_nesting_depth_}.GetData()};
         if (json_object.has_value())
         {
             result = std::move(*json_object);
@@ -291,7 +303,7 @@ auto JsonParser::FromBuffer(const std::string_view buffer) const noexcept -> sco
     // (else branch can't be hit due to internal implementation of JsonData::FromBuffer function that accepts all kind
     // of strings.)
     {
-        auto json_object{AnyTreeBuilder{json_data.value()}.GetData()};
+        auto json_object{AnyTreeBuilder{json_data.value(), max_nesting_depth_}.GetData()};
         if (json_object.has_value())
         {
             result = std::move(*json_object);

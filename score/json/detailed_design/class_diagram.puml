@@ -89,6 +89,10 @@ score::json::IJsonParser --> score::Result : use
 
 
 class score::json::JsonParser {
+  {static}+kDefaultMaxNestingDepth: std::size_t = 64
+  -max_nesting_depth_: const std::size_t
+  +JsonParser()
+  +JsonParser(max_nesting_depth: std::size_t)
   +FromFile(file_path: std::string_view): score::Result<Any>
   +FromBuffer(buffer: std::string_view): score::Result<Any>
 }
@@ -139,6 +143,8 @@ amsr::json::internal::StructureParser <|-- AnyTreeBuilder
 
 
 class AnyTreeBuilder <<internal to JsonParser>> #LightSteelBlue {
+  -max_nesting_depth_: const std::size_t
+  +AnyTreeBuilder(data: amsr::json::JsonData, max_nesting_depth: std::size_t)
   +GetData(): score::Result<Any>
 }
 
