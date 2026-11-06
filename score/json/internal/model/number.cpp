@@ -41,41 +41,49 @@ constexpr bool IsInfinite(const Floating value) noexcept
     return (value > std::numeric_limits<Floating>::max()) || (value < std::numeric_limits<Floating>::lowest());
 }
 
-// Integer narrowing is rejected by type, except unsigned to signed, which is checked by value.
+// Returns whether value converts to Out without changing it.
 template <typename Out, typename In>
 constexpr bool IsLosslessCast(const In value) noexcept
 {
     if constexpr (std::is_same_v<Out, In>)
     {
+        // Same type: always lossless.
         return true;
     }
     else if constexpr (std::is_same_v<Out, bool>)
     {
+        // To bool: only 0 and 1.
         return std::equal_to<In>{}(value, In{0}) || std::equal_to<In>{}(value, In{1});
     }
     else if constexpr (std::is_integral_v<In> && std::is_integral_v<Out>)
     {
         if constexpr (std::is_signed_v<In> == std::is_signed_v<Out>)
         {
+            // Same signedness: only widening, decided by type even if the value would fit.
             return std::numeric_limits<Out>::max() > std::numeric_limits<In>::max();
         }
         else if constexpr (std::is_unsigned_v<In>)
         {
+            // Unsigned to signed: the value must fit.
             return static_cast<std::uint64_t>(value) <= static_cast<std::uint64_t>(std::numeric_limits<Out>::max());
         }
         else
         {
+            // Signed to unsigned: always rejected.
             return false;
         }
     }
     else if constexpr (std::is_integral_v<In>)
     {
+        // Integer to floating point: the whole input type range must be exact, decided by type.
         constexpr auto kLimit = kMaxExactInteger<Out>;
         return (static_cast<std::int64_t>(std::numeric_limits<In>::min()) >= -static_cast<std::int64_t>(kLimit)) &&
                (static_cast<std::uint64_t>(std::numeric_limits<In>::max()) <= kLimit);
     }
     else if constexpr (std::is_integral_v<Out>)
     {
+        // Floating point to integer: the value must be integral and within the exact range of In.
+        // Integral values beyond kMaxExactInteger are rejected, even if exactly representable.
         constexpr auto kMin = static_cast<In>(std::max(-static_cast<std::int64_t>(kMaxExactInteger<In>),
                                                        static_cast<std::int64_t>(std::numeric_limits<Out>::min())));
         constexpr auto kMax = static_cast<In>(
@@ -86,7 +94,7 @@ constexpr bool IsLosslessCast(const In value) noexcept
     }
     else
     {
-        // Precision loss and underflow are accepted, overflow to infinity is not.
+        // Floating point to floating point: precision loss and underflow are accepted, overflow to infinity is not.
         return IsInfinite(value) || !IsInfinite(static_cast<Out>(value));
     }
 }
