@@ -12,15 +12,15 @@
    # SPDX-License-Identifier: Apache-2.0
    # *******************************************************************************
 
-.. _comp_doc_memory_shared:
+.. _comp_doc_memory:
 
-memory
+Memory
 ######
 
 .. document:: Memory Library
    :id: doc__memory
    :status: draft
-   :version: 1
+   :version: 2
    :safety: ASIL_B
    :tags: baselibs_memory
    :realizes: wp__cmpt_request[version==1]
@@ -35,35 +35,36 @@ memory
 Abstract
 ========
 
-The Memory library provides APIs for memory management to facilitate inter-process communication (IPC) in the S-CORE software platform.
+The Memory library provides byte-order utilities, size and alignment information, and a ring buffer with construction-time capacity.
 
 Motivation and Rationale
 ========================
 
-The Memory library shall provide mechanisms for creating, accessing, and managing shared memory between different processes.
-It includes support for polymorphic memory resource allocators using offset pointers and additional utilities to deal with memory use-cases.
-
-The Memory library is needed in the S-CORE software platform because subsystems like Communication and Logging rely on shared memory for inter-process communication.
+Callers use these utilities to interpret byte order, represent allocation size and alignment, and store a bounded sequence using a caller-selected allocation resource.
 
 Specification
 =============
 
-The following details and requirements describe the aspects of the current feature in the context of S-CORE.
+The Memory library provides the following capabilities.
 
-General considerations
-----------------------
+Endianness
+----------
 
-The Memory Library should provide APIs for memory management:
+The endianness utilities identify the host byte order as little endian or big endian and determine whether a requested byte order differs from the host.
+They reverse the bytes of 32-bit and 64-bit unsigned integers and convert big-endian values of those types to host byte order.
+The endianness unit tests partially verify :need:`comp_req__memory__endianness` through host detection, byte-order comparison, byte reversal, and big-endian-to-host conversion.
+The current test environment assumes a little-endian host.
 
-* :need:`comp_req__memory__shared_memory`
-* :need:`comp_req__memory__offset_ptr`
-* :need:`comp_req__memory__shared_container`
-* :need:`comp_req__memory__inter_process_sync`
-* :need:`comp_req__memory__bounds_check`
-* :need:`comp_req__memory__endianness`
-* :need:`comp_req__memory__sealed_shm`
-* :need:`comp_req__memory__typed_memory`
-* :need:`comp_req__memory__resource_registry`
-* :need:`comp_req__memory__atomic_ops`
+Size and Alignment Information
+------------------------------
 
-The library should ensure that all memory operations are performed safely, with appropriate bounds checking and synchronization mechanisms to prevent memory corruption.
+Size and alignment information describes an allocation's size and required alignment and supports comparing two size and alignment pairs for equality.
+Alignment must be a nonzero power of two within the supported range, and size must be a multiple of alignment.
+
+Fixed-Capacity Ring Buffer
+--------------------------
+
+The ring buffer stores a bounded sequence with capacity selected at construction.
+Callers supply an allocation resource and a capacity greater than zero.
+Inserting into a full buffer removes the oldest element before adding the new element.
+The oldest element can be accessed or removed, the buffer can be cleared, and its size and capacity can be queried.

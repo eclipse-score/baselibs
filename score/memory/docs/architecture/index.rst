@@ -12,11 +12,11 @@
    # SPDX-License-Identifier: Apache-2.0
    # *******************************************************************************
 
-Memory Shared Component Architecture
-************************************
+Memory Component Architecture
+*****************************
 
-.. document:: Memory Shared Architecture
-   :id: doc__memory_shared_architecture
+.. document:: Memory Architecture
+   :id: doc__memory_architecture
    :status: valid
    :version: 1
    :safety: ASIL_B
@@ -26,30 +26,28 @@ Memory Shared Component Architecture
 Overview/Description
 --------------------
 
-see :need:`doc__memory`
+The Memory component contains independent utilities for byte order, size and alignment information, and fixed-capacity buffering.
+See :need:`doc__memory` for the capability descriptions.
 
 Static Architecture
 -------------------
 
-.. comp:: Memory Shared
-   :id: comp__baselibs_memory_shared
+.. comp:: Memory
+   :id: comp__baselibs_memory
    :security: YES
    :safety: ASIL_B
    :status: valid
    :version: 1
-   :implements: logic_arc_int__baselibs__memory_shared[version==1]
-   :uses: logic_arc_int__os__fcntl[version==1], logic_arc_int__os__stat[version==1], logic_arc_int__os__mman[version==1]
    :belongs_to: feat__baselibs[version==1]
 
-
-.. comp_arc_sta:: Memory Shared Static view
-   :id: comp_arc_sta__baselibs__memory_shared
+.. comp_arc_sta:: Memory Static View
+   :id: comp_arc_sta__baselibs__memory
    :security: YES
-   :safety:  ASIL_B
+   :safety: ASIL_B
    :status: valid
    :version: 1
-   :fulfils: comp_req__memory__shared_memory[version==1], comp_req__memory__offset_ptr[version==1], comp_req__memory__shared_container[version==1], comp_req__memory__inter_process_sync[version==1], comp_req__memory__bounds_check[version==1], comp_req__memory__endianness[version==1], comp_req__memory__sealed_shm[version==1], comp_req__memory__typed_memory[version==1], comp_req__memory__resource_registry[version==1], comp_req__memory__atomic_ops[version==1], comp_req__memory__deterministic_alloc[version==1], comp_req__memory__address_independence[version==1]
-   :belongs_to: comp__baselibs_memory_shared[version==1]
+   :fulfils: comp_req__memory__endianness[version==2]
+   :belongs_to: comp__baselibs_memory[version==1]
 
    .. needarch::
       :scale: 50
@@ -60,39 +58,10 @@ Static Architecture
 Dynamic Architecture
 --------------------
 
-No need for sequence diagram. Simple caller callee flow.
+The utilities are invoked directly by their callers.
 
 Interfaces
 ----------
 
-.. logic_arc_int_op:: Open
-   :id: logic_arc_int_op__baselibs__open
-   :security: YES
-   :safety: ASIL_B
-   :status: valid
-   :version: 1
-   :included_by: logic_arc_int__baselibs__memory_shared[version==1]
-
-.. logic_arc_int_op:: Update
-   :id: logic_arc_int_op__baselibs__update
-   :security: YES
-   :safety: ASIL_B
-   :status: valid
-   :version: 1
-   :included_by: logic_arc_int__baselibs__memory_shared[version==1]
-
-.. logic_arc_int_op:: Lock
-   :id: logic_arc_int_op__baselibs__lock
-   :security: YES
-   :safety: ASIL_B
-   :status: valid
-   :version: 1
-   :included_by: logic_arc_int__baselibs__memory_shared[version==1]
-
-.. logic_arc_int_op:: Set Permissions
-   :id: logic_arc_int_op__baselibs__set_perm
-   :security: YES
-   :safety: ASIL_B
-   :status: valid
-   :version: 1
-   :included_by: logic_arc_int__baselibs__memory_shared[version==1]
+The interfaces cover byte-order detection and conversion, size and alignment information, and fixed-capacity buffering.
+The ring buffer accepts a capacity and an allocation resource at construction.

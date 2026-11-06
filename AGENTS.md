@@ -182,8 +182,15 @@ cd examples/integration && bazel build //...
 
 Documentation uses Sphinx with the sphinx-needs extension, integrated with Bazel. The project follows the S-CORE process defined at https://github.com/eclipse-score/process_description. The metamodels for Sphinx-needs directives and Bazel integration are maintained at https://github.com/eclipse-score/docs-as-code.
 
-`score/<component>/docs/` holds most components' documentation (requirements, architecture, detailed design, safety analysis), colocated with the component's source. `docs/` at the repo root hosts feature-level docs (`docs/features/`), module-level docs (`docs/module/`), and the docs of components not yet migrated to `score/<component>/docs/` (`docs/baselibs/components/<component>/docs/`).
+`score/<component>/docs/` holds most components' documentation (requirements, architecture, detailed design, safety analysis), colocated with the component's source. `docs/` at the repo root hosts feature-level docs (`docs/features/`) and module-level docs (`docs/module/`).
 
 ```bash
-bazel run //:docs    # Build docs, output at _build/index.html
+bazel run //:docs    # Run sphinx-needs consistency checks and build HTML documentation, output at _build/index.html
 ```
+
+### Documentation guidelines
+
+- Write RST prose about current capabilities, observable behavior, and constraints. Omit migration narratives, inventories of absent functionality, namespaces, code symbols, and implementation details.
+- Do not link RST prose to source files or Markdown READMEs to RST files.
+- Before deleting obsolete requirements, check whether their functionality moved elsewhere within Baselibs. Remove or retire obsolete needs consistently, updating architecture, safety analysis, incoming references, test metadata, and documentation bundle IDs together.
+- Preserve stable need IDs where possible, bump versions for material changes, and pin links to verified target versions. Tests must reference valid requirements they genuinely verify; do not invent requirements merely to preserve links.
