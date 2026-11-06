@@ -18,7 +18,11 @@
 #include "gtest/gtest.h"
 
 #include <future>
+#include <mutex>
+#include <shared_mutex>
 #include <string>
+#include <type_traits>
+#include <utility>
 #include <vector>
 
 using score::concurrency::Synchronized;
@@ -39,6 +43,16 @@ auto clone_synced(const Synced<T>& sync)
 {
     return sync.WithLock(clone);
 }
+
+template <typename T, typename = void>
+struct HasLockShared : std::false_type
+{
+};
+
+template <typename T>
+struct HasLockShared<T, std::void_t<decltype(std::declval<T&>().lock_shared())>> : std::true_type
+{
+};
 }  // namespace
 
 class TestStruct
@@ -221,6 +235,52 @@ TEST(SynchronizedTest, LockMethodBasic)
     }
 
     EXPECT_EQ(sync_int.WithLock(clone), 100);
+}
+
+TEST(SynchronizedTest, SharedLockProvidesConstAccessAndRequiresSharedMutexes)
+{
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
+    RecordProperty("FullyVerifies", "comp_req__concurrency__synchronized_shared");
+    RecordProperty("Description",
+                   "Check that shared locking provides const pointer access for shared-lockable mutexes "
+                   "and is unavailable for mutexes without shared locking.");
+
+    using SharedSynchronized = Synchronized<int, std::shared_mutex>;
+    static_assert(std::is_same_v<SharedSynchronized::shared_pointer,
+                                 score::concurrency::LockedPtr<const int, std::shared_lock<std::shared_mutex>>>);
+    static_assert(HasLockShared<SharedSynchronized>::value);
+    static_assert(HasLockShared<const SharedSynchronized>::value);
+    static_assert(HasLockShared<Synchronized<int, std::shared_timed_mutex>>::value);
+    static_assert(HasLockShared<const Synchronized<int, std::shared_timed_mutex>>::value);
+    static_assert(!HasLockShared<Synchronized<int, std::mutex>>::value);
+    static_assert(!HasLockShared<Synchronized<int, std::recursive_mutex>>::value);
+    static_assert(!HasLockShared<Synchronized<int, std::timed_mutex>>::value);
+    static_assert(!HasLockShared<Synchronized<int, std::recursive_timed_mutex>>::value);
+
+    SharedSynchronized sync_value(42);
+    const int* sync_value_ptr = sync_value.lock().get();
+    {
+        auto locked_ptr = sync_value.lock_shared();
+        ASSERT_EQ(locked_ptr.get(), sync_value_ptr);
+        EXPECT_EQ(*locked_ptr, 42);
+    }
+
+    {
+        auto locked_ptr = std::as_const(sync_value).lock_shared();
+        ASSERT_EQ(locked_ptr.get(), sync_value_ptr);
+        EXPECT_EQ(*locked_ptr, 42);
+    }
+
+    {
+        auto held_lock = sync_value.lock_shared();
+        ASSERT_EQ(held_lock.get(), sync_value_ptr);
+        auto shared_lock_result = std::async(std::launch::async, [&sync_value]() {
+            auto shared_locked_ptr = std::as_const(sync_value).lock_shared();
+            return *shared_locked_ptr == 42;
+        });
+        EXPECT_TRUE(shared_lock_result.get());
+    }
 }
 
 TEST(SynchronizedTest, TestStructLockReturnValue)

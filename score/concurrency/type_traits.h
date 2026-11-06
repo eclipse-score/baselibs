@@ -36,6 +36,22 @@ template <typename T>
 using is_basic_lockable_t = typename is_basic_lockable<T>::type;
 
 template <typename T, typename = void>
+struct is_shared_lockable : std::false_type
+{
+};
+
+template <typename T>
+struct is_shared_lockable<
+    T,
+    std::void_t<decltype(std::declval<T&>().lock_shared()), decltype(std::declval<T&>().unlock_shared())>>
+    : is_basic_lockable<T>
+{
+};
+
+template <typename T>
+inline constexpr bool is_shared_lockable_v = is_shared_lockable<T>::value;
+
+template <typename T, typename = void>
 struct LockWithOwnsLock : std::false_type
 {
 };

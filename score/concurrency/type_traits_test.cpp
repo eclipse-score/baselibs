@@ -108,3 +108,17 @@ TEST(TypeTraitsTest, LockWithOwnsLockCompileTimeChecks)
     EXPECT_TRUE((LockWithOwnsLock<std::shared_lock<std::shared_mutex>>::value))
         << "std::shared_lock<std::shared_mutex> should satisfy LockWithOwnsLock";
 }
+
+TEST(TypeTraitsTest, IsSharedLockableCompileTimeChecks)
+{
+    EXPECT_TRUE((is_shared_lockable_v<test::SharedLockableArchetype>));
+    EXPECT_FALSE((is_shared_lockable_v<test::BasicLockableArchetype>));
+    EXPECT_FALSE((is_shared_lockable_v<test::SharedLockWithoutBasicLocking>));
+
+    EXPECT_TRUE((is_shared_lockable_v<std::shared_mutex>));
+    EXPECT_TRUE((is_shared_lockable_v<std::shared_timed_mutex>));
+    EXPECT_FALSE((is_shared_lockable_v<std::mutex>));
+    EXPECT_FALSE((is_shared_lockable_v<std::recursive_mutex>));
+    EXPECT_FALSE((is_shared_lockable_v<std::timed_mutex>));
+    EXPECT_FALSE((is_shared_lockable_v<std::recursive_timed_mutex>));
+}
