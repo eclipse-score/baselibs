@@ -18,7 +18,6 @@
 #include <functional>
 #include <limits>
 
-#include "score/overload.hpp"
 #include <score/assert.hpp>
 #include <cmath>
 
@@ -164,48 +163,12 @@ template <typename T, class>
 // coverity[autosar_cpp14_a15_5_3_violation]
 score::Result<T> Number::As() const noexcept
 {
-    //  we are suppressing clang format here that results in coverity violation:
-    //  "AUTOSAR C++14 A7-1-7" rule finding. This rule states: "Each expression
-    //  statement and identifier declaration shall be placed on a separate line."
-    // clang-format off
-
     SCORE_LANGUAGE_FUTURECPP_ASSERT_PRD(!value_.valueless_by_exception());
     return std::visit(
-        score::cpp::overload(
-            [](const std::uint8_t v) {
-                return TryLosslessCast<T>(v);
-            },
-            [](const std::uint16_t v) {
-                return TryLosslessCast<T>(v);
-            },
-            [](const std::uint32_t v) {
-                return TryLosslessCast<T>(v);
-            },
-            [](const std::uint64_t v) {
-                return TryLosslessCast<T>(v);
-            },
-            [](const std::int8_t v) {
-                return TryLosslessCast<T>(v);
-            },
-            [](const std::int16_t v) {
-                return TryLosslessCast<T>(v);
-            },
-            [](const std::int32_t v) {
-                return TryLosslessCast<T>(v);
-            },
-            [](const std::int64_t v) {
-                return TryLosslessCast<T>(v);
-            },
-            [](const float v) {
-                return TryLosslessCast<T>(v);
-            },
-            [](const double v) {
-                return TryLosslessCast<T>(v);
-            }
-            ),
-        value_
-    );
-    // clang-format on
+        [](const auto v) {
+            return TryLosslessCast<T>(v);
+        },
+        value_);
 }
 
 template score::Result<std::uint64_t> Number::As() const noexcept;
