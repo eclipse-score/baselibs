@@ -90,9 +90,9 @@ jobs:
           qnx-credential-helper: .github/tools/qnx_credential_helper.py
           qnx-license-dir: /opt/score_qnx/license
       - name: Install qemu
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y qemu-system
+        uses: awalsh128/cache-apt-pkgs-action@553a35bb8ebd9fcabcb1c9451aa4c98e1b4ca8a9 # v1.6.3
+        with:
+          packages: qemu-system
       - name: Enable KVM group permissions
         run: |
           echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' | sudo tee /etc/udev/rules.d/99-kvm4all.rules
