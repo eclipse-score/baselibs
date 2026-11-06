@@ -161,6 +161,26 @@ class SerializeIterator
         return *this;
     }
 
+    /// @brief Overwrites an already-written element at the given offset (counted from the start of this iterator).
+    /// @details Needed because SOME/IP requires the length prefix of a dynamic-length array to hold the byte length of
+    /// the serialized array data, not the element count; that byte length is only known after the
+    /// elements are written, so the prefix is written as a placeholder and patched afterwards. Offsets not yet written
+    /// latch kOutOfBoundsWrite.
+    SerializeIterator<Container>& WriteAt(const std::size_t offset, const typename Container::value_type& value) &
+    {
+        if (not result_->has_value())
+        {
+            return *this;  // keep the first latched error
+        }
+        if (offset >= result_->value())
+        {
+            *result_ = MakeUnexpected(SerializationError::kOutOfBoundsWrite);
+            return *this;
+        }
+        *std::next(container_.begin(), static_cast<difference_type>(offset)) = value;
+        return *this;
+    }
+
     [[nodiscard]] Result<std::size_t> GetResult() const
     {
         return *result_;
@@ -210,6 +230,13 @@ class DeSerializeIterator
     {
         SCORE_LANGUAGE_FUTURECPP_ASSERT_PRD(iterator_ != container_.cend());
         return *iterator_;
+    }
+
+    /// @brief Latches a deserialization error detected by the caller (e.g. a declared length that cannot be read).
+    /// Surfaced through GetResult().
+    void SetError(const SerializationError error)
+    {
+        *result_ = MakeUnexpected(error);
     }
 
     /// @brief Move iterator to next position (but not past end())

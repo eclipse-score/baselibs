@@ -20,7 +20,12 @@
 #include "static_reflection_with_serialization/visitor/visit.h"
 
 #include <score/assert.hpp>
+#include <score/span.hpp>
 #include <score/type_traits.hpp>
+
+#include <array>
+#include <cstddef>
+#include <limits>
 
 namespace score
 {
@@ -69,8 +74,63 @@ class CommonVisitorLogic
         return meta_;
     }
 
+    void SetFieldIndex(std::size_t field_index)
+    {
+        meta_.field_index_ = field_index;
+    }
+
+    /// @brief Maximum supported struct/array nesting depth for the field path below.
+    static constexpr std::size_t kMaxNestingDepth{16U};
+
+    /// @brief Path marker standing for "descended into an array element" rather than a struct field index. Lets a
+    /// format tell array nesting apart from struct nesting when resolving per-level configuration.
+    static constexpr std::size_t kArrayElementMarker{std::numeric_limits<std::size_t>::max()};
+
+    /// @brief Records that traversal descended into the field at the given index of the current struct. Together with
+    /// PopField this maintains the full index path from the root to the element currently visited, letting a format
+    /// resolve per-level configuration for arbitrarily nested types. is_last records whether this field is the last one
+    /// of its struct, so a format can tell whether anything follows the element across all nesting levels.
+    void PushField(const std::size_t field_index, const bool is_last)
+    {
+        SCORE_LANGUAGE_FUTURECPP_ASSERT_PRD(field_depth_ < kMaxNestingDepth);
+        field_path_.at(field_depth_) = field_index;
+        last_path_.at(field_depth_) = is_last;
+        ++field_depth_;
+    }
+
+    void PopField()
+    {
+        SCORE_LANGUAGE_FUTURECPP_ASSERT_PRD(field_depth_ > 0U);
+        --field_depth_;
+    }
+
+    /// @brief Records that traversal descended into an array element (as opposed to a struct field). is_last marks
+    /// whether this is the array's last element, so trailing padding behind variable-length elements is correct.
+    void PushArrayElement(const bool is_last)
+    {
+        PushField(kArrayElementMarker, is_last);
+    }
+
+    [[nodiscard]] score::cpp::span<const std::size_t> FieldPath() const
+    {
+        return {field_path_.data(), field_depth_};
+    }
+
+    [[nodiscard]] score::cpp::span<const bool> LastPath() const
+    {
+        return {last_path_.data(), field_depth_};
+    }
+
+    [[nodiscard]] std::size_t FieldDepth() const
+    {
+        return field_depth_;
+    }
+
   private:
     MetaInformation meta_{};
+    std::array<std::size_t, kMaxNestingDepth> field_path_{};
+    std::array<bool, kMaxNestingDepth> last_path_{};
+    std::size_t field_depth_{0U};
 };
 
 /// @brief Provides context for serialization but is not user
@@ -95,7 +155,7 @@ class SerializationVisitor : public CommonVisitorLogic
         strategy_.Serialize(*this, iterator_, value);
     }
 
-    Result<std::size_t> GetResult() const
+    [[nodiscard]] Result<std::size_t> GetResult() const
     {
         return iterator_.GetResult();
     }
@@ -145,7 +205,7 @@ class DeSerializationVisitor : public CommonVisitorLogic
         }
     }
 
-    Result<std::size_t> GetResult() const
+    [[nodiscard]] Result<std::size_t> GetResult() const
     {
         if (not result_.has_value())
         {

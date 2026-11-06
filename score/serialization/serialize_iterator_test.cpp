@@ -18,6 +18,7 @@
 #include <gtest/gtest.h>
 
 #include <array>
+#include <cstddef>
 #include <cstdint>
 #include <vector>
 
@@ -125,6 +126,66 @@ TYPED_TEST_P(SerializeIteratorFixture, CanIndicateError)
     ASSERT_FALSE(result.has_value());
 }
 
+constexpr std::uint8_t kPlaceholder{0x00U};
+constexpr std::uint8_t kPatchedValue{0x01U};
+constexpr std::uint8_t kPayload{0x02U};
+constexpr std::size_t kPlaceholderOffset{0U};
+
+TYPED_TEST_P(SerializeIteratorFixture, WriteAtOverwritesAlreadyWrittenElement)
+{
+    // Given a serialization iterator with a placeholder followed by payload
+    auto iterator = SerializeInto(this->buffer);
+    iterator = kPlaceholder;
+    iterator = kPayload;
+    const auto written_before_patch = iterator.GetResult();
+    ASSERT_TRUE(written_before_patch.has_value());
+
+    // When back-patching the placeholder
+    iterator.WriteAt(kPlaceholderOffset, kPatchedValue);
+
+    // Then the placeholder is replaced, the payload is kept and the written count is unchanged
+    auto data = this->buffer.begin();
+    EXPECT_EQ(*data++, kPatchedValue);
+    EXPECT_EQ(*data++, kPayload);
+    const auto result = iterator.GetResult();
+    ASSERT_TRUE(result.has_value());
+    EXPECT_EQ(result.value(), written_before_patch.value());
+}
+
+TYPED_TEST_P(SerializeIteratorFixture, WriteAtBeyondWrittenElementsIndicatesError)
+{
+    // Given a serialization iterator with one written element
+    auto iterator = SerializeInto(this->buffer);
+    iterator = kPayload;
+    const auto first_unwritten_offset = iterator.GetResult();
+    ASSERT_TRUE(first_unwritten_offset.has_value());
+
+    // When writing at an offset that has not been written yet
+    iterator.WriteAt(first_unwritten_offset.value(), kPatchedValue);
+
+    // Then an out-of-bounds error is reported
+    const auto result = iterator.GetResult();
+    ASSERT_FALSE(result.has_value());
+    EXPECT_EQ(result.error(), SerializationError::kOutOfBoundsWrite);
+}
+
+TYPED_TEST_P(SerializeIteratorFixture, WriteAtAfterErrorKeepsError)
+{
+    // Given a serialization iterator with a latched error
+    auto iterator = SerializeInto(this->buffer);
+    iterator = kPlaceholder;
+    iterator = MakeUnexpected(SerializationError::kStringTooBig);
+
+    // When back-patching
+    iterator.WriteAt(kPlaceholderOffset, kPatchedValue);
+
+    // Then the buffer is untouched and the original error is preserved
+    EXPECT_EQ(*this->buffer.begin(), kPlaceholder);
+    const auto result = iterator.GetResult();
+    ASSERT_FALSE(result.has_value());
+    EXPECT_EQ(result.error(), SerializationError::kStringTooBig);
+}
+
 TYPED_TEST_P(DeSerializeIteratorFixture, CanIncrement)
 {
     // Given a deserialization iterator for a buffer that contains three data elements
@@ -207,6 +268,20 @@ TYPED_TEST_P(DeSerializeIteratorFixture, CheckBufferNotEmpty)
     EXPECT_TRUE(iterator != iterator.End());
 }
 
+TYPED_TEST_P(DeSerializeIteratorFixture, SetErrorIsReportedThroughGetResult)
+{
+    // Given a deserialization iterator
+    auto iterator = DeSerializeIterator<TypeParam>(this->buffer);
+
+    // When the caller sets an error
+    iterator.SetError(SerializationError::kStringTooBig);
+
+    // Then the error is reported
+    const auto result = iterator.GetResult();
+    ASSERT_FALSE(result.has_value());
+    EXPECT_EQ(result.error(), SerializationError::kStringTooBig);
+}
+
 TYPED_TEST_P(DeSerializeIteratorFixtureEmptyBuffer, CheckBufferEmpty)
 {
     // Given a deserialization iterator for a buffer that contains 0 elements
@@ -219,7 +294,10 @@ TYPED_TEST_P(DeSerializeIteratorFixtureEmptyBuffer, CheckBufferEmpty)
 REGISTER_TYPED_TEST_SUITE_P(SerializeIteratorFixture,
                             WriteMultipleDataElementsViaIterator,
                             CanGetNumberOfWrittenElements,
-                            CanIndicateError);
+                            CanIndicateError,
+                            WriteAtOverwritesAlreadyWrittenElement,
+                            WriteAtBeyondWrittenElementsIndicatesError,
+                            WriteAtAfterErrorKeepsError);
 
 REGISTER_TYPED_TEST_SUITE_P(DeSerializeIteratorFixture,
                             CanIncrement,
@@ -227,7 +305,8 @@ REGISTER_TYPED_TEST_SUITE_P(DeSerializeIteratorFixture,
                             DoesNotAdvanceOverEndPostfix,
                             PostfixIncrementReturnsPreviousPosition,
                             CanGetEndFromIterator,
-                            CheckBufferNotEmpty);
+                            CheckBufferNotEmpty,
+                            SetErrorIsReportedThroughGetResult);
 
 REGISTER_TYPED_TEST_SUITE_P(DeSerializeIteratorFixtureEmptyBuffer, CheckBufferEmpty);
 

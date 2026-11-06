@@ -90,6 +90,7 @@ test_suite(
     name = "unit_tests",
     tests = [
         ":unit_test",
+        "//score/serialization/details:unit_test",
         "//score/serialization/error:unit_test",
         "//score/serialization/strategies:unit_test",
         "//score/serialization/strategies:unit_test_hex_string_to_bytes",

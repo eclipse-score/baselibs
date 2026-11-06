@@ -71,6 +71,7 @@ cc_library(
 
 cc_library(
     name = "uds_strategy_serialization_test_helper",
+    testonly = True,
     srcs = ["uds_strategy_serialization_test_helper.cpp"],
     hdrs = ["uds_strategy_serialization_test_helper.h"],
     features = [
@@ -78,7 +79,7 @@ cc_library(
         "strict_warnings",
         "additional_warnings",
     ],
-    visibility = ["//score:__subpackages__"],
+    visibility = ["//visibility:public"],  # platform_only
     deps = [
         ":hex_string_to_bytes",
         ":uds_strategy",

@@ -14,6 +14,7 @@
 #ifndef SCORE_SERIALIZATION_META_INFORMATION_H
 #define SCORE_SERIALIZATION_META_INFORMATION_H
 
+#include <cstddef>
 namespace score
 {
 namespace serialization
@@ -31,6 +32,10 @@ struct MetaInformation
     bool is_first_element_in_struct_{false};
     // coverity[autosar_cpp14_m11_0_1_violation]
     bool is_last_element_in_struct_{false};
+    // Zero-based index of the current element within its struct. Lets a format apply per-element configuration
+    // (e.g. SOME/IP byte order / alignment) supplied out-of-band, without decorating the user's data type.
+    // coverity[autosar_cpp14_m11_0_1_violation]
+    std::size_t field_index_{0U};
 };
 
 }  // namespace serialization
