@@ -10,14 +10,9 @@
  *
  * SPDX-License-Identifier: Apache-2.0
  ********************************************************************************/
-/*!        \file
- *        \brief  Contains tests concerning the parsing of invalid JSON.
- *
- *********************************************************************************************************************/
+/// @file
+/// @brief  Contains tests concerning the parsing of invalid JSON.
 
-/**********************************************************************************************************************
- *  INCLUDES
- *********************************************************************************************************************/
 #include "score/json/internal/parser/vajson/virtual_parser.h"
 
 #include "gtest/gtest.h"
@@ -49,10 +44,10 @@ class DynamicInvalidDetectionParser final : public internal::VirtualParser
 /// Helper: assert that the given JSON string is rejected with kInvalidJson.
 void AssertInvalid(std::string_view json)
 {
-    auto data = JsonData::FromBuffer(json);
+    auto data{JsonData::FromBuffer(json)};
     ASSERT_TRUE(data.has_value());
     DynamicInvalidDetectionParser parser{data.value()};
-    const auto result = parser.Parse();
+    const auto result{parser.Parse()};
     ASSERT_FALSE(result.has_value());
     ASSERT_EQ(result.error(), JsonErrc::kInvalidJson);
 }

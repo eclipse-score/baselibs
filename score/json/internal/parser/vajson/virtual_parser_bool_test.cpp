@@ -10,14 +10,9 @@
  *
  * SPDX-License-Identifier: Apache-2.0
  ********************************************************************************/
-/*!        \file
- *        \brief  Contains tests concerning the parsing of booleans.
- *
- *********************************************************************************************************************/
+/// @file
+/// @brief  Contains tests concerning the parsing of booleans.
 
-/**********************************************************************************************************************
- *  INCLUDES
- *********************************************************************************************************************/
 #include "score/json/internal/parser/vajson/virtual_parser.h"
 
 #include "gtest/gtest.h"
@@ -38,9 +33,7 @@ namespace
 
 using Count = std::size_t;
 
-/*!
- * \brief           Parser that is only interested in bools
- */
+/// @brief           Parser that is only interested in bools
 class DynamicBoolParser final : public internal::VirtualParser
 {
   public:
@@ -68,9 +61,7 @@ class DynamicBoolParser final : public internal::VirtualParser
     Count false_{0};
 };
 
-/*!
- * \brief           Parser that always returns an error on call of OnBool
- */
+/// @brief           Parser that always returns an error on call of OnBool
 class ErrorBoolParser final : public internal::VirtualParser
 {
   public:
@@ -89,13 +80,11 @@ class ErrorBoolParser final : public internal::VirtualParser
 
 }  // namespace
 
-/*!
- * Test that callbacks for a boolean value can be registered — single true.
- * \trace           CREQ-Json-EventCallbacks
- */
+/// Test that callbacks for a boolean value can be registered — single true.
+/// @trace           CREQ-Json-EventCallbacks
 TEST(UT__Parser__Bool, Dynamic__True)
 {
-    auto data = JsonData::FromBuffer(std::string_view{"true"});
+    auto data{JsonData::FromBuffer(std::string_view{"true"})};
     ASSERT_TRUE(data.has_value());
     DynamicBoolParser parser{data.value()};
     ASSERT_TRUE(parser.Parse().has_value());
@@ -103,13 +92,11 @@ TEST(UT__Parser__Bool, Dynamic__True)
     EXPECT_EQ(parser.false_, 0U);
 }
 
-/*!
- * Test that callbacks for a boolean value can be registered — single false.
- * \trace           CREQ-Json-EventCallbacks
- */
+/// Test that callbacks for a boolean value can be registered — single false.
+/// @trace           CREQ-Json-EventCallbacks
 TEST(UT__Parser__Bool, Dynamic__False)
 {
-    auto data = JsonData::FromBuffer(std::string_view{"false"});
+    auto data{JsonData::FromBuffer(std::string_view{"false"})};
     ASSERT_TRUE(data.has_value());
     DynamicBoolParser parser{data.value()};
     ASSERT_TRUE(parser.Parse().has_value());
@@ -117,13 +104,11 @@ TEST(UT__Parser__Bool, Dynamic__False)
     EXPECT_EQ(parser.false_, 1U);
 }
 
-/*!
- * Test that callbacks for boolean values can be registered — array of bools.
- * \trace           CREQ-Json-EventCallbacks
- */
+/// Test that callbacks for boolean values can be registered — array of bools.
+/// @trace           CREQ-Json-EventCallbacks
 TEST(UT__Parser__Bool, Dynamic__Bools)
 {
-    auto data = JsonData::FromBuffer(std::string_view{"[true,true,false,false,false]"});
+    auto data{JsonData::FromBuffer(std::string_view{"[true,true,false,false,false]"})};
     ASSERT_TRUE(data.has_value());
     DynamicBoolParser parser{data.value()};
     ASSERT_TRUE(parser.Parse().has_value());
@@ -131,65 +116,57 @@ TEST(UT__Parser__Bool, Dynamic__Bools)
     EXPECT_EQ(parser.false_, 3U);
 }
 
-/*!
- * Test that parsing fails if 'true' is not expected.
- * \trace           ::score::json::vajson::internal::StructureParserBase::ParseValue
- */
+/// Test that parsing fails if 'true' is not expected.
+/// @trace           ::score::json::vajson::internal::StructureParserBase::ParseValue
 TEST(UT__Parser__Bool, Dynamic__ParseTrue_WrongFormat)
 {
-    auto result = JsonData::FromBuffer(std::string_view{R"({true:123})"});
+    auto result{JsonData::FromBuffer(std::string_view{R"({true:123})"})};
     ASSERT_TRUE(result.has_value());
     JsonData data{std::move(result).value()};
 
     DynamicBoolParser parser{data};
-    const auto parse_result = parser.Parse();
+    const auto parse_result{parser.Parse()};
     ASSERT_FALSE(parse_result.has_value());
     ASSERT_EQ(parse_result.error(), JsonErrc::kInvalidJson);
 }
 
-/*!
- * Test that parsing fails if 'false' is not expected.
- * \trace           ::score::json::vajson::internal::StructureParserBase::ParseValue
- */
+/// Test that parsing fails if 'false' is not expected.
+/// @trace           ::score::json::vajson::internal::StructureParserBase::ParseValue
 TEST(UT__Parser__Bool, Dynamic__ParseFalse__WrongFormat)
 {
-    auto result = JsonData::FromBuffer(std::string_view{R"({false:123})"});
+    auto result{JsonData::FromBuffer(std::string_view{R"({false:123})"})};
     ASSERT_TRUE(result.has_value());
     JsonData data{std::move(result).value()};
 
     DynamicBoolParser parser{data};
-    const auto parse_result = parser.Parse();
+    const auto parse_result{parser.Parse()};
     ASSERT_FALSE(parse_result.has_value());
     ASSERT_EQ(parse_result.error(), JsonErrc::kInvalidJson);
 }
 
-/*!
- * Tests that when the overridden OnBool method returns an error, that error is propagated.
- * \trace           score::json::vajson::internal::StructureParserBase::ParseFalse
- */
+/// Tests that when the overridden OnBool method returns an error, that error is propagated.
+/// @trace           score::json::vajson::internal::StructureParserBase::ParseFalse
 TEST(UT__Parser__Bool, Dynamic__ParseFalse__Error)
 {
-    auto doc = JsonData::FromBuffer(std::string_view{"false"});
+    auto doc{JsonData::FromBuffer(std::string_view{"false"})};
     ASSERT_TRUE(doc.has_value());
-    ErrorBoolParser parser(doc.value());
+    ErrorBoolParser parser{doc.value()};
 
-    const auto parser_result = parser.Parse();
+    const auto parser_result{parser.Parse()};
     ASSERT_FALSE(parser_result.has_value());
     ASSERT_EQ(parser_result.error(), JsonErrc::kUserValidationFailed);
     ASSERT_EQ(parser_result.error().UserMessage(), std::string_view{"OnBool called."});
 }
 
-/*!
- * Tests that when the overridden OnBool method returns an error, that error is propagated.
- * \trace           score::json::vajson::internal::StructureParserBase::ParseTrue
- */
+/// Tests that when the overridden OnBool method returns an error, that error is propagated.
+/// @trace           score::json::vajson::internal::StructureParserBase::ParseTrue
 TEST(UT__Parser__Bool, Dynamic__ParseTrue__Error)
 {
-    auto doc = JsonData::FromBuffer(std::string_view{"true"});
+    auto doc{JsonData::FromBuffer(std::string_view{"true"})};
     ASSERT_TRUE(doc.has_value());
-    ErrorBoolParser parser(doc.value());
+    ErrorBoolParser parser{doc.value()};
 
-    const auto parser_result = parser.Parse();
+    const auto parser_result{parser.Parse()};
     ASSERT_FALSE(parser_result.has_value());
     ASSERT_EQ(parser_result.error(), JsonErrc::kUserValidationFailed);
     ASSERT_EQ(parser_result.error().UserMessage(), std::string_view{"OnBool called."});

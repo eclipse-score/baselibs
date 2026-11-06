@@ -10,24 +10,18 @@
  *
  * SPDX-License-Identifier: Apache-2.0
  ********************************************************************************/
-/*!        \file
- *        \brief  Contains a SAX-style JSON parser.
- *
- *      \details  Provides callbacks for implementing parsers.
- *
- *********************************************************************************************************************/
+/// @file
+/// @brief  Contains a SAX-style JSON parser.
+///
+/// @details  Provides callbacks for implementing parsers.
 
 #ifndef SCORE_JSON_INTERNAL_PARSER_VAJSON_VIRTUAL_PARSER_H
 #define SCORE_JSON_INTERNAL_PARSER_VAJSON_VIRTUAL_PARSER_H
 
-/**********************************************************************************************************************
- *  INCLUDES
- *********************************************************************************************************************/
 #include "score/json/internal/common/json_error_domain.h"
 #include "score/json/internal/common/types.h"
 #include "score/json/internal/parser/vajson/json_data.h"
 #include "score/json/internal/parser/vajson/structure_parser.h"
-#include "score/json/internal/parser/vajson/structure_parser_impl.h"
 
 namespace score
 {
@@ -38,150 +32,149 @@ namespace vajson
 namespace internal
 {
 
-/// \brief           A SAX-style JSON parser
-/// \details         The VirtualParser implements an interface for parsers and is based on dynamic polymorphism. The
+/// @brief           A SAX-style JSON parser
+/// @details         The VirtualParser implements an interface for parsers and is based on dynamic polymorphism. The
 ///                  derived parser can implement callbacks for all types of elements it expects to appear. If the
 ///                  parser encounters any other type, it calls OnUnexpectedEvent. If this callback is not overridden by
 ///                  the derived parser, the default implementation aborts parsing.
-/// \trace           DSGN-JSON-Reader-Data-Items
+/// @trace           DSGN-JSON-Reader-Data-Items
 class VirtualParser
 {
   public:
-    /// \brief            Friend declaration, in order to make StructureParser able to access private methods of
-    /// VirtualParser
-    template <typename T>
-
-    friend class StructureParser;
-
-    /// \brief           Constructs a VirtualParser
-    /// \param[in]       doc
+    /// @brief           Constructs a VirtualParser
+    /// @param[in]       doc
     ///                  to parse.
-    /// \context         ANY
-    /// \pre             -
-    /// \threadsafe      FALSE
-    /// \reentrant       FALSE
+    /// @context         ANY
+    /// @pre             -
+    /// @threadsafe      FALSE
+    /// @reentrant       FALSE
     explicit VirtualParser(JsonData& doc) noexcept;
 
-    /// \brief           Deleted copy constructor
+    /// @brief           Deleted copy constructor
     VirtualParser(const VirtualParser&) = delete;
 
-    /// \brief           Deleted copy assignment
+    /// @brief           Deleted copy assignment
     auto operator=(const VirtualParser&) -> VirtualParser& = delete;
 
-    /// \brief           Deleted move constructor
+    /// @brief           Deleted move constructor
     VirtualParser(VirtualParser&&) = delete;
 
-    /// \brief           Deleted move assignment
+    /// @brief           Deleted move assignment
     auto operator=(VirtualParser&&) -> VirtualParser& = delete;
 
-    /// \brief           Default destructor
-    /// \context         ANY
-    /// \pre             -
-    /// \threadsafe      FALSE
-    /// \reentrant       FALSE
+    /// @brief           Default destructor
+    /// @context         ANY
+    /// @pre             -
+    /// @threadsafe      FALSE
+    /// @reentrant       FALSE
     virtual ~VirtualParser() noexcept = default;
 
-    /// \brief           Parses file until the current parser is finished
-    /// \return          The empty Result, or an error.
-    /// \error           score::json::vajson::JsonErrc::kUserValidationFailed
+    /// @brief           Parses file until the current parser is finished
+    /// @return          The empty Result, or an error.
+    /// @error           score::json::vajson::JsonErrc::kUserValidationFailed
     ///                  if an unknown value has been encountered.
-    /// \error           score::json::vajson::JsonErrc::kInvalidJson
+    /// @error           score::json::vajson::JsonErrc::kInvalidJson
     ///                  if parsing has failed due to invalid JSON data.
-    /// \context         ANY
-    /// \pre             -
-    /// \threadsafe      FALSE
-    /// \reentrant       FALSE
+    /// @context         ANY
+    /// @pre             -
+    /// @threadsafe      FALSE
+    /// @reentrant       FALSE
     virtual auto Parse() noexcept -> Result<void>;
 
   private:
-    /// \brief           Default event for Null
-    /// \return          The result of the OnUnexpectedEvent callback or its error.
-    /// \context         ANY
-    /// \pre             -
-    /// \threadsafe      FALSE
-    /// \reentrant       FALSE
+    /// @brief            Friend declaration, in order to make StructureParser able to access private methods of
+    /// VirtualParser
+    template <typename T>
+    friend class StructureParser;
+
+    /// @brief           Default event for Null
+    /// @return          The result of the OnUnexpectedEvent callback or its error.
+    /// @context         ANY
+    /// @pre             -
+    /// @threadsafe      FALSE
+    /// @reentrant       FALSE
     virtual auto OnNull() noexcept -> ParserResult;
 
-    /// \brief           Default event for Bools
-    /// \return          The result of the OnUnexpectedEvent callback or its error.
-    /// \context         ANY
-    /// \pre             -
-    /// \threadsafe      FALSE
-    /// \reentrant       FALSE
+    /// @brief           Default event for Bools
+    /// @return          The result of the OnUnexpectedEvent callback or its error.
+    /// @context         ANY
+    /// @pre             -
+    /// @threadsafe      FALSE
+    /// @reentrant       FALSE
     virtual auto OnBool(bool) noexcept -> ParserResult;  // NOLINT(readability/casting)
 
-    /// \brief           Default event for Numbers
-    /// \return          The result of the OnUnexpectedEvent callback or its error.
-    /// \context         ANY
-    /// \pre             -
-    /// \threadsafe      FALSE
-    /// \reentrant       FALSE
+    /// @brief           Default event for Numbers
+    /// @return          The result of the OnUnexpectedEvent callback or its error.
+    /// @context         ANY
+    /// @pre             -
+    /// @threadsafe      FALSE
+    /// @reentrant       FALSE
     virtual auto OnNumber(JsonNumber) noexcept -> ParserResult;
 
-    /// \brief           Default event for Strings
-    /// \details         The provided StringView is only valid until any other method or parser operating on the same
+    /// @brief           Default event for Strings
+    /// @details         The provided StringView is only valid until any other method or parser operating on the same
     ///                  document is called.
-    /// \return          The result of the OnUnexpectedEvent callback or its error.
-    /// \context         ANY
-    /// \pre             -
-    /// \threadsafe      FALSE
-    /// \reentrant       FALSE
+    /// @return          The result of the OnUnexpectedEvent callback or its error.
+    /// @context         ANY
+    /// @pre             -
+    /// @threadsafe      FALSE
+    /// @reentrant       FALSE
     virtual auto OnString(StringView) noexcept -> ParserResult;
 
-    /// \brief           Default event for Keys
-    /// \details         The provided StringView is only valid until any other method or parser operating on the same
+    /// @brief           Default event for Keys
+    /// @details         The provided StringView is only valid until any other method or parser operating on the same
     ///                  document is called.
-    /// \return          The result of the OnUnexpectedEvent callback or its error.
-    /// \context         ANY
-    /// \pre             -
-    /// \threadsafe      FALSE
-    /// \reentrant       FALSE
+    /// @return          The result of the OnUnexpectedEvent callback or its error.
+    /// @context         ANY
+    /// @pre             -
+    /// @threadsafe      FALSE
+    /// @reentrant       FALSE
     virtual auto OnKey(StringView) noexcept -> ParserResult;
 
-    /// \brief           Default event for the start of objects
-    /// \return          The result of the OnUnexpectedEvent callback or its error.
-    /// \context         ANY
-    /// \pre             -
-    /// \threadsafe      FALSE
-    /// \reentrant       FALSE
+    /// @brief           Default event for the start of objects
+    /// @return          The result of the OnUnexpectedEvent callback or its error.
+    /// @context         ANY
+    /// @pre             -
+    /// @threadsafe      FALSE
+    /// @reentrant       FALSE
     virtual auto OnStartObject() noexcept -> ParserResult;
 
-    /// \brief           Default event for the end of objects
-    /// \return          The result of the OnUnexpectedEvent callback or its error.
-    /// \context         ANY
-    /// \pre             -
-    /// \threadsafe      FALSE
-    /// \reentrant       FALSE
+    /// @brief           Default event for the end of objects
+    /// @return          The result of the OnUnexpectedEvent callback or its error.
+    /// @context         ANY
+    /// @pre             -
+    /// @threadsafe      FALSE
+    /// @reentrant       FALSE
     virtual auto OnEndObject(std::size_t) noexcept -> ParserResult;
 
-    /// \brief           Default event for the start of arrays
-    /// \return          The result of the OnUnexpectedEvent callback or its error.
-    /// \context         ANY
-    /// \pre             -
-    /// \threadsafe      FALSE
-    /// \reentrant       FALSE
+    /// @brief           Default event for the start of arrays
+    /// @return          The result of the OnUnexpectedEvent callback or its error.
+    /// @context         ANY
+    /// @pre             -
+    /// @threadsafe      FALSE
+    /// @reentrant       FALSE
     virtual auto OnStartArray() noexcept -> ParserResult;
 
-    /// \brief           Default event for the end of arrays
-    /// \return          The result of the OnUnexpectedEvent callback or its error.
-    /// \context         ANY
-    /// \pre             -
-    /// \threadsafe      FALSE
-    /// \reentrant       FALSE
+    /// @brief           Default event for the end of arrays
+    /// @return          The result of the OnUnexpectedEvent callback or its error.
+    /// @context         ANY
+    /// @pre             -
+    /// @threadsafe      FALSE
+    /// @reentrant       FALSE
     virtual auto OnEndArray(std::size_t) noexcept -> ParserResult;
 
-    /// \brief           Default event for default callbacks that aborts parsing
-    /// \details         This callback is called by all default event callbacks which are not overridden by the derived
+    /// @brief           Default event for default callbacks that aborts parsing
+    /// @details         This callback is called by all default event callbacks which are not overridden by the derived
     ///                  parser. It allows the parser to continue parsing if an unexpected event is encountered (i.e. a
     ///                  JSON element for which no callback is implemented by the derived parser). It may be overridden
     ///                  by the derived parser if a different behaviour is desired.
-    /// \return          An error result.
-    /// \context         ANY
-    /// \pre             -
-    /// \threadsafe      TRUE, for different this pointer
+    /// @return          An error result.
+    /// @context         ANY
+    /// @pre             -
+    /// @threadsafe      TRUE, for different this pointer
     virtual auto OnUnexpectedEvent() noexcept -> ParserResult;
 
-    /// \brief           Generic JSON structure parser
+    /// @brief           Generic JSON structure parser
     StructureParser<VirtualParser> parser_;
 };
 

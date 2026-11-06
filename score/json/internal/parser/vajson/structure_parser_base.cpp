@@ -10,15 +10,10 @@
  *
  * SPDX-License-Identifier: Apache-2.0
  ********************************************************************************/
-/*!        \file
- *        \brief  A SAX-Style JSON parser.
- *
- *      \details  Parses JSON text from a stream and sends events synchronously to an Implementer.
- *
- *********************************************************************************************************************/
-/**********************************************************************************************************************
- *  INCLUDES
- *********************************************************************************************************************/
+/// @file
+/// @brief  A SAX-Style JSON parser.
+///
+/// @details  Parses JSON text from a stream and sends events synchronously to an Implementer.
 
 #include <algorithm>
 #include <cstring>
@@ -42,6 +37,17 @@ namespace vajson
 namespace internal
 {
 
+auto StructureParserBase::GetState() noexcept -> DepthCounter&
+{
+    return this->GetJsonDocument().GetState();
+}
+
+auto StructureParserBase::GetJsonDocument() noexcept -> JsonData&
+{
+
+    return this->GetJsonOps().GetJsonDocument();
+}
+
 auto StructureParserBase::Parse() noexcept -> Result<void>
 {
     // Skip all whitespace to so that we will detect empty documents immediately.
@@ -60,14 +66,12 @@ auto StructureParserBase::Parse() noexcept -> Result<void>
     return Drop(result);
 }
 
-/*!
- /// \internal
- * - If the parsed string is "null" and a value is expected:
- *   - Call the OnNull callback and return its Result.
- * - Otherwise:
- *   - Return an error.
- /// \endinternal
- */
+/// @internal
+/// - If the parsed string is "null" and a value is expected:
+///   - Call the OnNull callback and return its Result.
+/// - Otherwise:
+///   - Return an error.
+/// @endinternal
 auto StructureParserBase::ParseNull() noexcept -> ParserResult
 {
 
@@ -80,15 +84,13 @@ auto StructureParserBase::ParseNull() noexcept -> ParserResult
         });
 }
 
-/*!
- * \internal
- * - If the parsed string is "true" and a value is expected:
- *   - Call the OnBool callback with the value "true".
- *   - Return the Result of the callback.
- * - Otherwise:
- *   - Return an error.
- * \endinternal
- */
+/// @internal
+/// - If the parsed string is "true" and a value is expected:
+///   - Call the OnBool callback with the value "true".
+///   - Return the Result of the callback.
+/// - Otherwise:
+///   - Return an error.
+/// @endinternal
 auto StructureParserBase::ParseTrue() noexcept -> ParserResult
 {
 
@@ -101,14 +103,12 @@ auto StructureParserBase::ParseTrue() noexcept -> ParserResult
         });
 }
 
-/*!
- * \internal
- * - If the parsed string is "false" and a value is expected:
- *   - Call the OnBool callback with the value "false" and return its Result.
- * - Otherwise:
- *   - Return an error.
- * \endinternal
- */
+/// @internal
+/// - If the parsed string is "false" and a value is expected:
+///   - Call the OnBool callback with the value "false" and return its Result.
+/// - Otherwise:
+///   - Return an error.
+/// @endinternal
 auto StructureParserBase::ParseFalse() noexcept -> ParserResult
 {
 
@@ -121,17 +121,15 @@ auto StructureParserBase::ParseFalse() noexcept -> ParserResult
         });
 }
 
-/*!
- * \internal
- * - If a value is expected:
- *   - Parse the number string.
- *   - Create a new JsonNumber from the string.
- *   - If the JsonNumber could be successfully created:
- *     - Call the OnNumber callback with the JsonNumber and return its Result.
- * - Otherwise:
- *   - Return an error.
- * \endinternal
- */
+/// @internal
+/// - If a value is expected:
+///   - Parse the number string.
+///   - Create a new JsonNumber from the string.
+///   - If the JsonNumber could be successfully created:
+///     - Call the OnNumber callback with the JsonNumber and return its Result.
+/// - Otherwise:
+///   - Return an error.
+/// @endinternal
 auto StructureParserBase::ParseNumber(const char cur) noexcept -> ParserResult
 {
     return (this->GetState().AddValue())
@@ -143,12 +141,10 @@ auto StructureParserBase::ParseNumber(const char cur) noexcept -> ParserResult
         });
 }
 
-/*!
- * \internal
- * - Convert a JSON string to a C++ string.
- * - Parse this unescaped string.
- * \endinternal
- */
+/// @internal
+/// - Convert a JSON string to a C++ string.
+/// - Parse this unescaped string.
+/// @endinternal
 auto StructureParserBase::ParseString() noexcept -> ParserResult
 {
     return ReadJsonString().and_then([this](CStringView string) noexcept {
@@ -156,18 +152,16 @@ auto StructureParserBase::ParseString() noexcept -> ParserResult
     });
 }
 
-/*!
- * \internal
- * - Skip all whitespace characters.
- * - If the string is followed by a colon and a key is expected:
- *   - Call the OnKey callback with the key.
- * - If the string is not followed by a colon a value is expected:
- *   - Call the OnString callback with the string.
- * - Return the Result of the callback.
- * - Otherwise:
- *   - Return an error.
- * \endinternal
- */
+/// @internal
+/// - Skip all whitespace characters.
+/// - If the string is followed by a colon and a key is expected:
+///   - Call the OnKey callback with the key.
+/// - If the string is not followed by a colon a value is expected:
+///   - Call the OnString callback with the string.
+/// - Return the Result of the callback.
+/// - Otherwise:
+///   - Return an error.
+/// @endinternal
 auto StructureParserBase::ParseUnescapedString(CStringView string) noexcept -> ParserResult
 {
 
@@ -190,27 +184,25 @@ auto StructureParserBase::ParseUnescapedString(CStringView string) noexcept -> P
     return result;
 }
 
-/*!
- * \internal
- * - Read the string until either an escape sequence or a string termination occurs.
- * - While all operations are successful & an escape sequence is encountered
- *  - Unescape the character sequence
- *  - And read the string until either an escape sequence or a string termination occurs.
- * - Take the string termination character
- * - Return the result.
- * \endinternal
- */
+/// @internal
+/// - Read the string until either an escape sequence or a string termination occurs.
+/// - While all operations are successful & an escape sequence is encountered
+///  - Unescape the character sequence
+///  - And read the string until either an escape sequence or a string termination occurs.
+/// - Take the string termination character
+/// - Return the result.
+/// @endinternal
 auto StructureParserBase::ReadJsonString() noexcept -> Result<CStringView>
 {
     String& buffer{this->GetJsonDocument().GetClearedStringBuffer()};
 
-    const auto reader = [this, &buffer]() noexcept {
+    const auto reader{[this, &buffer]() noexcept {
         return this->GetJsonOps().ReadUntil(R"("\)"sv,
 
                                             [&buffer](StringView buf) noexcept {
                                                 static_cast<void>(buffer.append(buf.begin(), buf.end()));
                                             });
-    };
+    }};
 
     Result<OptChar> ret_val{reader()};
     while (ret_val.has_value())
@@ -255,13 +247,11 @@ auto StructureParserBase::ReadJsonString() noexcept -> Result<CStringView>
         });
 }
 
-/*!
- * \internal
- * - transform all characters to the appropriate escape sequence.
- * - If a unicode escape is encountered return an error.
- * - If an unknown/invalid escape is encountered return an error.
- * \endinternal
- */
+/// @internal
+/// - transform all characters to the appropriate escape sequence.
+/// - If a unicode escape is encountered return an error.
+/// - If an unknown/invalid escape is encountered return an error.
+/// @endinternal
 auto StructureParserBase::UnescapeChar(const char escaped) noexcept -> Result<char>
 {
     Result<char> ret_val{escaped};
@@ -298,14 +288,12 @@ auto StructureParserBase::UnescapeChar(const char escaped) noexcept -> Result<ch
     return ret_val;
 }
 
-/*!
- * \internal
- * - If an object can be added to the stack:
- *   - Call the OnStartObject callback and return its Result.
- * - Otherwise:
- *   - Return an error.
- * \endinternal
- */
+/// @internal
+/// - If an object can be added to the stack:
+///   - Call the OnStartObject callback and return its Result.
+/// - Otherwise:
+///   - Return an error.
+/// @endinternal
 auto StructureParserBase::ParseStartObject() noexcept -> ParserResult
 {
     return this->GetState().AddObject().and_then([this](void) noexcept {
@@ -313,16 +301,14 @@ auto StructureParserBase::ParseStartObject() noexcept -> ParserResult
     });
 }
 
-/*!
- * \internal
- * - Move the position in the file past the closing brace.
- * - Pop the Object from the ItemStack.
- * - If the pop object call was successful:
- *   - Call the OnStartObject callback with the number of parsed keys and return its Result.
- * - Otherwise:
- *   - Return an error.
- * \endinternal
- */
+/// @internal
+/// - Move the position in the file past the closing brace.
+/// - Pop the Object from the ItemStack.
+/// - If the pop object call was successful:
+///   - Call the OnStartObject callback with the number of parsed keys and return its Result.
+/// - Otherwise:
+///   - Return an error.
+/// @endinternal
 auto StructureParserBase::ParseEndObject() noexcept -> ParserResult
 {
     return this->GetState().PopObject().and_then([this](std::size_t count) noexcept {
@@ -330,14 +316,12 @@ auto StructureParserBase::ParseEndObject() noexcept -> ParserResult
     });
 }
 
-/*!
- * \internal
- * - If an array can be added to the stack:
- *   - Call the OnStartArray callback and return its Result.
- * - Otherwise:
- *   - Return an error.
- * \endinternal
- */
+/// @internal
+/// - If an array can be added to the stack:
+///   - Call the OnStartArray callback and return its Result.
+/// - Otherwise:
+///   - Return an error.
+/// @endinternal
 auto StructureParserBase::ParseStartArray() noexcept -> ParserResult
 {
     return this->GetState().AddArray().and_then(
@@ -347,16 +331,14 @@ auto StructureParserBase::ParseStartArray() noexcept -> ParserResult
         });
 }
 
-/*!
- * \internal
- * - Move the position in the file past the closing bracket.
- * - Pop the Array from the ItemStack.
- * - If the pop array call was successful:
- *   - Call the OnEndArray callback with the number of parsed elements and return its Result.
- * - Otherwise:
- *   - Return an error.
- * \endinternal
- */
+/// @internal
+/// - Move the position in the file past the closing bracket.
+/// - Pop the Array from the ItemStack.
+/// - If the pop array call was successful:
+///   - Call the OnEndArray callback with the number of parsed elements and return its Result.
+/// - Otherwise:
+///   - Return an error.
+/// @endinternal
 auto StructureParserBase::ParseEndArray() noexcept -> ParserResult
 {
     return this->GetState().PopArray().and_then([this](std::size_t count) noexcept {
@@ -364,14 +346,12 @@ auto StructureParserBase::ParseEndArray() noexcept -> ParserResult
     });
 }
 
-/*!
- * \internal
- * - If the comma at this position is valid:
- *   - Return kRunning to continue parsing.
- * - Otherwise:
- *   - Return the error.
- * \endinternal
- */
+/// @internal
+/// - If the comma at this position is valid:
+///   - Return kRunning to continue parsing.
+/// - Otherwise:
+///   - Return the error.
+/// @endinternal
 auto StructureParserBase::ParseComma() noexcept -> ParserResult
 {
     return MakeResult(this->GetState().AddComma(),
@@ -381,20 +361,18 @@ auto StructureParserBase::ParseComma() noexcept -> ParserResult
         });
 }
 
-/*!
- * \internal
- * - Skip all whitespace characters.
- * - If the stream has ended and the ItemStack is empty:
- *   - Return kFinished.
- * - If there are still new elements in the stream:
- *   - Parse the next character.
- *   - Determine the expected type to follow based on the parsed character.
- *   - Call the specialized parser method for this type.
- *   - Return the Result of the call.
- * - Otherwise:
- *   - Return an error.
- * \endinternal
- */
+/// @internal
+/// - Skip all whitespace characters.
+/// - If the stream has ended and the ItemStack is empty:
+///   - Return kFinished.
+/// - If there are still new elements in the stream:
+///   - Parse the next character.
+///   - Determine the expected type to follow based on the parsed character.
+///   - Call the specialized parser method for this type.
+///   - Return the Result of the call.
+/// - Otherwise:
+///   - Return an error.
+/// @endinternal
 auto StructureParserBase::ParseValue() noexcept -> ParserResult
 {
     ParserResult result{ParserState::kRunning};
@@ -460,12 +438,10 @@ auto StructureParserBase::ParseValue() noexcept -> ParserResult
     return result;
 }
 
-/*!
- * \internal
- * - Parse all characters and add them to the number string until a comma, a closing brace/bracket, or a whitespace
- *   character is encountered.
- * \endinternal
- */
+/// @internal
+/// - Parse all characters and add them to the number string until a comma, a closing brace/bracket, or a whitespace
+///   character is encountered.
+/// @endinternal
 auto StructureParserBase::GetNumber(const char first) noexcept -> CStringView
 {
     constexpr static StringView kLimiterChars{",}] \n\r\t"};
@@ -483,17 +459,6 @@ auto StructureParserBase::GetNumber(const char first) noexcept -> CStringView
 
     // Create a string view from the number-string
     return this->GetJsonDocument().GetCurrentString();
-}
-
-auto StructureParserBase::GetJsonDocument() noexcept -> JsonData&
-{
-
-    return this->GetJsonOps().GetJsonDocument();
-}
-
-auto StructureParserBase::GetState() noexcept -> DepthCounter&
-{
-    return this->GetJsonDocument().GetState();
 }
 
 }  // namespace internal

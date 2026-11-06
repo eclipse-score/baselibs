@@ -30,10 +30,10 @@ score::Result<void> ToFileInternal(const T& json_data,
                                    const score::json::Formatting formatting)
 {
     const std::string file_path_string{file_path.data(), file_path.size()};
-    const auto file = file_factory.Open(file_path_string, std::ios::out | std::ios::trunc);
+    const auto file{file_factory.Open(file_path_string, std::ios::out | std::ios::trunc)};
     if (!file.has_value())
     {
-        auto error = score::json::MakeError(score::json::Error::kInvalidFilePath, "Failed to open file");
+        auto error{score::json::MakeError(score::json::Error::kInvalidFilePath, "Failed to open file")};
         return score::Result<void>{score::unexpect, error};
     }
 
@@ -53,8 +53,8 @@ score::Result<void> ToFileInternalAtomic(const T& json_data,
             return score::json::MakeError(score::json::Error::kInvalidFilePath, err.UserMessage());
         })
         .and_then([&json_data, formatting](auto filestream) -> score::Result<void> {
-            auto serializer_result =
-                score::json::internal::writer::SerializeToStream(*filestream, json_data, formatting);
+            auto serializer_result{
+                score::json::internal::writer::SerializeToStream(*filestream, json_data, formatting)};
             return filestream->Close().and_then([serializer_result](auto&&...) noexcept {
                 return serializer_result;
             });

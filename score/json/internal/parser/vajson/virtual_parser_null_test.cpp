@@ -10,14 +10,9 @@
  *
  * SPDX-License-Identifier: Apache-2.0
  ********************************************************************************/
-/*!        \file
- *        \brief  Contains tests concerning the parsing of null values.
- *
- *********************************************************************************************************************/
+/// @file
+/// @brief  Contains tests concerning the parsing of null values.
 
-/**********************************************************************************************************************
- *  INCLUDES
- *********************************************************************************************************************/
 #include "score/json/internal/parser/vajson/virtual_parser.h"
 
 #include "gtest/gtest.h"
@@ -75,72 +70,62 @@ class ErrorNullParser final : public internal::VirtualParser
 
 }  // namespace
 
-/*!
- * Test that null is counted — single null value.
- * \trace           CREQ-Json-EventCallbacks
- */
+/// Test that null is counted — single null value.
+/// @trace           CREQ-Json-EventCallbacks
 TEST(UT__Parser__Null, Dynamic__SingleNull)
 {
-    auto data = JsonData::FromBuffer(std::string_view{"null"});
+    auto data{JsonData::FromBuffer(std::string_view{"null"})};
     ASSERT_TRUE(data.has_value());
     DynamicNullParser parser{data.value()};
     ASSERT_TRUE(parser.Parse().has_value());
     EXPECT_EQ(parser.null_, 1U);
 }
 
-/*!
- * Test that null is counted — multiple null values.
- * \trace           CREQ-Json-EventCallbacks
- */
+/// Test that null is counted — multiple null values.
+/// @trace           CREQ-Json-EventCallbacks
 TEST(UT__Parser__Null, Dynamic__MultipleNulls)
 {
-    auto data = JsonData::FromBuffer(std::string_view{"[null,null,null]"});
+    auto data{JsonData::FromBuffer(std::string_view{"[null,null,null]"})};
     ASSERT_TRUE(data.has_value());
     DynamicNullParser parser{data.value()};
     ASSERT_TRUE(parser.Parse().has_value());
     EXPECT_EQ(parser.null_, 3U);
 }
 
-/*!
- * Test that no nulls are counted when not present.
- * \trace           CREQ-Json-EventCallbacks
- */
+/// Test that no nulls are counted when not present.
+/// @trace           CREQ-Json-EventCallbacks
 TEST(UT__Parser__Null, Dynamic__NoNulls)
 {
-    auto data = JsonData::FromBuffer(std::string_view{"true"});
+    auto data{JsonData::FromBuffer(std::string_view{"true"})};
     ASSERT_TRUE(data.has_value());
     DynamicNullParser parser{data.value()};
     ASSERT_TRUE(parser.Parse().has_value());
     EXPECT_EQ(parser.null_, 0U);
 }
 
-/*!
- * Test that parsing fails if 'null' is used as key without quotation marks.
- * \trace           score::json::vajson::internal::StructureParserBase::ParseValue
- */
+/// Test that parsing fails if 'null' is used as key without quotation marks.
+/// @trace           score::json::vajson::internal::StructureParserBase::ParseValue
 TEST(UT__Parser__Null, Dynamic__WrongFormat)
 {
-    auto result = JsonData::FromBuffer(std::string_view{R"({null:123})"});
+    auto result{JsonData::FromBuffer(std::string_view{R"({null:123})"})};
     ASSERT_TRUE(result.has_value());
     JsonData data{std::move(result).value()};
 
     DynamicNullParser parser{data};
-    const auto parse_result = parser.Parse();
+    const auto parse_result{parser.Parse()};
     ASSERT_FALSE(parse_result.has_value());
     ASSERT_EQ(parse_result.error(), JsonErrc::kInvalidJson);
 }
 
-/*!
- * Tests that when the overridden OnNull method returns an error, that error is propagated.
- * \trace           score::json::vajson::internal::StructureParserBase::ParseNull
- */
+/// Tests that when the overridden OnNull method returns an error, that error is propagated.
+/// @trace           score::json::vajson::internal::StructureParserBase::ParseNull
 TEST(UT__Parser__Null, Dynamic__OnNull__Error)
 {
-    auto doc = JsonData::FromBuffer(std::string_view{"null"});
+    auto doc{JsonData::FromBuffer(std::string_view{"null"})};
     ASSERT_TRUE(doc.has_value());
-    ErrorNullParser parser(doc.value());
+    ErrorNullParser parser{doc.value()};
 
-    const auto parser_result = parser.Parse();
+    const auto parser_result{parser.Parse()};
     ASSERT_FALSE(parser_result.has_value());
     ASSERT_EQ(parser_result.error(), JsonErrc::kUserValidationFailed);
     ASSERT_EQ(parser_result.error().UserMessage(), std::string_view{"OnNull called."});

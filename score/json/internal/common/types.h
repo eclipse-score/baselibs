@@ -10,17 +10,12 @@
  *
  * SPDX-License-Identifier: Apache-2.0
  ********************************************************************************/
-/*!        \file
- *        \brief  Type definitions for vaJson.
- *
- *********************************************************************************************************************/
+/// @file
+/// @brief  Type definitions for vaJson.
 
 #ifndef SCORE_JSON_INTERNAL_COMMON_TYPES_H
 #define SCORE_JSON_INTERNAL_COMMON_TYPES_H
 
-/**********************************************************************************************************************
- *  INCLUDES
- *********************************************************************************************************************/
 #include <string>
 #include <string_view>
 
@@ -34,27 +29,27 @@ namespace json
 {
 namespace vajson
 {
-/// \brief            Unqualified access to Optional
-/// \tparam          T                  Type of value.
+/// @brief            Unqualified access to Optional
+/// @tparam          T                  Type of value.
 template <typename T>
 using Optional = score::cpp::optional<T>;
 
-/// \brief           Unqualified access to CStringView
+/// @brief           Unqualified access to CStringView
 using CStringView = score::safecpp::zstring_view;
 
-/// \brief           Unqualified access to StringView
+/// @brief           Unqualified access to StringView
 using StringView = std::string_view;
 
-/// \brief           Unqualified access to String
+/// @brief           Unqualified access to String
 using String = std::string;
 
-/// \brief           Unqualified access to binary data
+/// @brief           Unqualified access to binary data
 using Bytes = score::cpp::span<const char>;
 
-/// \brief           Short form for creating a StringView
+/// @brief           Short form for creating a StringView
 using std::literals::string_view_literals::operator""sv;
 
-/// \brief           The encoding of the document
+/// @brief           The encoding of the document
 enum class EncodingType : std::uint8_t
 {
     kNone,

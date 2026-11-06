@@ -10,17 +10,12 @@
  *
  * SPDX-License-Identifier: Apache-2.0
  ********************************************************************************/
-/*!        \file
- *        \brief  Contains the definition of the parser state.
- *
- *********************************************************************************************************************/
+/// @file
+/// @brief  Contains the definition of the parser state.
 
 #ifndef SCORE_JSON_INTERNAL_PARSER_VAJSON_PARSER_STATE_H
 #define SCORE_JSON_INTERNAL_PARSER_VAJSON_PARSER_STATE_H
 
-/**********************************************************************************************************************
- *  INCLUDES
- *********************************************************************************************************************/
 #include "score/result/result.h"
 
 namespace score
@@ -29,14 +24,14 @@ namespace json
 {
 namespace vajson
 {
-/// \brief           State that is used for every parser event
+/// @brief           State that is used for every parser event
 enum class ParserState : bool
 {
     kRunning,
     kFinished
 };
 
-/// \brief           Return type of most parser functions
+/// @brief           Return type of most parser functions
 using ParserResult = score::Result<ParserState>;
 }  // namespace vajson
 }  // namespace json

@@ -10,14 +10,9 @@
  *
  * SPDX-License-Identifier: Apache-2.0
  ********************************************************************************/
-/*!        \file
- *        \brief  Contains tests concerning the parsing of numbers.
- *
- *********************************************************************************************************************/
+/// @file
+/// @brief  Contains tests concerning the parsing of numbers.
 
-/**********************************************************************************************************************
- *  INCLUDES
- *********************************************************************************************************************/
 #include "score/json/internal/parser/vajson/virtual_parser.h"
 
 #include "gtest/gtest.h"
@@ -58,26 +53,22 @@ class DynamicNumberParser final : public internal::VirtualParser
 
 }  // namespace
 
-/*!
- * Test that numbers are counted — integer array.
- * \trace           CREQ-Json-EventCallbacks
- */
+/// Test that numbers are counted — integer array.
+/// @trace           CREQ-Json-EventCallbacks
 TEST(UT__Parser__Number, Dynamic__IntegerArray)
 {
-    auto data = JsonData::FromBuffer(std::string_view{"[1,2,3,4,5]"});
+    auto data{JsonData::FromBuffer(std::string_view{"[1,2,3,4,5]"})};
     ASSERT_TRUE(data.has_value());
     DynamicNumberParser parser{data.value()};
     ASSERT_TRUE(parser.Parse().has_value());
     EXPECT_EQ(parser.number_, 5U);
 }
 
-/*!
- * Test that numbers are counted — float array.
- * \trace           CREQ-Json-EventCallbacks
- */
+/// Test that numbers are counted — float array.
+/// @trace           CREQ-Json-EventCallbacks
 TEST(UT__Parser__Number, Dynamic__FloatArray)
 {
-    auto data = JsonData::FromBuffer(std::string_view{"[1.0,-1.5,3.14]"});
+    auto data{JsonData::FromBuffer(std::string_view{"[1.0,-1.5,3.14]"})};
     ASSERT_TRUE(data.has_value());
     DynamicNumberParser parser{data.value()};
     ASSERT_TRUE(parser.Parse().has_value());

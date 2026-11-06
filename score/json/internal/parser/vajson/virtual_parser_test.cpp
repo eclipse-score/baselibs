@@ -10,14 +10,9 @@
  *
  * SPDX-License-Identifier: Apache-2.0
  ********************************************************************************/
-/*!        \file
- *        \brief  Contains tests concerning the VirtualParser class.
- *
- *********************************************************************************************************************/
+/// @file
+/// @brief  Contains tests concerning the VirtualParser class.
 
-/**********************************************************************************************************************
- *  INCLUDES
- *********************************************************************************************************************/
 #include "score/json/internal/parser/vajson/virtual_parser.h"
 
 #include "gtest/gtest.h"
@@ -62,10 +57,8 @@ class EmptyParser final : public internal::VirtualParser
 
 }  // namespace
 
-/*!
- * Test that a parser that does not overwrite any methods uses the default methods which return an error.
- * \trace           score::json::vajson::internal::VirtualParser
- */
+/// Test that a parser that does not overwrite any methods uses the default methods which return an error.
+/// @trace           score::json::vajson::internal::VirtualParser
 TEST(UT__Parser, Static__Empty)
 {
     constexpr std::string_view doc{R"({"key": [123, "string", null, true]})"};
@@ -73,12 +66,12 @@ TEST(UT__Parser, Static__Empty)
 
     for (std::size_t idx{0}; idx < num_elements; ++idx)
     {
-        auto result = JsonData::FromBuffer(doc);
+        auto result{JsonData::FromBuffer(doc)};
         ASSERT_TRUE(result.has_value());
         JsonData data{std::move(result).value()};
 
         EmptyParser parser{data, idx};
-        const auto parse_result = parser.Parse();
+        const auto parse_result{parser.Parse()};
         ASSERT_FALSE(parse_result.has_value());
         ASSERT_EQ(parse_result.error(), JsonErrc::kUserValidationFailed);
     }

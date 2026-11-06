@@ -152,6 +152,28 @@ TEST_F(BackendTableTest, IsBackendAvailableReturnsTrueWhenRegistered)
     EXPECT_FALSE(IsBackendAvailable(LogMode::kConsole));
 }
 
+TEST_F(BackendTableTest, SystemBackendActivationRegistersSystemMode)
+{
+    RecordProperty("Description",
+                   "The system backend becomes available when a backend is registered for LogMode::kSystem.");
+    RecordProperty("TestType", "interface-test");
+    RecordProperty("DerivationTechnique", "design-analysis");
+
+    auto creator = [](const Configuration&, score::cpp::pmr::memory_resource*) -> std::unique_ptr<Recorder> {
+        return std::make_unique<EmptyRecorder>();
+    };
+
+    EXPECT_FALSE(IsBackendAvailable(LogMode::kSystem));
+
+    RegisterBackend(LogMode::kSystem, creator);
+
+    EXPECT_TRUE(IsBackendAvailable(LogMode::kSystem));
+    EXPECT_FALSE(IsBackendAvailable(LogMode::kConsole));
+    EXPECT_FALSE(IsBackendAvailable(LogMode::kFile));
+    EXPECT_FALSE(IsBackendAvailable(LogMode::kRemote));
+    EXPECT_FALSE(IsBackendAvailable(LogMode::kCustom));
+}
+
 TEST_F(BackendTableTest, IsBackendAvailableReturnsFalseForInvalidMode)
 {
     RecordProperty("Description", "IsBackendAvailable shall return false for kInvalid.");
@@ -186,6 +208,25 @@ TEST_F(BackendTableTest, CreateRecorderForModeReturnsRecorderWhenRegistered)
 
     const Configuration config;
     auto recorder = CreateRecorderForMode(LogMode::kConsole, config, nullptr);
+
+    EXPECT_NE(recorder, nullptr);
+}
+
+TEST_F(BackendTableTest, SystemModeUsesRegisteredBackendCreator)
+{
+    RecordProperty("Description",
+                   "Check that creating a recorder for the registered system mode returns a non-null recorder.");
+    RecordProperty("TestType", "interface-test");
+    RecordProperty("DerivationTechnique", "design-analysis");
+
+    auto creator = [](const Configuration&, score::cpp::pmr::memory_resource*) -> std::unique_ptr<Recorder> {
+        return std::make_unique<EmptyRecorder>();
+    };
+
+    RegisterBackend(LogMode::kSystem, creator);
+
+    const Configuration config;
+    auto recorder = CreateRecorderForMode(LogMode::kSystem, config, nullptr);
 
     EXPECT_NE(recorder, nullptr);
 }

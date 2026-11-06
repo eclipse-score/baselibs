@@ -36,7 +36,6 @@ cc_library(
         "reader_fwd.h",
         "structure_parser.h",
         "structure_parser_base.h",
-        "structure_parser_impl.h",
         "virtual_parser.h",
     ],
     features = COMPILER_WARNING_FEATURES,

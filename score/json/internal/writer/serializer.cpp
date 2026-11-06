@@ -30,7 +30,7 @@ score::Result<void> SerializeToStreamInternal(std::ostream& out_stream,
                                               const score::json::Formatting formatting)
 {
     score::json::vajson::FormattingWriter writer{out_stream, formatting};
-    auto serializer = score::json::vajson::DocumentSerializer{std::ref(writer)};
+    score::json::vajson::DocumentSerializer serializer{std::ref(writer)};
     if constexpr (std::is_same_v<T, score::json::Object>)
     {
         static_cast<void>(score::json::internal::writer::vajson::SerializeObject(std::move(serializer), json_data));

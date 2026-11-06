@@ -10,14 +10,9 @@
  *
  * SPDX-License-Identifier: Apache-2.0
  ********************************************************************************/
-/*!        \file
- *        \brief  Contains tests concerning the parsing of objects.
- *
- *********************************************************************************************************************/
+/// @file
+/// @brief  Contains tests concerning the parsing of objects.
 
-/**********************************************************************************************************************
- *  INCLUDES
- *********************************************************************************************************************/
 #include "score/json/internal/parser/vajson/virtual_parser.h"
 
 #include "gtest/gtest.h"
@@ -114,13 +109,11 @@ class StartObjectParser final : public internal::VirtualParser
 
 }  // namespace
 
-/*!
- * Test object start/end counting — single object.
- * \trace           CREQ-Json-EventCallbacks
- */
+/// Test object start/end counting — single object.
+/// @trace           CREQ-Json-EventCallbacks
 TEST(UT__Parser__Object, Dynamic__SingleObject)
 {
-    auto data = JsonData::FromBuffer(std::string_view{R"({"a":1})"});
+    auto data{JsonData::FromBuffer(std::string_view{R"({"a":1})"})};
     ASSERT_TRUE(data.has_value());
     DynamicObjectParser parser{data.value()};
     ASSERT_TRUE(parser.Parse().has_value());
@@ -129,13 +122,11 @@ TEST(UT__Parser__Object, Dynamic__SingleObject)
     EXPECT_EQ(parser.balance_, 0);
 }
 
-/*!
- * Test object start/end counting — nested objects.
- * \trace           CREQ-Json-EventCallbacks
- */
+/// Test object start/end counting — nested objects.
+/// @trace           CREQ-Json-EventCallbacks
 TEST(UT__Parser__Object, Dynamic__NestedObjects)
 {
-    auto data = JsonData::FromBuffer(std::string_view{R"({"a":{"b":1},"c":{"d":2}})"});
+    auto data{JsonData::FromBuffer(std::string_view{R"({"a":{"b":1},"c":{"d":2}})"})};
     ASSERT_TRUE(data.has_value());
     DynamicObjectParser parser{data.value()};
     ASSERT_TRUE(parser.Parse().has_value());
@@ -144,13 +135,11 @@ TEST(UT__Parser__Object, Dynamic__NestedObjects)
     EXPECT_EQ(parser.balance_, 0);
 }
 
-/*!
- * Test object start/end counting — no objects (only array).
- * \trace           CREQ-Json-EventCallbacks
- */
+/// Test object start/end counting — no objects (only array).
+/// @trace           CREQ-Json-EventCallbacks
 TEST(UT__Parser__Object, Dynamic__NoObjects)
 {
-    auto data = JsonData::FromBuffer(std::string_view{"[1,2,3]"});
+    auto data{JsonData::FromBuffer(std::string_view{"[1,2,3]"})};
     ASSERT_TRUE(data.has_value());
     DynamicObjectParser parser{data.value()};
     ASSERT_TRUE(parser.Parse().has_value());
@@ -159,33 +148,29 @@ TEST(UT__Parser__Object, Dynamic__NoObjects)
     EXPECT_EQ(parser.balance_, 0);
 }
 
-/*!
- * Tests that when the overridden OnEndObject method returns an error, that error is propagated.
- * \trace           score::json::vajson::internal::StructureParserBase::ParseEndObject
- */
+/// Tests that when the overridden OnEndObject method returns an error, that error is propagated.
+/// @trace           score::json::vajson::internal::StructureParserBase::ParseEndObject
 TEST(UT__Parser__Object__Error, Dynamic__OnEndObject)
 {
-    auto doc = JsonData::FromBuffer(std::string_view{R"({})"});
+    auto doc{JsonData::FromBuffer(std::string_view{R"({})"})};
     ASSERT_TRUE(doc.has_value());
-    EndObjectParser parser(doc.value());
+    EndObjectParser parser{doc.value()};
 
-    const auto parser_result = parser.Parse();
+    const auto parser_result{parser.Parse()};
     ASSERT_FALSE(parser_result.has_value());
     ASSERT_EQ(parser_result.error(), JsonErrc::kUserValidationFailed);
     ASSERT_EQ(parser_result.error().UserMessage(), std::string_view{"OnEndObject called."});
 }
 
-/*!
- * Tests that when the overridden OnStartObject method returns an error, that error is propagated.
- * \trace           score::json::vajson::internal::StructureParserBase::ParseStartObject
- */
+/// Tests that when the overridden OnStartObject method returns an error, that error is propagated.
+/// @trace           score::json::vajson::internal::StructureParserBase::ParseStartObject
 TEST(UT__Parser__Object__Error, Dynamic__OnStartObject)
 {
-    auto doc = JsonData::FromBuffer(std::string_view{R"({})"});
+    auto doc{JsonData::FromBuffer(std::string_view{R"({})"})};
     ASSERT_TRUE(doc.has_value());
-    StartObjectParser parser(doc.value());
+    StartObjectParser parser{doc.value()};
 
-    const auto parser_result = parser.Parse();
+    const auto parser_result{parser.Parse()};
     ASSERT_FALSE(parser_result.has_value());
     ASSERT_EQ(parser_result.error(), JsonErrc::kUserValidationFailed);
     ASSERT_EQ(parser_result.error().UserMessage(), std::string_view{"OnStartObject called."});

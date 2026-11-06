@@ -10,12 +10,10 @@
  *
  * SPDX-License-Identifier: Apache-2.0
  ********************************************************************************/
-/*!        \file
- *        \brief  Configuration data of vaJson.
- *
- *      \details  Contains the application specific configuration.
- *
- *********************************************************************************************************************/
+/// @file
+/// @brief  Configuration data of vaJson.
+///
+/// @details  Contains the application specific configuration.
 
 #ifndef SCORE_JSON_INTERNAL_PARSER_VAJSON_READER_CONFIG_H
 #define SCORE_JSON_INTERNAL_PARSER_VAJSON_READER_CONFIG_H
@@ -32,7 +30,7 @@ namespace internal
 {
 namespace config
 {
-/// \brief           Size of the string buffer
+/// @brief           Size of the string buffer
 constexpr static std::size_t kStringBufferSize{1024};
 }  // namespace config
 }  // namespace internal
