@@ -21,6 +21,7 @@
 #include <fstream>
 #include <iostream>
 #include <limits>
+#include <ostream>
 #include <string>
 #include <string_view>
 #include <type_traits>
@@ -470,6 +471,90 @@ TEST_F(ParserTest, ParsingFromFileWorks)
 
     // Then the correct value is returned
     EXPECT_EQ(value, true);
+}
+
+struct DuplicateMemberNameParam
+{
+    std::string_view name;
+    std::string_view json;
+};
+
+// Found by gtest via ADL to print GetParam() in failure messages.
+void PrintTo(const DuplicateMemberNameParam& param, std::ostream* os)
+{
+    *os << param.json;
+}
+
+class DuplicateMemberNameTest : public testing::TestWithParam<DuplicateMemberNameParam>
+{
+};
+
+TEST_P(DuplicateMemberNameTest, EmitsErrorWhenParsingObjectWithDuplicateMemberName)
+{
+    RecordProperty("PartiallyVerifies", "comp_req__json__duplicate_member_names");
+    RecordProperty("Description",
+                   "Check that parsing an object with two members of the same name returns a parsing error, for "
+                   "each combination of member value types and object positions.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
+
+    const auto root{JsonParser{}.FromBuffer(GetParam().json)};
+
+    ASSERT_FALSE(root.has_value());
+    EXPECT_EQ(root.error(), score::json::Error::kParsingError);
+}
+
+INSTANTIATE_TEST_SUITE_P(ParserTest,
+                         DuplicateMemberNameTest,
+                         testing::Values(DuplicateMemberNameParam{"Null", R"({"a": null, "a": null})"},
+                                         DuplicateMemberNameParam{"Bool", R"({"a": true, "a": false})"},
+                                         DuplicateMemberNameParam{"Number", R"({"a": 1, "a": 2})"},
+                                         DuplicateMemberNameParam{"String", R"({"a": "x", "a": "y"})"},
+                                         DuplicateMemberNameParam{"Object", R"({"a": {"b": 1}, "a": {"c": 2}})"},
+                                         DuplicateMemberNameParam{"List", R"({"a": [1], "a": [2]})"},
+                                         DuplicateMemberNameParam{"ScalarThenObject", R"({"a": 1, "a": {"b": 1}})"},
+                                         DuplicateMemberNameParam{"ScalarThenList", R"({"a": 1, "a": [1]})"},
+                                         DuplicateMemberNameParam{"ObjectThenScalar", R"({"a": {"b": 1}, "a": 1})"},
+                                         DuplicateMemberNameParam{"ListThenObject", R"({"a": [1], "a": {"b": 1}})"},
+                                         DuplicateMemberNameParam{"NotAdjacent", R"({"a": 1, "b": 2, "a": 3})"},
+                                         DuplicateMemberNameParam{"InNestedObject", R"({"o": {"a": 1, "a": 2}})"},
+                                         DuplicateMemberNameParam{"InObjectInList", R"([{"a": 1, "a": 2}])"}),
+                         [](const testing::TestParamInfo<DuplicateMemberNameParam>& param_info) {
+                             return std::string{param_info.param.name};
+                         });
+
+TEST_F(ParserTest, EmitsErrorWhenParsingObjectWithDuplicateEscapedMemberName)
+{
+    RecordProperty("PartiallyVerifies", "comp_req__json__duplicate_member_names");
+    RecordProperty("Description",
+                   "Check that two member names that differ only in escaping are treated as duplicates and return a "
+                   "parsing error.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "error-guessing");
+
+    const auto root{JsonParser{}.FromBuffer(R"({"a/b": 1, "a\/b": 2})")};
+
+    ASSERT_FALSE(root.has_value());
+    EXPECT_EQ(root.error(), score::json::Error::kParsingError);
+}
+
+TEST_F(ParserTest, CanParseSameMemberNameInDifferentObjects)
+{
+    RecordProperty("PartiallyVerifies", "comp_req__json__duplicate_member_names");
+    RecordProperty("Description",
+                   "Check that the same member name in different objects, and names differing only in case, are "
+                   "accepted.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
+
+    const auto root{JsonParser{}.FromBuffer(R"({"a": {"a": 1}, "b": [{"a": 2}, {"a": 3}], "A": 4})")};
+
+    ASSERT_TRUE(root.has_value());
+    EXPECT_EQ(GetValueOfObject<Object>(root.value(), "a").at("a").As<std::uint64_t>().value(), 1U);
+    const auto& list{GetValueOfObject<List>(root.value(), "b")};
+    EXPECT_EQ(list.at(0).As<Object>().value().get().at("a").As<std::uint64_t>().value(), 2U);
+    EXPECT_EQ(list.at(1).As<Object>().value().get().at("a").As<std::uint64_t>().value(), 3U);
+    EXPECT_EQ(GetValueOfObject<std::uint64_t>(root.value(), "A"), 4U);
 }
 
 TEST(JsonParserVajsonTest, CanParseObjectHexadecimalNumber)

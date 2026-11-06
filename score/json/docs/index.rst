@@ -87,6 +87,7 @@ The JSON-Library should provide parsing, writing and data conversion capabilitie
 * :need:`comp_req__json__deserialization`
 * :need:`comp_req__json__serialization`
 * :need:`comp_req__json__user_format`
+* :need:`comp_req__json__duplicate_member_names`
 
 User friendly API
 -----------------
