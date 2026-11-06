@@ -153,16 +153,22 @@ INSTANTIATE_TYPED_TEST_SUITE_P(WorkingDigests, HashCalculatorFactoryCreationTest
 
 TEST(HashCalculatorFactory, hashCalculatorFactoryFailTest)
 {
-    RecordProperty("PartiallyVerifies", "comp_req__hash__factory_interface, comp_req__hash__safe_computation");
+    RecordProperty("PartiallyVerifies",
+                   "comp_req__hash__factory_interface, comp_req__hash__safe_computation, "
+                   "comp_req__hash__sha_algorithms");
     RecordProperty("TestType", "requirements-based");
     RecordProperty("DerivationTechnique", "boundary-values");
     RecordProperty("Description",
                    "Check that the factory returns an error, instead of a calculator, when asked to create a "
-                   "calculator for HashAlgorithm::kNone.");
+                   "calculator for HashAlgorithm::kNone or the former SHA-1 numeric identifier.");
 
     HashCalculatorFactory unit{};
     auto hash_factory = unit.CreateHashCalculator(HashAlgorithm::kNone);
     ASSERT_FALSE(hash_factory.has_value());
+
+    const auto legacy_sha1_algorithm{static_cast<HashAlgorithm>(1U)};
+    const auto legacy_sha1_factory_result{unit.CreateHashCalculator(legacy_sha1_algorithm)};
+    EXPECT_FALSE(legacy_sha1_factory_result.has_value());
 }
 
 TEST(HashCalculatorFactory, HashCalculatorSpanInput)
@@ -310,9 +316,9 @@ TEST(HashCalculatorFactory, InstantiateWithFailingOpenSslLib)
                    "underlying OpenSSL library fails to resolve the digest algorithm.");
 
     openssl::OpensslLibMock open_ssl_lib_mock{};
-    EXPECT_CALL(open_ssl_lib_mock, DigestAlgoSha1()).WillOnce(::testing::Return(nullptr));
+    EXPECT_CALL(open_ssl_lib_mock, DigestAlgoSha384()).WillOnce(::testing::Return(nullptr));
     HashCalculatorFactory unit{std::cref(open_ssl_lib_mock)};
-    const auto create_result{unit.CreateHashCalculator(HashAlgorithm::kSha1)};
+    const auto create_result{unit.CreateHashCalculator(HashAlgorithm::kSha384)};
     ASSERT_FALSE(create_result.has_value());
     EXPECT_EQ(create_result.error(), ErrorCode::kCouldNotCreateDigest);
 }
@@ -332,27 +338,32 @@ TEST(HashCalculatorFactory, InstantiateWithSuccess)
         const openssl::StructDigest* digest{reinterpret_cast<const openssl::StructDigest*>(0xDEADBEEF)};
 
         ::testing::InSequence seq{};
-        EXPECT_CALL(open_ssl_lib_mock, DigestAlgoSha1()).WillOnce(::testing::Return(digest));
+        EXPECT_CALL(open_ssl_lib_mock, DigestAlgoSha384()).WillOnce(::testing::Return(digest));
         EXPECT_CALL(open_ssl_lib_mock, CreateDigestCtx()).WillOnce(::testing::Return(digest_context));
         EXPECT_CALL(open_ssl_lib_mock, InitDigestCtx(digest_context, digest, nullptr)).WillOnce(::testing::Return(37));
     }
 
     HashCalculatorFactory unit{std::cref(open_ssl_lib_mock)};
-    const auto create_result{unit.CreateHashCalculator(HashAlgorithm::kSha1)};
+    const auto create_result{unit.CreateHashCalculator(HashAlgorithm::kSha384)};
     EXPECT_TRUE(create_result.has_value());
 }
 
 TEST(SafeHashCalculatorFactory, TryToInstantiateNonexistentHash)
 {
-    RecordProperty("PartiallyVerifies", "comp_req__hash__factory_interface, comp_req__hash__safe_computation");
+    RecordProperty("PartiallyVerifies",
+                   "comp_req__hash__factory_interface, comp_req__hash__safe_computation, "
+                   "comp_req__hash__sha_algorithms");
     RecordProperty("TestType", "requirements-based");
     RecordProperty("DerivationTechnique", "equivalence-classes");
     RecordProperty("Description",
                    "Check that SafeHashCalculatorFactory returns an error, instead of a calculator, for an "
-                   "algorithm it does not support (SHA-1).");
+                   "algorithm it does not support (SHA-384) and the former SHA-1 numeric identifier.");
 
     SafeHashCalculatorFactory unit{};
-    EXPECT_FALSE(unit.CreateHashCalculator(HashAlgorithm::kSha1).has_value());
+    EXPECT_FALSE(unit.CreateHashCalculator(HashAlgorithm::kSha384).has_value());
+
+    const auto legacy_sha1_algorithm{static_cast<HashAlgorithm>(1U)};
+    EXPECT_FALSE(unit.CreateHashCalculator(legacy_sha1_algorithm).has_value());
 }
 
 }  // namespace

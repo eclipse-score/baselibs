@@ -55,7 +55,6 @@ class AlgorithmLoggerFixture : public ::testing::Test
 TEST(HashIdentify, CorrectlyIdentifyHashFromString)
 {
     const std::string crc32{"4342711f"};
-    const std::string sha1{"526eac4f80dd6e6e73c7a501dff1abc83f0b7ccc"};
     const std::string sha256{"78e599a1555f8dec1d91833c01523e14ea8373cb92345600b24a3cbe987ba400"};
     const std::string sha384{
         "ca796ef303046f9773b9ca35b092be4a86b22d72f0ed91a0e49208d8defadf9f4de3bf63320c32d6890e80b7159afcdf"};
@@ -64,7 +63,6 @@ TEST(HashIdentify, CorrectlyIdentifyHashFromString)
         "2d39f5800a06c47e91"};
 
     EXPECT_EQ(IdentifyHash(crc32), HashAlgorithm::kCrc32);
-    EXPECT_EQ(IdentifyHash(sha1), HashAlgorithm::kSha1);
     EXPECT_EQ(IdentifyHash(sha256), HashAlgorithm::kSha256);
     EXPECT_EQ(IdentifyHash(sha384), HashAlgorithm::kSha384);
     EXPECT_EQ(IdentifyHash(sha512), HashAlgorithm::kSha512);
@@ -72,20 +70,27 @@ TEST(HashIdentify, CorrectlyIdentifyHashFromString)
 
 TEST(HashIdentify, CanNotIdentifyBadHashesFromString)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__hash__sha_algorithms");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
+    RecordProperty("Description",
+                   "Check that invalid hash lengths, including the former SHA-1 length, are not identified as "
+                   "supported algorithms.");
+
     const std::string bad_hash_0{""};
     const std::string bad_hash_1{"a"};
     const std::string bad_hash_41{"526eac4f80dd6e6e73c7a501dff1abc83f0b7ccca"};
+    const std::string legacy_sha1{"526eac4f80dd6e6e73c7a501dff1abc83f0b7ccc"};
 
     EXPECT_EQ(IdentifyHash(bad_hash_0), HashAlgorithm::kNone);
     EXPECT_EQ(IdentifyHash(bad_hash_1), HashAlgorithm::kNone);
     EXPECT_EQ(IdentifyHash(bad_hash_41), HashAlgorithm::kNone);
+    EXPECT_EQ(IdentifyHash(legacy_sha1), HashAlgorithm::kNone);
 }
 
 TEST(HashIdentify, CorrectlyIdentifyHashFromSize)
 {
     const std::vector<uint8_t> crc32{0x43, 0x42, 0x71, 0x1f};
-    const std::vector<uint8_t> sha1{0x52, 0x6e, 0xac, 0x4f, 0x80, 0xdd, 0x6e, 0x6e, 0x73, 0xc7,
-                                    0xa5, 0x01, 0xdf, 0xf1, 0xab, 0xc8, 0x3f, 0x0b, 0x7c, 0xcc};
     const std::vector<uint8_t> sha256{0x78, 0xe5, 0x99, 0xa1, 0x55, 0x5f, 0x8d, 0xec, 0x1d, 0x91, 0x83,
                                       0x3c, 0x01, 0x52, 0x3e, 0x14, 0xea, 0x83, 0x73, 0xcb, 0x92, 0x34,
                                       0x56, 0x00, 0xb2, 0x4a, 0x3c, 0xbe, 0x98, 0x7b, 0xa4, 0x00};
@@ -102,7 +107,6 @@ TEST(HashIdentify, CorrectlyIdentifyHashFromSize)
     };
 
     EXPECT_EQ(IdentifyHash(crc32.size()), HashAlgorithm::kCrc32);
-    EXPECT_EQ(IdentifyHash(sha1.size()), HashAlgorithm::kSha1);
     EXPECT_EQ(IdentifyHash(sha256.size()), HashAlgorithm::kSha256);
     EXPECT_EQ(IdentifyHash(sha384.size()), HashAlgorithm::kSha384);
     EXPECT_EQ(IdentifyHash(sha512.size()), HashAlgorithm::kSha512);
@@ -110,13 +114,22 @@ TEST(HashIdentify, CorrectlyIdentifyHashFromSize)
 
 TEST(HashIdentify, CanNotIdentifyBadHashesFromSize)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__hash__sha_algorithms");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
+    RecordProperty("Description",
+                   "Check that invalid hash sizes, including the former SHA-1 size, are not identified as "
+                   "supported algorithms.");
+
     const std::vector<uint8_t> bad_hash_0{};
     const std::vector<uint8_t> bad_hash_1{0xa};
+    const std::vector<uint8_t> legacy_sha1(20U);
     const std::vector<uint8_t> bad_hash_41{0x52, 0x6e, 0xac, 0x4f, 0x80, 0xdd, 0x6e, 0x6e, 0x73, 0xc7, 0xa5,
                                            0x01, 0xdf, 0xf1, 0xab, 0xc8, 0x3f, 0x0b, 0x7c, 0xcc, 0xa};
 
     EXPECT_EQ(IdentifyHash(bad_hash_0.size()), HashAlgorithm::kNone);
     EXPECT_EQ(IdentifyHash(bad_hash_1.size()), HashAlgorithm::kNone);
+    EXPECT_EQ(IdentifyHash(legacy_sha1.size()), HashAlgorithm::kNone);
     EXPECT_EQ(IdentifyHash(bad_hash_41.size()), HashAlgorithm::kNone);
 }
 
@@ -127,12 +140,12 @@ TEST(HashIdentify, CorrectSizes)
     RecordProperty("DerivationTechnique", "boundary-values");
     RecordProperty("Description",
                    "Check that HashSizeInBytes()/HashSizeInCharacters() report the correct byte and hex-character "
-                   "lengths for every supported algorithm, and report no value for kNone/kLast.");
+                   "lengths for every supported algorithm, and report no value for kNone/kLast or the former SHA-1 "
+                   "numeric identifier.");
 
     const auto expected_sizes_bytes = std::map<const HashAlgorithm, const std::uint8_t>{
         {HashAlgorithm::kCrc32, 4},
         {HashAlgorithm::kCrc32Autosar, 4},
-        {HashAlgorithm::kSha1, 20},
         {HashAlgorithm::kSha256, 32},
         {HashAlgorithm::kSha384, 48},
         {HashAlgorithm::kSha512, 64},
@@ -153,6 +166,9 @@ TEST(HashIdentify, CorrectSizes)
     EXPECT_FALSE(score::hash::HashSizeInBytes(HashAlgorithm::kLast).has_value());
     EXPECT_FALSE(score::hash::HashSizeInCharacters(HashAlgorithm::kNone).has_value());
     EXPECT_FALSE(score::hash::HashSizeInCharacters(HashAlgorithm::kLast).has_value());
+
+    EXPECT_FALSE(score::hash::HashSizeInBytes(HashAlgorithm{1}).has_value());
+    EXPECT_FALSE(score::hash::HashSizeInCharacters(HashAlgorithm{1}).has_value());
 }
 
 TEST_F(AlgorithmLoggerFixture, CanLogAlgorithms)
@@ -163,9 +179,6 @@ TEST_F(AlgorithmLoggerFixture, CanLogAlgorithms)
 
     EXPECT_CALL(recorder_, LogStringView(_, {"CRC32 AUTOSAR:"}));
     EXPECT_CALL(recorder_, LogStringView(_, {"Crc32Autosar"}));
-
-    EXPECT_CALL(recorder_, LogStringView(_, {"SHA-1:"}));
-    EXPECT_CALL(recorder_, LogStringView(_, {"Sha1"}));
 
     EXPECT_CALL(recorder_, LogStringView(_, {"SHA-256:"}));
     EXPECT_CALL(recorder_, LogStringView(_, {"Sha256"}));
@@ -189,7 +202,6 @@ TEST_F(AlgorithmLoggerFixture, CanLogAlgorithms)
 
     mw::log::LogInfo() << "CRC32:" << HashAlgorithm::kCrc32;
     mw::log::LogInfo() << "CRC32 AUTOSAR:" << HashAlgorithm::kCrc32Autosar;
-    mw::log::LogInfo() << "SHA-1:" << HashAlgorithm::kSha1;
     mw::log::LogInfo() << "SHA-256:" << HashAlgorithm::kSha256;
     mw::log::LogInfo() << "SHA-384:" << HashAlgorithm::kSha384;
     mw::log::LogInfo() << "SHA-512:" << HashAlgorithm::kSha512;

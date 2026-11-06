@@ -29,7 +29,6 @@ namespace openssl
 class OpensslLibMock : public IOpensslLib
 {
   public:
-    MOCK_METHOD((const StructDigest*), DigestAlgoSha1, (), (const, noexcept, override));
     MOCK_METHOD((const StructDigest*), DigestAlgoSha256, (), (const, noexcept, override));
     MOCK_METHOD((const StructDigest*), DigestAlgoSha384, (), (const, noexcept, override));
     MOCK_METHOD((const StructDigest*), DigestAlgoSha512, (), (const, noexcept, override));

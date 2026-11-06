@@ -43,10 +43,6 @@ Result<OpensslHashCalculator> OpensslHashCalculator::Create(const HashAlgorithm 
 
     switch (algorithm)
     {
-        case HashAlgorithm::kSha1:
-            message_digest_type = openssl.DigestAlgoSha1();
-            break;
-
         case HashAlgorithm::kSha256:
             message_digest_type = openssl.DigestAlgoSha256();
             break;

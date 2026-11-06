@@ -43,9 +43,6 @@ class IOpensslLib
     IOpensslLib& operator=(const IOpensslLib&) = delete;
     IOpensslLib& operator=(IOpensslLib&&) noexcept = delete;
 
-    /// @brief Calculates the hash value with SHA1 algorithm.
-    virtual const StructDigest* DigestAlgoSha1() const noexcept = 0;
-
     /// @brief Calculates the hash value with SHA256 algorithm.
     virtual const StructDigest* DigestAlgoSha256() const noexcept = 0;
 

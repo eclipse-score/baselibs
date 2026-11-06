@@ -45,7 +45,6 @@ Result<std::unique_ptr<IHashCalculator>> HashCalculatorFactory::CreateHashCalcul
         case HashAlgorithm::kSha256:
             result = static_cast<std::unique_ptr<IHashCalculator>>(std::make_unique<Sha256Digest>());
             break;
-        case HashAlgorithm::kSha1:
         case HashAlgorithm::kSha384:
         case HashAlgorithm::kSha512:
         {

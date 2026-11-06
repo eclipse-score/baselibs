@@ -36,7 +36,6 @@ class OpensslLibImpl final : public IOpensslLib
     OpensslLibImpl& operator=(const OpensslLibImpl&) = delete;
     OpensslLibImpl& operator=(OpensslLibImpl&&) noexcept = delete;
 
-    const StructDigest* DigestAlgoSha1() const noexcept override;
     const StructDigest* DigestAlgoSha256() const noexcept override;
     const StructDigest* DigestAlgoSha384() const noexcept override;
     const StructDigest* DigestAlgoSha512() const noexcept override;

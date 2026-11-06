@@ -8,7 +8,7 @@ The main aim of this library is to:
 * reduce the duplicated code.
 * enable unit-testability of hash calculator.
 
-The hash calculator class allows the hash value calculation using SHA1, SHA256, SHA384, and SHA512 algorithms.
+The hash calculator class allows the hash value calculation using SHA256, SHA384, and SHA512 algorithms.
 
 In order to easily handle hashes, we introduce a custom `Hash` class, which encapsulates necessary information. It acts
 as kind of _type erasure_ around the more detailed hash information, which is otherwise distributed as pair of buffer
@@ -40,8 +40,8 @@ unit-testability of Openssl library functions and acheive 100% unit test coverag
 
 The Openssl wrapper functions are:
 
-* DigestAlgoSha1(), DigestAlgoSha256(), DigestAlgoSha384(), DigestAlgoSha512() - Returns a structure(EVP_MD) of digest
-  algorithms respectively.
+* DigestAlgoSha256(), DigestAlgoSha384(), DigestAlgoSha512() - Returns a structure(EVP_MD) of digest algorithms
+  respectively.
 
 * CreateDigestCtx() - Allocates and returns a digest context.
 
