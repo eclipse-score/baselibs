@@ -32,7 +32,7 @@ cc_library(
     ],
     # No dependencies except for STL shall be used
     deps = [
-        "@score_baselibs//score/quality/compiler_warnings:macro_deprecation",
+        "@score_baselibs//score/quality/compiler_warnings:deprecation",
     ],
 )
 
