@@ -18,7 +18,11 @@
 #include "gtest/gtest.h"
 
 #include <future>
+#include <mutex>
+#include <shared_mutex>
 #include <string>
+#include <type_traits>
+#include <utility>
 #include <vector>
 
 using score::concurrency::Synchronized;
@@ -28,6 +32,16 @@ namespace test
 
 namespace
 {
+template <typename T, typename = void>
+struct HasTryLock : std::false_type
+{
+};
+
+template <typename T>
+struct HasTryLock<T, std::void_t<decltype(std::declval<T&>().try_lock())>> : std::true_type
+{
+};
+
 constexpr auto clone = [](auto ptr) noexcept(std::is_nothrow_copy_constructible_v<std::decay_t<decltype(*ptr)>>) {
     static_assert(std::is_copy_constructible_v<std::decay_t<decltype(*ptr)>>,
                   "clone requires a copy-constructible type");
@@ -221,6 +235,60 @@ TEST(SynchronizedTest, LockMethodBasic)
     }
 
     EXPECT_EQ(sync_int.WithLock(clone), 100);
+}
+
+TEST(SynchronizedTest, TryLockSupportsMutableConstAndUnavailableLockables)
+{
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
+    RecordProperty("FullyVerifies", "comp_req__concurrency__synchronized_try_lock");
+    RecordProperty("Description",
+                   "Check that try_lock provides mutable or const access when available and returns nullptr on "
+                   "contention, while remaining unavailable for Lockable types without try_lock.");
+
+    static_assert(HasTryLock<Synchronized<int>>::value);
+    static_assert(HasTryLock<const Synchronized<int>>::value);
+    static_assert(HasTryLock<Synchronized<int, std::mutex>>::value);
+    static_assert(HasTryLock<Synchronized<int, std::recursive_mutex>>::value);
+    static_assert(HasTryLock<Synchronized<int, std::timed_mutex>>::value);
+    static_assert(HasTryLock<Synchronized<int, std::recursive_timed_mutex>>::value);
+    static_assert(HasTryLock<Synchronized<int, std::shared_mutex>>::value);
+    static_assert(HasTryLock<Synchronized<int, std::shared_timed_mutex>>::value);
+    static_assert(!HasTryLock<Synchronized<int, MockMutex>>::value);
+
+    Synchronized<int> sync_value(42);
+    const int* sync_value_ptr = sync_value.lock().get();
+
+    {
+        auto locked_ptr = sync_value.try_lock();
+        ASSERT_EQ(locked_ptr.get(), sync_value_ptr);
+        EXPECT_EQ(*locked_ptr, 42);
+        *locked_ptr = 100;
+    }
+
+    {
+        auto locked_ptr = std::as_const(sync_value).try_lock();
+        ASSERT_EQ(locked_ptr.get(), sync_value_ptr);
+        EXPECT_EQ(*locked_ptr, 100);
+    }
+
+    {
+        auto held_lock = sync_value.lock();
+        ASSERT_EQ(held_lock.get(), sync_value_ptr);
+        auto try_lock_result = std::async(std::launch::async, [&sync_value]() {
+            return sync_value.try_lock() == nullptr;
+        });
+        EXPECT_TRUE(try_lock_result.get());
+    }
+
+    {
+        auto held_lock = sync_value.lock();
+        ASSERT_EQ(held_lock.get(), sync_value_ptr);
+        auto try_lock_result = std::async(std::launch::async, [&sync_value]() {
+            return std::as_const(sync_value).try_lock() == nullptr;
+        });
+        EXPECT_TRUE(try_lock_result.get());
+    }
 }
 
 TEST(SynchronizedTest, TestStructLockReturnValue)

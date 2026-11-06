@@ -36,6 +36,20 @@ template <typename T>
 using is_basic_lockable_t = typename is_basic_lockable<T>::type;
 
 template <typename T, typename = void>
+struct is_try_lockable : std::false_type
+{
+};
+
+template <typename T>
+struct is_try_lockable<T, std::void_t<decltype(static_cast<bool>(std::declval<T&>().try_lock()))>>
+    : is_basic_lockable<T>
+{
+};
+
+template <typename T>
+inline constexpr bool is_try_lockable_v = is_try_lockable<T>::value;
+
+template <typename T, typename = void>
 struct LockWithOwnsLock : std::false_type
 {
 };
