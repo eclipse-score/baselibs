@@ -656,6 +656,54 @@ TEST(Number, FromNanToAnyOtherType)
     TestNanToAnyOtherType<double>();
 }
 
+TEST(Number, NarrowingIntegerIsRejectedByType)
+{
+    RecordProperty("Verifies", "::score::json::Number::As");
+    RecordProperty("ASIL", "B");
+    RecordProperty("Description", "Tests that narrowing integer conversions fail even if the value fits.");
+    RecordProperty("TestType", "interface-test");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
+    RecordProperty("Priority", "3");
+
+    ExpectWrongType(Number{std::uint64_t{1}}.As<std::uint8_t>());
+    ExpectWrongType(Number{std::int64_t{-1}}.As<std::int8_t>());
+    ExpectWrongType(Number{std::int32_t{0}}.As<float>());
+    ExpectWrongType(Number{std::int64_t{0}}.As<double>());
+
+    // Unsigned to signed is the exception and is checked by value.
+    CheckResult(Number{std::uint64_t{1}}.As<std::int8_t>(), 1, true);
+}
+
+template <typename FloatingPoint>
+void TestFloatingPointEdgeCases(FloatingPoint maximum_integer)
+{
+    constexpr FloatingPoint kInfinity{std::numeric_limits<FloatingPoint>::infinity()};
+    const FloatingPoint above_maximum_integer{std::nextafter(maximum_integer, kInfinity)};
+
+    ExpectWrongType(Number{above_maximum_integer}.As<std::int64_t>());
+    ExpectWrongType(Number{-above_maximum_integer}.As<std::int64_t>());
+    ExpectWrongType(Number{kInfinity}.As<std::int64_t>());
+    ExpectWrongType(Number{-kInfinity}.As<std::int64_t>());
+
+    CheckResult(Number{FloatingPoint{-0.0}}.As<std::uint8_t>(), 0, true);
+    CheckResult(Number{kInfinity}.As<float>(), kInfinity, true);
+    CheckResult(Number{-kInfinity}.As<double>(), -kInfinity, true);
+}
+
+TEST(Number, FloatingPointEdgeCases)
+{
+    RecordProperty("Verifies", "::score::json::Number::As");
+    RecordProperty("ASIL", "B");
+    RecordProperty("Description",
+                   "Tests floating-point conversions just beyond the exact integer range, -0 and infinity.");
+    RecordProperty("TestType", "interface-test");
+    RecordProperty("DerivationTechnique", "boundary-values");
+    RecordProperty("Priority", "3");
+
+    TestFloatingPointEdgeCases<float>(GetMaximumIntegerInFloat());
+    TestFloatingPointEdgeCases<double>(GetMaximumIntegerInDouble());
+}
+
 template <typename T1, typename T2>
 void TestEqualOperator(T1 lhs, T2 rhs, bool result)
 {
