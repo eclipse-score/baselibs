@@ -85,7 +85,8 @@ TEST(TypedHashTest, CanCreateFromValidString)
 
     constexpr auto kLegacySha1Algorithm{static_cast<HashAlgorithm>(1U)};
     using LegacySha1Hash = TypedHash<kLegacySha1Algorithm>;
-    const auto legacy_sha1_result{LegacySha1Hash::FromString(sha256)};
+    const score::cpp::pmr::string legacy_sha1{"89fdde0b28373dc4f361cfb810b35342cc2c3232"};
+    const auto legacy_sha1_result{LegacySha1Hash::FromString(legacy_sha1)};
     EXPECT_FALSE(legacy_sha1_result.has_value());
 }
 

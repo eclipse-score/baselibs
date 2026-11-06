@@ -166,7 +166,8 @@ TEST(HashTest, ValidateAlgorithm)
     ASSERT_FALSE(crc32_hash_result.has_value());
 
     const auto legacy_sha1_algorithm{static_cast<HashAlgorithm>(1U)};
-    const auto legacy_sha1_result{Hash::FromString(legacy_sha1_algorithm, crc32)};
+    const score::cpp::pmr::string legacy_sha1{"89fdde0b28373dc4f361cfb810b35342cc2c3232"};
+    const auto legacy_sha1_result{Hash::FromString(legacy_sha1_algorithm, legacy_sha1)};
     EXPECT_FALSE(legacy_sha1_result.has_value());
 }
 

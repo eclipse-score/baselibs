@@ -167,9 +167,8 @@ TEST(HashIdentify, CorrectSizes)
     EXPECT_FALSE(score::hash::HashSizeInCharacters(HashAlgorithm::kNone).has_value());
     EXPECT_FALSE(score::hash::HashSizeInCharacters(HashAlgorithm::kLast).has_value());
 
-    const auto legacy_sha1_algorithm{static_cast<HashAlgorithm>(1U)};
-    EXPECT_FALSE(score::hash::HashSizeInBytes(legacy_sha1_algorithm).has_value());
-    EXPECT_FALSE(score::hash::HashSizeInCharacters(legacy_sha1_algorithm).has_value());
+    EXPECT_FALSE(score::hash::HashSizeInBytes(HashAlgorithm{1}).has_value());
+    EXPECT_FALSE(score::hash::HashSizeInCharacters(HashAlgorithm{1}).has_value());
 }
 
 TEST_F(AlgorithmLoggerFixture, CanLogAlgorithms)
