@@ -811,6 +811,8 @@ TEST_F(LogStreamFixture, WhenTryToLogEmptyRawBufferShallNotLog)
 
 TEST_F(LogStreamFixture, CanLogACustomType)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__log__cfg_custom_types");
+    RecordProperty("TestType", "requirements-based");
     RecordProperty("ParentRequirement", "SCR-1633236");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Verifies the ability of logging custom type (struct).");
