@@ -13,9 +13,10 @@
 /// @file
 /// @brief  Contains tests concerning the parsing of booleans.
 
-#include "score/json/internal/parser/vajson/virtual_parser.h"
+#include "score/json/internal/parser/vajson/structure_parser.h"
 
 #include "gtest/gtest.h"
+#include "score/json/internal/parser/vajson/ignoring_parser.h"
 #include "score/json/internal/parser/vajson/json_data.h"
 #include "score/json/internal/parser/vajson/json_error_domain.h"
 #include <utility>
@@ -34,11 +35,15 @@ namespace
 using Count = std::size_t;
 
 /// @brief           Parser that is only interested in bools
-class DynamicBoolParser final : public internal::VirtualParser
+class DynamicBoolParser final : public IgnoringParser
 {
   public:
-    using internal::VirtualParser::VirtualParser;
+    using IgnoringParser::IgnoringParser;
 
+    Count true_{0};
+    Count false_{0};
+
+  private:
     auto OnBool(bool b) noexcept -> ParserResult override
     {
         if (b)
@@ -51,30 +56,18 @@ class DynamicBoolParser final : public internal::VirtualParser
         }
         return ParserState::kRunning;
     }
-
-    auto OnUnexpectedEvent() noexcept -> ParserResult override
-    {
-        return ParserState::kRunning;
-    }
-
-    Count true_{0};
-    Count false_{0};
 };
 
 /// @brief           Parser that always returns an error on call of OnBool
-class ErrorBoolParser final : public internal::VirtualParser
+class ErrorBoolParser final : public IgnoringParser
 {
   public:
-    using internal::VirtualParser::VirtualParser;
+    using IgnoringParser::IgnoringParser;
 
+  private:
     auto OnBool(bool) noexcept -> ParserResult override
     {
         return MakeErrorResult<ParserState>(JsonErrc::kUserValidationFailed, "OnBool called.");
-    }
-
-    auto OnUnexpectedEvent() noexcept -> ParserResult override
-    {
-        return ParserState::kRunning;
     }
 };
 
@@ -117,7 +110,7 @@ TEST(UT__Parser__Bool, Dynamic__Bools)
 }
 
 /// Test that parsing fails if 'true' is not expected.
-/// @trace           ::score::json::vajson::internal::StructureParserBase::ParseValue
+/// @trace           ::score::json::vajson::internal::StructureParser::ParseValue
 TEST(UT__Parser__Bool, Dynamic__ParseTrue_WrongFormat)
 {
     auto result{JsonData::FromBuffer(std::string_view{R"({true:123})"})};
@@ -131,7 +124,7 @@ TEST(UT__Parser__Bool, Dynamic__ParseTrue_WrongFormat)
 }
 
 /// Test that parsing fails if 'false' is not expected.
-/// @trace           ::score::json::vajson::internal::StructureParserBase::ParseValue
+/// @trace           ::score::json::vajson::internal::StructureParser::ParseValue
 TEST(UT__Parser__Bool, Dynamic__ParseFalse__WrongFormat)
 {
     auto result{JsonData::FromBuffer(std::string_view{R"({false:123})"})};
@@ -145,7 +138,7 @@ TEST(UT__Parser__Bool, Dynamic__ParseFalse__WrongFormat)
 }
 
 /// Tests that when the overridden OnBool method returns an error, that error is propagated.
-/// @trace           score::json::vajson::internal::StructureParserBase::ParseFalse
+/// @trace           score::json::vajson::internal::StructureParser::ParseFalse
 TEST(UT__Parser__Bool, Dynamic__ParseFalse__Error)
 {
     auto doc{JsonData::FromBuffer(std::string_view{"false"})};
@@ -159,7 +152,7 @@ TEST(UT__Parser__Bool, Dynamic__ParseFalse__Error)
 }
 
 /// Tests that when the overridden OnBool method returns an error, that error is propagated.
-/// @trace           score::json::vajson::internal::StructureParserBase::ParseTrue
+/// @trace           score::json::vajson::internal::StructureParser::ParseTrue
 TEST(UT__Parser__Bool, Dynamic__ParseTrue__Error)
 {
     auto doc{JsonData::FromBuffer(std::string_view{"true"})};

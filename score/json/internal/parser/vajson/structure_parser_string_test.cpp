@@ -13,9 +13,10 @@
 /// @file
 /// @brief  Contains tests concerning the parsing of strings.
 
-#include "score/json/internal/parser/vajson/virtual_parser.h"
+#include "score/json/internal/parser/vajson/structure_parser.h"
 
 #include "gtest/gtest.h"
+#include "score/json/internal/parser/vajson/ignoring_parser.h"
 #include "score/json/internal/parser/vajson/json_data.h"
 #include "score/json/internal/parser/vajson/json_error_domain.h"
 #include <string>
@@ -34,38 +35,30 @@ namespace
 
 using Strings = std::vector<std::string>;
 
-class DynamicStringParser final : public internal::VirtualParser
+class DynamicStringParser final : public IgnoringParser
 {
   public:
-    using internal::VirtualParser::VirtualParser;
+    using IgnoringParser::IgnoringParser;
 
-    auto OnString(StringView str) noexcept -> ParserResult override
+    Strings strings;
+
+  private:
+    auto OnString(CStringView str) noexcept -> ParserResult override
     {
         this->strings.push_back(std::string(str));
         return ParserState::kRunning;
     }
-
-    auto OnUnexpectedEvent() noexcept -> ParserResult override
-    {
-        return ParserState::kRunning;
-    }
-
-    Strings strings;
 };
 
-class ErrorStringParser final : public internal::VirtualParser
+class ErrorStringParser final : public IgnoringParser
 {
   public:
-    using internal::VirtualParser::VirtualParser;
+    using IgnoringParser::IgnoringParser;
 
-    auto OnString(StringView) noexcept -> ParserResult override
+  private:
+    auto OnString(CStringView) noexcept -> ParserResult override
     {
         return MakeErrorResult<ParserState>(JsonErrc::kUserValidationFailed, "OnString called.");
-    }
-
-    auto OnUnexpectedEvent() noexcept -> ParserResult override
-    {
-        return ParserState::kRunning;
     }
 };
 
@@ -83,7 +76,7 @@ TEST(UT__Parser__String, Dynamic__StringArray)
 }
 
 /// Tests that when the overridden OnString method returns an error, that error is propagated.
-/// @trace           score::json::vajson::internal::StructureParserBase::ParseUnescapedString
+/// @trace           score::json::vajson::internal::StructureParser::ParseUnescapedString
 TEST(UT__Parser__String, Dynamic__ParseUnescapedString__Error)
 {
     auto doc{JsonData::FromBuffer(std::string_view{R"("SomeString")"})};

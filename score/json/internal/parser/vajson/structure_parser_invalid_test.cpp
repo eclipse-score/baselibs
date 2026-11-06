@@ -13,9 +13,10 @@
 /// @file
 /// @brief  Contains tests concerning the parsing of invalid JSON.
 
-#include "score/json/internal/parser/vajson/virtual_parser.h"
+#include "score/json/internal/parser/vajson/structure_parser.h"
 
 #include "gtest/gtest.h"
+#include "score/json/internal/parser/vajson/ignoring_parser.h"
 #include "score/json/internal/parser/vajson/json_data.h"
 #include "score/json/internal/parser/vajson/json_error_domain.h"
 
@@ -30,23 +31,12 @@ namespace unit_test
 namespace
 {
 
-class DynamicInvalidDetectionParser final : public internal::VirtualParser
-{
-  public:
-    using internal::VirtualParser::VirtualParser;
-
-    auto OnUnexpectedEvent() noexcept -> ParserResult override
-    {
-        return ParserState::kRunning;
-    }
-};
-
 /// Helper: assert that the given JSON string is rejected with kInvalidJson.
 void AssertInvalid(std::string_view json)
 {
     auto data{JsonData::FromBuffer(json)};
     ASSERT_TRUE(data.has_value());
-    DynamicInvalidDetectionParser parser{data.value()};
+    IgnoringParser parser{data.value()};
     const auto result{parser.Parse()};
     ASSERT_FALSE(result.has_value());
     ASSERT_EQ(result.error(), JsonErrc::kInvalidJson);

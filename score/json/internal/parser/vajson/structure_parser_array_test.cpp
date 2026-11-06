@@ -13,9 +13,10 @@
 /// @file
 /// @brief  Contains tests concerning the parsing of arrays.
 
-#include "score/json/internal/parser/vajson/virtual_parser.h"
+#include "score/json/internal/parser/vajson/structure_parser.h"
 
 #include "gtest/gtest.h"
+#include "score/json/internal/parser/vajson/ignoring_parser.h"
 #include "score/json/internal/parser/vajson/json_data.h"
 #include "score/json/internal/parser/vajson/json_error_domain.h"
 
@@ -32,11 +33,16 @@ namespace
 
 using Count = std::streamsize;
 
-class DynamicArrayParser final : public internal::VirtualParser
+class DynamicArrayParser final : public IgnoringParser
 {
   public:
-    using internal::VirtualParser::VirtualParser;
+    using IgnoringParser::IgnoringParser;
 
+    Count start_{0};
+    Count end_{0};
+    Count balance_{0};
+
+  private:
     auto OnStartArray() noexcept -> ParserResult override
     {
         this->start_ += 1;
@@ -54,22 +60,14 @@ class DynamicArrayParser final : public internal::VirtualParser
         this->balance_ -= 1;
         return ParserResult{ParserState::kRunning};
     }
-
-    auto OnUnexpectedEvent() noexcept -> ParserResult override
-    {
-        return ParserState::kRunning;
-    }
-
-    Count start_{0};
-    Count end_{0};
-    Count balance_{0};
 };
 
-class LimitedEndArrayParser final : public internal::VirtualParser
+class LimitedEndArrayParser final : public IgnoringParser
 {
   public:
-    using internal::VirtualParser::VirtualParser;
+    using IgnoringParser::IgnoringParser;
 
+  private:
     auto OnStartArray() noexcept -> ParserResult override
     {
         return ParserState::kRunning;
@@ -84,18 +82,14 @@ class LimitedEndArrayParser final : public internal::VirtualParser
         }
         return ParserResult{ParserState::kRunning};
     }
-
-    auto OnUnexpectedEvent() noexcept -> ParserResult override
-    {
-        return ParserState::kRunning;
-    }
 };
 
-class LimitedStartArrayParser final : public internal::VirtualParser
+class LimitedStartArrayParser final : public IgnoringParser
 {
   public:
-    using internal::VirtualParser::VirtualParser;
+    using IgnoringParser::IgnoringParser;
 
+  private:
     auto OnStartArray() noexcept -> ParserResult override
     {
         static std::uint8_t call_cnt{0};
@@ -108,11 +102,6 @@ class LimitedStartArrayParser final : public internal::VirtualParser
     }
 
     auto OnEndArray(std::size_t) noexcept -> ParserResult override
-    {
-        return ParserState::kRunning;
-    }
-
-    auto OnUnexpectedEvent() noexcept -> ParserResult override
     {
         return ParserState::kRunning;
     }
@@ -160,7 +149,7 @@ TEST(UT__Parser__Array, Dynamic__NoArrays)
 }
 
 /// Tests that when the overridden OnEndArray method returns an error, that error is propagated.
-/// @trace           score::json::vajson::internal::StructureParserBase::ParseEndArray
+/// @trace           score::json::vajson::internal::StructureParser::ParseEndArray
 TEST(UT__Parser__Array__Error, Dynamic__OnEndArray)
 {
     auto doc{JsonData::FromBuffer(std::string_view{R"([1,2])"})};
@@ -174,7 +163,7 @@ TEST(UT__Parser__Array__Error, Dynamic__OnEndArray)
 }
 
 /// Tests that when the overridden OnStartArray method returns an error, that error is propagated.
-/// @trace           score::json::vajson::internal::StructureParserBase::ParseStartArray
+/// @trace           score::json::vajson::internal::StructureParser::ParseStartArray
 TEST(UT__Parser__Array__Error, Dynamic__OnStartArray)
 {
     auto doc{JsonData::FromBuffer(std::string_view{R"([[]])"})};

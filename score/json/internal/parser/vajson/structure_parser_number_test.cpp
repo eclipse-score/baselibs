@@ -13,9 +13,10 @@
 /// @file
 /// @brief  Contains tests concerning the parsing of numbers.
 
-#include "score/json/internal/parser/vajson/virtual_parser.h"
+#include "score/json/internal/parser/vajson/structure_parser.h"
 
 #include "gtest/gtest.h"
+#include "score/json/internal/parser/vajson/ignoring_parser.h"
 #include "score/json/internal/parser/vajson/json_data.h"
 #include "score/json/internal/parser/vajson/json_error_domain.h"
 
@@ -32,23 +33,19 @@ namespace
 
 using Count = std::size_t;
 
-class DynamicNumberParser final : public internal::VirtualParser
+class DynamicNumberParser final : public IgnoringParser
 {
   public:
-    using internal::VirtualParser::VirtualParser;
+    using IgnoringParser::IgnoringParser;
 
+    Count number_{0};
+
+  private:
     auto OnNumber(JsonNumber) noexcept -> ParserResult override
     {
         this->number_ += 1;
         return ParserState::kRunning;
     }
-
-    auto OnUnexpectedEvent() noexcept -> ParserResult override
-    {
-        return ParserState::kRunning;
-    }
-
-    Count number_{0};
 };
 
 }  // namespace

@@ -14,7 +14,7 @@
 #include "score/json/json_parser.h"
 
 #include "score/json/internal/parser/vajson/json_data.h"
-#include "score/json/internal/parser/vajson/virtual_parser.h"
+#include "score/json/internal/parser/vajson/structure_parser.h"
 
 #include <iostream>
 #include <optional>
@@ -32,10 +32,10 @@ namespace
 {
 
 /// @brief Builds the tree of data elements from the events reported by the vaJson parser.
-class AnyTreeBuilder final : private score::json::vajson::internal::VirtualParser
+class AnyTreeBuilder final : private score::json::vajson::internal::StructureParser
 {
   public:
-    using score::json::vajson::internal::VirtualParser::VirtualParser;
+    using score::json::vajson::internal::StructureParser::StructureParser;
 
     /// @brief Parses the data given to the constructor
     /// @return Any as root of the tree, error on error
@@ -91,8 +91,8 @@ class AnyTreeBuilder final : private score::json::vajson::internal::VirtualParse
     auto OnNull() noexcept -> score::json::vajson::ParserResult override;
     auto OnBool(bool value) noexcept -> score::json::vajson::ParserResult override;
     auto OnNumber(score::json::vajson::JsonNumber value) noexcept -> score::json::vajson::ParserResult override;
-    auto OnString(std::string_view value) noexcept -> score::json::vajson::ParserResult override;
-    auto OnKey(std::string_view key) noexcept -> score::json::vajson::ParserResult override;
+    auto OnString(score::json::vajson::CStringView value) noexcept -> score::json::vajson::ParserResult override;
+    auto OnKey(score::json::vajson::CStringView key) noexcept -> score::json::vajson::ParserResult override;
 
     /// @brief Updates the state of the parser to store any newly parsed data in the provided container
     template <typename T>
@@ -105,7 +105,6 @@ class AnyTreeBuilder final : private score::json::vajson::internal::VirtualParse
     auto OnEndObject(std::size_t) noexcept -> score::json::vajson::ParserResult override;
     auto OnStartArray() noexcept -> score::json::vajson::ParserResult override;
     auto OnEndArray(std::size_t) noexcept -> score::json::vajson::ParserResult override;
-    auto OnUnexpectedEvent() noexcept -> score::json::vajson::ParserResult override;
 
     template <typename... NumberType>
     // NOLINTNEXTLINE(bugprone-exception-escape) an exception terminates, as required by the safety concept
@@ -190,7 +189,7 @@ auto AnyTreeBuilder::OnNumber(score::json::vajson::JsonNumber value) noexcept ->
     return OnNumber<uint8_t, uint16_t, uint32_t, uint64_t, int8_t, int16_t, int32_t, int64_t, double>(value);
 }
 
-auto AnyTreeBuilder::OnString(std::string_view value) noexcept -> score::json::vajson::ParserResult
+auto AnyTreeBuilder::OnString(score::json::vajson::CStringView value) noexcept -> score::json::vajson::ParserResult
 {
     auto result{Store(std::string(value))};
     if (!result.has_value())
@@ -201,7 +200,7 @@ auto AnyTreeBuilder::OnString(std::string_view value) noexcept -> score::json::v
     return score::json::vajson::ParserState::kRunning;
 }
 
-auto AnyTreeBuilder::OnKey(std::string_view key) noexcept -> score::json::vajson::ParserResult
+auto AnyTreeBuilder::OnKey(score::json::vajson::CStringView key) noexcept -> score::json::vajson::ParserResult
 {
     last_key_ = std::string(key);
     return score::json::vajson::ParserState::kRunning;
@@ -258,14 +257,6 @@ auto AnyTreeBuilder::OnStartArray() noexcept -> score::json::vajson::ParserResul
 auto AnyTreeBuilder::OnEndArray(std::size_t) noexcept -> score::json::vajson::ParserResult
 {
     return EndContainer();
-}
-
-auto AnyTreeBuilder::OnUnexpectedEvent() noexcept -> score::json::vajson::ParserResult
-{
-    // A call to this function means we have not implemented one of the necessary callbacks.
-    // We set this equal to a failed user validation, since a missing callback means we do not support this type.
-    return score::json::vajson::MakeErrorResult<score::json::vajson::ParserState>(
-        score::json::vajson::JsonErrc::kUserValidationFailed);
 }
 
 }  // namespace
