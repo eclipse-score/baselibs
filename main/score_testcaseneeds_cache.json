@@ -343560,7 +343560,7 @@
     "FullyVerifies": null
   },
   {
-    "name": "HashCalculatorTest__HashAlgorithmsSimpleSha1Test",
+    "name": "HashCalculatorTest__HashAlgorithmsSimpleSha256Test",
     "file": "score/hash/code/openssl/openssl_hash_calculator_test.cpp",
     "line": "79",
     "result": "passed",
@@ -343574,23 +343574,9 @@
     "FullyVerifies": null
   },
   {
-    "name": "HashCalculatorTest__HashAlgorithmsSimpleSha256Test",
-    "file": "score/hash/code/openssl/openssl_hash_calculator_test.cpp",
-    "line": "102",
-    "result": "passed",
-    "repo_name": "local_repo",
-    "hash": "",
-    "url": "",
-    "TestType": "requirements-based",
-    "DerivationTechnique": "equivalence-classes",
-    "result_text": "",
-    "PartiallyVerifies": "comp_req__hash__sha_algorithms",
-    "FullyVerifies": null
-  },
-  {
     "name": "HashCalculatorTest__HashAlgorithmsSimpleSha384Test",
     "file": "score/hash/code/openssl/openssl_hash_calculator_test.cpp",
-    "line": "117",
+    "line": "94",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -343604,7 +343590,7 @@
   {
     "name": "HashCalculatorTest__HashAlgorithmsSimpleSha512Test",
     "file": "score/hash/code/openssl/openssl_hash_calculator_test.cpp",
-    "line": "140",
+    "line": "117",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -343618,7 +343604,7 @@
   {
     "name": "HashCalculatorTest__NullDigestTypeCreateAlgoTest",
     "file": "score/hash/code/openssl/openssl_hash_calculator_test.cpp",
-    "line": "172",
+    "line": "149",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -343632,7 +343618,7 @@
   {
     "name": "HashCalculatorTest__InvalidDigestCtxCreateAlgoTest",
     "file": "score/hash/code/openssl/openssl_hash_calculator_test.cpp",
-    "line": "187",
+    "line": "164",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -343646,7 +343632,7 @@
   {
     "name": "HashCalculatorTest__InvalidDigestInitCreateAlgoTest",
     "file": "score/hash/code/openssl/openssl_hash_calculator_test.cpp",
-    "line": "204",
+    "line": "181",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -343660,7 +343646,7 @@
   {
     "name": "HashCalculatorTest__InvalidCreateAlgorthimTest",
     "file": "score/hash/code/openssl/openssl_hash_calculator_test.cpp",
-    "line": "222",
+    "line": "199",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -343668,13 +343654,13 @@
     "TestType": "requirements-based",
     "DerivationTechnique": "boundary-values",
     "result_text": "",
-    "PartiallyVerifies": "comp_req__hash__safe_computation",
+    "PartiallyVerifies": "comp_req__hash__safe_computation, comp_req__hash__sha_algorithms",
     "FullyVerifies": null
   },
   {
     "name": "HashCalculatorTest__UpdateStreamTest",
     "file": "score/hash/code/openssl/openssl_hash_calculator_test.cpp",
-    "line": "240",
+    "line": "227",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -343688,7 +343674,7 @@
   {
     "name": "HashCalculatorTest__EmptyUpdateTest",
     "file": "score/hash/code/openssl/openssl_hash_calculator_test.cpp",
-    "line": "259",
+    "line": "246",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -343702,7 +343688,7 @@
   {
     "name": "HashCalculatorTest__InvalidDigestUpdateTest",
     "file": "score/hash/code/openssl/openssl_hash_calculator_test.cpp",
-    "line": "271",
+    "line": "258",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -343716,7 +343702,7 @@
   {
     "name": "HashCalculatorTest__UpdateFromStreamTest",
     "file": "score/hash/code/openssl/openssl_hash_calculator_test.cpp",
-    "line": "293",
+    "line": "280",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -343730,7 +343716,7 @@
   {
     "name": "HashCalculatorTest__InvalidUpdateFromStreamTest",
     "file": "score/hash/code/openssl/openssl_hash_calculator_test.cpp",
-    "line": "312",
+    "line": "299",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -343744,7 +343730,7 @@
   {
     "name": "HashCalculatorTest__UpdateFromStreamGoesBadTest",
     "file": "score/hash/code/openssl/openssl_hash_calculator_test.cpp",
-    "line": "335",
+    "line": "322",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -343758,7 +343744,7 @@
   {
     "name": "HashCalculatorTest__BadInputUpdateFromStreamTest",
     "file": "score/hash/code/openssl/openssl_hash_calculator_test.cpp",
-    "line": "363",
+    "line": "350",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -343772,7 +343758,7 @@
   {
     "name": "HashCalculatorTest__EmptyInputUpdateFromStreamTest",
     "file": "score/hash/code/openssl/openssl_hash_calculator_test.cpp",
-    "line": "384",
+    "line": "371",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -343786,7 +343772,7 @@
   {
     "name": "HashCalculatorTest__InvalidFinalizeTest",
     "file": "score/hash/code/openssl/openssl_hash_calculator_test.cpp",
-    "line": "408",
+    "line": "395",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -343800,7 +343786,7 @@
   {
     "name": "HashCalculatorSHATest__HashAlgorithmsSimpleTestSha256",
     "file": "score/hash/code/openssl/openssl_hash_calculator_test.cpp",
-    "line": "427",
+    "line": "414",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -343812,23 +343798,9 @@
     "FullyVerifies": null
   },
   {
-    "name": "OpensslLibTest__Sha1Test",
-    "file": "score/hash/code/openssl/openssl_wrapper/openssl_lib_impl_test.cpp",
-    "line": "55",
-    "result": "passed",
-    "repo_name": "local_repo",
-    "hash": "",
-    "url": "",
-    "TestType": "interface-test",
-    "DerivationTechnique": "equivalence-classes",
-    "result_text": "",
-    "PartiallyVerifies": "comp_req__hash__sha_algorithms",
-    "FullyVerifies": null
-  },
-  {
     "name": "OpensslLibTest__Sha256Test",
     "file": "score/hash/code/openssl/openssl_wrapper/openssl_lib_impl_test.cpp",
-    "line": "67",
+    "line": "55",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -343842,7 +343814,7 @@
   {
     "name": "OpensslLibTest__Sha384Test",
     "file": "score/hash/code/openssl/openssl_wrapper/openssl_lib_impl_test.cpp",
-    "line": "77",
+    "line": "65",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -343856,7 +343828,7 @@
   {
     "name": "OpensslLibTest__Sha512Test",
     "file": "score/hash/code/openssl/openssl_wrapper/openssl_lib_impl_test.cpp",
-    "line": "89",
+    "line": "77",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -343870,7 +343842,7 @@
   {
     "name": "OpensslLibTest__DigestCtxNewTest",
     "file": "score/hash/code/openssl/openssl_wrapper/openssl_lib_impl_test.cpp",
-    "line": "101",
+    "line": "89",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -343884,7 +343856,7 @@
   {
     "name": "OpensslLibTest__DigestInitExTest",
     "file": "score/hash/code/openssl/openssl_wrapper/openssl_lib_impl_test.cpp",
-    "line": "111",
+    "line": "99",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -343898,7 +343870,7 @@
   {
     "name": "OpensslLibTest__DigestUpdateTest",
     "file": "score/hash/code/openssl/openssl_wrapper/openssl_lib_impl_test.cpp",
-    "line": "123",
+    "line": "111",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -343912,7 +343884,7 @@
   {
     "name": "OpensslLibTest__DigestFinalExTest",
     "file": "score/hash/code/openssl/openssl_wrapper/openssl_lib_impl_test.cpp",
-    "line": "140",
+    "line": "128",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -343940,21 +343912,21 @@
   {
     "name": "HashIdentify__CanNotIdentifyBadHashesFromString",
     "file": "score/hash/code/common/algorithms_test.cpp",
-    "line": "73",
+    "line": "71",
     "result": "passed",
-    "repo_name": null,
-    "hash": null,
-    "url": null,
-    "TestType": null,
-    "DerivationTechnique": null,
+    "repo_name": "local_repo",
+    "hash": "",
+    "url": "",
+    "TestType": "requirements-based",
+    "DerivationTechnique": "requirements-analysis",
     "result_text": "",
-    "PartiallyVerifies": null,
+    "PartiallyVerifies": "comp_req__hash__sha_algorithms",
     "FullyVerifies": null
   },
   {
     "name": "HashIdentify__CorrectlyIdentifyHashFromSize",
     "file": "score/hash/code/common/algorithms_test.cpp",
-    "line": "84",
+    "line": "91",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -343968,21 +343940,21 @@
   {
     "name": "HashIdentify__CanNotIdentifyBadHashesFromSize",
     "file": "score/hash/code/common/algorithms_test.cpp",
-    "line": "111",
+    "line": "115",
     "result": "passed",
-    "repo_name": null,
-    "hash": null,
-    "url": null,
-    "TestType": null,
-    "DerivationTechnique": null,
+    "repo_name": "local_repo",
+    "hash": "",
+    "url": "",
+    "TestType": "requirements-based",
+    "DerivationTechnique": "requirements-analysis",
     "result_text": "",
-    "PartiallyVerifies": null,
+    "PartiallyVerifies": "comp_req__hash__sha_algorithms",
     "FullyVerifies": null
   },
   {
     "name": "HashIdentify__CorrectSizes",
     "file": "score/hash/code/common/algorithms_test.cpp",
-    "line": "123",
+    "line": "136",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -343996,7 +343968,7 @@
   {
     "name": "AlgorithmLoggerFixture__CanLogAlgorithms",
     "file": "score/hash/code/common/algorithms_test.cpp",
-    "line": "158",
+    "line": "174",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -344122,7 +344094,7 @@
   {
     "name": "HashTest__ToStringEmptyValueTest",
     "file": "score/hash/code/core/hash_test.cpp",
-    "line": "83",
+    "line": "84",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -344136,7 +344108,7 @@
   {
     "name": "HashTest__CanCreateFromValidStringCompleteSetOfAlgorithms",
     "file": "score/hash/code/core/hash_test.cpp",
-    "line": "95",
+    "line": "96",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -344150,21 +344122,21 @@
   {
     "name": "HashTest__ValidateAlgorithm",
     "file": "score/hash/code/core/hash_test.cpp",
-    "line": "158",
+    "line": "155",
     "result": "passed",
-    "repo_name": null,
-    "hash": null,
-    "url": null,
-    "TestType": null,
-    "DerivationTechnique": null,
+    "repo_name": "local_repo",
+    "hash": "",
+    "url": "",
+    "TestType": "requirements-based",
+    "DerivationTechnique": "requirements-analysis",
     "result_text": "",
-    "PartiallyVerifies": null,
+    "PartiallyVerifies": "comp_req__hash__value_retrieval_hex, comp_req__hash__sha_algorithms",
     "FullyVerifies": null
   },
   {
     "name": "HashTest__ValidateSize",
     "file": "score/hash/code/core/hash_test.cpp",
-    "line": "166",
+    "line": "174",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -344178,7 +344150,7 @@
   {
     "name": "HashTest__ValidateContents",
     "file": "score/hash/code/core/hash_test.cpp",
-    "line": "178",
+    "line": "186",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -344242,13 +344214,13 @@
     "TestType": "requirements-based",
     "DerivationTechnique": "equivalence-classes",
     "result_text": "",
-    "PartiallyVerifies": "comp_req__hash__value_retrieval_hex",
+    "PartiallyVerifies": "comp_req__hash__value_retrieval_hex, comp_req__hash__sha_algorithms",
     "FullyVerifies": null
   },
   {
     "name": "TypedHashTest__ToStringEmptyValueTest",
     "file": "score/hash/code/core/typed_hash_test.cpp",
-    "line": "84",
+    "line": "93",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -344262,7 +344234,7 @@
   {
     "name": "TypedHashTest__CanSerializeToJsonAny",
     "file": "score/hash/code/core/typed_hash_test.cpp",
-    "line": "96",
+    "line": "105",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -344276,7 +344248,7 @@
   {
     "name": "TypedHashTest__CanDeserializeFromJsonAny",
     "file": "score/hash/code/core/typed_hash_test.cpp",
-    "line": "120",
+    "line": "129",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -344410,13 +344382,13 @@
     "TestType": "requirements-based",
     "DerivationTechnique": "boundary-values",
     "result_text": "",
-    "PartiallyVerifies": "comp_req__hash__factory_interface, comp_req__hash__safe_computation",
+    "PartiallyVerifies": "comp_req__hash__factory_interface, comp_req__hash__safe_computation, comp_req__hash__sha_algorithms",
     "FullyVerifies": null
   },
   {
     "name": "HashCalculatorFactory__HashCalculatorSpanInput",
     "file": "score/hash/code/core/factory/impl/hash_calculator_factory_ieee_test.cpp",
-    "line": "168",
+    "line": "174",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -344430,7 +344402,7 @@
   {
     "name": "HashCalculatorFactory__HashCalculatorStreamInput",
     "file": "score/hash/code/core/factory/impl/hash_calculator_factory_ieee_test.cpp",
-    "line": "189",
+    "line": "195",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -344444,7 +344416,7 @@
   {
     "name": "HashCalculatorFactory__FailedHashObjCreation",
     "file": "score/hash/code/core/factory/impl/hash_calculator_factory_ieee_test.cpp",
-    "line": "209",
+    "line": "215",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -344458,7 +344430,7 @@
   {
     "name": "HashCalculatorFactory__FailedHashObjCreationStream",
     "file": "score/hash/code/core/factory/impl/hash_calculator_factory_ieee_test.cpp",
-    "line": "227",
+    "line": "233",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -344472,7 +344444,7 @@
   {
     "name": "HashCalculatorFactory__InvalidHashCalculatorSpanInput",
     "file": "score/hash/code/core/factory/impl/hash_calculator_factory_ieee_test.cpp",
-    "line": "244",
+    "line": "250",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -344486,7 +344458,7 @@
   {
     "name": "HashCalculatorFactory__InvalidhashCalculatorStreamInput",
     "file": "score/hash/code/core/factory/impl/hash_calculator_factory_ieee_test.cpp",
-    "line": "254",
+    "line": "260",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -344500,7 +344472,7 @@
   {
     "name": "HashCalculatorFactory__FailHashObjCreationWithMaxRead",
     "file": "score/hash/code/core/factory/impl/hash_calculator_factory_ieee_test.cpp",
-    "line": "265",
+    "line": "271",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -344514,7 +344486,7 @@
   {
     "name": "HashCalculatorFactory__HashCalculatorStreamInputWithMaxRead",
     "file": "score/hash/code/core/factory/impl/hash_calculator_factory_ieee_test.cpp",
-    "line": "283",
+    "line": "289",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -344528,7 +344500,7 @@
   {
     "name": "HashCalculatorFactory__InstantiateWithFailingOpenSslLib",
     "file": "score/hash/code/core/factory/impl/hash_calculator_factory_ieee_test.cpp",
-    "line": "303",
+    "line": "309",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -344542,7 +344514,7 @@
   {
     "name": "HashCalculatorFactory__InstantiateWithSuccess",
     "file": "score/hash/code/core/factory/impl/hash_calculator_factory_ieee_test.cpp",
-    "line": "320",
+    "line": "326",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -344556,7 +344528,7 @@
   {
     "name": "SafeHashCalculatorFactory__TryToInstantiateNonexistentHash",
     "file": "score/hash/code/core/factory/impl/hash_calculator_factory_ieee_test.cpp",
-    "line": "345",
+    "line": "351",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -344564,7 +344536,7 @@
     "TestType": "requirements-based",
     "DerivationTechnique": "equivalence-classes",
     "result_text": "",
-    "PartiallyVerifies": "comp_req__hash__factory_interface, comp_req__hash__safe_computation",
+    "PartiallyVerifies": "comp_req__hash__factory_interface, comp_req__hash__safe_computation, comp_req__hash__sha_algorithms",
     "FullyVerifies": null
   },
   {

@@ -92,8 +92,8 @@
     },
     {
       "branches": {
-        "percent": 88,
-        "total": 254
+        "percent": 90,
+        "total": 240
       },
       "files": {
         "measured": 21,
@@ -101,7 +101,7 @@
       },
       "lines": {
         "percent": 100,
-        "total": 760
+        "total": 740
       },
       "primary_need_id": "comp__baselibs_hash"
     },
