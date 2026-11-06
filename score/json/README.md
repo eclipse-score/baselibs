@@ -4,6 +4,7 @@
   - [Usage](#usage)
     - [Bazel target](#bazel-target)
     - [Loading a JSON document from a file](#loading-a-json-document-from-a-file)
+    - [Maximum nesting depth](#maximum-nesting-depth)
     - [Accessing elements from a JSON object](#accessing-elements-from-a-json-object)
     - [Accessing elements from a JSON list](#accessing-elements-from-a-json-list)
     - [Accessing numbers from a JSON document](#accessing-numbers-from-a-json-document)
@@ -50,6 +51,33 @@ if (!root.has_value())
     return root.error();
 }
 ```
+
+### Maximum nesting depth
+
+`JsonParser{}` limits nesting to `JsonParser::kDefaultMaxNestingDepth`, currently 64.
+Configure a different immutable limit per parser instance:
+
+```c++
+score::json::JsonParser parser{32U};
+auto root = parser.FromBuffer(buffer);
+```
+
+Depth counts arrays and objects on a root-to-value path, including the root container.
+A scalar root has depth 0, `[]` and `{}` have depth 1, and `[[0]]` has depth 2.
+Sibling containers, keys, scalar leaves and brackets inside strings do not add depth.
+The limit is inclusive; 0 permits scalar roots only and is not an unlimited setting.
+`FromBuffer` and `FromFile` return `Error::kParsingError` when a container would exceed the limit.
+Each call has an independent depth budget, including after a rejected document.
+The `_json` literal uses the default limit and terminates on excessive depth, like any other parse error.
+
+Compatibility: valid documents deeper than 64 that were previously accepted are now rejected by default.
+Existing `IJsonParser` and mock interfaces are unchanged, and default construction remains supported.
+The concrete `JsonParser` object layout changes to store the limit, so binary consumers must be rebuilt.
+
+The default is a conservative policy value, not a platform-qualified stack bound.
+Integrators must validate even the default against their thread stack, platform and toolchain, including partial-tree cleanup, destruction, cloning, comparison and serialization.
+Increasing the limit can allow trees that exhaust the stack in these recursive operations.
+This limit does not constrain manually constructed or later-mutated trees, document length, container width, key/string sizes, heap consumption or processing time.
 
 ### Accessing elements from a JSON object
 

@@ -25,3 +25,21 @@ broken by using forward declarations and pointers.
 
 Since we don't want to expose pointers to the user, we always return references
 (since it's guaranteed that the pointers are not null).
+
+## Parser Nesting Policy
+
+`JsonParser` stores an immutable per-instance maximum nesting depth, defaulting to 64.
+Each `FromBuffer` or `FromFile` call constructs its own `AnyTreeBuilder` with that limit.
+The builder's `hierarchy_` contains pointers to open arrays and objects, so its size counts container depth without counting pending keys or scalar values.
+`StartContainer` compares this size with the limit before storing the new container or pushing its pointer.
+If the size already equals the limit, the callback returns a backend parse error, mapped to the existing public `Error::kParsingError`.
+`EndContainer` pops the pointer, making depth available to siblings.
+
+The grammar parser updates its iterative grammar state before invoking the builder callback, so it can transiently hold one additional container when the builder rejects input.
+The rejected container is not inserted into the partial `Any` tree.
+The local builder and grammar state are destroyed on return; later calls do not retain nesting state.
+Partial and accepted trees contain at most the configured number of nested containers.
+
+The model owns nested containers through pointers and destroys, clones and compares them recursively; serialization also traverses nested values recursively.
+The integrator must budget stack space for these operations at the configured limit, including rejection cleanup.
+The default is not a measured or platform-qualified resource bound, and the policy does not constrain manually built trees or other input resources.
