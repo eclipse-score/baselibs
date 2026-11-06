@@ -6291,7 +6291,7 @@
         {
           "name": "ParserTest__CanParseObjectBool",
           "file": "score/json/json_parser_test.cpp",
-          "line": 200,
+          "line": 201,
           "need": "comp_req__json__deserialization",
           "verify_type": "partially",
           "result": "passed",
@@ -6303,7 +6303,7 @@
         {
           "name": "ParserTest__CanParseObjectString",
           "file": "score/json/json_parser_test.cpp",
-          "line": 217,
+          "line": 218,
           "need": "comp_req__json__deserialization",
           "verify_type": "partially",
           "result": "passed",
@@ -6315,7 +6315,7 @@
         {
           "name": "ParserTest__CanParseObjectNull",
           "file": "score/json/json_parser_test.cpp",
-          "line": 234,
+          "line": 235,
           "need": "comp_req__json__deserialization",
           "verify_type": "partially",
           "result": "passed",
@@ -6327,7 +6327,7 @@
         {
           "name": "ParserTest__CanParseObjectNumber",
           "file": "score/json/json_parser_test.cpp",
-          "line": 251,
+          "line": 252,
           "need": "comp_req__json__deserialization",
           "verify_type": "partially",
           "result": "passed",
@@ -6339,7 +6339,7 @@
         {
           "name": "ParserTest__CanParseObjectFloatingPointNumber",
           "file": "score/json/json_parser_test.cpp",
-          "line": 268,
+          "line": 269,
           "need": "comp_req__json__deserialization",
           "verify_type": "partially",
           "result": "passed",
@@ -6351,7 +6351,7 @@
         {
           "name": "ParserTest__CanParseObjectInObject",
           "file": "score/json/json_parser_test.cpp",
-          "line": 289,
+          "line": 290,
           "need": "comp_req__json__deserialization",
           "verify_type": "partially",
           "result": "passed",
@@ -6363,7 +6363,7 @@
         {
           "name": "ParserTest__CanParseListInObject",
           "file": "score/json/json_parser_test.cpp",
-          "line": 306,
+          "line": 307,
           "need": "comp_req__json__deserialization",
           "verify_type": "partially",
           "result": "passed",
@@ -6375,7 +6375,7 @@
         {
           "name": "ParserTest__CanParseObjectInObjectAndIterateOverKeys",
           "file": "score/json/json_parser_test.cpp",
-          "line": 325,
+          "line": 326,
           "need": "comp_req__json__deserialization",
           "verify_type": "partially",
           "result": "passed",
@@ -6387,7 +6387,7 @@
         {
           "name": "ParserTest__EmitsErrorWhenParsingObjectWithValueButNoKey",
           "file": "score/json/json_parser_test.cpp",
-          "line": 374,
+          "line": 375,
           "need": "comp_req__json__deserialization",
           "verify_type": "partially",
           "result": "passed",
@@ -6399,7 +6399,7 @@
         {
           "name": "ParserTest__EmitsErrorWhenParsingObjectWithBinaryValue",
           "file": "score/json/json_parser_test.cpp",
-          "line": 394,
+          "line": 395,
           "need": "comp_req__json__deserialization",
           "verify_type": "partially",
           "result": "passed",
@@ -6411,7 +6411,7 @@
         {
           "name": "ParserTest__EmitsErrorWhenParsingTooLargeNumber",
           "file": "score/json/json_parser_test.cpp",
-          "line": 426,
+          "line": 427,
           "need": "comp_req__json__deserialization",
           "verify_type": "partially",
           "result": "passed",
@@ -6423,7 +6423,7 @@
         {
           "name": "ParserTest__FromFileFail",
           "file": "score/json/json_parser_test.cpp",
-          "line": 443,
+          "line": 444,
           "need": "comp_req__json__deserialization",
           "verify_type": "partially",
           "result": "passed",
@@ -6435,7 +6435,7 @@
         {
           "name": "ParserTest__ParsingFromFileWorks",
           "file": "score/json/json_parser_test.cpp",
-          "line": 455,
+          "line": 456,
           "need": "comp_req__json__deserialization",
           "verify_type": "partially",
           "result": "passed",
@@ -6447,7 +6447,7 @@
         {
           "name": "JsonParserVajsonTest__CanParseObjectHexadecimalNumber",
           "file": "score/json/json_parser_test.cpp",
-          "line": 475,
+          "line": 560,
           "need": "comp_req__json__deserialization",
           "verify_type": "partially",
           "result": "passed",
@@ -6459,7 +6459,7 @@
         {
           "name": "JsonParserVajsonTest__CanParseTwoByteBuffer",
           "file": "score/json/json_parser_test.cpp",
-          "line": 525,
+          "line": 610,
           "need": "comp_req__json__deserialization",
           "verify_type": "partially",
           "result": "passed",
@@ -6471,7 +6471,7 @@
         {
           "name": "JsonParserVajsonTest__CanParseBufferWithUtf8Bom",
           "file": "score/json/json_parser_test.cpp",
-          "line": 544,
+          "line": 629,
           "need": "comp_req__json__deserialization",
           "verify_type": "partially",
           "result": "passed",
@@ -6483,7 +6483,7 @@
         {
           "name": "NumberTest__WhenParsingABoolStoredInAJsonThenParsingIsSuccessfulAndCorrectValueIsReturned",
           "file": "score/json/json_parser_test.cpp",
-          "line": 616,
+          "line": 701,
           "need": "comp_req__json__deserialization",
           "verify_type": "partially",
           "result": "passed",
@@ -6495,7 +6495,7 @@
         {
           "name": "NumberTest__WhenParsingAUint8StoredInAJsonThenParsingIsSuccessfulAndCorrectValueIsReturned",
           "file": "score/json/json_parser_test.cpp",
-          "line": 638,
+          "line": 723,
           "need": "comp_req__json__deserialization",
           "verify_type": "partially",
           "result": "passed",
@@ -6507,7 +6507,7 @@
         {
           "name": "NumberTest__WhenParsingAUint16StoredInAJsonThenParsingIsSuccessfulAndCorrectValueIsReturned",
           "file": "score/json/json_parser_test.cpp",
-          "line": 661,
+          "line": 746,
           "need": "comp_req__json__deserialization",
           "verify_type": "partially",
           "result": "passed",
@@ -6519,7 +6519,7 @@
         {
           "name": "NumberTest__WhenParsingAUint32StoredInAJsonThenParsingIsSuccessfulAndCorrectValueIsReturned",
           "file": "score/json/json_parser_test.cpp",
-          "line": 684,
+          "line": 769,
           "need": "comp_req__json__deserialization",
           "verify_type": "partially",
           "result": "passed",
@@ -6531,7 +6531,7 @@
         {
           "name": "NumberTest__WhenParsingAUint64StoredInAJsonThenParsingIsSuccessfulAndCorrectValueIsReturned",
           "file": "score/json/json_parser_test.cpp",
-          "line": 707,
+          "line": 792,
           "need": "comp_req__json__deserialization",
           "verify_type": "partially",
           "result": "passed",
@@ -6543,7 +6543,7 @@
         {
           "name": "NumberTest__WhenParsingAInt8StoredInAJsonThenParsingIsSuccessfulAndCorrectValueIsReturned",
           "file": "score/json/json_parser_test.cpp",
-          "line": 730,
+          "line": 815,
           "need": "comp_req__json__deserialization",
           "verify_type": "partially",
           "result": "passed",
@@ -6555,7 +6555,7 @@
         {
           "name": "NumberTest__WhenParsingAInt16StoredInAJsonThenParsingIsSuccessfulAndCorrectValueIsReturned",
           "file": "score/json/json_parser_test.cpp",
-          "line": 753,
+          "line": 838,
           "need": "comp_req__json__deserialization",
           "verify_type": "partially",
           "result": "passed",
@@ -6567,7 +6567,7 @@
         {
           "name": "NumberTest__WhenParsingAInt32StoredInAJsonThenParsingIsSuccessfulAndCorrectValueIsReturned",
           "file": "score/json/json_parser_test.cpp",
-          "line": 776,
+          "line": 861,
           "need": "comp_req__json__deserialization",
           "verify_type": "partially",
           "result": "passed",
@@ -6579,7 +6579,7 @@
         {
           "name": "NumberTest__WhenParsingAInt64StoredInAJsonThenParsingIsSuccessfulAndCorrectValueIsReturned",
           "file": "score/json/json_parser_test.cpp",
-          "line": 799,
+          "line": 884,
           "need": "comp_req__json__deserialization",
           "verify_type": "partially",
           "result": "passed",
@@ -6591,7 +6591,7 @@
         {
           "name": "NumberTest__WhenParsingAFloatStoredInAJsonThenParsingIsSuccessfulAndCorrectValueIsReturned",
           "file": "score/json/json_parser_test.cpp",
-          "line": 821,
+          "line": 906,
           "need": "comp_req__json__deserialization",
           "verify_type": "partially",
           "result": "passed",
@@ -6603,7 +6603,7 @@
         {
           "name": "NumberTest__WhenParsingADoubleStoredInAJsonThenParsingIsSuccessfulAndCorrectValueIsReturned",
           "file": "score/json/json_parser_test.cpp",
-          "line": 844,
+          "line": 929,
           "need": "comp_req__json__deserialization",
           "verify_type": "partially",
           "result": "passed",
@@ -6797,6 +6797,194 @@
           "file": "score/json/internal/parser/vajson/json_number_test.cpp",
           "line": 789,
           "need": "comp_req__json__deserialization",
+          "verify_type": "partially",
+          "result": "passed",
+          "result_text": "",
+          "repo_name": "local_repo",
+          "hash": "",
+          "url": ""
+        }
+      ]
+    }
+  },
+  {
+    "need": "comp_req__json__duplicate_member_names",
+    "links": {
+      "CodeLinks": [],
+      "TestLinks": [
+        {
+          "name": "ParserTest__EmitsErrorWhenParsingObjectWithDuplicateEscapedMemberName",
+          "file": "score/json/json_parser_test.cpp",
+          "line": 526,
+          "need": "comp_req__json__duplicate_member_names",
+          "verify_type": "partially",
+          "result": "passed",
+          "result_text": "",
+          "repo_name": "local_repo",
+          "hash": "",
+          "url": ""
+        },
+        {
+          "name": "ParserTest__CanParseSameMemberNameInDifferentObjects",
+          "file": "score/json/json_parser_test.cpp",
+          "line": 541,
+          "need": "comp_req__json__duplicate_member_names",
+          "verify_type": "partially",
+          "result": "passed",
+          "result_text": "",
+          "repo_name": "local_repo",
+          "hash": "",
+          "url": ""
+        },
+        {
+          "name": "ParserTest/DuplicateMemberNameTest__EmitsErrorWhenParsingObjectWithDuplicateMemberName/Null",
+          "file": "score/json/json_parser_test.cpp",
+          "line": 492,
+          "need": "comp_req__json__duplicate_member_names",
+          "verify_type": "partially",
+          "result": "passed",
+          "result_text": "",
+          "repo_name": "local_repo",
+          "hash": "",
+          "url": ""
+        },
+        {
+          "name": "ParserTest/DuplicateMemberNameTest__EmitsErrorWhenParsingObjectWithDuplicateMemberName/Bool",
+          "file": "score/json/json_parser_test.cpp",
+          "line": 492,
+          "need": "comp_req__json__duplicate_member_names",
+          "verify_type": "partially",
+          "result": "passed",
+          "result_text": "",
+          "repo_name": "local_repo",
+          "hash": "",
+          "url": ""
+        },
+        {
+          "name": "ParserTest/DuplicateMemberNameTest__EmitsErrorWhenParsingObjectWithDuplicateMemberName/Number",
+          "file": "score/json/json_parser_test.cpp",
+          "line": 492,
+          "need": "comp_req__json__duplicate_member_names",
+          "verify_type": "partially",
+          "result": "passed",
+          "result_text": "",
+          "repo_name": "local_repo",
+          "hash": "",
+          "url": ""
+        },
+        {
+          "name": "ParserTest/DuplicateMemberNameTest__EmitsErrorWhenParsingObjectWithDuplicateMemberName/String",
+          "file": "score/json/json_parser_test.cpp",
+          "line": 492,
+          "need": "comp_req__json__duplicate_member_names",
+          "verify_type": "partially",
+          "result": "passed",
+          "result_text": "",
+          "repo_name": "local_repo",
+          "hash": "",
+          "url": ""
+        },
+        {
+          "name": "ParserTest/DuplicateMemberNameTest__EmitsErrorWhenParsingObjectWithDuplicateMemberName/Object",
+          "file": "score/json/json_parser_test.cpp",
+          "line": 492,
+          "need": "comp_req__json__duplicate_member_names",
+          "verify_type": "partially",
+          "result": "passed",
+          "result_text": "",
+          "repo_name": "local_repo",
+          "hash": "",
+          "url": ""
+        },
+        {
+          "name": "ParserTest/DuplicateMemberNameTest__EmitsErrorWhenParsingObjectWithDuplicateMemberName/List",
+          "file": "score/json/json_parser_test.cpp",
+          "line": 492,
+          "need": "comp_req__json__duplicate_member_names",
+          "verify_type": "partially",
+          "result": "passed",
+          "result_text": "",
+          "repo_name": "local_repo",
+          "hash": "",
+          "url": ""
+        },
+        {
+          "name": "ParserTest/DuplicateMemberNameTest__EmitsErrorWhenParsingObjectWithDuplicateMemberName/ScalarThenObject",
+          "file": "score/json/json_parser_test.cpp",
+          "line": 492,
+          "need": "comp_req__json__duplicate_member_names",
+          "verify_type": "partially",
+          "result": "passed",
+          "result_text": "",
+          "repo_name": "local_repo",
+          "hash": "",
+          "url": ""
+        },
+        {
+          "name": "ParserTest/DuplicateMemberNameTest__EmitsErrorWhenParsingObjectWithDuplicateMemberName/ScalarThenList",
+          "file": "score/json/json_parser_test.cpp",
+          "line": 492,
+          "need": "comp_req__json__duplicate_member_names",
+          "verify_type": "partially",
+          "result": "passed",
+          "result_text": "",
+          "repo_name": "local_repo",
+          "hash": "",
+          "url": ""
+        },
+        {
+          "name": "ParserTest/DuplicateMemberNameTest__EmitsErrorWhenParsingObjectWithDuplicateMemberName/ObjectThenScalar",
+          "file": "score/json/json_parser_test.cpp",
+          "line": 492,
+          "need": "comp_req__json__duplicate_member_names",
+          "verify_type": "partially",
+          "result": "passed",
+          "result_text": "",
+          "repo_name": "local_repo",
+          "hash": "",
+          "url": ""
+        },
+        {
+          "name": "ParserTest/DuplicateMemberNameTest__EmitsErrorWhenParsingObjectWithDuplicateMemberName/ListThenObject",
+          "file": "score/json/json_parser_test.cpp",
+          "line": 492,
+          "need": "comp_req__json__duplicate_member_names",
+          "verify_type": "partially",
+          "result": "passed",
+          "result_text": "",
+          "repo_name": "local_repo",
+          "hash": "",
+          "url": ""
+        },
+        {
+          "name": "ParserTest/DuplicateMemberNameTest__EmitsErrorWhenParsingObjectWithDuplicateMemberName/NotAdjacent",
+          "file": "score/json/json_parser_test.cpp",
+          "line": 492,
+          "need": "comp_req__json__duplicate_member_names",
+          "verify_type": "partially",
+          "result": "passed",
+          "result_text": "",
+          "repo_name": "local_repo",
+          "hash": "",
+          "url": ""
+        },
+        {
+          "name": "ParserTest/DuplicateMemberNameTest__EmitsErrorWhenParsingObjectWithDuplicateMemberName/InNestedObject",
+          "file": "score/json/json_parser_test.cpp",
+          "line": 492,
+          "need": "comp_req__json__duplicate_member_names",
+          "verify_type": "partially",
+          "result": "passed",
+          "result_text": "",
+          "repo_name": "local_repo",
+          "hash": "",
+          "url": ""
+        },
+        {
+          "name": "ParserTest/DuplicateMemberNameTest__EmitsErrorWhenParsingObjectWithDuplicateMemberName/InObjectInList",
+          "file": "score/json/json_parser_test.cpp",
+          "line": 492,
+          "need": "comp_req__json__duplicate_member_names",
           "verify_type": "partially",
           "result": "passed",
           "result_text": "",
@@ -12597,7 +12785,7 @@
       "CodeLinks": [],
       "TestLinks": [
         {
-          "name": "HashCalculatorTest__HashAlgorithmsSimpleSha1Test",
+          "name": "HashCalculatorTest__HashAlgorithmsSimpleSha256Test",
           "file": "score/hash/code/openssl/openssl_hash_calculator_test.cpp",
           "line": 79,
           "need": "comp_req__hash__sha_algorithms",
@@ -12609,21 +12797,9 @@
           "url": ""
         },
         {
-          "name": "HashCalculatorTest__HashAlgorithmsSimpleSha256Test",
-          "file": "score/hash/code/openssl/openssl_hash_calculator_test.cpp",
-          "line": 102,
-          "need": "comp_req__hash__sha_algorithms",
-          "verify_type": "partially",
-          "result": "passed",
-          "result_text": "",
-          "repo_name": "local_repo",
-          "hash": "",
-          "url": ""
-        },
-        {
           "name": "HashCalculatorTest__HashAlgorithmsSimpleSha384Test",
           "file": "score/hash/code/openssl/openssl_hash_calculator_test.cpp",
-          "line": 117,
+          "line": 94,
           "need": "comp_req__hash__sha_algorithms",
           "verify_type": "partially",
           "result": "passed",
@@ -12635,7 +12811,19 @@
         {
           "name": "HashCalculatorTest__HashAlgorithmsSimpleSha512Test",
           "file": "score/hash/code/openssl/openssl_hash_calculator_test.cpp",
-          "line": 140,
+          "line": 117,
+          "need": "comp_req__hash__sha_algorithms",
+          "verify_type": "partially",
+          "result": "passed",
+          "result_text": "",
+          "repo_name": "local_repo",
+          "hash": "",
+          "url": ""
+        },
+        {
+          "name": "HashCalculatorTest__InvalidCreateAlgorthimTest",
+          "file": "score/hash/code/openssl/openssl_hash_calculator_test.cpp",
+          "line": 199,
           "need": "comp_req__hash__sha_algorithms",
           "verify_type": "partially",
           "result": "passed",
@@ -12647,19 +12835,7 @@
         {
           "name": "HashCalculatorSHATest__HashAlgorithmsSimpleTestSha256",
           "file": "score/hash/code/openssl/openssl_hash_calculator_test.cpp",
-          "line": 427,
-          "need": "comp_req__hash__sha_algorithms",
-          "verify_type": "partially",
-          "result": "passed",
-          "result_text": "",
-          "repo_name": "local_repo",
-          "hash": "",
-          "url": ""
-        },
-        {
-          "name": "OpensslLibTest__Sha1Test",
-          "file": "score/hash/code/openssl/openssl_wrapper/openssl_lib_impl_test.cpp",
-          "line": 55,
+          "line": 414,
           "need": "comp_req__hash__sha_algorithms",
           "verify_type": "partially",
           "result": "passed",
@@ -12671,7 +12847,7 @@
         {
           "name": "OpensslLibTest__Sha384Test",
           "file": "score/hash/code/openssl/openssl_wrapper/openssl_lib_impl_test.cpp",
-          "line": 77,
+          "line": 65,
           "need": "comp_req__hash__sha_algorithms",
           "verify_type": "partially",
           "result": "passed",
@@ -12683,7 +12859,31 @@
         {
           "name": "OpensslLibTest__Sha512Test",
           "file": "score/hash/code/openssl/openssl_wrapper/openssl_lib_impl_test.cpp",
-          "line": 89,
+          "line": 77,
+          "need": "comp_req__hash__sha_algorithms",
+          "verify_type": "partially",
+          "result": "passed",
+          "result_text": "",
+          "repo_name": "local_repo",
+          "hash": "",
+          "url": ""
+        },
+        {
+          "name": "HashIdentify__CanNotIdentifyBadHashesFromString",
+          "file": "score/hash/code/common/algorithms_test.cpp",
+          "line": 71,
+          "need": "comp_req__hash__sha_algorithms",
+          "verify_type": "partially",
+          "result": "passed",
+          "result_text": "",
+          "repo_name": "local_repo",
+          "hash": "",
+          "url": ""
+        },
+        {
+          "name": "HashIdentify__CanNotIdentifyBadHashesFromSize",
+          "file": "score/hash/code/common/algorithms_test.cpp",
+          "line": 115,
           "need": "comp_req__hash__sha_algorithms",
           "verify_type": "partially",
           "result": "passed",
@@ -12695,7 +12895,31 @@
         {
           "name": "HashIdentify__CorrectSizes",
           "file": "score/hash/code/common/algorithms_test.cpp",
-          "line": 123,
+          "line": 136,
+          "need": "comp_req__hash__sha_algorithms",
+          "verify_type": "partially",
+          "result": "passed",
+          "result_text": "",
+          "repo_name": "local_repo",
+          "hash": "",
+          "url": ""
+        },
+        {
+          "name": "HashTest__ValidateAlgorithm",
+          "file": "score/hash/code/core/hash_test.cpp",
+          "line": 155,
+          "need": "comp_req__hash__sha_algorithms",
+          "verify_type": "partially",
+          "result": "passed",
+          "result_text": "",
+          "repo_name": "local_repo",
+          "hash": "",
+          "url": ""
+        },
+        {
+          "name": "TypedHashTest__CanCreateFromValidString",
+          "file": "score/hash/code/core/typed_hash_test.cpp",
+          "line": 57,
           "need": "comp_req__hash__sha_algorithms",
           "verify_type": "partially",
           "result": "passed",
@@ -12727,6 +12951,30 @@
           "repo_name": "local_repo",
           "hash": "",
           "url": ""
+        },
+        {
+          "name": "HashCalculatorFactory__hashCalculatorFactoryFailTest",
+          "file": "score/hash/code/core/factory/impl/hash_calculator_factory_ieee_test.cpp",
+          "line": 154,
+          "need": "comp_req__hash__sha_algorithms",
+          "verify_type": "partially",
+          "result": "passed",
+          "result_text": "",
+          "repo_name": "local_repo",
+          "hash": "",
+          "url": ""
+        },
+        {
+          "name": "SafeHashCalculatorFactory__TryToInstantiateNonexistentHash",
+          "file": "score/hash/code/core/factory/impl/hash_calculator_factory_ieee_test.cpp",
+          "line": 351,
+          "need": "comp_req__hash__sha_algorithms",
+          "verify_type": "partially",
+          "result": "passed",
+          "result_text": "",
+          "repo_name": "local_repo",
+          "hash": "",
+          "url": ""
         }
       ]
     }
@@ -12739,7 +12987,7 @@
         {
           "name": "HashCalculatorTest__NullDigestTypeCreateAlgoTest",
           "file": "score/hash/code/openssl/openssl_hash_calculator_test.cpp",
-          "line": 172,
+          "line": 149,
           "need": "comp_req__hash__safe_computation",
           "verify_type": "partially",
           "result": "passed",
@@ -12751,7 +12999,7 @@
         {
           "name": "HashCalculatorTest__InvalidDigestCtxCreateAlgoTest",
           "file": "score/hash/code/openssl/openssl_hash_calculator_test.cpp",
-          "line": 187,
+          "line": 164,
           "need": "comp_req__hash__safe_computation",
           "verify_type": "partially",
           "result": "passed",
@@ -12763,7 +13011,7 @@
         {
           "name": "HashCalculatorTest__InvalidDigestInitCreateAlgoTest",
           "file": "score/hash/code/openssl/openssl_hash_calculator_test.cpp",
-          "line": 204,
+          "line": 181,
           "need": "comp_req__hash__safe_computation",
           "verify_type": "partially",
           "result": "passed",
@@ -12775,7 +13023,7 @@
         {
           "name": "HashCalculatorTest__InvalidCreateAlgorthimTest",
           "file": "score/hash/code/openssl/openssl_hash_calculator_test.cpp",
-          "line": 222,
+          "line": 199,
           "need": "comp_req__hash__safe_computation",
           "verify_type": "partially",
           "result": "passed",
@@ -12799,7 +13047,7 @@
         {
           "name": "HashCalculatorFactory__FailedHashObjCreation",
           "file": "score/hash/code/core/factory/impl/hash_calculator_factory_ieee_test.cpp",
-          "line": 209,
+          "line": 215,
           "need": "comp_req__hash__safe_computation",
           "verify_type": "partially",
           "result": "passed",
@@ -12811,7 +13059,7 @@
         {
           "name": "HashCalculatorFactory__FailedHashObjCreationStream",
           "file": "score/hash/code/core/factory/impl/hash_calculator_factory_ieee_test.cpp",
-          "line": 227,
+          "line": 233,
           "need": "comp_req__hash__safe_computation",
           "verify_type": "partially",
           "result": "passed",
@@ -12823,7 +13071,7 @@
         {
           "name": "HashCalculatorFactory__FailHashObjCreationWithMaxRead",
           "file": "score/hash/code/core/factory/impl/hash_calculator_factory_ieee_test.cpp",
-          "line": 265,
+          "line": 271,
           "need": "comp_req__hash__safe_computation",
           "verify_type": "partially",
           "result": "passed",
@@ -12835,7 +13083,7 @@
         {
           "name": "HashCalculatorFactory__InstantiateWithFailingOpenSslLib",
           "file": "score/hash/code/core/factory/impl/hash_calculator_factory_ieee_test.cpp",
-          "line": 303,
+          "line": 309,
           "need": "comp_req__hash__safe_computation",
           "verify_type": "partially",
           "result": "passed",
@@ -12847,7 +13095,7 @@
         {
           "name": "SafeHashCalculatorFactory__TryToInstantiateNonexistentHash",
           "file": "score/hash/code/core/factory/impl/hash_calculator_factory_ieee_test.cpp",
-          "line": 345,
+          "line": 351,
           "need": "comp_req__hash__safe_computation",
           "verify_type": "partially",
           "result": "passed",
@@ -12867,7 +13115,7 @@
         {
           "name": "HashCalculatorTest__UpdateStreamTest",
           "file": "score/hash/code/openssl/openssl_hash_calculator_test.cpp",
-          "line": 240,
+          "line": 227,
           "need": "comp_req__hash__calculation_interface",
           "verify_type": "partially",
           "result": "passed",
@@ -12879,7 +13127,7 @@
         {
           "name": "HashCalculatorTest__InvalidDigestUpdateTest",
           "file": "score/hash/code/openssl/openssl_hash_calculator_test.cpp",
-          "line": 271,
+          "line": 258,
           "need": "comp_req__hash__calculation_interface",
           "verify_type": "partially",
           "result": "passed",
@@ -12891,7 +13139,7 @@
         {
           "name": "HashCalculatorTest__UpdateFromStreamTest",
           "file": "score/hash/code/openssl/openssl_hash_calculator_test.cpp",
-          "line": 293,
+          "line": 280,
           "need": "comp_req__hash__calculation_interface",
           "verify_type": "partially",
           "result": "passed",
@@ -12903,7 +13151,7 @@
         {
           "name": "HashCalculatorTest__InvalidUpdateFromStreamTest",
           "file": "score/hash/code/openssl/openssl_hash_calculator_test.cpp",
-          "line": 312,
+          "line": 299,
           "need": "comp_req__hash__calculation_interface",
           "verify_type": "partially",
           "result": "passed",
@@ -12915,7 +13163,7 @@
         {
           "name": "HashCalculatorTest__UpdateFromStreamGoesBadTest",
           "file": "score/hash/code/openssl/openssl_hash_calculator_test.cpp",
-          "line": 335,
+          "line": 322,
           "need": "comp_req__hash__calculation_interface",
           "verify_type": "partially",
           "result": "passed",
@@ -12927,7 +13175,7 @@
         {
           "name": "HashCalculatorTest__BadInputUpdateFromStreamTest",
           "file": "score/hash/code/openssl/openssl_hash_calculator_test.cpp",
-          "line": 363,
+          "line": 350,
           "need": "comp_req__hash__calculation_interface",
           "verify_type": "partially",
           "result": "passed",
@@ -12939,7 +13187,7 @@
         {
           "name": "HashCalculatorTest__EmptyInputUpdateFromStreamTest",
           "file": "score/hash/code/openssl/openssl_hash_calculator_test.cpp",
-          "line": 384,
+          "line": 371,
           "need": "comp_req__hash__calculation_interface",
           "verify_type": "partially",
           "result": "passed",
@@ -12951,7 +13199,7 @@
         {
           "name": "HashCalculatorTest__InvalidFinalizeTest",
           "file": "score/hash/code/openssl/openssl_hash_calculator_test.cpp",
-          "line": 408,
+          "line": 395,
           "need": "comp_req__hash__calculation_interface",
           "verify_type": "partially",
           "result": "passed",
@@ -12963,7 +13211,7 @@
         {
           "name": "HashCalculatorSHATest__HashAlgorithmsSimpleTestSha256",
           "file": "score/hash/code/openssl/openssl_hash_calculator_test.cpp",
-          "line": 427,
+          "line": 414,
           "need": "comp_req__hash__calculation_interface",
           "verify_type": "partially",
           "result": "passed",
@@ -12975,7 +13223,7 @@
         {
           "name": "OpensslLibTest__Sha256Test",
           "file": "score/hash/code/openssl/openssl_wrapper/openssl_lib_impl_test.cpp",
-          "line": 67,
+          "line": 55,
           "need": "comp_req__hash__calculation_interface",
           "verify_type": "partially",
           "result": "passed",
@@ -12987,7 +13235,7 @@
         {
           "name": "OpensslLibTest__DigestCtxNewTest",
           "file": "score/hash/code/openssl/openssl_wrapper/openssl_lib_impl_test.cpp",
-          "line": 101,
+          "line": 89,
           "need": "comp_req__hash__calculation_interface",
           "verify_type": "partially",
           "result": "passed",
@@ -12999,7 +13247,7 @@
         {
           "name": "OpensslLibTest__DigestInitExTest",
           "file": "score/hash/code/openssl/openssl_wrapper/openssl_lib_impl_test.cpp",
-          "line": 111,
+          "line": 99,
           "need": "comp_req__hash__calculation_interface",
           "verify_type": "partially",
           "result": "passed",
@@ -13011,7 +13259,7 @@
         {
           "name": "OpensslLibTest__DigestUpdateTest",
           "file": "score/hash/code/openssl/openssl_wrapper/openssl_lib_impl_test.cpp",
-          "line": 123,
+          "line": 111,
           "need": "comp_req__hash__calculation_interface",
           "verify_type": "partially",
           "result": "passed",
@@ -13023,7 +13271,7 @@
         {
           "name": "OpensslLibTest__DigestFinalExTest",
           "file": "score/hash/code/openssl/openssl_wrapper/openssl_lib_impl_test.cpp",
-          "line": 140,
+          "line": 128,
           "need": "comp_req__hash__calculation_interface",
           "verify_type": "partially",
           "result": "passed",
@@ -13107,7 +13355,7 @@
         {
           "name": "HashCalculatorFactory__HashCalculatorSpanInput",
           "file": "score/hash/code/core/factory/impl/hash_calculator_factory_ieee_test.cpp",
-          "line": 168,
+          "line": 174,
           "need": "comp_req__hash__calculation_interface",
           "verify_type": "partially",
           "result": "passed",
@@ -13119,7 +13367,7 @@
         {
           "name": "HashCalculatorFactory__HashCalculatorStreamInput",
           "file": "score/hash/code/core/factory/impl/hash_calculator_factory_ieee_test.cpp",
-          "line": 189,
+          "line": 195,
           "need": "comp_req__hash__calculation_interface",
           "verify_type": "partially",
           "result": "passed",
@@ -13131,7 +13379,7 @@
         {
           "name": "HashCalculatorFactory__HashCalculatorStreamInputWithMaxRead",
           "file": "score/hash/code/core/factory/impl/hash_calculator_factory_ieee_test.cpp",
-          "line": 283,
+          "line": 289,
           "need": "comp_req__hash__calculation_interface",
           "verify_type": "partially",
           "result": "passed",
@@ -13151,7 +13399,7 @@
         {
           "name": "HashIdentify__CorrectSizes",
           "file": "score/hash/code/common/algorithms_test.cpp",
-          "line": 123,
+          "line": 136,
           "need": "comp_req__hash__crc32_algorithm",
           "verify_type": "partially",
           "result": "passed",
@@ -13255,7 +13503,7 @@
         {
           "name": "HashTest__CanCreateFromValidStringCompleteSetOfAlgorithms",
           "file": "score/hash/code/core/hash_test.cpp",
-          "line": 95,
+          "line": 96,
           "need": "comp_req__hash__value_retrieval_bytes",
           "verify_type": "partially",
           "result": "passed",
@@ -13299,7 +13547,7 @@
         {
           "name": "HashTest__ToStringEmptyValueTest",
           "file": "score/hash/code/core/hash_test.cpp",
-          "line": 83,
+          "line": 84,
           "need": "comp_req__hash__value_retrieval_hex",
           "verify_type": "partially",
           "result": "passed",
@@ -13311,7 +13559,19 @@
         {
           "name": "HashTest__CanCreateFromValidStringCompleteSetOfAlgorithms",
           "file": "score/hash/code/core/hash_test.cpp",
-          "line": 95,
+          "line": 96,
+          "need": "comp_req__hash__value_retrieval_hex",
+          "verify_type": "partially",
+          "result": "passed",
+          "result_text": "",
+          "repo_name": "local_repo",
+          "hash": "",
+          "url": ""
+        },
+        {
+          "name": "HashTest__ValidateAlgorithm",
+          "file": "score/hash/code/core/hash_test.cpp",
+          "line": 155,
           "need": "comp_req__hash__value_retrieval_hex",
           "verify_type": "partially",
           "result": "passed",
@@ -13335,7 +13595,7 @@
         {
           "name": "TypedHashTest__ToStringEmptyValueTest",
           "file": "score/hash/code/core/typed_hash_test.cpp",
-          "line": 84,
+          "line": 93,
           "need": "comp_req__hash__value_retrieval_hex",
           "verify_type": "partially",
           "result": "passed",
@@ -13347,7 +13607,7 @@
         {
           "name": "TypedHashTest__CanSerializeToJsonAny",
           "file": "score/hash/code/core/typed_hash_test.cpp",
-          "line": 96,
+          "line": 105,
           "need": "comp_req__hash__value_retrieval_hex",
           "verify_type": "partially",
           "result": "passed",
@@ -13403,7 +13663,7 @@
         {
           "name": "HashCalculatorFactory__FailedHashObjCreation",
           "file": "score/hash/code/core/factory/impl/hash_calculator_factory_ieee_test.cpp",
-          "line": 209,
+          "line": 215,
           "need": "comp_req__hash__factory_interface",
           "verify_type": "partially",
           "result": "passed",
@@ -13415,7 +13675,7 @@
         {
           "name": "HashCalculatorFactory__FailedHashObjCreationStream",
           "file": "score/hash/code/core/factory/impl/hash_calculator_factory_ieee_test.cpp",
-          "line": 227,
+          "line": 233,
           "need": "comp_req__hash__factory_interface",
           "verify_type": "partially",
           "result": "passed",
@@ -13427,7 +13687,7 @@
         {
           "name": "HashCalculatorFactory__FailHashObjCreationWithMaxRead",
           "file": "score/hash/code/core/factory/impl/hash_calculator_factory_ieee_test.cpp",
-          "line": 265,
+          "line": 271,
           "need": "comp_req__hash__factory_interface",
           "verify_type": "partially",
           "result": "passed",
@@ -13439,7 +13699,7 @@
         {
           "name": "HashCalculatorFactory__InstantiateWithFailingOpenSslLib",
           "file": "score/hash/code/core/factory/impl/hash_calculator_factory_ieee_test.cpp",
-          "line": 303,
+          "line": 309,
           "need": "comp_req__hash__factory_interface",
           "verify_type": "partially",
           "result": "passed",
@@ -13451,7 +13711,7 @@
         {
           "name": "HashCalculatorFactory__InstantiateWithSuccess",
           "file": "score/hash/code/core/factory/impl/hash_calculator_factory_ieee_test.cpp",
-          "line": 320,
+          "line": 326,
           "need": "comp_req__hash__factory_interface",
           "verify_type": "partially",
           "result": "passed",
@@ -13463,7 +13723,7 @@
         {
           "name": "SafeHashCalculatorFactory__TryToInstantiateNonexistentHash",
           "file": "score/hash/code/core/factory/impl/hash_calculator_factory_ieee_test.cpp",
-          "line": 345,
+          "line": 351,
           "need": "comp_req__hash__factory_interface",
           "verify_type": "partially",
           "result": "passed",
