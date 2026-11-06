@@ -10,15 +10,22 @@
 #
 # SPDX-License-Identifier: Apache-2.0
 # *******************************************************************************
-# The shared workflow owns all Linux builds and tests, including ARM emulation
-# and the separate integration workspace. No local execution matrix is needed.
-# Bazel configs select module-owned platforms and toolchains explicitly.
+# Select the Linux checks for this module here; QNX uses separate workflows.
+# Each named test profile runs independently and collects its test reports.
+# Profiles default to Linux x86_64, the repository root and test target `//...`.
+# bazel-build-targets adds a build before tests; a failed build stops that profile.
+# Maintain targets, exclusions and Bazel toolchain configs in this repository.
+# The shared workflow handles runner setup, caching and report collection.
+# Configuration reference: https://github.com/eclipse-score/cicd-workflows/blob/central-workflow/.github/workflows/on-pr.md
 schema-version: 2
 tests:
+  # Build and test the complete root workspace with the native Linux toolchain.
   linux-native:
     bazel-configs: score-linux-x86_64
     bazel-build-targets: //...
-  # These OS tests stay excluded from the established emulated test set.
+  # Cross-compile for ARM and execute tests through QEMU on an x86_64 runner.
+  # The Bazel config supplies the ARM toolchain and test wrapper.
+  # Keep the established OS-test exclusions and Rust doc-test tag filter below.
   linux-arm:
     bazel-configs: score-linux-aarch64
     bazel-build-targets: //...
@@ -30,21 +37,31 @@ tests:
     architecture: aarch64
     execution: qemu-user
     bazel-test-custom-cli-args: --test_tag_filters=-no_rust_doc_test
-  # The separate Bazel module consumes baselibs through a local_path_override.
+  # Build and test examples/integration as its own Bazel workspace.
+  # Its local_path_override checks that an external consumer can use this module.
   linux-integration:
     bazel-configs: x86_64-linux
     bazel-build-targets: //...
     working-directory: examples/integration
-# These Clang-specific exclusions keep running in the GCC test profiles.
+# Run LLVM coverage separately from the test profiles above.
+# Defaults select llvm_cov and tools/coverage/coverage_justifications.yaml.
+# The shared recipe generates HTML and machine-readable reports for Docs.
+# These Clang-specific exclusions still run in the GCC test profiles.
 llvm-coverage:
   bazel-targets: >-
     //score/...
     -//score/language/safecpp/aborts_upon_exception/...
     -//score/language/safecpp/safe_math/details:floating_point_environment_test
     -//score/os/linux/utils/test:network_interface_test
+  # Collect coverage without enforcing a minimum percentage.
   coverage-threshold: 0
   testlogs-subdir: score
+  # Check that production code has coverage instrumentation or a declared exclusion.
+  # Maintain tools/coverage/scope_exclusions.txt when the production scope changes.
   scope-check: {}
   # release.yml downloads this artifact by name.
   artifact-name: '{repository}_cpp_coverage_report'
+# An empty mapping enables the standard //:docs build after configured checks.
+# Docs automatically receives native test reports and the LLVM coverage report.
+# The existing publishing workflow deploys the finished github-pages artifact.
 docs: {}
