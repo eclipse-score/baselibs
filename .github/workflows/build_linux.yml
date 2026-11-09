@@ -28,7 +28,6 @@ on:
 jobs:
   linux-build-and-test:
     name: Build and Test ${{ matrix.name }}
-    runs-on: ubuntu-24.04
     strategy:
       fail-fast: false
       matrix:
@@ -57,42 +56,17 @@ jobs:
             working-directory: "examples/integration"
             bazel-build-target: "//..."
             bazel-test-target: "//..."
-    steps:
-      - uses: eclipse-score/more-disk-space@6a3b48901846bf7f8cc985925157d71a8973e61f # v1
-        with:
-          level: 4
-      - name: Checkout Repository
-        uses: actions/checkout@v6
-      - name: Setup Bazel Cache
-        uses: eclipse-score/cicd-actions/setup-bazel-cache@659dcbed63f6b7fbde88c7850125ea0a0a92f939
-        with:
-          unique-cache-name: ${{ github.workflow }}-${{ github.job }}-${{ matrix.name }}
-      - name: Configure fast APT mirror
-        if: matrix.bazel-config == 'score-linux-aarch64'
-        uses: vegardit/fast-apt-mirror.sh@5861fa3e23a90b3adfbb5e40067d1ed1a054e980 # v1
-      - name: Install QEMU
-        if: matrix.bazel-config == 'score-linux-aarch64'
-        run: |
-          sudo apt-get update
-          sudo apt install -y qemu-user
-      - name: Bazel Build
-        working-directory: ${{ matrix.working-directory }}
-        run: |
-          bazel build --config ${{ matrix.bazel-config }} -- ${{ matrix.bazel-build-target }}
-      - name: Bazel Test
-        working-directory: ${{ matrix.working-directory }}
-        run: |
-          bazel test --config ${{ matrix.bazel-config }} ${{ matrix.bazel-test-extra-flags }} -- ${{ matrix.bazel-test-target }}
-      - name: Upload test report
-        if: always()
-        uses: actions/upload-artifact@v7
-        with:
-          name: test-report-${{ matrix.artifact-name }}
-          path: |
-            ${{ matrix.working-directory }}/bazel-testlogs/**/test.log
-            ${{ matrix.working-directory }}/bazel-testlogs/**/test.xml
-          retention-days: 5
-          if-no-files-found: warn
+    uses: eclipse-score/cicd-workflows/.github/workflows/bazel.yml@bazel-workflow
+    with:
+      build-targets: ${{ matrix.bazel-build-target }}
+      test-targets: ${{ matrix.bazel-test-target }}
+      bazel-args: --config ${{ matrix.bazel-config }}
+      test-args: ${{ matrix.bazel-test-extra-flags || '' }}
+      working-directory: ${{ matrix.working-directory }}
+      cache-key: ${{ github.workflow }}-linux-build-and-test-${{ matrix.name }}
+      packages: ${{ matrix.bazel-config == 'score-linux-aarch64' && 'qemu-user' || '' }}
+      disk-space-level: 4
+      artifact-name: test-report-${{ matrix.artifact-name }}
   coverage-report:
     uses: ./.github/workflows/coverage_report.yml
   docs-build:
