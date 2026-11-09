@@ -440,7 +440,7 @@
 </ul>
 </details></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../language/index.html">language</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../../memory/index.html">memory</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../memory/index.html">Memory</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../mw_log/index.html">log_frontend</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../os/index.html">os</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../result/index.html">result</a></li>
@@ -536,7 +536,7 @@ The JSON data must be provided to the parser as
 <section id="sequences">
 <h3>Sequences<a class="headerlink" href="#sequences" title="Link to this heading">#</a></h3>
 <p class="plantuml">
-<object data="../../../../../../_images/plantuml-06d46db47759245dbf1ff5d15daff74ac65590da.svg" type="image/svg+xml" style="width:1536px;height:1875px;background:#FFFFFF;"></object></p>
+<object data="../../../../../../_images/plantuml-06d46db47759245dbf1ff5d15daff74ac65590da.svg" type="image/svg+xml" style="width:1388px;height:1746px;background:#FFFFFF;"></object></p>
 </section>
 </section>
 <section id="encoding">
@@ -550,7 +550,7 @@ order mark (BOM).</p>
 <h2>Data Items<a class="headerlink" href="#data-items" title="Link to this heading">#</a></h2>
 <p>The parser creates events for each detected JSON element of the input data and reports them to an event handler that
 must be implemented by the application.
-The event handler must inherit from score::json::vajson::internal::StructureParser and can implement the following functions:</p>
+The event handler must inherit from score::json::vajson::internal::StructureParser and must implement the following functions:</p>
 <ul class="simple">
 <li><p>“null” is reported to the applications event handler by calling <code class="docutils literal notranslate"><span class="pre">OnNull()</span></code></p></li>
 <li><p>“true” is reported to the applications event handler by calling <code class="docutils literal notranslate"><span class="pre">OnBool(bool)</span></code></p></li>
@@ -562,9 +562,6 @@ The event handler must inherit from score::json::vajson::internal::StructurePars
 <li><p>The end of an object is reported to the applications event handler by calling <code class="docutils literal notranslate"><span class="pre">OnEndObject(std::size_t)</span></code></p></li>
 <li><p>The start of an array is reported to the applications event handler by calling <code class="docutils literal notranslate"><span class="pre">OnStartArray()</span></code></p></li>
 <li><p>The end of an object is reported to the applications event handler by calling <code class="docutils literal notranslate"><span class="pre">OnEndArray(std::size_t)</span></code></p></li>
-<li><p>A binary value is reported to the applications event handler by calling <code class="docutils literal notranslate"><span class="pre">OnBinary(ara::core::Span&lt;char&gt;)</span></code></p></li>
-<li><p>The default action for any of the above methods is to call <code class="docutils literal notranslate"><span class="pre">OnUnexpectedEvent()</span></code>
-The default implementation returns an error.</p></li>
 </ul>
 <p>Each function returns an <code class="docutils literal notranslate"><span class="pre">ara::core::Result&lt;score::json::vajson::ParserState&gt;</span></code> to report errors and to indicate whether the
 parser shall go on (<code class="docutils literal notranslate"><span class="pre">score::json::vajson::ParserState::kRunning</span></code>) or stop (<code class="docutils literal notranslate"><span class="pre">score::json::vajson::ParserState::kFinished</span></code>).</p>
