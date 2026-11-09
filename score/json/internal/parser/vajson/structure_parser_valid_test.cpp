@@ -13,11 +13,12 @@
 /// @file
 /// @brief  Contains tests concerning the parsing of valid JSON.
 
-#include "score/json/internal/parser/vajson/virtual_parser.h"
+#include "score/json/internal/parser/vajson/structure_parser.h"
 
 #include "gtest/gtest.h"
 #include "score/json/internal/parser/vajson/json_data.h"
 #include "score/json/internal/parser/vajson/json_error_domain.h"
+#include "score/json/internal/parser/vajson/structure_parser_stub.h"
 
 namespace score
 {
@@ -30,16 +31,7 @@ namespace unit_test
 namespace
 {
 
-class DynamicAnyParser final : public internal::VirtualParser
-{
-  public:
-    using internal::VirtualParser::VirtualParser;
-
-    auto OnUnexpectedEvent() noexcept -> ParserResult override
-    {
-        return ParserState::kRunning;
-    }
-};
+using DynamicAnyParser = StructureParserStub;
 
 }  // namespace
 

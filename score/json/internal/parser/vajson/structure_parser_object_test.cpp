@@ -13,11 +13,12 @@
 /// @file
 /// @brief  Contains tests concerning the parsing of objects.
 
-#include "score/json/internal/parser/vajson/virtual_parser.h"
+#include "score/json/internal/parser/vajson/structure_parser.h"
 
 #include "gtest/gtest.h"
 #include "score/json/internal/parser/vajson/json_data.h"
 #include "score/json/internal/parser/vajson/json_error_domain.h"
+#include "score/json/internal/parser/vajson/structure_parser_stub.h"
 
 namespace score
 {
@@ -32,11 +33,16 @@ namespace
 
 using Count = std::streamsize;
 
-class DynamicObjectParser final : public internal::VirtualParser
+class DynamicObjectParser final : public StructureParserStub
 {
   public:
-    using internal::VirtualParser::VirtualParser;
+    using StructureParserStub::StructureParserStub;
 
+    Count start_{0};
+    Count end_{0};
+    Count balance_{0};
+
+  private:
     auto OnStartObject() noexcept -> ParserResult override
     {
         this->start_ += 1;
@@ -54,22 +60,14 @@ class DynamicObjectParser final : public internal::VirtualParser
         this->balance_ -= 1;
         return ParserResult{ParserState::kRunning};
     }
-
-    auto OnUnexpectedEvent() noexcept -> ParserResult override
-    {
-        return ParserState::kRunning;
-    }
-
-    Count start_{0};
-    Count end_{0};
-    Count balance_{0};
 };
 
-class EndObjectParser final : public internal::VirtualParser
+class EndObjectParser final : public StructureParserStub
 {
   public:
-    using internal::VirtualParser::VirtualParser;
+    using StructureParserStub::StructureParserStub;
 
+  private:
     auto OnStartObject() noexcept -> ParserResult override
     {
         return ParserState::kRunning;
@@ -79,29 +77,20 @@ class EndObjectParser final : public internal::VirtualParser
     {
         return MakeErrorResult<ParserState>(JsonErrc::kUserValidationFailed, "OnEndObject called.");
     }
-
-    auto OnUnexpectedEvent() noexcept -> ParserResult override
-    {
-        return ParserState::kRunning;
-    }
 };
 
-class StartObjectParser final : public internal::VirtualParser
+class StartObjectParser final : public StructureParserStub
 {
   public:
-    using internal::VirtualParser::VirtualParser;
+    using StructureParserStub::StructureParserStub;
 
+  private:
     auto OnStartObject() noexcept -> ParserResult override
     {
         return MakeErrorResult<ParserState>(JsonErrc::kUserValidationFailed, "OnStartObject called.");
     }
 
     auto OnEndObject(std::size_t) noexcept -> ParserResult override
-    {
-        return ParserState::kRunning;
-    }
-
-    auto OnUnexpectedEvent() noexcept -> ParserResult override
     {
         return ParserState::kRunning;
     }
@@ -149,7 +138,7 @@ TEST(UT__Parser__Object, Dynamic__NoObjects)
 }
 
 /// Tests that when the overridden OnEndObject method returns an error, that error is propagated.
-/// @trace           score::json::vajson::internal::StructureParserBase::ParseEndObject
+/// @trace           score::json::vajson::internal::StructureParser::ParseEndObject
 TEST(UT__Parser__Object__Error, Dynamic__OnEndObject)
 {
     auto doc{JsonData::FromBuffer(std::string_view{R"({})"})};
@@ -163,7 +152,7 @@ TEST(UT__Parser__Object__Error, Dynamic__OnEndObject)
 }
 
 /// Tests that when the overridden OnStartObject method returns an error, that error is propagated.
-/// @trace           score::json::vajson::internal::StructureParserBase::ParseStartObject
+/// @trace           score::json::vajson::internal::StructureParser::ParseStartObject
 TEST(UT__Parser__Object__Error, Dynamic__OnStartObject)
 {
     auto doc{JsonData::FromBuffer(std::string_view{R"({})"})};

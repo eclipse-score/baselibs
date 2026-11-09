@@ -65,7 +65,7 @@ Data Items
 
 The parser creates events for each detected JSON element of the input data and reports them to an event handler that
 must be implemented by the application.
-The event handler must inherit from score::json::vajson::internal::StructureParser and can implement the following functions:
+The event handler must inherit from score::json::vajson::internal::StructureParser and must implement the following functions:
 
 * "null" is reported to the applications event handler by calling ``OnNull()``
 * "true" is reported to the applications event handler by calling ``OnBool(bool)``
@@ -77,9 +77,6 @@ The event handler must inherit from score::json::vajson::internal::StructurePars
 * The end of an object is reported to the applications event handler by calling ``OnEndObject(std::size_t)``
 * The start of an array is reported to the applications event handler by calling ``OnStartArray()``
 * The end of an object is reported to the applications event handler by calling ``OnEndArray(std::size_t)``
-* A binary value is reported to the applications event handler by calling ``OnBinary(ara::core::Span<char>)``
-* The default action for any of the above methods is to call ``OnUnexpectedEvent()``
-  The default implementation returns an error.
 
 Each function returns an ``ara::core::Result<score::json::vajson::ParserState>`` to report errors and to indicate whether the
 parser shall go on (``score::json::vajson::ParserState::kRunning``) or stop (``score::json::vajson::ParserState::kFinished``).

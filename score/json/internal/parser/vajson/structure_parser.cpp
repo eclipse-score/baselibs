@@ -13,7 +13,9 @@
 /// @file
 /// @brief  A SAX-Style JSON parser.
 ///
-/// @details  Parses JSON text from a stream and sends events synchronously to an Implementer.
+/// @details  Parses JSON text from a stream and sends events synchronously to the derived class.
+
+#include "score/json/internal/parser/vajson/structure_parser.h"
 
 #include <algorithm>
 #include <cstring>
@@ -25,7 +27,6 @@
 #include "score/json/internal/parser/vajson/json_number.h"
 #include "score/json/internal/parser/vajson/json_ops.h"
 #include "score/json/internal/parser/vajson/parser_state.h"
-#include "score/json/internal/parser/vajson/structure_parser.h"
 #include "score/json/internal/parser/vajson/types.h"
 
 namespace score
@@ -37,22 +38,13 @@ namespace vajson
 namespace internal
 {
 
-auto StructureParserBase::GetState() noexcept -> DepthCounter&
-{
-    return this->GetJsonDocument().GetState();
-}
+StructureParser::StructureParser(JsonData& doc) noexcept : json_ops_{doc} {}
 
-auto StructureParserBase::GetJsonDocument() noexcept -> JsonData&
-{
-
-    return this->GetJsonOps().GetJsonDocument();
-}
-
-auto StructureParserBase::Parse() noexcept -> Result<void>
+auto StructureParser::Parse() noexcept -> Result<void>
 {
     // Skip all whitespace to so that we will detect empty documents immediately.
 
-    ParserResult result{MakeResult(this->GetJsonOps().SkipWhitespace(),
+    ParserResult result{MakeResult(this->json_ops_.SkipWhitespace(),
                                    MakeError(JsonErrc::kInvalidJson, "StructureParser::Parse: Document is empty."))
                             .transform([](void) noexcept {
                                 return ParserState::kRunning;
@@ -66,16 +58,27 @@ auto StructureParserBase::Parse() noexcept -> Result<void>
     return Drop(result);
 }
 
+auto StructureParser::GetState() noexcept -> DepthCounter&
+{
+    return this->GetJsonDocument().GetState();
+}
+
+auto StructureParser::GetJsonDocument() noexcept -> JsonData&
+{
+
+    return this->json_ops_.GetJsonDocument();
+}
+
 /// @internal
 /// - If the parsed string is "null" and a value is expected:
 ///   - Call the OnNull callback and return its Result.
 /// - Otherwise:
 ///   - Return an error.
 /// @endinternal
-auto StructureParserBase::ParseNull() noexcept -> ParserResult
+auto StructureParser::ParseNull() noexcept -> ParserResult
 {
 
-    return (this->GetJsonOps().CheckString("ull"sv, "StructureParser::ParseNull: Expected 'null'\0"))
+    return (this->json_ops_.CheckString("ull"sv, "StructureParser::ParseNull: Expected 'null'\0"))
         .and_then([this](void) noexcept {
             return this->GetState().AddValue();
         })
@@ -91,10 +94,10 @@ auto StructureParserBase::ParseNull() noexcept -> ParserResult
 /// - Otherwise:
 ///   - Return an error.
 /// @endinternal
-auto StructureParserBase::ParseTrue() noexcept -> ParserResult
+auto StructureParser::ParseTrue() noexcept -> ParserResult
 {
 
-    return (this->GetJsonOps().CheckString("rue"sv, "StructureParser::ParseTrue: Expected 'true'\0"sv))
+    return (this->json_ops_.CheckString("rue"sv, "StructureParser::ParseTrue: Expected 'true'\0"sv))
         .and_then([this](void) noexcept {
             return this->GetState().AddValue();
         })
@@ -109,10 +112,10 @@ auto StructureParserBase::ParseTrue() noexcept -> ParserResult
 /// - Otherwise:
 ///   - Return an error.
 /// @endinternal
-auto StructureParserBase::ParseFalse() noexcept -> ParserResult
+auto StructureParser::ParseFalse() noexcept -> ParserResult
 {
 
-    return (this->GetJsonOps().CheckString("alse"sv, "StructureParser::ParseFalse: Expected 'false'\0"sv))
+    return (this->json_ops_.CheckString("alse"sv, "StructureParser::ParseFalse: Expected 'false'\0"sv))
         .and_then([this](void) noexcept {
             return this->GetState().AddValue();
         })
@@ -130,7 +133,7 @@ auto StructureParserBase::ParseFalse() noexcept -> ParserResult
 /// - Otherwise:
 ///   - Return an error.
 /// @endinternal
-auto StructureParserBase::ParseNumber(const char cur) noexcept -> ParserResult
+auto StructureParser::ParseNumber(const char cur) noexcept -> ParserResult
 {
     return (this->GetState().AddValue())
         .and_then([this, cur](void) noexcept {
@@ -145,7 +148,7 @@ auto StructureParserBase::ParseNumber(const char cur) noexcept -> ParserResult
 /// - Convert a JSON string to a C++ string.
 /// - Parse this unescaped string.
 /// @endinternal
-auto StructureParserBase::ParseString() noexcept -> ParserResult
+auto StructureParser::ParseString() noexcept -> ParserResult
 {
     return ReadJsonString().and_then([this](CStringView string) noexcept {
         return ParseUnescapedString(string);
@@ -162,13 +165,13 @@ auto StructureParserBase::ParseString() noexcept -> ParserResult
 /// - Otherwise:
 ///   - Return an error.
 /// @endinternal
-auto StructureParserBase::ParseUnescapedString(CStringView string) noexcept -> ParserResult
+auto StructureParser::ParseUnescapedString(CStringView string) noexcept -> ParserResult
 {
 
-    static_cast<void>(this->GetJsonOps().SkipWhitespace());
+    static_cast<void>(this->json_ops_.SkipWhitespace());
     ParserResult result{ParserState::kRunning};
 
-    if (this->GetJsonOps().Skip(':'))
+    if (this->json_ops_.Skip(':'))
     {
         result = this->GetState().AddKey().and_then([this, &string](void) noexcept {
             return this->OnKey(string);
@@ -192,16 +195,16 @@ auto StructureParserBase::ParseUnescapedString(CStringView string) noexcept -> P
 /// - Take the string termination character
 /// - Return the result.
 /// @endinternal
-auto StructureParserBase::ReadJsonString() noexcept -> Result<CStringView>
+auto StructureParser::ReadJsonString() noexcept -> Result<CStringView>
 {
     String& buffer{this->GetJsonDocument().GetClearedStringBuffer()};
 
     const auto reader{[this, &buffer]() noexcept {
-        return this->GetJsonOps().ReadUntil(R"("\)"sv,
+        return this->json_ops_.ReadUntil(R"("\)"sv,
 
-                                            [&buffer](StringView buf) noexcept {
-                                                static_cast<void>(buffer.append(buf.begin(), buf.end()));
-                                            });
+                                         [&buffer](StringView buf) noexcept {
+                                             static_cast<void>(buffer.append(buf.begin(), buf.end()));
+                                         });
     }};
 
     Result<OptChar> ret_val{reader()};
@@ -215,11 +218,11 @@ auto StructureParserBase::ReadJsonString() noexcept -> Result<CStringView>
 
         // Take the backslash itself
 
-        static_cast<void>(this->GetJsonOps().Move());
+        static_cast<void>(this->json_ops_.Move());
 
         // Unescape the escaped character
 
-        ret_val = this->GetJsonOps()
+        ret_val = this->json_ops_
 
                       .TryTake()
                       .and_then([this](const char escaped) noexcept {
@@ -242,7 +245,7 @@ auto StructureParserBase::ReadJsonString() noexcept -> Result<CStringView>
         // Take the " character
 
         .transform([this](OptChar) noexcept {
-            static_cast<void>(this->GetJsonOps().Move());
+            static_cast<void>(this->json_ops_.Move());
             return this->GetJsonDocument().GetCurrentString();
         });
 }
@@ -252,7 +255,7 @@ auto StructureParserBase::ReadJsonString() noexcept -> Result<CStringView>
 /// - If a unicode escape is encountered return an error.
 /// - If an unknown/invalid escape is encountered return an error.
 /// @endinternal
-auto StructureParserBase::UnescapeChar(const char escaped) noexcept -> Result<char>
+auto StructureParser::UnescapeChar(const char escaped) noexcept -> Result<char>
 {
     Result<char> ret_val{escaped};
     switch (std::char_traits<char>::to_int_type(escaped))
@@ -294,7 +297,7 @@ auto StructureParserBase::UnescapeChar(const char escaped) noexcept -> Result<ch
 /// - Otherwise:
 ///   - Return an error.
 /// @endinternal
-auto StructureParserBase::ParseStartObject() noexcept -> ParserResult
+auto StructureParser::ParseStartObject() noexcept -> ParserResult
 {
     return this->GetState().AddObject().and_then([this](void) noexcept {
         return this->OnStartObject();
@@ -309,7 +312,7 @@ auto StructureParserBase::ParseStartObject() noexcept -> ParserResult
 /// - Otherwise:
 ///   - Return an error.
 /// @endinternal
-auto StructureParserBase::ParseEndObject() noexcept -> ParserResult
+auto StructureParser::ParseEndObject() noexcept -> ParserResult
 {
     return this->GetState().PopObject().and_then([this](std::size_t count) noexcept {
         return this->OnEndObject(count);
@@ -322,7 +325,7 @@ auto StructureParserBase::ParseEndObject() noexcept -> ParserResult
 /// - Otherwise:
 ///   - Return an error.
 /// @endinternal
-auto StructureParserBase::ParseStartArray() noexcept -> ParserResult
+auto StructureParser::ParseStartArray() noexcept -> ParserResult
 {
     return this->GetState().AddArray().and_then(
 
@@ -339,7 +342,7 @@ auto StructureParserBase::ParseStartArray() noexcept -> ParserResult
 /// - Otherwise:
 ///   - Return an error.
 /// @endinternal
-auto StructureParserBase::ParseEndArray() noexcept -> ParserResult
+auto StructureParser::ParseEndArray() noexcept -> ParserResult
 {
     return this->GetState().PopArray().and_then([this](std::size_t count) noexcept {
         return this->OnEndArray(count);
@@ -352,7 +355,7 @@ auto StructureParserBase::ParseEndArray() noexcept -> ParserResult
 /// - Otherwise:
 ///   - Return the error.
 /// @endinternal
-auto StructureParserBase::ParseComma() noexcept -> ParserResult
+auto StructureParser::ParseComma() noexcept -> ParserResult
 {
     return MakeResult(this->GetState().AddComma(),
                       {JsonErrc::kInvalidJson, "StructureParser::ParseComma: Unexpected comma."})
@@ -373,11 +376,11 @@ auto StructureParserBase::ParseComma() noexcept -> ParserResult
 /// - Otherwise:
 ///   - Return an error.
 /// @endinternal
-auto StructureParserBase::ParseValue() noexcept -> ParserResult
+auto StructureParser::ParseValue() noexcept -> ParserResult
 {
     ParserResult result{ParserState::kRunning};
 
-    if (!this->GetJsonOps().SkipWhitespace())
+    if (!this->json_ops_.SkipWhitespace())
     {
         result = this->GetState().CheckEndOfFile();
     }
@@ -386,7 +389,7 @@ auto StructureParserBase::ParseValue() noexcept -> ParserResult
     {
         static_cast<void>(this->GetJsonDocument().GetClearedStringBuffer());
 
-        const char cur{this->GetJsonOps().Take()};
+        const char cur{this->json_ops_.Take()};
         switch (std::char_traits<char>::to_int_type(cur))
         {
             case std::char_traits<char>::to_int_type('n'):
@@ -442,14 +445,14 @@ auto StructureParserBase::ParseValue() noexcept -> ParserResult
 /// - Parse all characters and add them to the number string until a comma, a closing brace/bracket, or a whitespace
 ///   character is encountered.
 /// @endinternal
-auto StructureParserBase::GetNumber(const char first) noexcept -> CStringView
+auto StructureParser::GetNumber(const char first) noexcept -> CStringView
 {
     constexpr static StringView kLimiterChars{",}] \n\r\t"};
     String& buffer{this->GetJsonDocument().GetStringBuffer()};
 
     buffer.push_back(first);
 
-    static_cast<void>(this->GetJsonOps()
+    static_cast<void>(this->json_ops_
 
                           .ReadUntil(StringView{kLimiterChars},
                                      [&buffer](StringView ch) noexcept {
