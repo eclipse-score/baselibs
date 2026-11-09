@@ -67,11 +67,14 @@ jobs:
         uses: eclipse-score/cicd-actions/setup-bazel-cache@659dcbed63f6b7fbde88c7850125ea0a0a92f939
         with:
           unique-cache-name: ${{ github.workflow }}-${{ github.job }}-${{ matrix.name }}
+      - name: Configure fast APT mirror
+        if: matrix.bazel-config == 'score-linux-aarch64'
+        uses: vegardit/fast-apt-mirror.sh@5861fa3e23a90b3adfbb5e40067d1ed1a054e980 # v1
       - name: Install QEMU
         if: matrix.bazel-config == 'score-linux-aarch64'
-        uses: awalsh128/cache-apt-pkgs-action@553a35bb8ebd9fcabcb1c9451aa4c98e1b4ca8a9 # v1.6.3
-        with:
-          packages: qemu-user
+        run: |
+          sudo apt-get update
+          sudo apt install -y qemu-user
       - name: Bazel Build
         working-directory: ${{ matrix.working-directory }}
         run: |
