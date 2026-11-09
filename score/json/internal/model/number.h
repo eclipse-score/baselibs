@@ -74,7 +74,7 @@ class Number
     ArithmeticType value_;
 };
 
-// Explicit instantiation declaration for TryLosslessCast() to meet MISRA requirements.
+// Explicit instantiation declaration for Number::As() to meet MISRA requirements.
 extern template score::Result<std::uint64_t> score::json::Number::As() const noexcept;
 extern template score::Result<std::uint32_t> score::json::Number::As() const noexcept;
 extern template score::Result<std::uint16_t> score::json::Number::As() const noexcept;
