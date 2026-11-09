@@ -107,16 +107,16 @@
     },
     {
       "branches": {
-        "percent": 87,
-        "total": 166
+        "percent": 90,
+        "total": 162
       },
       "files": {
-        "measured": 16,
-        "total": 22
+        "measured": 15,
+        "total": 20
       },
       "lines": {
-        "percent": 75,
-        "total": 1020
+        "percent": 97,
+        "total": 715
       },
       "primary_need_id": "comp__baselibs_json"
     },

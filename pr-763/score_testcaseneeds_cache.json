@@ -314848,7 +314848,7 @@
   {
     "name": "Number__FromUint8ToAnyOtherType",
     "file": "score/json/internal/model/number_test.cpp",
-    "line": "85",
+    "line": "86",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -314862,7 +314862,7 @@
   {
     "name": "Number__FromUint16ToAnyOtherType",
     "file": "score/json/internal/model/number_test.cpp",
-    "line": "107",
+    "line": "108",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -314876,7 +314876,7 @@
   {
     "name": "Number__FromUint32ToAnyOtherType",
     "file": "score/json/internal/model/number_test.cpp",
-    "line": "129",
+    "line": "130",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -314890,7 +314890,7 @@
   {
     "name": "Number__FromUint64ToAnyOtherType",
     "file": "score/json/internal/model/number_test.cpp",
-    "line": "151",
+    "line": "152",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -314904,7 +314904,7 @@
   {
     "name": "Number__FromInt8ToAnyOtherType",
     "file": "score/json/internal/model/number_test.cpp",
-    "line": "230",
+    "line": "231",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -314918,7 +314918,7 @@
   {
     "name": "Number__FromInt16ToAnyOtherType",
     "file": "score/json/internal/model/number_test.cpp",
-    "line": "248",
+    "line": "249",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -314932,7 +314932,7 @@
   {
     "name": "Number__FromInt32ToAnyOtherType",
     "file": "score/json/internal/model/number_test.cpp",
-    "line": "266",
+    "line": "267",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -314946,7 +314946,7 @@
   {
     "name": "Number__FromInt64ToAnyOtherType",
     "file": "score/json/internal/model/number_test.cpp",
-    "line": "284",
+    "line": "285",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -314960,7 +314960,7 @@
   {
     "name": "Number__FromFloatToAnyOtherType",
     "file": "score/json/internal/model/number_test.cpp",
-    "line": "600",
+    "line": "591",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -314974,7 +314974,7 @@
   {
     "name": "Number__FromDoubleToAnyOtherType",
     "file": "score/json/internal/model/number_test.cpp",
-    "line": "612",
+    "line": "603",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -314986,9 +314986,51 @@
     "FullyVerifies": null
   },
   {
+    "name": "Number__FromNanToAnyOtherType",
+    "file": "score/json/internal/model/number_test.cpp",
+    "line": "646",
+    "result": "passed",
+    "repo_name": "local_repo",
+    "hash": "",
+    "url": "",
+    "TestType": "interface-test",
+    "DerivationTechnique": "equivalence-classes",
+    "result_text": "",
+    "PartiallyVerifies": null,
+    "FullyVerifies": null
+  },
+  {
+    "name": "Number__NarrowingIntegerIsRejectedByType",
+    "file": "score/json/internal/model/number_test.cpp",
+    "line": "659",
+    "result": "passed",
+    "repo_name": "local_repo",
+    "hash": "",
+    "url": "",
+    "TestType": "interface-test",
+    "DerivationTechnique": "equivalence-classes",
+    "result_text": "",
+    "PartiallyVerifies": null,
+    "FullyVerifies": null
+  },
+  {
+    "name": "Number__FloatingPointEdgeCases",
+    "file": "score/json/internal/model/number_test.cpp",
+    "line": "693",
+    "result": "passed",
+    "repo_name": "local_repo",
+    "hash": "",
+    "url": "",
+    "TestType": "interface-test",
+    "DerivationTechnique": "boundary-values",
+    "result_text": "",
+    "PartiallyVerifies": null,
+    "FullyVerifies": null
+  },
+  {
     "name": "Number__CheckEqualOperator",
     "file": "score/json/internal/model/number_test.cpp",
-    "line": "630",
+    "line": "713",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
