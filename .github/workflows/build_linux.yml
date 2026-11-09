@@ -60,7 +60,7 @@ jobs:
     with:
       build-targets: ${{ matrix.bazel-build-target }}
       test-targets: ${{ matrix.bazel-test-target }}
-      bazel-args: --config ${{ matrix.bazel-config }}
+      bazel-configs: ${{ matrix.bazel-config }}
       test-args: ${{ matrix.bazel-test-extra-flags || '' }}
       working-directory: ${{ matrix.working-directory }}
       cache-key: ${{ github.workflow }}-linux-build-and-test-${{ matrix.name }}
