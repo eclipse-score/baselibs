@@ -20,12 +20,12 @@ mod ffi {
 
         /// Opaque C++ `score::cpp::stop_token`.
         #[namespace = "score"]
-        #[cxx_name = "cxx_stop_token"]
+        #[cxx_name = "CxxStopToken"]
         type stop_token;
 
         /// Opaque C++ `score::cpp::stop_source`.
         #[namespace = "score"]
-        #[cxx_name = "cxx_stop_source"]
+        #[cxx_name = "CxxStopSource"]
         type stop_source;
 
         #[namespace = "score::language::rust::stop_token"]
