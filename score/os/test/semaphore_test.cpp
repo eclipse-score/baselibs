@@ -404,8 +404,8 @@ TEST_F(SemaphoreTestFixture, SuccessTimedWaitFailureChrono)
     RecordProperty("TestType", "interface-test");
     RecordProperty("DerivationTechnique", "equivalence-classes");  // equivalence classes
 
-    std::chrono::time_point<std::chrono::system_clock> abs_time =
-        std::chrono::time_point<std::chrono::system_clock>{std::chrono::nanoseconds(-1)};
+    const std::chrono::time_point<std::chrono::system_clock, std::chrono::nanoseconds> abs_time{
+        std::chrono::nanoseconds{-1}};
     const auto sem = ::sem_open(m_name_.c_str(), O_CREAT, S_IRUSR, value_);
     ASSERT_NE(sem, SEM_FAILED);
     ASSERT_TRUE(sem != nullptr);
@@ -461,8 +461,8 @@ TEST_F(SemaphoreTestFixture, FailureTimedWaitMonotonicChrono)
     RecordProperty("DerivationTechnique", "equivalence-classes");  // equivalence classes
 
     // An invalid nanoseconds field is rejected with EINVAL before the semaphore can be decremented.
-    std::chrono::time_point<std::chrono::steady_clock> abs_time =
-        std::chrono::time_point<std::chrono::steady_clock>{std::chrono::nanoseconds(-1)};
+    const std::chrono::time_point<std::chrono::steady_clock, std::chrono::nanoseconds> abs_time{
+        std::chrono::nanoseconds{-1}};
     const auto sem = ::sem_open(m_name_.c_str(), O_CREAT, S_IRUSR, value_);
     ASSERT_NE(sem, SEM_FAILED);
     ASSERT_TRUE(sem != nullptr);
