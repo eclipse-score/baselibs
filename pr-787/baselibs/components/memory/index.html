@@ -7,7 +7,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>memory &#8212; S-CORE Baselibs  documentation</title>
+    <title>Memory &#8212; S-CORE Baselibs  documentation</title>
   
   
   
@@ -72,7 +72,7 @@
     <script>DOCUMENTATION_OPTIONS.search_as_you_type = false;</script>
     <link rel="index" title="Index" href="../../../genindex.html" />
     <link rel="search" title="Search" href="../../../search.html" />
-    <link rel="next" title="Memory Shared Component Architecture" href="architecture/index.html" />
+    <link rel="next" title="Memory Component Architecture" href="architecture/index.html" />
     <link rel="prev" title="Implementation Inspection Checklist" href="../language/safecpp/detailed_design/chklst_impl_inspection.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="color-scheme" content="light dark"/>
@@ -415,8 +415,8 @@
 <li class="toctree-l1"><a class="reference internal" href="../hash/index.html">hash</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../json/index.html">JSON-Library</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../language/index.html">language</a></li>
-<li class="toctree-l1 current active has-children"><a aria-current="page" class="current reference internal" href="#">memory</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
-<li class="toctree-l2"><a class="reference internal" href="architecture/index.html">Memory Shared Component Architecture</a></li>
+<li class="toctree-l1 current active has-children"><a aria-current="page" class="current reference internal" href="#">Memory</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="architecture/index.html">Memory Component Architecture</a></li>
 <li class="toctree-l2"><a class="reference internal" href="requirements/index.html">Requirements</a></li>
 </ul>
 </details></li>
@@ -471,7 +471,7 @@
     
     <li class="breadcrumb-item"><a href="../index.html" class="nav-link">Components</a></li>
     
-    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">memory</span></li>
+    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">Memory</span></li>
   </ul>
 </nav>
 </div>
@@ -489,8 +489,8 @@
                 <article class="bd-article">
                   
   <section id="memory">
-<span id="comp-doc-memory-shared"></span><h1>memory<a class="headerlink" href="#memory" title="Link to this heading">#</a></h1>
-<div class="need_container docutils container" id="SNCB-e4d978b7">
+<span id="comp-doc-memory"></span><h1>Memory<a class="headerlink" href="#memory" title="Link to this heading">#</a></h1>
+<div class="need_container docutils container" id="SNCB-6dcf1d98">
 <div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_document table" id="doc__memory">
 <tbody>
 <tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
@@ -510,7 +510,7 @@
 </tr>
 <tr class="meta row-even"><td class="meta" colspan="3"><div class="needs_meta_left line-block">
 <div class="line"><span><span><div class="line"><span class="needs_tags"><span class="needs_label">tags: </span><span class="needs_data_container"><span class="needs_data">baselibs_memory</span></span></span></div>
-<div class="line"><span class="needs_version"><span class="needs_label">version: </span>1</span></div>
+<div class="line"><span class="needs_version"><span class="needs_label">version: </span>2</span></div>
 </span></span></div>
 <div class="line"><span><div class="line">realizes: <span class="realizes"><span><a class="external_link reference external" href="https://eclipse-score.github.io/process_description//main/process_areas/change_management/change_management_workproducts.html#wp__cmpt_request">wp__cmpt_request</a></span></span></div>
 </span></div>
@@ -538,33 +538,33 @@
 </div>
 <section id="abstract">
 <h2>Abstract<a class="headerlink" href="#abstract" title="Link to this heading">#</a></h2>
-<p>The Memory library provides APIs for memory management to facilitate inter-process communication (IPC) in the S-CORE software platform.</p>
+<p>The Memory library provides byte-order utilities, size and alignment information, and a ring buffer with construction-time capacity.</p>
 </section>
 <section id="motivation-and-rationale">
 <h2>Motivation and Rationale<a class="headerlink" href="#motivation-and-rationale" title="Link to this heading">#</a></h2>
-<p>The Memory library shall provide mechanisms for creating, accessing, and managing shared memory between different processes.
-It includes support for polymorphic memory resource allocators using offset pointers and additional utilities to deal with memory use-cases.</p>
-<p>The Memory library is needed in the S-CORE software platform because subsystems like Communication and Logging rely on shared memory for inter-process communication.</p>
+<p>Callers use these utilities to interpret byte order, represent allocation size and alignment, and store a bounded sequence using a caller-selected allocation resource.</p>
 </section>
 <section id="specification">
 <h2>Specification<a class="headerlink" href="#specification" title="Link to this heading">#</a></h2>
-<p>The following details and requirements describe the aspects of the current feature in the context of S-CORE.</p>
-<section id="general-considerations">
-<h3>General considerations<a class="headerlink" href="#general-considerations" title="Link to this heading">#</a></h3>
-<p>The Memory Library should provide APIs for memory management:</p>
-<ul class="simple">
-<li><p><a class="reference internal" href="requirements/index.html#comp_req__memory__shared_memory" title="comp_req__memory__shared_memory"><em class="xref need">Shared Memory Management (comp_req__memory__shared_memory)</em></a></p></li>
-<li><p><a class="reference internal" href="requirements/index.html#comp_req__memory__offset_ptr" title="comp_req__memory__offset_ptr"><em class="xref need">Polymorphic OffsetPtr Alloc... (comp_req__memory__offset_ptr)</em></a></p></li>
-<li><p><a class="reference internal" href="requirements/index.html#comp_req__memory__shared_container" title="comp_req__memory__shared_container"><em class="xref need">Shared Memory Container (comp_req__memory__shared_container)</em></a></p></li>
-<li><p><a class="reference internal" href="requirements/index.html#comp_req__memory__inter_process_sync" title="comp_req__memory__inter_process_sync"><em class="xref need">Inter-Process Synchronization (comp_req__memory__inter_process_sync)</em></a></p></li>
-<li><p><a class="reference internal" href="requirements/index.html#comp_req__memory__bounds_check" title="comp_req__memory__bounds_check"><em class="xref need">Memory Region Bounds Checking (comp_req__memory__bounds_check)</em></a></p></li>
-<li><p><a class="reference internal" href="requirements/index.html#comp_req__memory__endianness" title="comp_req__memory__endianness"><em class="xref need">Endianness Conversion (comp_req__memory__endianness)</em></a></p></li>
-<li><p><a class="reference internal" href="requirements/index.html#comp_req__memory__sealed_shm" title="comp_req__memory__sealed_shm"><em class="xref need">Sealed Shared Memory (comp_req__memory__sealed_shm)</em></a></p></li>
-<li><p><a class="reference internal" href="requirements/index.html#comp_req__memory__typed_memory" title="comp_req__memory__typed_memory"><em class="xref need">Typed Memory (comp_req__memory__typed_memory)</em></a></p></li>
-<li><p><a class="reference internal" href="requirements/index.html#comp_req__memory__resource_registry" title="comp_req__memory__resource_registry"><em class="xref need">Memory Resource Registry (comp_req__memory__resource_registry)</em></a></p></li>
-<li><p><a class="reference internal" href="requirements/index.html#comp_req__memory__atomic_ops" title="comp_req__memory__atomic_ops"><em class="xref need">Atomic Operations in Shared... (comp_req__memory__atomic_ops)</em></a></p></li>
-</ul>
-<p>The library should ensure that all memory operations are performed safely, with appropriate bounds checking and synchronization mechanisms to prevent memory corruption.</p>
+<p>The Memory library provides the following capabilities.</p>
+<section id="endianness">
+<h3>Endianness<a class="headerlink" href="#endianness" title="Link to this heading">#</a></h3>
+<p>The endianness utilities identify the host byte order as little endian or big endian and determine whether a requested byte order differs from the host.
+They reverse the bytes of 32-bit and 64-bit unsigned integers and convert big-endian values of those types to host byte order.
+The endianness unit tests partially verify <a class="reference internal" href="requirements/index.html#comp_req__memory__endianness" title="comp_req__memory__endianness"><em class="xref need">Endianness Utilities (comp_req__memory__endianness)</em></a> through host detection, byte-order comparison, byte reversal, and big-endian-to-host conversion.
+The current test environment assumes a little-endian host.</p>
+</section>
+<section id="size-and-alignment-information">
+<h3>Size and Alignment Information<a class="headerlink" href="#size-and-alignment-information" title="Link to this heading">#</a></h3>
+<p>Size and alignment information describes an allocation’s size and required alignment and supports comparing two size and alignment pairs for equality.
+Alignment must be a nonzero power of two within the supported range, and size must be a multiple of alignment.</p>
+</section>
+<section id="fixed-capacity-ring-buffer">
+<h3>Fixed-Capacity Ring Buffer<a class="headerlink" href="#fixed-capacity-ring-buffer" title="Link to this heading">#</a></h3>
+<p>The ring buffer stores a bounded sequence with capacity selected at construction.
+Callers supply an allocation resource and a capacity greater than zero.
+Inserting into a full buffer removes the oldest element before adding the new element.
+The oldest element can be accessed or removed, the buffer can be cleared, and its size and capacity can be queried.</p>
 </section>
 </section>
 </section>
@@ -593,7 +593,7 @@ It includes support for polymorphic memory resource allocators using offset poin
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">Memory Shared Component Architecture</p>
+        <p class="prev-next-title">Memory Component Architecture</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
@@ -619,7 +619,9 @@ It includes support for polymorphic memory resource allocators using offset poin
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#abstract">Abstract</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#motivation-and-rationale">Motivation and Rationale</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#specification">Specification</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#general-considerations">General considerations</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#endianness">Endianness</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#size-and-alignment-information">Size and Alignment Information</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#fixed-capacity-ring-buffer">Fixed-Capacity Ring Buffer</a></li>
 </ul>
 </li>
 </ul>
