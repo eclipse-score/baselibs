@@ -21,12 +21,6 @@
 #include <ostream>
 #include <string>
 #include <string_view>
-#include <utility>
-
-#include "score/json/internal/parser/vajson/types.h"
-#include "score/json/internal/writer/vajson/j_key_type.h"
-#include "score/json/internal/writer/vajson/j_string_type.h"
-#include "score/json/internal/writer/vajson/serializer_types.h"
 
 namespace score::json::vajson::internal
 {
@@ -37,14 +31,6 @@ class EscapedJsonString
     /// @brief Constructs an EscapedJsonString from a StringView
     /// @param[in] value The value to serialize.
     explicit EscapedJsonString(std::string_view value) noexcept : value_{value} {}
-
-    /// @brief Constructs an EscapedJsonString from a JSON key
-    /// @param[in] key to serialize.
-    explicit EscapedJsonString(JKeyType key) noexcept : EscapedJsonString{key.GetValue()} {}
-
-    /// @brief Constructs an EscapedJsonString from a JSON string
-    /// @param[in] string to serialize.
-    explicit EscapedJsonString(JStringType string) noexcept : EscapedJsonString{string.GetValue()} {}
 
     /// @brief Returns the contained string
     /// @return The contained string.

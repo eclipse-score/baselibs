@@ -21,7 +21,7 @@ cc_library(
     hdrs = ["serializer.h"],
     features = COMPILER_WARNING_FEATURES,
     implementation_deps = [
-        "@score_baselibs//score/json/internal/writer/vajson:any_serializer",
+        "@score_baselibs//score/json/internal/writer/vajson:formatting_writer",
         "@score_baselibs//score/language/futurecpp",
     ],
     tags = ["FFI"],
