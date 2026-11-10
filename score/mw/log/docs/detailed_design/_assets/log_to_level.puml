@@ -9,7 +9,7 @@ log_to_level_macro -> log_macro : Log message with given level
 log_macro --> actor
 
 note left
-    Case of 'dd_dyn<U+005F><U+005F>log<U+005F><U+005F>log_op'
+    Case of 'comp_arc_dyn<U+005F><U+005F>log<U+005F><U+005F>log_op'
 end note
 
 @enduml
