@@ -5,7 +5,9 @@ implementation details of the backends. Applying the component principles from
 [1] the goal here is to structure the dependencies in a way that instable
 components depend on stable components.
 
-![Use Case Diagram](./score/mw/log/design/frontend_dependency_graph.puml)
+```{uml} ../_assets/frontend_dependency_graph.puml
+:caption: Use Case Diagram
+```
 
 The `mw::log` component is divided in a stable frontend and the backends with
 the implementation details. The frontend shall be API compatible to the ara::log
