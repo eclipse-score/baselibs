@@ -7519,7 +7519,7 @@
         {
           "name": "SemaphoreTestFixture__SuccessSemOpen",
           "file": "score/os/test/semaphore_test.cpp",
-          "line": 44,
+          "line": 47,
           "need": "comp_req__osal__asil_b_operation_delegation",
           "verify_type": "partially",
           "result": "passed",
@@ -7531,7 +7531,7 @@
         {
           "name": "SemaphoreTestFixture__FailureSemOpen",
           "file": "score/os/test/semaphore_test.cpp",
-          "line": 66,
+          "line": 69,
           "need": "comp_req__osal__asil_b_operation_delegation",
           "verify_type": "partially",
           "result": "passed",
@@ -7543,7 +7543,7 @@
         {
           "name": "SemaphoreTestFixture__FailureSemOpenWithoutCreateFlag",
           "file": "score/os/test/semaphore_test.cpp",
-          "line": 80,
+          "line": 83,
           "need": "comp_req__osal__asil_b_operation_delegation",
           "verify_type": "partially",
           "result": "passed",
@@ -7555,7 +7555,7 @@
         {
           "name": "SemaphoreTestFixture__SuccessGetValue",
           "file": "score/os/test/semaphore_test.cpp",
-          "line": 93,
+          "line": 96,
           "need": "comp_req__osal__asil_b_operation_delegation",
           "verify_type": "partially",
           "result": "passed",
@@ -7567,7 +7567,7 @@
         {
           "name": "SemaphoreTestFixture__FailureSemPost",
           "file": "score/os/test/semaphore_test.cpp",
-          "line": 113,
+          "line": 116,
           "need": "comp_req__osal__asil_b_operation_delegation",
           "verify_type": "partially",
           "result": "passed",
@@ -7579,7 +7579,7 @@
         {
           "name": "SemaphoreTestFixture__SuccessTimedWait",
           "file": "score/os/test/semaphore_test.cpp",
-          "line": 134,
+          "line": 137,
           "need": "comp_req__osal__asil_b_operation_delegation",
           "verify_type": "partially",
           "result": "passed",
@@ -7591,7 +7591,7 @@
         {
           "name": "SemaphoreTestFixture__SuccessSemOpenAllModes",
           "file": "score/os/test/semaphore_test.cpp",
-          "line": 152,
+          "line": 155,
           "need": "comp_req__osal__asil_b_operation_delegation",
           "verify_type": "partially",
           "result": "passed",
@@ -7603,7 +7603,7 @@
         {
           "name": "SemaphoreTestFixture__SuccessSemWait",
           "file": "score/os/test/semaphore_test.cpp",
-          "line": 180,
+          "line": 183,
           "need": "comp_req__osal__asil_b_operation_delegation",
           "verify_type": "partially",
           "result": "passed",
@@ -7615,7 +7615,7 @@
         {
           "name": "SemaphoreTestFixture__SuccessSemTryWait",
           "file": "score/os/test/semaphore_test.cpp",
-          "line": 203,
+          "line": 206,
           "need": "comp_req__osal__asil_b_operation_delegation",
           "verify_type": "partially",
           "result": "passed",
@@ -7627,7 +7627,7 @@
         {
           "name": "SemaphoreTestFixture__FailureSemTryWait",
           "file": "score/os/test/semaphore_test.cpp",
-          "line": 226,
+          "line": 229,
           "need": "comp_req__osal__asil_b_operation_delegation",
           "verify_type": "partially",
           "result": "passed",
@@ -7639,7 +7639,7 @@
         {
           "name": "SemaphoreTestFixture__SuccessSemPost",
           "file": "score/os/test/semaphore_test.cpp",
-          "line": 252,
+          "line": 255,
           "need": "comp_req__osal__asil_b_operation_delegation",
           "verify_type": "partially",
           "result": "passed",
@@ -7651,7 +7651,19 @@
         {
           "name": "SemaphoreTestFixture__TimeoutWaitTimeout",
           "file": "score/os/test/semaphore_test.cpp",
-          "line": 276,
+          "line": 279,
+          "need": "comp_req__osal__asil_b_operation_delegation",
+          "verify_type": "partially",
+          "result": "passed",
+          "result_text": "",
+          "repo_name": "local_repo",
+          "hash": "",
+          "url": ""
+        },
+        {
+          "name": "SemaphoreTestFixture__TimeoutWaitTimeoutEINTR",
+          "file": "score/os/test/semaphore_test.cpp",
+          "line": 323,
           "need": "comp_req__osal__asil_b_operation_delegation",
           "verify_type": "partially",
           "result": "passed",
@@ -7663,7 +7675,7 @@
         {
           "name": "SemaphoreTestFixture__SuccessTimedWaitFailure",
           "file": "score/os/test/semaphore_test.cpp",
-          "line": 296,
+          "line": 367,
           "need": "comp_req__osal__asil_b_operation_delegation",
           "verify_type": "partially",
           "result": "passed",
@@ -7675,7 +7687,7 @@
         {
           "name": "SemaphoreTestFixture__SuccessTimedWaitMonotonic",
           "file": "score/os/test/semaphore_test.cpp",
-          "line": 313,
+          "line": 384,
           "need": "comp_req__osal__asil_b_operation_delegation",
           "verify_type": "partially",
           "result": "passed",
@@ -7687,7 +7699,7 @@
         {
           "name": "SemaphoreTestFixture__TimeoutTimedWaitMonotonic",
           "file": "score/os/test/semaphore_test.cpp",
-          "line": 335,
+          "line": 424,
           "need": "comp_req__osal__asil_b_operation_delegation",
           "verify_type": "partially",
           "result": "passed",
@@ -7699,7 +7711,7 @@
         {
           "name": "SemaphoreTestFixture__SuccessTimedWaitChrono",
           "file": "score/os/test/semaphore_test.cpp",
-          "line": 362,
+          "line": 451,
           "need": "comp_req__osal__asil_b_operation_delegation",
           "verify_type": "partially",
           "result": "passed",
@@ -7711,7 +7723,7 @@
         {
           "name": "SemaphoreTestFixture__SuccessTimedWaitFailureChrono",
           "file": "score/os/test/semaphore_test.cpp",
-          "line": 380,
+          "line": 470,
           "need": "comp_req__osal__asil_b_operation_delegation",
           "verify_type": "partially",
           "result": "passed",
@@ -7723,19 +7735,7 @@
         {
           "name": "SemaphoreTestFixture__SuccessTimedWaitMonotonicChrono",
           "file": "score/os/test/semaphore_test.cpp",
-          "line": 399,
-          "need": "comp_req__osal__asil_b_operation_delegation",
-          "verify_type": "partially",
-          "result": "passed",
-          "result_text": "",
-          "repo_name": "local_repo",
-          "hash": "",
-          "url": ""
-        },
-        {
-          "name": "SemaphoreTestFixture__FailureTimedWaitMonotonic",
-          "file": "score/os/test/semaphore_test.cpp",
-          "line": 418,
+          "line": 489,
           "need": "comp_req__osal__asil_b_operation_delegation",
           "verify_type": "partially",
           "result": "passed",
@@ -7747,7 +7747,7 @@
         {
           "name": "SemaphoreTestFixture__TimeoutTimedWaitMonotonicChrono",
           "file": "score/os/test/semaphore_test.cpp",
-          "line": 437,
+          "line": 509,
           "need": "comp_req__osal__asil_b_operation_delegation",
           "verify_type": "partially",
           "result": "passed",
@@ -7759,7 +7759,7 @@
         {
           "name": "SemaphoreTestFixture__FailureTimedWaitMonotonicChrono",
           "file": "score/os/test/semaphore_test.cpp",
-          "line": 456,
+          "line": 529,
           "need": "comp_req__osal__asil_b_operation_delegation",
           "verify_type": "partially",
           "result": "passed",
@@ -7771,7 +7771,7 @@
         {
           "name": "SemaphoreTestFixture__SuccessSemDestroy",
           "file": "score/os/test/semaphore_test.cpp",
-          "line": 485,
+          "line": 558,
           "need": "comp_req__osal__asil_b_operation_delegation",
           "verify_type": "partially",
           "result": "passed",
@@ -7783,7 +7783,7 @@
         {
           "name": "Semaphore__get_instance",
           "file": "score/os/test/semaphore_test.cpp",
-          "line": 474,
+          "line": 547,
           "need": "comp_req__osal__asil_b_operation_delegation",
           "verify_type": "partially",
           "result": "passed",
@@ -7887,7 +7887,7 @@
         {
           "name": "SemaphoreTestFixture__FailureSemOpen",
           "file": "score/os/test/semaphore_test.cpp",
-          "line": 66,
+          "line": 69,
           "need": "comp_req__osal__error_information",
           "verify_type": "partially",
           "result": "passed",
@@ -7899,7 +7899,7 @@
         {
           "name": "SemaphoreTestFixture__FailureSemPost",
           "file": "score/os/test/semaphore_test.cpp",
-          "line": 113,
+          "line": 116,
           "need": "comp_req__osal__error_information",
           "verify_type": "partially",
           "result": "passed",
@@ -7911,7 +7911,7 @@
         {
           "name": "SemaphoreTestFixture__FailureSemTryWait",
           "file": "score/os/test/semaphore_test.cpp",
-          "line": 226,
+          "line": 229,
           "need": "comp_req__osal__error_information",
           "verify_type": "partially",
           "result": "passed",
@@ -7923,7 +7923,19 @@
         {
           "name": "SemaphoreTestFixture__TimeoutWaitTimeout",
           "file": "score/os/test/semaphore_test.cpp",
-          "line": 276,
+          "line": 279,
+          "need": "comp_req__osal__error_information",
+          "verify_type": "partially",
+          "result": "passed",
+          "result_text": "",
+          "repo_name": "local_repo",
+          "hash": "",
+          "url": ""
+        },
+        {
+          "name": "SemaphoreTestFixture__TimeoutWaitTimeoutEINTR",
+          "file": "score/os/test/semaphore_test.cpp",
+          "line": 323,
           "need": "comp_req__osal__error_information",
           "verify_type": "partially",
           "result": "passed",
@@ -7935,7 +7947,7 @@
         {
           "name": "SemaphoreTestFixture__SuccessTimedWaitFailure",
           "file": "score/os/test/semaphore_test.cpp",
-          "line": 296,
+          "line": 367,
           "need": "comp_req__osal__error_information",
           "verify_type": "partially",
           "result": "passed",
@@ -7947,7 +7959,7 @@
         {
           "name": "SemaphoreTestFixture__TimeoutTimedWaitMonotonic",
           "file": "score/os/test/semaphore_test.cpp",
-          "line": 335,
+          "line": 424,
           "need": "comp_req__osal__error_information",
           "verify_type": "partially",
           "result": "passed",
@@ -7959,19 +7971,7 @@
         {
           "name": "SemaphoreTestFixture__SuccessTimedWaitFailureChrono",
           "file": "score/os/test/semaphore_test.cpp",
-          "line": 380,
-          "need": "comp_req__osal__error_information",
-          "verify_type": "partially",
-          "result": "passed",
-          "result_text": "",
-          "repo_name": "local_repo",
-          "hash": "",
-          "url": ""
-        },
-        {
-          "name": "SemaphoreTestFixture__FailureTimedWaitMonotonic",
-          "file": "score/os/test/semaphore_test.cpp",
-          "line": 418,
+          "line": 470,
           "need": "comp_req__osal__error_information",
           "verify_type": "partially",
           "result": "passed",
@@ -7983,7 +7983,7 @@
         {
           "name": "SemaphoreTestFixture__TimeoutTimedWaitMonotonicChrono",
           "file": "score/os/test/semaphore_test.cpp",
-          "line": 437,
+          "line": 509,
           "need": "comp_req__osal__error_information",
           "verify_type": "partially",
           "result": "passed",
@@ -7995,7 +7995,7 @@
         {
           "name": "SemaphoreTestFixture__FailureTimedWaitMonotonicChrono",
           "file": "score/os/test/semaphore_test.cpp",
-          "line": 456,
+          "line": 529,
           "need": "comp_req__osal__error_information",
           "verify_type": "partially",
           "result": "passed",
