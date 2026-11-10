@@ -32,6 +32,7 @@ Detailed Design
 
    rust_bridge_design.rst
    log_frontend_design.rst
+   external_libraries.rst
    cpp_design/README.md
    cpp_design/configuration_design.md
    cpp_design/dependency_graph.md
