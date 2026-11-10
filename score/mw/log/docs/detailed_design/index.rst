@@ -32,4 +32,10 @@ Detailed Design
 
    rust_bridge_design.rst
    log_frontend_design.rst
+   cpp_design/README.md
+   cpp_design/configuration_design.md
+   cpp_design/dependency_graph.md
+   cpp_design/registry_aware_recorder_factory.md
+   cpp_design/dynamic_backend_loading_design.md
+   cpp_design/design_decisions.md
    chklst_impl_inspection.rst
