@@ -15,8 +15,11 @@
 
 #include <fcntl.h>
 #include <gtest/gtest.h>
+#include <pthread.h>
 #include <limits.h>
 #include <time.h>
+#include <csignal>
+#include <thread>
 
 namespace score
 {
@@ -272,7 +275,7 @@ TEST_F(SemaphoreTestFixture, SuccessSemPost)
     unit_.sem_close(sem);
 }
 
-// Timeout test for sem_waittimeout()
+// Timeout test for EINTR with resume sem_waittimeout()
 TEST_F(SemaphoreTestFixture, TimeoutWaitTimeout)
 {
     RecordProperty("PartiallyVerifies",
@@ -286,10 +289,78 @@ TEST_F(SemaphoreTestFixture, TimeoutWaitTimeout)
     const auto ret = unit_.sem_open(m_name_.c_str(), Semaphore::OpenFlag::kCreate, Semaphore::ModeFlag::kReadUser, 0U);
     ASSERT_TRUE(ret.has_value());
     ASSERT_TRUE(ret.value() != nullptr);
-    const auto wait = unit_.sem_waittimeout(ret.value(), std::chrono::milliseconds(10), true);
+    const auto tp1 = std::chrono::steady_clock::now();
+    const auto sigret = signal(SIGUSR1, [](int signal) {
+        (void)signal;
+    });
+    ASSERT_NE(sigret, SIG_ERR);
+
+    // create a thread sending signal to parent
+    std::thread s(
+        [](pthread_t parentId) {
+            std::this_thread::sleep_for(std::chrono::milliseconds(100));
+            sigset_t set;
+            sigemptyset(&set);
+            sigaddset(&set, SIGUSR1);
+            pthread_sigmask(SIG_BLOCK, &set, nullptr);
+            pthread_kill(parentId, SIGUSR1);
+            pthread_sigmask(SIG_UNBLOCK, &set, nullptr);
+        },
+        pthread_self());
+
+    const auto wait = unit_.sem_waittimeout(ret.value(), std::chrono::milliseconds(500), true);
+    const auto tp2 = std::chrono::steady_clock::now();
+
     ASSERT_FALSE(wait.has_value());
     EXPECT_EQ(wait.error().GetOsDependentErrorCode(), ETIMEDOUT);
+    ASSERT_GE(tp2 - tp1, std::chrono::milliseconds(500));
+    // compare timestamps
     unit_.sem_close(ret.value());
+    s.join();
+}
+
+// Timeout test for EINTR sem_waittimeout()
+TEST_F(SemaphoreTestFixture, TimeoutWaitTimeoutEINTR)
+{
+    RecordProperty("PartiallyVerifies",
+                   "comp_req__osal__asil_b_operation_delegation, comp_req__osal__error_information");
+    RecordProperty("Description", "SemaphoreTestFixture Failure Wait Timeout");
+    RecordProperty("TestType", "interface-test");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
+
+    // Semaphore starts at 0 and nobody posts to it, so sem_waittimeout() must block and
+    // return ETIMEDOUT once the deadline passes. Deadline is 10 ms from now on CLOCK_MONOTONIC.
+    const auto ret = unit_.sem_open(m_name_.c_str(), Semaphore::OpenFlag::kCreate, Semaphore::ModeFlag::kReadUser, 0U);
+    ASSERT_TRUE(ret.has_value());
+    ASSERT_TRUE(ret.value() != nullptr);
+    const auto tp1 = std::chrono::steady_clock::now();
+    const auto sigret = signal(SIGUSR1, [](int signal) {
+        (void)signal;
+    });
+    ASSERT_NE(sigret, SIG_ERR);
+
+    // create a thread sending signal to parent
+    std::thread s(
+        [](pthread_t parentId) {
+            std::this_thread::sleep_for(std::chrono::milliseconds(100));
+            sigset_t set;
+            sigemptyset(&set);
+            sigaddset(&set, SIGUSR1);
+            pthread_sigmask(SIG_BLOCK, &set, nullptr);
+            pthread_kill(parentId, SIGUSR1);
+            pthread_sigmask(SIG_UNBLOCK, &set, nullptr);
+        },
+        pthread_self());
+
+    const auto wait = unit_.sem_waittimeout(ret.value(), std::chrono::milliseconds(500), false);
+    const auto tp2 = std::chrono::steady_clock::now();
+
+    ASSERT_FALSE(wait.has_value());
+    EXPECT_EQ(wait.error().GetOsDependentErrorCode(), EINTR);
+    ASSERT_LE(tp2 - tp1, std::chrono::milliseconds(300));
+    // compare timestamps
+    unit_.sem_close(ret.value());
+    s.join();
 }
 
 // Positive Negative for sem_timedwait()
