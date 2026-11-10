@@ -285,7 +285,7 @@ Console Backend
    :satisfied_by: comp__log[version==1]
    :version: 1
 
-    ``mw::log`` shall support output log messages to stdout when running unit tests.
+    ``mw::log`` shall support output log messages to stdout.
 
 Non-Functional Requirements
 ===========================

@@ -66,8 +66,7 @@ See also :need:`doc_concept__wp_inspections` for further information about revie
       - Is the requirement description *comprehensible* ?
       - If you think the requirement is hard to understand, comment here.
       - No
-      - :need:`comp_req__log__cfg_precedence` use order instead of Precedence
-        :need:`comp_req__log__console_backend` remove when running unit tests
+      - :need:`comp_req__log__console_backend` remove when running unit tests
       - https://github.com/eclipse-score/logging/issues/346
     * - REQ_02_02
       - Is the requirement description *unambiguous* ?
