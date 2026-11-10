@@ -12,10 +12,18 @@ description: >-
 
 1. Edit `docs/baselibs/components/<component>/docs/requirements/index.rst`.
 2. Use a stable lower-snake-case ID: `comp_req__<component>__<short_name>` or `aou_req__<component>__<short_name>`.
-3. Set every required attribute from [Requirement Attributes](#requirement-attributes), including `:version:`.
-4. For `comp_req`, pin every `:derived_from:`, `:satisfied_by:`, and `:covers:` target as `<target_id>[version==N]`.
-5. Check the linked target exists and the pinned version matches the authoritative need data.
-6. Validate with `bazel run //:docs`; the route is complete when the docs build has no metamodel, link, or schema errors caused by the change.
+3. Write the body following [Requirement Wording](#requirement-wording); split non-atomic requirements into separate needs.
+4. Set every required attribute from [Requirement Attributes](#requirement-attributes), including `:version:`.
+5. For `comp_req`, pin every `:derived_from:`, `:satisfied_by:`, and `:covers:` target as `<target_id>[version==N]`.
+6. Check the linked target exists and the pinned version matches the authoritative need data.
+7. Validate with `bazel run //:docs`; the route is complete when the docs build has no metamodel, link, or schema errors caused by the change.
+
+### Review `comp_req` / `aou_req`
+
+1. Locate the Bazel output base with `bazel info output_base`.
+2. Read the upstream inspection checklist `*score_process_description+/process/folder_templates/platform/features/feature_name/requirements/req_inspection.rst`. No component-level checklist exists; apply the feature-level one to `comp_req` and `aou_req`.
+3. Check each new or changed requirement against every checklist item and report findings by item ID, e.g. `REQ_02_03`.
+4. The route is complete when every checklist item is answered for every requirement under review.
 
 ### Look up external `feat_req` / `stkh_req`
 
@@ -47,6 +55,13 @@ Other IDs: requirements document `doc__<component>_requirements`; architecture c
 - The directive title is a short noun phrase; put `shall`, `must`, `will`, and other normative wording in the body.
 - Use `:status: invalid` with a TODO instead of linking to a `feat_req` that does not exist yet.
 - Do not rename an existing `:id:` casually; downstream links and `:need:` references depend on it.
+
+## Requirement Wording
+
+- Follow the formulation template `gd_temp__req_formulation`, defined in `*score_process_description+/process/process_areas/requirements_engineering/guidance/requirements_templates.rst` under the Bazel output base.
+- Keep each requirement atomic (checklist item `REQ_02_03`): it states one behavior that one positive test case can verify.
+- Split a body that joins independent behaviors with "and" / "or", enumerates several capabilities, or contains a bullet list of features into one need per behavior, each with its own ID.
+- Keep a requirement non-atomic only when splitting would make it harder to understand.
 
 ## Requirement Attributes
 
