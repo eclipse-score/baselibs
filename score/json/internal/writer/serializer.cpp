@@ -137,10 +137,6 @@ void WriteValue(FormattingWriter& writer, const Any& value) noexcept
     {
         WriteString(writer.Stream(), *string_value);
     }
-    else if (value.As<Null>().has_value())
-    {  // NOLINT(bugprone-branch-clone) the unreachable fallback below writes null as well
-        WriteText(writer.Stream(), "null");
-    }
     else if (const auto number = value.As<Number>(); number.has_value())
     {
         WriteNumber(writer.Stream(), number->get());
@@ -151,10 +147,8 @@ void WriteValue(FormattingWriter& writer, const Any& value) noexcept
     }
     else
     {
-        // Any holds a bool, a Number, a std::string, a Null, an Object or a List, so every alternative has been
-        // probed by now and this branch cannot be reached. Writing null keeps the output valid JSON in case an
-        // alternative is added to Any without being handled here.
-        WriteText(writer.Stream(), "null"); /* LCOV_EXCL_LINE */
+        // Null is the only alternative of Any left.
+        WriteText(writer.Stream(), "null");
     }
 }
 
@@ -179,7 +173,7 @@ score::Result<void> SerializeToStreamInternal(std::ostream& out_stream, const T&
     score::Result<void> result{};
     if (out_stream.fail())
     {
-        result = score::MakeUnexpected(Error::kUnknownError, "vaJSON serializer failed to write to stream");
+        result = score::MakeUnexpected(Error::kUnknownError, "JSON writer failed to write to stream");
     }
 
     return result;

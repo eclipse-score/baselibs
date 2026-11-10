@@ -503,10 +503,18 @@ TEST(SerializerTest, SerializesTopLevelScalars)
     RecordProperty("TestType", "requirements-based");
     RecordProperty("DerivationTechnique", "equivalence-classes");
 
-    EXPECT_EQ(SerializeToBuffer(Any{std::string{"text"}}, Formatting::kCompact).value(), std::string{"\"text\""});
-    EXPECT_EQ(SerializeToBuffer(Any{std::int32_t{-42}}, Formatting::kCompact).value(), std::string{"-42"});
-    EXPECT_EQ(SerializeToBuffer(Any{false}, Formatting::kCompact).value(), std::string{"false"});
-    EXPECT_EQ(SerializeToBuffer(Any{Null{}}, Formatting::kCompact).value(), std::string{"null"});
+    const auto string_result{SerializeToBuffer(Any{std::string{"text"}}, Formatting::kCompact)};
+    ASSERT_TRUE(string_result.has_value());
+    EXPECT_EQ(*string_result, std::string{"\"text\""});
+    const auto number_result{SerializeToBuffer(Any{std::int32_t{-42}}, Formatting::kCompact)};
+    ASSERT_TRUE(number_result.has_value());
+    EXPECT_EQ(*number_result, std::string{"-42"});
+    const auto bool_result{SerializeToBuffer(Any{false}, Formatting::kCompact)};
+    ASSERT_TRUE(bool_result.has_value());
+    EXPECT_EQ(*bool_result, std::string{"false"});
+    const auto null_result{SerializeToBuffer(Any{Null{}}, Formatting::kCompact)};
+    ASSERT_TRUE(null_result.has_value());
+    EXPECT_EQ(*null_result, std::string{"null"});
 }
 TEST(SerializerTest, EscapesObjectKeysInNestedObjects)
 {
