@@ -6271,7 +6271,7 @@
         {
           "name": "SerializerTest__PrettyPrintsNestedAny",
           "file": "score/json/internal/writer/serializer_test.cpp",
-          "line": 322,
+          "line": 326,
           "need": "comp_req__json__serialization",
           "verify_type": "partially",
           "result": "passed",
@@ -6283,7 +6283,7 @@
         {
           "name": "SerializerTest__PrettyPrintsMixedNesting",
           "file": "score/json/internal/writer/serializer_test.cpp",
-          "line": 450,
+          "line": 454,
           "need": "comp_req__json__serialization",
           "verify_type": "partially",
           "result": "passed",
@@ -6295,7 +6295,7 @@
         {
           "name": "SerializerTest__SerializesMixedNestingCompactly",
           "file": "score/json/internal/writer/serializer_test.cpp",
-          "line": 480,
+          "line": 484,
           "need": "comp_req__json__serialization",
           "verify_type": "partially",
           "result": "passed",
@@ -6307,7 +6307,7 @@
         {
           "name": "SerializerTest__SerializesTopLevelScalars",
           "file": "score/json/internal/writer/serializer_test.cpp",
-          "line": 494,
+          "line": 498,
           "need": "comp_req__json__serialization",
           "verify_type": "partially",
           "result": "passed",
@@ -6319,7 +6319,7 @@
         {
           "name": "SerializerTest__EscapesObjectKeysInNestedObjects",
           "file": "score/json/internal/writer/serializer_test.cpp",
-          "line": 515,
+          "line": 519,
           "need": "comp_req__json__serialization",
           "verify_type": "partially",
           "result": "passed",
@@ -6331,7 +6331,7 @@
         {
           "name": "SerializerTest__RejectsNonFiniteNumberNestedDeepInsideContainers",
           "file": "score/json/internal/writer/serializer_test.cpp",
-          "line": 530,
+          "line": 534,
           "need": "comp_req__json__serialization",
           "verify_type": "partially",
           "result": "passed",
