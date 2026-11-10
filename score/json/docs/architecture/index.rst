@@ -43,7 +43,7 @@ Design Decisions:
 
 It was decided to use the vaJson parser from Vector (see :need:`doc__vajson`), which is ASIL D certified.
 
-JSON writing functionality is provided by the vaJson serializer, which is wrapped by the "Wrapper" component.
+JSON writing is built on the vaJson output formatting and string escaping, and is wrapped by the "Wrapper" component.
 
 Design Constraints:
 

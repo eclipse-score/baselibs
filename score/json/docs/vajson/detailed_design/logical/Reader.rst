@@ -212,6 +212,4 @@ Util
       Reader -down-> JsonErrorDomain
       Reader -down-> JsonErrc
 
-      Writer -down-> JsonErrorDomain
-
     @enduml
