@@ -29,6 +29,7 @@ jobs:
     with:
       test-targets: //score/...
       bazel-configs: score-linux-x86_64 asan_ubsan_lsan
+      # Build and run the selected tests without building unrelated targets.
       test-args: --build_tests_only
       cache-key: ${{ github.workflow }}-linux-sanitizers
       disk-space-level: 4
