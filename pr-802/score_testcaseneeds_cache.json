@@ -311222,7 +311222,7 @@
   {
     "name": "SerializerTest__EscapesObjectKeysInNestedObjects",
     "file": "score/json/internal/writer/serializer_test.cpp",
-    "line": "507",
+    "line": "515",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -311236,7 +311236,7 @@
   {
     "name": "SerializerTest__RejectsNonFiniteNumberNestedDeepInsideContainers",
     "file": "score/json/internal/writer/serializer_test.cpp",
-    "line": "522",
+    "line": "530",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",

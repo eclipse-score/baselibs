@@ -4766,7 +4766,7 @@
             {
               "name": "SerializerTest__EscapesObjectKeysInNestedObjects",
               "file": "score/json/internal/writer/serializer_test.cpp",
-              "line": 507,
+              "line": 515,
               "need": "comp_req__json__serialization",
               "verify_type": "partially",
               "result": "passed",
@@ -4775,7 +4775,7 @@
             {
               "name": "SerializerTest__RejectsNonFiniteNumberNestedDeepInsideContainers",
               "file": "score/json/internal/writer/serializer_test.cpp",
-              "line": 522,
+              "line": 530,
               "need": "comp_req__json__serialization",
               "verify_type": "partially",
               "result": "passed",
