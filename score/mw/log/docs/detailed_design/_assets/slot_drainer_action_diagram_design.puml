@@ -10,10 +10,18 @@ title Slot disposal diagram
 
 start
 
-:Flush slot call
-circular_buffer.push(LogRecord&);
+:PushBack(slot)
+lock(context_mutex_);
+:circular_buffer.push_back(slot)
+unlock(context_mutex_);
 
 partition SlotDrainer #orange {
+  :Flush()
+  lock(context_mutex_);
+  note right
+    The mutex is held during the whole flush and
+    released on every exit path (std::lock_guard).
+  end note
   while (circular_buffer not empty) is (yes)
     :get_next_slot;
 
