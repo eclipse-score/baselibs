@@ -78,8 +78,8 @@ Configuration
    :satisfied_by: comp__log[version==1]
    :version: 1
 
-    The application specific file shall be the first valid configuration file
-    from the following locations.
+    ``mw::log`` shall use the first valid configuration file found in the
+    following order as the application-specific configuration file:
 
     1. location pointed to by the environmental variable ``MW_LOG_CONFIG_FILE``
     2. ``<cwd>/etc/logging.json``
@@ -129,8 +129,8 @@ Configuration
    :satisfied_by: comp__log[version==1]
    :version: 1
 
-    For each configuration field, ``mw::log`` shall resolve values using the
-    following precedence order:
+    ``mw::log`` shall resolve the value of each configuration field from the
+    first source that provides it, in the following order:
 
     1. Application configuration file
     2. Global configuration file
