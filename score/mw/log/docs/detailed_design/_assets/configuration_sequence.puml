@@ -58,9 +58,9 @@ CFD -> OS: access(/etc/ecu_logging_config.json)
 alt MW_LOG_CONFIG_FILE is defined
   CFD -> OS: access(MW_LOG_CONFIG_FILE)
 else MW_LOG_CONFIG_FILE is undefined
+  CFD -> OS: access(<binary path>/../etc/logging.json)
   CFD -> OS: access(<cwd>/etc/logging.json)
   CFD -> OS: access(<cwd>/logging.json)
-  CFD -> OS: access(<binary path>/../etc/logging.json)
 end
 
 CFD -> TCR: Return global and environmental or application config file paths.

@@ -12,7 +12,7 @@ For Verbose Logging, an adaptive application on target loads two configuration f
 1. The ECU-wide configuration file under `/etc/ecu_logging_config.json`.
 2. The environmental config file from the path saved under `MW_LOG_CONFIG_FILE` environmental variable
       or
-   The application-specific configuration file under `/opt/<app>/etc/logging.json` or `<cwd>/etc/logging.json` or `<cwd>/logging.json`.
+   The application-specific configuration file under `<binary path>/../etc/logging.json`, `<cwd>/etc/logging.json` or `<cwd>/logging.json`, the first existing file in this order wins.
 
 In the ECU-wide config file, an attribute called ECUID is made available that shall used
 in the DLT header. The environmental configuration then shall override the ECU-wide configuration. If not defined, the application-specific configuration then shall be applied with the settings from the application developer. In particular, an application identifier (APPID) shall be provided.
@@ -21,7 +21,7 @@ context-specific log levels may be provided.
 
 Note that for non-verbose logging there is a third configuration file:
 
-3. The non-verbose message configuration: `/opt/datarouter/etc/class-id.json`
+3. The non-verbose message configuration: `/bmw/platform/opt/datarouter/etc/class-id.json`
 
 `class-id.json` provides the logging level that a non-verbose message shall use
 when sent using the `TRACE()` macro. This design document focuses on the
@@ -72,16 +72,16 @@ On target, the configuration shall be loaded by the `TargetConfigReader` class.
 As this class has several external dependencies we also introduce the
 corresponding interfaces and mock class to unit-test the
 `RegistryAwareRecorderFactory` methods. `TargetConfigReader` uses `ConfigurationFileDiscoverer` to obtain the
-file paths for the configuration. After that it uses `lib::json` library to read
+file paths for the configuration. After that it uses `score::json` library to read
 the JSON documents and extract the configuration information from there.
 
 For unit-testing, we introduce the `IConfigurationFileDiscoverer` interface and
 corresponding mock. This enables dependency-injection of
-`MockConfigurationFileDiscoverer` into the `TargetConfigReader` for testing.
+`ConfigurationFileDiscovererMock` into the `TargetConfigReader` for testing.
 
-On lowest layer, `ConfigurationFileDiscoverer` makes use of `OSAL` for
+On lowest layer, `ConfigurationFileDiscoverer` makes use of `score::os` for
 general purpose file and directory operations, as well as finding the path of
-the current executable. We reuse the mocking facilities of OSAL to unit test the
+the current executable. We reuse the mocking facilities of `score::os` to unit test the
 file discoverer.
 
 ## Initialization Sequence Diagram

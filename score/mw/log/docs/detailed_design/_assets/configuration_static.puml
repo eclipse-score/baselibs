@@ -200,10 +200,11 @@ note right of RegistryAwareRecorderFactory
 end note
 
 note right of TargetConfigReader
-  Reads config from
-  /opt/<app>/etc/logging.json
-  and /ecu/logging.json and creates the
-  Configuration object.
+  Reads the files found by the
+  ConfigurationFileDiscoverer and creates the
+  Configuration object. The application or
+  environmental configuration overrides the
+  global configuration.
 end note
 
 note bottom of TargetConfigReaderMock
@@ -231,9 +232,9 @@ note right of ConfigurationFileDiscoverer
   variable if it defined
 
   Application configuration:
-  1. <cwd>/etc/logging.json
-  2. <cwd>/logging.json
-  3. <binary path>/../etc/logging.json
+  1. <binary path>/../etc/logging.json
+  2. <cwd>/etc/logging.json
+  3. <cwd>/logging.json
 end note
 
 @enduml

@@ -203,11 +203,11 @@ Both free functions and `Logger` methods return `LogStream` by value. Ownership 
 The logging library loads its configuration lazily on the first log call. For verbose logging, two configuration files are consulted:
 
 1. ECU-wide configuration — `/etc/ecu_logging_config.json` — provides the ECU identifier (`ECUID`) used in DLT headers.
-2. Application-specific configuration — discovered via the `MW_LOG_CONFIG_FILE` environment variable, or from standard paths (`/opt/<app>/etc/logging.json`, `<cwd>/etc/logging.json`, `<cwd>/logging.json`). This file specifies the application identifier (`APPID`), default log level, context-specific log levels, and active log modes.
+2. Application-specific configuration — discovered via the `MW_LOG_CONFIG_FILE` environment variable, or from standard paths (in this order `<binary path>/../etc/logging.json`, `<cwd>/etc/logging.json`, `<cwd>/logging.json`; the first existing file is used). This file specifies the application identifier (`APPID`), default log level, context-specific log levels, and active log modes.
 
 The application-specific configuration overrides ECU-wide defaults. The `Configuration` class (in `configuration/configuration.h`) aggregates these settings, and `TargetConfigReader` (in `configuration/target_config_reader.h`) handles file discovery and parsing via `ConfigurationFileDiscoverer`.
 
-For non-verbose logging, a third file — `/opt/datarouter/etc/class-id.json` — maps non-verbose message class IDs to their log levels.
+For non-verbose logging, a third file — `/bmw/platform/opt/datarouter/etc/class-id.json` — maps non-verbose message class IDs to their log levels.
 
 Refer to [configuration_design.md](./configuration_design.md) for the full class diagram and sequence diagram.
 
