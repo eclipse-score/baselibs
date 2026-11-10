@@ -15,6 +15,7 @@ load("@rules_cc//cc:defs.bzl", "cc_library", "cc_test")
 load("@score_baselibs//:bazel/unit_tests.bzl", "cc_unit_test_suites_for_host_and_qnx")
 load("@score_baselibs//score/quality/clang_tidy:extra_checks.bzl", "clang_tidy_extra_checks")
 load("@score_docs_as_code//:docs.bzl", "docs_bundle")
+load("@score_tooling//bazel/rules/rules_score:rules_score.bzl", "architectural_design")
 
 clang_tidy_extra_checks(
     name = "clang_tidy_extra_checks",
@@ -492,6 +493,17 @@ cc_unit_test_suites_for_host_and_qnx(
     visibility = [
         "//platform/aas/mw:__pkg__",
     ],
+)
+
+# Only the diagrams that the strict PlantUML parser of score_tooling accepts. The other diagrams in
+# docs/detailed_design/_assets use free-text names and swimlanes, or are class diagrams where the static view requires component diagrams, and need to be rewritten first.
+architectural_design(
+    name = "mw_log_architectural_design",
+    dynamic = [
+        "docs/detailed_design/_assets/configuration_sequence.puml",
+        "docs/detailed_design/_assets/wait_free_stack_trypush.puml",
+    ],
+    visibility = ["//visibility:public"],
 )
 
 docs_bundle(
