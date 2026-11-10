@@ -215,18 +215,6 @@ Configuration Fields
 Log Handling
 ============
 
-.. comp_req:: Message Loss Detection
-   :id: comp_req__log__log_loss_detect
-   :status: valid
-   :derived_from: feat_req__logging__message_loss_detection[version==1]
-   :reqtype: Functional
-   :security: NO
-   :safety: QM
-   :satisfied_by: comp__log[version==1]
-   :version: 1
-
-    ``mw::log`` shall detect and report any message loss.
-
 .. comp_req:: Custom Log Types
    :id: comp_req__log__cfg_custom_types
    :status: valid
@@ -288,7 +276,7 @@ Console Backend
     ``mw::log`` shall support output log messages to stdout when running unit tests.
 
 Non-Functional Requirements
-===============
+===========================
 
 .. comp_req:: Heap Allocation Only During Initialization
    :id: comp_req__log__local_allocation_strategy2
