@@ -145,7 +145,7 @@ score::cpp::expected_blank<Error> SemaphoreImpl::sem_waittimeout(sem_t* const se
                                                                  const std::chrono::nanoseconds timeout,
                                                                  const bool resume_on_eintr) const noexcept
 {
-    const auto tp = std::chrono::steady_clock::now() + timeout;
+    const auto tp = std::chrono::time_point_cast<std::chrono::nanoseconds>(std::chrono::steady_clock::now() + timeout);
     return sem_timedwait_monotonic(sem, tp, resume_on_eintr);
 }
 score::cpp::expected_blank<Error> SemaphoreImpl::sem_timedwait(

@@ -456,7 +456,8 @@ TEST_F(SemaphoreTestFixture, SuccessTimedWaitChrono)
     RecordProperty("TestType", "interface-test");
     RecordProperty("DerivationTechnique", "equivalence-classes");  // equivalence classes
 
-    const auto tp = std::chrono::system_clock::now() + std::chrono::seconds{5};
+    const auto tp = std::chrono::time_point_cast<std::chrono::nanoseconds>(std::chrono::system_clock::now() +
+                                                                           std::chrono::seconds{5});
     const auto ret =
         unit_.sem_open(m_name_.c_str(), Semaphore::OpenFlag::kCreate, Semaphore::ModeFlag::kReadUser, value_);
     ASSERT_TRUE(ret.has_value());
@@ -494,7 +495,8 @@ TEST_F(SemaphoreTestFixture, SuccessTimedWaitMonotonicChrono)
 
     // The timeout is expressed against CLOCK_MONOTONIC. Since the semaphore is created with value 1 it can be
     // decremented immediately, so the call returns success without ever blocking until the (future) deadline.
-    std::chrono::time_point<std::chrono::steady_clock> tp = std::chrono::steady_clock::now() + std::chrono::seconds(5);
+    const auto tp = std::chrono::time_point_cast<std::chrono::nanoseconds>(std::chrono::steady_clock::now() +
+                                                                           std::chrono::seconds{5});
     const auto ret =
         unit_.sem_open(m_name_.c_str(), Semaphore::OpenFlag::kCreate, Semaphore::ModeFlag::kReadUser, value_);
     ASSERT_TRUE(ret.has_value());
@@ -514,7 +516,8 @@ TEST_F(SemaphoreTestFixture, TimeoutTimedWaitMonotonicChrono)
 
     // Semaphore starts at 0 and nobody posts to it, so sem_timedwait_monotonic() must block and
     // return ETIMEDOUT once the deadline passes. Deadline is 10 ms from now on CLOCK_MONOTONIC.
-    std::chrono::steady_clock::time_point tp = std::chrono::steady_clock::now() + std::chrono::milliseconds(10);
+    const auto tp = std::chrono::time_point_cast<std::chrono::nanoseconds>(std::chrono::steady_clock::now() +
+                                                                           std::chrono::milliseconds{5});
     const auto ret = unit_.sem_open(m_name_.c_str(), Semaphore::OpenFlag::kCreate, Semaphore::ModeFlag::kReadUser, 0U);
     ASSERT_TRUE(ret.has_value());
     ASSERT_TRUE(ret.value() != nullptr);
