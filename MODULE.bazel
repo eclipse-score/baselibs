@@ -15,7 +15,15 @@ module(name = "score_baselibs")
 
 ## Configure the C++ toolchain
 
+# Toolchain dependencies.
 bazel_dep(name = "score_bazel_cpp_toolchains", version = "1.0.5", dev_dependency = True)
+
+bazel_dep(name = "score_bazel_platforms", version = "1.1.0")
+bazel_dep(name = "platforms", version = "1.1.0")
+
+bazel_dep(name = "score_toolchains_rust", version = "0.10.0", dev_dependency = True)
+bazel_dep(name = "score_rules_imagefs", version = "0.1.0", dev_dependency = True)
+bazel_dep(name = "score_cpp_policies", version = "0.1.2", dev_dependency = True)
 
 # TODO: Switch to the next release (after 1.0.5)
 git_override(
@@ -23,8 +31,6 @@ git_override(
     commit = "90c377061e4c3585cb5b11b6e490413664179def",
     remote = "https://github.com/eclipse-score/bazel_cpp_toolchains.git",
 )
-
-bazel_dep(name = "score_cpp_policies", version = "0.1.2", dev_dependency = True)
 
 # score_bazel_cpp_toolchains 1.0.0 removed its built-in warning features; inject them instead.
 WARNING_FEATURES = [
@@ -47,6 +53,7 @@ GCC_SANITIZER_FEATURES = SANITIZER_FEATURES + ["@score_cpp_policies//sanitizers/
 
 LLVM_SANITIZER_FEATURES = SANITIZER_FEATURES + ["@score_cpp_policies//sanitizers/features:ubsan_clang"]
 
+# Linux C++ toolchains.
 gcc = use_extension("@score_bazel_cpp_toolchains//extensions:gcc.bzl", "gcc", dev_dependency = True)
 gcc.toolchain(
     name = "score_gcc_x86_64_toolchain",
@@ -64,6 +71,8 @@ gcc.toolchain(
     use_default_package = True,
     version = "12.2.0",
 )
+
+# QNX C++ toolchains.
 gcc.toolchain(
     name = "score_qcc_x86_64_toolchain",
     extra_known_features = WARNING_FEATURES + GCC_SANITIZER_FEATURES,
@@ -128,8 +137,7 @@ use_repo(
     "score_qcc_x86_64_toolchain_pkg",
 )
 
-bazel_dep(name = "score_rules_imagefs", version = "0.1.0", dev_dependency = True)
-
+# QNX image toolchains.
 imagefs = use_extension("@score_rules_imagefs//extensions:imagefs.bzl", "imagefs", dev_dependency = True)
 imagefs.toolchain(
     name = "score_qnx_x86_64_ifs_toolchain",
@@ -183,8 +191,6 @@ bazel_dep(name = "rules_rust", version = "0.68.2-score")
 bazel_dep(name = "score_rust_policies", version = "0.0.5")
 bazel_dep(name = "score_crates", version = "0.0.13")
 bazel_dep(name = "cxx.rs", version = "1.0.186")
-
-bazel_dep(name = "score_toolchains_rust", version = "0.10.0", dev_dependency = True)
 
 ## Custom Module Loading
 
@@ -300,11 +306,3 @@ git_override(
     patches = ["//patches:hedron_compile_commands_env_vars.patch"],
     remote = "https://github.com/hedronvision/bazel-compile-commands-extractor.git",
 )
-
-#############################################################
-#
-# Constraint values for specifying platforms and toolchains
-#
-#############################################################
-bazel_dep(name = "platforms", version = "1.1.0")
-bazel_dep(name = "score_bazel_platforms", version = "1.1.0")
