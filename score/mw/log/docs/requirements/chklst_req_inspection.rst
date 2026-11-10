@@ -65,9 +65,9 @@ See also :need:`doc_concept__wp_inspections` for further information about revie
     * - REQ_02_01
       - Is the requirement description *comprehensible* ?
       - If you think the requirement is hard to understand, comment here.
-      - No
-      - :need:`comp_req__log__console_backend` remove when running unit tests
-      - https://github.com/eclipse-score/logging/issues/346
+      - Yes
+      - 
+      -
     * - REQ_02_02
       - Is the requirement description *unambiguous* ?
       - Especially search for "weak words" like "about", "etc.", "relevant" and others (see the internet documentation on this). This check shall be supported by tooling.
@@ -149,12 +149,9 @@ See also :need:`doc_concept__wp_inspections` for further information about revie
     * - REQ_10_01
       - Is the requirement description *complete* ?
       - For every requirement in the inspection, follow to its parent (feature) requirement(s) and then check if this/these are fulfilled completely by its/their linked children (component requirements, including those which are not in scope of the inspection).
-      - No
-      - All the configuraiton fields comp requirements e.g.
-        :need:`comp_req__log__cfg_sink_device` should be removed, the single
-        :need:`comp_req__log__cfg_file` links those, then each backend that
-        uses the configuraiton field shall make a component of it.
-      - https://github.com/eclipse-score/logging/issues/346
+      - Yes
+      -
+      -
 
 .. attention::
     The above checklist entries must be filled according to your component requirements in scope.

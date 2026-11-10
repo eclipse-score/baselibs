@@ -287,6 +287,10 @@ Console Backend
 
     ``mw::log`` shall support output log messages to stdout.
 
+    .. note::
+       The console backend is intended for use when running unit tests.
+
+
 Non-Functional Requirements
 ===========================
 
@@ -302,7 +306,7 @@ Non-Functional Requirements
 
    mw::log shall allocate heap memory only during the initialization phase of
    the application lifecycle, and shall therefore satisfy any memory needs after
-   that phase from pre-allocated, bounded memory resources.
+
 
 Compatibility
 =============
