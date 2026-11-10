@@ -73,7 +73,7 @@
     <link rel="index" title="Index" href="../../../../genindex.html" />
     <link rel="search" title="Search" href="../../../../search.html" />
     <link rel="next" title="os" href="../../os/index.html" />
-    <link rel="prev" title="Log Frontend Detailed Design" href="log_frontend_design.html" />
+    <link rel="prev" title="Design Decisions" href="cpp_design/design_decisions.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="color-scheme" content="light dark"/>
   <meta name="docsearch:language" content="en"/>
@@ -415,7 +415,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../../hash/index.html">hash</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../json/index.html">JSON-Library</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../language/index.html">language</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../memory/index.html">memory</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../memory/index.html">Memory</a></li>
 <li class="toctree-l1 current active has-children"><a class="reference internal" href="../index.html">log_frontend</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="../requirements/index.html">Log Frontend Requirements</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../architecture/index.html">Component Architecture</a></li>
@@ -425,6 +425,13 @@
 <li class="toctree-l2 current active has-children"><a class="reference internal" href="index.html">Detailed Design</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
 <li class="toctree-l3"><a class="reference internal" href="rust_bridge_design.html">Rust Bridge Detailed Design</a></li>
 <li class="toctree-l3"><a class="reference internal" href="log_frontend_design.html">Log Frontend Detailed Design</a></li>
+<li class="toctree-l3"><a class="reference internal" href="cpp_design/README.html">Detailed Design</a></li>
+<li class="toctree-l3"><a class="reference internal" href="cpp_design/configuration_design.html">Low Level Design of the Configuration and Initialization for <code class="docutils literal notranslate"><span class="pre">mw::log</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="cpp_design/dependency_graph.html">Dependency graph</a></li>
+
+<li class="toctree-l3"><a class="reference internal" href="cpp_design/registry_aware_recorder_factory.html">Registry Aware Recorder Factory</a></li>
+<li class="toctree-l3"><a class="reference internal" href="cpp_design/dynamic_backend_loading_design.html">Dynamic backend loading for mw::log</a></li>
+<li class="toctree-l3"><a class="reference internal" href="cpp_design/design_decisions.html">Design Decisions</a></li>
 <li class="toctree-l3 current active"><a aria-current="page" class="current reference internal" href="#">Implementation Inspection Checklist</a></li>
 </ul>
 </details></li>
@@ -503,7 +510,7 @@
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <div class="need_container docutils container" id="SNCB-8ca2be14">
+  <div class="need_container docutils container" id="SNCB-38ab7864">
 <div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_document table" id="doc__log_impl_inspection">
 <tbody>
 <tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
@@ -569,8 +576,8 @@ by linking to C++ or Rust specific documentation.</p>
 <p>It is mandatory to fill in the “passed” column with “yes” or “no” for each checklist item and additionally to add in the remarks why it is passed or not passed.
 In case of “no” an issue link to the issue tracking system has to be added in the last column (if not solved in the same issue).
 See also <a class="external_link reference external" href="https://eclipse-score.github.io/process_description//main/general_concepts/score_review_concept.html#doc_concept__wp_inspections">doc_concept__wp_inspections</a> for further information about reviews in general and inspection in particular.</p>
-<div class="pst-scrollable-table-container"><table class="table" id="id3">
-<caption><span class="caption-number">Table 43 </span><span class="caption-text">Implementation Checklist</span><a class="headerlink" href="#id3" title="Link to this table">#</a></caption>
+<div class="pst-scrollable-table-container"><table class="table" id="id4">
+<caption><span class="caption-number">Table 43 </span><span class="caption-text">Implementation Checklist</span><a class="headerlink" href="#id4" title="Link to this table">#</a></caption>
 <colgroup>
 <col style="width: 5.8%" />
 <col style="width: 14.6%" />
@@ -595,14 +602,13 @@ See also <a class="external_link reference external" href="https://eclipse-score
 (e.g. are the views done with the proposed UML diagrams)</p></td>
 <td><p>no</p></td>
 <td><p>The detailed design consists of <a class="reference internal" href="rust_bridge_design.html"><span class="doc">Rust Bridge Detailed Design</span></a> and the stub
-<a class="reference internal" href="log_frontend_design.html"><span class="doc">Log Frontend Detailed Design</span></a>. The C++ design is in <code class="docutils literal notranslate"><span class="pre">score/mw/log/design</span></code>
-and is not part of the documentation build, the bundle
-<code class="docutils literal notranslate"><span class="pre">//score/mw/log:docs</span></code> rejects files outside <code class="docutils literal notranslate"><span class="pre">score/mw/log/docs</span></code>
-(<code class="docutils literal notranslate"><span class="pre">mounts.path_escape</span></code>).</p>
+<a class="reference internal" href="log_frontend_design.html"><span class="doc">Log Frontend Detailed Design</span></a>. The C++ design is in <code class="docutils literal notranslate"><span class="pre">cpp_design</span></code> and
+<code class="docutils literal notranslate"><span class="pre">_assets</span></code>. It was moved from <code class="docutils literal notranslate"><span class="pre">score/mw/log/design</span></code>, as the bundle
+<code class="docutils literal notranslate"><span class="pre">//score/mw/log:docs</span></code> rejects files and symbolic links to files
+outside <code class="docutils literal notranslate"><span class="pre">score/mw/log/docs</span></code> (<code class="docutils literal notranslate"><span class="pre">mounts.path_escape</span></code>).</p>
 <p>Following issues need to be addressed:</p>
 <ul class="simple">
-<li><p>Move the C++ design into the documentation and restructure it after the
-template.</p></li>
+<li><p>Restructure the C++ design after the template.</p></li>
 <li><p>Add an <code class="docutils literal notranslate"><span class="pre">architectural_design</span></code> target that validates the diagrams.</p></li>
 <li><p><a class="reference internal" href="rust_bridge_design.html"><span class="doc">Rust Bridge Detailed Design</span></a> uses the architecture need types
 <code class="docutils literal notranslate"><span class="pre">comp_arc_sta</span></code> and <code class="docutils literal notranslate"><span class="pre">comp_arc_dyn</span></code>. <code class="docutils literal notranslate"><span class="pre">log_to_level.puml</span></code> refers to
@@ -617,22 +623,17 @@ Other points: To be added.</p></td>
 <td><p>Check if the linked component requirements are fulfilled
 and detailed design also matches architecture description.</p></td>
 <td><p>no</p></td>
-<td><p>29 existing tests were linked to 13 of the 18 component requirements. The
+<td><p>72 existing test cases were linked to 12 of the 18 component requirements. The
 requirement-to-test traceability is shown in
 <a class="reference internal" href="../../../../verification_report/requirements_statistics.html"><span class="doc">Component Requirements Statistics</span></a>.</p>
 <p>Following issues need to be addressed:</p>
 <ul class="simple">
-<li><p>No test for <a class="reference internal" href="../requirements/index.html#comp_req__log__log_loss_detect" title="comp_req__log__log_loss_detect"><em class="xref need">Message Loss Detection (comp_req__log__log_loss_detect)</em></a>,
+<li><p>No test for <a class="reference internal" href="../requirements/index.html#comp_req__log__local_allocation_strategy2" title="comp_req__log__local_allocation_strategy2"><em class="xref need">Heap Allocation Only During... (comp_req__log__local_allocation_strategy2)</em></a>,
 <a class="reference internal" href="../requirements/index.html#comp_req__log__timestamp_local" title="comp_req__log__timestamp_local"><em class="xref need">Local Timestamp (comp_req__log__timestamp_local)</em></a>,
 <a class="reference internal" href="../requirements/index.html#comp_req__log__console_backend" title="comp_req__log__console_backend"><em class="xref need">Console Backend Stdout Sink (comp_req__log__console_backend)</em></a> and
 <a class="reference internal" href="../requirements/index.html#comp_req__log__system_logger" title="comp_req__log__system_logger"><em class="xref need">System Logger Backend (comp_req__log__system_logger)</em></a>. <a class="reference internal" href="../requirements/index.html#comp_req__log__compat_os" title="comp_req__log__compat_os"><em class="xref need">Compatibility Supported Ope... (comp_req__log__compat_os)</em></a>
 and <a class="reference internal" href="../requirements/index.html#comp_req__log__compat_languages" title="comp_req__log__compat_languages"><em class="xref need">Compatibility Supported Pro... (comp_req__log__compat_languages)</em></a> need another verification
 method.</p></li>
-<li><p><a class="reference internal" href="../requirements/index.html#comp_req__log__cfg_file_loc" title="comp_req__log__cfg_file_loc"><em class="xref need">Logging Configuration File ... (comp_req__log__cfg_file_loc)</em></a> defines another search order than
-<code class="docutils literal notranslate"><span class="pre">configuration/configuration_file_discoverer.cpp</span></code>.</p></li>
-<li><p><a class="reference internal" href="../requirements/index.html#comp_req__log__cfg_log_ecu_id" title="comp_req__log__cfg_log_ecu_id"><em class="xref need">Logging Configuration Log E... (comp_req__log__cfg_log_ecu_id)</em></a> and
-<a class="reference internal" href="../requirements/index.html#comp_req__log__cfg_log_app_id" title="comp_req__log__cfg_log_app_id"><em class="xref need">Logging Configuration Log A... (comp_req__log__cfg_log_app_id)</em></a> require uppercase, the code does
-not check it.</p></li>
 <li><p>The Rust tests have no requirement links.</p></li>
 </ul>
 </td>
@@ -641,42 +642,30 @@ not check it.</p></li>
 <tr class="row-even"><td><p>IMPL_01_03</p></td>
 <td><p>Are the design decisions and constraints documented?</p></td>
 <td><p>Check also for plausibility of these.</p></td>
-<td><p>no</p></td>
-<td><p>Design decisions in <code class="docutils literal notranslate"><span class="pre">design/README.md</span></code> and
-<code class="docutils literal notranslate"><span class="pre">design/design_decisions.md</span></code> were checked against the code.</p>
-<p>Following issues need to be addressed:</p>
-<ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">design/dependency_graph.md</span></code> states that the frontend does not depend
-on the details, it uses <code class="docutils literal notranslate"><span class="pre">detail:empty_recorder</span></code>,
-<code class="docutils literal notranslate"><span class="pre">detail:thread_local_guard</span></code>, <code class="docutils literal notranslate"><span class="pre">detail:logging_identifier</span></code> and
-<code class="docutils literal notranslate"><span class="pre">detail/wait_free_stack</span></code>.</p></li>
-<li><p>The constraints of the units (slot count, slot size, slots per drain
-cycle, queued slots) are not documented.</p></li>
-</ul>
-</td>
-<td><p>To be added</p></td>
+<td><p>yes</p></td>
+<td><p>Design decisions in <code class="docutils literal notranslate"><span class="pre">cpp_design/README.md</span></code> and
+<code class="docutils literal notranslate"><span class="pre">cpp_design/design_decisions.md</span></code> were checked against the code. The
+constraints of the units (slot count, slot size, slots per drain cycle,
+queued slots) are expressed by the expectations of the unit tests.</p></td>
+<td></td>
 </tr>
 <tr class="row-odd"><td><p>IMPL_01_04</p></td>
 <td><p>Are all external libraries used by the component specified in the detailed design?</p></td>
 <td><p>Check the automated dependency analysis.
 Also make sure ASIL rated units also only use ASIL rated libraries.</p></td>
 <td><p>no</p></td>
-<td><p>Dependency and FFI metadata are maintained in Bazel. The direct
-dependencies outside of the component are listed with:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>bazel query "let l = kind('.*_library|rust_proc_macro',
-  //score/mw/log/... + //score/log_rust/...)
-  except attr(testonly, 1, //score/mw/log/... + //score/log_rust/...)
-  in labels(deps, \$l) + labels(implementation_deps, \$l)
-  + labels(proc_macro_deps, \$l)
-  except (//score/mw/log/... + //score/log_rust/...)" \
-  --output=label_kind
+<td><p>Dependency and FFI metadata are maintained in Bazel. The libraries the
+component depends on are listed with:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">bazel</span> <span class="n">query</span> <span class="s2">"kind('.*_library|rust_proc_macro',</span>
+  <span class="n">deps</span><span class="p">(</span><span class="o">//</span><span class="n">score</span><span class="o">/</span><span class="n">mw</span><span class="o">/</span><span class="n">log</span><span class="p">:</span><span class="n">log</span><span class="p">))</span><span class="s2">" --output=label_kind</span>
 </pre></div>
 </div>
 <p>Following issues need to be addressed:</p>
 <ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">//score/json</span></code>, <code class="docutils literal notranslate"><span class="pre">//score/language/futurecpp</span></code> and the crates
-<code class="docutils literal notranslate"><span class="pre">syn</span></code>, <code class="docutils literal notranslate"><span class="pre">quote</span></code> and <code class="docutils literal notranslate"><span class="pre">proc_macro2</span></code> have no <code class="docutils literal notranslate"><span class="pre">FFI</span></code> tag and no
-stated rating.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">//score/json:json</span></code> (the other json libraries have the tag),
+<code class="docutils literal notranslate"><span class="pre">//score/language/futurecpp:futurecpp</span></code>,
+<code class="docutils literal notranslate"><span class="pre">//score/language/futurecpp:math</span></code> and the crates <code class="docutils literal notranslate"><span class="pre">syn</span></code>, <code class="docutils literal notranslate"><span class="pre">quote</span></code>
+and <code class="docutils literal notranslate"><span class="pre">proc_macro2</span></code> have no <code class="docutils literal notranslate"><span class="pre">FFI</span></code> tag and no stated rating.</p></li>
 <li><p>The crates <code class="docutils literal notranslate"><span class="pre">score_log</span></code>, <code class="docutils literal notranslate"><span class="pre">score_log_fmt</span></code>, <code class="docutils literal notranslate"><span class="pre">stdout_logger</span></code> and
 <code class="docutils literal notranslate"><span class="pre">stdout_logger_cpp_init</span></code> have no <code class="docutils literal notranslate"><span class="pre">FFI</span></code> tag.</p></li>
 <li><p>The external libraries are not listed in the detailed design.</p></li>
@@ -689,16 +678,22 @@ replacement is not available in the open source dependencies.</p></li>
 <tr class="row-even"><td><p>IMPL_02_01</p></td>
 <td><p>Are the static and dynamic code analysis reports verified for violations?</p></td>
 <td><p>All violations in ASIL related code must be justified. This includes the checks of coding guidelines.</p></td>
-<td><p>no</p></td>
+<td><p>yes</p></td>
 <td><p>Refer to the generated <a class="reference internal" href="../../../../verification_report/module_verification_report.html"><span class="doc">verification report</span></a> and revision-specific
 CI results.</p>
-<p>Following issues need to be addressed:</p>
-<ul class="simple">
-<li><p>Resolve or justify coverage gaps, <code class="docutils literal notranslate"><span class="pre">stdout_logger</span></code> and
-<code class="docutils literal notranslate"><span class="pre">stdout_logger_cpp_init</span></code> are mostly not tested.</p></li>
-<li><p>69 of 232 suppressions have no justification and use AUTOSAR C++14 ids.</p></li>
-<li><p>Memcheck (valgrind 3.22.0) is not part of CI. No errors and no definite
-leaks in the unit tests found in manual runs.</p></li>
+<p>Deviations:</p>
+<ul>
+<li><p>Static code analysis with MISRA C++:2023 checks is planned:
+<a class="reference external" href="https://github.com/eclipse-score/logging/issues/262">#262</a></p></li>
+<li><p>Dynamic code analysis using valgrind is planned:
+<a class="reference external" href="https://github.com/eclipse-score/logging/issues/389">#389</a></p></li>
+<li><p>Coverage gap: <code class="docutils literal notranslate"><span class="pre">stdout_logger</span></code> is tested only for its timestamp
+code, the logger itself (<code class="docutils literal notranslate"><span class="pre">lib.rs</span></code>) has no tests.
+<code class="docutils literal notranslate"><span class="pre">stdout_logger_cpp_init</span></code> has no tests.</p>
+<p>Clarification: <code class="docutils literal notranslate"><span class="pre">stdout_logger</span></code> is a testing and development backend
+(see its <code class="docutils literal notranslate"><span class="pre">BUILD</span></code> file), for production use <code class="docutils literal notranslate"><span class="pre">score_logging</span></code>.
+Resolve the gap with unit tests or justify it by this scope.</p>
+</li>
 </ul>
 </td>
 <td><p>To be added</p></td>
@@ -707,22 +702,22 @@ leaks in the unit tests found in manual runs.</p></li>
 <td><p>Do manual checks, that are derived from the coding guideline, find no safety critical error?</p></td>
 <td><p>Check this for the programming language used (e.g. C++ &lt;link_to_checks_list&gt;, Rust &lt;link_to_checks_list&gt;)</p></td>
 <td><p>no</p></td>
-<td><p>The MISRA C++:2023 and Safety-Critical Rust checks are not done</p>
+<td><p>Manual checks were done with a code review and against the <a class="reference external" href="https://eclipse-score.github.io/score/main/contribute/development/cpp/coding_guidelines.html">C++ guideline</a>.</p>
+<p>Deviations:</p>
+<ul class="simple">
+<li><p>The coding guideline asks to avoid the prefix <code class="docutils literal notranslate"><span class="pre">I</span></code> for interfaces. The
+<code class="docutils literal notranslate"><span class="pre">IRecorderFactory</span></code>, <code class="docutils literal notranslate"><span class="pre">IMessageBuilder</span></code>, <code class="docutils literal notranslate"><span class="pre">ITargetConfigReader</span></code>,
+<code class="docutils literal notranslate"><span class="pre">IConfigurationFileDiscoverer</span></code> and <code class="docutils literal notranslate"><span class="pre">INvConfig</span></code> use it.</p></li>
+</ul>
 <p>Following issues found in the code review need to be addressed:</p>
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">SlotDrainer</span></code> keeps a reference to a removed element in
 <code class="docutils literal notranslate"><span class="pre">current_slot_</span></code> (<code class="docutils literal notranslate"><span class="pre">detail/text_recorder/slot_drainer.cpp</span></code>).</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">RegistryAwareRecorderFactory</span></code> can add the console recorder twice for
 <code class="docutils literal notranslate"><span class="pre">kRemote|kConsole</span></code>.</p></li>
-<li><p>The two <code class="docutils literal notranslate"><span class="pre">CreateFromConfiguration</span></code> overloads behave differently, the
-tests use the overload not used in production.</p></li>
+<li><p>The two <code class="docutils literal notranslate"><span class="pre">CreateFromConfiguration</span></code> overloads behave differently. Both
+overloads are tested in <code class="docutils literal notranslate"><span class="pre">detail/registry_aware_recorder_factory_test.cpp</span></code>.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">SlotDrainer</span></code> processes 33 slots per cycle with a limit of 32.</p></li>
-</ul>
-<p>Following issues found in <a class="reference external" href="https://eclipse-score.github.io/score/main/contribute/development/cpp/coding_guidelines.html">C++ guideline</a>:</p>
-<ul class="simple">
-<li><p>The coding guideline asks to avoid the prefix <code class="docutils literal notranslate"><span class="pre">I</span></code> for interfaces. The
-<code class="docutils literal notranslate"><span class="pre">IRecorderFactory</span></code>, <code class="docutils literal notranslate"><span class="pre">IMessageBuilder</span></code>, <code class="docutils literal notranslate"><span class="pre">ITargetConfigReader</span></code>,
-<code class="docutils literal notranslate"><span class="pre">IConfigurationFileDiscoverer</span></code> and <code class="docutils literal notranslate"><span class="pre">INvConfig</span></code>.</p></li>
 </ul>
 </td>
 <td><p>To be added</p></td>
@@ -754,26 +749,11 @@ the UIDs.</p></li>
 (e.g. naming of interfaces, units, functions/operations/messages, data types).
 Check if the folder/file names of the units and its source code matches the intended functionality.
 For example if a unit is named “communication” it should not contain code for “data processing”.</p></td>
-<td><p>no</p></td>
-<td><p>The C++ design in <code class="docutils literal notranslate"><span class="pre">score/mw/log/design</span></code> and <a class="reference internal" href="rust_bridge_design.html"><span class="doc">Rust Bridge Detailed Design</span></a>
-were compared with the code. The folder and file names of the units match
-their function.</p>
-<p>Following issues need to be addressed when the design is moved into the
-documentation (see IMPL_01_01):</p>
-<ul class="simple">
-<li><p>Classes that do not exist (<code class="docutils literal notranslate"><span class="pre">RecorderFactory</span></code>, <code class="docutils literal notranslate"><span class="pre">ConsoleRecorder</span></code>,
-<code class="docutils literal notranslate"><span class="pre">RecorderComposite</span></code>, namespace <code class="docutils literal notranslate"><span class="pre">bmw::</span></code>).</p></li>
-<li><p>Sequences that differ from the code (recorder creation, fallback
-recorder, console output path).</p></li>
-<li><p>The configuration design uses outdated names, a wrong <code class="docutils literal notranslate"><span class="pre">class-id.json</span></code>
-path and a wrong discovery order.</p></li>
-<li><p>The slot drainer diagrams miss the mutex, the slot allocation shows one
-atomic operation as two steps.</p></li>
-<li><p><a class="reference internal" href="rust_bridge_design.html"><span class="doc">Rust Bridge Detailed Design</span></a> lists 3 of 5 crates, <code class="docutils literal notranslate"><span class="pre">class_diagram.puml</span></code>
-shows the crate <code class="docutils literal notranslate"><span class="pre">score_log_subscriber</span></code> that does not exist.</p></li>
-</ul>
-</td>
-<td><p>Design location: <a class="reference external" href="https://github.com/eclipse-score/logging/issues/187">#187</a>.</p></td>
+<td><p>yes</p></td>
+<td><p>The C++ design in <code class="docutils literal notranslate"><span class="pre">cpp_design</span></code> and <a class="reference internal" href="rust_bridge_design.html"><span class="doc">Rust Bridge Detailed Design</span></a> were
+compared with the code and corrected. The folder and file names of the units match their
+function.</p></td>
+<td></td>
 </tr>
 </tbody>
 </table>
@@ -792,12 +772,12 @@ shows the crate <code class="docutils literal notranslate"><span class="pre">sco
                   
 <div class="prev-next-area">
     <a class="left-prev"
-       href="log_frontend_design.html"
+       href="cpp_design/design_decisions.html"
        title="previous page">
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">Log Frontend Detailed Design</p>
+        <p class="prev-next-title">Design Decisions</p>
       </div>
     </a>
     <a class="right-next"

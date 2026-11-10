@@ -415,7 +415,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../../hash/index.html">hash</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../json/index.html">JSON-Library</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../language/index.html">language</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../memory/index.html">memory</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../memory/index.html">Memory</a></li>
 <li class="toctree-l1 current active has-children"><a class="reference internal" href="../index.html">log_frontend</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="../requirements/index.html">Log Frontend Requirements</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../architecture/index.html">Component Architecture</a></li>
@@ -425,6 +425,13 @@
 <li class="toctree-l2 current active has-children"><a class="reference internal" href="index.html">Detailed Design</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
 <li class="toctree-l3 current active"><a aria-current="page" class="current reference internal" href="#">Rust Bridge Detailed Design</a></li>
 <li class="toctree-l3"><a class="reference internal" href="log_frontend_design.html">Log Frontend Detailed Design</a></li>
+<li class="toctree-l3"><a class="reference internal" href="cpp_design/README.html">Detailed Design</a></li>
+<li class="toctree-l3"><a class="reference internal" href="cpp_design/configuration_design.html">Low Level Design of the Configuration and Initialization for <code class="docutils literal notranslate"><span class="pre">mw::log</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="cpp_design/dependency_graph.html">Dependency graph</a></li>
+
+<li class="toctree-l3"><a class="reference internal" href="cpp_design/registry_aware_recorder_factory.html">Registry Aware Recorder Factory</a></li>
+<li class="toctree-l3"><a class="reference internal" href="cpp_design/dynamic_backend_loading_design.html">Dynamic backend loading for mw::log</a></li>
+<li class="toctree-l3"><a class="reference internal" href="cpp_design/design_decisions.html">Design Decisions</a></li>
 <li class="toctree-l3"><a class="reference internal" href="chklst_impl_inspection.html">Implementation Inspection Checklist</a></li>
 </ul>
 </details></li>
@@ -507,13 +514,15 @@
 <span id="component-detailed-design-log-rust-bridge"></span><h1>Rust Bridge Detailed Design<a class="headerlink" href="#rust-bridge-detailed-design" title="Link to this heading">#</a></h1>
 <section id="description">
 <h2>Description<a class="headerlink" href="#description" title="Link to this heading">#</a></h2>
-<p>The rust log bridge component consists of three units:</p>
+<p>The rust log bridge component consists of five units:</p>
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">score_log</span></code> - modelled after <code class="docutils literal notranslate"><span class="pre">log</span></code> Rust library.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">score_log_fmt</span></code> - replacement for <code class="docutils literal notranslate"><span class="pre">core::fmt</span></code> provided by Rust core library.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">score_log_fmt_macro</span></code> - replacement for macros provided by Rust compiler:
 - <code class="docutils literal notranslate"><span class="pre">score_log_format_args!</span></code> - replacement for <code class="docutils literal notranslate"><span class="pre">format_args!</span></code>
 - <code class="docutils literal notranslate"><span class="pre">ScoreDebug</span></code> - replacement for <code class="docutils literal notranslate"><span class="pre">Debug</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">stdout_logger</span></code> - string-based backend for <code class="docutils literal notranslate"><span class="pre">score_log</span></code>, data is written to a fixed-size buffer.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">stdout_logger_cpp_init</span></code> - C++ builder and C interface to set up the <code class="docutils literal notranslate"><span class="pre">stdout_logger</span></code> from C++ applications.</p></li>
 </ul>
 <p>Most common approach in Rust is that formatting always results in a string.
 This means that the <code class="docutils literal notranslate"><span class="pre">log</span></code> library always receives a pre-formatted string.</p>
@@ -529,7 +538,7 @@ Those units are not described in architecture, as they all form a monolithic log
 </section>
 <section id="static-diagrams-for-unit-interactions">
 <h2>Static Diagrams for Unit Interactions<a class="headerlink" href="#static-diagrams-for-unit-interactions" title="Link to this heading">#</a></h2>
-<div class="need_container docutils container" id="SNCB-c0fec7c1">
+<div class="need_container docutils container" id="SNCB-2c313879">
 <div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_comp_arc_sta table" id="comp_arc_sta__log__class_diagram">
 <tbody>
 <tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
@@ -559,7 +568,7 @@ Those units are not described in architecture, as they all form a monolithic log
 <td class="meta" colspan="3"></td>
 </tr>
 <tr class="content row-odd"><td class="content" colspan="6"><p class="plantuml">
-<object data="../../../../_images/plantuml-c0aab993ac684bf823b05425ce57079ed502658b.svg" type="image/svg+xml" style="width:1907px;height:2709px;background:#FFFFFF;"></object></p>
+<object data="../../../../_images/plantuml-6fed701323cf9e9b0009197c08f50e9af57e36f2.svg" type="image/svg+xml" style="width:2172px;height:2986px;background:#FFFFFF;"></object></p>
 </td>
 </tr>
 <tr class="footer row-even"><td class="footer_left" colspan="2"><div class="needs_footer_left line-block">
@@ -579,7 +588,7 @@ Those units are not described in architecture, as they all form a monolithic log
 </section>
 <section id="dynamic-diagrams-for-unit-interactions">
 <h2>Dynamic Diagrams for Unit Interactions<a class="headerlink" href="#dynamic-diagrams-for-unit-interactions" title="Link to this heading">#</a></h2>
-<div class="need_container docutils container" id="SNCB-503a03d1">
+<div class="need_container docutils container" id="SNCB-8a9e4e3f">
 <div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_comp_arc_dyn table" id="comp_arc_dyn__log__log_op">
 <tbody>
 <tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
@@ -626,7 +635,7 @@ Those units are not described in architecture, as they all form a monolithic log
 </table>
 </div>
 </div>
-<div class="need_container docutils container" id="SNCB-9f103693">
+<div class="need_container docutils container" id="SNCB-d5c729bf">
 <div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_comp_arc_dyn table" id="comp_arc_dyn__log__log_to_level">
 <tbody>
 <tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">

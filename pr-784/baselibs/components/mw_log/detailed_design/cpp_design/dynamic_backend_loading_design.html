@@ -1,0 +1,1522 @@
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../../../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Dynamic backend loading for mw::log &#8212; S-CORE Baselibs  documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../../../../_static/styles/theme.css?digest=18bd87630a240e9c25be" rel="stylesheet" />
+<link href="../../../../../_static/styles/pydata-sphinx-theme.css?digest=18bd87630a240e9c25be" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../../../../../_static/pygments.css?v=8f2a1f02" />
+    <link rel="stylesheet" type="text/css" href="../../../../../_static/graphviz.css?v=4ae1632d" />
+    <link rel="stylesheet" type="text/css" href="../../../../../_static/css/score.css?v=415257cb" />
+    <link rel="stylesheet" type="text/css" href="../../../../../_static/css/score_needs.css?v=82a1844f" />
+    <link rel="stylesheet" type="text/css" href="../../../../../_static/css/score_design.css?v=8048e6ee" />
+    <link rel="stylesheet" type="text/css" href="../../../../../_static/sphinx-design.min.css?v=95c83b7e" />
+    <link rel="stylesheet" type="text/css" href="../../../../../_static/sphinx-data-viewer/jsonview.bundle.css?v=f6ef2277" />
+    <link rel="stylesheet" type="text/css" href="../../../../../_static/sphinx-needs/libs/html/datatables.min.css?v=4b4fd840" />
+    <link rel="stylesheet" type="text/css" href="../../../../../_static/sphinx-needs/common_css/needstable.css?v=5e1b6797" />
+    <link rel="stylesheet" type="text/css" href="../../../../../_static/sphinx-needs/common_css/need_core.css?v=f5b60a78" />
+    <link rel="stylesheet" type="text/css" href="../../../../../_static/sphinx-needs/common_css/need_style.css?v=92936fa5" />
+    <link rel="stylesheet" type="text/css" href="../../../../../_static/sphinx-needs/common_css/need_toggle.css?v=5c6620df" />
+    <link rel="stylesheet" type="text/css" href="../../../../../_static/sphinx-needs/common_css/need_links.css?v=2150a916" />
+    <link rel="stylesheet" type="text/css" href="../../../../../_static/sphinx-needs/modern.css?v=803738c0" />
+  
+  <!-- So that users can add custom icons -->
+  <script defer src="../../../../../_static/scripts/fontawesome.js?digest=18bd87630a240e9c25be"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../../../../_static/scripts/bootstrap.js?digest=18bd87630a240e9c25be" />
+<link rel="preload" as="script" href="../../../../../_static/scripts/pydata-sphinx-theme.js?digest=18bd87630a240e9c25be" />
+
+    <script src="../../../../../_static/jquery.js?v=5d32c60e"></script>
+    <script src="../../../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+    <script src="../../../../../_static/documentation_options.js?v=7f41d439"></script>
+    <script src="../../../../../_static/doctools.js?v=fd6eb6e6"></script>
+    <script src="../../../../../_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <script src="../../../../../_static/design-tabs.js?v=f930bc37"></script>
+    <script src="../../../../../_static/sphinx-data-viewer/jsonview.bundle.js?v=18cd53c5"></script>
+    <script src="../../../../../_static/sphinx-data-viewer/jsonview_loader.js?v=f7ff7e7d"></script>
+    <script src="../../../../../_static/sphinx-needs/libs/html/datatables.min.js?v=8a4aee21"></script>
+    <script src="../../../../../_static/sphinx-needs/libs/html/datatables_loader.js?v=a2cae175"></script>
+    <script src="../../../../../_static/sphinx-needs/libs/html/sphinx_needs_collapse.js?v=dca66431"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'baselibs/components/mw_log/detailed_design/cpp_design/dynamic_backend_loading_design';</script>
+    <script>
+        DOCUMENTATION_OPTIONS.theme_version = '0.23.0';
+        DOCUMENTATION_OPTIONS.theme_switcher_json_url = 'https://eclipse-score.github.io/baselibs/versions.json';
+        DOCUMENTATION_OPTIONS.theme_switcher_version_match = '';
+        DOCUMENTATION_OPTIONS.show_version_warning_banner =
+            false;
+        </script>
+    <script>DOCUMENTATION_OPTIONS.search_as_you_type = false;</script>
+    <link rel="index" title="Index" href="../../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../../search.html" />
+    <link rel="next" title="Design Decisions" href="design_decisions.html" />
+    <link rel="prev" title="Registry Aware Recorder Factory" href="registry_aware_recorder_factory.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="color-scheme" content="light dark"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="0.1" />
+  
+    
+    <script src="../../../../../_static/searchtools.js"></script>
+    <script src="../../../../../_static/language_data.js"></script>
+    <script src="../../../../../searchindex.js"></script>
+  
+  </head>
+  <body data-default-mode="">
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+  
+  
+  
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../../../../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search the docs ..."
+         aria-label="Search the docs ..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header id="pst-header" class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button type="button" class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class="col-lg-3 navbar-header-items__start">
+    
+      <div class="navbar-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../../../../index.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">Eclipse S-CORE</p>
+  
+</a></div>
+    
+  </div>
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    <div class="me-auto navbar-header-items__center">
+      
+        <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../../../features/index.html">
+    Features
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../../../module/index.html">
+    Module
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../../../verification_report/module_verification_report.html">
+    Verification Report
+  </a>
+</li>
+
+
+<li class="nav-item current active">
+  <a class="nav-link nav-internal" href="../../../index.html">
+    Components
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+      
+    </div>
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+<button type="button" class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+        </div>
+      
+      
+        <div class="navbar-item">
+
+<div class="theme-switch-container dropdown pst-js-only" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Color mode">
+  <button type="button" class="btn btn-sm nav-link pst-navbar-icon theme-switch-button dropdown-toggle" aria-label="Color mode" data-bs-toggle="dropdown">
+    <i class="theme-switch fa-solid fa-sun fa-lg fa-fw" data-mode="light" title="Light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg fa-fw" data-mode="dark" title="Dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg fa-fw" data-mode="auto" title="System Settings"></i>
+  </button>
+  <ul class="dropdown-menu dropdown-menu-end">
+    <li><button type="button" class="dropdown-item d-flex align-items-center theme-change-button" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg fa-fw me-1"></i>System Settings</button></li>
+    <li><button type="button" class="dropdown-item d-flex align-items-center theme-change-button" data-mode="light"><i class="fa-solid fa-sun fa-lg fa-fw me-1"></i>Light</button></li>
+    <li><button type="button" class="dropdown-item d-flex align-items-center theme-change-button" data-mode="dark"><i class="fa-solid fa-moon fa-lg fa-fw me-1"></i>Dark</button></li>
+  </ul>
+</div></div>
+      
+        <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/eclipse-score" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-github fa-lg" aria-hidden="true"></i><span class="visually-hidden">GitHub</span></a>
+        </li>
+</ul></div>
+      
+        <div class="navbar-item">
+<div class="version-switcher__container dropdown pst-js-only">
+  <button id="pst-version-switcher-button-2"
+    type="button"
+    class="version-switcher__button btn btn-sm dropdown-toggle"
+    data-bs-toggle="dropdown"
+    aria-haspopup="listbox"
+    aria-controls="pst-version-switcher-list-2"
+    aria-label="Version switcher list"
+  >
+    Choose version  <!-- this text may get changed later by javascript -->
+    <span class="caret"></span>
+  </button>
+  <div id="pst-version-switcher-list-2"
+    class="version-switcher__menu dropdown-menu list-group-flush py-0"
+    role="listbox" aria-labelledby="pst-version-switcher-button-2">
+    <!-- dropdown will be populated by javascript on page load -->
+  </div>
+</div></div>
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+<button type="button" class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+    </div>
+  
+
+  
+    <button type="button" class="pst-navbar-icon sidebar-toggle secondary-toggle" aria-label="On this page">
+      <span class="fa-solid fa-outdent"></span>
+    </button>
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+        
+          
+          
+            <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../../../features/index.html">
+    Features
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../../../module/index.html">
+    Module
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../../../verification_report/module_verification_report.html">
+    Verification Report
+  </a>
+</li>
+
+
+<li class="nav-item current active">
+  <a class="nav-link nav-internal" href="../../../index.html">
+    Components
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+          
+        
+      </div>
+    
+    
+    
+      <div class="sidebar-header-items__end">
+        
+          <div class="navbar-item">
+
+<div class="theme-switch-container dropdown pst-js-only" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Color mode">
+  <button type="button" class="btn btn-sm nav-link pst-navbar-icon theme-switch-button dropdown-toggle" aria-label="Color mode" data-bs-toggle="dropdown">
+    <i class="theme-switch fa-solid fa-sun fa-lg fa-fw" data-mode="light" title="Light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg fa-fw" data-mode="dark" title="Dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg fa-fw" data-mode="auto" title="System Settings"></i>
+  </button>
+  <ul class="dropdown-menu dropdown-menu-end">
+    <li><button type="button" class="dropdown-item d-flex align-items-center theme-change-button" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg fa-fw me-1"></i>System Settings</button></li>
+    <li><button type="button" class="dropdown-item d-flex align-items-center theme-change-button" data-mode="light"><i class="fa-solid fa-sun fa-lg fa-fw me-1"></i>Light</button></li>
+    <li><button type="button" class="dropdown-item d-flex align-items-center theme-change-button" data-mode="dark"><i class="fa-solid fa-moon fa-lg fa-fw me-1"></i>Dark</button></li>
+  </ul>
+</div></div>
+        
+          <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/eclipse-score" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-github fa-lg" aria-hidden="true"></i><span class="visually-hidden">GitHub</span></a>
+        </li>
+</ul></div>
+        
+          <div class="navbar-item">
+<div class="version-switcher__container dropdown pst-js-only">
+  <button id="pst-version-switcher-button-3"
+    type="button"
+    class="version-switcher__button btn btn-sm dropdown-toggle"
+    data-bs-toggle="dropdown"
+    aria-haspopup="listbox"
+    aria-controls="pst-version-switcher-list-3"
+    aria-label="Version switcher list"
+  >
+    Choose version  <!-- this text may get changed later by javascript -->
+    <span class="caret"></span>
+  </button>
+  <div id="pst-version-switcher-list-3"
+    class="version-switcher__menu dropdown-menu list-group-flush py-0"
+    role="listbox" aria-labelledby="pst-version-switcher-button-3">
+    <!-- dropdown will be populated by javascript on page load -->
+  </div>
+</div></div>
+        
+      </div>
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item pst-sidebar-collapse"><button type="button" id="pst-collapse-sidebar-button" aria-expanded="true" aria-controls="pst-primary-sidebar">
+  <svg class="pst-icon" role="img" aria-hidden="true" focusable="false" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg">
+    <path fill="currentColor" d="M3 15.5C2.36232 15.5 1.74874 15.2564 1.28478 14.8189C0.820828 14.3815 0.541576 13.7832 0.504167 13.1467L0.5 13L0.5 3C0.499965 2.36232 0.743605 1.74874 1.18107 1.28478C1.61854 0.820828 2.21676 0.541576 2.85333 0.504167L3 0.5L13 0.5C13.6377 0.499965 14.2513 0.743605 14.7152 1.18107C15.1792 1.61854 15.4584 2.21676 15.4958 2.85333L15.5 3L15.5 13C15.5 13.6377 15.2564 14.2513 14.8189 14.7152C14.3815 15.1792 13.7832 15.4584 13.1467 15.4958L13 15.5L3 15.5ZM3 13.8333L10.5 13.8333L10.5 2.16667L3 2.16667C2.79589 2.16669 2.59889 2.24163 2.44636 2.37726C2.29383 2.5129 2.19638 2.69979 2.1725 2.9025L2.16667 3L2.16667 13C2.16669 13.2041 2.24163 13.4011 2.37726 13.5536C2.5129 13.7062 2.69979 13.8036 2.9025 13.8275L3 13.8333ZM6.65583 10.325L6.5775 10.2558L4.91083 8.58917C4.76735 8.44567 4.68116 8.25476 4.66843 8.05223C4.65569 7.84971 4.71729 7.6495 4.84167 7.48917L4.91083 7.41083L6.5775 5.74417C6.72747 5.59471 6.9287 5.50794 7.14032 5.50148C7.35194 5.49502 7.55809 5.56935 7.7169 5.70937C7.8757 5.8494 7.97525 6.04463 7.99533 6.25539C8.01541 6.46616 7.95451 6.67667 7.825 6.84417L7.75583 6.9225L6.67917 8L7.75583 9.0775C7.89931 9.22099 7.98551 9.41191 7.99824 9.61443C8.01097 9.81695 7.94938 10.0172 7.825 10.1775L7.75583 10.2558C7.61234 10.3993 7.42142 10.4855 7.2189 10.4982C7.01638 10.511 6.81617 10.4494 6.65583 10.325Z"/>
+  </svg>
+  <span class="pst-collapse-sidebar-label">Collapse Sidebar</span>
+  <span class="pst-expand-sidebar-label">Expand Sidebar</span>
+</button></div>
+        <div class="sidebar-primary-item">
+
+<nav class="bd-docs-nav bd-links"
+     aria-label="Section Navigation">
+  <p class="bd-links__title" role="heading" aria-level="1">Section Navigation</p>
+  <div class="bd-toc-item navbar-nav"><ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../../bitmanipulation/index.html">bitmanipulation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../concurrency/index.html">concurrency</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../containers/index.html">containers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../containers_rust/index.html">containers_rust</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../filesystem/index.html">filesystem</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../flatbuffers/index.html">FlatBuffers-Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../hash/index.html">hash</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../json/index.html">JSON-Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../language/index.html">language</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../memory/index.html">Memory</a></li>
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="../../index.html">log_frontend</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../../requirements/index.html">Log Frontend Requirements</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../architecture/index.html">Component Architecture</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../safety_analysis/fmea.html">FMEA (Failure Modes and Effects Analysis)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../safety_analysis/dfa.html">DFA (Dependent Failure Analysis)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../safety_analysis/aou_requirements.html">Assumptions of Use</a></li>
+<li class="toctree-l2 current active has-children"><a class="reference internal" href="../index.html">Detailed Design</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../rust_bridge_design.html">Rust Bridge Detailed Design</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../log_frontend_design.html">Log Frontend Detailed Design</a></li>
+<li class="toctree-l3"><a class="reference internal" href="README.html">Detailed Design</a></li>
+<li class="toctree-l3"><a class="reference internal" href="configuration_design.html">Low Level Design of the Configuration and Initialization for <code class="docutils literal notranslate"><span class="pre">mw::log</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="dependency_graph.html">Dependency graph</a></li>
+
+<li class="toctree-l3"><a class="reference internal" href="registry_aware_recorder_factory.html">Registry Aware Recorder Factory</a></li>
+<li class="toctree-l3 current active"><a aria-current="page" class="current reference internal" href="#">Dynamic backend loading for mw::log</a></li>
+<li class="toctree-l3"><a class="reference internal" href="design_decisions.html">Design Decisions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../chklst_impl_inspection.html">Implementation Inspection Checklist</a></li>
+</ul>
+</details></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../os/index.html">os</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../result/index.html">result</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../scope_exit/index.html">Scope Exit</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../shared_layout/index.html">Cross-Language Shared-Layout Data Types</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../static_reflection_with_serialization/index.html">static_reflection_with_serialization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../string_manipulation/index.html">String Manipulation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../utils/index.html">utils</a></li>
+</ul>
+</div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item">
+
+<nav aria-label="Breadcrumb" class="d-print-none">
+  <ul class="bd-breadcrumbs">
+    
+    <li class="breadcrumb-item breadcrumb-home">
+      <a href="../../../../../index.html" class="nav-link" aria-label="Home">
+        <i class="fa-solid fa-home"></i>
+      </a>
+    </li>
+    
+    <li class="breadcrumb-item"><a href="../../../index.html" class="nav-link">Components</a></li>
+    
+    
+    <li class="breadcrumb-item"><a href="../../index.html" class="nav-link">log_frontend</a></li>
+    
+    
+    <li class="breadcrumb-item"><a href="../index.html" class="nav-link">Detailed Design</a></li>
+    
+    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">Dynamic backend loading for mw::log</span></li>
+  </ul>
+</nav>
+</div>
+      
+    </div>
+  
+  
+</div>
+</div>
+              
+              
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="dynamic-backend-loading-for-mw-log">
+<h1>Dynamic backend loading for mw::log<a class="headerlink" href="#dynamic-backend-loading-for-mw-log" title="Link to this heading">#</a></h1>
+<section id="goal">
+<h2>Goal<a class="headerlink" href="#goal" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>mw/log as a single shared library (.so) with console backend/sink built-in.</p></li>
+<li><p>backend .so files (libmwlog_file_backend.so, libmwlog_remote_backend.so, libmwlog_slog_backend.so) deployed to a well-known directory by the integrator. Each backend is an independent shared library.</p></li>
+<li><p>At runtime, mw/log loads and registers all the *backend.so files specified by the integrator.</p></li>
+<li><p>Libraries and binaries depend on a single mw/log target. No per-backend deps needed.</p></li>
+<li><p>Customer-provided backends (libmwlog_custom_backend.so) use the same directory based discovery mechanism.</p></li>
+</ul>
+</section>
+<section id="targets">
+<h2>Targets<a class="headerlink" href="#targets" title="Link to this heading">#</a></h2>
+<ol class="arabic simple">
+<li><p>score_baselibs - libmwlog.so (cc_shared_library)</p></li>
+</ol>
+<ul class="simple">
+<li><p>frontend</p></li>
+<li><p>console backend (built-in)</p></li>
+<li><p>backend_table (gBackendCreators)</p></li>
+<li><p>backend_loader (via dl_open)</p></li>
+</ul>
+<ol class="arabic simple" start="2">
+<li><p>score_logging - *backend.so (cc_shared_library)</p></li>
+</ol>
+<ul class="simple">
+<li><p>libmwlog_file_backend.so</p></li>
+<li><p>libmwlog_remote_backend.so</p></li>
+<li><p>libmwlog_slog_backend.so (QNX)</p></li>
+<li><p>libmwlog_custom_backend.so (custom)</p></li>
+</ul>
+</section>
+<section id="dynamic-loading-and-application-binary-interface-abi">
+<h2>Dynamic loading and Application Binary Interface (ABI)<a class="headerlink" href="#dynamic-loading-and-application-binary-interface-abi" title="Link to this heading">#</a></h2>
+<p>Dynamic loading introduces an ABI boundary between the main binary and the backend plugin .so. Unlike static linking where the compiler and linker can verify type compatibility at build time, dynamic linking defers binding to runtime making ABI stability an explicit design concern.</p>
+</section>
+<section id="design-decision-for-dlopen-based-solution">
+<h2>Design Decision for dlopen() based solution<a class="headerlink" href="#design-decision-for-dlopen-based-solution" title="Link to this heading">#</a></h2>
+<p>The rationale for choosing a dlopen-based solution is documented in the <a class="reference internal" href="design_decisions.html"><span class="std std-doc">Design Decisions</span></a>.</p>
+<p>mw::log would use dlopen() based dynamic loading to compose recorders and respective backends at runtime. A libmwlog.so (frontend + console backend + dynamic backend loader) is the sole build dependency for all consumers. Per-backend .so files (libmwlog_file_backend.so, libmwlog_remote_backend.so, libmwlog_slog_backend.so) are deployed by the integrator and loaded at runtime from a configuration-specified list. The plugin boundary uses a C++ interface - backend .so files export a C++ recorder factory function discovered via a minimal extern “C” entry point.</p>
+<p>mw::log is classified as ASIL B. The frontend preserves freedom from interference (FFI) - dlopen() occurs only during init, and the post-init Recorder interface boundary is identical to the static-link case.</p>
+<p>Architectural decision: This approach preserves the existing C++ backend implementation unchanged, at the cost of requiring toolchain identity between libmwlog.so and all backend .so files. Security is enforced via OS-level compensating controls (pathtrust, secpol, procnto -mX, setuid bit, configuration-driven loading) rather than libc isolation.</p>
+<section id="plugin-api-mw-log-plugin-api-h">
+<h3>Plugin API (mw_log_plugin_api.h)<a class="headerlink" href="#plugin-api-mw-log-plugin-api-h" title="Link to this heading">#</a></h3>
+<p>The plugin API uses minimal extern “C” entry points: one for version checking and one for backend registration. Both symbols use C linkage to avoid name-mangling dependencies across toolchain versions.</p>
+<p>Rationale:</p>
+<ul class="simple">
+<li><p>Both MwLogVersion() and MwLogRegisterBackends() use extern “C” to provide stable, mangling-independent symbols for dlsym() lookup.</p></li>
+<li><p>Shared libc/libstdc++ (no RTLD_NOSHARE) enables standard C++ types, smart pointers, and allocators to cross the dlopen() boundary safely within the registration and recorder creation path.</p>
+<ul>
+<li><p>Constraint: All backend .so files MUST be built with the identical toolchain (compiler version, -std= flag, libstdc++ version) as libmwlog.so. This is enforced via CI (REQ-DD-1).</p></li>
+</ul>
+</li>
+<li><p>The no-dlclose() policy (REQ-SAFE-1) guarantees that all code pages and vtable pointers remain valid for process lifetime.</p></li>
+</ul>
+</section>
+</section>
+<section id="detailed-design">
+<h2>1. Detailed Design<a class="headerlink" href="#detailed-design" title="Link to this heading">#</a></h2>
+<p>Covers requirements for Detailed Design (DD) and Implementation.</p>
+<p>The dynamic backend selection diagram shows the backend selection sequence.</p>
+<figure class="align-default" id="id7">
+<p class="plantuml">
+<object data="../../../../../_images/plantuml-4d000ef6261184e9d8f8dc9ccf777f0fdcbd6015.svg" type="image/svg+xml" style="width:2474px;height:2419px;background:#FFFFFF;"></object></p>
+<figcaption>
+<p><span class="caption-number">Fig. 21 </span><span class="caption-text">dynamic backend selection diagram</span><a class="headerlink" href="#id7" title="Link to this image">#</a></p>
+</figcaption>
+</figure>
+<p>The diagram uses swimlanes to clearly separate the two configuration layers:</p>
+<p>Layer 1 (Integrator / backend_config.json): Shows the global backend creator slot population flow. Each backend .so becomes available but no recorder is created yet.</p>
+<p>Layer 2 (User / logging.json): Shows CreateFromConfiguration reading the logMode set, then for each mode checking IsBackendAvailable() against the already-populated global backend creator and calls CreateRecorderForMode() to instantiate only what the user selected. If a requested mode has NO slot populated (integrator didn’t deploy that .so), it falls back to console.</p>
+<p>Runtime init: Wraps both layers, enforcing the REQ-DD-7 ordering invariant, and shows the final CompositeRecorder / single recorder / EmptyRecorder outcome.</p>
+<section id="detailed-design-requirements">
+<h3>1.1 Detailed Design Requirements<a class="headerlink" href="#detailed-design-requirements" title="Link to this heading">#</a></h3>
+<section id="req-dd-1-c-plugin-boundary-with-toolchain-identity">
+<h4>REQ-DD-1: C++ Plugin Boundary with Toolchain Identity<a class="headerlink" href="#req-dd-1-c-plugin-boundary-with-toolchain-identity" title="Link to this heading">#</a></h4>
+<p>The plugin .so files shall use the existing C++ Recorder interface. Each backend .so exports two extern “C” entry points: MwLogVersion() (ABI version gate) and MwLogRegisterBackends() (registration callback). The registration callback calls RegisterBackend() from backend_table.h, which stores a RecorderCreatorFn function pointer. The RecorderCreatorFn returns std::unique_ptr<Recorder>. C++ types (std::unique_ptr, Configuration&amp;, std::pmr::memory_resource*) are permitted to cross the dlopen() boundary at recorder creation time. “RTLD_NOSHARE” shall not be used - all backend .so files share the process’s libc and libstdc++ instances.</p>
+<p>Toolchain identity constraint: All backend .so files and libmwlog.so shall be built with the identical toolchain: same compiler version, same -std=c++XX flag, same optimization level (-O2), and same libstdc++/libc++ version. A CI gate shall enforce this by comparing compiler identification hashes (E.g.: gcc –version fingerprint) embedded in each .so at build time.</p>
+<p>Reasoning: score_baselibs and score_logging reside in separate Bazel workspaces but share the same score_toolchain and reference integration platform. Since RTLD_NOSHARE is not used, libc/libstdc++ are shared, making C++ types safe to pass across the boundary “within the same toolchain”. The toolchain identity CI gate is the mechanism that prevents C++ ABI mismatches.</p>
+<p>Limitation: Customer provided plugins built with a different toolchain are not supported.</p>
+<p>References:</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://itanium-cxx-abi.github.io/cxx-abi/abi.html">Itanium C++ ABI - Name Mangling &amp; Virtual Table Layout</a></p></li>
+<li><p><a class="reference external" href="https://gcc.gnu.org/onlinedocs/libstdc++/manual/abi.html">GCC ABI Policy and Guidelines</a></p></li>
+<li><p><a class="reference external" href="https://pubs.opengroup.org/onlinepubs/9699919799/functions/dlopen.html">POSIX dlopen()</a></p></li>
+</ul>
+</section>
+<section id="req-dd-2-abi-version-guard">
+<h4>REQ-DD-2: ABI Version Guard<a class="headerlink" href="#req-dd-2-abi-version-guard" title="Link to this heading">#</a></h4>
+<p>Each plugin .so shall export an extern “C” function MwLogVersion() returning MW_LOG_ABI_VERSION. The dynamic backend loader shall call MwLogVersion() immediately after dlopen() and reject the plugin if the returned version does not match MW_LOG_ABI_VERSION compiled into libmwlog.so. MW_LOG_ABI_VERSION shall be incremented when the Recorder interface changes in a binary-incompatible way (virtual method addition, removal, reorder, or signature change).</p>
+<p>Reasoning: The version check is a coarse-grained ABI gate. It catches obvious mismatches (E.g.: a backend built against an older Recorder interface). It does not catch subtle C++ ABI differences caused by toolchain mismatches - the toolchain identity CI gate (REQ-DD-1) is the primary defense for that class of errors.</p>
+<p>References:</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://semver.org/">Semantic Versioning 2.0.0</a> - versioning contract for API/ABI changes.</p></li>
+</ul>
+</section>
+<section id="req-dd-3-configuration-driven-backend-loading">
+<h4>REQ-DD-3: Configuration-Driven Backend Loading<a class="headerlink" href="#req-dd-3-configuration-driven-backend-loading" title="Link to this heading">#</a></h4>
+<p>The dynamic backend loader shall load only the backend .so files explicitly listed in the logging backend configuration file (E.g.: backend_config.json field “backends”: [“libmwlog_file_backend.so”, “libmwlog_remote_backend.so”, etc.]). It shall not blindly scan the backend directory for all matching files. Each listed filename is joined with the backend directory path, which is determined exclusively at compile time via Bazel feature flags (see below).</p>
+<p>Reasoning: Glob-based directory scanning creates a wider attack surface - An incompatible backend version could potentially crash the application. An explicit compatible version is safe. Feature flags improve discoverability, and allow per-integration overrides without modifying source files. Security is preserved because feature flags are build-time constants, not runtime-configurable values.</p>
+<section id="backend-directory-and-config-path-resolution-via-feature-flags">
+<h5>Backend Directory and Config Path Resolution via Feature Flags<a class="headerlink" href="#backend-directory-and-config-path-resolution-via-feature-flags" title="Link to this heading">#</a></h5>
+<p>The backend directory path and config file path should be compile-time constants controlled via Bazel <code class="docutils literal notranslate"><span class="pre">string_flag</span></code> feature flags defined in <code class="docutils literal notranslate"><span class="pre">//score/mw/log/flags:BUILD</span></code>.</p>
+<p>Flag definitions in <code class="docutils literal notranslate"><span class="pre">//score/mw/log/flags/BUILD</span></code>:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">load</span><span class="p">(</span><span class="s2">"@bazel_skylib//rules:common_settings.bzl"</span><span class="p">,</span> <span class="s2">"string_flag"</span><span class="p">)</span>
+
+<span class="n">string_flag</span><span class="p">(</span>
+    <span class="n">name</span> <span class="o">=</span> <span class="s2">"backend_dir"</span><span class="p">,</span>
+    <span class="n">build_setting_default</span> <span class="o">=</span> <span class="s2">"/opt/libmwlog/backends/"</span><span class="p">,</span>
+    <span class="n">visibility</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="s2">"@score_baselibs//score/mw/log:__subpackages__"</span><span class="p">,</span>
+    <span class="p">],</span>
+<span class="p">)</span>
+
+<span class="n">string_flag</span><span class="p">(</span>
+    <span class="n">name</span> <span class="o">=</span> <span class="s2">"backend_config_path"</span><span class="p">,</span>
+    <span class="n">build_setting_default</span> <span class="o">=</span> <span class="s2">"/opt/libmwlog/backend_config.json"</span><span class="p">,</span>
+    <span class="n">visibility</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="s2">"@score_baselibs//score/mw/log:__subpackages__"</span><span class="p">,</span>
+    <span class="p">],</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<p>Propagation to C++ is done via <code class="docutils literal notranslate"><span class="pre">expand_template</span></code> generating a header with the flag values, avoiding the <code class="docutils literal notranslate"><span class="pre">select()</span></code>/<code class="docutils literal notranslate"><span class="pre">config_setting</span></code> enumeration limitation inherent to arbitrary string paths:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">expand_template</span><span class="p">(</span>
+    <span class="n">name</span> <span class="o">=</span> <span class="s2">"backend_paths_header"</span><span class="p">,</span>
+    <span class="n">out</span> <span class="o">=</span> <span class="s2">"backend_paths_config.h"</span><span class="p">,</span>
+    <span class="n">template</span> <span class="o">=</span> <span class="s2">"backend_paths_config.h.tpl"</span><span class="p">,</span>
+    <span class="n">substitutions</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s2">"@BACKEND_DIR@"</span><span class="p">:</span> <span class="s2">"$(//score/mw/log/flags:backend_dir)"</span><span class="p">,</span>
+        <span class="s2">"@BACKEND_CONFIG_PATH@"</span><span class="p">:</span> <span class="s2">"$(//score/mw/log/flags:backend_config_path)"</span><span class="p">,</span>
+    <span class="p">},</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<p>Per-integration override via command line:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>bazel<span class="w"> </span>build<span class="w"> </span>//...<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--//score/mw/log/flags:backend_dir<span class="o">=</span><span class="s2">"/xyz/platform/opt/mwlog/"</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--//score/mw/log/flags:backend_config_path<span class="o">=</span><span class="s2">"/xyz/platform/opt/mwlog/backend_config.json"</span>
+</pre></div>
+</div>
+<p>Or via <code class="docutils literal notranslate"><span class="pre">.bazelrc</span></code>:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>build:ipnext_isoc<span class="w"> </span>--//score/mw/log/flags:backend_dir<span class="o">=</span><span class="s2">"/xyz/platform/opt/mwlog/"</span>
+build:ipnext_isoc<span class="w"> </span>--//score/mw/log/flags:backend_config_path<span class="o">=</span><span class="s2">"/xyz/platform/opt/mwlog/backend_config.json"</span>
+</pre></div>
+</div>
+<p>The paths shall never be sourced from an environment variable or from the runtime configuration file. Feature flags are build-time settings, ensuring the paths are immutable after build and preventing runtime manipulation.</p>
+<ul class="simple">
+<li><p>Default values match the most productive/stable configuration (<code class="docutils literal notranslate"><span class="pre">/opt/libmwlog/backends/</span></code> and <code class="docutils literal notranslate"><span class="pre">/opt/libmwlog/backend_config.json</span></code>).</p></li>
+</ul>
+<p>Constraints on the backend directory path:</p>
+<ul class="simple">
+<li><p>Must be an absolute path (starts with <code class="docutils literal notranslate"><span class="pre">/</span></code>).</p></li>
+<li><p>The dynamic backend loader shall <code class="docutils literal notranslate"><span class="pre">static_assert</span></code> that the backend directory path starts with <code class="docutils literal notranslate"><span class="pre">/</span></code> at compile time.</p></li>
+</ul>
+<p>Constraints on the backend config path:</p>
+<ul class="simple">
+<li><p>Must be an absolute path (starts with <code class="docutils literal notranslate"><span class="pre">/</span></code>).</p></li>
+<li><p>Must reside on a qtsafefs-mounted filesystem that is RO to prevent tampering (AOU-7).</p></li>
+</ul>
+<p>If a listed file is absent, it is treated as “not deployed”. If no configuration is provided, no backends are loaded and the system uses console-only logging.</p>
+<p>NOTE: config file placed at the path specified by <code class="docutils literal notranslate"><span class="pre">backend_config_path</span></code> (default: <code class="docutils literal notranslate"><span class="pre">/opt/libmwlog/backend_config.json</span></code>) with content:</p>
+<p>{
+“backends”: [
+“libmwlog_file_backend.so”,
+“libmwlog_remote_backend.so”
+]
+}</p>
+<p>References:</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://cwe.mitre.org/data/definitions/426.html">CWE-426: Untrusted Search Path</a></p></li>
+<li><p>EP-23: Feature Flags in Bazel (<code class="docutils literal notranslate"><span class="pre">docs/enhancement_proposals/proposals/23_feature_flags.md</span></code> of the <code class="docutils literal notranslate"><span class="pre">score_baselibs</span></code> repository)</p></li>
+</ul>
+</section>
+</section>
+<section id="req-dd-4-fallback-chain">
+<h4>REQ-DD-4: Fallback Chain<a class="headerlink" href="#req-dd-4-fallback-chain" title="Link to this heading">#</a></h4>
+<p>The dynamic backend loader shall implement the following fallback chain:</p>
+<ol class="arabic simple">
+<li><p>For each configured backend: attempt dlopen(), ABI check via MwLogVersion(), then call MwLogRegisterBackends().</p></li>
+<li><p>If a configured backend fails to load (.so present but dlopen()/ABI check/registration fails): report an ERROR.</p></li>
+<li><p>If a configured backend .so is absent (file does not exist): report a warning.</p></li>
+<li><p>If no recorders are registered after loading, fallback to console-only logging (built-in).</p></li>
+<li><p>If console allocation also fails then EmptyRecorder (stub, no-op).</p></li>
+</ol>
+<p>Fallback diagnostic messages shall use a non-mw::log channel to avoid circular dependency.</p>
+<p>References:</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://www.autosar.org/fileadmin/standards/R22-11/FO/AUTOSAR_PRS_LogAndTraceProtocol.pdf">AUTOSAR Adaptive Platform - R22-11, Log and Trace</a></p></li>
+</ul>
+</section>
+<section id="req-dd-5-frontend-ffi-preservation">
+<h4>REQ-DD-5: Frontend FFI Preservation<a class="headerlink" href="#req-dd-5-frontend-ffi-preservation" title="Link to this heading">#</a></h4>
+<p>The frontend’s steady-state behavior (after init) shall not be affected by which recorder backend is loaded. dlopen() shall occur only during the initialization window. Post-init, all logging calls go through the Recorder interface - identical to the static-link architecture. Backend failures shall not propagate into the frontend.</p>
+<p>Reasoning: mw::log is ASIL B. ISO 26262: Part 6 requires freedom from interference (FFI). Confining dynamic loading to init preserves temporal, spatial, functional, and resource FFI. Take note of existing AoUs of mw::log that init is not time bounded.</p>
+</section>
+<section id="req-dd-6-shared-libc-libstdc-contract">
+<h4>REQ-DD-6: Shared libc/libstdc++ Contract<a class="headerlink" href="#req-dd-6-shared-libc-libstdc-contract" title="Link to this heading">#</a></h4>
+<p>RTLD_NOSHARE is explicitly not used. All backend .so files share the process’s single libc and libstdc++ instance. This means:</p>
+<ul class="simple">
+<li><p>errno is shared (thread-local, single instance per thread).</p></li>
+<li><p>malloc/free operate on a single heap - memory allocated by the backend can be freed by the frontend and vice versa.</p></li>
+<li><p>File descriptors, atexit() handlers, and signal state are process-global and shared.</p></li>
+<li><p>C++ standard library types (std::unique_ptr, std::string, std::mutex, etc.) have identical layouts and can safely cross the dlopen() boundary.</p></li>
+</ul>
+<p>Constraints imposed by this decision:</p>
+<ol class="arabic simple">
+<li><p>Toolchain identity is mandatory (REQ-DD-1). Different libstdc++ versions have different std::string layouts (pre/post-C++11 ABI), different allocator internals, etc.</p></li>
+<li><p>“RTLD_NOSHARE” cannot be enabled without first refactoring to a pure C ABI boundary. This is an explicit, documented trade-off.</p></li>
+<li><p>Security relies on OS-level compensating controls (pathtrust, secpol, procnto -mX, setuid bit) rather than libc isolation (see Security Requirements).</p></li>
+</ol>
+<p>Reasoning: The existing backend implementation (RemoteDltRecorderFactory, DataRouterRecorder, DatarouterMessageClientImpl) uses C++ standard library types, spawns threads, opens file descriptors, and maps shared memory. These operations require a shared libc/libstdc++ instance to function correctly. Isolating libc via RTLD_NOSHARE would require a complete refactor to a pure C ABI boundary - a huge refactoring effort given that OS-level integrity controls (qtsafefs, pathtrust, secpol) already prevent loading untrusted code.</p>
+<p>References:</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://www.qnx.com/developers/docs/8.0/com.qnx.doc.neutrino.lib_ref/topic/d/dlopen.html">QNX 8.0 dlopen()</a></p></li>
+<li><p><a class="reference external" href="https://gcc.gnu.org/onlinedocs/libstdc++/manual/abi.html">GCC ABI Policy and Guidelines</a></p></li>
+</ul>
+</section>
+<section id="req-dd-7-backend-loading-inside-runtime-constructor-meyer-s-singleton">
+<h4>REQ-DD-7: Backend Loading inside Runtime Constructor (Meyer’s Singleton)<a class="headerlink" href="#req-dd-7-backend-loading-inside-runtime-constructor-meyer-s-singleton" title="Link to this heading">#</a></h4>
+<p>LoadConfiguredBackends() shall be called inside Runtime::Runtime(), before RegistryAwareRecorderFactory::CreateFromConfiguration(). The execution sequence within the Runtime constructor shall be:</p>
+<ol class="arabic simple">
+<li><p>LoadConfiguredBackends() - writes to gBackendCreators[] via RegisterBackend().</p></li>
+<li><p>CreateRecorderFactory() calls CreateFromConfiguration() which invokes gBackendCreators[] via CreateRecorderForMode().</p></li>
+</ol>
+<p>This ordering guarantees that all writes to gBackendCreators[] complete before any reads, within the same function call on the same thread. No synchronization primitive (mutex, atomic) is required on gBackendCreators[] itself.</p>
+<p>Thread-safety is provided by the C++11 Meyer’s singleton guarantee: Runtime is constructed via singleton::MeyerSingleton<Runtime>::GetInstance(), which uses the C++11 “magic statics” guarantee ([stmt.dcl] p4) - if multiple threads call GetInstance() concurrently, exactly one thread executes the constructor while all others block until construction completes. After construction, gBackendCreators[] is effectively immutable for the remainder of the process lifetime.</p>
+<p>Invariants:</p>
+<ul class="simple">
+<li><p>LoadConfiguredBackends() is called exactly once, inside Runtime::Runtime(), on the thread that first triggers singleton construction.</p></li>
+<li><p>All writes to gBackendCreators[] (both static-init registrants like console and dynamic-load registrants) complete before CreateFromConfiguration() reads the table.</p></li>
+<li><p>After Runtime::Runtime() returns, gBackendCreators[] shall not be modified.</p></li>
+</ul>
+<p>Implementation note: Runtime::Runtime() must read the backend configuration (directory path, filenames) before calling LoadConfiguredBackends(). The preferred approach is single-read + pass-through: read and parse the backend configuration file once, then pass the parsed backend list to LoadConfiguredBackends() and the full configuration to CreateFromConfiguration(). This avoids parsing the config file twice.</p>
+<p>If the config file is read independently by LoadConfiguredBackends() and CreateFromConfiguration(), a TOCTOU race exists on the config file content between the two reads. On production QNX targets with RO qtsafefs (AOU-7) this is safe because the file is immutable. However, on development Linux environments where the config file is on a read-write filesystem, a concurrent modification between the two reads could cause LoadConfiguredBackends() and CreateFromConfiguration() to operate on inconsistent configuration state. The single-read + pass-through approach eliminates this race.</p>
+<p>References:</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://timsong-cpp.github.io/cppwp/n4659/stmt.dcl#3">C++11 Standard - [stmt.dcl] p4</a> - concurrent execution of block-scope static variable initialization.</p></li>
+<li><p><a class="reference external" href="https://timsong-cpp.github.io/cppwp/n4659/intro.races">C++17 Standard - [intro.races]</a> - data race definition and undefined behavior.</p></li>
+<li><p><a class="reference external" href="https://www.iso.org/standard/68391.html">ISO 26262-6:2018 - Freedom from Interference</a></p></li>
+</ul>
+</section>
+</section>
+<section id="verification-requirements">
+<h3>1.2 Verification Requirements<a class="headerlink" href="#verification-requirements" title="Link to this heading">#</a></h3>
+<section id="req-dd-v1-abi-version-mismatch-rejection">
+<h4>REQ-DD-V1: ABI Version Mismatch Rejection<a class="headerlink" href="#req-dd-v1-abi-version-mismatch-rejection" title="Link to this heading">#</a></h4>
+<p>Verify that the dynamic backend loader rejects a plugin .so whose MwLogVersion() returns a value different from MW_LOG_ABI_VERSION. Verify the fallback chain activates and the mismatch is logged via slogf()/stderr.</p>
+<p>Verification method: unit test</p>
+</section>
+<section id="req-dd-v2-configuration-driven-loading">
+<h4>REQ-DD-V2: Configuration-Driven Loading<a class="headerlink" href="#req-dd-v2-configuration-driven-loading" title="Link to this heading">#</a></h4>
+<p>Verify that the dynamic backend loader loads only the .so files listed in the configuration.</p>
+<p>Verification method: component test/sctf.</p>
+</section>
+<section id="req-dd-v3-fallback-chain-activation">
+<h4>REQ-DD-V3: Fallback Chain Activation<a class="headerlink" href="#req-dd-v3-fallback-chain-activation" title="Link to this heading">#</a></h4>
+<p>Verify all fallback chain paths:</p>
+<ol class="arabic simple">
+<li><p>All configured backends load successfully and all registered.</p></li>
+<li><p>One configured backend missing and remaining load</p></li>
+<li><p>One configured backend corrupt/failing and remaining load; error logged.</p></li>
+<li><p>All configured backends fail and console-only fallback activates.</p></li>
+<li><p>Console allocation fails and EmptyRecorder stub is returned.</p></li>
+</ol>
+<p>Verification method: unit/component testing.</p>
+</section>
+<section id="req-dd-v4-backend-loading-order-inside-runtime-constructor">
+<h4>REQ-DD-V4: Backend Loading Order Inside Runtime Constructor<a class="headerlink" href="#req-dd-v4-backend-loading-order-inside-runtime-constructor" title="Link to this heading">#</a></h4>
+<p>Ensure that <code class="docutils literal notranslate"><span class="pre">LoadConfiguredBackends()</span></code> executes before <code class="docutils literal notranslate"><span class="pre">CreateFromConfiguration()</span></code> within <code class="docutils literal notranslate"><span class="pre">Runtime::Runtime()</span></code>, and that <code class="docutils literal notranslate"><span class="pre">gBackendCreators[]</span></code> is not modified after construction:</p>
+<p>Verification method: unit test + Manual Analysis / clang (TODO)</p>
+</section>
+</section>
+</section>
+<hr class="docutils" />
+<section id="safety-requirements">
+<h2>2. Safety Requirements<a class="headerlink" href="#safety-requirements" title="Link to this heading">#</a></h2>
+<section id="id1">
+<h3>2.1 Detailed Design<a class="headerlink" href="#id1" title="Link to this heading">#</a></h3>
+<section id="req-safe-1-no-dlclose-policy">
+<h4>REQ-SAFE-1: No dlclose() Policy<a class="headerlink" href="#req-safe-1-no-dlclose-policy" title="Link to this heading">#</a></h4>
+<p>The loaded plugin handle shall not be closed during process lifetime. The handle is intentionally leaked: (void)handle;. This policy SHALL be enforced as follows:</p>
+<ol class="arabic simple">
+<li><p>The dynamic backend loader SHALL NOT store the dlopen() handle in any data structure that could be passed to dlclose().</p></li>
+<li><p>The dynamic backend loader SHALL NOT expose any API that accepts or returns a dlopen() handle.</p></li>
+<li><p>No code path in libmwlog.so or any backend .so SHALL call dlclose().</p></li>
+</ol>
+<p>Reasoning: The C++ virtual function table (vtable) and destructor code of Recorder objects returned by the backend factory reside in code pages mapped from the plugin .so. These code pages SHALL remain mapped for the entire process lifetime. This is the mechanism that prevents use-after-free (CWE-416) when the frontend destroys Recorder objects via std::unique_ptr<Recorder>. If dlclose() is called, those code pages are unmapped - but Recorder objects remain alive with dangling vtable pointers. Any subsequent virtual call (StartRecord(), StopRecord(), Log()) would jump to unmapped memory, causing a segfault or silent corruption. Since the plugin is loaded once at init and recorders live for the entire process, there is no legitimate reason to unload.</p>
+<p>References:</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://cwe.mitre.org/data/definitions/416.html">CWE-416: Use After Free</a> - accessing memory through dangling pointers after dlclose() unmaps code pages.</p></li>
+<li><p><a class="reference external" href="https://pubs.opengroup.org/onlinepubs/9699919799/functions/dlclose.html">POSIX dlclose()</a> - specifies that symbols from a closed library become undefined.</p></li>
+</ul>
+</section>
+<section id="req-safe-2-plugin-constructor-restrictions">
+<h4>REQ-SAFE-2: Plugin Constructor Restrictions<a class="headerlink" href="#req-safe-2-plugin-constructor-restrictions" title="Link to this heading">#</a></h4>
+<p>The plugin .so shall not use mw::log in any <strong>attribute</strong>((constructor)) function or static initializer. The plugin .so shall not call setenv(), putenv(), signal(), or spawn threads in constructor functions.</p>
+<p>Reasoning: Plugin constructors execute during dlopen() - before the version guard (MwLogVersion()) is checked. A constructor calling mw::log creates a circular dependency and potential deadlock (the logging runtime may not yet be initialized). Constructors that modify global process state (setenv, signal handlers) can interfere with the frontend’s FFI guarantees.</p>
+<p>References:</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://gcc.gnu.org/onlinedocs/gcc/Common-Function-Attributes.html">GCC Common Function Attributes - constructor</a>.</p></li>
+<li><p><a class="reference external" href="https://cwe.mitre.org/data/definitions/764.html">CWE-764: Multiple Locks</a> - deadlock risk from circular re-entrant locking during init.</p></li>
+</ul>
+</section>
+<section id="req-safe-3-fmea-coverage-for-dlopen-path">
+<h4>REQ-SAFE-3: FMEA Coverage for dlopen() Path<a class="headerlink" href="#req-safe-3-fmea-coverage-for-dlopen-path" title="Link to this heading">#</a></h4>
+<p>A formal FMEA entry shall be created covering dlopen, dlsym, MwLogVersion, MwLogRegisterBackends calls.</p>
+<p>Reasoning: ISO 26262 Part 5 requires FMEA for all safety-relevant failure modes. The dlopen() path introduces new failure modes not present in the static-link architecture. In particular, MwLogRegisterBackends() executes plugin code within the frontend’s address space - any failure in this function can corrupt the backend registration table or crash the process.</p>
+</section>
+<section id="req-safe-4-pre-dlopen-elf-section-version-marker-ci-deploy-time-gate">
+<h4>REQ-SAFE-4: Pre-dlopen() ELF Section Version Marker (CI/Deploy-Time Gate)<a class="headerlink" href="#req-safe-4-pre-dlopen-elf-section-version-marker-ci-deploy-time-gate" title="Link to this heading">#</a></h4>
+<p>Each plugin .so SHALL embed a version integer in a dedicated ELF section <code class="docutils literal notranslate"><span class="pre">.mwlog_abi</span></code> at build time. This marker is intended for offline verification - it is NOT read at runtime by the dynamic backend loader.</p>
+<p>CI/deploy-time enforcement: A CI gate or deployment validation script SHALL read the <code class="docutils literal notranslate"><span class="pre">.mwlog_abi</span></code> section from each backend .so (using <code class="docutils literal notranslate"><span class="pre">readelf</span> <span class="pre">-x</span> <span class="pre">.mwlog_abi</span></code>) and verify that the embedded version matches the MW_LOG_ABI_VERSION compiled into libmwlog.so. Backend .so files with mismatched versions SHALL NOT be deployed to the target filesystem.</p>
+<p>This check catches version mismatches before deployment, preventing a scenario where dlopen() executes plugin constructors (REQ-SAFE-2) from an incompatible binary before the application can call MwLogVersion(). The runtime MwLogVersion() check (REQ-DD-2) remains the defense-in-depth mechanism for detecting mismatches that escape the CI gate.</p>
+<p>Reasoning: dlopen() executes plugin constructors before the application can call MwLogVersion(). A pre-deployment check avoids running any plugin code from an incompatible binary on the target. Runtime ELF section parsing was considered but rejected due to implementation complexity (requires ELF header parsing in application code) and marginal benefit over the deploy-time gate combined with pathtrust/qtsafefs as the primary protection against untrusted binaries.</p>
+<p>Note on section naming: A custom section name <code class="docutils literal notranslate"><span class="pre">.mwlog_abi</span></code> is used instead of a <code class="docutils literal notranslate"><span class="pre">.note.*</span></code> prefix. The ELF <code class="docutils literal notranslate"><span class="pre">.note</span></code> section format requires a structured header (namesz, descsz, type, name, desc) per the ELF specification. Placing a raw <code class="docutils literal notranslate"><span class="pre">uint32_t</span></code> into a <code class="docutils literal notranslate"><span class="pre">.note.*</span></code>-prefixed section without this structure would confuse tools like <code class="docutils literal notranslate"><span class="pre">readelf</span> <span class="pre">-n</span></code> that expect proper note formatting. Since the CI gate uses <code class="docutils literal notranslate"><span class="pre">readelf</span> <span class="pre">-x</span></code> (hex dump), the simpler custom section approach is sufficient and avoids misleading section naming.</p>
+<p>References:</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://refspecs.linuxfoundation.org/elf/elf.pdf">ELF Specification</a> - section and .note format for embedding metadata in ELF binaries.</p></li>
+<li><p><a class="reference external" href="https://csrc.nist.gov/publications/detail/sp/800-53/rev-5/final">NIST: Security and Privacy Engineering Principles</a></p></li>
+</ul>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="c1">// Plugin side - static marker (readable offline via readelf/objdump, not loaded at runtime)</span>
+<span class="k">extern</span><span class="w"> </span><span class="s">"C"</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">const</span><span class="w"> </span><span class="kt">uint32_t</span><span class="w"> </span><span class="n">kMwLogAbiVersion</span><span class="w"> </span><span class="n">__attribute__</span><span class="p">((</span><span class="n">section</span><span class="p">(</span><span class="s">".mwlog_abi"</span><span class="p">)))</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1U</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>CI gate example:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="ch">#!/bin/bash</span>
+<span class="c1"># Verify ABI version in backend .so matches libmwlog.so</span>
+<span class="nv">EXPECTED_VERSION</span><span class="o">=</span><span class="k">$(</span>readelf<span class="w"> </span>-x<span class="w"> </span>.mwlog_abi<span class="w"> </span>libmwlog.so<span class="w"> </span><span class="p">|</span><span class="w"> </span>awk<span class="w"> </span><span class="s1">'...'</span><span class="k">)</span>
+<span class="nv">PLUGIN_VERSION</span><span class="o">=</span><span class="k">$(</span>readelf<span class="w"> </span>-x<span class="w"> </span>.mwlog_abi<span class="w"> </span><span class="s2">"</span><span class="nv">$1</span><span class="s2">"</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>awk<span class="w"> </span><span class="s1">'...'</span><span class="k">)</span>
+<span class="k">if</span><span class="w"> </span><span class="o">[</span><span class="w"> </span><span class="s2">"</span><span class="nv">$EXPECTED_VERSION</span><span class="s2">"</span><span class="w"> </span>!<span class="o">=</span><span class="w"> </span><span class="s2">"</span><span class="nv">$PLUGIN_VERSION</span><span class="s2">"</span><span class="w"> </span><span class="o">]</span><span class="p">;</span><span class="w"> </span><span class="k">then</span>
+<span class="w">    </span><span class="nb">echo</span><span class="w"> </span><span class="s2">"FAIL: ABI version mismatch in </span><span class="nv">$1</span><span class="s2"> (expected </span><span class="nv">$EXPECTED_VERSION</span><span class="s2">, got </span><span class="nv">$PLUGIN_VERSION</span><span class="s2">)"</span>
+<span class="w">    </span><span class="nb">exit</span><span class="w"> </span><span class="m">1</span>
+<span class="k">fi</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="id2">
+<h3>2.2 Verification Requirements<a class="headerlink" href="#id2" title="Link to this heading">#</a></h3>
+<section id="req-safe-v1-dlopen-failure-path-testing-on-target-ecu">
+<h4>REQ-SAFE-V1: dlopen() Failure Path Testing on Target ECU<a class="headerlink" href="#req-safe-v1-dlopen-failure-path-testing-on-target-ecu" title="Link to this heading">#</a></h4>
+<p>Execute REQ-DD-V3 scenarios on target ECU to confirm that all dlopen() failure paths behave correctly on actual hardware.</p>
+<p>Verification method: ITF</p>
+</section>
+<section id="req-safe-v2-execution-management-em-plaftorm-health-management-phm-monitoring-regressions">
+<h4>REQ-SAFE-V2: Execution Management (EM)/ Plaftorm Health Management (PHM) monitoring regressions<a class="headerlink" href="#req-safe-v2-execution-management-em-plaftorm-health-management-phm-monitoring-regressions" title="Link to this heading">#</a></h4>
+<p>All existing ASIL B init sequence - EM/PHM checkpoint tests shall be re-executed with dynamic plugin loading active</p>
+<p>Verification method: ITF</p>
+</section>
+<section id="req-safe-v3-stub-logging-detection">
+<h4>REQ-SAFE-V3: Stub Logging Detection<a class="headerlink" href="#req-safe-v3-stub-logging-detection" title="Link to this heading">#</a></h4>
+<p>Verify that in a fully deployed production system, the EmptyRecorder stub is never the active recorder.</p>
+<p>Verification method: ITF</p>
+</section>
+<section id="req-safe-v4-no-mw-log-usage-in-plugin-constructors">
+<h4>REQ-SAFE-V4: No mw::log Usage in Plugin Constructors<a class="headerlink" href="#req-safe-v4-no-mw-log-usage-in-plugin-constructors" title="Link to this heading">#</a></h4>
+<p>Verify that loading a plugin whose constructor calls mw::log does not deadlock or crash the init sequence.</p>
+<p>Verification method: Manual Analysis.</p>
+</section>
+</section>
+</section>
+<hr class="docutils" />
+<section id="security-requirements">
+<h2>3. Security Requirements<a class="headerlink" href="#security-requirements" title="Link to this heading">#</a></h2>
+<section id="id3">
+<h3>3.1 Detailed Design<a class="headerlink" href="#id3" title="Link to this heading">#</a></h3>
+<section id="req-sec-1-absolute-path-for-dlopen">
+<h4>REQ-SEC-1: Absolute Path for dlopen()<a class="headerlink" href="#req-sec-1-absolute-path-for-dlopen" title="Link to this heading">#</a></h4>
+<p>dynamic backend loader shall call dlopen() with a fully-qualified absolute path constructed by joining the backend directory path and the configured filename. Relative paths and bare filenames shall not be passed to dlopen().</p>
+<p>Reasoning: Relative paths cause the runtime linker to search LD_LIBRARY_PATH and _CS_LIBPATH, which may point to untrusted directories. Absolute paths bypass the search entirely, eliminating CWE-426: Untrusted Search Path.</p>
+<p>References:</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://cwe.mitre.org/data/definitions/426.html">CWE-426: Untrusted Search Path</a></p></li>
+<li><p><a class="reference external" href="https://pubs.opengroup.org/onlinepubs/9699919799/functions/dlopen.html">POSIX dlopen()</a> - specifies search order when a bare filename (no /) is passed.</p></li>
+<li><p><a class="reference external" href="https://www.qnx.com/developers/docs/8.0/com.qnx.doc.neutrino.lib_ref/topic/d/dlopen.html">QNX 8.0 dlopen() - Search Order</a> - QNX-specific _CS_LIBPATH search behavior.</p></li>
+</ul>
+</section>
+<section id="req-sec-2-qtsafefs-enforcement-for-production-software-runnning-qnx">
+<h4>REQ-SEC-2: qtsafefs Enforcement for production software runnning QNX<a class="headerlink" href="#req-sec-2-qtsafefs-enforcement-for-production-software-runnning-qnx" title="Link to this heading">#</a></h4>
+<p>Reasoning: A path-prefix check alone is insufficient - anyone could mount a non-qtsafefs filesystem at the expected path.</p>
+<p>Should be satisfied by AOU-1. This is a security enforced requirement.</p>
+</section>
+<section id="req-sec-3-compensating-controls-for-omitted-rtld-noshare">
+<h4>REQ-SEC-3: Compensating Controls for Omitted RTLD_NOSHARE<a class="headerlink" href="#req-sec-3-compensating-controls-for-omitted-rtld-noshare" title="Link to this heading">#</a></h4>
+<p>dlopen() shall use RTLD_NOW | RTLD_LOCAL (without RTLD_NOSHARE). The decision to omit RTLD_NOSHARE is justified by the following compensating controls, ALL of which shall be enforced:</p>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>#</p></th>
+<th class="head"><p>Compensating Control</p></th>
+<th class="head"><p>Requirement</p></th>
+<th class="head"><p>Threat Mitigated</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>1</p></td>
+<td><p>pathtrust + qtsafefs</p></td>
+<td><p>REQ-SEC-2, AOU-1, AOU-2</p></td>
+<td><p>Prevents loading tampered/untrusted .so files at OS level</p></td>
+</tr>
+<tr class="row-odd"><td><p>2</p></td>
+<td><p>secpol: PROCMGR_AID_UNTRUSTED_EXEC denied</p></td>
+<td><p>REQ-SEC-8</p></td>
+<td><p>Makes pathtrust mandatory - dlopen() cannot bypass trust verification</p></td>
+</tr>
+<tr class="row-even"><td><p>3</p></td>
+<td><p>setuid bit on process</p></td>
+<td><p>REQ-SEC-8</p></td>
+<td><p>Runtime linker automatically unsets LD_PRELOAD, LD_LIBRARY_PATH before any user code</p></td>
+</tr>
+<tr class="row-odd"><td><p>4</p></td>
+<td><p>procnto -mX</p></td>
+<td><p>REQ-SEC-9</p></td>
+<td><p>Prevents PROT_EXEC on files without +x - blocks loading from /dev/shmem, /tmp</p></td>
+</tr>
+<tr class="row-even"><td><p>5</p></td>
+<td><p>Configuration-driven loading</p></td>
+<td><p>REQ-DD-3</p></td>
+<td><p>Only explicitly listed .so files are loaded - no glob-scan, no auto-discovery</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>Without RTLD_NOSHARE, the following attack is theoretically possible: If a compromised component calls dlopen(“libmwlog_remote_backend.so”, …) with a relative path before dynamic backend loader runs, the linker may return the already-loaded (malicious) handle. With all five compensating controls in place, this attack requires a build-chain compromise of a pathtrust-verified binary on a qtsafefs filesystem - a significantly higher bar than the RTLD_NOSHARE scenario alone addresses.</p>
+<p>Reasoning: RTLD_NOSHARE creates a private libc/libstdc++ copy for the plugin, making C++ types unusable across the boundary. Since the design choice is to preserve the existing C++ backend implementation (REQ-DD-1, REQ-DD-6), RTLD_NOSHARE is incompatible with the architecture. The five compensating controls collectively provide equivalent or stronger security guarantees for the threat model.</p>
+<p>References:</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://cwe.mitre.org/data/definitions/427.html">CWE-427: Uncontrolled Search Path Element</a></p></li>
+<li><p><a class="reference external" href="https://www.qnx.com/developers/docs/8.0/com.qnx.doc.security.system/topic/manual/pathtrust.html">QNX 8.0 pathtrust</a></p></li>
+</ul>
+</section>
+<section id="req-sec-4-rpath-hardening-plugin-and-transitive-dependencies">
+<h4>REQ-SEC-4: RPATH Hardening (Plugin and Transitive Dependencies)<a class="headerlink" href="#req-sec-4-rpath-hardening-plugin-and-transitive-dependencies" title="Link to this heading">#</a></h4>
+<p>Each backend .so shall be built with:</p>
+<ul class="simple">
+<li><p>-Wl,–disable-new-dtags - ensures RPATH is used (not RUNPATH). RPATH is not overridden by LD_LIBRARY_PATH.</p></li>
+<li><p>An explicit, absolute RPATH pointing only to qtsafefs-backed library directories (E.g.: -Wl,-rpath,/opt/libmwlog/backends). No $ORIGIN-relative paths.</p></li>
+</ul>
+<p>Reasoning: When dlopen() loads a backend .so, the runtime linker resolves its DT_NEEDED transitive dependencies using the search order: RPATH -&gt; LD_LIBRARY_PATH -&gt; _CS_LIBPATH. If RUNPATH is used instead of RPATH, LD_LIBRARY_PATH takes precedence, allowing an attacker to inject transitive dependencies. Absolute RPATH with –disable-new-dtags ensures transitive deps are resolved only from trusted paths.</p>
+<p>References:</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://man7.org/linux/man-pages/man8/ld.so.8.html">ld.so(8) - Linux Dynamic Linker: RPATH vs RUNPATH</a></p></li>
+<li><p><a class="reference external" href="https://cwe.mitre.org/data/definitions/426.html">CWE-426: Untrusted Search Path</a></p></li>
+<li><p><a class="reference external" href="https://www.qnx.com/developers/docs/8.0/com.qnx.doc.neutrino.lib_ref/topic/d/dlopen.html">QNX 8.0 dlopen _CS_LIBPATH</a></p></li>
+</ul>
+</section>
+<section id="req-sec-5-exported-symbol-minimization">
+<h4>REQ-SEC-5: Exported Symbol Minimization<a class="headerlink" href="#req-sec-5-exported-symbol-minimization" title="Link to this heading">#</a></h4>
+<p>Each plugin .so shall export only MwLogVersion and MwLogRegisterBackends (both extern “C”). All other symbols shall be hidden via -fvisibility=hidden and a linker version script:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+    <span class="k">global</span><span class="p">:</span>
+        <span class="n">MwLogVersion</span><span class="p">;</span>
+        <span class="n">MwLogRegisterBackends</span><span class="p">;</span>
+    <span class="n">local</span><span class="p">:</span>
+        <span class="o">*</span><span class="p">;</span>
+<span class="p">};</span>
+</pre></div>
+</div>
+<p>Reasoning: Every exported symbol is an attack surface and a potential source of symbol collision (CWE-114). Minimizing exports hides internal implementation, eliminates interposition risk, and reduces the ABI surface that must remain stable.</p>
+<p>References:</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://gcc.gnu.org/wiki/Visibility">GCC Wiki - Visibility</a></p></li>
+<li><p><a class="reference external" href="https://sourceware.org/binutils/docs/ld/VERSION.html">GNU ld - Version Scripts</a> - linker version script syntax for controlling symbol export.</p></li>
+</ul>
+</section>
+<section id="req-sec-6-environment-variable-integrity-check-needs-further-investigation">
+<h4>REQ-SEC-6: Environment Variable Integrity Check (Needs further investigation)<a class="headerlink" href="#req-sec-6-environment-variable-integrity-check-needs-further-investigation" title="Link to this heading">#</a></h4>
+<p>At init, the dynamic backend loader should snapshot the values of LD_PRELOAD, LD_LIBRARY_PATH, DL_DEBUG, and LD_DEBUG. Before each dlopen() call, it should verify these values have not changed. If any have been modified, a critical diagnostic shall be logged.</p>
+<p>Known limitation (TOCTOU): This check is subject to a time-of-check time-of-use race condition. A concurrent thread calling setenv(“LD_LIBRARY_PATH”, “/attacker/path”) between the snapshot verification and the dlopen() call can still succeed. This check is therefore a diagnostic aid, not a reliable security control. It MUST not be relied upon as the sole mitigation for environment variable manipulation.</p>
+<p>The primary mitigation is the setuid bit (REQ-SEC-8), which causes the runtime linker to automatically unset LD_LIBRARY_PATH, LD_PRELOAD, DL_DEBUG, and LD_DEBUG before any user code runs - including library constructors. REQ-SEC-8 eliminates the TOCTOU race entirely because the variables are never present in the process environment.</p>
+<p>Reasoning: On QNX 8.0, LD_LIBRARY_PATH is re-read on every dlopen() call. The snapshot-and-recheck approach provides observability (detecting unexpected environment mutations) but cannot guarantee atomicity with respect to dlopen(). The setuid bit (REQ-SEC-8) is the authoritative control.</p>
+<p>References:</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://cwe.mitre.org/data/definitions/367.html">CWE-367: Time-of-check Time-of-use (TOCTOU) Race Condition</a> - race between environment variable check and dlopen() usage.</p></li>
+<li><p><a class="reference external" href="https://www.qnx.com/developers/docs/8.0/com.qnx.doc.neutrino.lib_ref/topic/d/dlopen.html">QNX 8.0 dlopen() - Environment Variable Handling</a> - QNX re-reads LD_LIBRARY_PATH on each dlopen() call.</p></li>
+<li><p><a class="reference external" href="https://cwe.mitre.org/data/definitions/426.html">CWE-426: Untrusted Search Path</a> - LD_LIBRARY_PATH manipulation.</p></li>
+</ul>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="kt">void</span><span class="w"> </span><span class="nf">AssertCleanEnvironment</span><span class="p">()</span><span class="w"> </span><span class="k">noexcept</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">const</span><span class="w"> </span><span class="kt">char</span><span class="o">*</span><span class="w"> </span><span class="n">vars</span><span class="p">[]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="s">"LD_PRELOAD"</span><span class="p">,</span><span class="w"> </span><span class="s">"LD_LIBRARY_PATH"</span><span class="p">,</span><span class="w"> </span><span class="s">"DL_DEBUG"</span><span class="p">,</span><span class="w"> </span><span class="s">"LD_DEBUG"</span><span class="p">};</span>
+<span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="kt">char</span><span class="o">*</span><span class="w"> </span><span class="n">var</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="n">vars</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">const</span><span class="w"> </span><span class="kt">char</span><span class="o">*</span><span class="w"> </span><span class="n">val</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">getenv</span><span class="p">(</span><span class="n">var</span><span class="p">);</span>
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">val</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="nb">nullptr</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="n">slogf</span><span class="p">(</span><span class="n">_SLOG_SETCODE</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">),</span><span class="w"> </span><span class="n">_SLOG_CRITICAL</span><span class="p">,</span>
+<span class="w">                  </span><span class="s">"mw::log: %s is set - potential security risk"</span><span class="p">,</span><span class="w"> </span><span class="n">var</span><span class="p">);</span><span class="w"> </span><span class="c1">// slog buffers</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</section>
+<section id="req-sec-7-dlerror-output-sanitization">
+<h4>REQ-SEC-7: dlerror() Output Sanitization<a class="headerlink" href="#req-sec-7-dlerror-output-sanitization" title="Link to this heading">#</a></h4>
+<p>dlerror() strings shall be sanitized before logging. They shall be logged at internal/verbose level only, never at a level accessible to unprivileged log consumers.</p>
+<p>Reasoning: dlerror() may return filesystem paths and internal details that reveal system layout to an attacker with log access.</p>
+<p>References:</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://pubs.opengroup.org/onlinepubs/9699919799/functions/dlerror.html">POSIX dlerror()</a> - specifies that dlerror() returns a human-readable string describing the last error.</p></li>
+</ul>
+</section>
+<section id="req-sec-8-qnx-secpol-and-ability-restrictions">
+<h4>REQ-SEC-8: QNX secpol and Ability Restrictions<a class="headerlink" href="#req-sec-8-qnx-secpol-and-ability-restrictions" title="Link to this heading">#</a></h4>
+<p>Processes using mw::log with dynamic loading shall have PROCMGR_AID_UNTRUSTED_EXEC denied via secpol. This ensures only pathtrust-verified libraries can be loaded by dlopen(). The process should run with the “setuid” bit set, causing the runtime linker to automatically unset LD_LIBRARY_PATH, LD_PRELOAD, DL_DEBUG, and LD_DEBUG before any user code runs.</p>
+<p>Reasoning: pathtrust is the OS-level gate that prevents dlopen() from loading untrusted binaries. Denying PROCMGR_AID_UNTRUSTED_EXEC makes this gate mandatory. The setuid bit provides automatic environment variable sanitization by the runtime linker - a stronger guarantee than application-level checks (REQ-SEC-6) because it runs before any user code, including library constructors.</p>
+<p>References:</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://www.qnx.com/developers/docs/8.0/com.qnx.doc.neutrino.lib_ref/topic/p/procmgr_ability.html">QNX 8.0 PROCMGR_AID_UNTRUSTED_EXEC</a></p></li>
+<li><p><a class="reference external" href="https://pubs.opengroup.org/onlinepubs/9699919799/functions/exec.html">POSIX setuid behavior - Runtime Linker</a></p></li>
+</ul>
+</section>
+<section id="req-sec-9-prot-exec-enforcement-via-procnto-mx">
+<h4>REQ-SEC-9: PROT_EXEC Enforcement via procnto -mX<a class="headerlink" href="#req-sec-9-prot-exec-enforcement-via-procnto-mx" title="Link to this heading">#</a></h4>
+<p>Deployment shall require procnto -mX on the target ECU. All backend .so files shall have the +x (executable) permission bit set.</p>
+<p>Reasoning: When procnto is started with -mX, it only allows PROT_EXEC on mmap() if the file has the +x bit set. This prevents loading .so files from writable directories like /dev/shmem or /tmp where an attacker could write a malicious library but would lack the ability to set the +x bit on a properly configured system.</p>
+<p>References:</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://www.qnx.com/developers/docs/8.0/com.qnx.doc.neutrino.utilities/topic/p/procnto.html">QNX 8.0 procnto - -mX Option</a> - PROT_EXEC enforcement via execute permission bit.</p></li>
+</ul>
+</section>
+<section id="req-sec-10-elf-hardening-flags">
+<h4>REQ-SEC-10: ELF Hardening Flags<a class="headerlink" href="#req-sec-10-elf-hardening-flags" title="Link to this heading">#</a></h4>
+<p>All backend .so files and libmwlog.so shall be built with:</p>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Flag</p></th>
+<th class="head"><p>Purpose</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>-Wl,-z,now</p></td>
+<td><p>Full RELRO - all GOT (global offset table) entries resolved at load time, GOT marked read-only</p></td>
+</tr>
+<tr class="row-odd"><td><p>-Wl,-z,relro</p></td>
+<td><p>Partial RELRO (relocatable sections before GOT marked read-only)</p></td>
+</tr>
+<tr class="row-even"><td><p>-Wl,-z,noexecstack</p></td>
+<td><p>Non-executable stack</p></td>
+</tr>
+<tr class="row-odd"><td><p>-fstack-protector-strong</p></td>
+<td><p>Stack canary protection</p></td>
+</tr>
+<tr class="row-even"><td><p>-fPIC</p></td>
+<td><p>Position-independent code</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>NOTE: Flags (1) and (2) are complimentary.</p>
+<p>Reasoning: Standard ELF hardening per Red Hat security hardening guidelines. Full RELRO prevents GOT overwrite attacks. Non-executable stack mitigates stack-based code injection. These are baseline requirements for any shared library in a safety-critical system.</p>
+<p>References:</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/9/html/security_hardening/">Red Hat Enterprise Linux - Security Hardening Guide</a> - ELF hardening best practices.</p></li>
+</ul>
+</section>
+</section>
+<section id="id4">
+<h3>3.2 Verification Requirements<a class="headerlink" href="#id4" title="Link to this heading">#</a></h3>
+<section id="req-sec-v1-absolute-path-enforcement">
+<h4>REQ-SEC-V1: Absolute Path Enforcement<a class="headerlink" href="#req-sec-v1-absolute-path-enforcement" title="Link to this heading">#</a></h4>
+<p>Verify that dynamic backend loader rejects any attempt to load a plugin via a relative path or bare filename.</p>
+<p>Verification method: Unit test</p>
+</section>
+<section id="req-sec-v2-backend-directory-ownership-verification">
+<h4>REQ-SEC-V2: Backend Directory Ownership Verification<a class="headerlink" href="#req-sec-v2-backend-directory-ownership-verification" title="Link to this heading">#</a></h4>
+<p>Verify that the backend directory has the the right mandatory access controls setup.</p>
+<p>Reasoning: On qtsafefs, the filesystem is read-only and integrity-checked. On non-qtsafefs deployments (E.g.: development environments), a rw backend directory would allow any process to inject a wrong plugin.</p>
+<p>Verification method: Integration test (ITF)</p>
+</section>
+<section id="req-sec-v3-compensating-controls-enforcement">
+<h4>REQ-SEC-V3: Compensating Controls Enforcement<a class="headerlink" href="#req-sec-v3-compensating-controls-enforcement" title="Link to this heading">#</a></h4>
+<p>Verify that all five compensating controls (REQ-SEC-3) are active and correctly prevent unauthorized library loading:</p>
+<ol class="arabic simple">
+<li><p>pathtrust: Place a valid .so on a non-pathtrust filesystem would verify dlopen() fails.</p></li>
+<li><p>secpol: Verify process has PROCMGR_AID_UNTRUSTED_EXEC denied would untrusted .so cannot load.</p></li>
+<li><p>setuid: Verify LD_LIBRARY_PATH and LD_PRELOAD are unset by runtime linker before main().</p></li>
+<li><p>procnto -mX: Remove +x from a .so would verify dlopen() fails.</p></li>
+<li><p>Config-driven: Place an extra libmwlog_hacky_backend.so in the backend directory (not in config) would verify it is not loaded.</p></li>
+</ol>
+<p>Verification method: Target integration test (ITF) on QNX</p>
+</section>
+<section id="req-sec-v4-exported-symbol-check">
+<h4>REQ-SEC-V4: Exported Symbol Check<a class="headerlink" href="#req-sec-v4-exported-symbol-check" title="Link to this heading">#</a></h4>
+<p>Verify that each backend .so exports only MwLogVersion and MwLogRegisterBackends (both extern “C”). All other symbols shall be hidden.</p>
+<p>Verification method: CI gate - nm –defined-only –extern-only on each libmwlog_*_backend.so; fail if unexpected symbols are found beyond MwLogVersion and MwLogRegisterBackends.</p>
+</section>
+<section id="req-sec-v5-rpath-verification">
+<h4>REQ-SEC-V5: RPATH Verification<a class="headerlink" href="#req-sec-v5-rpath-verification" title="Link to this heading">#</a></h4>
+<p>Verify that each backend .so has RPATH (not RUNPATH) containing only approved absolute paths to qtsafefs-backed directories.</p>
+<p>Verification method: CI gate - readelf -d on each backend .so; verify RPATH contains only approved paths and no RUNPATH entries exist.</p>
+</section>
+<section id="req-sec-v6-elf-hardening-verification">
+<h4>REQ-SEC-V6: ELF Hardening Verification<a class="headerlink" href="#req-sec-v6-elf-hardening-verification" title="Link to this heading">#</a></h4>
+<p>Verify that all .so files have GNU_RELRO segment, GNU_STACK without execute flag, and full RELRO binding.</p>
+<p>Verification method: CI gate - readelf -l and readelf -d on each .so; verify GNU_RELRO present, GNU_STACK flags do not include E, and BIND_NOW is set.</p>
+</section>
+<section id="req-sec-v7-pathtrust-enforcement">
+<h4>REQ-SEC-V7: pathtrust Enforcement<a class="headerlink" href="#req-sec-v7-pathtrust-enforcement" title="Link to this heading">#</a></h4>
+<p>Verify that dlopen() fails to load a .so from a non-pathtrust filesystem and that the fallback chain activates correctly.</p>
+<p>Verification method: Integration test (ITF) on QNX</p>
+</section>
+<section id="req-sec-v8-execute-permission-enforcement">
+<h4>REQ-SEC-V8: Execute Permission Enforcement<a class="headerlink" href="#req-sec-v8-execute-permission-enforcement" title="Link to this heading">#</a></h4>
+<p>Verify that a backend .so without the +x permission bit fails to load under procnto -mX.</p>
+<p>Verification method: Target integration test (ITF) on QNX</p>
+</section>
+<section id="req-sec-v9-environment-variable-mutation-detection">
+<h4>REQ-SEC-V9: Environment Variable Mutation Detection<a class="headerlink" href="#req-sec-v9-environment-variable-mutation-detection" title="Link to this heading">#</a></h4>
+<p>Verify that dynamic backend loader detects a change to LD_LIBRARY_PATH between init and dlopen() and logs a diagnostic message.</p>
+<p>Verification method: Component test</p>
+</section>
+<section id="req-sec-v10-dlerror-sanitization">
+<h4>REQ-SEC-V10: dlerror() Sanitization<a class="headerlink" href="#req-sec-v10-dlerror-sanitization" title="Link to this heading">#</a></h4>
+<p>Verify that dlerror() output logged by dynamic backend loader does not contain raw filesystem paths at user-accessible log levels.</p>
+<p>Verification method: Unit test</p>
+</section>
+<section id="req-sec-v11-double-load-same-soname-from-different-paths">
+<h4>REQ-SEC-V11: Double-Load Same Soname from Different Paths<a class="headerlink" href="#req-sec-v11-double-load-same-soname-from-different-paths" title="Link to this heading">#</a></h4>
+<p>Empirically determine QNX 8.0 behavior when loading the same soname from two different absolute paths. Document results.</p>
+<p>Verification method: Target integration test (ITF) on QNX</p>
+</section>
+</section>
+</section>
+<hr class="docutils" />
+<section id="performance-requirements">
+<h2>4. Performance Requirements<a class="headerlink" href="#performance-requirements" title="Link to this heading">#</a></h2>
+<section id="id5">
+<h3>4.1 Detailed Design<a class="headerlink" href="#id5" title="Link to this heading">#</a></h3>
+<section id="req-perf-1-zero-steady-state-overhead">
+<h4>REQ-PERF-1: Zero Steady-State Overhead<a class="headerlink" href="#req-perf-1-zero-steady-state-overhead" title="Link to this heading">#</a></h4>
+<p>After initialization, the dynamic-loading architecture shall introduce zero additional overhead compared to the static-link approach. The recorder factory is created once during init; all subsequent logging calls go through the same Recorder interface via virtual function dispatch - identical to the static-link architecture.</p>
+<p>Reasoning: The backend’s Recorder object is held via std::unique_ptr<Recorder> - the same ownership model as the static-link case. No additional wrappers, adapters, or indirection layers are introduced. The dlopen() boundary is crossed only during init.</p>
+</section>
+<section id="req-perf-2-dlopen-with-rtld-now-and-rtld-local">
+<h4>REQ-PERF-2: dlopen() with RTLD_NOW and RTLD_LOCAL<a class="headerlink" href="#req-perf-2-dlopen-with-rtld-now-and-rtld-local" title="Link to this heading">#</a></h4>
+<p>Backend .so files shall be loaded with RTLD_NOW | RTLD_LOCAL (immediate symbol resolution, symbols not available to subsequently loaded libraries). RTLD_LAZY shall not be used. The full flag set is specified in REQ-SEC-3.</p>
+<p>Reasoning: RTLD_NOW performs all symbol resolution at load time, exposing any missing symbol errors immediately during init. RTLD_LAZY defers resolution to first use, which could cause a crash on the first record() call - unacceptable for an ASIL B component. RTLD_LOCAL prevents backend symbols from polluting the global symbol namespace, reducing symbol collision risk. The latency cost is paid once during init, which is already covered as unbounded (TODO: Link existing AoU).</p>
+<p>References:</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://pubs.opengroup.org/onlinepubs/9699919799/functions/dlopen.html">POSIX dlopen() - RTLD_NOW vs RTLD_LAZY</a> - specifies immediate vs. deferred symbol resolution semantics.</p></li>
+</ul>
+</section>
+</section>
+<section id="id6">
+<h3>4.2 Verification Requirements<a class="headerlink" href="#id6" title="Link to this heading">#</a></h3>
+<section id="req-perf-v1-dlopen-latency-profiling-on-target-ecu">
+<h4>REQ-PERF-V1: dlopen() Latency Profiling on Target ECU<a class="headerlink" href="#req-perf-v1-dlopen-latency-profiling-on-target-ecu" title="Link to this heading">#</a></h4>
+<p>Measure dlopen() latency on the target ECU for each per-backend .so file (file, remote, slog)</p>
+<p>Document measured values alongside PHM timing budgets with margin.</p>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Backend</p></th>
+<th class="head"><p>Expected (ms)</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>libmwlog_file_backend.so</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p>libmwlog_remote_backend.so</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p>libmwlog_slog_backend.so</p></td>
+<td><p></p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<section id="req-perf-v2-memory-footprint-comparison-optional">
+<h4>REQ-PERF-V2: Memory Footprint Comparison (Optional)<a class="headerlink" href="#req-perf-v2-memory-footprint-comparison-optional" title="Link to this heading">#</a></h4>
+<p>Measure the .text + .rodata + RSS footprint for processes in the following configurations and compare against the previous static-link architecture:</p>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Configuration</p></th>
+<th class="head"><p>Expected footprint</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Console-only (no plugins)</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p>File-only</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p>File + remote</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p>All backends (previous static-link)</p></td>
+<td><p></p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<section id="req-perf-v3-memory-footprint-improvement-validation-optional">
+<h4>REQ-PERF-V3: Memory Footprint Improvement Validation (Optional)<a class="headerlink" href="#req-perf-v3-memory-footprint-improvement-validation-optional" title="Link to this heading">#</a></h4>
+<p>Measure the .text + .rodata footprint for processes that load only the backends they need (console-only apps no longer link remote/file backend code) and verify the expected memory savings vs. static-link.</p>
+</section>
+<section id="req-perf-v4-toolchain-identity-ci-gate-performance-optional">
+<h4>REQ-PERF-V4: Toolchain Identity CI Gate Performance (Optional)<a class="headerlink" href="#req-perf-v4-toolchain-identity-ci-gate-performance-optional" title="Link to this heading">#</a></h4>
+<p>Verify that the toolchain identity CI gate (REQ-DD-1) does not add measurable overhead to the build pipeline (&lt; 5 seconds per backend .so verification).</p>
+</section>
+</section>
+</section>
+<hr class="docutils" />
+<section id="assumptions-of-use-aous">
+<h2>5. Assumptions of Use (AoUs)<a class="headerlink" href="#assumptions-of-use-aous" title="Link to this heading">#</a></h2>
+<p>These requirements define the operational context and constraints that the integrator, deployer, and plugin author must satisfy for the dynamic loading architecture to function correctly and safely.</p>
+<section id="aou-1-qtsafefs-backend-directory">
+<h3>AOU-1: qtsafefs Backend Directory<a class="headerlink" href="#aou-1-qtsafefs-backend-directory" title="Link to this heading">#</a></h3>
+<p>The backend directory (integrator-defined, resolved via the <code class="docutils literal notranslate"><span class="pre">backend_dir</span></code> feature flag in <code class="docutils literal notranslate"><span class="pre">//score/mw/log/flags</span></code>, default <code class="docutils literal notranslate"><span class="pre">/opt/libmwlog/backends/</span></code>) shall reside on a qtsafefs-mounted filesystem with integrity checking enabled.</p>
+</section>
+<section id="aou-2-pathtrust-enabled-filesystems">
+<h3>AOU-2: pathtrust-Enabled Filesystems<a class="headerlink" href="#aou-2-pathtrust-enabled-filesystems" title="Link to this heading">#</a></h3>
+<p>All filesystems from which backend .so files and their transitive dependencies are loaded shall have pathtrust enabled.</p>
+</section>
+<section id="aou-3-procnto-mx-enabled">
+<h3>AOU-3: procnto -mX Enabled<a class="headerlink" href="#aou-3-procnto-mx-enabled" title="Link to this heading">#</a></h3>
+<p>The target ECU shall run procnto with the -mX flag to enforce PROT_EXEC restrictions on mmap(). Only files with the +x permission bit can be loaded as executable code.</p>
+</section>
+<section id="aou-4-secpol-configuration">
+<h3>AOU-4: secpol Configuration<a class="headerlink" href="#aou-4-secpol-configuration" title="Link to this heading">#</a></h3>
+<p>The process’s secpol configuration shall deny PROCMGR_AID_UNTRUSTED_EXEC. This ensures dlopen() only loads pathtrust-verified libraries.</p>
+</section>
+<section id="aou-5-backend-so-file-permissions">
+<h3>AOU-5: Backend .so File Permissions<a class="headerlink" href="#aou-5-backend-so-file-permissions" title="Link to this heading">#</a></h3>
+<p>All deployed backend .so files shall:</p>
+<ul class="simple">
+<li><p>Have the +x (executable) permission bit set.</p></li>
+<li><p>Be owned by root (or the designated system user).</p></li>
+<li><p>Not be world-writable.</p></li>
+</ul>
+</section>
+<section id="aou-6-environment-variable-integrity">
+<h3>AOU-6: Environment Variable Integrity<a class="headerlink" href="#aou-6-environment-variable-integrity" title="Link to this heading">#</a></h3>
+<p>LD_PRELOAD, LD_LIBRARY_PATH, DL_DEBUG, LD_DEBUG, and PATH shall not be modified after process start. The process should use the setuid bit to have the runtime linker automatically unset LD_LIBRARY_PATH and LD_PRELOAD.</p>
+</section>
+<section id="aou-7-logging-configuration-file">
+<h3>AOU-7: Logging Configuration File<a class="headerlink" href="#aou-7-logging-configuration-file" title="Link to this heading">#</a></h3>
+<p>The logging configuration file (E.g.: backend_config.json) shall explicitly list the backend .so filenames to load. It shall reside on a qtsafefs-mounted filesystem that is RO to prevent tampering.</p>
+</section>
+<section id="aou-8-no-mw-log-in-plugin-constructors">
+<h3>AOU-8: No mw::log in Plugin Constructors<a class="headerlink" href="#aou-8-no-mw-log-in-plugin-constructors" title="Link to this heading">#</a></h3>
+<p>Plugin .so files shall not call mw::log APIs in <strong>attribute</strong>((constructor)) functions or static initializers. Plugin constructors shall not call setenv(), putenv(), signal(), or spawn threads.</p>
+</section>
+<section id="aou-9-shared-memory-semantics">
+<h3>AOU-9: Shared Memory Semantics<a class="headerlink" href="#aou-9-shared-memory-semantics" title="Link to this heading">#</a></h3>
+<p>Since RTLD_NOSHARE is not used, libc/libstdc++ are shared between libmwlog.so and all backend .so files. Memory allocated by the backend (E.g.: via std::make_unique) can be freed by the frontend and vice versa. Standard C++ ownership semantics (std::unique_ptr<Recorder>) apply normally across the dlopen() boundary. The backend’s Recorder destructor is the primary cleanup mechanism.</p>
+</section>
+<section id="aou-10-plugin-vtable-lifetime">
+<h3>AOU-10: Plugin Vtable Lifetime<a class="headerlink" href="#aou-10-plugin-vtable-lifetime" title="Link to this heading">#</a></h3>
+<p>The C++ virtual function table (vtable) of Recorder objects returned by the backend factory remains valid for the entire process lifetime. This is guaranteed by the no-dlclose() policy (REQ-SAFE-1) - the backend .so’s code pages are never unmapped.</p>
+</section>
+<section id="aou-11-toolchain-identity-for-backend-plugins">
+<h3>AOU-11: Toolchain Identity for Backend Plugins<a class="headerlink" href="#aou-11-toolchain-identity-for-backend-plugins" title="Link to this heading">#</a></h3>
+<p>All backend .so files shall be built with the identical toolchain as libmwlog.so:</p>
+<ul class="simple">
+<li><p>Same GCC/Clang version</p></li>
+<li><p>Same -std=c++XX flag</p></li>
+<li><p>Same libstdc++/libc++ version</p></li>
+<li><p>Same target architecture flags</p></li>
+</ul>
+</section>
+<section id="aou-12-transitive-dependencies-on-trusted-filesystems">
+<h3>AOU-12: Transitive Dependencies on Trusted Filesystems<a class="headerlink" href="#aou-12-transitive-dependencies-on-trusted-filesystems" title="Link to this heading">#</a></h3>
+<p>All shared libraries transitively required by backend .so files (i.e., their DT_NEEDED entries) shall reside on qtsafefs-mounted, pathtrust-enabled filesystems.</p>
+</section>
+<section id="aou-13-em-phm-timing-budget">
+<h3>AOU-13: EM/PHM Timing Budget<a class="headerlink" href="#aou-13-em-phm-timing-budget" title="Link to this heading">#</a></h3>
+<p>The integrator shall ensure that the EM and PHM checkpoint timing budget for init sequences that include dynamic plugin loading accounts for the measured worst-case dlopen() latency (including early startup with RTLD_NOW) with margin.</p>
+</section>
+</section>
+<section id="todos">
+<h2>TODOs<a class="headerlink" href="#todos" title="Link to this heading">#</a></h2>
+<ol class="arabic simple">
+<li><p>The security requirements heavily focus on QNX (qtsafefs, pathtrust, secpol, procnto). Document security hardening for Linux-based targets or development environments.</p></li>
+<li><p>Measure memory footprint per application (static-link vs. dynamic).</p></li>
+<li><p>Measure dlopen() latency on target ECU flash.</p></li>
+<li><p>Investigate what Linux/QNX 8.0 does if we load the same soname from two different absolute paths.</p></li>
+<li><p>Documentation on handling updates to per-backend .so files.</p></li>
+<li><p>Document EM/PHM checkpoint timing budgets apply to the init sequence.</p></li>
+<li><p>Document abilities (secpol) required for processes additionally.</p></li>
+</ol>
+</section>
+</section>
+
+
+                </article>
+              
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="registry_aware_recorder_factory.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Registry Aware Recorder Factory</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="design_decisions.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Design Decisions</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+<div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> On this page
+  </div>
+  <nav id="pst-page-toc-nav" class="page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="pst-show_toc_level nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#goal">Goal</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#targets">Targets</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#dynamic-loading-and-application-binary-interface-abi">Dynamic loading and Application Binary Interface (ABI)</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#design-decision-for-dlopen-based-solution">Design Decision for dlopen() based solution</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#plugin-api-mw-log-plugin-api-h">Plugin API (mw_log_plugin_api.h)</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#detailed-design">1. Detailed Design</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#detailed-design-requirements">1.1 Detailed Design Requirements</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#req-dd-1-c-plugin-boundary-with-toolchain-identity">REQ-DD-1: C++ Plugin Boundary with Toolchain Identity</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#req-dd-2-abi-version-guard">REQ-DD-2: ABI Version Guard</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#req-dd-3-configuration-driven-backend-loading">REQ-DD-3: Configuration-Driven Backend Loading</a><ul class="nav section-nav flex-column">
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#backend-directory-and-config-path-resolution-via-feature-flags">Backend Directory and Config Path Resolution via Feature Flags</a></li>
+</ul>
+</li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#req-dd-4-fallback-chain">REQ-DD-4: Fallback Chain</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#req-dd-5-frontend-ffi-preservation">REQ-DD-5: Frontend FFI Preservation</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#req-dd-6-shared-libc-libstdc-contract">REQ-DD-6: Shared libc/libstdc++ Contract</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#req-dd-7-backend-loading-inside-runtime-constructor-meyer-s-singleton">REQ-DD-7: Backend Loading inside Runtime Constructor (Meyer’s Singleton)</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#verification-requirements">1.2 Verification Requirements</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#req-dd-v1-abi-version-mismatch-rejection">REQ-DD-V1: ABI Version Mismatch Rejection</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#req-dd-v2-configuration-driven-loading">REQ-DD-V2: Configuration-Driven Loading</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#req-dd-v3-fallback-chain-activation">REQ-DD-V3: Fallback Chain Activation</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#req-dd-v4-backend-loading-order-inside-runtime-constructor">REQ-DD-V4: Backend Loading Order Inside Runtime Constructor</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#safety-requirements">2. Safety Requirements</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">2.1 Detailed Design</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#req-safe-1-no-dlclose-policy">REQ-SAFE-1: No dlclose() Policy</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#req-safe-2-plugin-constructor-restrictions">REQ-SAFE-2: Plugin Constructor Restrictions</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#req-safe-3-fmea-coverage-for-dlopen-path">REQ-SAFE-3: FMEA Coverage for dlopen() Path</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#req-safe-4-pre-dlopen-elf-section-version-marker-ci-deploy-time-gate">REQ-SAFE-4: Pre-dlopen() ELF Section Version Marker (CI/Deploy-Time Gate)</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">2.2 Verification Requirements</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#req-safe-v1-dlopen-failure-path-testing-on-target-ecu">REQ-SAFE-V1: dlopen() Failure Path Testing on Target ECU</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#req-safe-v2-execution-management-em-plaftorm-health-management-phm-monitoring-regressions">REQ-SAFE-V2: Execution Management (EM)/ Plaftorm Health Management (PHM) monitoring regressions</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#req-safe-v3-stub-logging-detection">REQ-SAFE-V3: Stub Logging Detection</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#req-safe-v4-no-mw-log-usage-in-plugin-constructors">REQ-SAFE-V4: No mw::log Usage in Plugin Constructors</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#security-requirements">3. Security Requirements</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">3.1 Detailed Design</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#req-sec-1-absolute-path-for-dlopen">REQ-SEC-1: Absolute Path for dlopen()</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#req-sec-2-qtsafefs-enforcement-for-production-software-runnning-qnx">REQ-SEC-2: qtsafefs Enforcement for production software runnning QNX</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#req-sec-3-compensating-controls-for-omitted-rtld-noshare">REQ-SEC-3: Compensating Controls for Omitted RTLD_NOSHARE</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#req-sec-4-rpath-hardening-plugin-and-transitive-dependencies">REQ-SEC-4: RPATH Hardening (Plugin and Transitive Dependencies)</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#req-sec-5-exported-symbol-minimization">REQ-SEC-5: Exported Symbol Minimization</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#req-sec-6-environment-variable-integrity-check-needs-further-investigation">REQ-SEC-6: Environment Variable Integrity Check (Needs further investigation)</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#req-sec-7-dlerror-output-sanitization">REQ-SEC-7: dlerror() Output Sanitization</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#req-sec-8-qnx-secpol-and-ability-restrictions">REQ-SEC-8: QNX secpol and Ability Restrictions</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#req-sec-9-prot-exec-enforcement-via-procnto-mx">REQ-SEC-9: PROT_EXEC Enforcement via procnto -mX</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#req-sec-10-elf-hardening-flags">REQ-SEC-10: ELF Hardening Flags</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">3.2 Verification Requirements</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#req-sec-v1-absolute-path-enforcement">REQ-SEC-V1: Absolute Path Enforcement</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#req-sec-v2-backend-directory-ownership-verification">REQ-SEC-V2: Backend Directory Ownership Verification</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#req-sec-v3-compensating-controls-enforcement">REQ-SEC-V3: Compensating Controls Enforcement</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#req-sec-v4-exported-symbol-check">REQ-SEC-V4: Exported Symbol Check</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#req-sec-v5-rpath-verification">REQ-SEC-V5: RPATH Verification</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#req-sec-v6-elf-hardening-verification">REQ-SEC-V6: ELF Hardening Verification</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#req-sec-v7-pathtrust-enforcement">REQ-SEC-V7: pathtrust Enforcement</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#req-sec-v8-execute-permission-enforcement">REQ-SEC-V8: Execute Permission Enforcement</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#req-sec-v9-environment-variable-mutation-detection">REQ-SEC-V9: Environment Variable Mutation Detection</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#req-sec-v10-dlerror-sanitization">REQ-SEC-V10: dlerror() Sanitization</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#req-sec-v11-double-load-same-soname-from-different-paths">REQ-SEC-V11: Double-Load Same Soname from Different Paths</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#performance-requirements">4. Performance Requirements</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">4.1 Detailed Design</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#req-perf-1-zero-steady-state-overhead">REQ-PERF-1: Zero Steady-State Overhead</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#req-perf-2-dlopen-with-rtld-now-and-rtld-local">REQ-PERF-2: dlopen() with RTLD_NOW and RTLD_LOCAL</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">4.2 Verification Requirements</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#req-perf-v1-dlopen-latency-profiling-on-target-ecu">REQ-PERF-V1: dlopen() Latency Profiling on Target ECU</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#req-perf-v2-memory-footprint-comparison-optional">REQ-PERF-V2: Memory Footprint Comparison (Optional)</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#req-perf-v3-memory-footprint-improvement-validation-optional">REQ-PERF-V3: Memory Footprint Improvement Validation (Optional)</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#req-perf-v4-toolchain-identity-ci-gate-performance-optional">REQ-PERF-V4: Toolchain Identity CI Gate Performance (Optional)</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#assumptions-of-use-aous">5. Assumptions of Use (AoUs)</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#aou-1-qtsafefs-backend-directory">AOU-1: qtsafefs Backend Directory</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#aou-2-pathtrust-enabled-filesystems">AOU-2: pathtrust-Enabled Filesystems</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#aou-3-procnto-mx-enabled">AOU-3: procnto -mX Enabled</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#aou-4-secpol-configuration">AOU-4: secpol Configuration</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#aou-5-backend-so-file-permissions">AOU-5: Backend .so File Permissions</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#aou-6-environment-variable-integrity">AOU-6: Environment Variable Integrity</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#aou-7-logging-configuration-file">AOU-7: Logging Configuration File</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#aou-8-no-mw-log-in-plugin-constructors">AOU-8: No mw::log in Plugin Constructors</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#aou-9-shared-memory-semantics">AOU-9: Shared Memory Semantics</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#aou-10-plugin-vtable-lifetime">AOU-10: Plugin Vtable Lifetime</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#aou-11-toolchain-identity-for-backend-plugins">AOU-11: Toolchain Identity for Backend Plugins</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#aou-12-transitive-dependencies-on-trusted-filesystems">AOU-12: Transitive Dependencies on Trusted Filesystems</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#aou-13-em-phm-timing-budget">AOU-13: EM/PHM Timing Budget</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#todos">TODOs</a></li>
+</ul>
+  </nav></div>
+
+  <div class="sidebar-secondary-item">
+
+  
+  <div class="tocsection editthispage">
+    <a href="https://github.com/eclipse-score/baselibs/edit/main/score/mw/log/docs/detailed_design/cpp_design/dynamic_backend_loading_design.md">
+      <i class="fa-solid fa-pencil"></i>
+      
+      
+        
+          Edit on GitHub
+        
+      
+    </a>
+  </div>
+</div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+          </footer>
+        
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../../../../../_static/scripts/bootstrap.js?digest=18bd87630a240e9c25be"></script>
+<script defer src="../../../../../_static/scripts/pydata-sphinx-theme.js?digest=18bd87630a240e9c25be"></script>
+
+  <footer class="bd-footer">
+<div class="bd-footer__inner bd-page-width">
+  
+    <div class="footer-items__start">
+      
+        <div class="footer-item">
+
+  <p class="sphinx-version">
+    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 9.1.1.
+  </p>
+</div>
+      
+    </div>
+  
+  
+  
+    <div class="footer-items__end">
+      
+        <div class="footer-item">
+<p class="theme-version">
+  <!-- # L10n: Setting the PST URL as an argument as this does not need to be localized -->
+  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.23.0.
+</p></div>
+      
+    </div>
+  
+</div>
+
+  </footer>
+  </body>
+</html>

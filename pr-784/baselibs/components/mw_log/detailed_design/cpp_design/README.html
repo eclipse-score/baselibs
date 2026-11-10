@@ -1,0 +1,972 @@
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../../../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Detailed Design &#8212; S-CORE Baselibs  documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../../../../_static/styles/theme.css?digest=18bd87630a240e9c25be" rel="stylesheet" />
+<link href="../../../../../_static/styles/pydata-sphinx-theme.css?digest=18bd87630a240e9c25be" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../../../../../_static/pygments.css?v=8f2a1f02" />
+    <link rel="stylesheet" type="text/css" href="../../../../../_static/graphviz.css?v=4ae1632d" />
+    <link rel="stylesheet" type="text/css" href="../../../../../_static/css/score.css?v=415257cb" />
+    <link rel="stylesheet" type="text/css" href="../../../../../_static/css/score_needs.css?v=82a1844f" />
+    <link rel="stylesheet" type="text/css" href="../../../../../_static/css/score_design.css?v=8048e6ee" />
+    <link rel="stylesheet" type="text/css" href="../../../../../_static/sphinx-design.min.css?v=95c83b7e" />
+    <link rel="stylesheet" type="text/css" href="../../../../../_static/sphinx-data-viewer/jsonview.bundle.css?v=f6ef2277" />
+    <link rel="stylesheet" type="text/css" href="../../../../../_static/sphinx-needs/libs/html/datatables.min.css?v=4b4fd840" />
+    <link rel="stylesheet" type="text/css" href="../../../../../_static/sphinx-needs/common_css/needstable.css?v=5e1b6797" />
+    <link rel="stylesheet" type="text/css" href="../../../../../_static/sphinx-needs/common_css/need_core.css?v=f5b60a78" />
+    <link rel="stylesheet" type="text/css" href="../../../../../_static/sphinx-needs/common_css/need_style.css?v=92936fa5" />
+    <link rel="stylesheet" type="text/css" href="../../../../../_static/sphinx-needs/common_css/need_toggle.css?v=5c6620df" />
+    <link rel="stylesheet" type="text/css" href="../../../../../_static/sphinx-needs/common_css/need_links.css?v=2150a916" />
+    <link rel="stylesheet" type="text/css" href="../../../../../_static/sphinx-needs/modern.css?v=803738c0" />
+  
+  <!-- So that users can add custom icons -->
+  <script defer src="../../../../../_static/scripts/fontawesome.js?digest=18bd87630a240e9c25be"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../../../../_static/scripts/bootstrap.js?digest=18bd87630a240e9c25be" />
+<link rel="preload" as="script" href="../../../../../_static/scripts/pydata-sphinx-theme.js?digest=18bd87630a240e9c25be" />
+
+    <script src="../../../../../_static/jquery.js?v=5d32c60e"></script>
+    <script src="../../../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+    <script src="../../../../../_static/documentation_options.js?v=7f41d439"></script>
+    <script src="../../../../../_static/doctools.js?v=fd6eb6e6"></script>
+    <script src="../../../../../_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <script src="../../../../../_static/design-tabs.js?v=f930bc37"></script>
+    <script src="../../../../../_static/sphinx-data-viewer/jsonview.bundle.js?v=18cd53c5"></script>
+    <script src="../../../../../_static/sphinx-data-viewer/jsonview_loader.js?v=f7ff7e7d"></script>
+    <script src="../../../../../_static/sphinx-needs/libs/html/datatables.min.js?v=8a4aee21"></script>
+    <script src="../../../../../_static/sphinx-needs/libs/html/datatables_loader.js?v=a2cae175"></script>
+    <script src="../../../../../_static/sphinx-needs/libs/html/sphinx_needs_collapse.js?v=dca66431"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'baselibs/components/mw_log/detailed_design/cpp_design/README';</script>
+    <script>
+        DOCUMENTATION_OPTIONS.theme_version = '0.23.0';
+        DOCUMENTATION_OPTIONS.theme_switcher_json_url = 'https://eclipse-score.github.io/baselibs/versions.json';
+        DOCUMENTATION_OPTIONS.theme_switcher_version_match = '';
+        DOCUMENTATION_OPTIONS.show_version_warning_banner =
+            false;
+        </script>
+    <script>DOCUMENTATION_OPTIONS.search_as_you_type = false;</script>
+    <link rel="index" title="Index" href="../../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../../search.html" />
+    <link rel="next" title="Low Level Design of the Configuration and Initialization for mw::log" href="configuration_design.html" />
+    <link rel="prev" title="Log Frontend Detailed Design" href="../log_frontend_design.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="color-scheme" content="light dark"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="0.1" />
+  
+    
+    <script src="../../../../../_static/searchtools.js"></script>
+    <script src="../../../../../_static/language_data.js"></script>
+    <script src="../../../../../searchindex.js"></script>
+  
+  </head>
+  <body data-default-mode="">
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+  
+  
+  
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../../../../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search the docs ..."
+         aria-label="Search the docs ..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header id="pst-header" class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button type="button" class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class="col-lg-3 navbar-header-items__start">
+    
+      <div class="navbar-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../../../../index.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">Eclipse S-CORE</p>
+  
+</a></div>
+    
+  </div>
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    <div class="me-auto navbar-header-items__center">
+      
+        <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../../../features/index.html">
+    Features
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../../../module/index.html">
+    Module
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../../../verification_report/module_verification_report.html">
+    Verification Report
+  </a>
+</li>
+
+
+<li class="nav-item current active">
+  <a class="nav-link nav-internal" href="../../../index.html">
+    Components
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+      
+    </div>
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+<button type="button" class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+        </div>
+      
+      
+        <div class="navbar-item">
+
+<div class="theme-switch-container dropdown pst-js-only" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Color mode">
+  <button type="button" class="btn btn-sm nav-link pst-navbar-icon theme-switch-button dropdown-toggle" aria-label="Color mode" data-bs-toggle="dropdown">
+    <i class="theme-switch fa-solid fa-sun fa-lg fa-fw" data-mode="light" title="Light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg fa-fw" data-mode="dark" title="Dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg fa-fw" data-mode="auto" title="System Settings"></i>
+  </button>
+  <ul class="dropdown-menu dropdown-menu-end">
+    <li><button type="button" class="dropdown-item d-flex align-items-center theme-change-button" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg fa-fw me-1"></i>System Settings</button></li>
+    <li><button type="button" class="dropdown-item d-flex align-items-center theme-change-button" data-mode="light"><i class="fa-solid fa-sun fa-lg fa-fw me-1"></i>Light</button></li>
+    <li><button type="button" class="dropdown-item d-flex align-items-center theme-change-button" data-mode="dark"><i class="fa-solid fa-moon fa-lg fa-fw me-1"></i>Dark</button></li>
+  </ul>
+</div></div>
+      
+        <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/eclipse-score" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-github fa-lg" aria-hidden="true"></i><span class="visually-hidden">GitHub</span></a>
+        </li>
+</ul></div>
+      
+        <div class="navbar-item">
+<div class="version-switcher__container dropdown pst-js-only">
+  <button id="pst-version-switcher-button-2"
+    type="button"
+    class="version-switcher__button btn btn-sm dropdown-toggle"
+    data-bs-toggle="dropdown"
+    aria-haspopup="listbox"
+    aria-controls="pst-version-switcher-list-2"
+    aria-label="Version switcher list"
+  >
+    Choose version  <!-- this text may get changed later by javascript -->
+    <span class="caret"></span>
+  </button>
+  <div id="pst-version-switcher-list-2"
+    class="version-switcher__menu dropdown-menu list-group-flush py-0"
+    role="listbox" aria-labelledby="pst-version-switcher-button-2">
+    <!-- dropdown will be populated by javascript on page load -->
+  </div>
+</div></div>
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+<button type="button" class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+    </div>
+  
+
+  
+    <button type="button" class="pst-navbar-icon sidebar-toggle secondary-toggle" aria-label="On this page">
+      <span class="fa-solid fa-outdent"></span>
+    </button>
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+        
+          
+          
+            <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../../../features/index.html">
+    Features
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../../../module/index.html">
+    Module
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../../../verification_report/module_verification_report.html">
+    Verification Report
+  </a>
+</li>
+
+
+<li class="nav-item current active">
+  <a class="nav-link nav-internal" href="../../../index.html">
+    Components
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+          
+        
+      </div>
+    
+    
+    
+      <div class="sidebar-header-items__end">
+        
+          <div class="navbar-item">
+
+<div class="theme-switch-container dropdown pst-js-only" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Color mode">
+  <button type="button" class="btn btn-sm nav-link pst-navbar-icon theme-switch-button dropdown-toggle" aria-label="Color mode" data-bs-toggle="dropdown">
+    <i class="theme-switch fa-solid fa-sun fa-lg fa-fw" data-mode="light" title="Light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg fa-fw" data-mode="dark" title="Dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg fa-fw" data-mode="auto" title="System Settings"></i>
+  </button>
+  <ul class="dropdown-menu dropdown-menu-end">
+    <li><button type="button" class="dropdown-item d-flex align-items-center theme-change-button" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg fa-fw me-1"></i>System Settings</button></li>
+    <li><button type="button" class="dropdown-item d-flex align-items-center theme-change-button" data-mode="light"><i class="fa-solid fa-sun fa-lg fa-fw me-1"></i>Light</button></li>
+    <li><button type="button" class="dropdown-item d-flex align-items-center theme-change-button" data-mode="dark"><i class="fa-solid fa-moon fa-lg fa-fw me-1"></i>Dark</button></li>
+  </ul>
+</div></div>
+        
+          <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/eclipse-score" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-github fa-lg" aria-hidden="true"></i><span class="visually-hidden">GitHub</span></a>
+        </li>
+</ul></div>
+        
+          <div class="navbar-item">
+<div class="version-switcher__container dropdown pst-js-only">
+  <button id="pst-version-switcher-button-3"
+    type="button"
+    class="version-switcher__button btn btn-sm dropdown-toggle"
+    data-bs-toggle="dropdown"
+    aria-haspopup="listbox"
+    aria-controls="pst-version-switcher-list-3"
+    aria-label="Version switcher list"
+  >
+    Choose version  <!-- this text may get changed later by javascript -->
+    <span class="caret"></span>
+  </button>
+  <div id="pst-version-switcher-list-3"
+    class="version-switcher__menu dropdown-menu list-group-flush py-0"
+    role="listbox" aria-labelledby="pst-version-switcher-button-3">
+    <!-- dropdown will be populated by javascript on page load -->
+  </div>
+</div></div>
+        
+      </div>
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item pst-sidebar-collapse"><button type="button" id="pst-collapse-sidebar-button" aria-expanded="true" aria-controls="pst-primary-sidebar">
+  <svg class="pst-icon" role="img" aria-hidden="true" focusable="false" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg">
+    <path fill="currentColor" d="M3 15.5C2.36232 15.5 1.74874 15.2564 1.28478 14.8189C0.820828 14.3815 0.541576 13.7832 0.504167 13.1467L0.5 13L0.5 3C0.499965 2.36232 0.743605 1.74874 1.18107 1.28478C1.61854 0.820828 2.21676 0.541576 2.85333 0.504167L3 0.5L13 0.5C13.6377 0.499965 14.2513 0.743605 14.7152 1.18107C15.1792 1.61854 15.4584 2.21676 15.4958 2.85333L15.5 3L15.5 13C15.5 13.6377 15.2564 14.2513 14.8189 14.7152C14.3815 15.1792 13.7832 15.4584 13.1467 15.4958L13 15.5L3 15.5ZM3 13.8333L10.5 13.8333L10.5 2.16667L3 2.16667C2.79589 2.16669 2.59889 2.24163 2.44636 2.37726C2.29383 2.5129 2.19638 2.69979 2.1725 2.9025L2.16667 3L2.16667 13C2.16669 13.2041 2.24163 13.4011 2.37726 13.5536C2.5129 13.7062 2.69979 13.8036 2.9025 13.8275L3 13.8333ZM6.65583 10.325L6.5775 10.2558L4.91083 8.58917C4.76735 8.44567 4.68116 8.25476 4.66843 8.05223C4.65569 7.84971 4.71729 7.6495 4.84167 7.48917L4.91083 7.41083L6.5775 5.74417C6.72747 5.59471 6.9287 5.50794 7.14032 5.50148C7.35194 5.49502 7.55809 5.56935 7.7169 5.70937C7.8757 5.8494 7.97525 6.04463 7.99533 6.25539C8.01541 6.46616 7.95451 6.67667 7.825 6.84417L7.75583 6.9225L6.67917 8L7.75583 9.0775C7.89931 9.22099 7.98551 9.41191 7.99824 9.61443C8.01097 9.81695 7.94938 10.0172 7.825 10.1775L7.75583 10.2558C7.61234 10.3993 7.42142 10.4855 7.2189 10.4982C7.01638 10.511 6.81617 10.4494 6.65583 10.325Z"/>
+  </svg>
+  <span class="pst-collapse-sidebar-label">Collapse Sidebar</span>
+  <span class="pst-expand-sidebar-label">Expand Sidebar</span>
+</button></div>
+        <div class="sidebar-primary-item">
+
+<nav class="bd-docs-nav bd-links"
+     aria-label="Section Navigation">
+  <p class="bd-links__title" role="heading" aria-level="1">Section Navigation</p>
+  <div class="bd-toc-item navbar-nav"><ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../../bitmanipulation/index.html">bitmanipulation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../concurrency/index.html">concurrency</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../containers/index.html">containers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../containers_rust/index.html">containers_rust</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../filesystem/index.html">filesystem</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../flatbuffers/index.html">FlatBuffers-Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../hash/index.html">hash</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../json/index.html">JSON-Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../language/index.html">language</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../memory/index.html">Memory</a></li>
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="../../index.html">log_frontend</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../../requirements/index.html">Log Frontend Requirements</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../architecture/index.html">Component Architecture</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../safety_analysis/fmea.html">FMEA (Failure Modes and Effects Analysis)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../safety_analysis/dfa.html">DFA (Dependent Failure Analysis)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../safety_analysis/aou_requirements.html">Assumptions of Use</a></li>
+<li class="toctree-l2 current active has-children"><a class="reference internal" href="../index.html">Detailed Design</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../rust_bridge_design.html">Rust Bridge Detailed Design</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../log_frontend_design.html">Log Frontend Detailed Design</a></li>
+<li class="toctree-l3 current active"><a aria-current="page" class="current reference internal" href="#">Detailed Design</a></li>
+<li class="toctree-l3"><a class="reference internal" href="configuration_design.html">Low Level Design of the Configuration and Initialization for <code class="docutils literal notranslate"><span class="pre">mw::log</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="dependency_graph.html">Dependency graph</a></li>
+
+<li class="toctree-l3"><a class="reference internal" href="registry_aware_recorder_factory.html">Registry Aware Recorder Factory</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dynamic_backend_loading_design.html">Dynamic backend loading for mw::log</a></li>
+<li class="toctree-l3"><a class="reference internal" href="design_decisions.html">Design Decisions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../chklst_impl_inspection.html">Implementation Inspection Checklist</a></li>
+</ul>
+</details></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../os/index.html">os</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../result/index.html">result</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../scope_exit/index.html">Scope Exit</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../shared_layout/index.html">Cross-Language Shared-Layout Data Types</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../static_reflection_with_serialization/index.html">static_reflection_with_serialization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../string_manipulation/index.html">String Manipulation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../utils/index.html">utils</a></li>
+</ul>
+</div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item">
+
+<nav aria-label="Breadcrumb" class="d-print-none">
+  <ul class="bd-breadcrumbs">
+    
+    <li class="breadcrumb-item breadcrumb-home">
+      <a href="../../../../../index.html" class="nav-link" aria-label="Home">
+        <i class="fa-solid fa-home"></i>
+      </a>
+    </li>
+    
+    <li class="breadcrumb-item"><a href="../../../index.html" class="nav-link">Components</a></li>
+    
+    
+    <li class="breadcrumb-item"><a href="../../index.html" class="nav-link">log_frontend</a></li>
+    
+    
+    <li class="breadcrumb-item"><a href="../index.html" class="nav-link">Detailed Design</a></li>
+    
+    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">Detailed Design</span></li>
+  </ul>
+</nav>
+</div>
+      
+    </div>
+  
+  
+</div>
+</div>
+              
+              
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="detailed-design">
+<h1>Detailed Design<a class="headerlink" href="#detailed-design" title="Link to this heading">#</a></h1>
+<section id="table-of-contents">
+<h2>Table of Contents<a class="headerlink" href="#table-of-contents" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p><a class="reference internal" href="#design-decisions">Design Decisions</a></p></li>
+<li><p><a class="reference internal" href="#design">Design</a></p>
+<ul>
+<li><p><a class="reference internal" href="#core-data-structure">Core Data Structure</a></p></li>
+<li><p><a class="reference internal" href="#architectural-components">Architectural Components</a></p></li>
+<li><p><a class="reference internal" href="#types-of-recorders">Types of Recorders</a></p></li>
+<li><p><a class="reference internal" href="#backend-registration-system">Backend Registration System</a></p></li>
+<li><p><a class="reference internal" href="#activity-diagrams">Activity Diagrams</a></p></li>
+<li><p><a class="reference internal" href="#user-facing-apis">User-Facing APIs</a></p></li>
+<li><p><a class="reference internal" href="#configuration">Configuration</a></p></li>
+<li><p><a class="reference internal" href="#runtime">Runtime</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#library-dependencies">Library Dependencies</a></p></li>
+<li><p><a class="reference internal" href="#related-design-documents">Related Design Documents</a></p></li>
+</ul>
+</section>
+<section id="design-decisions">
+<h2>Design Decisions<a class="headerlink" href="#design-decisions" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Object-seam mocking — The codebase uses object seams for testability (no link-time mocking). All recorder and backend abstractions expose virtual interfaces with corresponding mock implementations.</p></li>
+<li><p>No dynamic memory allocation at runtime — Buffer sizes (per slot and number of slots) are allocated at creation time. The sole exception is the remote backend (<code class="docutils literal notranslate"><span class="pre">DataRouterRecorder</span></code>), which requires one dynamic allocation for shared-memory communication.</p></li>
+<li><p>Lock-free, pre-allocated buffers — The system prioritises stable, predictable performance over memory efficiency by using lock-free data structures with pre-allocated storage.</p></li>
+<li><p>Stream-based API — C++ idiomatically uses <a class="reference external" href="https://en.cppreference.com/w/cpp/io">streams</a> for I/O. The <code class="docutils literal notranslate"><span class="pre">LogStream</span></code> follows this pattern to provide a familiar interface and to efficiently support the DLT protocol (see the section “DLT formatted payload” of the <code class="docutils literal notranslate"><span class="pre">mw::log</span></code> README), which is the primary backend format.</p></li>
+<li><p>Free-function and context-aware entry points — Two complementary APIs coexist: free functions (<code class="docutils literal notranslate"><span class="pre">LogError()</span></code>, <code class="docutils literal notranslate"><span class="pre">LogWarn()</span></code>, …) for convenience, and a <code class="docutils literal notranslate"><span class="pre">Logger</span></code> class for context-aware logging. The free functions satisfy compatibility with the Adaptive AUTOSAR standard, while the <code class="docutils literal notranslate"><span class="pre">Logger</span></code> provides scoped context identifiers.</p></li>
+<li><p>Plugin-based backend selection — Backends register themselves via static initialisation into a global function-pointer table (<code class="docutils literal notranslate"><span class="pre">BackendTable</span></code>). Applications opt in to specific backends through Bazel dependencies, and the <code class="docutils literal notranslate"><span class="pre">RegistryAwareRecorderFactory</span></code> queries the table at runtime to compose the active recorder.</p></li>
+</ul>
+</section>
+<section id="design">
+<h2>Design<a class="headerlink" href="#design" title="Link to this heading">#</a></h2>
+<section id="core-data-structure">
+<h3>Core Data Structure<a class="headerlink" href="#core-data-structure" title="Link to this heading">#</a></h3>
+<p>The core data structure is a slot-oriented, lock-free ring buffer where each slot carries a flag indicating whether it is currently in use.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">CircularAllocator</span></code> template (in <code class="docutils literal notranslate"><span class="pre">detail/circular_allocator.h</span></code>) implements this ring buffer. Each slot allows independent, concurrent writing and reading. A reader checks the slot’s flag to determine readability; when every slot is occupied, the writer wraps around like a conventional ring buffer.</p>
+<p>Key properties:</p>
+<ul class="simple">
+<li><p>No runtime allocation. The buffer capacity — both per-slot size and total slot count — is fixed at construction time. This satisfies safety requirements and eliminates allocator overhead on the hot path.</p></li>
+<li><p>Concurrent and nested writes. Multiple threads can write simultaneously without synchronisation. Within a single thread, nested log messages are also safe, because each <code class="docutils literal notranslate"><span class="pre">LogStream</span></code> instance acquires its own slot independently.</p></li>
+</ul>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">LogError</span><span class="p">()</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">"My message:"</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">func</span><span class="p">();</span>
+
+<span class="kt">int</span><span class="w"> </span><span class="nf">func</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="n">LogError</span><span class="p">()</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">"My nested message"</span><span class="p">;</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>In this example, the outer message starts writing, then the inner message acquires a separate slot, completes, and releases it — all before the outer message finishes. A locking approach would deadlock here; the lock-free design avoids that.</p>
+</section>
+<section id="architectural-components">
+<h3>Architectural Components<a class="headerlink" href="#architectural-components" title="Link to this heading">#</a></h3>
+<p>The static design is divided into five main parts:</p>
+<ol class="arabic">
+<li><p>MessageBuilder / Format
+Responsible for encoding log data into a target wire format. Two format families exist:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">DLTFormat</span></code> / <code class="docutils literal notranslate"><span class="pre">DltMessageBuilder</span></code> — Encodes payloads in the DLT protocol (see the section “DLT formatted payload” of the <code class="docutils literal notranslate"><span class="pre">mw::log</span></code> README) format, used by the remote and file recorders.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">TextFormat</span></code> / <code class="docutils literal notranslate"><span class="pre">TextMessageBuilder</span></code> — Produces human-readable text output, used by the console recorder.</p></li>
+</ul>
+<p>The <code class="docutils literal notranslate"><span class="pre">IMessageBuilder</span></code> interface (in <code class="docutils literal notranslate"><span class="pre">detail/text_recorder/imessage_builder.h</span></code>) defines the abstraction, allowing new formats to be introduced without affecting other components.</p>
+</li>
+<li><p>Backend
+Abstracts the storage and transport of log data. A <code class="docutils literal notranslate"><span class="pre">Backend</span></code> (defined in <code class="docutils literal notranslate"><span class="pre">detail/backend.h</span></code>) manages slot allocation and flushing. Concrete implementations include:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">DataRouterBackend</span></code> — Transmits log entries to the DataRouter via shared memory for remote DLT logging.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">DltTraceBackend</span></code> — Second-generation remote DLT backend (“DLTv2”) that forwards log entries to the Generic Trace Library (GTL); selected in place of <code class="docutils literal notranslate"><span class="pre">DataRouterBackend</span></code> when the <code class="docutils literal notranslate"><span class="pre">shm_dma_enabled</span></code> flag is set. See <code class="docutils literal notranslate"><span class="pre">dlt_trace_backend.md</span></code> in the <code class="docutils literal notranslate"><span class="pre">score_logging</span></code> repository.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">FileOutputBackend</span></code> — Writes log entries to local files.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">SlogBackend</span></code> — Forwards log entries to the QNX <code class="docutils literal notranslate"><span class="pre">slog2</span></code> system logger (QNX-only).</p></li>
+</ul>
+<p>The <code class="docutils literal notranslate"><span class="pre">Backend</span></code> exposes three key operations: <code class="docutils literal notranslate"><span class="pre">ReserveSlot()</span></code>, <code class="docutils literal notranslate"><span class="pre">FlushSlot()</span></code>, and <code class="docutils literal notranslate"><span class="pre">GetLogRecord()</span></code>.</p>
+</li>
+<li><p>Recorder
+Combines a message builder with a backend into a single coherent unit. The base class <code class="docutils literal notranslate"><span class="pre">Recorder</span></code> (in <code class="docutils literal notranslate"><span class="pre">recorder.h</span></code>) defines pure-virtual <code class="docutils literal notranslate"><span class="pre">Log()</span></code> overloads for all supported C++ primitive types, plus <code class="docutils literal notranslate"><span class="pre">StartRecord()</span></code> and <code class="docutils literal notranslate"><span class="pre">StopRecord()</span></code> for slot lifecycle management.</p></li>
+<li><p>LogStream
+The primary user-facing API. <code class="docutils literal notranslate"><span class="pre">LogStream</span></code> is a RAII wrapper: construction acquires a slot from the active recorder, and destruction releases it. Content streamed via <code class="docutils literal notranslate"><span class="pre">operator&lt;&lt;</span></code> writes directly into the owned slot, avoiding intermediate copies. Ownership transfers from the middleware to the caller by value — no heap allocation is required.</p></li>
+<li><p>Recorder factory
+The <code class="docutils literal notranslate"><span class="pre">RegistryAwareRecorderFactory</span></code> (in <code class="docutils literal notranslate"><span class="pre">detail/registry_aware_recorder_factory.h</span></code>) is the single implementation of <code class="docutils literal notranslate"><span class="pre">IRecorderFactory</span></code>. It queries the <code class="docutils literal notranslate"><span class="pre">BackendTable</span></code> for registered backends, creates the appropriate recorders, and composes them via <code class="docutils literal notranslate"><span class="pre">CompositeRecorder</span></code> when multiple log modes are active.</p></li>
+</ol>
+<figure class="align-default" id="id1">
+<p class="plantuml">
+<object data="../../../../../_images/plantuml-c0d55514d6debfd176602c2da65178b3c48de023.svg" type="image/svg+xml" style="width:4331px;height:1456px;background:#FFFFFF;"></object></p>
+<figcaption>
+<p><span class="caption-number">Fig. 1 </span><span class="caption-text">Verbose Console Logging class diagram</span><a class="headerlink" href="#id1" title="Link to this image">#</a></p>
+</figcaption>
+</figure>
+<figure class="align-default" id="id2">
+<p class="plantuml">
+<object data="../../../../../_images/plantuml-34f99dc02130b1de9f9e4f6313e2dcc0532d79ef.svg" type="image/svg+xml" style="width:2085px;height:1544px;background:#FFFFFF;"></object></p>
+<figcaption>
+<p><span class="caption-number">Fig. 2 </span><span class="caption-text">Verbose Console Logging sequence diagram</span><a class="headerlink" href="#id2" title="Link to this image">#</a></p>
+</figcaption>
+</figure>
+<figure class="align-default" id="id3">
+<p class="plantuml">
+<object data="../../../../../_images/plantuml-ae50750dded10bcd656f5063ec9766611175fe03.svg" type="image/svg+xml" style="width:1793px;height:804px;background:#FFFFFF;"></object></p>
+<figcaption>
+<p><span class="caption-number">Fig. 3 </span><span class="caption-text">Non-Verbose Logging class diagram</span><a class="headerlink" href="#id3" title="Link to this image">#</a></p>
+</figcaption>
+</figure>
+<figure class="align-default" id="id4">
+<p class="plantuml">
+<object data="../../../../../_images/plantuml-20a6a273912ee091464fe19a443bb3042389a0b1.svg" type="image/svg+xml" style="width:474px;height:202px;background:#FFFFFF;"></object></p>
+<figcaption>
+<p><span class="caption-number">Fig. 4 </span><span class="caption-text">ErrorDomain class diagram</span><a class="headerlink" href="#id4" title="Link to this image">#</a></p>
+</figcaption>
+</figure>
+<figure class="align-default" id="id5">
+<p class="plantuml">
+<object data="../../../../../_images/plantuml-840f27d4ee4587462735b4b50e84c0d2074bf4c4.svg" type="image/svg+xml" style="width:1921px;height:955px;background:#FFFFFF;"></object></p>
+<figcaption>
+<p><span class="caption-number">Fig. 5 </span><span class="caption-text">Frontend Dependency Graph</span><a class="headerlink" href="#id5" title="Link to this image">#</a></p>
+</figcaption>
+</figure>
+</section>
+<section id="types-of-recorders">
+<h3>Types of Recorders<a class="headerlink" href="#types-of-recorders" title="Link to this heading">#</a></h3>
+<p>The following concrete <code class="docutils literal notranslate"><span class="pre">Recorder</span></code> implementations exist:</p>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Recorder</p></th>
+<th class="head"><p>Purpose</p></th>
+<th class="head"><p>Backend / Transport</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">DataRouterRecorder</span></code></p></td>
+<td><p>Remote DLT logging via DataRouter shared memory</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">DataRouterBackend</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">DltTraceRecorder</span></code></p></td>
+<td><p>Remote DLT logging via the Generic Trace Library (“DLTv2”, <code class="docutils literal notranslate"><span class="pre">shm_dma_enabled</span></code>)</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">DltTraceBackend</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">TextRecorder</span></code></p></td>
+<td><p>Human-readable text output (console, system logger)</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">FileOutputBackend</span></code> / stdout</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">FileRecorder</span></code></p></td>
+<td><p>DLT-formatted file logging</p></td>
+<td><p>DLT file writer</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">CompositeRecorder</span></code></p></td>
+<td><p>Multiplexes log entries to one or more child recorders</p></td>
+<td><p>Delegates to children</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">EmptyRecorder</span></code></p></td>
+<td><p>No-op stub for when logging is disabled</p></td>
+<td><p>None</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">CompositeRecorder</span></code> enables parallel logging to multiple sinks — for example, console and remote DLT simultaneously. It implements the composite design pattern: each <code class="docutils literal notranslate"><span class="pre">Recorder</span></code> method delegates to all child recorders in sequence.</p>
+<p><code class="docutils literal notranslate"><span class="pre">EmptyRecorder</span></code> serves as the default when no backend is linked or when logging is explicitly turned off.</p>
+<figure class="align-default" id="id6">
+<p class="plantuml">
+<object data="../../../../../_images/plantuml-2dd8d1bd0405663d4e2c66e322570ab03a30dbdc.svg" type="image/svg+xml" style="width:4887px;height:1056px;background:#FFFFFF;"></object></p>
+<figcaption>
+<p><span class="caption-number">Fig. 6 </span><span class="caption-text">Recorders class diagram</span><a class="headerlink" href="#id6" title="Link to this image">#</a></p>
+</figcaption>
+</figure>
+</section>
+<section id="backend-registration-system">
+<h3>Backend Registration System<a class="headerlink" href="#backend-registration-system" title="Link to this heading">#</a></h3>
+<p>Backends use a static plugin architecture. Each backend provides a <em>registrant</em> — a compilation unit containing a <code class="docutils literal notranslate"><span class="pre">BackendRegistrant</span></code> static object that self-registers a creator function into the global <code class="docutils literal notranslate"><span class="pre">BackendTable</span></code> during static initialisation.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">BackendTable</span></code> (in <code class="docutils literal notranslate"><span class="pre">backend_table.h</span></code>) maintains a fixed-size array of <code class="docutils literal notranslate"><span class="pre">RecorderCreatorFn</span></code> function pointers, indexed by <code class="docutils literal notranslate"><span class="pre">LogMode</span></code>:</p>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p><code class="docutils literal notranslate"><span class="pre">LogMode</span></code></p></th>
+<th class="head"><p>Slot</p></th>
+<th class="head"><p>Registrant</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">kConsole</span></code></p></td>
+<td><p>0</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">console_registrant.cpp</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">kFile</span></code></p></td>
+<td><p>1</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">file_registrant.cpp</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">kRemote</span></code></p></td>
+<td><p>2</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">remote_registrant.cpp</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">kSystem</span></code></p></td>
+<td><p>3</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">slog_registrant.cpp</span></code> (QNX only)</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">kCustom</span></code></p></td>
+<td><p>4</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">custom_registrant.cpp</span></code></p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>At runtime, <code class="docutils literal notranslate"><span class="pre">RegistryAwareRecorderFactory</span></code> queries <code class="docutils literal notranslate"><span class="pre">IsBackendAvailable()</span></code> for each configured log mode and calls <code class="docutils literal notranslate"><span class="pre">CreateRecorderForMode()</span></code> for available backends. If a requested backend is not linked, the factory falls back to console logging; if console is also unavailable, it falls back to the <code class="docutils literal notranslate"><span class="pre">EmptyRecorder</span></code> stub.</p>
+<p>Each registrant Bazel target uses <code class="docutils literal notranslate"><span class="pre">alwayslink</span> <span class="pre">=</span> <span class="pre">True</span></code> to ensure the linker does not discard the static registrant object.</p>
+<figure class="align-default" id="id7">
+<p class="plantuml">
+<object data="../../../../../_images/plantuml-3944828b14717ce85a41a96bf8725ff8c7582d46.svg" type="image/svg+xml" style="width:2125px;height:1521px;background:#FEFEFE;"></object></p>
+<figcaption>
+<p><span class="caption-number">Fig. 7 </span><span class="caption-text">Backend Registration Component Diagram</span><a class="headerlink" href="#id7" title="Link to this image">#</a></p>
+</figcaption>
+</figure>
+<figure class="align-default" id="id8">
+<p class="plantuml">
+<object data="../../../../../_images/plantuml-2eaee51f7789edbc76f26977782c8c187ab94433.svg" type="image/svg+xml" style="width:2474px;height:1760px;background:#FEFEFE;"></object></p>
+<figcaption>
+<p><span class="caption-number">Fig. 8 </span><span class="caption-text">Backend Registration Sequence Diagram</span><a class="headerlink" href="#id8" title="Link to this image">#</a></p>
+</figcaption>
+</figure>
+<figure class="align-default" id="id9">
+<p class="plantuml">
+<object data="../../../../../_images/plantuml-25cd5035dc7e0c0ae29d9ea3dfb49b2ddeed9298.svg" type="image/svg+xml" style="width:1860px;height:1837px;background:#FEFEFE;"></object></p>
+<figcaption>
+<p><span class="caption-number">Fig. 9 </span><span class="caption-text">RegistryAwareRecorderFactory Activity Diagram</span><a class="headerlink" href="#id9" title="Link to this image">#</a></p>
+</figcaption>
+</figure>
+<p>For a step-by-step guide on adding a new backend, refer to <a class="reference internal" href="registry_aware_recorder_factory.html"><span class="std std-doc">registry_aware_recorder_factory.md</span></a>.</p>
+</section>
+<section id="activity-diagrams">
+<h3>Activity Diagrams<a class="headerlink" href="#activity-diagrams" title="Link to this heading">#</a></h3>
+<figure class="align-default" id="id10">
+<p class="plantuml">
+<object data="../../../../../_images/plantuml-4b19a8116a159a69b03128317c7c166c46095beb.svg" type="image/svg+xml" style="width:464px;height:636px;background:#FFFFFF;"></object></p>
+<figcaption>
+<p><span class="caption-number">Fig. 10 </span><span class="caption-text">CircularAllocator::AcquireSlotToWrite Activity diagram</span><a class="headerlink" href="#id10" title="Link to this image">#</a></p>
+</figcaption>
+</figure>
+<figure class="align-default" id="id11">
+<p class="plantuml">
+<object data="../../../../../_images/plantuml-b651e3734d222dfab84857628649d4a08bd6bbf2.svg" type="image/svg+xml" style="width:586px;height:640px;background:#FFFFFF;"></object></p>
+<figcaption>
+<p><span class="caption-number">Fig. 11 </span><span class="caption-text">WaitFreeStack::TryPush Activity diagram</span><a class="headerlink" href="#id11" title="Link to this image">#</a></p>
+</figcaption>
+</figure>
+<figure class="align-default" id="id12">
+<p class="plantuml">
+<object data="../../../../../_images/plantuml-fdd7e7aab31c10eb1a4f7da72753cb1801f0aa5f.svg" type="image/svg+xml" style="width:577px;height:1030px;background:#FFFFFF;"></object></p>
+<figcaption>
+<p><span class="caption-number">Fig. 12 </span><span class="caption-text">SlotDrainer Action Diagram</span><a class="headerlink" href="#id12" title="Link to this image">#</a></p>
+</figcaption>
+</figure>
+<figure class="align-default" id="id13">
+<p class="plantuml">
+<object data="../../../../../_images/plantuml-7ddbf11b1e9189a6b7d33217998d5f6162cbd9d4.svg" type="image/svg+xml" style="width:964px;height:1238px;background:#FFFFFF;"></object></p>
+<figcaption>
+<p><span class="caption-number">Fig. 13 </span><span class="caption-text">SlotDrainer Sequence Diagram</span><a class="headerlink" href="#id13" title="Link to this image">#</a></p>
+</figcaption>
+</figure>
+</section>
+<section id="user-facing-apis">
+<h3>User-Facing APIs<a class="headerlink" href="#user-facing-apis" title="Link to this heading">#</a></h3>
+<p>Users interact with the logging library through two complementary entry points:</p>
+<section id="free-functions">
+<h4>Free Functions<a class="headerlink" href="#free-functions" title="Link to this heading">#</a></h4>
+<p>The free functions in <code class="docutils literal notranslate"><span class="pre">logging.h</span></code> provide the simplest way to emit log messages. Each function returns a <code class="docutils literal notranslate"><span class="pre">LogStream</span></code> by value:</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span><span class="w"> </span><span class="cpf">"score/mw/log/logging.h"</span>
+
+<span class="n">score</span><span class="o">::</span><span class="n">mw</span><span class="o">::</span><span class="n">log</span><span class="o">::</span><span class="n">LogError</span><span class="p">()</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">"Something went wrong: "</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">error_code</span><span class="p">;</span>
+<span class="n">score</span><span class="o">::</span><span class="n">mw</span><span class="o">::</span><span class="n">log</span><span class="o">::</span><span class="n">LogInfo</span><span class="p">(</span><span class="s">"MYCTX"</span><span class="p">)</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">"Startup complete"</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>Available functions: <code class="docutils literal notranslate"><span class="pre">LogFatal()</span></code>, <code class="docutils literal notranslate"><span class="pre">LogError()</span></code>, <code class="docutils literal notranslate"><span class="pre">LogWarn()</span></code>, <code class="docutils literal notranslate"><span class="pre">LogInfo()</span></code>, <code class="docutils literal notranslate"><span class="pre">LogDebug()</span></code>, <code class="docutils literal notranslate"><span class="pre">LogVerbose()</span></code>. Each accepts an optional <code class="docutils literal notranslate"><span class="pre">std::string_view</span> <span class="pre">context_id</span></code>; when omitted, the default configured context identifier is used.</p>
+</section>
+<section id="context-aware-logger">
+<h4>Context-Aware Logger<a class="headerlink" href="#context-aware-logger" title="Link to this heading">#</a></h4>
+<p>The <code class="docutils literal notranslate"><span class="pre">Logger</span></code> class (in <code class="docutils literal notranslate"><span class="pre">logger.h</span></code>) binds a context identifier at construction time and exposes the same log-level methods:</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span><span class="w"> </span><span class="cpf">"score/mw/log/logger.h"</span>
+
+<span class="n">score</span><span class="o">::</span><span class="n">mw</span><span class="o">::</span><span class="n">log</span><span class="o">::</span><span class="n">Logger</span><span class="w"> </span><span class="n">logger</span><span class="p">{</span><span class="s">"MYCTX"</span><span class="p">};</span>
+<span class="n">logger</span><span class="p">.</span><span class="n">LogError</span><span class="p">()</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">"Context-scoped error"</span><span class="p">;</span>
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">Logger</span></code> also provides <code class="docutils literal notranslate"><span class="pre">WithLevel(LogLevel)</span></code> for dynamic log-level selection and <code class="docutils literal notranslate"><span class="pre">IsEnabled(LogLevel)</span></code> / <code class="docutils literal notranslate"><span class="pre">IsLogEnabled(LogLevel)</span></code> for checking whether a given level is active before constructing an expensive message.</p>
+</section>
+<section id="ownership-model">
+<h4>Ownership Model<a class="headerlink" href="#ownership-model" title="Link to this heading">#</a></h4>
+<p>Both free functions and <code class="docutils literal notranslate"><span class="pre">Logger</span></code> methods return <code class="docutils literal notranslate"><span class="pre">LogStream</span></code> by value. Ownership transfers from the middleware to the caller. The <code class="docutils literal notranslate"><span class="pre">LogStream</span></code> acquires a slot on construction and releases it on destruction (RAII). No heap allocation occurs during this transfer.</p>
+</section>
+</section>
+<section id="configuration">
+<h3>Configuration<a class="headerlink" href="#configuration" title="Link to this heading">#</a></h3>
+<p>The logging library loads its configuration lazily on the first log call. For verbose logging, two configuration files are consulted:</p>
+<ol class="arabic simple">
+<li><p>ECU-wide configuration — <code class="docutils literal notranslate"><span class="pre">/etc/ecu_logging_config.json</span></code> — provides the ECU identifier (<code class="docutils literal notranslate"><span class="pre">ECUID</span></code>) used in DLT headers.</p></li>
+<li><p>Application-specific configuration — discovered via the <code class="docutils literal notranslate"><span class="pre">MW_LOG_CONFIG_FILE</span></code> environment variable, or from standard paths (in this order <code class="docutils literal notranslate"><span class="pre">&lt;cwd&gt;/etc/logging.json</span></code>, <code class="docutils literal notranslate"><span class="pre">&lt;cwd&gt;/logging.json</span></code>, <code class="docutils literal notranslate"><span class="pre">&lt;binary</span> <span class="pre">path&gt;/../etc/logging.json</span></code>; the first existing file is used). This file specifies the application identifier (<code class="docutils literal notranslate"><span class="pre">APPID</span></code>), default log level, context-specific log levels, and active log modes.</p></li>
+</ol>
+<p>The application-specific configuration overrides ECU-wide defaults. The <code class="docutils literal notranslate"><span class="pre">Configuration</span></code> class (in <code class="docutils literal notranslate"><span class="pre">configuration/configuration.h</span></code>) aggregates these settings, and <code class="docutils literal notranslate"><span class="pre">TargetConfigReader</span></code> (in <code class="docutils literal notranslate"><span class="pre">configuration/target_config_reader.h</span></code>) handles file discovery and parsing via <code class="docutils literal notranslate"><span class="pre">ConfigurationFileDiscoverer</span></code>.</p>
+<p>For non-verbose logging, a third file — <code class="docutils literal notranslate"><span class="pre">/bmw/platform/opt/datarouter/etc/class-id.json</span></code> — maps non-verbose message class IDs to their log levels.</p>
+<p>Refer to <a class="reference internal" href="configuration_design.html"><span class="std std-doc">configuration_design.md</span></a> for the full class diagram and sequence diagram.</p>
+</section>
+<section id="runtime">
+<h3>Runtime<a class="headerlink" href="#runtime" title="Link to this heading">#</a></h3>
+<p>The <code class="docutils literal notranslate"><span class="pre">Runtime</span></code> class (in <code class="docutils literal notranslate"><span class="pre">runtime.h</span></code>) is a singleton that owns the active <code class="docutils literal notranslate"><span class="pre">Recorder</span></code> instance. It provides two static methods:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">GetRecorder()</span></code> — Returns a reference to the current recorder. On the first call, <code class="docutils literal notranslate"><span class="pre">Runtime</span></code> creates the default recorder via <code class="docutils literal notranslate"><span class="pre">RegistryAwareRecorderFactory</span></code> based on the loaded configuration.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">SetRecorder()</span></code> — Injects a custom recorder (primarily used in tests to substitute a mock).</p></li>
+</ul>
+<p><code class="docutils literal notranslate"><span class="pre">Runtime</span></code> uses lazy initialisation: no logging infrastructure is created until the first log statement executes. This avoids unnecessary overhead in applications that may not log.</p>
+</section>
+</section>
+<section id="library-dependencies">
+<h2>Library Dependencies<a class="headerlink" href="#library-dependencies" title="Link to this heading">#</a></h2>
+<p>Query the full transitive dependency set with Bazel:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>bazel<span class="w"> </span>query<span class="w"> </span><span class="s1">'kind("cc_library", deps(@score_baselibs//score/mw/log))'</span>
+</pre></div>
+</div>
+</section>
+<section id="related-design-documents">
+<h2>Related Design Documents<a class="headerlink" href="#related-design-documents" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p><a class="reference internal" href="registry_aware_recorder_factory.html"><span class="std std-doc">registry_aware_recorder_factory.md</span></a> — Backend plugin system, Bazel targets, fallback behaviour, and guide for adding new backends.</p></li>
+<li><p><a class="reference internal" href="configuration_design.html"><span class="std std-doc">configuration_design.md</span></a> — Configuration file discovery, loading, and class design.</p></li>
+<li><p><a class="reference internal" href="dependency_graph.html"><span class="std std-doc">dependency_graph.md</span></a> — Frontend-to-backend dependency boundaries and the one-way dependency principle.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">backend/</span></code> (in the <code class="docutils literal notranslate"><span class="pre">score_logging</span></code> repository) — Per-backend design documents (DataRouter, DLT trace / DLTv2, file output).</p></li>
+</ul>
+</section>
+</section>
+
+
+                </article>
+              
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="../log_frontend_design.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Log Frontend Detailed Design</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="configuration_design.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Low Level Design of the Configuration and Initialization for <code class="docutils literal notranslate"><span class="pre">mw::log</span></code></p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+<div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> On this page
+  </div>
+  <nav id="pst-page-toc-nav" class="page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="pst-show_toc_level nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#table-of-contents">Table of Contents</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#design-decisions">Design Decisions</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#design">Design</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#core-data-structure">Core Data Structure</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#architectural-components">Architectural Components</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#types-of-recorders">Types of Recorders</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#backend-registration-system">Backend Registration System</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#activity-diagrams">Activity Diagrams</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#user-facing-apis">User-Facing APIs</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#free-functions">Free Functions</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#context-aware-logger">Context-Aware Logger</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#ownership-model">Ownership Model</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#configuration">Configuration</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#runtime">Runtime</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#library-dependencies">Library Dependencies</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#related-design-documents">Related Design Documents</a></li>
+</ul>
+  </nav></div>
+
+  <div class="sidebar-secondary-item">
+
+  
+  <div class="tocsection editthispage">
+    <a href="https://github.com/eclipse-score/baselibs/edit/main/score/mw/log/docs/detailed_design/cpp_design/README.md">
+      <i class="fa-solid fa-pencil"></i>
+      
+      
+        
+          Edit on GitHub
+        
+      
+    </a>
+  </div>
+</div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+          </footer>
+        
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../../../../../_static/scripts/bootstrap.js?digest=18bd87630a240e9c25be"></script>
+<script defer src="../../../../../_static/scripts/pydata-sphinx-theme.js?digest=18bd87630a240e9c25be"></script>
+
+  <footer class="bd-footer">
+<div class="bd-footer__inner bd-page-width">
+  
+    <div class="footer-items__start">
+      
+        <div class="footer-item">
+
+  <p class="sphinx-version">
+    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 9.1.1.
+  </p>
+</div>
+      
+    </div>
+  
+  
+  
+    <div class="footer-items__end">
+      
+        <div class="footer-item">
+<p class="theme-version">
+  <!-- # L10n: Setting the PST URL as an argument as this does not need to be localized -->
+  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.23.0.
+</p></div>
+      
+    </div>
+  
+</div>
+
+  </footer>
+  </body>
+</html>

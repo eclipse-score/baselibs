@@ -415,7 +415,7 @@
 <li class="toctree-l1"><a class="reference internal" href="hash/index.html">hash</a></li>
 <li class="toctree-l1"><a class="reference internal" href="json/index.html">JSON-Library</a></li>
 <li class="toctree-l1"><a class="reference internal" href="language/index.html">language</a></li>
-<li class="toctree-l1"><a class="reference internal" href="memory/index.html">memory</a></li>
+<li class="toctree-l1"><a class="reference internal" href="memory/index.html">Memory</a></li>
 <li class="toctree-l1"><a class="reference internal" href="mw_log/index.html">log_frontend</a></li>
 <li class="toctree-l1"><a class="reference internal" href="os/index.html">os</a></li>
 <li class="toctree-l1"><a class="reference internal" href="result/index.html">result</a></li>
@@ -585,11 +585,13 @@
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="language/index.html">language</a></li>
-<li class="toctree-l1"><a class="reference internal" href="memory/index.html">memory</a><ul>
+<li class="toctree-l1"><a class="reference internal" href="memory/index.html">Memory</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="memory/index.html#abstract">Abstract</a></li>
 <li class="toctree-l2"><a class="reference internal" href="memory/index.html#motivation-and-rationale">Motivation and Rationale</a></li>
 <li class="toctree-l2"><a class="reference internal" href="memory/index.html#specification">Specification</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="memory/index.html#general-considerations">General considerations</a></li>
+<li class="toctree-l3"><a class="reference internal" href="memory/index.html#endianness">Endianness</a></li>
+<li class="toctree-l3"><a class="reference internal" href="memory/index.html#size-and-alignment-information">Size and Alignment Information</a></li>
+<li class="toctree-l3"><a class="reference internal" href="memory/index.html#fixed-capacity-ring-buffer">Fixed-Capacity Ring Buffer</a></li>
 </ul>
 </li>
 </ul>
@@ -604,6 +606,7 @@
 <li class="toctree-l3"><a class="reference internal" href="mw_log/requirements/index.html#log-message-format">Log Message Format</a></li>
 <li class="toctree-l3"><a class="reference internal" href="mw_log/requirements/index.html#system-backend">System Backend</a></li>
 <li class="toctree-l3"><a class="reference internal" href="mw_log/requirements/index.html#console-backend">Console Backend</a></li>
+<li class="toctree-l3"><a class="reference internal" href="mw_log/requirements/index.html#non-functional-requirements">Non-Functional Requirements</a></li>
 <li class="toctree-l3"><a class="reference internal" href="mw_log/requirements/index.html#compatibility">Compatibility</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="mw_log/requirements/chklst_req_inspection.html">Requirement Inspection Checklist</a><ul>
 <li class="toctree-l5"><a class="reference internal" href="mw_log/requirements/chklst_req_inspection.html#purpose">Purpose</a></li>
@@ -657,6 +660,189 @@
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="mw_log/detailed_design/log_frontend_design.html">Log Frontend Detailed Design</a></li>
+<li class="toctree-l3"><a class="reference internal" href="mw_log/detailed_design/cpp_design/README.html">Detailed Design</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="mw_log/detailed_design/cpp_design/README.html#table-of-contents">Table of Contents</a></li>
+<li class="toctree-l4"><a class="reference internal" href="mw_log/detailed_design/cpp_design/README.html#design-decisions">Design Decisions</a></li>
+<li class="toctree-l4"><a class="reference internal" href="mw_log/detailed_design/cpp_design/README.html#design">Design</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="mw_log/detailed_design/cpp_design/README.html#core-data-structure">Core Data Structure</a></li>
+<li class="toctree-l5"><a class="reference internal" href="mw_log/detailed_design/cpp_design/README.html#architectural-components">Architectural Components</a></li>
+<li class="toctree-l5"><a class="reference internal" href="mw_log/detailed_design/cpp_design/README.html#types-of-recorders">Types of Recorders</a></li>
+<li class="toctree-l5"><a class="reference internal" href="mw_log/detailed_design/cpp_design/README.html#backend-registration-system">Backend Registration System</a></li>
+<li class="toctree-l5"><a class="reference internal" href="mw_log/detailed_design/cpp_design/README.html#activity-diagrams">Activity Diagrams</a></li>
+<li class="toctree-l5"><a class="reference internal" href="mw_log/detailed_design/cpp_design/README.html#user-facing-apis">User-Facing APIs</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="mw_log/detailed_design/cpp_design/README.html#free-functions">Free Functions</a></li>
+<li class="toctree-l6"><a class="reference internal" href="mw_log/detailed_design/cpp_design/README.html#context-aware-logger">Context-Aware Logger</a></li>
+<li class="toctree-l6"><a class="reference internal" href="mw_log/detailed_design/cpp_design/README.html#ownership-model">Ownership Model</a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="mw_log/detailed_design/cpp_design/README.html#configuration">Configuration</a></li>
+<li class="toctree-l5"><a class="reference internal" href="mw_log/detailed_design/cpp_design/README.html#runtime">Runtime</a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="mw_log/detailed_design/cpp_design/README.html#library-dependencies">Library Dependencies</a></li>
+<li class="toctree-l4"><a class="reference internal" href="mw_log/detailed_design/cpp_design/README.html#related-design-documents">Related Design Documents</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="mw_log/detailed_design/cpp_design/configuration_design.html">Low Level Design of the Configuration and Initialization for <code class="docutils literal notranslate"><span class="pre">mw::log</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="mw_log/detailed_design/cpp_design/configuration_design.html#introduction">Introduction</a></li>
+<li class="toctree-l4"><a class="reference internal" href="mw_log/detailed_design/cpp_design/configuration_design.html#use-cases">Use Cases</a></li>
+<li class="toctree-l4"><a class="reference internal" href="mw_log/detailed_design/cpp_design/configuration_design.html#class-diagram">Class Diagram</a></li>
+<li class="toctree-l4"><a class="reference internal" href="mw_log/detailed_design/cpp_design/configuration_design.html#initialization-sequence-diagram">Initialization Sequence Diagram</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="mw_log/detailed_design/cpp_design/dependency_graph.html">Dependency graph</a></li>
+<li class="toctree-l3"><a class="reference internal" href="mw_log/detailed_design/cpp_design/dependency_graph.html#references">References</a></li>
+<li class="toctree-l3"><a class="reference internal" href="mw_log/detailed_design/cpp_design/registry_aware_recorder_factory.html">Registry Aware Recorder Factory</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="mw_log/detailed_design/cpp_design/registry_aware_recorder_factory.html#overview">1. Overview</a></li>
+<li class="toctree-l4"><a class="reference internal" href="mw_log/detailed_design/cpp_design/registry_aware_recorder_factory.html#targets-at-a-glance">2. Targets at a Glance</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="mw_log/detailed_design/cpp_design/registry_aware_recorder_factory.html#minimal-target">Minimal target</a></li>
+<li class="toctree-l5"><a class="reference internal" href="mw_log/detailed_design/cpp_design/registry_aware_recorder_factory.html#additive-backend-plugins-zero-or-more">Additive backend plugins (zero or more)</a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="mw_log/detailed_design/cpp_design/registry_aware_recorder_factory.html#plantuml-diagrams">4. PlantUML Diagrams</a></li>
+<li class="toctree-l4"><a class="reference internal" href="mw_log/detailed_design/cpp_design/registry_aware_recorder_factory.html#how-to-add-a-new-backend-registrant">5. How to Add a New Backend Registrant</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="mw_log/detailed_design/cpp_design/registry_aware_recorder_factory.html#step-1-implement-your-recorder">Step 1: Implement Your Recorder</a></li>
+<li class="toctree-l5"><a class="reference internal" href="mw_log/detailed_design/cpp_design/registry_aware_recorder_factory.html#step-2-create-the-registrant-source-file">Step 2: Create the Registrant Source File</a></li>
+<li class="toctree-l5"><a class="reference internal" href="mw_log/detailed_design/cpp_design/registry_aware_recorder_factory.html#step-3-create-the-bazel-target">Step 3: Create the Bazel Target</a></li>
+<li class="toctree-l5"><a class="reference internal" href="mw_log/detailed_design/cpp_design/registry_aware_recorder_factory.html#step-4-wire-into-applications">Step 4: Wire Into Applications</a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="mw_log/detailed_design/cpp_design/registry_aware_recorder_factory.html#bazel-usage-guide">6. Bazel Usage Guide</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="mw_log/detailed_design/cpp_design/registry_aware_recorder_factory.html#libraries">Libraries</a></li>
+<li class="toctree-l5"><a class="reference internal" href="mw_log/detailed_design/cpp_design/registry_aware_recorder_factory.html#service-with-file-logging">Service with file logging</a></li>
+<li class="toctree-l5"><a class="reference internal" href="mw_log/detailed_design/cpp_design/registry_aware_recorder_factory.html#service-with-file-remote-dlt">Service with file + remote DLT</a></li>
+<li class="toctree-l5"><a class="reference internal" href="mw_log/detailed_design/cpp_design/registry_aware_recorder_factory.html#minimal-target-to-support-backwards-compatibility">minimal target to support backwards compatibility</a></li>
+<li class="toctree-l5"><a class="reference internal" href="mw_log/detailed_design/cpp_design/registry_aware_recorder_factory.html#full-backend-bundle">Full backend bundle</a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="mw_log/detailed_design/cpp_design/registry_aware_recorder_factory.html#fallback-behavior">7. Fallback Behavior</a></li>
+<li class="toctree-l4"><a class="reference internal" href="mw_log/detailed_design/cpp_design/registry_aware_recorder_factory.html#assumptions-and-constraints">8. Assumptions and Constraints</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="mw_log/detailed_design/cpp_design/registry_aware_recorder_factory.html#static-initialization-assumptions">Static Initialization Assumptions</a></li>
+<li class="toctree-l5"><a class="reference internal" href="mw_log/detailed_design/cpp_design/registry_aware_recorder_factory.html#thread-safety-assumptions">Thread Safety Assumptions</a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="mw_log/detailed_design/cpp_design/registry_aware_recorder_factory.html#faqs">9. FAQs</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="mw_log/detailed_design/cpp_design/dynamic_backend_loading_design.html">Dynamic backend loading for mw::log</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="mw_log/detailed_design/cpp_design/dynamic_backend_loading_design.html#goal">Goal</a></li>
+<li class="toctree-l4"><a class="reference internal" href="mw_log/detailed_design/cpp_design/dynamic_backend_loading_design.html#targets">Targets</a></li>
+<li class="toctree-l4"><a class="reference internal" href="mw_log/detailed_design/cpp_design/dynamic_backend_loading_design.html#dynamic-loading-and-application-binary-interface-abi">Dynamic loading and Application Binary Interface (ABI)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="mw_log/detailed_design/cpp_design/dynamic_backend_loading_design.html#design-decision-for-dlopen-based-solution">Design Decision for dlopen() based solution</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="mw_log/detailed_design/cpp_design/dynamic_backend_loading_design.html#plugin-api-mw-log-plugin-api-h">Plugin API (mw_log_plugin_api.h)</a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="mw_log/detailed_design/cpp_design/dynamic_backend_loading_design.html#detailed-design">1. Detailed Design</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="mw_log/detailed_design/cpp_design/dynamic_backend_loading_design.html#detailed-design-requirements">1.1 Detailed Design Requirements</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="mw_log/detailed_design/cpp_design/dynamic_backend_loading_design.html#req-dd-1-c-plugin-boundary-with-toolchain-identity">REQ-DD-1: C++ Plugin Boundary with Toolchain Identity</a></li>
+<li class="toctree-l6"><a class="reference internal" href="mw_log/detailed_design/cpp_design/dynamic_backend_loading_design.html#req-dd-2-abi-version-guard">REQ-DD-2: ABI Version Guard</a></li>
+<li class="toctree-l6"><a class="reference internal" href="mw_log/detailed_design/cpp_design/dynamic_backend_loading_design.html#req-dd-3-configuration-driven-backend-loading">REQ-DD-3: Configuration-Driven Backend Loading</a><ul>
+<li class="toctree-l7"><a class="reference internal" href="mw_log/detailed_design/cpp_design/dynamic_backend_loading_design.html#backend-directory-and-config-path-resolution-via-feature-flags">Backend Directory and Config Path Resolution via Feature Flags</a></li>
+</ul>
+</li>
+<li class="toctree-l6"><a class="reference internal" href="mw_log/detailed_design/cpp_design/dynamic_backend_loading_design.html#req-dd-4-fallback-chain">REQ-DD-4: Fallback Chain</a></li>
+<li class="toctree-l6"><a class="reference internal" href="mw_log/detailed_design/cpp_design/dynamic_backend_loading_design.html#req-dd-5-frontend-ffi-preservation">REQ-DD-5: Frontend FFI Preservation</a></li>
+<li class="toctree-l6"><a class="reference internal" href="mw_log/detailed_design/cpp_design/dynamic_backend_loading_design.html#req-dd-6-shared-libc-libstdc-contract">REQ-DD-6: Shared libc/libstdc++ Contract</a></li>
+<li class="toctree-l6"><a class="reference internal" href="mw_log/detailed_design/cpp_design/dynamic_backend_loading_design.html#req-dd-7-backend-loading-inside-runtime-constructor-meyer-s-singleton">REQ-DD-7: Backend Loading inside Runtime Constructor (Meyer’s Singleton)</a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="mw_log/detailed_design/cpp_design/dynamic_backend_loading_design.html#verification-requirements">1.2 Verification Requirements</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="mw_log/detailed_design/cpp_design/dynamic_backend_loading_design.html#req-dd-v1-abi-version-mismatch-rejection">REQ-DD-V1: ABI Version Mismatch Rejection</a></li>
+<li class="toctree-l6"><a class="reference internal" href="mw_log/detailed_design/cpp_design/dynamic_backend_loading_design.html#req-dd-v2-configuration-driven-loading">REQ-DD-V2: Configuration-Driven Loading</a></li>
+<li class="toctree-l6"><a class="reference internal" href="mw_log/detailed_design/cpp_design/dynamic_backend_loading_design.html#req-dd-v3-fallback-chain-activation">REQ-DD-V3: Fallback Chain Activation</a></li>
+<li class="toctree-l6"><a class="reference internal" href="mw_log/detailed_design/cpp_design/dynamic_backend_loading_design.html#req-dd-v4-backend-loading-order-inside-runtime-constructor">REQ-DD-V4: Backend Loading Order Inside Runtime Constructor</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="mw_log/detailed_design/cpp_design/dynamic_backend_loading_design.html#safety-requirements">2. Safety Requirements</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="mw_log/detailed_design/cpp_design/dynamic_backend_loading_design.html#id1">2.1 Detailed Design</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="mw_log/detailed_design/cpp_design/dynamic_backend_loading_design.html#req-safe-1-no-dlclose-policy">REQ-SAFE-1: No dlclose() Policy</a></li>
+<li class="toctree-l6"><a class="reference internal" href="mw_log/detailed_design/cpp_design/dynamic_backend_loading_design.html#req-safe-2-plugin-constructor-restrictions">REQ-SAFE-2: Plugin Constructor Restrictions</a></li>
+<li class="toctree-l6"><a class="reference internal" href="mw_log/detailed_design/cpp_design/dynamic_backend_loading_design.html#req-safe-3-fmea-coverage-for-dlopen-path">REQ-SAFE-3: FMEA Coverage for dlopen() Path</a></li>
+<li class="toctree-l6"><a class="reference internal" href="mw_log/detailed_design/cpp_design/dynamic_backend_loading_design.html#req-safe-4-pre-dlopen-elf-section-version-marker-ci-deploy-time-gate">REQ-SAFE-4: Pre-dlopen() ELF Section Version Marker (CI/Deploy-Time Gate)</a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="mw_log/detailed_design/cpp_design/dynamic_backend_loading_design.html#id2">2.2 Verification Requirements</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="mw_log/detailed_design/cpp_design/dynamic_backend_loading_design.html#req-safe-v1-dlopen-failure-path-testing-on-target-ecu">REQ-SAFE-V1: dlopen() Failure Path Testing on Target ECU</a></li>
+<li class="toctree-l6"><a class="reference internal" href="mw_log/detailed_design/cpp_design/dynamic_backend_loading_design.html#req-safe-v2-execution-management-em-plaftorm-health-management-phm-monitoring-regressions">REQ-SAFE-V2: Execution Management (EM)/ Plaftorm Health Management (PHM) monitoring regressions</a></li>
+<li class="toctree-l6"><a class="reference internal" href="mw_log/detailed_design/cpp_design/dynamic_backend_loading_design.html#req-safe-v3-stub-logging-detection">REQ-SAFE-V3: Stub Logging Detection</a></li>
+<li class="toctree-l6"><a class="reference internal" href="mw_log/detailed_design/cpp_design/dynamic_backend_loading_design.html#req-safe-v4-no-mw-log-usage-in-plugin-constructors">REQ-SAFE-V4: No mw::log Usage in Plugin Constructors</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="mw_log/detailed_design/cpp_design/dynamic_backend_loading_design.html#security-requirements">3. Security Requirements</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="mw_log/detailed_design/cpp_design/dynamic_backend_loading_design.html#id3">3.1 Detailed Design</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="mw_log/detailed_design/cpp_design/dynamic_backend_loading_design.html#req-sec-1-absolute-path-for-dlopen">REQ-SEC-1: Absolute Path for dlopen()</a></li>
+<li class="toctree-l6"><a class="reference internal" href="mw_log/detailed_design/cpp_design/dynamic_backend_loading_design.html#req-sec-2-qtsafefs-enforcement-for-production-software-runnning-qnx">REQ-SEC-2: qtsafefs Enforcement for production software runnning QNX</a></li>
+<li class="toctree-l6"><a class="reference internal" href="mw_log/detailed_design/cpp_design/dynamic_backend_loading_design.html#req-sec-3-compensating-controls-for-omitted-rtld-noshare">REQ-SEC-3: Compensating Controls for Omitted RTLD_NOSHARE</a></li>
+<li class="toctree-l6"><a class="reference internal" href="mw_log/detailed_design/cpp_design/dynamic_backend_loading_design.html#req-sec-4-rpath-hardening-plugin-and-transitive-dependencies">REQ-SEC-4: RPATH Hardening (Plugin and Transitive Dependencies)</a></li>
+<li class="toctree-l6"><a class="reference internal" href="mw_log/detailed_design/cpp_design/dynamic_backend_loading_design.html#req-sec-5-exported-symbol-minimization">REQ-SEC-5: Exported Symbol Minimization</a></li>
+<li class="toctree-l6"><a class="reference internal" href="mw_log/detailed_design/cpp_design/dynamic_backend_loading_design.html#req-sec-6-environment-variable-integrity-check-needs-further-investigation">REQ-SEC-6: Environment Variable Integrity Check (Needs further investigation)</a></li>
+<li class="toctree-l6"><a class="reference internal" href="mw_log/detailed_design/cpp_design/dynamic_backend_loading_design.html#req-sec-7-dlerror-output-sanitization">REQ-SEC-7: dlerror() Output Sanitization</a></li>
+<li class="toctree-l6"><a class="reference internal" href="mw_log/detailed_design/cpp_design/dynamic_backend_loading_design.html#req-sec-8-qnx-secpol-and-ability-restrictions">REQ-SEC-8: QNX secpol and Ability Restrictions</a></li>
+<li class="toctree-l6"><a class="reference internal" href="mw_log/detailed_design/cpp_design/dynamic_backend_loading_design.html#req-sec-9-prot-exec-enforcement-via-procnto-mx">REQ-SEC-9: PROT_EXEC Enforcement via procnto -mX</a></li>
+<li class="toctree-l6"><a class="reference internal" href="mw_log/detailed_design/cpp_design/dynamic_backend_loading_design.html#req-sec-10-elf-hardening-flags">REQ-SEC-10: ELF Hardening Flags</a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="mw_log/detailed_design/cpp_design/dynamic_backend_loading_design.html#id4">3.2 Verification Requirements</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="mw_log/detailed_design/cpp_design/dynamic_backend_loading_design.html#req-sec-v1-absolute-path-enforcement">REQ-SEC-V1: Absolute Path Enforcement</a></li>
+<li class="toctree-l6"><a class="reference internal" href="mw_log/detailed_design/cpp_design/dynamic_backend_loading_design.html#req-sec-v2-backend-directory-ownership-verification">REQ-SEC-V2: Backend Directory Ownership Verification</a></li>
+<li class="toctree-l6"><a class="reference internal" href="mw_log/detailed_design/cpp_design/dynamic_backend_loading_design.html#req-sec-v3-compensating-controls-enforcement">REQ-SEC-V3: Compensating Controls Enforcement</a></li>
+<li class="toctree-l6"><a class="reference internal" href="mw_log/detailed_design/cpp_design/dynamic_backend_loading_design.html#req-sec-v4-exported-symbol-check">REQ-SEC-V4: Exported Symbol Check</a></li>
+<li class="toctree-l6"><a class="reference internal" href="mw_log/detailed_design/cpp_design/dynamic_backend_loading_design.html#req-sec-v5-rpath-verification">REQ-SEC-V5: RPATH Verification</a></li>
+<li class="toctree-l6"><a class="reference internal" href="mw_log/detailed_design/cpp_design/dynamic_backend_loading_design.html#req-sec-v6-elf-hardening-verification">REQ-SEC-V6: ELF Hardening Verification</a></li>
+<li class="toctree-l6"><a class="reference internal" href="mw_log/detailed_design/cpp_design/dynamic_backend_loading_design.html#req-sec-v7-pathtrust-enforcement">REQ-SEC-V7: pathtrust Enforcement</a></li>
+<li class="toctree-l6"><a class="reference internal" href="mw_log/detailed_design/cpp_design/dynamic_backend_loading_design.html#req-sec-v8-execute-permission-enforcement">REQ-SEC-V8: Execute Permission Enforcement</a></li>
+<li class="toctree-l6"><a class="reference internal" href="mw_log/detailed_design/cpp_design/dynamic_backend_loading_design.html#req-sec-v9-environment-variable-mutation-detection">REQ-SEC-V9: Environment Variable Mutation Detection</a></li>
+<li class="toctree-l6"><a class="reference internal" href="mw_log/detailed_design/cpp_design/dynamic_backend_loading_design.html#req-sec-v10-dlerror-sanitization">REQ-SEC-V10: dlerror() Sanitization</a></li>
+<li class="toctree-l6"><a class="reference internal" href="mw_log/detailed_design/cpp_design/dynamic_backend_loading_design.html#req-sec-v11-double-load-same-soname-from-different-paths">REQ-SEC-V11: Double-Load Same Soname from Different Paths</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="mw_log/detailed_design/cpp_design/dynamic_backend_loading_design.html#performance-requirements">4. Performance Requirements</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="mw_log/detailed_design/cpp_design/dynamic_backend_loading_design.html#id5">4.1 Detailed Design</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="mw_log/detailed_design/cpp_design/dynamic_backend_loading_design.html#req-perf-1-zero-steady-state-overhead">REQ-PERF-1: Zero Steady-State Overhead</a></li>
+<li class="toctree-l6"><a class="reference internal" href="mw_log/detailed_design/cpp_design/dynamic_backend_loading_design.html#req-perf-2-dlopen-with-rtld-now-and-rtld-local">REQ-PERF-2: dlopen() with RTLD_NOW and RTLD_LOCAL</a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="mw_log/detailed_design/cpp_design/dynamic_backend_loading_design.html#id6">4.2 Verification Requirements</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="mw_log/detailed_design/cpp_design/dynamic_backend_loading_design.html#req-perf-v1-dlopen-latency-profiling-on-target-ecu">REQ-PERF-V1: dlopen() Latency Profiling on Target ECU</a></li>
+<li class="toctree-l6"><a class="reference internal" href="mw_log/detailed_design/cpp_design/dynamic_backend_loading_design.html#req-perf-v2-memory-footprint-comparison-optional">REQ-PERF-V2: Memory Footprint Comparison (Optional)</a></li>
+<li class="toctree-l6"><a class="reference internal" href="mw_log/detailed_design/cpp_design/dynamic_backend_loading_design.html#req-perf-v3-memory-footprint-improvement-validation-optional">REQ-PERF-V3: Memory Footprint Improvement Validation (Optional)</a></li>
+<li class="toctree-l6"><a class="reference internal" href="mw_log/detailed_design/cpp_design/dynamic_backend_loading_design.html#req-perf-v4-toolchain-identity-ci-gate-performance-optional">REQ-PERF-V4: Toolchain Identity CI Gate Performance (Optional)</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="mw_log/detailed_design/cpp_design/dynamic_backend_loading_design.html#assumptions-of-use-aous">5. Assumptions of Use (AoUs)</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="mw_log/detailed_design/cpp_design/dynamic_backend_loading_design.html#aou-1-qtsafefs-backend-directory">AOU-1: qtsafefs Backend Directory</a></li>
+<li class="toctree-l5"><a class="reference internal" href="mw_log/detailed_design/cpp_design/dynamic_backend_loading_design.html#aou-2-pathtrust-enabled-filesystems">AOU-2: pathtrust-Enabled Filesystems</a></li>
+<li class="toctree-l5"><a class="reference internal" href="mw_log/detailed_design/cpp_design/dynamic_backend_loading_design.html#aou-3-procnto-mx-enabled">AOU-3: procnto -mX Enabled</a></li>
+<li class="toctree-l5"><a class="reference internal" href="mw_log/detailed_design/cpp_design/dynamic_backend_loading_design.html#aou-4-secpol-configuration">AOU-4: secpol Configuration</a></li>
+<li class="toctree-l5"><a class="reference internal" href="mw_log/detailed_design/cpp_design/dynamic_backend_loading_design.html#aou-5-backend-so-file-permissions">AOU-5: Backend .so File Permissions</a></li>
+<li class="toctree-l5"><a class="reference internal" href="mw_log/detailed_design/cpp_design/dynamic_backend_loading_design.html#aou-6-environment-variable-integrity">AOU-6: Environment Variable Integrity</a></li>
+<li class="toctree-l5"><a class="reference internal" href="mw_log/detailed_design/cpp_design/dynamic_backend_loading_design.html#aou-7-logging-configuration-file">AOU-7: Logging Configuration File</a></li>
+<li class="toctree-l5"><a class="reference internal" href="mw_log/detailed_design/cpp_design/dynamic_backend_loading_design.html#aou-8-no-mw-log-in-plugin-constructors">AOU-8: No mw::log in Plugin Constructors</a></li>
+<li class="toctree-l5"><a class="reference internal" href="mw_log/detailed_design/cpp_design/dynamic_backend_loading_design.html#aou-9-shared-memory-semantics">AOU-9: Shared Memory Semantics</a></li>
+<li class="toctree-l5"><a class="reference internal" href="mw_log/detailed_design/cpp_design/dynamic_backend_loading_design.html#aou-10-plugin-vtable-lifetime">AOU-10: Plugin Vtable Lifetime</a></li>
+<li class="toctree-l5"><a class="reference internal" href="mw_log/detailed_design/cpp_design/dynamic_backend_loading_design.html#aou-11-toolchain-identity-for-backend-plugins">AOU-11: Toolchain Identity for Backend Plugins</a></li>
+<li class="toctree-l5"><a class="reference internal" href="mw_log/detailed_design/cpp_design/dynamic_backend_loading_design.html#aou-12-transitive-dependencies-on-trusted-filesystems">AOU-12: Transitive Dependencies on Trusted Filesystems</a></li>
+<li class="toctree-l5"><a class="reference internal" href="mw_log/detailed_design/cpp_design/dynamic_backend_loading_design.html#aou-13-em-phm-timing-budget">AOU-13: EM/PHM Timing Budget</a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="mw_log/detailed_design/cpp_design/dynamic_backend_loading_design.html#todos">TODOs</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="mw_log/detailed_design/cpp_design/design_decisions.html">Design Decisions</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="mw_log/detailed_design/cpp_design/design_decisions.html#dynamic-backend-loading-for-mw-log">Dynamic backend loading for mw::log</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="mw_log/detailed_design/cpp_design/design_decisions.html#appoach-comparison-for-the-intended-use-case">Appoach Comparison for the intended use case</a></li>
+</ul>
+</li>
+</ul>
+</li>
 <li class="toctree-l3"><a class="reference internal" href="mw_log/detailed_design/chklst_impl_inspection.html">Implementation Inspection Checklist</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="mw_log/detailed_design/chklst_impl_inspection.html#purpose">Purpose</a></li>
 <li class="toctree-l4"><a class="reference internal" href="mw_log/detailed_design/chklst_impl_inspection.html#conduct">Conduct</a></li>
@@ -770,7 +956,7 @@ as well as selected proposals for the C++ Standard Library.</p></li>
 <li><p><a class="reference internal" href="language/safecpp/index.html#doc__safecpp" title="doc__safecpp"><em class="xref need">Safecpp Library (doc__safecpp)</em></a>: A collection of utilities that helps developers write safer C++ code, including
 overflow-safe arithmetic, scoped callable execution, abort-on-exception enforcement, atomic overflow
 prevention, null-terminated string view utilities, and coverage data preservation in GTest death tests.</p></li>
-<li><p><a class="reference internal" href="memory/index.html#doc__memory" title="doc__memory"><em class="xref need">Memory Library (doc__memory)</em></a>: Utility library for memory handling, including an abstraction layer for shared memory.</p></li>
+<li><p><a class="reference internal" href="memory/index.html#doc__memory" title="doc__memory"><em class="xref need">Memory Library (doc__memory)</em></a>: Endianness utilities, size and alignment information, and a ring buffer with construction-time capacity.</p></li>
 <li><p><a class="reference internal" href="os/index.html#doc__os" title="doc__os"><em class="xref need">OS Library (doc__os)</em></a>: OS Abstraction Layer (OSAL) to interface with different POSIX-like operating systems such
 as Linux and QNX.</p></li>
 <li><p><a class="reference internal" href="result/index.html#doc__result" title="doc__result"><em class="xref need">Result Library (doc__result)</em></a>: Provides a unified approach to error handling without exceptions, conforming to C++23
