@@ -74,10 +74,6 @@ cc_library(
 
 docs_bundle(
     name = "docs",
-    code_targets = [
-        ":bitmanipulation",
-        ":bitmask_operators",
-    ],
     # Lets the bundle export its own Needs, which feed component_requirements below.
     external_needs = [
         "@score_platform//:needs_json_file",
