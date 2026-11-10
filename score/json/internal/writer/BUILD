@@ -22,6 +22,7 @@ cc_library(
     features = COMPILER_WARNING_FEATURES,
     implementation_deps = [
         "@score_baselibs//score/json/internal/writer/vajson:any_serializer",
+        "@score_baselibs//score/language/futurecpp",
     ],
     tags = ["FFI"],
     visibility = ["@score_baselibs//score/json:__pkg__"],

@@ -34,6 +34,10 @@ namespace score::json::vajson::internal
 class EscapedJsonString
 {
   public:
+    /// @brief Constructs an EscapedJsonString from a StringView
+    /// @param[in] value The value to serialize.
+    explicit EscapedJsonString(std::string_view value) noexcept : value_{value} {}
+
     /// @brief Constructs an EscapedJsonString from a JSON key
     /// @param[in] key to serialize.
     explicit EscapedJsonString(JKeyType key) noexcept : EscapedJsonString{key.GetValue()} {}
@@ -50,10 +54,6 @@ class EscapedJsonString
     }
 
   private:
-    /// @brief Constructs an EscapedJsonString from a StringView
-    /// @param[in] value The value to serialize.
-    explicit EscapedJsonString(std::string_view value) noexcept : value_{value} {}
-
     /// @brief Value to write as a JSON string literal
     std::string_view value_;
 };
