@@ -46,16 +46,18 @@ introduced in this design:
 :caption: Class diagram
 ```
 
-The design is centered around the `RecorderFactory` class, which contains three
-static methods for each major use case. By default for on-target logging the
-`Runtime` will initialize its recorder instance using the `CreateForTarget()`
-static method. Internally, this will instantiate the `TargetConfigReader` to
+The design is centered around the `RegistryAwareRecorderFactory` class, the
+implementation of the `IRecorderFactory` interface. Its methods serve each major
+use case. By default for on-target logging the `Runtime` will initialize its
+recorder instance using the `CreateFromConfiguration()` method. Internally, this
+will instantiate the `TargetConfigReader` to
 obtain the logging configuration. Depending on the configuration, multiple
 recorders might be needed. For instance, a user might select console logging and
 remote logging, i.e. DLT logging. Hence both the `DataRouterRecorder` and the
-`TextRecorder` are required in parallel.
+`TextRecorder` are required in parallel. The `TextRecorder` writes the console
+output and is created by the `ConsoleRecorderFactory`.
 
-The responsibility of the `RecorderComposite` is to facilitate multiple active
+The responsibility of the `CompositeRecorder` is to facilitate multiple active
 recorders in parallel. As the name implies the composite design
 pattern is used here. In the constructor, the class receives a list of Recorder
 instances. The class implements the `Recorder` interface methods by calling all
@@ -68,8 +70,8 @@ a simpler design is chosen by accepting the extra copies as a tradeoff.
 
 On target, the configuration shall be loaded by the `TargetConfigReader` class.
 As this class has several external dependencies we also introduce the
-corresponding interfaces and mock class to unit-test the `RecorderFactory`
-methods. `TargetConfigReader` uses `ConfigurationFileDiscoverer` to obtain the
+corresponding interfaces and mock class to unit-test the
+`RegistryAwareRecorderFactory` methods. `TargetConfigReader` uses `ConfigurationFileDiscoverer` to obtain the
 file paths for the configuration. After that it uses `lib::json` library to read
 the JSON documents and extract the configuration information from there.
 
@@ -95,7 +97,7 @@ In the diagram, the user calls `mw::log::Error()` to send the first log message
 of the program. The `LogStreamFactory` then calls `GetRecorder()` on the
 `Runtime` class to obtain the handler of the log message. Since this is the
 first invocation, the instance of the `Runtime` shall be empty and thus the
-`Runtime` will call `RecorderFactory::CreateForTarget()` to create the recorder
+`Runtime` will call `RegistryAwareRecorderFactory::CreateFromConfiguration()` to create the recorder
 according to user configuration. Thus we invoke the `ReadConfig()` method of the
 local instance of `ITargetConfigReader`.
 
@@ -105,14 +107,14 @@ config files exist. It will first load the JSON document of the global
 configuration, and then override the values with the environmental xor application-specific
 configuration. Finally, the obtained instance of `Configuration` is returned.
 
-Back in the method `RecorderFactory::CreateForTarget()` we instantiate the
+Back in the method `CreateFromConfiguration()` we instantiate the
 configured recorder types. In the example, `kConsole` and `kRemote` are given.
 Thus the method creates a vector that contains `DatarouterRecorder` and
 `TextRecorder`. From that list, we construct the `CompositeRecorder` that
 will forward the messages to both recorders.
 
 The created instance of `CompositeRecorder` is returned by
-`RecorderFactory::CreateForTarget()` and stored in the `Runtime`. Henceforth,
+`CreateFromConfiguration()` and stored in the `Runtime`. Henceforth,
 this recorder will be used for all following `mw::log` invocations by the user.
 
 If a user wants to avoid the latency on the first log message, we provide
