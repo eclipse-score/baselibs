@@ -17,7 +17,7 @@
     },
     {
       "branches": {
-        "percent": 95,
+        "percent": 96,
         "total": 270
       },
       "files": {
@@ -92,8 +92,8 @@
     },
     {
       "branches": {
-        "percent": 88,
-        "total": 254
+        "percent": 90,
+        "total": 240
       },
       "files": {
         "measured": 21,
@@ -101,22 +101,22 @@
       },
       "lines": {
         "percent": 100,
-        "total": 760
+        "total": 740
       },
       "primary_need_id": "comp__baselibs_hash"
     },
     {
       "branches": {
-        "percent": 87,
-        "total": 166
+        "percent": 90,
+        "total": 162
       },
       "files": {
-        "measured": 16,
-        "total": 22
+        "measured": 15,
+        "total": 20
       },
       "lines": {
-        "percent": 75,
-        "total": 1024
+        "percent": 97,
+        "total": 715
       },
       "primary_need_id": "comp__baselibs_json"
     },
@@ -133,7 +133,7 @@
         "percent": 96,
         "total": 126
       },
-      "primary_need_id": "comp__baselibs_memory_shared"
+      "primary_need_id": "comp__baselibs_memory"
     },
     {
       "branches": {
