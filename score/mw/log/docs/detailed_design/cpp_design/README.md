@@ -74,7 +74,7 @@ The static design is divided into five main parts:
 4. LogStream
    The primary user-facing API. `LogStream` is a RAII wrapper: construction acquires a slot from the active recorder, and destruction releases it. Content streamed via `operator<<` writes directly into the owned slot, avoiding intermediate copies. Ownership transfers from the middleware to the caller by value — no heap allocation is required.
 
-5. RecorderFactory
+5. Recorder factory
    The `RegistryAwareRecorderFactory` (in `detail/registry_aware_recorder_factory.h`) is the single implementation of `IRecorderFactory`. It queries the `BackendTable` for registered backends, creates the appropriate recorders, and composes them via `CompositeRecorder` when multiple log modes are active.
 
 ```{uml} ../_assets/verbose_console_logging_static.puml
