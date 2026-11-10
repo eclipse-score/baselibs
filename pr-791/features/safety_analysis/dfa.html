@@ -475,7 +475,7 @@
                   
   <section id="dfa-dependent-failure-analysis">
 <h1>DFA (Dependent Failure Analysis)<a class="headerlink" href="#dfa-dependent-failure-analysis" title="Link to this heading">#</a></h1>
-<div class="need_container docutils container" id="SNCB-c2fb1a77">
+<div class="need_container docutils container" id="SNCB-bcc81a47">
 <div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_document table" id="doc__baselibs_dfa">
 <tbody>
 <tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
@@ -494,7 +494,7 @@
 </td>
 </tr>
 <tr class="meta row-even"><td class="meta" colspan="3"><div class="needs_meta_left line-block">
-<div class="line"><span><span><div class="line"><span class="needs_version"><span class="needs_label">version: </span>1</span></div>
+<div class="line"><span><span><div class="line"><span class="needs_version"><span class="needs_label">version: </span>2</span></div>
 </span></span></div>
 <div class="line"><span><div class="line">realizes: <span class="realizes"><span><a class="external_link reference external" href="https://eclipse-score.github.io/process_description//main/process_areas/safety_analysis/safety_analysis_workproducts.html#wp__feature_dfa">wp__feature_dfa</a></span></span></div>
 </span></div>
@@ -725,7 +725,7 @@ following tables. For all applicable failure initiators, the DFA has to be perfo
 <tr class="row-odd"><td><p>UI_01_04</p></td>
 <td><p>Deadlocks</p></td>
 <td><p>yes</p></td>
-<td><p>shared memory or file access may lead to deadlock, <a class="reference internal" href="#feat_saf_dfa__baselibs__locked_ressource" title="feat_saf_dfa__baselibs__locked_ressource"><em class="xref need">locked ressource (feat_saf_dfa__baselibs__locked_ressource)</em></a></p></td>
+<td><p>File access may lead to deadlock, <a class="reference internal" href="#feat_saf_dfa__baselibs__locked_ressource" title="feat_saf_dfa__baselibs__locked_ressource"><em class="xref need">locked ressource (feat_saf_dfa__baselibs__locked_ressource)</em></a></p></td>
 </tr>
 <tr class="row-even"><td><p>UI_01_05</p></td>
 <td><p>Livelocks</p></td>
@@ -776,7 +776,7 @@ following tables. For all applicable failure initiators, the DFA has to be perfo
 <section id="dfa">
 <h1>DFA<a class="headerlink" href="#dfa" title="Link to this heading">#</a></h1>
 <p>For all identified applicable failure initiators, the DFA is performed in the following section.</p>
-<div class="need_container docutils container" id="SNCB-0852eb38">
+<div class="need_container docutils container" id="SNCB-2a4e32a5">
 <div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_feat_saf_dfa table" id="feat_saf_dfa__baselibs__memory_access">
 <tbody>
 <tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
@@ -799,7 +799,7 @@ following tables. For all applicable failure initiators, the DFA has to be perfo
 <div class="line"><span class="needs_failure_id"><span class="needs_label">failure_id: </span><span class="needs_data">UI_01_02</span></span></div>
 <div class="line"><span class="needs_mitigation_issue"><span class="needs_label">mitigation_issue: </span><span class="needs_data"><a class="reference external" href="https://github.com/eclipse-score/score/issues/2816">score#2816</a></span></span></div>
 <div class="line"><span class="needs_sufficient"><span class="needs_label">sufficient: </span><span class="needs_data">no</span></span></div>
-<div class="line"><span class="needs_version"><span class="needs_label">version: </span>1</span></div>
+<div class="line"><span class="needs_version"><span class="needs_label">version: </span>2</span></div>
 </span></span></div>
 <div class="line"><span><div class="line">violates: <span class="violates"><span><a class="reference internal" href="../architecture/index.html#feat_arc_sta__baselibs__static_view_arch" title="feat_saf_dfa__baselibs__memory_access">feat_arc_sta__baselibs__static_view_arch</a></span></span></div>
 </span></div>
@@ -824,7 +824,7 @@ out of bounds access should be detected by unit testing/sanitizers.</p></td>
 </table>
 </div>
 </div>
-<div class="need_container docutils container" id="SNCB-3ff322dd">
+<div class="need_container docutils container" id="SNCB-c95d718a">
 <div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_feat_saf_dfa table" id="feat_saf_dfa__baselibs__locked_ressource">
 <tbody>
 <tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
@@ -846,18 +846,17 @@ out of bounds access should be detected by unit testing/sanitizers.</p></td>
 <div class="line"><span><span><div class="line"><span class="needs_failure_effect"><span class="needs_label">failure_effect: </span><span class="needs_data">Deadlock/Livelock leads to stalling of the execution</span></span></div>
 <div class="line"><span class="needs_failure_id"><span class="needs_label">failure_id: </span><span class="needs_data">UI_01_04</span></span></div>
 <div class="line"><span class="needs_sufficient"><span class="needs_label">sufficient: </span><span class="needs_data">yes</span></span></div>
-<div class="line"><span class="needs_version"><span class="needs_label">version: </span>1</span></div>
+<div class="line"><span class="needs_version"><span class="needs_label">version: </span>2</span></div>
 </span></span></div>
-<div class="line"><span><div class="line">mitigated_by: <span class="mitigated_by"><span><a class="external_link reference external" href="https://eclipse-score.github.io/score/main/requirements/platform_assumptions/index.html#aou_req__platform__flow_monitoring">aou_req__platform__flow_monitoring</a>, <a class="external_link reference external" href="https://eclipse-score.github.io/score/main/features/baselibs/requirements/index.html#feat_req__baselibs__memory_library">feat_req__baselibs__memory_library</a></span></span></div>
+<div class="line"><span><div class="line">mitigated_by: <span class="mitigated_by"><span><a class="external_link reference external" href="https://eclipse-score.github.io/score/main/requirements/platform_assumptions/index.html#aou_req__platform__flow_monitoring">aou_req__platform__flow_monitoring</a></span></span></div>
 <div class="line">violates: <span class="violates"><span><a class="reference internal" href="../architecture/index.html#feat_arc_sta__baselibs__static_view_arch" title="feat_saf_dfa__baselibs__locked_ressource">feat_arc_sta__baselibs__static_view_arch</a></span></span></div>
 </span></div>
 </div>
 </td>
 <td class="meta" colspan="3"></td>
 </tr>
-<tr class="content row-odd"><td class="content" colspan="6"><p>Only components “filesystem” and “memory_shared” should have the problem (“bitmanipulation” should not be affected due to shortness of execution)
-“memory_shared” cares for this by above linked feature requirement and <a class="reference internal" href="../../baselibs/components/memory/requirements/index.html#comp_req__memory__atomic_ops" title="comp_req__memory__atomic_ops"><em class="xref need">Atomic Operations in Shared... (comp_req__memory__atomic_ops)</em></a>.
-“filesystem” component may fail on this but this is covered by common platform aou linked above.</p></td>
+<tr class="content row-odd"><td class="content" colspan="6"><p>File access through the filesystem component may stall execution.
+This failure is covered by the platform flow-monitoring AoU linked above.</p></td>
 </tr>
 <tr class="footer row-even"><td class="footer_left" colspan="2"><div class="needs_footer_left line-block">
 <div class="line"><span><span class="needs-id"><a class="reference internal" href="#feat_saf_dfa__baselibs__locked_ressource" title="feat_saf_dfa__baselibs__locked_ressource">feat_saf_dfa__baselibs__locked_ressource</a></span></span></div>
@@ -873,7 +872,7 @@ out of bounds access should be detected by unit testing/sanitizers.</p></td>
 </table>
 </div>
 </div>
-<div class="need_container docutils container" id="SNCB-0061e414">
+<div class="need_container docutils container" id="SNCB-79b9ae9b">
 <div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_feat_saf_dfa table" id="feat_saf_dfa__baselibs__conc_file_access">
 <tbody>
 <tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
@@ -895,7 +894,7 @@ out of bounds access should be detected by unit testing/sanitizers.</p></td>
 <div class="line"><span><span><div class="line"><span class="needs_failure_effect"><span class="needs_label">failure_effect: </span><span class="needs_data">Concurrent file access may lead to corruption of the file</span></span></div>
 <div class="line"><span class="needs_failure_id"><span class="needs_label">failure_id: </span><span class="needs_data">SR_01_02</span></span></div>
 <div class="line"><span class="needs_sufficient"><span class="needs_label">sufficient: </span><span class="needs_data">yes</span></span></div>
-<div class="line"><span class="needs_version"><span class="needs_label">version: </span>1</span></div>
+<div class="line"><span class="needs_version"><span class="needs_label">version: </span>2</span></div>
 </span></span></div>
 <div class="line"><span><div class="line">mitigated_by: <span class="mitigated_by"><span><a class="reference internal" href="../../baselibs/components/filesystem/requirements/index.html#aou_req__filesystem__thread_safety" title="feat_saf_dfa__baselibs__conc_file_access">aou_req__filesystem__thread_safety</a></span></span></div>
 <div class="line">violates: <span class="violates"><span><a class="reference internal" href="../architecture/index.html#feat_arc_sta__baselibs__static_view_arch" title="feat_saf_dfa__baselibs__conc_file_access">feat_arc_sta__baselibs__static_view_arch</a></span></span></div>
@@ -920,7 +919,7 @@ out of bounds access should be detected by unit testing/sanitizers.</p></td>
 </table>
 </div>
 </div>
-<div class="need_container docutils container" id="SNCB-9f1e5f72">
+<div class="need_container docutils container" id="SNCB-db2f468d">
 <div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_feat_saf_dfa table" id="feat_saf_dfa__baselibs__conc_memory_access">
 <tbody>
 <tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
@@ -942,7 +941,7 @@ out of bounds access should be detected by unit testing/sanitizers.</p></td>
 <div class="line"><span><span><div class="line"><span class="needs_failure_effect"><span class="needs_label">failure_effect: </span><span class="needs_data">Concurrent memory access may lead to corruption of the memory</span></span></div>
 <div class="line"><span class="needs_failure_id"><span class="needs_label">failure_id: </span><span class="needs_data">SR_01_10</span></span></div>
 <div class="line"><span class="needs_sufficient"><span class="needs_label">sufficient: </span><span class="needs_data">yes</span></span></div>
-<div class="line"><span class="needs_version"><span class="needs_label">version: </span>1</span></div>
+<div class="line"><span class="needs_version"><span class="needs_label">version: </span>2</span></div>
 </span></span></div>
 <div class="line"><span><div class="line">mitigated_by: <span class="mitigated_by"><span><a class="reference internal" href="../../baselibs/components/bitmanipulation/requirements/index.html#aou_req__bitmanipulation__concurrent_access" title="feat_saf_dfa__baselibs__conc_memory_access">aou_req__bitmanipulation__concurrent_access</a></span></span></div>
 <div class="line">violates: <span class="violates"><span><a class="reference internal" href="../architecture/index.html#feat_arc_sta__baselibs__static_view_arch" title="feat_saf_dfa__baselibs__conc_memory_access">feat_arc_sta__baselibs__static_view_arch</a></span></span></div>
@@ -967,7 +966,7 @@ out of bounds access should be detected by unit testing/sanitizers.</p></td>
 </table>
 </div>
 </div>
-<div class="need_container docutils container" id="SNCB-918faa8e">
+<div class="need_container docutils container" id="SNCB-cafba540">
 <div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_feat_saf_dfa table" id="feat_saf_dfa__baselibs__blocked_execution">
 <tbody>
 <tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
@@ -990,7 +989,7 @@ out of bounds access should be detected by unit testing/sanitizers.</p></td>
 <div class="line"><span class="needs_failure_id"><span class="needs_label">failure_id: </span><span class="needs_data">UI_01_06</span></span></div>
 <div class="line"><span class="needs_mitigation_issue"><span class="needs_label">mitigation_issue: </span><span class="needs_data"><a class="reference external" href="https://github.com/eclipse-score/score/issues/2816">score#2816</a></span></span></div>
 <div class="line"><span class="needs_sufficient"><span class="needs_label">sufficient: </span><span class="needs_data">no</span></span></div>
-<div class="line"><span class="needs_version"><span class="needs_label">version: </span>1</span></div>
+<div class="line"><span class="needs_version"><span class="needs_label">version: </span>2</span></div>
 </span></span></div>
 <div class="line"><span><div class="line">violates: <span class="violates"><span><a class="reference internal" href="../architecture/index.html#feat_arc_sta__baselibs__static_view_arch" title="feat_saf_dfa__baselibs__blocked_execution">feat_arc_sta__baselibs__static_view_arch</a></span></span></div>
 </span></div>
@@ -1015,7 +1014,7 @@ all blocks should be detected by unit testing.</p></td>
 </table>
 </div>
 </div>
-<div class="need_container docutils container" id="SNCB-e4f2e0c5">
+<div class="need_container docutils container" id="SNCB-0b68d5fc">
 <div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_feat_saf_dfa table" id="feat_saf_dfa__baselibs__cpu_starvation">
 <tbody>
 <tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
@@ -1037,7 +1036,7 @@ all blocks should be detected by unit testing.</p></td>
 <div class="line"><span><span><div class="line"><span class="needs_failure_effect"><span class="needs_label">failure_effect: </span><span class="needs_data">CPU starvation leads to delayed execution and may violate safety timing requirements.</span></span></div>
 <div class="line"><span class="needs_failure_id"><span class="needs_label">failure_id: </span><span class="needs_data">UI_01_10</span></span></div>
 <div class="line"><span class="needs_sufficient"><span class="needs_label">sufficient: </span><span class="needs_data">yes</span></span></div>
-<div class="line"><span class="needs_version"><span class="needs_label">version: </span>1</span></div>
+<div class="line"><span class="needs_version"><span class="needs_label">version: </span>2</span></div>
 </span></span></div>
 <div class="line"><span><div class="line">mitigated_by: <span class="mitigated_by"><span><a class="external_link reference external" href="https://eclipse-score.github.io/score/main/requirements/platform_assumptions/index.html#aou_req__platform__flow_monitoring">aou_req__platform__flow_monitoring</a></span></span></div>
 <div class="line">violates: <span class="violates"><span><a class="reference internal" href="../architecture/index.html#feat_arc_sta__baselibs__static_view_arch" title="feat_saf_dfa__baselibs__cpu_starvation">feat_arc_sta__baselibs__static_view_arch</a></span></span></div>
