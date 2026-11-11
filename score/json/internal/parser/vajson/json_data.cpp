@@ -22,6 +22,7 @@
 
 #include "score/filesystem/filestream/file_factory.h"
 #include "score/filesystem/filestream/file_stream.h"
+#include "score/filesystem/filesystem.h"
 #include "score/filesystem/path.h"
 
 #include "score/json/internal/parser/vajson/json_ops.h"
@@ -54,6 +55,7 @@ JsonData::JsonData(std::unique_ptr<std::istream> input_stream) noexcept : JsonDa
 }
 
 /// @internal
+/// - Return a JsonErrc if the path does not refer to a regular file.
 /// - Create the input stream from the file.
 /// - If the file has been opened successfully.
 ///   - Then create & return the JsonData object.
@@ -64,6 +66,17 @@ auto JsonData::FromFile(const std::string_view path) noexcept -> Result<JsonData
     // Open file using score filesystem
     score::filesystem::FileFactory factory{};
     score::filesystem::Path file_path{std::string(path.data(), path.size())};
+
+    // Opening a FIFO or device could block or never reach end of file.
+    const auto is_regular_file{score::filesystem::StandardFilesystem{}.IsRegularFile(file_path)};
+    if (!is_regular_file.has_value())
+    {
+        return MakeErrorResult<JsonData>(JsonErrc::kStreamFailure, "Could not open file");
+    }
+    if (!is_regular_file.value())
+    {
+        return MakeErrorResult<JsonData>(JsonErrc::kStreamFailure, "Not a regular file");
+    }
 
     auto file_result{factory.Open(file_path, std::ios::in | std::ios::binary)};
     auto result{MakeErrorResult<JsonData>(JsonErrc::kStreamFailure, "Could not open file")};

@@ -32,7 +32,7 @@ class JsonParser : public IJsonParser
   public:
     /// @brief Parses the underlying file and creates a tree of JSON data
     /// @param file_path The path to the file that shall be parsed
-    /// @return root to the tree of JSON data, error on error
+    /// @return root to the tree of JSON data, or an error if parsing fails or the path is not a regular file
     score::Result<Any> FromFile(const std::string_view file_path) const noexcept override;
 
     /// @brief Parses the underlying buffer and creates a tree of JSON data
