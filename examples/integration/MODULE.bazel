@@ -17,6 +17,14 @@ local_path_override(
     path = "../..",
 )
 
+# Same docs-as-code as the root module (prototype dependable element):
+# //score/bitmanipulation:docs uses docs_bundle(external_needs).
+git_override(
+    module_name = "score_docs_as_code",
+    commit = "95d4a5efe66281755509f954a3b660d53fae8921",
+    remote = "https://github.com/eclipse-score/docs-as-code.git",
+)
+
 bazel_dep(name = "rules_cc", version = "0.2.17")
 
 # C++ Toolchain configuration
