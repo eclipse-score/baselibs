@@ -104,6 +104,18 @@ General Requirements
 
    The JSON-Library shall report a failure to read or write a JSON file as an I/O error.
 
+.. comp_req:: Regular files only
+   :id: comp_req__json__regular_file
+   :reqtype: Functional
+   :security: YES
+   :safety: ASIL_B
+   :derived_from: feat_req__baselibs__json_library[version==2]
+   :status: valid
+   :version: 1
+   :satisfied_by: comp__baselibs_json_wrapper[version==1]
+
+   The JSON-Library shall report reading JSON data from a path that does not refer to a regular file as an I/O error.
+
 .. comp_req:: Failing field of a deserialization error
    :id: comp_req__json__deserialization_error_field
    :reqtype: Functional

@@ -83,7 +83,7 @@ class JsonData final
     ///                  The path to the JSON file.
     /// @return          A constructed JSON data object.
     /// @error           score::json::vajson::JsonErrc::kStreamFailure
-    ///                  if the file could not be opened or read.
+    ///                  if the path is not a regular file or the file could not be opened or read.
     /// @context         ANY
     /// @pre             -
     /// @threadsafe      FALSE
