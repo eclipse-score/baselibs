@@ -53,11 +53,11 @@ score::Result<void> ToFileInternalAtomic(const T& json_data,
             return score::json::MakeError(score::json::Error::kInvalidFilePath, err.UserMessage());
         })
         .and_then([&json_data, formatting](auto filestream) -> score::Result<void> {
-            auto serializer_result{
-                score::json::internal::writer::SerializeToStream(*filestream, json_data, formatting)};
-            return filestream->Close().and_then([serializer_result](auto&&...) noexcept {
-                return serializer_result;
-            });
+            // Serialization errors stem from a failed stream, whose destructor discards the update.
+            return score::json::internal::writer::SerializeToStream(*filestream, json_data, formatting)
+                .and_then([&filestream](auto&&...) {
+                    return filestream->Close();
+                });
         });
 }
 

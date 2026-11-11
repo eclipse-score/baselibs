@@ -252,6 +252,31 @@ TYPED_TEST(JsonWriterWriteToFileTest, ToSyncedFileResultsInError)
     EXPECT_EQ(result.error(), score::json::Error::kInvalidFilePath);
 }
 
+TEST(JsonWriterSyncedFileTest, SerializationFailureKeepsTargetUnchanged)
+{
+    RecordProperty("PartiallyVerifies", "comp_req__json__serialization");
+    RecordProperty("Description",
+                   "Check that a synced ToFile of a list holding NaN returns the serialization error and keeps the "
+                   "existing target file unchanged.");
+    RecordProperty("TestType", "interface-test");
+    RecordProperty("DerivationTechnique", "error-guessing");
+
+    constexpr std::string_view kPath{"/foo/foo.json"};
+    constexpr std::string_view kOldContent{R"({"old":true})"};
+    score::filesystem::SimpleStringStreamCollection collection{};
+    const auto file_factory{std::make_shared<score::filesystem::FileFactoryFake>(collection)};
+    file_factory->Get(kPath).str(std::string{kOldContent});
+    score::json::List list{};
+    list.emplace_back(1);
+    list.emplace_back(std::numeric_limits<double>::quiet_NaN());
+
+    const auto result{score::json::JsonWriter{FileSyncMode::kSynced}.ToFile(list, kPath, file_factory)};
+
+    ASSERT_FALSE(result.has_value());
+    EXPECT_EQ(result.error(), score::json::Error::kUnknownError);
+    EXPECT_EQ(file_factory->Get(kPath).str(), kOldContent);
+}
+
 TEST(JsonWriterDefaultFormattingTest, PrettyPrintsWhenFormattingIsOmitted)
 {
     RecordProperty("PartiallyVerifies", "comp_req__json__serialization");
