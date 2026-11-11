@@ -73,7 +73,7 @@ TEST(JsonParserTest, FromBuffer)
 
 TEST(JsonParserTest, EnforcesConfiguredNestingDepth)
 {
-    RecordProperty("PartiallyVerifies", "comp_req__json__nesting_depth");
+    RecordProperty("PartiallyVerifies", "comp_req__json__nesting_depth, comp_req__json__nesting_depth_inclusive");
     RecordProperty("Description", "Check that the configured container depth is inclusive for arrays and objects.");
     RecordProperty("TestType", "requirements-based");
     RecordProperty("DerivationTechnique", "boundary-values");
@@ -101,7 +101,8 @@ TEST(JsonParserTest, EnforcesConfiguredNestingDepth)
 
 TEST(JsonParserTest, EnforcesDefaultAndLargerNestingLimits)
 {
-    RecordProperty("PartiallyVerifies", "comp_req__json__nesting_depth");
+    RecordProperty("PartiallyVerifies",
+                   "comp_req__json__nesting_depth_default, comp_req__json__nesting_depth_configuration");
     RecordProperty("Description", "Check the default depth boundary and a larger per-instance limit.");
     RecordProperty("TestType", "requirements-based");
     RecordProperty("DerivationTechnique", "boundary-values");
@@ -130,7 +131,7 @@ TEST(JsonParserTest, EnforcesDefaultAndLargerNestingLimits)
 
 TEST(JsonParserTest, ZeroNestingLimitAllowsOnlyScalars)
 {
-    RecordProperty("PartiallyVerifies", "comp_req__json__nesting_depth");
+    RecordProperty("PartiallyVerifies", "comp_req__json__nesting_depth_zero");
     RecordProperty("Description", "Check that depth zero accepts scalar roots and rejects even empty containers.");
     RecordProperty("TestType", "requirements-based");
     RecordProperty("DerivationTechnique", "boundary-values");
@@ -150,7 +151,7 @@ TEST(JsonParserTest, ZeroNestingLimitAllowsOnlyScalars)
 
 TEST(JsonParserTest, CountsOnlyOpenContainers)
 {
-    RecordProperty("PartiallyVerifies", "comp_req__json__nesting_depth");
+    RecordProperty("PartiallyVerifies", "comp_req__json__nesting_depth_counting");
     RecordProperty("Description",
                    "Check that sibling containers, keys and string delimiters do not consume extra depth.");
     RecordProperty("TestType", "requirements-based");
@@ -165,7 +166,7 @@ TEST(JsonParserTest, CountsOnlyOpenContainers)
 
 TEST(JsonParserTest, ReusesNestingBudgetAfterErrors)
 {
-    RecordProperty("PartiallyVerifies", "comp_req__json__nesting_depth, comp_req__json__deserialization");
+    RecordProperty("PartiallyVerifies", "comp_req__json__nesting_depth_independence, comp_req__json__deserialization");
     RecordProperty("Description",
                    "Check that depth and syntax errors leave the parser reusable and instances independent.");
     RecordProperty("TestType", "requirements-based");
@@ -185,7 +186,7 @@ TEST(JsonParserTest, ReusesNestingBudgetAfterErrors)
 
 TEST(JsonParserTest, RejectsDeepInputWithoutRetainingState)
 {
-    RecordProperty("PartiallyVerifies", "comp_req__json__nesting_depth");
+    RecordProperty("PartiallyVerifies", "comp_req__json__nesting_depth, comp_req__json__nesting_depth_independence");
     RecordProperty("Description", "Check normal rejection and reuse for deeply nested valid arrays and objects.");
     RecordProperty("TestType", "requirements-based");
     RecordProperty("DerivationTechnique", "error-guessing");
@@ -212,7 +213,7 @@ TEST(JsonParserTest, RejectsDeepInputWithoutRetainingState)
 
 TEST(JsonParserTest, LiteralUsesDefaultNestingLimit)
 {
-    RecordProperty("PartiallyVerifies", "comp_req__json__nesting_depth");
+    RecordProperty("PartiallyVerifies", "comp_req__json__nesting_depth_literal");
     RecordProperty("Description", "Check that the literal accepts the default boundary and terminates above it.");
     RecordProperty("TestType", "requirements-based");
     RecordProperty("DerivationTechnique", "boundary-values");
@@ -353,7 +354,7 @@ class ParserTest : public testing::Test
 
 TEST_F(ParserTest, AppliesConfiguredNestingLimitToFiles)
 {
-    RecordProperty("PartiallyVerifies", "comp_req__json__nesting_depth");
+    RecordProperty("PartiallyVerifies", "comp_req__json__nesting_depth_file");
     RecordProperty("Description", "Check that files and buffers share the inclusive array and object depth limit.");
     RecordProperty("TestType", "requirements-based");
     RecordProperty("DerivationTechnique", "boundary-values");

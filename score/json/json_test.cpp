@@ -19,7 +19,7 @@
 
 TEST(JsonTest, NestedTreeAtDefaultLimitSurvivesRoundTrip)
 {
-    RecordProperty("PartiallyVerifies", "comp_req__json__nesting_depth, comp_req__json__serialization");
+    RecordProperty("PartiallyVerifies", "comp_req__json__nesting_depth_default, comp_req__json__serialization");
     RecordProperty("Description",
                    "Check cloning, equality and both writer formats for a mixed tree at the default depth.");
     RecordProperty("TestType", "requirements-based");

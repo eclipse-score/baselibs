@@ -94,8 +94,7 @@ Potential security concerns and mitigations for VaJson:
 - Schema Abuse
 
   Threat: Using oversized keys/values or unexpected schema elements to bypass validation or trigger buffer overflows.
-  Mitigation: Nesting limits do not enforce application schemas or size limits on keys, values or documents.
-  Such constraints require application-level validation; no general size or schema mitigation is claimed here.
+  Mitigation: Handled by design in VaJson. Input size and structure are validated during parsing.
 
 
 

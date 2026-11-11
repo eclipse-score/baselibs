@@ -51,12 +51,15 @@ Failure Mode List
     - The above "code-block" directive must be updated
     - Fill in all the needed information in the <brackets>
 
-Nesting Risk
-------------
+Excessive Nesting Depth
+-----------------------
 
-Deeply nested parsed trees can exhaust the thread stack during recursive destruction, cloning, comparison or serialization, including destruction of partially parsed input.
-The tree-builder guard in :need:`comp_req__json__nesting_depth` prevents insertion beyond the configured container depth.
-The default limit of 64 is a policy value, not a qualified resource bound.
-The integrator must validate stack budgets according to :need:`aou_req__json__stack_budget`.
-Boundary and lifecycle tests provide behavioral evidence, not worst-case stack measurements or completion of this draft FMEA.
-Arbitrarily deep manually constructed or modified trees and other resource exhaustion remain outside this parser mitigation.
+Failure mode: A parsed tree is nested deeper than the available thread stack supports.
+
+Failure effect: Recursive destruction, cloning, comparison or serialization of the tree, including destruction of a partially parsed tree, exhausts the thread stack.
+
+Mitigation: :need:`comp_req__json__nesting_depth` rejects input exceeding the configured maximum nesting depth.
+The default limit is a policy value, not a qualified resource bound, so the integrator validates it according to :need:`aou_req__json__stack_budget`.
+
+Residual risk: Manually constructed or modified trees and other resource exhaustion are not mitigated.
+This entry is not a completed FMEA.

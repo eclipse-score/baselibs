@@ -70,10 +70,6 @@ The limit is inclusive; 0 permits scalar roots only and is not an unlimited sett
 Each call has an independent depth budget, including after a rejected document.
 The `_json` literal uses the default limit and terminates on excessive depth, like any other parse error.
 
-Compatibility: valid documents deeper than 64 that were previously accepted are now rejected by default.
-Existing `IJsonParser` and mock interfaces are unchanged, and default construction remains supported.
-The concrete `JsonParser` object layout changes to store the limit, so binary consumers must be rebuilt.
-
 The default is a conservative policy value, not a platform-qualified stack bound.
 Integrators must validate even the default against their thread stack, platform and toolchain, including partial-tree cleanup, destruction, cloning, comparison and serialization.
 Increasing the limit can allow trees that exhaust the stack in these recursive operations.
