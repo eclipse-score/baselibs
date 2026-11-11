@@ -129,6 +129,18 @@ General Requirements
    When converting JSON data into a user type fails, the JSON-Library shall report the name of the innermost field
    that failed together with the error.
 
+.. comp_req:: Maximum file size
+   :id: comp_req__json__max_file_size
+   :reqtype: Functional
+   :security: YES
+   :safety: ASIL_B
+   :derived_from: feat_req__baselibs__json_library[version==2]
+   :status: valid
+   :version: 1
+   :satisfied_by: comp__baselibs_json_wrapper[version==1]
+
+   The JSON-Library shall report reading JSON data from a file larger than 64 MiB as an I/O error.
+
 User friendly API for information exchange
 ==========================================
 

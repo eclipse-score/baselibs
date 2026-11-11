@@ -140,7 +140,7 @@ JsonData
         }
 
         class JsonData {
-          + {static} auto FromFile(StringView path) -> Result<JsonData>
+          + {static} auto FromFile(StringView path, std::size_t max_size) -> Result<JsonData>
           + {static} auto FromBuffer(StringView buffer) -> Result<JsonData>
         }
 
