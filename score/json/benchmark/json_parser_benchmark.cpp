@@ -128,12 +128,11 @@ std::string MakeEscapedStringArray(const std::size_t count)
             out.push_back(',');
         }
         // Every value contains quotes, backslashes and the control escapes that
-        // the parser supports (\b \f \n \r \t \\ \/ \"), stressing the
-        // escape-decoding branch. Note: \u (unicode) is intentionally not
-        // emitted because this parser rejects it.
-        out += "\"esc\\t";
+        // the parser supports (\b \f \n \r \t \\ \/ \" \uXXXX), stressing the
+        // escape-decoding branch. The \uXXXX escapes cover every UTF-8 sequence length.
+        out += R"("esc\t)";
         out += std::to_string(i);
-        out += "\\n\\\"quoted\\\"\\\\path\\/end\\r\\b\\f\"";
+        out += R"(\n\"quoted\"\\path\/end\r\b\f\u001f\u00e4\u20ac\ud83d\ude00")";
     }
     out.push_back(']');
     return out;
