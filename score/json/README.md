@@ -37,6 +37,10 @@ Vector, the only parser this library supports.
 
 Additionally, there is [another](#declarative-parsing-of-json-data) Bazel target, `//score/json:json_serializer`, which is **not** ASIL B certified.
 
+Public targets expose the JSON API and data model, while parser and writer implementation dependencies remain private.
+Neither the parser nor the writer implementation depends on the other.
+The declarative `json_serializer` target uses only the parser, and the `mock` target uses only the parser and writer interfaces.
+
 ### Loading a JSON document from a file
 
 ```c++
