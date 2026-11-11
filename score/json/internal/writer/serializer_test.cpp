@@ -218,16 +218,20 @@ TEST(SerializerTest, SerializesNumbersInTheirStoredArithmeticType)
 
     Object object{};
     object["u8"] = Any{std::uint8_t{255U}};
+    object["u16"] = Any{std::numeric_limits<std::uint16_t>::max()};
+    object["u32"] = Any{std::numeric_limits<std::uint32_t>::max()};
     object["u64"] = Any{std::numeric_limits<std::uint64_t>::max()};
     object["i8"] = Any{std::int8_t{-128}};
+    object["i16"] = Any{std::numeric_limits<std::int16_t>::min()};
+    object["i32"] = Any{std::numeric_limits<std::int32_t>::min()};
     object["i64"] = Any{std::numeric_limits<std::int64_t>::min()};
     object["f"] = Any{0.1F};
     object["d"] = Any{0.1};
     const auto result{SerializeToBuffer(object, Formatting::kCompact)};
     ASSERT_TRUE(result.has_value());
     EXPECT_EQ(*result,
-              std::string{R"({"d":0.1,"f":0.1,"i64":-9223372036854775808,"i8":-128,"u64":18446744073709551615,)"
-                          R"("u8":255})"});
+              std::string{R"({"d":0.1,"f":0.1,"i16":-32768,"i32":-2147483648,"i64":-9223372036854775808,"i8":-128,)"
+                          R"("u16":65535,"u32":4294967295,"u64":18446744073709551615,"u8":255})"});
 }
 // RFC 8259, section 6 has no representation for infinity or NaN, hence they cannot be serialized.
 TEST(SerializerTest, RejectsInfiniteDouble)
@@ -425,6 +429,128 @@ TEST(SerializerTest, SerializesEmptyContainersCompactly)
     const auto result{SerializeToBuffer(root, Formatting::kCompact)};
     ASSERT_TRUE(result.has_value());
     EXPECT_EQ(*result, std::string{R"({"empty_list":[],"empty_object":{}})"});
+}
+Object MakeMixedDocument()
+{
+    List empty_containers{};
+    empty_containers.emplace_back(Any{Object{}});
+    empty_containers.emplace_back(Any{List{}});
+    List tags{};
+    tags.emplace_back(Any{std::string{"a"}});
+    Object first_member{};
+    first_member["id"] = Any{std::int32_t{1}};
+    first_member["tags"] = Any{std::move(tags)};
+    Object second_member{};
+    second_member["id"] = Any{std::int32_t{2}};
+    second_member["tags"] = Any{List{}};
+    List members{};
+    members.emplace_back(Any{std::move(first_member)});
+    members.emplace_back(Any{std::move(second_member)});
+    Object root{};
+    root["empty_containers"] = Any{std::move(empty_containers)};
+    root["members"] = Any{std::move(members)};
+    return root;
+}
+TEST(SerializerTest, PrettyPrintsMixedNesting)
+{
+    RecordProperty("PartiallyVerifies", "comp_req__json__serialization");
+    RecordProperty("Description",
+                   "Check that pretty-printing an object holding a list of objects and a list of empty containers "
+                   "indents every level and writes empty containers as {} and [].");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
+
+    const auto result{SerializeToBuffer(Any{MakeMixedDocument()}, Formatting::kPrettyPrint)};
+    ASSERT_TRUE(result.has_value());
+    EXPECT_EQ(*result, std::string{R"({
+    "empty_containers": [
+        {},
+        []
+    ],
+    "members": [
+        {
+            "id": 1,
+            "tags": [
+                "a"
+            ]
+        },
+        {
+            "id": 2,
+            "tags": []
+        }
+    ]
+})"});
+}
+TEST(SerializerTest, SerializesMixedNestingCompactly)
+{
+    RecordProperty("PartiallyVerifies", "comp_req__json__serialization");
+    RecordProperty("Description",
+                   "Check that an object holding a list of objects and a list of empty containers is serialized "
+                   "without insignificant whitespace.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
+
+    const auto result{SerializeToBuffer(MakeMixedDocument(), Formatting::kCompact)};
+    ASSERT_TRUE(result.has_value());
+    EXPECT_EQ(*result,
+              std::string{R"({"empty_containers":[{},[]],"members":[{"id":1,"tags":["a"]},{"id":2,"tags":[]}]})"});
+}
+TEST(SerializerTest, SerializesTopLevelScalars)
+{
+    RecordProperty("PartiallyVerifies", "comp_req__json__serialization");
+    RecordProperty("Description",
+                   "Check that a string, a number, a boolean and null are each serialized as the top-level value.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
+
+    const auto string_result{SerializeToBuffer(Any{std::string{"text"}}, Formatting::kCompact)};
+    ASSERT_TRUE(string_result.has_value());
+    EXPECT_EQ(*string_result, std::string{"\"text\""});
+    const auto number_result{SerializeToBuffer(Any{std::int32_t{-42}}, Formatting::kCompact)};
+    ASSERT_TRUE(number_result.has_value());
+    EXPECT_EQ(*number_result, std::string{"-42"});
+    const auto bool_result{SerializeToBuffer(Any{false}, Formatting::kCompact)};
+    ASSERT_TRUE(bool_result.has_value());
+    EXPECT_EQ(*bool_result, std::string{"false"});
+    const auto null_result{SerializeToBuffer(Any{Null{}}, Formatting::kCompact)};
+    ASSERT_TRUE(null_result.has_value());
+    EXPECT_EQ(*null_result, std::string{"null"});
+}
+TEST(SerializerTest, EscapesObjectKeysInNestedObjects)
+{
+    RecordProperty("PartiallyVerifies", "comp_req__json__serialization");
+    RecordProperty("Description", "Check that the key of a member of a nested object is escaped.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
+
+    Object inner{};
+    inner[std::string{"a\"b\\c\n"}] = Any{std::int32_t{1}};
+    Object root{};
+    root["outer"] = Any{std::move(inner)};
+    const auto result{SerializeToBuffer(root, Formatting::kCompact)};
+    ASSERT_TRUE(result.has_value());
+    EXPECT_EQ(*result, std::string{R"({"outer":{"a\"b\\c\n":1}})"});
+}
+TEST(SerializerTest, RejectsNonFiniteNumberNestedDeepInsideContainers)
+{
+    RecordProperty("PartiallyVerifies", "comp_req__json__serialization");
+    RecordProperty("Description",
+                   "Check that infinity nested four containers deep, after valid siblings, fails the serialization.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "error-guessing");
+
+    List innermost{};
+    innermost.emplace_back(Any{std::int32_t{1}});
+    innermost.emplace_back(Any{std::numeric_limits<float>::infinity()});
+    Object inner{};
+    inner["valid"] = Any{true};
+    inner["values"] = Any{std::move(innermost)};
+    List outer{};
+    outer.emplace_back(Any{std::string{"valid"}});
+    outer.emplace_back(Any{std::move(inner)});
+    Object root{};
+    root["outer"] = Any{std::move(outer)};
+    EXPECT_FALSE(SerializeToBuffer(Any{std::move(root)}, Formatting::kCompact).has_value());
 }
 }  // namespace
 }  // namespace score::json

@@ -44,6 +44,47 @@ test --test_output=errors
 # Import platform and toolchain configurations. Not try-import: these files are required.
 import %workspace%/score.bazelrc/score_toolchain.bazelrc
 
+# Test execution and compatibility settings for this repository.
+test:_score_common --build_tests_only
+
+# Target configuration for CPU:x86-64|OS:Linux build (do not use it in case of system toolchains!)
+test:score-linux-x86_64 --config=_score_common
+
+# Target configuration for CPU:AArch64|OS:Linux build (do not use it in case of system toolchains!)
+test:score-linux-aarch64 --config=_score_common
+test:score-linux-aarch64 --test_timeout=300
+test:score-linux-aarch64 --run_under=//:qemu_aarch64
+test:score-linux-aarch64 --test_tag_filters=-no_rust_doc_test
+
+# Target configuration for CPU:x86-64|OS:QNX build (do not use it in case of system toolchains!)
+test:score-qnx-x86_64 --config=_score_common
+test:score-qnx-x86_64 --run_under=@score_qnx_unit_tests//src:run_under_qnx
+test:score-qnx-x86_64 --test_lang_filters=cc,rust
+
+# Target configuration for CPU:AArch64|OS:QNX build (do not use it in case of system toolchains!)
+test:score-qnx-aarch64 --config=_score_common
+test:score-qnx-aarch64 --test_timeout=300
+test:score-qnx-aarch64 --run_under=@score_qnx_unit_tests//src:run_under_qnx
+test:score-qnx-aarch64 --test_lang_filters=cc,rust
+
+# Same as the QNX configs above, but with the QNX SDP 8.0.5 from a private GitHub release.
+# Fetching the SDP requires a GitHub token with read access to eclipse-score/qnx_sdp_pkg (GH_TOKEN or ~/.netrc).
+# The toolchains registered last via --extra_toolchains have the highest priority and override the inherited ones.
+# The overridden SDP is not downloaded.
+build:score-qnx-x86_64-sdp_8.0.5 --config=score-qnx-x86_64
+build:score-qnx-x86_64-sdp_8.0.5 --extra_toolchains=@score_qcc_x86_64_toolchain_805//:x86_64-qnx-sdp_8.0.0
+build:score-qnx-x86_64-sdp_8.0.5 --extra_toolchains=@score_qnx_x86_64_ifs_toolchain_805//:ifs-x86_64-qnx-sdp_8.0.0
+build:score-qnx-aarch64-sdp_8.0.5 --config=score-qnx-aarch64
+build:score-qnx-aarch64-sdp_8.0.5 --extra_toolchains=@score_qcc_aarch64_toolchain_805//:aarch64-qnx-sdp_8.0.0
+build:score-qnx-aarch64-sdp_8.0.5 --extra_toolchains=@score_qnx_aarch64_ifs_toolchain_805//:ifs-aarch64-qnx-sdp_8.0.0
+
+# Deprecated aliases for the previous config names.
+# `test` inherits `build:` entries, so the aliased config's `test:` entries are pulled in too.
+build:bl-x86_64-linux --config=score-linux-x86_64
+build:bl-aarch64-linux --config=score-linux-aarch64
+build:bl-x86_64-qnx --config=score-qnx-x86_64
+build:bl-aarch64-qnx --config=score-qnx-aarch64
+
 # Import sanitizer configurations
 import %workspace%/score.bazelrc/score_sanitizers.bazelrc
 

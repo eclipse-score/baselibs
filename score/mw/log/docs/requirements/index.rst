@@ -48,7 +48,7 @@ Configuration
       feat_req__logging__config_fallback[version==1]
    :reqtype: Functional
    :security: NO
-   :safety: ASIL_B
+   :safety: QM
    :satisfied_by: comp__log[version==1]
    :version: 1
 
@@ -62,7 +62,7 @@ Configuration
    :derived_from: feat_req__logging__config_fallback[version==1]
    :reqtype: Functional
    :security: NO
-   :safety: ASIL_B
+   :safety: QM
    :satisfied_by: comp__log[version==1]
    :version: 1
 
@@ -81,7 +81,7 @@ Configuration
    :derived_from: feat_req__logging__config_fallback[version==1]
    :reqtype: Functional
    :security: NO
-   :safety: ASIL_B
+   :safety: QM
    :satisfied_by: comp__log[version==1]
    :version: 1
 
@@ -97,7 +97,7 @@ Configuration
    :derived_from: feat_req__logging__config_fallback[version==1]
    :reqtype: Functional
    :security: NO
-   :safety: ASIL_B
+   :safety: QM
    :satisfied_by: comp__log[version==1]
    :version: 1
 
@@ -113,7 +113,7 @@ Configuration
    :derived_from: feat_req__logging__config_fallback[version==1]
    :reqtype: Functional
    :security: NO
-   :safety: ASIL_B
+   :safety: QM
    :satisfied_by: comp__log[version==1]
    :version: 1
 
@@ -131,7 +131,7 @@ Configuration
    :derived_from: feat_req__logging__error_handling_recoverable[version==1]
    :reqtype: Functional
    :security: NO
-   :safety: ASIL_B
+   :safety: QM
    :satisfied_by: comp__log[version==1]
    :version: 1
 
@@ -145,7 +145,7 @@ Configuration
    :derived_from: feat_req__logging__error_handling_recoverable[version==1]
    :reqtype: Functional
    :security: NO
-   :safety: ASIL_B
+   :safety: QM
    :satisfied_by: comp__log[version==1]
    :version: 1
 
@@ -163,7 +163,7 @@ Configuration Fields
    :derived_from: feat_req__logging__sink_device[version==1]
    :reqtype: Functional
    :security: NO
-   :safety: ASIL_B
+   :safety: QM
    :satisfied_by: comp__log[version==1]
    :version: 1
 
@@ -177,7 +177,7 @@ Configuration Fields
    :derived_from: feat_req__logging__config_buffer_size[version==1]
    :reqtype: Functional
    :security: NO
-   :safety: ASIL_B
+   :safety: QM
    :satisfied_by: comp__log[version==1]
    :version: 1
 
@@ -190,7 +190,7 @@ Configuration Fields
    :derived_from: feat_req__logging__entity_identifier[version==1], feat_req__logging__config_entity_id
    :reqtype: Functional
    :security: NO
-   :safety: ASIL_B
+   :safety: QM
    :satisfied_by: comp__log[version==1]
    :version: 1
 
@@ -204,7 +204,7 @@ Configuration Fields
    :derived_from: feat_req__logging__entity_identifier[version==1], feat_req__logging__config_entity_id
    :reqtype: Functional
    :security: NO
-   :safety: ASIL_B
+   :safety: QM
    :satisfied_by: comp__log[version==1]
    :version: 1
 
@@ -215,26 +215,13 @@ Configuration Fields
 Log Handling
 ============
 
-.. comp_req:: Message Loss Detection
-   :id: comp_req__log__log_loss_detect
-   :status: valid
-   :derived_from: feat_req__logging__message_loss_detection[version==1]
-   :reqtype: Functional
-   :security: NO
-   :safety: ASIL_B
-   :satisfied_by: comp__log[version==1]
-   :version: 1
-
-    ``mw::log`` shall detect and report any message loss.
-
-
 .. comp_req:: Custom Log Types
    :id: comp_req__log__cfg_custom_types
    :status: valid
    :derived_from: feat_req__logging__config_custom_types[version==1]
    :reqtype: Functional
    :security: NO
-   :safety: ASIL_B
+   :safety: QM
    :satisfied_by: comp__log[version==1]
    :version: 1
 
@@ -250,7 +237,7 @@ Log Message Format
    :derived_from: feat_req__logging__timestamping_local[version==1]
    :reqtype: Functional
    :security: NO
-   :safety: ASIL_B
+   :safety: QM
    :satisfied_by: comp__log[version==1]
    :version: 1
 
@@ -266,7 +253,7 @@ System Backend
    :derived_from: feat_req__logging__early_startup[version==1]
    :reqtype: Functional
    :security: NO
-   :safety: ASIL_B
+   :safety: QM
    :satisfied_by: comp__log[version==1]
    :version: 1
 
@@ -282,12 +269,28 @@ Console Backend
    :derived_from: feat_req__logging__log_sinks_stdout[version==1]
    :reqtype: Functional
    :security: NO
-   :safety: ASIL_B
+   :safety: QM
    :satisfied_by: comp__log[version==1]
    :version: 1
 
     ``mw::log`` shall support output log messages to stdout when running unit tests.
 
+Non-Functional Requirements
+===========================
+
+.. comp_req:: Heap Allocation Only During Initialization
+   :id: comp_req__log__local_allocation_strategy2
+   :version: 1
+   :reqtype: Non-Functional
+   :security: YES
+   :safety: ASIL_B
+   :derived_from: feat_req__logging__asil_support
+   :status: valid
+   :satisfied_by: comp__log[version==1]
+
+   mw::log shall allocate heap memory only during the initialization phase of
+   the application lifecycle, and shall therefore satisfy any memory needs after
+   that phase from pre-allocated, bounded memory resources.
 
 Compatibility
 =============
@@ -298,7 +301,7 @@ Compatibility
    :derived_from: feat_req__logging__compat_os[version==1]
    :reqtype: Interface
    :security: NO
-   :safety: ASIL_B
+   :safety: QM
    :satisfied_by: comp__log[version==1]
    :version: 1
 
@@ -311,7 +314,7 @@ Compatibility
    :derived_from: feat_req__logging__compat_languages[version==1]
    :reqtype: Interface
    :security: NO
-   :safety: ASIL_B
+   :safety: QM
    :satisfied_by: comp__log[version==1]
    :version: 1
 
