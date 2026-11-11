@@ -21,7 +21,7 @@ local_path_override(
 # //score/bitmanipulation:docs uses docs_bundle(external_needs).
 git_override(
     module_name = "score_docs_as_code",
-    commit = "95d4a5efe66281755509f954a3b660d53fae8921",
+    commit = "dd5ff1896c4a4279c920eadc86f46c4742b6aa9b",
     remote = "https://github.com/eclipse-score/docs-as-code.git",
 )
 
