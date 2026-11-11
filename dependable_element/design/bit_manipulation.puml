@@ -15,17 +15,19 @@
 
 ' Byte types of bit_manipulation.h; the bit functions are free function templates.
 
-class HalfByte {
-    + HalfByte(value : std::uint8_t)
-}
+namespace score::platform {
+    class HalfByte {
+        + HalfByte(value : std::uint8_t)
+    }
 
-class Byte {
-    + Byte(upper_half : HalfByte, lower_half : HalfByte)
-    + Byte(value : std::uint8_t)
-    + UpperHalfByte() : HalfByte <<const>>
-    + LowerHalfByte() : HalfByte <<const>>
-}
+    class Byte {
+        + Byte(upper_half : HalfByte, lower_half : HalfByte)
+        + Byte(value : std::uint8_t)
+        + UpperHalfByte() : score::platform::HalfByte <<const>>
+        + LowerHalfByte() : score::platform::HalfByte <<const>>
+    }
 
-Byte *-- HalfByte
+    Byte --> HalfByte
+}
 
 @enduml

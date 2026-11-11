@@ -15,7 +15,9 @@
 
 ' Opt-in trait of bitmask_operators.h; the operators are free function templates.
 
-class enable_bitmask_operators<T> {
+namespace score {
+    class enable_bitmask_operators<T> {
+    }
 }
 
 @enduml

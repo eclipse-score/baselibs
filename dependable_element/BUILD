@@ -13,19 +13,68 @@
 
 # Prototype: baselibs as dependable element of rules_score with requirements from
 # Sphinx-Needs (lobster_sphinx_needs) instead of TRLC. Currently one component.
+# Kept out of //score/...: score_tooling is a dev dependency and //score/... is built for QNX.
 
 load(
     "@score_tooling//bazel/rules/rules_score:rules_score.bzl",
     "architectural_design",
+    "component",
+    "component_requirements",
     "dependable_element",
     "feature_requirements",
+    "unit",
+    "unit_design",
 )
 
 feature_requirements(
     name = "feature_requirements",
     feat_id = "feat__baselibs",
     needs = ["@score_platform//:needs_json_file"],
-    visibility = ["//score:__subpackages__"],
+)
+
+component_requirements(
+    name = "bitmanipulation_requirements",
+    comp_id = "comp__baselibs_bit_manipulation",
+    needs = ["//score/bitmanipulation:docs"],
+)
+
+unit_design(
+    name = "bit_manipulation_design",
+    static = ["design/bit_manipulation.puml"],
+)
+
+unit(
+    name = "bit_manipulation_unit",
+    design_name = "bit_manipulation",
+    tests = ["//score/bitmanipulation:bit_manipulation_test"],
+    unit_design = [":bit_manipulation_design"],
+    implementation = ["//score/bitmanipulation"],
+)
+
+unit_design(
+    name = "bitmask_operators_design",
+    static = ["design/bitmask_operators.puml"],
+)
+
+unit(
+    name = "bitmask_operators_unit",
+    design_name = "bitmask_operators",
+    tests = ["//score/bitmanipulation:bitmask_operators_test"],
+    unit_design = [":bitmask_operators_design"],
+    implementation = ["//score/bitmanipulation:bitmask_operators"],
+)
+
+component(
+    name = "bitmanipulation",
+    components = [
+        ":bit_manipulation_unit",
+        ":bitmask_operators_unit",
+    ],
+    requirements = [
+        ":bitmanipulation_requirements",
+        ":feature_requirements",
+    ],
+    tests = [],
 )
 
 architectural_design(
@@ -36,7 +85,7 @@ architectural_design(
 dependable_element(
     name = "baselibs",
     architectural_design = [":architectural_design"],
-    components = ["//score/bitmanipulation:component"],
+    components = [":bitmanipulation"],
     dependability_analysis = [],
     # Documented by //:docs, which imports :baselibs_needs.json.
     docs = False,
