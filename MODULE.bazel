@@ -202,7 +202,7 @@ bazel_dep(name = "score_docs_as_code", version = "8.6.0")
 # for the requirement macros (branch feat/lobster-sphinx-needs).
 git_override(
     module_name = "score_docs_as_code",
-    commit = "df6bf1c3777cc4e9581f6229486ecdd5cc9f92da",
+    commit = "95d4a5efe66281755509f954a3b660d53fae8921",
     remote = "https://github.com/eclipse-score/docs-as-code.git",
 )
 
@@ -211,7 +211,7 @@ bazel_dep(name = "score_process_description", version = "2.2.3")
 bazel_dep(name = "score_tooling", version = "3.0.2", dev_dependency = True)
 git_override(
     module_name = "score_tooling",
-    commit = "b11def9e5013210a01c0af09c73bf35b539106fe",
+    commit = "af25121cec851bb2aeec96eab4815d63efb0602c",
     remote = "https://github.com/eclipse-score/tooling.git",
 )
 

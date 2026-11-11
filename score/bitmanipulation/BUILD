@@ -88,6 +88,7 @@ docs_bundle(
 # see //dependable_element.
 component_requirements(
     name = "component_requirements",
+    comp_id = "comp__baselibs_bit_manipulation",
     needs = [":docs"],
 )
 

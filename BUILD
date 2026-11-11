@@ -108,6 +108,8 @@ docs(
             "mount_at": "baselibs/components/utils",
         },
     ],
+    # Test cases of the rules_score dependable element (prototype).
+    dependable_elements = ["//dependable_element:baselibs_needs.json"],
     external_needs = [
         "@score_platform//:needs_json_file",
         "@score_process_description//:needs_json_file",

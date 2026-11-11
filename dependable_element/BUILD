@@ -23,8 +23,8 @@ load(
 
 feature_requirements(
     name = "feature_requirements",
+    feat_id = "feat__baselibs",
     needs = ["@score_platform//:needs_json_file"],
-    needs_lobster_config = "lobster_feat_req.yaml",
     visibility = ["//score:__subpackages__"],
 )
 
@@ -38,9 +38,12 @@ dependable_element(
     architectural_design = [":architectural_design"],
     components = ["//score/bitmanipulation:component"],
     dependability_analysis = [],
+    # Documented by //:docs, which imports :baselibs_needs.json.
+    docs = False,
     integrity_level = "B",
     # Traceability gaps are reported as warnings while the prototype is incomplete.
     maturity = "development",
     requirements = [":feature_requirements"],
     tests = [],
+    visibility = ["//:__pkg__"],
 )
