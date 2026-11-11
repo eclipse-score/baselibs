@@ -50,7 +50,8 @@ jobs:
               -//score/os/test:acl_test
               -//score/os/test:errno_test
               -//score/os/test:socket_test
-            bazel-test-extra-flags: "--test_timeout=180,900,2700,10800 --test_tag_filters=-no_rust_doc_test" # Increase test timeout due to QEMU emulation
+              -//dependable_element/...
+            bazel-test-extra-flags: "--test_timeout=180,900,2700,10800 --test_tag_filters=-no_rust_doc_test" # Increase test timeout due to QEMU emulation; //dependable_element tests are host-side and cannot run under qemu
           - name: x86_64-linux (examples/integration)
             artifact-name: x86_64-linux-integration
             bazel-config: x86_64-linux
