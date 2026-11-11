@@ -269,7 +269,7 @@ auto JsonParser::FromFile(const std::string_view file_path) const noexcept -> sc
 {
     score::Result<Any> result{MakeUnexpected(Error::kParsingError)};
     // NOLINTNEXTLINE(score-banned-function) Tolerated because JsonParser::FromFile is also on the banned function list
-    auto json_data{score::json::vajson::JsonData::FromFile(file_path)};
+    auto json_data{score::json::vajson::JsonData::FromFile(file_path, kMaxFileSize)};
     if (json_data.has_value())
     {
         score::Result<Any> json_object{AnyTreeBuilder{json_data.value()}.GetData()};

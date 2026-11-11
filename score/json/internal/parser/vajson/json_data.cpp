@@ -14,10 +14,13 @@
 /// @brief  json data
 
 #include "score/json/internal/parser/vajson/json_data.h"
+#include <algorithm>
 #include <array>
+#include <cstddef>
 #include <istream>
 #include <memory>
 #include <sstream>
+#include <string>
 #include <utility>
 
 #include "score/filesystem/filestream/file_factory.h"
@@ -32,6 +35,11 @@ namespace json
 {
 namespace vajson
 {
+namespace
+{
+constexpr std::size_t kReadChunkSize{std::size_t{64U} * 1024U};
+}  // namespace
+
 /// @internal
 /// - Initialize the stream buffer from the given input stream.
 /// - Set the capacity for the string buffer to the value defined in the static configuration.
@@ -58,10 +66,12 @@ JsonData::JsonData(std::unique_ptr<std::istream> input_stream) noexcept : JsonDa
 /// - Return a JsonErrc if the path does not refer to a regular file.
 /// - Create the input stream from the file.
 /// - If the file has been opened successfully.
+///   - Reserve the buffer for the reported file size, capped at max_size.
+///   - Read the file in chunks, returning a JsonErrc once it exceeds max_size.
 ///   - Then create & return the JsonData object.
 /// - Else return a JsonErrc containing the original error message.
 /// @endinternal
-auto JsonData::FromFile(const std::string_view path) noexcept -> Result<JsonData>
+auto JsonData::FromFile(const std::string_view path, const std::size_t max_size) noexcept -> Result<JsonData>
 {
     // Open file using score filesystem
     score::filesystem::FileFactory factory{};
@@ -82,21 +92,30 @@ auto JsonData::FromFile(const std::string_view path) noexcept -> Result<JsonData
     auto result{MakeErrorResult<JsonData>(JsonErrc::kStreamFailure, "Could not open file")};
     if (file_result.has_value())
     {
-        // Read the whole file into an owned buffer once, then parse it through the same in-memory istringstream
-        // fast path used for FromBuffer. Parsing directly off the file stream is slow because the reader issues
-        // seekg calls, which are expensive on a filebuf but O(1) on an in-memory stringbuf.
+        // Parse an in-memory copy because the reader's seekg calls are expensive on a file but cheap on a stringbuf.
         std::istream& file{*file_result.value()};
         file.seekg(0, std::ios::end);
-        const std::streamoff size{file.tellg()};
+        const std::streamoff reported_size{file.tellg()};
         file.seekg(0, std::ios::beg);
-        if (file.fail() || (size < 0))
+        if (file.fail() || (reported_size < 0))
         {
             return MakeErrorResult<JsonData>(JsonErrc::kStreamFailure, "Could not read file");
         }
-        std::string content(static_cast<std::size_t>(size), '\0');
-        // Read through the unformatted input layer so an I/O error sets badbit and a short read is detectable
-        static_cast<void>(file.read(content.data(), size));
-        if (file.bad() || (file.gcount() != size))
+        std::string content{};
+        // The reported size only avoids reallocations; the limit applies to the bytes actually read.
+        content.reserve(std::min(static_cast<std::size_t>(reported_size), max_size));
+        std::string chunk(kReadChunkSize, '\0');
+        while (file.good())
+        {
+            static_cast<void>(file.read(chunk.data(), static_cast<std::streamsize>(chunk.size())));
+            const auto count{static_cast<std::size_t>(file.gcount())};
+            if (count > (max_size - content.size()))
+            {
+                return MakeErrorResult<JsonData>(JsonErrc::kStreamFailure, "File too large");
+            }
+            static_cast<void>(content.append(chunk.data(), count));
+        }
+        if (file.bad())
         {
             return MakeErrorResult<JsonData>(JsonErrc::kStreamFailure, "Could not read file");
         }

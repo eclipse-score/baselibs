@@ -93,6 +93,18 @@ General Requirements
    The JSON-Library shall return a parsing error when reading JSON data from a path that does not refer to a
    regular file.
 
+.. comp_req:: Maximum file size
+   :id: comp_req__json__max_file_size
+   :reqtype: Functional
+   :security: YES
+   :safety: ASIL_B
+   :derived_from: feat_req__baselibs__json_library[version==2]
+   :status: valid
+   :version: 1
+   :satisfied_by: comp__baselibs_json[version==2]
+
+   The JSON-Library shall return a parsing error when reading JSON data from a file larger than 64 MiB.
+
 User friendly API for information exchange
 ==========================================
 

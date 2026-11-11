@@ -485,6 +485,23 @@ TEST_F(ParserTest, FromFileRejectsFifoWithoutBlocking)
     EXPECT_EQ(result.error(), score::json::Error::kParsingError);
 }
 
+TEST_F(ParserTest, FromFileRejectsFileAboveMaxFileSize)
+{
+    RecordProperty("PartiallyVerifies", "comp_req__json__max_file_size");
+    RecordProperty("Description", "Check that parsing valid JSON from a file of 64 MiB + 1 byte fails.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "boundary-values");
+    std::string json(JsonParser::kMaxFileSize + 1U, ' ');
+    static_cast<void>(json.replace(0U, 2U, "{}"));
+    const auto file_path{CreateJsonFile("too_large.json", json)};
+
+    const auto result{JsonParser{}.FromFile(file_path)};
+    static_cast<void>(std::remove(file_path.c_str()));
+
+    ASSERT_FALSE(result.has_value());
+    EXPECT_EQ(result.error(), score::json::Error::kParsingError);
+}
+
 TEST_F(ParserTest, ParsingFromFileWorks)
 {
     RecordProperty("PartiallyVerifies", "comp_req__json__deserialization");

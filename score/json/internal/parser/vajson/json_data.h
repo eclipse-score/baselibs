@@ -23,6 +23,7 @@
 #include "score/json/internal/parser/vajson/reader_config.h"
 #include "score/json/internal/parser/vajson/reader_fwd.h"
 #include "score/json/internal/parser/vajson/types.h"
+#include <cstddef>
 #include <functional>
 #include <memory>
 
@@ -90,15 +91,18 @@ class JsonData final
     /// @brief           Initializes a JSON data object from a file
     /// @param[in]       path
     ///                  The path to the JSON file.
+    /// @param[in]       max_size
+    ///                  The maximum file size in bytes.
     /// @return          A constructed JSON data object.
     /// @error           score::json::vajson::JsonErrc::kStreamFailure
-    ///                  if the path is not a regular file or the file could not be opened.
+    ///                  if the path is not a regular file, the file could not be opened or read,
+    ///                  or the file is larger than max_size.
     /// @context         ANY
     /// @pre             -
     /// @threadsafe      FALSE
     /// @reentrant       FALSE
     /// @synchronous     -
-    static auto FromFile(std::string_view path) noexcept -> Result<JsonData>;
+    static auto FromFile(std::string_view path, std::size_t max_size) noexcept -> Result<JsonData>;
 
     /// @brief           Initializes a JSON data object from a buffer
     /// @param[in]       buffer
