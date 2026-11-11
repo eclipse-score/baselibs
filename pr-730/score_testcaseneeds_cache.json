@@ -18308,7 +18308,7 @@
     "TestType": "interface-test",
     "DerivationTechnique": "requirements-analysis",
     "result_text": "",
-    "PartiallyVerifies": "comp_req__trace__feature_flag",
+    "PartiallyVerifies": "comp_req__trace__configurable_implementation",
     "FullyVerifies": null
   },
   {
@@ -311040,7 +311040,7 @@
   {
     "name": "SerializerTest__RejectsInfiniteDouble",
     "file": "score/json/internal/writer/serializer_test.cpp",
-    "line": "233",
+    "line": "237",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -311054,7 +311054,7 @@
   {
     "name": "SerializerTest__RejectsNegativeInfiniteFloat",
     "file": "score/json/internal/writer/serializer_test.cpp",
-    "line": "247",
+    "line": "251",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -311068,7 +311068,7 @@
   {
     "name": "SerializerTest__RejectsNotANumber",
     "file": "score/json/internal/writer/serializer_test.cpp",
-    "line": "261",
+    "line": "265",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -311082,7 +311082,7 @@
   {
     "name": "SerializerTest__RejectsNotANumberOnStream",
     "file": "score/json/internal/writer/serializer_test.cpp",
-    "line": "274",
+    "line": "278",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -311096,7 +311096,7 @@
   {
     "name": "SerializerTest__SerializesBothBooleanValues",
     "file": "score/json/internal/writer/serializer_test.cpp",
-    "line": "292",
+    "line": "296",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -311110,7 +311110,7 @@
   {
     "name": "SerializerTest__SerializesTopLevelList",
     "file": "score/json/internal/writer/serializer_test.cpp",
-    "line": "307",
+    "line": "311",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -311124,7 +311124,7 @@
   {
     "name": "SerializerTest__PrettyPrintsNestedAny",
     "file": "score/json/internal/writer/serializer_test.cpp",
-    "line": "322",
+    "line": "326",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -311138,7 +311138,7 @@
   {
     "name": "SerializerTest__PrettyPrintsEmptyContainersOnOneLine",
     "file": "score/json/internal/writer/serializer_test.cpp",
-    "line": "356",
+    "line": "360",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -311152,7 +311152,7 @@
   {
     "name": "SerializerTest__PrettyPrintsTopLevelScalarWithoutWhitespace",
     "file": "score/json/internal/writer/serializer_test.cpp",
-    "line": "385",
+    "line": "389",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -311166,7 +311166,7 @@
   {
     "name": "SerializerTest__PrettyPrintsToStream",
     "file": "score/json/internal/writer/serializer_test.cpp",
-    "line": "397",
+    "line": "401",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -311180,7 +311180,7 @@
   {
     "name": "SerializerTest__SerializesEmptyContainersCompactly",
     "file": "score/json/internal/writer/serializer_test.cpp",
-    "line": "413",
+    "line": "417",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -311189,6 +311189,76 @@
     "DerivationTechnique": "boundary-values",
     "result_text": "",
     "PartiallyVerifies": null,
+    "FullyVerifies": null
+  },
+  {
+    "name": "SerializerTest__PrettyPrintsMixedNesting",
+    "file": "score/json/internal/writer/serializer_test.cpp",
+    "line": "454",
+    "result": "passed",
+    "repo_name": "local_repo",
+    "hash": "",
+    "url": "",
+    "TestType": "requirements-based",
+    "DerivationTechnique": "requirements-analysis",
+    "result_text": "",
+    "PartiallyVerifies": "comp_req__json__serialization",
+    "FullyVerifies": null
+  },
+  {
+    "name": "SerializerTest__SerializesMixedNestingCompactly",
+    "file": "score/json/internal/writer/serializer_test.cpp",
+    "line": "484",
+    "result": "passed",
+    "repo_name": "local_repo",
+    "hash": "",
+    "url": "",
+    "TestType": "requirements-based",
+    "DerivationTechnique": "requirements-analysis",
+    "result_text": "",
+    "PartiallyVerifies": "comp_req__json__serialization",
+    "FullyVerifies": null
+  },
+  {
+    "name": "SerializerTest__SerializesTopLevelScalars",
+    "file": "score/json/internal/writer/serializer_test.cpp",
+    "line": "498",
+    "result": "passed",
+    "repo_name": "local_repo",
+    "hash": "",
+    "url": "",
+    "TestType": "requirements-based",
+    "DerivationTechnique": "equivalence-classes",
+    "result_text": "",
+    "PartiallyVerifies": "comp_req__json__serialization",
+    "FullyVerifies": null
+  },
+  {
+    "name": "SerializerTest__EscapesObjectKeysInNestedObjects",
+    "file": "score/json/internal/writer/serializer_test.cpp",
+    "line": "519",
+    "result": "passed",
+    "repo_name": "local_repo",
+    "hash": "",
+    "url": "",
+    "TestType": "requirements-based",
+    "DerivationTechnique": "requirements-analysis",
+    "result_text": "",
+    "PartiallyVerifies": "comp_req__json__serialization",
+    "FullyVerifies": null
+  },
+  {
+    "name": "SerializerTest__RejectsNonFiniteNumberNestedDeepInsideContainers",
+    "file": "score/json/internal/writer/serializer_test.cpp",
+    "line": "534",
+    "result": "passed",
+    "repo_name": "local_repo",
+    "hash": "",
+    "url": "",
+    "TestType": "requirements-based",
+    "DerivationTechnique": "error-guessing",
+    "result_text": "",
+    "PartiallyVerifies": "comp_req__json__serialization",
     "FullyVerifies": null
   },
   {
