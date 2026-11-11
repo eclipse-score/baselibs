@@ -22,6 +22,7 @@
 #include <utility>
 #include <vector>
 
+#include "score/filesystem/error.h"
 #include "score/filesystem/filestream/file_factory.h"
 #include "score/filesystem/filestream/file_stream.h"
 #include "score/filesystem/path.h"
@@ -57,7 +58,7 @@ JsonData::JsonData(std::vector<char> document) noexcept
 }
 
 /// @internal
-/// - Open the file.
+/// - Open the file, returning a JsonErrc if it is not a regular file.
 /// - If the file has been opened successfully:
 ///   - Read the whole file into memory.
 ///   - If the file has been read successfully, then create & return the JsonData object owning the content.
@@ -67,9 +68,13 @@ auto JsonData::FromFile(const std::string_view path) noexcept -> Result<JsonData
 {
     // Open file using score filesystem
     score::filesystem::FileFactory factory{};
-    score::filesystem::Path file_path{std::string(path.data(), path.size())};
+    const score::filesystem::Path file_path{std::string(path.data(), path.size())};
 
-    auto file_result{factory.Open(file_path, std::ios::in | std::ios::binary)};
+    auto file_result{factory.OpenRegularFile(file_path, std::ios::in | std::ios::binary)};
+    if ((!file_result.has_value()) && (file_result.error() == score::filesystem::ErrorCode::kNotARegularFile))
+    {
+        return score::MakeUnexpected(JsonErrc::kStreamFailure, "Not a regular file");
+    }
     Result<JsonData> result{score::MakeUnexpected(JsonErrc::kStreamFailure, "Could not open file")};
     if (file_result.has_value())
     {

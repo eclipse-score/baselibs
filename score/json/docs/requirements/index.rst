@@ -92,6 +92,19 @@ General Requirements
 
    The JSON-Library shall report the reason of a parsing error together with the parsing error.
 
+.. comp_req:: Regular files only
+   :id: comp_req__json__regular_file
+   :reqtype: Functional
+   :security: YES
+   :safety: ASIL_B
+   :derived_from: feat_req__baselibs__json_library[version==2]
+   :status: valid
+   :version: 1
+   :satisfied_by: comp__baselibs_json[version==2]
+
+   The JSON-Library shall return a parsing error when reading JSON data from a path that does not refer to a
+   regular file.
+
 User friendly API for information exchange
 ==========================================
 
