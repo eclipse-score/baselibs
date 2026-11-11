@@ -130,7 +130,7 @@ cc_library(
 cc_library(
     name = "json",
     features = COMPILER_WARNING_FEATURES,
-    tags = ["FUSA"],
+    tags = ["FFI"],
     visibility = LIB_JSON_VISIBILITY,
     deps = [
         ":json_parser_impl",
