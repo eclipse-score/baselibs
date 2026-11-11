@@ -18,6 +18,7 @@
 #include <cstddef>
 #include <ios>
 #include <istream>
+#include <iterator>
 #include <string>
 #include <utility>
 #include <vector>
@@ -34,6 +35,11 @@ namespace json
 {
 namespace vajson
 {
+namespace
+{
+constexpr std::size_t kReadChunkSize{std::size_t{64U} * 1024U};
+}  // namespace
+
 /// @internal
 /// - Initialize the unread input with the whole document.
 /// - Set the capacity for the string buffer to the value defined in the static configuration.
@@ -60,11 +66,12 @@ JsonData::JsonData(std::vector<char> document) noexcept
 /// @internal
 /// - Open the file, returning a JsonErrc if it is not a regular file.
 /// - If the file has been opened successfully:
-///   - Read the whole file into memory.
+///   - Return a JsonErrc if the reported file size exceeds max_size.
+///   - Read the file in chunks into memory, returning a JsonErrc once it exceeds max_size.
 ///   - If the file has been read successfully, then create & return the JsonData object owning the content.
 /// - Otherwise return a JsonErrc containing the error message.
 /// @endinternal
-auto JsonData::FromFile(const std::string_view path) noexcept -> Result<JsonData>
+auto JsonData::FromFile(const std::string_view path, const std::size_t max_size) noexcept -> Result<JsonData>
 {
     // Open file using score filesystem
     score::filesystem::FileFactory factory{};
@@ -80,16 +87,32 @@ auto JsonData::FromFile(const std::string_view path) noexcept -> Result<JsonData
     {
         std::istream& file{*file_result.value()};
         file.seekg(0, std::ios::end);
-        const std::streamoff size{file.tellg()};
+        const std::streamoff reported_size{file.tellg()};
         file.seekg(0, std::ios::beg);
-        if (file.fail() || (size < 0))
+        if (file.fail() || (reported_size < 0))
         {
             return score::MakeUnexpected(JsonErrc::kStreamFailure, "Could not read file");
         }
-        std::vector<char> content(static_cast<std::size_t>(size));
-        // Read through the unformatted input layer so an I/O error sets badbit and a short read is detectable
-        static_cast<void>(file.read(content.data(), size));
-        if (file.bad() || (file.gcount() != size))
+        if (static_cast<std::size_t>(reported_size) > max_size)
+        {
+            return score::MakeUnexpected(JsonErrc::kStreamFailure, "File too large");
+        }
+        std::vector<char> content{};
+        content.reserve(static_cast<std::size_t>(reported_size));
+        std::vector<char> chunk(kReadChunkSize);
+        while (file.good())
+        {
+            static_cast<void>(file.read(chunk.data(), static_cast<std::streamsize>(chunk.size())));
+            const auto count{static_cast<std::size_t>(file.gcount())};
+            // The reported size can be wrong, e.g. for a file that grows, so the limit also applies to the bytes read.
+            if (count > (max_size - content.size()))
+            {
+                return score::MakeUnexpected(JsonErrc::kStreamFailure, "File too large");
+            }
+            static_cast<void>(content.insert(
+                content.end(), chunk.cbegin(), std::next(chunk.cbegin(), static_cast<std::ptrdiff_t>(count))));
+        }
+        if (file.bad())
         {
             return score::MakeUnexpected(JsonErrc::kStreamFailure, "Could not read file");
         }
