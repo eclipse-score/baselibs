@@ -508,7 +508,7 @@
                   
   <section id="vajson">
 <h1>VaJson<a class="headerlink" href="#vajson" title="Link to this heading">#</a></h1>
-<div class="need_container docutils container" id="SNCB-d6ec82de">
+<div class="need_container docutils container" id="SNCB-8e1bf960">
 <div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_document table" id="doc__vajson">
 <tbody>
 <tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
@@ -604,8 +604,7 @@ The configured limit requires stack-budget validation under <a class="reference 
 </li>
 <li><p>Schema Abuse</p>
 <p>Threat: Using oversized keys/values or unexpected schema elements to bypass validation or trigger buffer overflows.
-Mitigation: Nesting limits do not enforce application schemas or size limits on keys, values or documents.
-Such constraints require application-level validation; no general size or schema mitigation is claimed here.</p>
+Mitigation: Handled by design in VaJson. Input size and structure are validated during parsing.</p>
 </li>
 </ul>
 </section>

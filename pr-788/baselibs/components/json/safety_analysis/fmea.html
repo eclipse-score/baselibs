@@ -500,7 +500,7 @@
                   
   <section id="fmea-failure-modes-and-effects-analysis">
 <h1>FMEA (Failure Modes and Effects Analysis)<a class="headerlink" href="#fmea-failure-modes-and-effects-analysis" title="Link to this heading">#</a></h1>
-<div class="need_container docutils container" id="SNCB-2b4676aa">
+<div class="need_container docutils container" id="SNCB-d3a9848f">
 <div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_document table" id="doc__json_fmea">
 <tbody>
 <tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
@@ -574,14 +574,14 @@
 </ul>
 </div>
 </section>
-<section id="nesting-risk">
-<h2>Nesting Risk<a class="headerlink" href="#nesting-risk" title="Link to this heading">#</a></h2>
-<p>Deeply nested parsed trees can exhaust the thread stack during recursive destruction, cloning, comparison or serialization, including destruction of partially parsed input.
-The tree-builder guard in <a class="reference internal" href="../requirements/index.html#comp_req__json__nesting_depth" title="comp_req__json__nesting_depth"><em class="xref need">JSON nesting depth (comp_req__json__nesting_depth)</em></a> prevents insertion beyond the configured container depth.
-The default limit of 64 is a policy value, not a qualified resource bound.
-The integrator must validate stack budgets according to <a class="reference internal" href="../requirements/index.html#aou_req__json__stack_budget" title="aou_req__json__stack_budget"><em class="xref need">JSON stack budget (aou_req__json__stack_budget)</em></a>.
-Boundary and lifecycle tests provide behavioral evidence, not worst-case stack measurements or completion of this draft FMEA.
-Arbitrarily deep manually constructed or modified trees and other resource exhaustion remain outside this parser mitigation.</p>
+<section id="excessive-nesting-depth">
+<h2>Excessive Nesting Depth<a class="headerlink" href="#excessive-nesting-depth" title="Link to this heading">#</a></h2>
+<p>Failure mode: A parsed tree is nested deeper than the available thread stack supports.</p>
+<p>Failure effect: Recursive destruction, cloning, comparison or serialization of the tree, including destruction of a partially parsed tree, exhausts the thread stack.</p>
+<p>Mitigation: <a class="reference internal" href="../requirements/index.html#comp_req__json__nesting_depth" title="comp_req__json__nesting_depth"><em class="xref need">JSON nesting depth (comp_req__json__nesting_depth)</em></a> rejects input exceeding the configured maximum nesting depth.
+The default limit is a policy value, not a qualified resource bound, so the integrator validates it according to <a class="reference internal" href="../requirements/index.html#aou_req__json__stack_budget" title="aou_req__json__stack_budget"><em class="xref need">JSON stack budget (aou_req__json__stack_budget)</em></a>.</p>
+<p>Residual risk: Manually constructed or modified trees and other resource exhaustion are not mitigated.
+This entry is not a completed FMEA.</p>
 </section>
 </section>
 
@@ -633,7 +633,7 @@ Arbitrarily deep manually constructed or modified trees and other resource exhau
   <nav id="pst-page-toc-nav" class="page-toc" aria-labelledby="pst-page-navigation-heading-2">
     <ul class="pst-show_toc_level nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#failure-mode-list">Failure Mode List</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#nesting-risk">Nesting Risk</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#excessive-nesting-depth">Excessive Nesting Depth</a></li>
 </ul>
   </nav></div>
 
