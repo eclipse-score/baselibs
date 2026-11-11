@@ -31,13 +31,3 @@ cc_library(
     target_compatible_with = ["@platforms//os:qnx"],
     visibility = ["//:__subpackages__"],
 )
-
-cc_library(
-    name = "openssl",
-    linkopts = [
-        "-lssl",
-        "-lcrypto",
-    ],
-    target_compatible_with = ["@platforms//os:qnx"],
-    visibility = ["//:__subpackages__"],
-)
