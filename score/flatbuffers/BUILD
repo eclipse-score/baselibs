@@ -167,6 +167,7 @@ cc_test(
     srcs = [
         "details/flatbuffers_allocator_test.cpp",
         "details/flatbuffers_array_test.cpp",
+        "details/flatbuffers_table_test.cpp",
         "details/flatbuffers_vector_test.cpp",
         ":gen_vector_lookup_fixture_h",
     ],
