@@ -47,6 +47,9 @@ class StdioFileBuf : public StdioFilebufBase
     StdioFileBuf(StdioFileBuf&&) = default;  // NOLINT(performance-noexcept-move-constructor): see above
 
     virtual Result<void> Close();
+
+    /// @brief Closes the file without committing staged changes to their destination.
+    virtual Result<void> Discard();
 };
 
 class AtomicFileBuf : public StdioFileBuf
@@ -62,6 +65,7 @@ class AtomicFileBuf : public StdioFileBuf
     ~AtomicFileBuf() override;
 
     Result<void> Close() override;
+    Result<void> Discard() override;
 
   private:
     Path from_path_;

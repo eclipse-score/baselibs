@@ -37,6 +37,9 @@ class FileStream : public std::iostream
     // coverity[autosar_cpp14_a12_8_6_violation] See above.
     FileStream& operator=(FileStream&& other) = delete;
 
+    /// @brief Closes the file, committing written data.
+    /// @return An error if closing fails.
+    ///         If the stream is in a failed state, staged data is discarded and an error is returned.
     Result<void> Close();
 };
 
