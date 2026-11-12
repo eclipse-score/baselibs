@@ -24,6 +24,7 @@ exports_files(
         "docs/architecture/public_api.puml",
         "docs/safety_analysis/fta_constraints.puml",
         "docs/safety_analysis/fta_late_return.puml",
+        "docs/safety_analysis/fta_metamodel.puml",
         "docs/safety_analysis/fta_no_return.puml",
         "docs/safety_analysis/fta_wrong_input.puml",
     ],

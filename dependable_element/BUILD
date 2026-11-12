@@ -15,6 +15,7 @@
 # Sphinx-Needs (lobster_sphinx_needs) instead of TRLC. Currently one component.
 # Kept out of //score/...: score_tooling is a dev dependency and //score/... is built for QNX.
 
+load("@bazel_skylib//rules:diff_test.bzl", "diff_test")
 load(
     "@score_tooling//bazel/rules/rules_score:rules_score.bzl",
     "architectural_design",
@@ -108,6 +109,14 @@ fault_trees(
     ],
     fta_package = "BitmanipulationFta",
     deps = [":bitmanipulation_failure_modes"],
+)
+
+# The docs render the fault trees with a copy of the FTA macros (PlantUML resolves
+# !include next to fmea.rst); it must not drift from score_tooling.
+diff_test(
+    name = "fta_metamodel_copy_test",
+    file1 = "@score_tooling//plantuml:fta_metamodel",
+    file2 = "//score/bitmanipulation:docs/safety_analysis/fta_metamodel.puml",
 )
 
 # Without TRLC assessments, each FMEA need rated sufficient assesses its root causes.

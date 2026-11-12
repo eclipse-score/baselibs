@@ -172,3 +172,17 @@ For all identified applicable failure initiators, the FMEA is performed in the f
 
 .. needextend:: c.this_doc() and type == "comp_saf_fmea"
    :+tags: baselibs, bitmanipulation
+
+Fault Trees
+-----------
+
+Root causes of the failure modes. The dependable element (``//dependable_element``) checks
+that every root cause of a failure mode rated sufficient is assessed by its FMEA entry.
+
+.. uml:: fta_no_return.puml
+
+.. uml:: fta_late_return.puml
+
+.. uml:: fta_constraints.puml
+
+.. uml:: fta_wrong_input.puml
