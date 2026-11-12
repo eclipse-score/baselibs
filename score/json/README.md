@@ -389,7 +389,6 @@ We have a couple of constraints with this library. We avoid implementing these
 since they would require high amount of work. Please be aware and note:
 
 - No support for duplicate member names in an object (parsing fails)
-- No support for empty keys
 - No support for online schema validation (we expect that this is done offline)
 - Only support for JSON Standard [RFC-8259](https://datatracker.ietf.org/doc/html/rfc8259)
 

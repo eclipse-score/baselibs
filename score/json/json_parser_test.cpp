@@ -517,6 +517,7 @@ INSTANTIATE_TEST_SUITE_P(ParserTest,
                                          DuplicateMemberNameParam{"ObjectThenScalar", R"({"a": {"b": 1}, "a": 1})"},
                                          DuplicateMemberNameParam{"ListThenObject", R"({"a": [1], "a": {"b": 1}})"},
                                          DuplicateMemberNameParam{"NotAdjacent", R"({"a": 1, "b": 2, "a": 3})"},
+                                         DuplicateMemberNameParam{"EmptyName", R"({"": 1, "": 2})"},
                                          DuplicateMemberNameParam{"InNestedObject", R"({"o": {"a": 1, "a": 2}})"},
                                          DuplicateMemberNameParam{"InObjectInList", R"([{"a": 1, "a": 2}])"}),
                          [](const testing::TestParamInfo<DuplicateMemberNameParam>& param_info) {
@@ -555,6 +556,26 @@ TEST_F(ParserTest, CanParseSameMemberNameInDifferentObjects)
     EXPECT_EQ(list.at(0).As<Object>().value().get().at("a").As<std::uint64_t>().value(), 2U);
     EXPECT_EQ(list.at(1).As<Object>().value().get().at("a").As<std::uint64_t>().value(), 3U);
     EXPECT_EQ(GetValueOfObject<std::uint64_t>(root.value(), "A"), 4U);
+}
+
+TEST_F(ParserTest, CanParseEmptyMemberName)
+{
+    RecordProperty("PartiallyVerifies", "comp_req__json__deserialization");
+    RecordProperty("Description",
+                   "Check that empty member names are accepted at top level, in nested objects, in objects inside a "
+                   "list and with a container value, cf. RFC 8259 section 4.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "boundary-values");
+
+    const auto root{JsonParser{}.FromBuffer(R"({"": 1, "o": {"": "x"}, "l": [{"": null}], "c": {"": [true]}})")};
+
+    ASSERT_TRUE(root.has_value());
+    EXPECT_EQ(GetValueOfObject<std::uint64_t>(root.value(), ""), 1U);
+    EXPECT_EQ(GetValueOfObject<Object>(root.value(), "o").at("").As<std::string>().value().get(), "x");
+    const auto& list{GetValueOfObject<List>(root.value(), "l")};
+    EXPECT_EQ(list.at(0).As<Object>().value().get().at("").As<Null>().value().get(), Null{});
+    const auto& container{GetValueOfObject<Object>(root.value(), "c").at("").As<List>().value().get()};
+    EXPECT_EQ(container.at(0).As<bool>().value(), true);
 }
 
 TEST(JsonParserVajsonTest, CanParseObjectHexadecimalNumber)
