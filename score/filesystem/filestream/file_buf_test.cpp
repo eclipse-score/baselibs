@@ -113,6 +113,69 @@ TEST_F(AtomicFileBufTest, TestFailureOnRename)
     EXPECT_EQ(result.error(), ErrorCode::kCouldNotRenameFile);
 }
 
+TEST_F(FileBufTest, DiscardClosesFile)
+{
+    RecordProperty("PartiallyVerifies", "comp_req__filesystem__file_io");
+    RecordProperty("Description", "Check that discarding a plain file buffer closes it.");
+    RecordProperty("TestType", "interface-test");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
+
+    EXPECT_CALL(filebuf, is_open()).WillOnce(Return(true));
+    EXPECT_CALL(filebuf, close()).WillOnce(Return(&filebuf));
+
+    EXPECT_TRUE(filebuf.Discard().has_value());
+}
+
+TEST_F(AtomicFileBufTest, DiscardRemovesTemporaryFileWithoutRename)
+{
+    RecordProperty("PartiallyVerifies", "comp_req__filesystem__file_io");
+    RecordProperty("Description",
+                   "Check that discarding an atomic update removes the temporary file and does not rename it.");
+    RecordProperty("TestType", "interface-test");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
+
+    EXPECT_CALL(atomic_filebuf, is_open()).WillOnce(Return(true)).WillRepeatedly(Return(false));
+    EXPECT_CALL(atomic_filebuf, sync()).Times(0);
+    EXPECT_CALL(*unistd_, fsync(_)).Times(0);
+    EXPECT_CALL(*stdio_, rename(_, _)).Times(0);
+    EXPECT_CALL(*unistd_, unlink(StrEq("from_path"))).WillOnce(Return(score::cpp::expected_blank<score::os::Error>{}));
+    EXPECT_CALL(atomic_filebuf, close()).WillOnce(Return(&atomic_filebuf));
+
+    EXPECT_TRUE(atomic_filebuf.Discard().has_value());
+}
+
+TEST_F(AtomicFileBufTest, DiscardReportsCloseFailure)
+{
+    RecordProperty("PartiallyVerifies", "comp_req__filesystem__file_io");
+    RecordProperty("Description", "Check that discarding an atomic update reports a failure to close the file.");
+    RecordProperty("TestType", "fault-injection");
+    RecordProperty("DerivationTechnique", "error-guessing");
+
+    EXPECT_CALL(atomic_filebuf, is_open()).WillRepeatedly(Return(true));
+    EXPECT_CALL(*stdio_, rename(_, _)).Times(0);
+    EXPECT_CALL(*unistd_, unlink(StrEq("from_path")))
+        .WillRepeatedly(Return(score::cpp::expected_blank<score::os::Error>{}));
+    EXPECT_CALL(atomic_filebuf, close()).WillOnce(Return(nullptr));
+
+    auto result = atomic_filebuf.Discard();
+    ASSERT_FALSE(result.has_value());
+    EXPECT_EQ(result.error(), ErrorCode::kCloseFailed);
+}
+
+TEST_F(AtomicFileBufTest, DiscardOnClosedFileDoesNothing)
+{
+    RecordProperty("PartiallyVerifies", "comp_req__filesystem__file_io");
+    RecordProperty("Description", "Check that discarding an already closed atomic update has no effect.");
+    RecordProperty("TestType", "interface-test");
+    RecordProperty("DerivationTechnique", "boundary-values");
+
+    EXPECT_CALL(atomic_filebuf, is_open()).WillRepeatedly(Return(false));
+    EXPECT_CALL(*unistd_, unlink(_)).Times(0);
+    EXPECT_CALL(atomic_filebuf, close()).Times(0);
+
+    EXPECT_TRUE(atomic_filebuf.Discard().has_value());
+}
+
 TEST(FileStreamTest, TestNullBuffer)
 {
     FileStream unit{nullptr};
