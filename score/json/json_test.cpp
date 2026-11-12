@@ -17,16 +17,17 @@
 #include <cstddef>
 #include <string>
 
-TEST(JsonTest, NestedTreeAtDefaultLimitSurvivesRoundTrip)
+TEST(JsonTest, NestedTreeAtMaximumDepthSurvivesRoundTrip)
 {
-    RecordProperty("PartiallyVerifies", "comp_req__json__nesting_depth_default, comp_req__json__serialization");
+    RecordProperty("PartiallyVerifies", "comp_req__json__nesting_depth_inclusive, comp_req__json__serialization");
     RecordProperty("Description",
-                   "Check cloning, equality and both writer formats for a mixed tree at the default depth.");
+                   "Check cloning, equality and both writer formats for a mixed tree at the maximum depth.");
     RecordProperty("TestType", "requirements-based");
     RecordProperty("DerivationTechnique", "boundary-values");
 
+    constexpr std::size_t kMaxNestingDepth{64U};
     std::string input{"0"};
-    for (std::size_t depth{0U}; depth < score::json::JsonParser::kDefaultMaxNestingDepth; ++depth)
+    for (std::size_t depth{0U}; depth < kMaxNestingDepth; ++depth)
     {
         const bool is_array{depth % 2U == 0U};
         input.insert(0U, is_array ? "[" : R"({"value":)");

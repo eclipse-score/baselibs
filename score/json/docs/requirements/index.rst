@@ -50,31 +50,7 @@ General Requirements
    :satisfied_by: comp__baselibs_json[version==2]
    :covers: aou_req__json__stack_budget[version==1]
 
-   The JSON parser shall return a parsing error for JSON data that exceeds the configured maximum nesting depth.
-
-.. comp_req:: JSON nesting depth configuration
-   :id: comp_req__json__nesting_depth_configuration
-   :reqtype: Functional
-   :security: YES
-   :safety: ASIL_B
-   :derived_from: feat_req__baselibs__json_library[version==2]
-   :status: valid
-   :version: 1
-   :satisfied_by: comp__baselibs_json[version==2]
-
-   The JSON parser shall support an immutable maximum nesting depth that is configured per parser instance.
-
-.. comp_req:: JSON default nesting depth
-   :id: comp_req__json__nesting_depth_default
-   :reqtype: Functional
-   :security: YES
-   :safety: ASIL_B
-   :derived_from: feat_req__baselibs__json_library[version==2]
-   :status: valid
-   :version: 1
-   :satisfied_by: comp__baselibs_json[version==2]
-
-   The JSON parser shall use a maximum nesting depth of 64 when none is configured.
+   The JSON parser shall return a parsing error for JSON data that is nested deeper than 64 levels.
 
 .. comp_req:: JSON nesting depth counting
    :id: comp_req__json__nesting_depth_counting
@@ -98,19 +74,7 @@ General Requirements
    :version: 1
    :satisfied_by: comp__baselibs_json[version==2]
 
-   The JSON parser shall accept JSON data whose nesting depth equals the configured maximum nesting depth.
-
-.. comp_req:: JSON zero nesting depth
-   :id: comp_req__json__nesting_depth_zero
-   :reqtype: Functional
-   :security: YES
-   :safety: ASIL_B
-   :derived_from: feat_req__baselibs__json_library[version==2]
-   :status: valid
-   :version: 1
-   :satisfied_by: comp__baselibs_json[version==2]
-
-   The JSON parser shall treat a configured maximum nesting depth of zero as permitting only scalar roots, not unlimited nesting.
+   The JSON parser shall accept JSON data whose nesting depth equals 64.
 
 .. comp_req:: JSON nesting depth file parsing
    :id: comp_req__json__nesting_depth_file
@@ -122,7 +86,7 @@ General Requirements
    :version: 1
    :satisfied_by: comp__baselibs_json[version==2]
 
-   The JSON parser shall apply the configured maximum nesting depth to JSON data parsed from files in the same way as to JSON data parsed from buffers.
+   The JSON parser shall apply the maximum nesting depth to JSON data parsed from files in the same way as to JSON data parsed from buffers.
 
 .. comp_req:: JSON nesting depth independence
    :id: comp_req__json__nesting_depth_independence
@@ -134,7 +98,7 @@ General Requirements
    :version: 1
    :satisfied_by: comp__baselibs_json[version==2]
 
-   The JSON parser shall not let rejected input affect the nesting depth budget of subsequent parse calls or of other parser instances.
+   The JSON parser shall not let rejected input affect the nesting depth budget of subsequent parse calls.
 
 .. comp_req:: JSON literal nesting depth
    :id: comp_req__json__nesting_depth_literal
@@ -146,7 +110,7 @@ General Requirements
    :version: 1
    :satisfied_by: comp__baselibs_json[version==2]
 
-   The JSON literal shall use the default maximum nesting depth and terminate on a parsing error like any other parsing failure.
+   The JSON literal shall apply the maximum nesting depth and terminate on a parsing error like any other parsing failure.
 
 .. comp_req:: JSON Serialization
    :id: comp_req__json__serialization
@@ -276,9 +240,9 @@ AoU Requirements
    :status: valid
    :version: 1
 
-   The integrator shall validate the chosen maximum nesting depth, including the default, against the available thread stack for parsing cleanup, destruction, cloning, comparison and serialization on the deployed platform and toolchain.
+   The integrator shall validate the maximum nesting depth of 64 against the available thread stack for parsing cleanup, destruction, cloning, comparison and serialization on the deployed platform and toolchain.
 
-   Note: The default is not a platform-qualified stack bound.
+   Note: The maximum nesting depth is not a platform-qualified stack bound.
    The parser limit does not constrain manually constructed or subsequently modified trees, document size, container width or heap consumption.
 
 .. aou_req:: JSON data integrity

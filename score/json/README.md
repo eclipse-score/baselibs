@@ -54,25 +54,19 @@ if (!root.has_value())
 
 ### Maximum nesting depth
 
-`JsonParser{}` limits nesting to `JsonParser::kDefaultMaxNestingDepth`, currently 64.
-Configure a different immutable limit per parser instance:
-
-```c++
-score::json::JsonParser parser{32U};
-auto root = parser.FromBuffer(buffer);
-```
+`JsonParser` limits nesting to a fixed maximum depth of 64.
+The limit is not configurable.
 
 Depth counts arrays and objects on a root-to-value path, including the root container.
 A scalar root has depth 0, `[]` and `{}` have depth 1, and `[[0]]` has depth 2.
 Sibling containers, keys, scalar leaves and brackets inside strings do not add depth.
-The limit is inclusive; 0 permits scalar roots only and is not an unlimited setting.
+The limit is inclusive; a document nested 64 levels deep is accepted and one nested 65 levels deep is rejected.
 `FromBuffer` and `FromFile` return `Error::kParsingError` when a container would exceed the limit.
 Each call has an independent depth budget, including after a rejected document.
-The `_json` literal uses the default limit and terminates on excessive depth, like any other parse error.
+The `_json` literal uses the same limit and terminates on excessive depth, like any other parse error.
 
-The default is a conservative policy value, not a platform-qualified stack bound.
-Integrators must validate even the default against their thread stack, platform and toolchain, including partial-tree cleanup, destruction, cloning, comparison and serialization.
-Increasing the limit can allow trees that exhaust the stack in these recursive operations.
+The limit is a conservative policy value, not a platform-qualified stack bound.
+Integrators must validate it against their thread stack, platform and toolchain, including partial-tree cleanup, destruction, cloning, comparison and serialization.
 This limit does not constrain manually constructed or later-mutated trees, document length, container width, key/string sizes, heap consumption or processing time.
 
 ### Accessing elements from a JSON object

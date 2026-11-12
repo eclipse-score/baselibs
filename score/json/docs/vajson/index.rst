@@ -89,7 +89,7 @@ Potential security concerns and mitigations for VaJson:
   Threat: Supplying malformed or deeply nested JSON to exhaust resources during parsing or subsequent tree operations.
   Mitigation: The SAX parser detects malformed input; the S-CORE tree builder separately enforces :need:`comp_req__json__nesting_depth` for syntactically valid nesting.
   It rejects an excessive container before inserting it into the partial tree and returns the normal parsing error.
-  The configured limit requires stack-budget validation under :need:`aou_req__json__stack_budget`; it does not bound total CPU or heap usage.
+  The nesting limit requires stack-budget validation under :need:`aou_req__json__stack_budget`; it does not bound total CPU or heap usage.
 
 - Schema Abuse
 
