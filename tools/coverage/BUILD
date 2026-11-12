@@ -37,6 +37,8 @@ SCOPE_DEPS_COMMON = [
     "//score/concurrency/thread_load_tracking",
     "//score/containers:dynamic_array",
     "//score/containers:intrusivelist",
+    "//score/containers:registry_string_view",
+    "//score/containers:string_registry",
     "//score/datetime_converter:time_conversion",
     "//score/flatbuffers:flatbufferutils",
     "//score/hash",
@@ -111,8 +113,6 @@ SCOPE_DEPS_COMMON = [
     "//score/serialization/strategies:uds_strategy",
     "//score/static_reflection_with_serialization/serialization",
     "//score/static_reflection_with_serialization/visitor/examples/ostream:visitor_examples",
-    "//score/string_manipulation:registry_string_view",
-    "//score/string_manipulation:string_registry",
     "//score/string_manipulation/arguments",
     "//score/utils:base64",
 ]

@@ -17,10 +17,10 @@
 #include <string>
 #include <string_view>
 
-#include "score/string_manipulation/registry_string_view.h"
-#include "score/string_manipulation/string_registry.h"
+#include "score/containers/registry_string_view.h"
+#include "score/containers/string_registry.h"
 
-namespace score::string_manipulation
+namespace score::containers
 {
 
 TEST(RegistryStringViewTest, Iterator)
@@ -29,8 +29,8 @@ TEST(RegistryStringViewTest, Iterator)
     const char* data = "test_string";
     Registry_string_view string_view = registry.insert(std::string(data)).first;
 
-    /// Verify the existence of the type score::string_manipulation::Registry_string_view interface.
-    /// Verify the existence of the type score::string_manipulation::Registry_string_view interface.
+    /// Verify the existence of the type score::containers::Registry_string_view interface.
+    /// Verify the existence of the type score::containers::Registry_string_view interface.
     /// Iterators to the beginning provide correct results.
     /// Iterators to the the end provide correct results.
     auto i = 0;
@@ -217,4 +217,4 @@ TEST(RegistryStringViewTest, CopyAssignmentOperator)
     EXPECT_EQ(another_string_view.string_view(), std::string_view("test_string"));
 }
 
-}  // namespace score::string_manipulation
+}  // namespace score::containers

@@ -11,8 +11,8 @@
  * SPDX-License-Identifier: Apache-2.0
  ********************************************************************************/
 
-#ifndef SCORE_STRING_MANIPULATION_STRING_REGISTRY_H
-#define SCORE_STRING_MANIPULATION_STRING_REGISTRY_H
+#ifndef SCORE_CONTAINERS_STRING_REGISTRY_H
+#define SCORE_CONTAINERS_STRING_REGISTRY_H
 
 #include <forward_list>
 #include <mutex>
@@ -21,9 +21,9 @@
 #include <unordered_set>
 #include <utility>
 
-#include "score/string_manipulation/registry_string_view.h"
+#include "score/containers/registry_string_view.h"
 
-namespace score::string_manipulation
+namespace score::containers
 {
 
 /// \brief Tag to select StringView literal version
@@ -80,6 +80,6 @@ class String_registry final
     std::mutex m_mutex;
 };
 
-}  // namespace score::string_manipulation
+}  // namespace score::containers
 
-#endif  // SCORE_STRING_MANIPULATION_STRING_REGISTRY_H
+#endif  // SCORE_CONTAINERS_STRING_REGISTRY_H

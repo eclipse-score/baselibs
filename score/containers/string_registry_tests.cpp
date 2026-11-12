@@ -16,9 +16,9 @@
 #include <string>
 #include <string_view>
 
-#include "score/string_manipulation/string_registry.h"
+#include "score/containers/string_registry.h"
 
-namespace score::string_manipulation
+namespace score::containers
 {
 
 TEST(StringRegistryTest, InsertMultipleStrings)
@@ -197,4 +197,4 @@ TEST(StringRegistryTest, EmbeddedNulsAreDistinct)
     EXPECT_EQ(insert3.first.string_view().size(), 5U);
 }
 
-}  // namespace score::string_manipulation
+}  // namespace score::containers
