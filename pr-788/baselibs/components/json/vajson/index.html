@@ -406,6 +406,7 @@
      aria-label="Section Navigation">
   <p class="bd-links__title" role="heading" aria-level="1">Section Navigation</p>
   <div class="bd-toc-item navbar-nav"><ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../generic_trace_library/index.html">Generic Trace Library</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../bitmanipulation/index.html">bitmanipulation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../concurrency/index.html">concurrency</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../containers/index.html">containers</a></li>
@@ -508,7 +509,7 @@
                   
   <section id="vajson">
 <h1>VaJson<a class="headerlink" href="#vajson" title="Link to this heading">#</a></h1>
-<div class="need_container docutils container" id="SNCB-8e1bf960">
+<div class="need_container docutils container" id="SNCB-1aa29a2b">
 <div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_document table" id="doc__vajson">
 <tbody>
 <tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
@@ -600,7 +601,7 @@ selection has been removed.</p>
 <p>Threat: Supplying malformed or deeply nested JSON to exhaust resources during parsing or subsequent tree operations.
 Mitigation: The SAX parser detects malformed input; the S-CORE tree builder separately enforces <a class="reference internal" href="../requirements/index.html#comp_req__json__nesting_depth" title="comp_req__json__nesting_depth"><em class="xref need">JSON nesting depth (comp_req__json__nesting_depth)</em></a> for syntactically valid nesting.
 It rejects an excessive container before inserting it into the partial tree and returns the normal parsing error.
-The configured limit requires stack-budget validation under <a class="reference internal" href="../requirements/index.html#aou_req__json__stack_budget" title="aou_req__json__stack_budget"><em class="xref need">JSON stack budget (aou_req__json__stack_budget)</em></a>; it does not bound total CPU or heap usage.</p>
+The nesting limit requires stack-budget validation under <a class="reference internal" href="../requirements/index.html#aou_req__json__stack_budget" title="aou_req__json__stack_budget"><em class="xref need">JSON stack budget (aou_req__json__stack_budget)</em></a>; it does not bound total CPU or heap usage.</p>
 </li>
 <li><p>Schema Abuse</p>
 <p>Threat: Using oversized keys/values or unexpected schema elements to bypass validation or trigger buffer overflows.

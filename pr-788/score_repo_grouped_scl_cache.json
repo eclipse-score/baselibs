@@ -51,6 +51,23 @@
         }
       },
       {
+        "need": "comp_req__trace__configurable_implementation",
+        "links": {
+          "CodeLinks": [],
+          "TestLinks": [
+            {
+              "name": "GenericTraceApiStubTest__TraceForwardsToConfiguredImplementation",
+              "file": "score/analysis/tracing/generic_trace_library/stub_implementation/tests/generic_trace_api_stub_test.cpp",
+              "line": 25,
+              "need": "comp_req__trace__configurable_implementation",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            }
+          ]
+        }
+      },
+      {
         "need": "comp_req__flatbuffers__buffer_identification",
         "links": {
           "CodeLinks": [],
@@ -4728,7 +4745,7 @@
               "result_text": ""
             },
             {
-              "name": "JsonTest__NestedTreeAtDefaultLimitSurvivesRoundTrip",
+              "name": "JsonTest__NestedTreeAtMaximumDepthSurvivesRoundTrip",
               "file": "score/json/json_test.cpp",
               "line": 20,
               "need": "comp_req__json__serialization",
@@ -4794,24 +4811,24 @@
         }
       },
       {
-        "need": "comp_req__json__nesting_depth_default",
+        "need": "comp_req__json__nesting_depth_inclusive",
         "links": {
           "CodeLinks": [],
           "TestLinks": [
             {
-              "name": "JsonTest__NestedTreeAtDefaultLimitSurvivesRoundTrip",
+              "name": "JsonTest__NestedTreeAtMaximumDepthSurvivesRoundTrip",
               "file": "score/json/json_test.cpp",
               "line": 20,
-              "need": "comp_req__json__nesting_depth_default",
+              "need": "comp_req__json__nesting_depth_inclusive",
               "verify_type": "partially",
               "result": "passed",
               "result_text": ""
             },
             {
-              "name": "JsonParserTest__EnforcesDefaultAndLargerNestingLimits",
+              "name": "JsonParserTest__EnforcesMaximumNestingDepth",
               "file": "score/json/json_parser_test.cpp",
-              "line": 102,
-              "need": "comp_req__json__nesting_depth_default",
+              "line": 94,
+              "need": "comp_req__json__nesting_depth_inclusive",
               "verify_type": "partially",
               "result": "passed",
               "result_text": ""
@@ -4825,9 +4842,9 @@
           "CodeLinks": [],
           "TestLinks": [
             {
-              "name": "JsonParserTest__EnforcesConfiguredNestingDepth",
+              "name": "JsonParserTest__EnforcesMaximumNestingDepth",
               "file": "score/json/json_parser_test.cpp",
-              "line": 74,
+              "line": 94,
               "need": "comp_req__json__nesting_depth",
               "verify_type": "partially",
               "result": "passed",
@@ -4836,59 +4853,8 @@
             {
               "name": "JsonParserTest__RejectsDeepInputWithoutRetainingState",
               "file": "score/json/json_parser_test.cpp",
-              "line": 187,
+              "line": 153,
               "need": "comp_req__json__nesting_depth",
-              "verify_type": "partially",
-              "result": "passed",
-              "result_text": ""
-            }
-          ]
-        }
-      },
-      {
-        "need": "comp_req__json__nesting_depth_inclusive",
-        "links": {
-          "CodeLinks": [],
-          "TestLinks": [
-            {
-              "name": "JsonParserTest__EnforcesConfiguredNestingDepth",
-              "file": "score/json/json_parser_test.cpp",
-              "line": 74,
-              "need": "comp_req__json__nesting_depth_inclusive",
-              "verify_type": "partially",
-              "result": "passed",
-              "result_text": ""
-            }
-          ]
-        }
-      },
-      {
-        "need": "comp_req__json__nesting_depth_configuration",
-        "links": {
-          "CodeLinks": [],
-          "TestLinks": [
-            {
-              "name": "JsonParserTest__EnforcesDefaultAndLargerNestingLimits",
-              "file": "score/json/json_parser_test.cpp",
-              "line": 102,
-              "need": "comp_req__json__nesting_depth_configuration",
-              "verify_type": "partially",
-              "result": "passed",
-              "result_text": ""
-            }
-          ]
-        }
-      },
-      {
-        "need": "comp_req__json__nesting_depth_zero",
-        "links": {
-          "CodeLinks": [],
-          "TestLinks": [
-            {
-              "name": "JsonParserTest__ZeroNestingLimitAllowsOnlyScalars",
-              "file": "score/json/json_parser_test.cpp",
-              "line": 132,
-              "need": "comp_req__json__nesting_depth_zero",
               "verify_type": "partially",
               "result": "passed",
               "result_text": ""
@@ -4904,7 +4870,7 @@
             {
               "name": "JsonParserTest__CountsOnlyOpenContainers",
               "file": "score/json/json_parser_test.cpp",
-              "line": 152,
+              "line": 117,
               "need": "comp_req__json__nesting_depth_counting",
               "verify_type": "partially",
               "result": "passed",
@@ -4921,7 +4887,7 @@
             {
               "name": "JsonParserTest__ReusesNestingBudgetAfterErrors",
               "file": "score/json/json_parser_test.cpp",
-              "line": 167,
+              "line": 131,
               "need": "comp_req__json__nesting_depth_independence",
               "verify_type": "partially",
               "result": "passed",
@@ -4930,7 +4896,7 @@
             {
               "name": "JsonParserTest__RejectsDeepInputWithoutRetainingState",
               "file": "score/json/json_parser_test.cpp",
-              "line": 187,
+              "line": 153,
               "need": "comp_req__json__nesting_depth_independence",
               "verify_type": "partially",
               "result": "passed",
@@ -4947,7 +4913,7 @@
             {
               "name": "JsonParserTest__ReusesNestingBudgetAfterErrors",
               "file": "score/json/json_parser_test.cpp",
-              "line": 167,
+              "line": 131,
               "need": "comp_req__json__deserialization",
               "verify_type": "partially",
               "result": "passed",
@@ -4956,7 +4922,7 @@
             {
               "name": "ParserTest__CanParseObjectBool",
               "file": "score/json/json_parser_test.cpp",
-              "line": 381,
+              "line": 340,
               "need": "comp_req__json__deserialization",
               "verify_type": "partially",
               "result": "passed",
@@ -4965,7 +4931,7 @@
             {
               "name": "ParserTest__CanParseObjectString",
               "file": "score/json/json_parser_test.cpp",
-              "line": 398,
+              "line": 357,
               "need": "comp_req__json__deserialization",
               "verify_type": "partially",
               "result": "passed",
@@ -4974,7 +4940,7 @@
             {
               "name": "ParserTest__CanParseObjectNull",
               "file": "score/json/json_parser_test.cpp",
-              "line": 415,
+              "line": 374,
               "need": "comp_req__json__deserialization",
               "verify_type": "partially",
               "result": "passed",
@@ -4983,7 +4949,7 @@
             {
               "name": "ParserTest__CanParseObjectNumber",
               "file": "score/json/json_parser_test.cpp",
-              "line": 432,
+              "line": 391,
               "need": "comp_req__json__deserialization",
               "verify_type": "partially",
               "result": "passed",
@@ -4992,7 +4958,7 @@
             {
               "name": "ParserTest__CanParseObjectFloatingPointNumber",
               "file": "score/json/json_parser_test.cpp",
-              "line": 449,
+              "line": 408,
               "need": "comp_req__json__deserialization",
               "verify_type": "partially",
               "result": "passed",
@@ -5001,7 +4967,7 @@
             {
               "name": "ParserTest__CanParseObjectInObject",
               "file": "score/json/json_parser_test.cpp",
-              "line": 470,
+              "line": 429,
               "need": "comp_req__json__deserialization",
               "verify_type": "partially",
               "result": "passed",
@@ -5010,7 +4976,7 @@
             {
               "name": "ParserTest__CanParseListInObject",
               "file": "score/json/json_parser_test.cpp",
-              "line": 487,
+              "line": 446,
               "need": "comp_req__json__deserialization",
               "verify_type": "partially",
               "result": "passed",
@@ -5019,7 +4985,7 @@
             {
               "name": "ParserTest__CanParseObjectInObjectAndIterateOverKeys",
               "file": "score/json/json_parser_test.cpp",
-              "line": 506,
+              "line": 465,
               "need": "comp_req__json__deserialization",
               "verify_type": "partially",
               "result": "passed",
@@ -5028,7 +4994,7 @@
             {
               "name": "ParserTest__EmitsErrorWhenParsingObjectWithValueButNoKey",
               "file": "score/json/json_parser_test.cpp",
-              "line": 555,
+              "line": 514,
               "need": "comp_req__json__deserialization",
               "verify_type": "partially",
               "result": "passed",
@@ -5037,7 +5003,7 @@
             {
               "name": "ParserTest__EmitsErrorWhenParsingObjectWithBinaryValue",
               "file": "score/json/json_parser_test.cpp",
-              "line": 575,
+              "line": 534,
               "need": "comp_req__json__deserialization",
               "verify_type": "partially",
               "result": "passed",
@@ -5046,7 +5012,7 @@
             {
               "name": "ParserTest__EmitsErrorWhenParsingTooLargeNumber",
               "file": "score/json/json_parser_test.cpp",
-              "line": 607,
+              "line": 566,
               "need": "comp_req__json__deserialization",
               "verify_type": "partially",
               "result": "passed",
@@ -5055,7 +5021,7 @@
             {
               "name": "ParserTest__FromFileFail",
               "file": "score/json/json_parser_test.cpp",
-              "line": 624,
+              "line": 583,
               "need": "comp_req__json__deserialization",
               "verify_type": "partially",
               "result": "passed",
@@ -5064,7 +5030,7 @@
             {
               "name": "ParserTest__ParsingFromFileWorks",
               "file": "score/json/json_parser_test.cpp",
-              "line": 636,
+              "line": 595,
               "need": "comp_req__json__deserialization",
               "verify_type": "partially",
               "result": "passed",
@@ -5073,7 +5039,7 @@
             {
               "name": "JsonParserVajsonTest__CanParseObjectHexadecimalNumber",
               "file": "score/json/json_parser_test.cpp",
-              "line": 740,
+              "line": 699,
               "need": "comp_req__json__deserialization",
               "verify_type": "partially",
               "result": "passed",
@@ -5082,7 +5048,7 @@
             {
               "name": "JsonParserVajsonTest__CanParseTwoByteBuffer",
               "file": "score/json/json_parser_test.cpp",
-              "line": 790,
+              "line": 749,
               "need": "comp_req__json__deserialization",
               "verify_type": "partially",
               "result": "passed",
@@ -5091,7 +5057,7 @@
             {
               "name": "JsonParserVajsonTest__CanParseBufferWithUtf8Bom",
               "file": "score/json/json_parser_test.cpp",
-              "line": 809,
+              "line": 768,
               "need": "comp_req__json__deserialization",
               "verify_type": "partially",
               "result": "passed",
@@ -5100,7 +5066,7 @@
             {
               "name": "NumberTest__WhenParsingABoolStoredInAJsonThenParsingIsSuccessfulAndCorrectValueIsReturned",
               "file": "score/json/json_parser_test.cpp",
-              "line": 881,
+              "line": 840,
               "need": "comp_req__json__deserialization",
               "verify_type": "partially",
               "result": "passed",
@@ -5109,7 +5075,7 @@
             {
               "name": "NumberTest__WhenParsingAUint8StoredInAJsonThenParsingIsSuccessfulAndCorrectValueIsReturned",
               "file": "score/json/json_parser_test.cpp",
-              "line": 903,
+              "line": 862,
               "need": "comp_req__json__deserialization",
               "verify_type": "partially",
               "result": "passed",
@@ -5118,7 +5084,7 @@
             {
               "name": "NumberTest__WhenParsingAUint16StoredInAJsonThenParsingIsSuccessfulAndCorrectValueIsReturned",
               "file": "score/json/json_parser_test.cpp",
-              "line": 926,
+              "line": 885,
               "need": "comp_req__json__deserialization",
               "verify_type": "partially",
               "result": "passed",
@@ -5127,7 +5093,7 @@
             {
               "name": "NumberTest__WhenParsingAUint32StoredInAJsonThenParsingIsSuccessfulAndCorrectValueIsReturned",
               "file": "score/json/json_parser_test.cpp",
-              "line": 949,
+              "line": 908,
               "need": "comp_req__json__deserialization",
               "verify_type": "partially",
               "result": "passed",
@@ -5136,7 +5102,7 @@
             {
               "name": "NumberTest__WhenParsingAUint64StoredInAJsonThenParsingIsSuccessfulAndCorrectValueIsReturned",
               "file": "score/json/json_parser_test.cpp",
-              "line": 972,
+              "line": 931,
               "need": "comp_req__json__deserialization",
               "verify_type": "partially",
               "result": "passed",
@@ -5145,7 +5111,7 @@
             {
               "name": "NumberTest__WhenParsingAInt8StoredInAJsonThenParsingIsSuccessfulAndCorrectValueIsReturned",
               "file": "score/json/json_parser_test.cpp",
-              "line": 995,
+              "line": 954,
               "need": "comp_req__json__deserialization",
               "verify_type": "partially",
               "result": "passed",
@@ -5154,7 +5120,7 @@
             {
               "name": "NumberTest__WhenParsingAInt16StoredInAJsonThenParsingIsSuccessfulAndCorrectValueIsReturned",
               "file": "score/json/json_parser_test.cpp",
-              "line": 1018,
+              "line": 977,
               "need": "comp_req__json__deserialization",
               "verify_type": "partially",
               "result": "passed",
@@ -5163,7 +5129,7 @@
             {
               "name": "NumberTest__WhenParsingAInt32StoredInAJsonThenParsingIsSuccessfulAndCorrectValueIsReturned",
               "file": "score/json/json_parser_test.cpp",
-              "line": 1041,
+              "line": 1000,
               "need": "comp_req__json__deserialization",
               "verify_type": "partially",
               "result": "passed",
@@ -5172,7 +5138,7 @@
             {
               "name": "NumberTest__WhenParsingAInt64StoredInAJsonThenParsingIsSuccessfulAndCorrectValueIsReturned",
               "file": "score/json/json_parser_test.cpp",
-              "line": 1064,
+              "line": 1023,
               "need": "comp_req__json__deserialization",
               "verify_type": "partially",
               "result": "passed",
@@ -5181,7 +5147,7 @@
             {
               "name": "NumberTest__WhenParsingAFloatStoredInAJsonThenParsingIsSuccessfulAndCorrectValueIsReturned",
               "file": "score/json/json_parser_test.cpp",
-              "line": 1086,
+              "line": 1045,
               "need": "comp_req__json__deserialization",
               "verify_type": "partially",
               "result": "passed",
@@ -5190,7 +5156,7 @@
             {
               "name": "NumberTest__WhenParsingADoubleStoredInAJsonThenParsingIsSuccessfulAndCorrectValueIsReturned",
               "file": "score/json/json_parser_test.cpp",
-              "line": 1109,
+              "line": 1068,
               "need": "comp_req__json__deserialization",
               "verify_type": "partially",
               "result": "passed",
@@ -5349,9 +5315,9 @@
           "CodeLinks": [],
           "TestLinks": [
             {
-              "name": "JsonParserTest__LiteralUsesDefaultNestingLimit",
+              "name": "JsonParserTest__LiteralUsesMaximumNestingDepth",
               "file": "score/json/json_parser_test.cpp",
-              "line": 214,
+              "line": 171,
               "need": "comp_req__json__nesting_depth_literal",
               "verify_type": "partially",
               "result": "passed",
@@ -5366,9 +5332,9 @@
           "CodeLinks": [],
           "TestLinks": [
             {
-              "name": "ParserTest__AppliesConfiguredNestingLimitToFiles",
+              "name": "ParserTest__AppliesMaximumNestingDepthToFiles",
               "file": "score/json/json_parser_test.cpp",
-              "line": 355,
+              "line": 311,
               "need": "comp_req__json__nesting_depth_file",
               "verify_type": "partially",
               "result": "passed",
@@ -5385,7 +5351,7 @@
             {
               "name": "ParserTest__EmitsErrorWhenParsingObjectWithDuplicateEscapedMemberName",
               "file": "score/json/json_parser_test.cpp",
-              "line": 706,
+              "line": 665,
               "need": "comp_req__json__duplicate_member_names",
               "verify_type": "partially",
               "result": "passed",
@@ -5394,7 +5360,7 @@
             {
               "name": "ParserTest__CanParseSameMemberNameInDifferentObjects",
               "file": "score/json/json_parser_test.cpp",
-              "line": 721,
+              "line": 680,
               "need": "comp_req__json__duplicate_member_names",
               "verify_type": "partially",
               "result": "passed",
@@ -5403,7 +5369,7 @@
             {
               "name": "ParserTest/DuplicateMemberNameTest__EmitsErrorWhenParsingObjectWithDuplicateMemberName/Null",
               "file": "score/json/json_parser_test.cpp",
-              "line": 672,
+              "line": 631,
               "need": "comp_req__json__duplicate_member_names",
               "verify_type": "partially",
               "result": "passed",
@@ -5412,7 +5378,7 @@
             {
               "name": "ParserTest/DuplicateMemberNameTest__EmitsErrorWhenParsingObjectWithDuplicateMemberName/Bool",
               "file": "score/json/json_parser_test.cpp",
-              "line": 672,
+              "line": 631,
               "need": "comp_req__json__duplicate_member_names",
               "verify_type": "partially",
               "result": "passed",
@@ -5421,7 +5387,7 @@
             {
               "name": "ParserTest/DuplicateMemberNameTest__EmitsErrorWhenParsingObjectWithDuplicateMemberName/Number",
               "file": "score/json/json_parser_test.cpp",
-              "line": 672,
+              "line": 631,
               "need": "comp_req__json__duplicate_member_names",
               "verify_type": "partially",
               "result": "passed",
@@ -5430,7 +5396,7 @@
             {
               "name": "ParserTest/DuplicateMemberNameTest__EmitsErrorWhenParsingObjectWithDuplicateMemberName/String",
               "file": "score/json/json_parser_test.cpp",
-              "line": 672,
+              "line": 631,
               "need": "comp_req__json__duplicate_member_names",
               "verify_type": "partially",
               "result": "passed",
@@ -5439,7 +5405,7 @@
             {
               "name": "ParserTest/DuplicateMemberNameTest__EmitsErrorWhenParsingObjectWithDuplicateMemberName/Object",
               "file": "score/json/json_parser_test.cpp",
-              "line": 672,
+              "line": 631,
               "need": "comp_req__json__duplicate_member_names",
               "verify_type": "partially",
               "result": "passed",
@@ -5448,7 +5414,7 @@
             {
               "name": "ParserTest/DuplicateMemberNameTest__EmitsErrorWhenParsingObjectWithDuplicateMemberName/List",
               "file": "score/json/json_parser_test.cpp",
-              "line": 672,
+              "line": 631,
               "need": "comp_req__json__duplicate_member_names",
               "verify_type": "partially",
               "result": "passed",
@@ -5457,7 +5423,7 @@
             {
               "name": "ParserTest/DuplicateMemberNameTest__EmitsErrorWhenParsingObjectWithDuplicateMemberName/ScalarThenObject",
               "file": "score/json/json_parser_test.cpp",
-              "line": 672,
+              "line": 631,
               "need": "comp_req__json__duplicate_member_names",
               "verify_type": "partially",
               "result": "passed",
@@ -5466,7 +5432,7 @@
             {
               "name": "ParserTest/DuplicateMemberNameTest__EmitsErrorWhenParsingObjectWithDuplicateMemberName/ScalarThenList",
               "file": "score/json/json_parser_test.cpp",
-              "line": 672,
+              "line": 631,
               "need": "comp_req__json__duplicate_member_names",
               "verify_type": "partially",
               "result": "passed",
@@ -5475,7 +5441,7 @@
             {
               "name": "ParserTest/DuplicateMemberNameTest__EmitsErrorWhenParsingObjectWithDuplicateMemberName/ObjectThenScalar",
               "file": "score/json/json_parser_test.cpp",
-              "line": 672,
+              "line": 631,
               "need": "comp_req__json__duplicate_member_names",
               "verify_type": "partially",
               "result": "passed",
@@ -5484,7 +5450,7 @@
             {
               "name": "ParserTest/DuplicateMemberNameTest__EmitsErrorWhenParsingObjectWithDuplicateMemberName/ListThenObject",
               "file": "score/json/json_parser_test.cpp",
-              "line": 672,
+              "line": 631,
               "need": "comp_req__json__duplicate_member_names",
               "verify_type": "partially",
               "result": "passed",
@@ -5493,7 +5459,7 @@
             {
               "name": "ParserTest/DuplicateMemberNameTest__EmitsErrorWhenParsingObjectWithDuplicateMemberName/NotAdjacent",
               "file": "score/json/json_parser_test.cpp",
-              "line": 672,
+              "line": 631,
               "need": "comp_req__json__duplicate_member_names",
               "verify_type": "partially",
               "result": "passed",
@@ -5502,7 +5468,7 @@
             {
               "name": "ParserTest/DuplicateMemberNameTest__EmitsErrorWhenParsingObjectWithDuplicateMemberName/InNestedObject",
               "file": "score/json/json_parser_test.cpp",
-              "line": 672,
+              "line": 631,
               "need": "comp_req__json__duplicate_member_names",
               "verify_type": "partially",
               "result": "passed",
@@ -5511,7 +5477,7 @@
             {
               "name": "ParserTest/DuplicateMemberNameTest__EmitsErrorWhenParsingObjectWithDuplicateMemberName/InObjectInList",
               "file": "score/json/json_parser_test.cpp",
-              "line": 672,
+              "line": 631,
               "need": "comp_req__json__duplicate_member_names",
               "verify_type": "partially",
               "result": "passed",
