@@ -18298,6 +18298,20 @@
     "FullyVerifies": null
   },
   {
+    "name": "GenericTraceApiStubTest__TraceForwardsToConfiguredImplementation",
+    "file": "score/analysis/tracing/generic_trace_library/stub_implementation/tests/generic_trace_api_stub_test.cpp",
+    "line": "25",
+    "result": "passed",
+    "repo_name": "local_repo",
+    "hash": "",
+    "url": "",
+    "TestType": "interface-test",
+    "DerivationTechnique": "requirements-analysis",
+    "result_text": "",
+    "PartiallyVerifies": "comp_req__trace__configurable_implementation",
+    "FullyVerifies": null
+  },
+  {
     "name": "SocketUDPTest__CreationSuccess",
     "file": "score/network/sock_async_udp/socket_udp_test.cpp",
     "line": "69",

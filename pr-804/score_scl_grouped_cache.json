@@ -56,6 +56,26 @@
     }
   },
   {
+    "need": "comp_req__trace__configurable_implementation",
+    "links": {
+      "CodeLinks": [],
+      "TestLinks": [
+        {
+          "name": "GenericTraceApiStubTest__TraceForwardsToConfiguredImplementation",
+          "file": "score/analysis/tracing/generic_trace_library/stub_implementation/tests/generic_trace_api_stub_test.cpp",
+          "line": 25,
+          "need": "comp_req__trace__configurable_implementation",
+          "verify_type": "partially",
+          "result": "passed",
+          "result_text": "",
+          "repo_name": "local_repo",
+          "hash": "",
+          "url": ""
+        }
+      ]
+    }
+  },
+  {
     "need": "comp_req__flatbuffers__buffer_identification",
     "links": {
       "CodeLinks": [],
