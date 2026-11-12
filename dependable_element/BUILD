@@ -79,7 +79,7 @@ component(
 
 architectural_design(
     name = "architectural_design",
-    static = ["static_design.puml"],
+    static = ["//:docs/module/dependable_element.puml"],
 )
 
 dependable_element(
