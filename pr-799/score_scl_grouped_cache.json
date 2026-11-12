@@ -6833,9 +6833,21 @@
       "CodeLinks": [],
       "TestLinks": [
         {
-          "name": "JsonWriterDefaultFormattingTest__PrettyPrintsWhenFormattingIsOmitted",
+          "name": "JsonWriterSyncedFileTest__SerializationFailureKeepsTargetUnchanged",
           "file": "score/json/json_writer_test.cpp",
           "line": 255,
+          "need": "comp_req__json__serialization",
+          "verify_type": "partially",
+          "result": "passed",
+          "result_text": "",
+          "repo_name": "local_repo",
+          "hash": "",
+          "url": ""
+        },
+        {
+          "name": "JsonWriterDefaultFormattingTest__PrettyPrintsWhenFormattingIsOmitted",
+          "file": "score/json/json_writer_test.cpp",
+          "line": 280,
           "need": "comp_req__json__serialization",
           "verify_type": "partially",
           "result": "passed",
@@ -7621,6 +7633,118 @@
           "file": "score/json/json_parser_test.cpp",
           "line": 492,
           "need": "comp_req__json__duplicate_member_names",
+          "verify_type": "partially",
+          "result": "passed",
+          "result_text": "",
+          "repo_name": "local_repo",
+          "hash": "",
+          "url": ""
+        }
+      ]
+    }
+  },
+  {
+    "need": "comp_req__filesystem__file_io",
+    "links": {
+      "CodeLinks": [],
+      "TestLinks": [
+        {
+          "name": "FileBufTest__DiscardClosesFile",
+          "file": "score/filesystem/filestream/file_buf_test.cpp",
+          "line": 116,
+          "need": "comp_req__filesystem__file_io",
+          "verify_type": "partially",
+          "result": "passed",
+          "result_text": "",
+          "repo_name": "local_repo",
+          "hash": "",
+          "url": ""
+        },
+        {
+          "name": "AtomicFileBufTest__DiscardRemovesTemporaryFileWithoutRename",
+          "file": "score/filesystem/filestream/file_buf_test.cpp",
+          "line": 129,
+          "need": "comp_req__filesystem__file_io",
+          "verify_type": "partially",
+          "result": "passed",
+          "result_text": "",
+          "repo_name": "local_repo",
+          "hash": "",
+          "url": ""
+        },
+        {
+          "name": "AtomicFileBufTest__DiscardReportsCloseFailure",
+          "file": "score/filesystem/filestream/file_buf_test.cpp",
+          "line": 147,
+          "need": "comp_req__filesystem__file_io",
+          "verify_type": "partially",
+          "result": "passed",
+          "result_text": "",
+          "repo_name": "local_repo",
+          "hash": "",
+          "url": ""
+        },
+        {
+          "name": "AtomicFileBufTest__DiscardOnClosedFileDoesNothing",
+          "file": "score/filesystem/filestream/file_buf_test.cpp",
+          "line": 165,
+          "need": "comp_req__filesystem__file_io",
+          "verify_type": "partially",
+          "result": "passed",
+          "result_text": "",
+          "repo_name": "local_repo",
+          "hash": "",
+          "url": ""
+        },
+        {
+          "name": "FileFactoryFailedAtomicUpdateTest__CloseKeepsTargetUnchanged",
+          "file": "score/filesystem/filestream/file_factory_test.cpp",
+          "line": 242,
+          "need": "comp_req__filesystem__file_io",
+          "verify_type": "partially",
+          "result": "passed",
+          "result_text": "",
+          "repo_name": "local_repo",
+          "hash": "",
+          "url": ""
+        },
+        {
+          "name": "FileFactoryFailedAtomicUpdateTest__DestructionKeepsTargetUnchanged",
+          "file": "score/filesystem/filestream/file_factory_test.cpp",
+          "line": 264,
+          "need": "comp_req__filesystem__file_io",
+          "verify_type": "partially",
+          "result": "passed",
+          "result_text": "",
+          "repo_name": "local_repo",
+          "hash": "",
+          "url": ""
+        }
+      ]
+    }
+  },
+  {
+    "need": "comp_req__filesystem__mock_fake",
+    "links": {
+      "CodeLinks": [],
+      "TestLinks": [
+        {
+          "name": "FileFactoryFakeTest__AtomicUpdateOfFailedStreamKeepsContent",
+          "file": "score/filesystem/filestream/file_factory_fake_test.cpp",
+          "line": 53,
+          "need": "comp_req__filesystem__mock_fake",
+          "verify_type": "partially",
+          "result": "passed",
+          "result_text": "",
+          "repo_name": "local_repo",
+          "hash": "",
+          "url": ""
+        },
+        {
+          "name": "FileFactoryFakeTest__AtomicUpdateKeepsContentOfStreamFailingAfterClose",
+          "file": "score/filesystem/filestream/file_factory_fake_test.cpp",
+          "line": 75,
+          "need": "comp_req__filesystem__mock_fake",
           "verify_type": "partially",
           "result": "passed",
           "result_text": "",
