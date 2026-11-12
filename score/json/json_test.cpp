@@ -65,3 +65,27 @@ TEST(JsonTest, ReadWrite)
                   .value(),
               4);
 }
+
+TEST(JsonTest, ReadWriteEmptyMemberName)
+{
+    RecordProperty("PartiallyVerifies", "comp_req__json__serialization, comp_req__json__deserialization");
+    RecordProperty("Description",
+                   "Check that an object with empty member names at top level and nested, written to a buffer, is "
+                   "read back to an equal value.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "boundary-values");
+
+    score::json::Object nested_object{};
+    nested_object[""] = std::string{"x"};
+    score::json::Object json{};
+    json[""] = std::move(nested_object);
+    json["a"] = true;
+    const score::json::Any expected{std::move(json)};
+
+    const auto buffer{score::json::JsonWriter{}.ToBuffer(expected)};
+    ASSERT_TRUE(buffer.has_value());
+    const auto read_json{score::json::JsonParser{}.FromBuffer(buffer.value())};
+
+    ASSERT_TRUE(read_json.has_value());
+    EXPECT_EQ(read_json.value(), expected);
+}
