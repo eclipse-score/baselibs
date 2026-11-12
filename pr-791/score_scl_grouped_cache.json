@@ -56,6 +56,26 @@
     }
   },
   {
+    "need": "comp_req__trace__configurable_implementation",
+    "links": {
+      "CodeLinks": [],
+      "TestLinks": [
+        {
+          "name": "GenericTraceApiStubTest__TraceForwardsToConfiguredImplementation",
+          "file": "score/analysis/tracing/generic_trace_library/stub_implementation/tests/generic_trace_api_stub_test.cpp",
+          "line": 25,
+          "need": "comp_req__trace__configurable_implementation",
+          "verify_type": "partially",
+          "result": "passed",
+          "result_text": "",
+          "repo_name": "local_repo",
+          "hash": "",
+          "url": ""
+        }
+      ]
+    }
+  },
+  {
     "need": "comp_req__flatbuffers__buffer_identification",
     "links": {
       "CodeLinks": [],
@@ -6271,7 +6291,67 @@
         {
           "name": "SerializerTest__PrettyPrintsNestedAny",
           "file": "score/json/internal/writer/serializer_test.cpp",
-          "line": 322,
+          "line": 326,
+          "need": "comp_req__json__serialization",
+          "verify_type": "partially",
+          "result": "passed",
+          "result_text": "",
+          "repo_name": "local_repo",
+          "hash": "",
+          "url": ""
+        },
+        {
+          "name": "SerializerTest__PrettyPrintsMixedNesting",
+          "file": "score/json/internal/writer/serializer_test.cpp",
+          "line": 454,
+          "need": "comp_req__json__serialization",
+          "verify_type": "partially",
+          "result": "passed",
+          "result_text": "",
+          "repo_name": "local_repo",
+          "hash": "",
+          "url": ""
+        },
+        {
+          "name": "SerializerTest__SerializesMixedNestingCompactly",
+          "file": "score/json/internal/writer/serializer_test.cpp",
+          "line": 484,
+          "need": "comp_req__json__serialization",
+          "verify_type": "partially",
+          "result": "passed",
+          "result_text": "",
+          "repo_name": "local_repo",
+          "hash": "",
+          "url": ""
+        },
+        {
+          "name": "SerializerTest__SerializesTopLevelScalars",
+          "file": "score/json/internal/writer/serializer_test.cpp",
+          "line": 498,
+          "need": "comp_req__json__serialization",
+          "verify_type": "partially",
+          "result": "passed",
+          "result_text": "",
+          "repo_name": "local_repo",
+          "hash": "",
+          "url": ""
+        },
+        {
+          "name": "SerializerTest__EscapesObjectKeysInNestedObjects",
+          "file": "score/json/internal/writer/serializer_test.cpp",
+          "line": 519,
+          "need": "comp_req__json__serialization",
+          "verify_type": "partially",
+          "result": "passed",
+          "result_text": "",
+          "repo_name": "local_repo",
+          "hash": "",
+          "url": ""
+        },
+        {
+          "name": "SerializerTest__RejectsNonFiniteNumberNestedDeepInsideContainers",
+          "file": "score/json/internal/writer/serializer_test.cpp",
+          "line": 534,
           "need": "comp_req__json__serialization",
           "verify_type": "partially",
           "result": "passed",
