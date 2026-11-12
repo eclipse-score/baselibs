@@ -57,6 +57,36 @@ Static Architecture
 
       {{ draw_component(need(), needs) }}
 
+.. comp_arc_sta:: Bit Manipulation Unit Static view
+   :id: comp_arc_sta__baselibs__bit_manipulation_unit
+   :security: NO
+   :safety:  ASIL_B
+   :status: valid
+   :version: 1
+   :fulfils: comp_req__bitmanipulation__bit_operations[version==1],comp_req__bitmanipulation__byte_operations[version==2],comp_req__bitmanipulation__byte_extraction[version==1],comp_req__bitmanipulation__bounds_safety[version==1]
+   :belongs_to: comp__baselibs_bit_manipulation[version==1]
+
+   Byte types of ``bit_manipulation.h``; the bit functions are free function templates.
+
+   .. uml:: bit_manipulation.puml
+      :scale: 50
+      :align: center
+
+.. comp_arc_sta:: Bitmask Operators Unit Static view
+   :id: comp_arc_sta__baselibs__bitmask_operator_unit
+   :security: NO
+   :safety:  ASIL_B
+   :status: valid
+   :version: 1
+   :fulfils: comp_req__bitmanipulation__bitmask_operators[version==1]
+   :belongs_to: comp__baselibs_bit_manipulation[version==1]
+
+   Opt-in trait of ``bitmask_operators.h``; the operators are free function templates.
+
+   .. uml:: bitmask_operators.puml
+      :scale: 50
+      :align: center
+
 Dynamic Architecture
 --------------------
 

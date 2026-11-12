@@ -40,7 +40,7 @@ component_requirements(
 
 unit_design(
     name = "bit_manipulation_design",
-    static = ["design/bit_manipulation.puml"],
+    static = ["//score/bitmanipulation:docs/architecture/bit_manipulation.puml"],
 )
 
 unit(
@@ -53,7 +53,7 @@ unit(
 
 unit_design(
     name = "bitmask_operators_design",
-    static = ["design/bitmask_operators.puml"],
+    static = ["//score/bitmanipulation:docs/architecture/bitmask_operators.puml"],
 )
 
 unit(
