@@ -20,7 +20,7 @@ Use this skill for a specific release tag.
 
 ### Draft
 
-Write the complete release body for the user. Preserve every existing non-`Notable Changes` section verbatim, and GitHub-generated `What's Changed` list. Replace only the `Notable Changes` section. Complete when the proposed body retains all source content outside that section and every notable PR is represented accurately.
+Write the complete release body for the user. Preserve every existing non-`Notable Changes` section verbatim, and GitHub-generated `What's Changed` list. Replace only the `Notable Changes` section. Complete when the proposed body retains all source content outside that section, every notable PR is represented accurately, and every bullet explicitly identifies its affected library.
 
 ### Verify
 
@@ -40,6 +40,7 @@ First provide the proposed complete body. Change GitHub only after the user expl
 - Headings use ATX style (`#`, `##`, `###`).
 - Link to PRs/issues with the bare URL, e.g. `https://github.com/eclipse-score/baselibs/pull/NNN`. GitHub auto-links and shortens these; do not use `[text](url)` markdown link syntax.
 - Use `-` for bullets and backticks for code identifiers/paths.
+- Start every bullet with the affected library's bold name, its repository path in backticks, and a colon, for example **JSON** (`score/json`):. Repeat this label on every bullet; do not rely on section headings or code identifiers to identify the library. If a change affects multiple libraries, label each affected library or split the bullet by library.
 - Group bullets under `###` subheadings as needed, typically `Breaking changes & deprecations`, `New features`, `Bug fixes` — plus an optional themed `###` (or a short intro paragraph before the first subheading) for a single cross-release effort such as a migration or multi-release deprecation.
 
 ## Inspecting diffs: `git` vs `gh` vs the web
