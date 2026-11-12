@@ -19,6 +19,11 @@ package baselibs <<SEooC>> {
         component bit_manipulation <<unit>>
         component bitmask_operators <<unit>>
     }
+    ' Public API, declared in score/bitmanipulation/docs/architecture/public_api.puml.
+    interface BitManipulationApi
+    interface BitmaskOperatorsApi
+    bit_manipulation -( BitManipulationApi
+    bitmask_operators -( BitmaskOperatorsApi
 }
 
 @enduml

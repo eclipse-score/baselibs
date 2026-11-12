@@ -79,6 +79,10 @@ component(
 
 architectural_design(
     name = "architectural_design",
+    dynamic = ["//score/bitmanipulation:docs/architecture/dynamic.puml"],
+    # TRLC package of the generated ApiMethod records (public_api.trlc).
+    package = "baselibs_api",
+    public_api = ["//score/bitmanipulation:docs/architecture/public_api.puml"],
     static = ["//:docs/module/dependable_element.puml"],
 )
 

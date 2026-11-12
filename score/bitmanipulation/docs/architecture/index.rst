@@ -90,10 +90,31 @@ Static Architecture
 Dynamic Architecture
 --------------------
 
-No need for sequence diagram. Simple caller callee flow.
+.. comp_arc_dyn:: Bit Manipulation Dynamic view
+   :id: comp_arc_dyn__baselibs__bit_manipulation
+   :security: NO
+   :safety:  ASIL_B
+   :status: valid
+   :version: 1
+   :fulfils: comp_req__bitmanipulation__bit_operations[version==1],comp_req__bitmanipulation__bitmask_operators[version==1]
+   :belongs_to: comp__baselibs_bit_manipulation[version==1]
+
+   A user combines and queries scoped-enum flags and sets and checks a bit; every call
+   goes through the public API (validated by ``//dependable_element:architectural_design``).
+
+   .. uml:: dynamic.puml
+      :scale: 50
+      :align: center
 
 Interfaces
 ----------
+
+Public API of the component; the architecture validation of the dependable element
+checks it against the static and dynamic views.
+
+.. uml:: public_api.puml
+   :scale: 50
+   :align: center
 
 .. logic_arc_int_op:: Set Bit
    :id: logic_arc_int_op__baselibs__set_bit

@@ -1,0 +1,36 @@
+' *******************************************************************************
+' Copyright (c) 2026 Contributors to the Eclipse Foundation
+'
+' See the NOTICE file(s) distributed with this work for additional
+' information regarding copyright ownership.
+'
+' This program and the accompanying materials are made available under the
+' terms of the Apache License Version 2.0 which is available at
+' https://www.apache.org/licenses/LICENSE-2.0
+'
+' SPDX-License-Identifier: Apache-2.0
+' *******************************************************************************
+
+@startuml bitmanipulation_public_api
+
+' Public API of the bitmanipulation component; all entries are free function templates.
+package baselibs {
+    interface BitManipulationApi {
+        + SetBit(value : T, position : std::size_t) : bool
+        + ClearBit(value : T, position : std::size_t) : bool
+        + ToggleBit(value : T, position : std::size_t) : bool
+        + CheckBit(value : T, position : std::size_t) : bool
+        + GetByte(raw_bytes : T) : std::uint8_t
+    }
+
+    interface BitmaskOperatorsApi {
+        + operator|(lhs : T, rhs : T) : T
+        + operator&(lhs : T, rhs : T) : bool
+        + operator^(lhs : T, rhs : T) : T
+        + operator~(other : T) : T
+        + operator|=(lhs : T, rhs : T) : T
+        + operator&=(lhs : T, rhs : T) : T
+    }
+}
+
+@enduml
