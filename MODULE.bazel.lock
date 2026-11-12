@@ -1050,8 +1050,8 @@
     "https://raw.githubusercontent.com/eclipse-score/bazel_registry/main/modules/rules_swift/2.1.1/MODULE.bazel": "not found",
     "https://raw.githubusercontent.com/eclipse-score/bazel_registry/main/modules/rules_swift/2.4.0/MODULE.bazel": "not found",
     "https://raw.githubusercontent.com/eclipse-score/bazel_registry/main/modules/rules_swift/3.1.2/MODULE.bazel": "not found",
-    "https://raw.githubusercontent.com/eclipse-score/bazel_registry/main/modules/score_bazel_cpp_toolchains/1.1.0-rc1/MODULE.bazel": "79b34efdd8651033da3d5330d2c9588b8bff412ac468de4e78ebcdc827138002",
-    "https://raw.githubusercontent.com/eclipse-score/bazel_registry/main/modules/score_bazel_cpp_toolchains/1.1.0-rc1/source.json": "973de32d0eb054c62590206129b84ce580dda2b51108285ba8810dcea022d2ee",
+    "https://raw.githubusercontent.com/eclipse-score/bazel_registry/main/modules/score_bazel_cpp_toolchains/1.1.0-rc2/MODULE.bazel": "a9901706de1df34e4eabd966f4dcffbc93b684afa8b82fedcbc09fbea0ec9bfb",
+    "https://raw.githubusercontent.com/eclipse-score/bazel_registry/main/modules/score_bazel_cpp_toolchains/1.1.0-rc2/source.json": "e20f4f5f0ad783d2c34c0ec6268431d93edb05da1f3ae5b90d2fda9b57a8410f",
     "https://raw.githubusercontent.com/eclipse-score/bazel_registry/main/modules/score_bazel_platforms/0.0.3/MODULE.bazel": "14c96e378c08705a46abe0799d6236fe3095c342c34f83f8d1b3f6046ce00651",
     "https://raw.githubusercontent.com/eclipse-score/bazel_registry/main/modules/score_bazel_platforms/0.1.1/MODULE.bazel": "236e5bdff6f2d6de6f96cc4f5f4b1bf2cd6137547ce279668a2dd4c54cd4236c",
     "https://raw.githubusercontent.com/eclipse-score/bazel_registry/main/modules/score_bazel_platforms/1.1.0/MODULE.bazel": "e5c656abcad121a89cbabad3550bb20167a6865de219ef6e1c68ca30567e1c32",
@@ -3403,7 +3403,7 @@
     },
     "@@score_bazel_cpp_toolchains+//extensions:gcc.bzl%gcc": {
       "general": {
-        "bzlTransitiveDigest": "xq3umoU/mEMaK/EuUbroheEpRAeebK7O4J/Q/gY4924=",
+        "bzlTransitiveDigest": "1uoPeLCLNfwipcI4cVe0B+KMMoZfwjZ3QFQzLpztFnE=",
         "usagesDigest": "ilxGQxExNoEr7zm41aZtOpqCn6X7hFsh/82/T5lNDU0=",
         "recordedInputs": [
           "REPO_MAPPING:,score_cpp_policies score_cpp_policies+",

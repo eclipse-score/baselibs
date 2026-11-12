@@ -16,7 +16,7 @@ module(name = "score_baselibs")
 ## Configure the C++ toolchain
 
 # Toolchain dependencies.
-bazel_dep(name = "score_bazel_cpp_toolchains", version = "1.1.0-rc1", dev_dependency = True)
+bazel_dep(name = "score_bazel_cpp_toolchains", version = "1.1.0-rc2", dev_dependency = True)
 
 bazel_dep(name = "score_bazel_platforms", version = "1.1.0")
 bazel_dep(name = "platforms", version = "1.1.0")
