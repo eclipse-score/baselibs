@@ -208,7 +208,7 @@ score_coverage_reporter(
     testonly = True,
     backend = "gcov",
     coverage_scope = ":coverage_scope_qnx",
-    gcov = "@score_qcc_x86_64_toolchain_pkg//:gcov",
+    gcov = "@qnx_sdp_8_0_4_pkg//:gcov_x86_64",
     # Manual: depends on the QNX SDP package, which a wildcard build on a
     # Linux host without QNX credentials must not try to fetch.
     tags = ["manual"],
@@ -219,6 +219,6 @@ score_coverage_reporter(
     testonly = True,
     backend = "gcov",
     coverage_scope = ":coverage_scope_qnx",
-    gcov = "@score_qcc_x86_64_toolchain_805_pkg//:gcov",
+    gcov = "@qnx_sdp_8_0_5_pkg//:gcov_x86_64",
     tags = ["manual"],
 )
