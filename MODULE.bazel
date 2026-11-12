@@ -186,7 +186,7 @@ bazel_dep(name = "score_process_description", version = "2.2.3")
 bazel_dep(name = "score_tooling", version = "3.0.2", dev_dependency = True)
 git_override(
     module_name = "score_tooling",
-    commit = "c33e99d5e77ab53679df59db590c53fe4ed1a1ac",
+    commit = "db8e3b32876e1142ff0f2cfe9594c09bf0fe65a5",
     remote = "https://github.com/eclipse-score/tooling.git",
 )
 
