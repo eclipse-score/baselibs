@@ -602,7 +602,35 @@
     "FullyVerifies": null
   },
   {
+    "name": "dependable_element/bitmanipulation_dependability_analysis_lobster_ci_test_executable",
+    "file": null,
+    "line": null,
+    "result": "passed",
+    "repo_name": null,
+    "hash": null,
+    "url": null,
+    "TestType": null,
+    "DerivationTechnique": null,
+    "result_text": "",
+    "PartiallyVerifies": null,
+    "FullyVerifies": null
+  },
+  {
     "name": "dependable_element/baselibs_lobster_test",
+    "file": null,
+    "line": null,
+    "result": "passed",
+    "repo_name": null,
+    "hash": null,
+    "url": null,
+    "TestType": null,
+    "DerivationTechnique": null,
+    "result_text": "",
+    "PartiallyVerifies": null,
+    "FullyVerifies": null
+  },
+  {
+    "name": "dependable_element/bitmanipulation_failure_modes_test",
     "file": null,
     "line": null,
     "result": "passed",
@@ -310492,6 +310520,20 @@
     "FullyVerifies": null
   },
   {
+    "name": "JsonTest__ReadWriteEmptyMemberName",
+    "file": "score/json/json_test.cpp",
+    "line": "69",
+    "result": "passed",
+    "repo_name": "local_repo",
+    "hash": "",
+    "url": "",
+    "TestType": "requirements-based",
+    "DerivationTechnique": "boundary-values",
+    "result_text": "",
+    "PartiallyVerifies": "comp_req__json__serialization, comp_req__json__deserialization",
+    "FullyVerifies": null
+  },
+  {
     "name": "JsonSerializerTest__TestSerialization",
     "file": "score/json/json_serializer_test.cpp",
     "line": "113",
@@ -311082,7 +311124,7 @@
   {
     "name": "ParserTest__EmitsErrorWhenParsingObjectWithDuplicateEscapedMemberName",
     "file": "score/json/json_parser_test.cpp",
-    "line": "526",
+    "line": "527",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -311096,7 +311138,7 @@
   {
     "name": "ParserTest__CanParseSameMemberNameInDifferentObjects",
     "file": "score/json/json_parser_test.cpp",
-    "line": "541",
+    "line": "542",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -311108,9 +311150,23 @@
     "FullyVerifies": null
   },
   {
+    "name": "ParserTest__CanParseEmptyMemberName",
+    "file": "score/json/json_parser_test.cpp",
+    "line": "561",
+    "result": "passed",
+    "repo_name": "local_repo",
+    "hash": "",
+    "url": "",
+    "TestType": "requirements-based",
+    "DerivationTechnique": "boundary-values",
+    "result_text": "",
+    "PartiallyVerifies": "comp_req__json__deserialization",
+    "FullyVerifies": null
+  },
+  {
     "name": "JsonParserVajsonTest__CanParseObjectHexadecimalNumber",
     "file": "score/json/json_parser_test.cpp",
-    "line": "560",
+    "line": "581",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -311124,7 +311180,7 @@
   {
     "name": "JsonParserVajsonTest__CanParseTwoByteBuffer",
     "file": "score/json/json_parser_test.cpp",
-    "line": "610",
+    "line": "631",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -311138,7 +311194,7 @@
   {
     "name": "JsonParserVajsonTest__CanParseBufferWithUtf8Bom",
     "file": "score/json/json_parser_test.cpp",
-    "line": "629",
+    "line": "650",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -311152,7 +311208,7 @@
   {
     "name": "NumberTest__WhenParsingABoolStoredInAJsonThenParsingIsSuccessfulAndCorrectValueIsReturned",
     "file": "score/json/json_parser_test.cpp",
-    "line": "701",
+    "line": "722",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -311166,7 +311222,7 @@
   {
     "name": "NumberTest__WhenParsingAUint8StoredInAJsonThenParsingIsSuccessfulAndCorrectValueIsReturned",
     "file": "score/json/json_parser_test.cpp",
-    "line": "723",
+    "line": "744",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -311180,7 +311236,7 @@
   {
     "name": "NumberTest__WhenParsingAUint16StoredInAJsonThenParsingIsSuccessfulAndCorrectValueIsReturned",
     "file": "score/json/json_parser_test.cpp",
-    "line": "746",
+    "line": "767",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -311194,7 +311250,7 @@
   {
     "name": "NumberTest__WhenParsingAUint32StoredInAJsonThenParsingIsSuccessfulAndCorrectValueIsReturned",
     "file": "score/json/json_parser_test.cpp",
-    "line": "769",
+    "line": "790",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -311208,7 +311264,7 @@
   {
     "name": "NumberTest__WhenParsingAUint64StoredInAJsonThenParsingIsSuccessfulAndCorrectValueIsReturned",
     "file": "score/json/json_parser_test.cpp",
-    "line": "792",
+    "line": "813",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -311222,7 +311278,7 @@
   {
     "name": "NumberTest__WhenParsingAInt8StoredInAJsonThenParsingIsSuccessfulAndCorrectValueIsReturned",
     "file": "score/json/json_parser_test.cpp",
-    "line": "815",
+    "line": "836",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -311236,7 +311292,7 @@
   {
     "name": "NumberTest__WhenParsingAInt16StoredInAJsonThenParsingIsSuccessfulAndCorrectValueIsReturned",
     "file": "score/json/json_parser_test.cpp",
-    "line": "838",
+    "line": "859",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -311250,7 +311306,7 @@
   {
     "name": "NumberTest__WhenParsingAInt32StoredInAJsonThenParsingIsSuccessfulAndCorrectValueIsReturned",
     "file": "score/json/json_parser_test.cpp",
-    "line": "861",
+    "line": "882",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -311264,7 +311320,7 @@
   {
     "name": "NumberTest__WhenParsingAInt64StoredInAJsonThenParsingIsSuccessfulAndCorrectValueIsReturned",
     "file": "score/json/json_parser_test.cpp",
-    "line": "884",
+    "line": "905",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -311278,7 +311334,7 @@
   {
     "name": "NumberTest__WhenParsingAFloatStoredInAJsonThenParsingIsSuccessfulAndCorrectValueIsReturned",
     "file": "score/json/json_parser_test.cpp",
-    "line": "906",
+    "line": "927",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -311292,7 +311348,7 @@
   {
     "name": "NumberTest__WhenParsingADoubleStoredInAJsonThenParsingIsSuccessfulAndCorrectValueIsReturned",
     "file": "score/json/json_parser_test.cpp",
-    "line": "929",
+    "line": "950",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -311445,6 +311501,20 @@
   },
   {
     "name": "ParserTest/DuplicateMemberNameTest__EmitsErrorWhenParsingObjectWithDuplicateMemberName/NotAdjacent",
+    "file": "score/json/json_parser_test.cpp",
+    "line": "492",
+    "result": "passed",
+    "repo_name": "local_repo",
+    "hash": "",
+    "url": "",
+    "TestType": "requirements-based",
+    "DerivationTechnique": "equivalence-classes",
+    "result_text": "",
+    "PartiallyVerifies": "comp_req__json__duplicate_member_names",
+    "FullyVerifies": null
+  },
+  {
+    "name": "ParserTest/DuplicateMemberNameTest__EmitsErrorWhenParsingObjectWithDuplicateMemberName/EmptyName",
     "file": "score/json/json_parser_test.cpp",
     "line": "492",
     "result": "passed",
