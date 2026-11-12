@@ -25,6 +25,13 @@ namespace score::containers
 
 TEST(RegistryStringViewTest, Iterator)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__containers__registry_string_view");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
+    RecordProperty(
+        "Description",
+        "Check that begin/end and cbegin/cend iterators traverse the registered string character by character.");
+
     String_registry registry;
     const char* data = "test_string";
     Registry_string_view string_view = registry.insert(std::string(data)).first;
@@ -50,6 +57,12 @@ TEST(RegistryStringViewTest, Iterator)
 
 TEST(RegistryStringViewTest, ConsistentHash)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__containers__registry_string_view");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
+    RecordProperty("Description",
+                   "Check that std::hash on a Registry_string_view returns the same value on repeated calls.");
+
     String_registry registry;
     Registry_string_view string_view = registry.insert(std::string("test_string")).first;
     auto hash_fn = std::hash<Registry_string_view>{};
@@ -64,6 +77,13 @@ TEST(RegistryStringViewTest, ConsistentHash)
 /// same string value.
 TEST(RegistryStringViewTest, DifferentRegistryStringViewDifferentHashes)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__containers__registry_string_view");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
+    RecordProperty("Description",
+                   "Check that equal strings stored in different registries produce different hash values due to "
+                   "pointer-based hashing.");
+
     String_registry registry1;
     Registry_string_view string_view1 = registry1.insert(std::string("test_string")).first;
     String_registry registry2;
@@ -80,6 +100,11 @@ TEST(RegistryStringViewTest, DifferentRegistryStringViewDifferentHashes)
 
 TEST(RegistryStringViewTest, StreamOutput)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__containers__registry_string_view");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
+    RecordProperty("Description", "Check that the ostream operator<< writes the correct string content.");
+
     String_registry registry;
     Registry_string_view string_view = registry.insert(std::string("test_string")).first;
     std::ostringstream oss;
@@ -94,6 +119,13 @@ TEST(RegistryStringViewTest, StreamOutput)
 
 TEST(RegistryStringViewTest, GlobalCompareOperator)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__containers__registry_string_view");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
+    RecordProperty("Description",
+                   "Check that operator== uses pointer equality and that relational operators (<, <=, >, >=) compare "
+                   "by string content.");
+
     String_registry registry;
     Registry_string_view string_view1 = registry.insert(std::string("test_string")).first;
     Registry_string_view string_view2 = registry.insert(std::string("test_string2")).first;
@@ -129,6 +161,12 @@ TEST(RegistryStringViewTest, GlobalCompareOperator)
 
 TEST(RegistryStringViewTest, StringLength)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__containers__registry_string_view");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
+    RecordProperty("Description",
+                   "Check that length() and size() return the correct character count of the registered string.");
+
     String_registry registry;
     Registry_string_view string_view = registry.insert(std::string("test_string")).first;
     auto length = std::string("test_string").length();
@@ -141,6 +179,12 @@ TEST(RegistryStringViewTest, StringLength)
 
 TEST(RegistryStringViewTest, StringEmpty)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__containers__registry_string_view");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "boundary-values");
+    RecordProperty("Description",
+                   "Check that empty() returns true for an empty registered string and false for a non-empty one.");
+
     String_registry registry;
     Registry_string_view empty_string_view = registry.insert(std::string("")).first;
     Registry_string_view non_empty_string_view = registry.insert(std::string("non-empty string")).first;
@@ -153,6 +197,11 @@ TEST(RegistryStringViewTest, StringEmpty)
 
 TEST(RegistryStringViewTest, Data)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__containers__registry_string_view");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
+    RecordProperty("Description", "Check that data() returns the same pointer as the underlying string_view.");
+
     String_registry registry;
     Registry_string_view string_view = registry.insert(std::string("test_string")).first;
 
@@ -164,6 +213,11 @@ TEST(RegistryStringViewTest, Data)
 
 TEST(RegistryStringViewTest, MoveConstructor)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__containers__registry_string_view");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
+    RecordProperty("Description", "Check that move construction transfers the string_view data to the new object.");
+
     String_registry registry;
     {
         Registry_string_view original_string_view = registry.insert(std::string("test_string")).first;
@@ -181,6 +235,12 @@ TEST(RegistryStringViewTest, MoveConstructor)
 
 TEST(RegistryStringViewTest, MoveAssignmentOperator)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__containers__registry_string_view");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
+    RecordProperty("Description",
+                   "Check that move assignment replaces the target's string_view data with the source's.");
+
     String_registry registry;
     Registry_string_view original_string_view = registry.insert(std::string("test_string")).first;
     Registry_string_view another_string_view = registry.insert(std::string("another_string")).first;
@@ -194,6 +254,11 @@ TEST(RegistryStringViewTest, MoveAssignmentOperator)
 
 TEST(RegistryStringViewTest, CopyConstructor)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__containers__registry_string_view");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
+    RecordProperty("Description", "Check that copy construction produces a view with identical string_view data.");
+
     String_registry registry;
     Registry_string_view original_string_view = registry.insert(std::string("test_string")).first;
 
@@ -206,6 +271,12 @@ TEST(RegistryStringViewTest, CopyConstructor)
 
 TEST(RegistryStringViewTest, CopyAssignmentOperator)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__containers__registry_string_view");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
+    RecordProperty("Description",
+                   "Check that copy assignment replaces the target's string_view data with the source's.");
+
     String_registry registry;
     Registry_string_view original_string_view = registry.insert(std::string("test_string")).first;
     Registry_string_view another_string_view = registry.insert(std::string("another_string")).first;

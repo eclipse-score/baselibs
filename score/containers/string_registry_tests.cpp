@@ -23,6 +23,13 @@ namespace score::containers
 
 TEST(StringRegistryTest, InsertMultipleStrings)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__containers__string_registry");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
+    RecordProperty("Description",
+                   "Check that inserting the same std::string twice returns false on the second insert and the same "
+                   "backing storage.");
+
     String_registry registry;
 
     /// Verify the existence of the type cara::core::util::String_registry interface.
@@ -41,6 +48,12 @@ TEST(StringRegistryTest, InsertMultipleStrings)
 
 TEST(StringRegistryTest, InsertMultipleStringViews)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__containers__string_registry");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
+    RecordProperty("Description",
+                   "Check that inserting equal std::string_views deduplicates to a single backing entry.");
+
     String_registry registry;
     const std::string_view string_view("TestString");
     const std::string_view second_string_view("TestString");
@@ -67,6 +80,13 @@ TEST(StringRegistryTest, InsertMultipleStringViews)
 
 TEST(StringRegistryTest, InsertMultipleStringViewLiterals)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__containers__string_registry");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
+    RecordProperty("Description",
+                   "Check that Literal_tag insertions of equal string_views deduplicate to a single entry without heap "
+                   "allocation.");
+
     String_registry registry;
     const std::string_view string_view("TestStringLiteral");
     const std::string_view second_string_view("TestStringLiteral");
@@ -94,6 +114,13 @@ TEST(StringRegistryTest, InsertMultipleStringViewLiterals)
 
 TEST(StringRegistryTest, EqualStringsFromSeparateAllocationsArePointerIdentical)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__containers__string_registry");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
+    RecordProperty("Description",
+                   "Check that two independently heap-allocated strings with equal content map to the same backing "
+                   "pointer after registry insertion.");
+
     String_registry registry;
 
     // Two independently heap-allocated strings with equal content
@@ -110,6 +137,13 @@ TEST(StringRegistryTest, EqualStringsFromSeparateAllocationsArePointerIdentical)
 
 TEST(StringRegistryTest, StringViewThenStringOverloadYieldPointerIdenticalViews)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__containers__string_registry");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
+    RecordProperty("Description",
+                   "Check that inserting equal content via the string_view and string&& overloads returns the same "
+                   "backing pointer.");
+
     String_registry registry;
 
     // First insertion via string_view: allocates a copy in the registry
@@ -126,6 +160,13 @@ TEST(StringRegistryTest, StringViewThenStringOverloadYieldPointerIdenticalViews)
 
 TEST(StringRegistryTest, LiteralThenStringOverloadYieldPointerIdenticalViews)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__containers__string_registry");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
+    RecordProperty(
+        "Description",
+        "Check that inserting equal content via Literal_tag and string&& overloads returns the same backing pointer.");
+
     String_registry registry;
 
     // Literal_tag insertion: stores a view directly into static storage — no heap allocation
@@ -143,6 +184,13 @@ TEST(StringRegistryTest, LiteralThenStringOverloadYieldPointerIdenticalViews)
 
 TEST(StringRegistryTest, ViewIdentityIsStableAfterRegistryGrowth)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__containers__string_registry");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
+    RecordProperty(
+        "Description",
+        "Check that the backing pointer of a registered string remains stable after the registry grows and rehashes.");
+
     String_registry registry;
 
     const auto [view1, inserted1] = registry.insert(std::string{"Stable"});
@@ -164,6 +212,12 @@ TEST(StringRegistryTest, ViewIdentityIsStableAfterRegistryGrowth)
 
 TEST(StringRegistryTest, SlicedLiteralAndFullStringAreDistinct)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__containers__string_registry");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "boundary-values");
+    RecordProperty("Description",
+                   "Check that a sliced string_view literal and the full string are treated as distinct entries.");
+
     String_registry registry;
 
     // Register only "abc" (first 3 chars of a longer buffer) via Literal_tag
@@ -179,6 +233,13 @@ TEST(StringRegistryTest, SlicedLiteralAndFullStringAreDistinct)
 
 TEST(StringRegistryTest, EmbeddedNulsAreDistinct)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__containers__string_registry");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "boundary-values");
+    RecordProperty("Description",
+                   "Check that strings containing embedded NUL characters are distinct from shorter strings sharing "
+                   "the same prefix.");
+
     String_registry registry;
 
     // Register a 5-char string containing an embedded NUL
