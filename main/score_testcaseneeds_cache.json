@@ -309764,9 +309764,23 @@
     "FullyVerifies": null
   },
   {
-    "name": "JsonWriterDefaultFormattingTest__PrettyPrintsWhenFormattingIsOmitted",
+    "name": "JsonWriterSyncedFileTest__SerializationFailureKeepsTargetUnchanged",
     "file": "score/json/json_writer_test.cpp",
     "line": "255",
+    "result": "passed",
+    "repo_name": "local_repo",
+    "hash": "",
+    "url": "",
+    "TestType": "interface-test",
+    "DerivationTechnique": "error-guessing",
+    "result_text": "",
+    "PartiallyVerifies": "comp_req__json__serialization",
+    "FullyVerifies": null
+  },
+  {
+    "name": "JsonWriterDefaultFormattingTest__PrettyPrintsWhenFormattingIsOmitted",
+    "file": "score/json/json_writer_test.cpp",
+    "line": "280",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -309780,7 +309794,7 @@
   {
     "name": "JsonWriterIntegerTest/0__FormatsIntegralValuesCorrectly",
     "file": "score/json/json_writer_test.cpp",
-    "line": "284",
+    "line": "309",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -309794,7 +309808,7 @@
   {
     "name": "JsonWriterIntegerTest/1__FormatsIntegralValuesCorrectly",
     "file": "score/json/json_writer_test.cpp",
-    "line": "284",
+    "line": "309",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -309808,7 +309822,7 @@
   {
     "name": "JsonWriterIntegerTest/2__FormatsIntegralValuesCorrectly",
     "file": "score/json/json_writer_test.cpp",
-    "line": "284",
+    "line": "309",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -309822,7 +309836,7 @@
   {
     "name": "JsonWriterIntegerTest/3__FormatsIntegralValuesCorrectly",
     "file": "score/json/json_writer_test.cpp",
-    "line": "284",
+    "line": "309",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -321090,6 +321104,20 @@
     "FullyVerifies": null
   },
   {
+    "name": "FileBufTest__DiscardClosesFile",
+    "file": "score/filesystem/filestream/file_buf_test.cpp",
+    "line": "116",
+    "result": "passed",
+    "repo_name": "local_repo",
+    "hash": "",
+    "url": "",
+    "TestType": "interface-test",
+    "DerivationTechnique": "requirements-analysis",
+    "result_text": "",
+    "PartiallyVerifies": "comp_req__filesystem__file_io",
+    "FullyVerifies": null
+  },
+  {
     "name": "AtomicFileBufTest__TestFailureOnSync",
     "file": "score/filesystem/filestream/file_buf_test.cpp",
     "line": "60",
@@ -321146,9 +321174,51 @@
     "FullyVerifies": null
   },
   {
+    "name": "AtomicFileBufTest__DiscardRemovesTemporaryFileWithoutRename",
+    "file": "score/filesystem/filestream/file_buf_test.cpp",
+    "line": "129",
+    "result": "passed",
+    "repo_name": "local_repo",
+    "hash": "",
+    "url": "",
+    "TestType": "interface-test",
+    "DerivationTechnique": "requirements-analysis",
+    "result_text": "",
+    "PartiallyVerifies": "comp_req__filesystem__file_io",
+    "FullyVerifies": null
+  },
+  {
+    "name": "AtomicFileBufTest__DiscardReportsCloseFailure",
+    "file": "score/filesystem/filestream/file_buf_test.cpp",
+    "line": "147",
+    "result": "passed",
+    "repo_name": "local_repo",
+    "hash": "",
+    "url": "",
+    "TestType": "fault-injection",
+    "DerivationTechnique": "error-guessing",
+    "result_text": "",
+    "PartiallyVerifies": "comp_req__filesystem__file_io",
+    "FullyVerifies": null
+  },
+  {
+    "name": "AtomicFileBufTest__DiscardOnClosedFileDoesNothing",
+    "file": "score/filesystem/filestream/file_buf_test.cpp",
+    "line": "165",
+    "result": "passed",
+    "repo_name": "local_repo",
+    "hash": "",
+    "url": "",
+    "TestType": "interface-test",
+    "DerivationTechnique": "boundary-values",
+    "result_text": "",
+    "PartiallyVerifies": "comp_req__filesystem__file_io",
+    "FullyVerifies": null
+  },
+  {
     "name": "FileStreamTest__TestNullBuffer",
     "file": "score/filesystem/filestream/file_buf_test.cpp",
-    "line": "116",
+    "line": "179",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -321162,7 +321232,7 @@
   {
     "name": "AtomicFileBufTempFileCleanupTest__CloseFailureRemovesTempFileFromDisk",
     "file": "score/filesystem/filestream/file_buf_test.cpp",
-    "line": "144",
+    "line": "207",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -321176,7 +321246,7 @@
   {
     "name": "AtomicFileBufTempFileCleanupTest__DestructorRemovesTempFileWhenCloseNeverCalled",
     "file": "score/filesystem/filestream/file_buf_test.cpp",
-    "line": "157",
+    "line": "220",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -321190,7 +321260,7 @@
   {
     "name": "AtomicFileBufTempFileCleanupTest__DestructorDoesNothingAfterSuccessfulClose",
     "file": "score/filesystem/filestream/file_buf_test.cpp",
-    "line": "167",
+    "line": "230",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -321258,9 +321328,37 @@
     "FullyVerifies": null
   },
   {
+    "name": "FileFactoryFakeTest__AtomicUpdateOfFailedStreamKeepsContent",
+    "file": "score/filesystem/filestream/file_factory_fake_test.cpp",
+    "line": "53",
+    "result": "passed",
+    "repo_name": "local_repo",
+    "hash": "",
+    "url": "",
+    "TestType": "interface-test",
+    "DerivationTechnique": "error-guessing",
+    "result_text": "",
+    "PartiallyVerifies": "comp_req__filesystem__mock_fake",
+    "FullyVerifies": null
+  },
+  {
+    "name": "FileFactoryFakeTest__AtomicUpdateKeepsContentOfStreamFailingAfterClose",
+    "file": "score/filesystem/filestream/file_factory_fake_test.cpp",
+    "line": "75",
+    "result": "passed",
+    "repo_name": "local_repo",
+    "hash": "",
+    "url": "",
+    "TestType": "interface-test",
+    "DerivationTechnique": "error-guessing",
+    "result_text": "",
+    "PartiallyVerifies": "comp_req__filesystem__mock_fake",
+    "FullyVerifies": null
+  },
+  {
     "name": "FileFactoryTest__OpensFile",
     "file": "score/filesystem/filestream/file_factory_test.cpp",
-    "line": "90",
+    "line": "95",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -321274,7 +321372,7 @@
   {
     "name": "FileFactoryTest__OpensFileForAppending",
     "file": "score/filesystem/filestream/file_factory_test.cpp",
-    "line": "101",
+    "line": "106",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -321288,7 +321386,7 @@
   {
     "name": "FileFactoryTest__OpensNonExistingFile",
     "file": "score/filesystem/filestream/file_factory_test.cpp",
-    "line": "112",
+    "line": "117",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -321302,7 +321400,7 @@
   {
     "name": "FileFactoryTest__OpenForAtomicUpdate",
     "file": "score/filesystem/filestream/file_factory_test.cpp",
-    "line": "120",
+    "line": "125",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -321316,7 +321414,7 @@
   {
     "name": "FileFactoryTest__AtomicUpdateInvalidMode",
     "file": "score/filesystem/filestream/file_factory_test.cpp",
-    "line": "148",
+    "line": "153",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -321330,7 +321428,7 @@
   {
     "name": "FileFactoryTest__OldContentVisibleBeforeAtomicObjectGetsDeleted",
     "file": "score/filesystem/filestream/file_factory_test.cpp",
-    "line": "158",
+    "line": "163",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -321344,7 +321442,7 @@
   {
     "name": "FileFactoryTest__ErrorOnFailingAtomicUpdate",
     "file": "score/filesystem/filestream/file_factory_test.cpp",
-    "line": "199",
+    "line": "284",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -321358,7 +321456,7 @@
   {
     "name": "FileFactoryTest__AtomicUpdateWithEmptyPath",
     "file": "score/filesystem/filestream/file_factory_test.cpp",
-    "line": "214",
+    "line": "299",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -321370,9 +321468,37 @@
     "FullyVerifies": null
   },
   {
+    "name": "FileFactoryFailedAtomicUpdateTest__CloseKeepsTargetUnchanged",
+    "file": "score/filesystem/filestream/file_factory_test.cpp",
+    "line": "242",
+    "result": "passed",
+    "repo_name": "local_repo",
+    "hash": "",
+    "url": "",
+    "TestType": "interface-test",
+    "DerivationTechnique": "error-guessing",
+    "result_text": "",
+    "PartiallyVerifies": "comp_req__filesystem__file_io",
+    "FullyVerifies": null
+  },
+  {
+    "name": "FileFactoryFailedAtomicUpdateTest__DestructionKeepsTargetUnchanged",
+    "file": "score/filesystem/filestream/file_factory_test.cpp",
+    "line": "264",
+    "result": "passed",
+    "repo_name": "local_repo",
+    "hash": "",
+    "url": "",
+    "TestType": "interface-test",
+    "DerivationTechnique": "error-guessing",
+    "result_text": "",
+    "PartiallyVerifies": "comp_req__filesystem__file_io",
+    "FullyVerifies": null
+  },
+  {
     "name": "FileFactoryTestWithFcntlMock__OpenFileHandleFailedOnOpen",
     "file": "score/filesystem/filestream/file_factory_test.cpp",
-    "line": "227",
+    "line": "312",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -321386,7 +321512,7 @@
   {
     "name": "FileFactoryTestWithFcntlMock__OpenFileHandleFailedOnOpen_AppendMode",
     "file": "score/filesystem/filestream/file_factory_test.cpp",
-    "line": "243",
+    "line": "328",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -321400,7 +321526,7 @@
   {
     "name": "FileFactoryTestWithFcntlMock__AtomicUpdateFileHandleFailedOnOpen",
     "file": "score/filesystem/filestream/file_factory_test.cpp",
-    "line": "259",
+    "line": "344",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -321414,7 +321540,7 @@
   {
     "name": "FileFactoryTestWithStatMock__AtomicUpdateFileHandleFailedOnStat",
     "file": "score/filesystem/filestream/file_factory_test.cpp",
-    "line": "271",
+    "line": "356",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -321428,7 +321554,7 @@
   {
     "name": "FileFactoryTestWithStatMock__OpenForAtomicUpdateWithOwnershipChange",
     "file": "score/filesystem/filestream/file_factory_test.cpp",
-    "line": "282",
+    "line": "367",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -321442,7 +321568,7 @@
   {
     "name": "FileFactoryTestWithStatMock__AtomicUpdateFileHandleFailedOnChown",
     "file": "score/filesystem/filestream/file_factory_test.cpp",
-    "line": "307",
+    "line": "392",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -321456,7 +321582,7 @@
   {
     "name": "FileFactoryTestWithStatMock__AtomicUpdateFailsWhenWriteAccessDenied",
     "file": "score/filesystem/filestream/file_factory_test.cpp",
-    "line": "328",
+    "line": "413",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -321470,7 +321596,7 @@
   {
     "name": "FileFactoryTestWithStatMock__AtomicUpdateSucceedsWhenWriteAccessGranted",
     "file": "score/filesystem/filestream/file_factory_test.cpp",
-    "line": "350",
+    "line": "435",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -321484,7 +321610,7 @@
   {
     "name": "FileFactoryTestWithStatMock__AtomicUpdateFailsOnNonRegularFile",
     "file": "score/filesystem/filestream/file_factory_test.cpp",
-    "line": "371",
+    "line": "456",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -321498,7 +321624,7 @@
   {
     "name": "FileFactoryHelpersTest__ComposeTempFilenameUsesAllParameters",
     "file": "score/filesystem/filestream/file_factory_test.cpp",
-    "line": "390",
+    "line": "475",
     "result": "passed",
     "repo_name": null,
     "hash": null,
