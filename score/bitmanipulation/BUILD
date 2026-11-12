@@ -15,13 +15,17 @@ load("@rules_cc//cc:defs.bzl", "cc_library", "cc_test")
 load("@score_baselibs//score/language/safecpp:toolchain_features.bzl", "COMPILER_WARNING_FEATURES")
 load("@score_docs_as_code//:docs.bzl", "docs_bundle")
 
-# Unit designs, public API and dynamic view: documented in docs/architecture, validated by //dependable_element.
+# Unit designs, public API, dynamic view and fault trees: documented in docs/, validated by //dependable_element.
 exports_files(
     [
         "docs/architecture/bit_manipulation.puml",
         "docs/architecture/bitmask_operators.puml",
         "docs/architecture/dynamic.puml",
         "docs/architecture/public_api.puml",
+        "docs/safety_analysis/fta_constraints.puml",
+        "docs/safety_analysis/fta_late_return.puml",
+        "docs/safety_analysis/fta_no_return.puml",
+        "docs/safety_analysis/fta_wrong_input.puml",
     ],
     visibility = ["//dependable_element:__pkg__"],
 )

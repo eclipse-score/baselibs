@@ -20,8 +20,12 @@ load(
     "architectural_design",
     "component",
     "component_requirements",
+    "dependability_analysis",
     "dependable_element",
+    "failure_modes",
+    "fault_trees",
     "feature_requirements",
+    "safety_analysis",
     "unit",
     "unit_design",
 )
@@ -86,11 +90,45 @@ architectural_design(
     static = ["//:docs/module/dependable_element.puml"],
 )
 
+# The FMEA stays Sphinx-Needs (comp_saf_fmea); fault trees reference its needs by ID.
+failure_modes(
+    name = "bitmanipulation_failure_modes",
+    needs = ["//score/bitmanipulation:docs"],
+    package = "BitmanipulationFmea",
+    deps = [":architectural_design"],
+)
+
+fault_trees(
+    name = "bitmanipulation_fault_trees",
+    srcs = [
+        "//score/bitmanipulation:docs/safety_analysis/fta_constraints.puml",
+        "//score/bitmanipulation:docs/safety_analysis/fta_late_return.puml",
+        "//score/bitmanipulation:docs/safety_analysis/fta_no_return.puml",
+        "//score/bitmanipulation:docs/safety_analysis/fta_wrong_input.puml",
+    ],
+    fta_package = "BitmanipulationFta",
+    deps = [":bitmanipulation_failure_modes"],
+)
+
+# Without TRLC assessments, each FMEA need rated sufficient assesses its root causes.
+safety_analysis(
+    name = "bitmanipulation_safety_analysis",
+    failure_modes = [":bitmanipulation_failure_modes"],
+    fault_trees = ":bitmanipulation_fault_trees",
+    safety_measures = [":bitmanipulation_requirements"],
+)
+
+dependability_analysis(
+    name = "bitmanipulation_dependability_analysis",
+    arch_design = ":architectural_design",
+    safety_analysis = [":bitmanipulation_safety_analysis"],
+)
+
 dependable_element(
     name = "baselibs",
     architectural_design = [":architectural_design"],
     components = [":bitmanipulation"],
-    dependability_analysis = [],
+    dependability_analysis = [":bitmanipulation_dependability_analysis"],
     # Documented by //:docs, which imports :baselibs_needs.json.
     docs = False,
     integrity_level = "B",
