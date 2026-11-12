@@ -47,6 +47,13 @@ cc_library(
         "null.h",
         "number.h",
         "object.h",
+        # Deprecated forwarding headers, kept so existing includes keep compiling.
+        # Remove them in a future breaking release.
+        "internal/model/any.h",
+        "internal/model/error.h",
+        "internal/model/null.h",
+        "internal/model/number.h",
+        "internal/model/object.h",
     ],
     features = COMPILER_WARNING_FEATURES,
     tags = ["FFI"],

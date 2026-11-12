@@ -18,6 +18,7 @@
   - [Requirements](#requirements)
   - [Assumptions of Use](#assumptions-of-use)
   - [Deprecated `base_library` flag](#deprecated-base_library-flag)
+  - [Deprecated `internal/model` headers](#deprecated-internalmodel-headers)
 
 This JSON library is designed as an abstraction layer over the underlying JSON implementation. At the moment it
 uses vaJson from Vector for parsing, which is ASIL D certified. Serialization is built on the vaJson writer.
@@ -438,3 +439,9 @@ The `base_library` flag (and its `nlohmann` value) no longer has any effect: vaJ
 The flag is kept, as a deprecated no-op, only so that consumers who still pass it on the command line or in their
 `.bazelrc` don't hit a hard build failure. Remove it from your build configuration; it will be deleted in a future
 release.
+
+## Deprecated `internal/model` headers
+
+The headers in `score/json/internal/model/` are deprecated and only forward to the data model headers `score/json/any.h`, `score/json/error.h`, `score/json/null.h`, `score/json/number.h`, and `score/json/object.h`.
+They are kept so that existing includes keep compiling; including one of them emits a deprecation warning.
+Include the headers from `score/json/` instead; the deprecated headers will be deleted in a future breaking release.
