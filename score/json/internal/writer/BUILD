@@ -11,7 +11,8 @@
 # SPDX-License-Identifier: Apache-2.0
 # *******************************************************************************
 
-load("@rules_cc//cc:defs.bzl", "cc_library", "cc_test")
+load("@rules_cc//cc:defs.bzl", "cc_library")
+load("@score_baselibs//:bazel/unit_tests.bzl", "cc_gtest_unit_test")
 load("@score_baselibs//score/language/safecpp:toolchain_features.bzl", "COMPILER_WARNING_FEATURES")
 
 cc_library(
@@ -20,7 +21,8 @@ cc_library(
     hdrs = ["serializer.h"],
     features = COMPILER_WARNING_FEATURES,
     implementation_deps = [
-        "@score_baselibs//score/json/internal/writer/vajson:any_serializer",
+        "@score_baselibs//score/json/internal/writer/vajson:formatting_writer",
+        "@score_baselibs//score/language/futurecpp",
     ],
     tags = ["FFI"],
     visibility = ["@score_baselibs//score/json:__pkg__"],
@@ -31,13 +33,9 @@ cc_library(
     ],
 )
 
-cc_test(
+cc_gtest_unit_test(
     name = "serializer_test",
     srcs = ["serializer_test.cpp"],
-    features = COMPILER_WARNING_FEATURES + ["aborts_upon_exception"],
-    tags = ["unit"],
-    deps = [
-        ":serializer",
-        "@googletest//:gtest_main",
-    ],
+    features = COMPILER_WARNING_FEATURES,
+    deps = [":serializer"],
 )

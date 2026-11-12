@@ -27,14 +27,7 @@ cc_library(
     hdrs = ["endianness.h"],
     features = COMPILER_WARNING_FEATURES,
     tags = ["FFI"],
-    visibility = [
-        # Coverage scope root (//tools/coverage, eclipse-score/baselibs#512):
-        # endianness is a dependency-forest root; everything else in this
-        # package is reached transitively or keeps the package default.
-        "//tools/coverage:__pkg__",
-        "@score_baselibs//score/memory:__subpackages__",
-        "@score_baselibs//score/serialization:__subpackages__",
-    ],
+    visibility = ["//visibility:public"],
     deps = ["@score_baselibs//score/language/futurecpp"],
 )
 
@@ -125,7 +118,7 @@ docs_bundle(
         ":endianness",
         ":pmr_ring_buffer",
     ],
-    primary_need_id = "comp__baselibs_memory_shared",
+    primary_need_id = "comp__baselibs_memory",
     source_dir = "docs",
     visibility = ["//visibility:public"],
 )

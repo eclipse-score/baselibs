@@ -64,6 +64,7 @@ The static design is divided into five main parts:
 2. Backend
    Abstracts the storage and transport of log data. A `Backend` (defined in `detail/backend.h`) manages slot allocation and flushing. Concrete implementations include:
    - `DataRouterBackend` — Transmits log entries to the DataRouter via shared memory for remote DLT logging.
+   - `DltTraceBackend` — Second-generation remote DLT backend ("DLTv2") that forwards log entries to the Generic Trace Library (GTL); selected in place of `DataRouterBackend` when the `shm_dma_enabled` flag is set. See [backend/dlt_trace_backend.md](./backend/dlt_trace_backend.md).
    - `FileOutputBackend` — Writes log entries to local files.
    - `SlogBackend` — Forwards log entries to the QNX `slog2` system logger (QNX-only).
 
@@ -95,6 +96,7 @@ The following concrete `Recorder` implementations exist:
 | Recorder | Purpose | Backend / Transport |
 |---|---|---|
 | `DataRouterRecorder` | Remote DLT logging via DataRouter shared memory | `DataRouterBackend` |
+| `DltTraceRecorder` | Remote DLT logging via the Generic Trace Library ("DLTv2", `shm_dma_enabled`) | `DltTraceBackend` |
 | `TextRecorder` | Human-readable text output (console, system logger) | `FileOutputBackend` / stdout |
 | `FileRecorder` | DLT-formatted file logging | DLT file writer |
 | `CompositeRecorder` | Multiplexes log entries to one or more child recorders | Delegates to children |
@@ -211,4 +213,4 @@ bazel query 'kind("cc_library", deps(@score_baselibs//score/mw/log))'
 - [registry_aware_recorder_factory.md](./registry_aware_recorder_factory.md) — Backend plugin system, Bazel targets, fallback behaviour, and guide for adding new backends.
 - [configuration_design.md](./configuration_design.md) — Configuration file discovery, loading, and class design.
 - [dependency_graph.md](./dependency_graph.md) — Frontend-to-backend dependency boundaries and the one-way dependency principle.
-- [backend/](./backend/) — Per-backend design documents (DataRouter, file output).
+- [backend/](./backend/) — Per-backend design documents (DataRouter, DLT trace / DLTv2, file output).

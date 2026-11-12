@@ -197,8 +197,10 @@ class Synchronized
      * @param f The callable to invoke with the locked pointer.
      * @return The result of invoking f.
      * @remarks f has exclusive thread-safe mutable access to the synchronized object.
+     * @deprecated Use lock() and the returned pointer's and_then(), transform(), or or_else() instead.
      */
     template <typename Func, typename = std::enable_if_t<std::is_invocable_v<Func, pointer>>>
+    [[deprecated("Use lock() with and_then(), transform(), or or_else() instead.")]]
     auto WithLock(Func&& f)
     {
         return std::invoke(std::forward<Func>(f), lock());
@@ -211,10 +213,12 @@ class Synchronized
      * @param f The callable to invoke with the locked const pointer.
      * @return The result of invoking f.
      * @remarks f has exclusive thread-safe const access to the synchronized object.
+     * @deprecated Use lock() and the returned const_pointer's and_then(), transform(), or or_else() instead.
      */
     template <typename Func, typename = std::enable_if_t<std::is_invocable_v<Func, const_pointer>>>
     // Forwarding reference overload intentional: const/non-const dispatch
     // coverity[autosar_cpp14_a13_3_1_violation]
+    [[deprecated("Use lock() with and_then(), transform(), or or_else() instead.")]]
     auto WithLock(Func&& f) const
     {
         return std::invoke(std::forward<Func>(f), lock());

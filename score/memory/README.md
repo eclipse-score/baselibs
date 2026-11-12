@@ -1,6 +1,3 @@
 # Memory
 
-We need different utility libraries to handle memory. One of them being custom allocators but also handling shared
-memory is a common problem.
-
-This library shall be a single place to abstract common memory related use-cases.
+This component provides endianness utilities, `DataTypeSizeInfo` for size and alignment information, and `PmrRingBuffer<T>` for a PMR-aware queue with construction-time capacity.

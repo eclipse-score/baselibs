@@ -32,7 +32,6 @@ on:
 permissions:
   contents: read
   pull-requests: read
-  actions: write
 concurrency:
   group: coverage-qnx-${{ github.event.pull_request.number || github.run_id }}
   cancel-in-progress: ${{ github.event_name == 'pull_request_target' }}
@@ -52,6 +51,11 @@ jobs:
     needs: approval
     if: ${{ !cancelled() && (needs.approval.result == 'success' || needs.approval.result == 'skipped') }}
     runs-on: ubuntu-24.04
+    permissions:
+      contents: read
+      pull-requests: read
+      # Lets setup-bazel-cache delete obsolete disk cache generations.
+      actions: write
     steps:
       - uses: eclipse-score/more-disk-space@3fac5780033e636b114cf69e891dc19d640855c2 # v1.1
         with:
@@ -65,10 +69,17 @@ jobs:
           ref: ${{ github.event.pull_request.head.sha || github.sha }}
           repository: ${{ github.event.pull_request.head.repo.full_name || github.repository }}
           allow-unsafe-pr-checkout: true
+      # The QNX SDP is proprietary and must not end up in the Actions cache.
+      # Its tarball lives in the repository cache and its extraction in the external cache, so both stay off.
+      # The disk cache only holds build outputs and test results, so it is kept.
       - name: Setup Bazel Cache
-        uses: eclipse-score/cicd-actions/setup-bazel-cache@30740c18c728bc58f9b17c914c5592a5008f6b98
+        uses: eclipse-score/cicd-actions/setup-bazel-cache@b04e3349097576dd2f06850c62fb9423515d2963
         with:
           disk-cache-key: ${{ github.job }}
+          repository-cache-restore: false
+          repository-cache-save: false
+          external-cache-restore: false
+          external-cache-save: false
       - uses: eclipse-score/cicd-actions/unblock-user-namespace-for-linux-sandbox@30740c18c728bc58f9b17c914c5592a5008f6b98
       - name: Setup QNX SDP usage
         uses: eclipse-score/cicd-actions/setup-qnx-sdp@30740c18c728bc58f9b17c914c5592a5008f6b98
@@ -78,6 +89,8 @@ jobs:
           qnx-password: ${{ secrets.SCORE_QNX_PASSWORD }}
           qnx-credential-helper: .github/tools/qnx_credential_helper.py
           qnx-license-dir: /opt/score_qnx/license
+      - name: Configure fast APT mirror
+        uses: vegardit/fast-apt-mirror.sh@5861fa3e23a90b3adfbb5e40067d1ed1a054e980 # v1
       - name: Install qemu
         run: |
           sudo apt-get update
@@ -88,10 +101,13 @@ jobs:
           sudo udevadm control --reload-rules
           sudo udevadm trigger --name-match=kvm
       - name: Run Bazel Coverage on QNX (gcov, C++)
+        env:
+          # Read by the QNX SDP fetcher of score_bazel_cpp_toolchains, needs read access to eclipse-score/qnx_sdp_pkg.
+          GH_TOKEN: ${{ secrets.SCORE_BOT_QNX_PKG_PAT }}
         run: |
           set -euo pipefail
-          bazel coverage --lockfile_mode=error --config=qnx_cov --build_tests_only \
-            --credential_helper=*.qnx.com="${QNX_CREDENTIAL_HELPER}" -- //score/... \
+          bazel coverage --lockfile_mode=error --config=qnx_cov_sdp_8.0.5 --build_tests_only \
+            -- //score/... \
             -//score/language/futurecpp/tests:memory_resource_test \
             -//score/os/test:asil_qm_test \
             -//score/os/test:grp_test

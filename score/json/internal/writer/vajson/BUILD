@@ -15,18 +15,15 @@ load("@rules_cc//cc:defs.bzl", "cc_library")
 load("@score_baselibs//score/language/safecpp:toolchain_features.bzl", "COMPILER_WARNING_FEATURES")
 
 cc_library(
-    name = "any_serializer",
-    hdrs = ["any_serializer.h"] + glob([
-        "writer/**/*.h",
-    ]),
+    name = "formatting_writer",
+    hdrs = [
+        "escaped_json_string.h",
+        "formatting_writer.h",
+    ],
     features = COMPILER_WARNING_FEATURES,
     tags = ["FFI"],
     visibility = ["@score_baselibs//score/json/internal/writer:__pkg__"],
     deps = [
         "@score_baselibs//score/json:formatting",
-        "@score_baselibs//score/json/internal/model",
-        "@score_baselibs//score/json/internal/parser/vajson",
-        "@score_baselibs//score/language/futurecpp",
-        "@score_baselibs//score/string_manipulation:string_comparison_adaptor",
     ],
 )

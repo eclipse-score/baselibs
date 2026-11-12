@@ -48,6 +48,9 @@ class SerializationErrorDomain final : public score::result::ErrorDomain
             case SerializationError::kNotAllDataDeserialized:
                 return "Some data still left in input buffer after deserialization!";
             // coverity[autosar_cpp14_m6_4_5_violation]
+            case SerializationError::kDeserializedCountExceedsCapacity:
+                return "Deserialized element count exceeds the container's fixed capacity!";
+            // coverity[autosar_cpp14_m6_4_5_violation]
             default:
                 return "Unknown Error!";
         }

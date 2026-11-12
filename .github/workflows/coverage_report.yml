@@ -15,13 +15,7 @@ permissions:
   contents: read
   actions: write
 on:
-  pull_request:
-    types: [opened, reopened, synchronize]
-  push:
-    branches:
-      - main
-  merge_group:
-    types: [checks_requested]
+  workflow_dispatch:
   workflow_call:
 jobs:
   coverage-report:
@@ -61,12 +55,14 @@ jobs:
           bazel run --lockfile_mode=error @score_coverage//:generate_coverage_html -- \
             --yaml tools/coverage/coverage_justifications.yaml \
             --testlogs-subdir score \
-            --archive-dir coverage_artifact
+            --archive-dir coverage-report
       - name: Upload Coverage Artifacts
+        if: ${{ !cancelled() }}
         uses: actions/upload-artifact@v6
         with:
           # Name kept from the gcov flow: release.yml downloads it by name.
           name: ${{ github.event.repository.name }}_cpp_coverage_report
-          path: coverage_artifact/
+          path: coverage-report/
           include-hidden-files: true
           retention-days: 10
+          if-no-files-found: error

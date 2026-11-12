@@ -56,29 +56,38 @@ TEST_F(TypedHashFixture, GetBytesAsSpan)
 
 TEST(TypedHashTest, CanCreateFromValidString)
 {
-    RecordProperty("PartiallyVerifies", "comp_req__hash__value_retrieval_hex");
+    RecordProperty("PartiallyVerifies", "comp_req__hash__value_retrieval_hex, comp_req__hash__sha_algorithms");
     RecordProperty("TestType", "requirements-based");
     RecordProperty("DerivationTechnique", "equivalence-classes");
     RecordProperty("Description",
                    "Check that TypedHash::FromString() parses a valid hex digest string into a TypedHash with "
-                   "the correct bytes, and ToString() round-trips back to the same string.");
+                   "the correct bytes and round-trips to the same string, and rejects the former SHA-1 numeric "
+                   "identifier.");
 
-    const score::cpp::pmr::string sha1{"89fdde0b28373dc4f361cfb810b35342cc2c3232"};
-    Hash::ByteVector expected_bytes = {0x89, 0xFD, 0xDE, 0x0B, 0x28, 0x37, 0x3D, 0xC4, 0xF3, 0x61,
-                                       0xCF, 0xB8, 0x10, 0xB3, 0x53, 0x42, 0xCC, 0x2C, 0x32, 0x32};
+    const score::cpp::pmr::string sha256{"ff18256292f5f2ba5261b55940cdf1125ce30e97c22ace6afa54b7af3872c351"};
+    Hash::ByteVector expected_bytes = {0xFF, 0x18, 0x25, 0x62, 0x92, 0xF5, 0xF2, 0xBA, 0x52, 0x61, 0xB5,
+                                       0x59, 0x40, 0xCD, 0xF1, 0x12, 0x5C, 0xE3, 0x0E, 0x97, 0xC2, 0x2A,
+                                       0xCE, 0x6A, 0xFA, 0x54, 0xB7, 0xAF, 0x38, 0x72, 0xC3, 0x51};
 
-    Result<TypedHash<HashAlgorithm::kSha1>> sha1_hash_result = TypedHash<HashAlgorithm::kSha1>::FromString(sha1);
-    ASSERT_TRUE(sha1_hash_result.has_value());
+    Result<TypedHash<HashAlgorithm::kSha256>> sha256_hash_result =
+        TypedHash<HashAlgorithm::kSha256>::FromString(sha256);
+    ASSERT_TRUE(sha256_hash_result.has_value());
 
-    TypedHash<HashAlgorithm::kSha1> sha1_hash = sha1_hash_result.value();
-    auto result = sha1_hash.GetBytes();
+    TypedHash<HashAlgorithm::kSha256> sha256_hash = sha256_hash_result.value();
+    auto result = sha256_hash.GetBytes();
     EXPECT_TRUE(std::equal(result.begin(), result.end(), expected_bytes.begin(), expected_bytes.end()));
 
-    score::cpp::pmr::string result_str = sha1_hash.ToString();
-    EXPECT_EQ(result_str, sha1);
+    score::cpp::pmr::string result_str = sha256_hash.ToString();
+    EXPECT_EQ(result_str, sha256);
 
-    Hash sha1_hash_nontyped{HashAlgorithm::kSha1, expected_bytes};
-    EXPECT_EQ(sha1_hash_nontyped, sha1_hash.ToHash());
+    Hash sha256_hash_nontyped{HashAlgorithm::kSha256, expected_bytes};
+    EXPECT_EQ(sha256_hash_nontyped, sha256_hash.ToHash());
+
+    constexpr auto kLegacySha1Algorithm{static_cast<HashAlgorithm>(1U)};
+    using LegacySha1Hash = TypedHash<kLegacySha1Algorithm>;
+    const score::cpp::pmr::string legacy_sha1{"89fdde0b28373dc4f361cfb810b35342cc2c3232"};
+    const auto legacy_sha1_result{LegacySha1Hash::FromString(legacy_sha1)};
+    EXPECT_FALSE(legacy_sha1_result.has_value());
 }
 
 TEST(TypedHashTest, ToStringEmptyValueTest)

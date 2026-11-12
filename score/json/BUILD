@@ -13,6 +13,7 @@
 
 load("@bazel_skylib//rules:common_settings.bzl", "string_flag")
 load("@rules_cc//cc:defs.bzl", "cc_library", "cc_test")
+load("@score_baselibs//:bazel/unit_tests.bzl", "cc_gtest_unit_test")
 load("@score_baselibs//score/language/safecpp:toolchain_features.bzl", "COMPILER_WARNING_FEATURES")
 load("@score_docs_as_code//:docs.bzl", "docs_bundle")
 
@@ -199,22 +200,18 @@ cc_test(
     ],
 )
 
-# The coverage tool only picks up this test when it lives in the same directory as json_writer.cpp.
-cc_test(
-    name = "json_writer_unit_test",
-    srcs = [
-        "json_writer_test.cpp",
-    ],
-    features = COMPILER_WARNING_FEATURES + [
-        "test_warnings",
-        "aborts_upon_exception",
-    ],
-    tags = ["unit"],
-    visibility = [
-        "@score_baselibs//score/json:__pkg__",
-    ],
+cc_gtest_unit_test(
+    name = "json_parser_test",
+    srcs = ["json_parser_test.cpp"],
+    features = COMPILER_WARNING_FEATURES,
+    deps = [":json"],
+)
+
+cc_gtest_unit_test(
+    name = "json_writer_test",
+    srcs = ["json_writer_test.cpp"],
+    features = COMPILER_WARNING_FEATURES + ["test_warnings"],
     deps = [
-        "@googletest//:gtest_main",
         "@score_baselibs//score/filesystem:mock",
         "@score_baselibs//score/json",
     ],

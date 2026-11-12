@@ -15,7 +15,14 @@ module(name = "score_baselibs")
 
 ## Configure the C++ toolchain
 
-bazel_dep(name = "score_bazel_cpp_toolchains", version = "1.0.5", dev_dependency = True)
+# Toolchain dependencies.
+bazel_dep(name = "score_bazel_cpp_toolchains", version = "1.1.0-rc1", dev_dependency = True)
+
+bazel_dep(name = "score_bazel_platforms", version = "1.1.0")
+bazel_dep(name = "platforms", version = "1.1.0")
+
+bazel_dep(name = "score_toolchains_rust", version = "0.10.0", dev_dependency = True)
+bazel_dep(name = "score_rules_imagefs", version = "0.1.0", dev_dependency = True)
 bazel_dep(name = "score_cpp_policies", version = "0.1.2", dev_dependency = True)
 
 # score_bazel_cpp_toolchains 1.0.0 removed its built-in warning features; inject them instead.
@@ -39,6 +46,7 @@ GCC_SANITIZER_FEATURES = SANITIZER_FEATURES + ["@score_cpp_policies//sanitizers/
 
 LLVM_SANITIZER_FEATURES = SANITIZER_FEATURES + ["@score_cpp_policies//sanitizers/features:ubsan_clang"]
 
+# Linux C++ toolchains.
 gcc = use_extension("@score_bazel_cpp_toolchains//extensions:gcc.bzl", "gcc", dev_dependency = True)
 gcc.toolchain(
     name = "score_gcc_x86_64_toolchain",
@@ -56,6 +64,8 @@ gcc.toolchain(
     use_default_package = True,
     version = "12.2.0",
 )
+
+# QNX C++ toolchains.
 gcc.toolchain(
     name = "score_qcc_x86_64_toolchain",
     extra_known_features = WARNING_FEATURES + GCC_SANITIZER_FEATURES,
@@ -74,22 +84,39 @@ gcc.toolchain(
     use_default_package = True,
     version = "12.2.0",
 )
+gcc.toolchain(
+    name = "score_qcc_x86_64_toolchain_805",
+    extra_known_features = WARNING_FEATURES + GCC_SANITIZER_FEATURES,
+    sdp_version = "8.0.5",
+    target_cpu = "x86_64",
+    target_os = "qnx",
+    use_default_package = True,
+)
+gcc.toolchain(
+    name = "score_qcc_aarch64_toolchain_805",
+    extra_known_features = WARNING_FEATURES + GCC_SANITIZER_FEATURES,
+    sdp_version = "8.0.5",
+    target_cpu = "aarch64",
+    target_os = "qnx",
+    use_default_package = True,
+)
 use_repo(
     gcc,
+    "qnx_sdp_8_0_4_pkg",
+    "qnx_sdp_8_0_5_pkg",
     "score_gcc_aarch64_toolchain",
     "score_gcc_x86_64_toolchain",
     "score_qcc_aarch64_toolchain",
-    "score_qcc_aarch64_toolchain_pkg",
+    "score_qcc_aarch64_toolchain_805",
     "score_qcc_x86_64_toolchain",
-    "score_qcc_x86_64_toolchain_pkg",
+    "score_qcc_x86_64_toolchain_805",
 )
 
-bazel_dep(name = "score_rules_imagefs", version = "0.1.0", dev_dependency = True)
-
+# QNX image toolchains.
 imagefs = use_extension("@score_rules_imagefs//extensions:imagefs.bzl", "imagefs", dev_dependency = True)
 imagefs.toolchain(
     name = "score_qnx_x86_64_ifs_toolchain",
-    sdp_to_import = "@score_qcc_x86_64_toolchain_pkg",
+    sdp_to_import = "@qnx_sdp_8_0_4_pkg",
     sdp_version = "8.0.0",
     target_cpu = "x86_64",
     target_os = "qnx",
@@ -97,13 +124,35 @@ imagefs.toolchain(
 )
 imagefs.toolchain(
     name = "score_qnx_aarch64_ifs_toolchain",
-    sdp_to_import = "@score_qcc_aarch64_toolchain_pkg",
+    sdp_to_import = "@qnx_sdp_8_0_4_pkg",
     sdp_version = "8.0.0",
     target_cpu = "aarch64",
     target_os = "qnx",
     type = "ifs",
 )
-use_repo(imagefs, "score_qnx_aarch64_ifs_toolchain", "score_qnx_x86_64_ifs_toolchain")
+imagefs.toolchain(
+    name = "score_qnx_x86_64_ifs_toolchain_805",
+    sdp_to_import = "@qnx_sdp_8_0_5_pkg",
+    sdp_version = "8.0.0",
+    target_cpu = "x86_64",
+    target_os = "qnx",
+    type = "ifs",
+)
+imagefs.toolchain(
+    name = "score_qnx_aarch64_ifs_toolchain_805",
+    sdp_to_import = "@qnx_sdp_8_0_5_pkg",
+    sdp_version = "8.0.0",
+    target_cpu = "aarch64",
+    target_os = "qnx",
+    type = "ifs",
+)
+use_repo(
+    imagefs,
+    "score_qnx_aarch64_ifs_toolchain",
+    "score_qnx_aarch64_ifs_toolchain_805",
+    "score_qnx_x86_64_ifs_toolchain",
+    "score_qnx_x86_64_ifs_toolchain_805",
+)
 
 bazel_dep(name = "googletest", version = "1.17.0.bcr.2")
 bazel_dep(name = "google_benchmark", version = "1.9.5")
@@ -118,14 +167,12 @@ bazel_dep(name = "score_rust_policies", version = "0.0.5")
 bazel_dep(name = "score_crates", version = "0.0.13")
 bazel_dep(name = "cxx.rs", version = "1.0.186")
 
-bazel_dep(name = "score_toolchains_rust", version = "0.10.0", dev_dependency = True)
-
 ## Custom Module Loading
 
 bazel_dep(name = "score_docs_as_code", version = "8.6.0")
 bazel_dep(name = "score_process_description", version = "2.2.2")
 
-bazel_dep(name = "score_tooling", version = "3.0.1", dev_dependency = True)
+bazel_dep(name = "score_tooling", version = "3.0.2", dev_dependency = True)
 
 # LLVM source-based coverage pipeline (successor of @score_tooling//coverage),
 # see tools/coverage/. 0.2.0 fixes eclipse-score/baselibs#558 and
@@ -151,7 +198,7 @@ python.toolchain(
 bazel_dep(name = "aspect_rules_py", version = "1.6.3", dev_dependency = True)
 bazel_dep(name = "buildifier_prebuilt", version = "8.5.1", dev_dependency = True)
 bazel_dep(name = "aspect_rules_lint", version = "2.5.0", dev_dependency = True)
-bazel_dep(name = "score_qnx_unit_tests", version = "0.2.0", dev_dependency = True)
+bazel_dep(name = "score_qnx_unit_tests", version = "0.3.0", dev_dependency = True)
 bazel_dep(name = "toolchains_llvm", version = "1.8.0", dev_dependency = True)
 
 llvm = use_extension("@toolchains_llvm//toolchain/extensions:llvm.bzl", "llvm", dev_dependency = True)
@@ -234,11 +281,3 @@ git_override(
     patches = ["//patches:hedron_compile_commands_env_vars.patch"],
     remote = "https://github.com/hedronvision/bazel-compile-commands-extractor.git",
 )
-
-#############################################################
-#
-# Constraint values for specifying platforms and toolchains
-#
-#############################################################
-bazel_dep(name = "platforms", version = "1.1.0")
-bazel_dep(name = "score_bazel_platforms", version = "1.1.0")

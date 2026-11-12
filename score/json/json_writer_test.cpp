@@ -36,7 +36,7 @@ using ::testing::ByMove;
 using ::testing::Return;
 using ::testing::StrEq;
 
-constexpr auto kKeySeparator = "\": ";
+constexpr auto kKeySeparator{"\": "};
 
 class TestJsonList : public json::List
 {
@@ -113,23 +113,23 @@ class JsonWriterWriteToFileTest : public ::testing::Test
         return (kFormatting == Formatting::kCompact) ? SampleJson::kExpectedCompact : SampleJson::kExpectedPrettyPrint;
     }
 
-    score::filesystem::SimpleStringStreamCollection stream{};
-    std::shared_ptr<score::filesystem::FileFactoryFake> file_factory_fake{
-        std::make_shared<score::filesystem::FileFactoryFake>(stream)};
-
     template <typename Json, typename... OpenArgs>
     std::string WriteToFile(const Json& json, std::string_view path, FileSyncMode type, OpenArgs&&... open_args)
     {
         score::json::JsonWriter writer{
             type, score::filesystem::kUseTargetFileUID | score::filesystem::kUseTargetFileGID, kFormatting};
         std::string_view path_view{path};
-        auto result = writer.ToFile(json, path_view, file_factory_fake, std::forward<OpenArgs>(open_args)...);
+        auto result{writer.ToFile(json, path_view, file_factory_fake_, std::forward<OpenArgs>(open_args)...)};
 
         EXPECT_EQ(result.has_value(), true);
 
-        auto& file = file_factory_fake->Get("/foo/foo.json");
+        auto& file{file_factory_fake_->Get("/foo/foo.json")};
         return file.str();
     }
+
+    score::filesystem::SimpleStringStreamCollection stream_{};
+    std::shared_ptr<score::filesystem::FileFactoryFake> file_factory_fake_{
+        std::make_shared<score::filesystem::FileFactoryFake>(stream_)};
 };
 
 TYPED_TEST_SUITE(JsonWriterWriteToFileTest, WriterTestCases, );
@@ -147,7 +147,7 @@ TYPED_TEST(JsonWriterWriteToFileTest, ToBuffer)
     score::json::JsonWriter writer{FileSyncMode::kUnsynced,
                                    score::filesystem::kUseTargetFileUID | score::filesystem::kUseTargetFileGID,
                                    TestFixture::kFormatting};
-    std::string buffer = *writer.ToBuffer(json);
+    std::string buffer{*writer.ToBuffer(json)};
 
     EXPECT_EQ(buffer, TestFixture::Expected());
 }
@@ -163,10 +163,10 @@ TYPED_TEST(JsonWriterWriteToFileTest, ToFile)
 
     typename TestFixture::SampleJson json;
 
-    EXPECT_CALL(*this->file_factory_fake, AtomicUpdate(StrEq("/foo/foo.json"), std::ios::out | std::ios::trunc, _))
+    EXPECT_CALL(*this->file_factory_fake_, AtomicUpdate(StrEq("/foo/foo.json"), std::ios::out | std::ios::trunc, _))
         .Times(1);
 
-    auto file_content = this->WriteToFile(json, "/foo/foo.json", FileSyncMode::kSynced);
+    auto file_content{this->WriteToFile(json, "/foo/foo.json", FileSyncMode::kSynced)};
 
     EXPECT_EQ(file_content, TestFixture::Expected());
 }
@@ -182,9 +182,9 @@ TYPED_TEST(JsonWriterWriteToFileTest, ToUnsyncedFile)
 
     typename TestFixture::SampleJson json;
 
-    EXPECT_CALL(*this->file_factory_fake, Open(StrEq("/foo/foo.json"), std::ios::out | std::ios::trunc)).Times(1);
+    EXPECT_CALL(*this->file_factory_fake_, Open(StrEq("/foo/foo.json"), std::ios::out | std::ios::trunc)).Times(1);
 
-    auto file_content = this->WriteToFile(json, "/foo/foo.json", FileSyncMode::kUnsynced);
+    auto file_content{this->WriteToFile(json, "/foo/foo.json", FileSyncMode::kUnsynced)};
 
     EXPECT_EQ(file_content, TestFixture::Expected());
 }
@@ -200,10 +200,10 @@ TYPED_TEST(JsonWriterWriteToFileTest, ToSyncedFile)
 
     typename TestFixture::SampleJson json;
 
-    EXPECT_CALL(*this->file_factory_fake, AtomicUpdate(StrEq("/foo/foo.json"), std::ios::out | std::ios::trunc, _))
+    EXPECT_CALL(*this->file_factory_fake_, AtomicUpdate(StrEq("/foo/foo.json"), std::ios::out | std::ios::trunc, _))
         .Times(1);
 
-    auto file_content = this->WriteToFile(json, "/foo/foo.json", FileSyncMode::kSynced);
+    auto file_content{this->WriteToFile(json, "/foo/foo.json", FileSyncMode::kSynced)};
 
     EXPECT_EQ(file_content, TestFixture::Expected());
 }
@@ -219,12 +219,12 @@ TYPED_TEST(JsonWriterWriteToFileTest, ToUnsyncedFileResultsInError)
 
     typename TestFixture::SampleJson json;
 
-    EXPECT_CALL(*this->file_factory_fake, Open(StrEq("/foo/foo.json"), std::ios::out | std::ios::trunc))
+    EXPECT_CALL(*this->file_factory_fake_, Open(StrEq("/foo/foo.json"), std::ios::out | std::ios::trunc))
         .WillOnce(Return(ByMove(score::MakeUnexpected(score::json::Error::kInvalidFilePath))));
 
     score::json::JsonWriter writer{FileSyncMode::kUnsynced};
     std::string_view path_view{"/foo/foo.json"};
-    auto result = writer.ToFile(json, path_view, this->file_factory_fake);
+    auto result{writer.ToFile(json, path_view, this->file_factory_fake_)};
 
     EXPECT_FALSE(result.has_value());
     EXPECT_EQ(result.error(), score::json::Error::kInvalidFilePath);
@@ -241,12 +241,12 @@ TYPED_TEST(JsonWriterWriteToFileTest, ToSyncedFileResultsInError)
 
     typename TestFixture::SampleJson json;
 
-    EXPECT_CALL(*this->file_factory_fake, AtomicUpdate(StrEq("/foo/foo.json"), std::ios::out | std::ios::trunc, _))
+    EXPECT_CALL(*this->file_factory_fake_, AtomicUpdate(StrEq("/foo/foo.json"), std::ios::out | std::ios::trunc, _))
         .WillOnce(Return(ByMove(score::MakeUnexpected(score::json::Error::kInvalidFilePath))));
 
     score::json::JsonWriter writer{FileSyncMode::kSynced};
     std::string_view path_view{"/foo/foo.json"};
-    auto result = writer.ToFile(json, path_view, this->file_factory_fake);
+    auto result{writer.ToFile(json, path_view, this->file_factory_fake_)};
 
     EXPECT_FALSE(result.has_value());
     EXPECT_EQ(result.error(), score::json::Error::kInvalidFilePath);
@@ -317,9 +317,9 @@ TYPED_TEST(JsonWriterIntegerTest, FormatsIntegralValuesCorrectly)
     score::json::JsonWriter writer{FileSyncMode::kUnsynced,
                                    score::filesystem::kUseTargetFileUID | score::filesystem::kUseTargetFileGID,
                                    Formatting::kPrettyPrint};
-    auto result = writer.ToBuffer(obj);
+    auto result{writer.ToBuffer(obj)};
     ASSERT_TRUE(result.has_value());
-    const std::string json_str = *result;
+    const std::string json_str{*result};
 
     // Verify all values are formatted correctly
     EXPECT_NE(std::string::npos,

@@ -13,12 +13,11 @@
 
 #include "number.h"
 
-#include "score/json/internal/model/lossless_cast.h"
-
+#include <algorithm>
 #include <cstdint>
+#include <functional>
 #include <limits>
 
-#include "score/overload.hpp"
 #include <score/assert.hpp>
 #include <cmath>
 
@@ -26,6 +25,90 @@ namespace score
 {
 namespace json
 {
+namespace
+{
+
+static_assert(std::numeric_limits<float>::is_iec559 && std::numeric_limits<double>::is_iec559, "IEEE-754 required");
+
+// Every integer with a magnitude up to this bound is exactly representable in Floating.
+template <typename Floating>
+constexpr std::uint64_t kMaxExactInteger{std::uint64_t{1} << std::numeric_limits<Floating>::digits};
+
+template <typename Floating>
+constexpr bool IsInfinite(const Floating value) noexcept
+{
+    return (value > std::numeric_limits<Floating>::max()) || (value < std::numeric_limits<Floating>::lowest());
+}
+
+// Returns whether value converts to Out without changing it.
+template <typename Out, typename In>
+constexpr bool IsLosslessCast(const In value) noexcept
+{
+    if constexpr (std::is_same_v<Out, In>)
+    {
+        // Same type: always lossless.
+        return true;
+    }
+    else if constexpr (std::is_same_v<Out, bool>)
+    {
+        // To bool: only 0 and 1.
+        return std::equal_to<In>{}(value, In{0}) || std::equal_to<In>{}(value, In{1});
+    }
+    else if constexpr (std::is_integral_v<In> && std::is_integral_v<Out>)
+    {
+        if constexpr (std::is_signed_v<In> == std::is_signed_v<Out>)
+        {
+            // Same signedness: only widening, decided by type even if the value would fit.
+            return std::numeric_limits<Out>::max() > std::numeric_limits<In>::max();
+        }
+        else if constexpr (std::is_unsigned_v<In>)
+        {
+            // Unsigned to signed: the value must fit.
+            return static_cast<std::uint64_t>(value) <= static_cast<std::uint64_t>(std::numeric_limits<Out>::max());
+        }
+        else
+        {
+            // Signed to unsigned: always rejected.
+            return false;
+        }
+    }
+    else if constexpr (std::is_integral_v<In>)
+    {
+        // Integer to floating point: the whole input type range must be exact, decided by type.
+        constexpr auto kLimit = kMaxExactInteger<Out>;
+        return (static_cast<std::int64_t>(std::numeric_limits<In>::min()) >= -static_cast<std::int64_t>(kLimit)) &&
+               (static_cast<std::uint64_t>(std::numeric_limits<In>::max()) <= kLimit);
+    }
+    else if constexpr (std::is_integral_v<Out>)
+    {
+        // Floating point to integer: the value must be integral and within the exact range of In.
+        // Integral values beyond kMaxExactInteger are rejected, even if exactly representable.
+        constexpr auto kMin = static_cast<In>(std::max(-static_cast<std::int64_t>(kMaxExactInteger<In>),
+                                                       static_cast<std::int64_t>(std::numeric_limits<Out>::min())));
+        constexpr auto kMax = static_cast<In>(
+            std::min(kMaxExactInteger<In>, static_cast<std::uint64_t>(std::numeric_limits<Out>::max())));
+        // The range check makes the cast below defined and also rejects NaN.
+        return (value >= kMin) && (value <= kMax) &&
+               std::equal_to<In>{}(static_cast<In>(static_cast<Out>(value)), value);
+    }
+    else
+    {
+        // Floating point to floating point: precision loss and underflow are accepted, overflow to infinity is not.
+        return IsInfinite(value) || !IsInfinite(static_cast<Out>(value));
+    }
+}
+
+template <typename Out, typename In>
+score::Result<Out> TryLosslessCast(const In value)
+{
+    if (IsLosslessCast<Out>(value))
+    {
+        return static_cast<Out>(value);
+    }
+    return score::MakeUnexpected(Error::kWrongType);
+}
+
+}  // namespace
 
 class VariantComparator
 {
@@ -80,48 +163,12 @@ template <typename T, class>
 // coverity[autosar_cpp14_a15_5_3_violation]
 score::Result<T> Number::As() const noexcept
 {
-    //  we are suppressing clang format here that results in coverity violation:
-    //  "AUTOSAR C++14 A7-1-7" rule finding. This rule states: "Each expression
-    //  statement and identifier declaration shall be placed on a separate line."
-    // clang-format off
-
     SCORE_LANGUAGE_FUTURECPP_ASSERT_PRD(!value_.valueless_by_exception());
     return std::visit(
-        score::cpp::overload(
-            [](const std::uint8_t v) {
-                return TryLosslessCast<T>(v);
-            },
-            [](const std::uint16_t v) {
-                return TryLosslessCast<T>(v);
-            },
-            [](const std::uint32_t v) {
-                return TryLosslessCast<T>(v);
-            },
-            [](const std::uint64_t v) {
-                return TryLosslessCast<T>(v);
-            },
-            [](const std::int8_t v) {
-                return TryLosslessCast<T>(v);
-            },
-            [](const std::int16_t v) {
-                return TryLosslessCast<T>(v);
-            },
-            [](const std::int32_t v) {
-                return TryLosslessCast<T>(v);
-            },
-            [](const std::int64_t v) {
-                return TryLosslessCast<T>(v);
-            },
-            [](const float v) {
-                return TryLosslessCast<T>(v);
-            },
-            [](const double v) {
-                return TryLosslessCast<T>(v);
-            }
-            ),
-        value_
-    );
-    // clang-format on
+        [](const auto v) {
+            return TryLosslessCast<T>(v);
+        },
+        value_);
 }
 
 template score::Result<std::uint64_t> Number::As() const noexcept;

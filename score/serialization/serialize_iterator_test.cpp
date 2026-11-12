@@ -18,6 +18,7 @@
 #include <gtest/gtest.h>
 
 #include <array>
+#include <cstddef>
 #include <cstdint>
 #include <vector>
 
@@ -125,6 +126,66 @@ TYPED_TEST_P(SerializeIteratorFixture, CanIndicateError)
     ASSERT_FALSE(result.has_value());
 }
 
+constexpr std::uint8_t kPlaceholder{0x00U};
+constexpr std::uint8_t kPatchedValue{0x01U};
+constexpr std::uint8_t kPayload{0x02U};
+constexpr std::size_t kPlaceholderOffset{0U};
+
+TYPED_TEST_P(SerializeIteratorFixture, WriteAtOverwritesAlreadyWrittenElement)
+{
+    // Given a serialization iterator with a placeholder followed by payload
+    auto iterator = SerializeInto(this->buffer);
+    iterator = kPlaceholder;
+    iterator = kPayload;
+    const auto written_before_patch = iterator.GetResult();
+    ASSERT_TRUE(written_before_patch.has_value());
+
+    // When back-patching the placeholder
+    iterator.WriteAt(kPlaceholderOffset, kPatchedValue);
+
+    // Then the placeholder is replaced, the payload is kept and the written count is unchanged
+    auto data = this->buffer.begin();
+    EXPECT_EQ(*data++, kPatchedValue);
+    EXPECT_EQ(*data++, kPayload);
+    const auto result = iterator.GetResult();
+    ASSERT_TRUE(result.has_value());
+    EXPECT_EQ(result.value(), written_before_patch.value());
+}
+
+TYPED_TEST_P(SerializeIteratorFixture, WriteAtBeyondWrittenElementsIndicatesError)
+{
+    // Given a serialization iterator with one written element
+    auto iterator = SerializeInto(this->buffer);
+    iterator = kPayload;
+    const auto first_unwritten_offset = iterator.GetResult();
+    ASSERT_TRUE(first_unwritten_offset.has_value());
+
+    // When writing at an offset that has not been written yet
+    iterator.WriteAt(first_unwritten_offset.value(), kPatchedValue);
+
+    // Then an out-of-bounds error is reported
+    const auto result = iterator.GetResult();
+    ASSERT_FALSE(result.has_value());
+    EXPECT_EQ(result.error(), SerializationError::kOutOfBoundsWrite);
+}
+
+TYPED_TEST_P(SerializeIteratorFixture, WriteAtAfterErrorKeepsError)
+{
+    // Given a serialization iterator with a latched error
+    auto iterator = SerializeInto(this->buffer);
+    iterator = kPlaceholder;
+    iterator = MakeUnexpected(SerializationError::kStringTooBig);
+
+    // When back-patching
+    iterator.WriteAt(kPlaceholderOffset, kPatchedValue);
+
+    // Then the buffer is untouched and the original error is preserved
+    EXPECT_EQ(*this->buffer.begin(), kPlaceholder);
+    const auto result = iterator.GetResult();
+    ASSERT_FALSE(result.has_value());
+    EXPECT_EQ(result.error(), SerializationError::kStringTooBig);
+}
+
 TYPED_TEST_P(DeSerializeIteratorFixture, CanIncrement)
 {
     // Given a deserialization iterator for a buffer that contains three data elements
@@ -172,6 +233,19 @@ TYPED_TEST_P(DeSerializeIteratorFixture, DoesNotAdvanceOverEndPostfix)
     ASSERT_EQ(result.value(), this->buffer.size());
 }
 
+TYPED_TEST_P(DeSerializeIteratorFixture, PostfixIncrementReturnsPreviousPosition)
+{
+    // Given a deserialization iterator for a buffer that starts at the first element {1, 2, 3}
+    auto iterator = DeSerializeIterator<TypeParam>(this->buffer);
+
+    // When using the forward-iterator idiom *iterator++
+    const auto first = *iterator++;
+
+    // Then the returned iterator referred to the old position and the live iterator advanced
+    EXPECT_EQ(first, 1);
+    EXPECT_EQ(*iterator, 2);
+}
+
 TYPED_TEST_P(DeSerializeIteratorFixture, CanGetEndFromIterator)
 {
     // Given a deserialization iterator for a buffer that contains three data elements and its respective end iterator
@@ -194,6 +268,20 @@ TYPED_TEST_P(DeSerializeIteratorFixture, CheckBufferNotEmpty)
     EXPECT_TRUE(iterator != iterator.End());
 }
 
+TYPED_TEST_P(DeSerializeIteratorFixture, SetErrorIsReportedThroughGetResult)
+{
+    // Given a deserialization iterator
+    auto iterator = DeSerializeIterator<TypeParam>(this->buffer);
+
+    // When the caller sets an error
+    iterator.SetError(SerializationError::kStringTooBig);
+
+    // Then the error is reported
+    const auto result = iterator.GetResult();
+    ASSERT_FALSE(result.has_value());
+    EXPECT_EQ(result.error(), SerializationError::kStringTooBig);
+}
+
 TYPED_TEST_P(DeSerializeIteratorFixtureEmptyBuffer, CheckBufferEmpty)
 {
     // Given a deserialization iterator for a buffer that contains 0 elements
@@ -206,14 +294,19 @@ TYPED_TEST_P(DeSerializeIteratorFixtureEmptyBuffer, CheckBufferEmpty)
 REGISTER_TYPED_TEST_SUITE_P(SerializeIteratorFixture,
                             WriteMultipleDataElementsViaIterator,
                             CanGetNumberOfWrittenElements,
-                            CanIndicateError);
+                            CanIndicateError,
+                            WriteAtOverwritesAlreadyWrittenElement,
+                            WriteAtBeyondWrittenElementsIndicatesError,
+                            WriteAtAfterErrorKeepsError);
 
 REGISTER_TYPED_TEST_SUITE_P(DeSerializeIteratorFixture,
                             CanIncrement,
                             DoesNotAdvanceOverEnd,
                             DoesNotAdvanceOverEndPostfix,
+                            PostfixIncrementReturnsPreviousPosition,
                             CanGetEndFromIterator,
-                            CheckBufferNotEmpty);
+                            CheckBufferNotEmpty,
+                            SetErrorIsReportedThroughGetResult);
 
 REGISTER_TYPED_TEST_SUITE_P(DeSerializeIteratorFixtureEmptyBuffer, CheckBufferEmpty);
 
@@ -259,6 +352,22 @@ TEST(SerializeIteratorTest, OverflowsOnStaticTypes)
     ASSERT_FALSE(result.has_value());
 }
 
+TEST(SerializeIteratorTest, OverflowsOnBoundedContainer)
+{
+    // Given a static_vector whose capacity is smaller than the data we want to write
+    score::cpp::static_vector<std::uint8_t, 1> buffer{};
+    auto iterator = SerializeInto(buffer);
+
+    // When writing more data than the capacity allows
+    iterator = 0x01;
+    iterator = 0x02;
+
+    // Then our serialization was not successful instead of aborting
+    const auto result = iterator.GetResult();
+    ASSERT_FALSE(result.has_value());
+    EXPECT_EQ(result.error(), SerializationError::kOutOfBoundsWrite);
+}
+
 TEST(SerializeIteratorTest, ProvideSerializationWindows)
 {
     // Given a buffer where we want to serialize into an offset
@@ -287,6 +396,27 @@ TEST(SerializeIteratorTest, ProvideSerializationWindows)
     EXPECT_EQ(*data++, 0x02);
     EXPECT_EQ(*data++, 0x03);
     EXPECT_EQ(*data++, 0x00);
+}
+
+TEST(SerializeIteratorTest, CountsOnlyBytesWrittenIntoNonEmptyGrowableContainer)
+{
+    // Given a growable container that already holds two bytes
+    std::vector<std::uint8_t> buffer{0xAA, 0xBB};
+    auto iterator = SerializeInto(buffer);
+
+    // When serializing one more byte
+    iterator = 0x01;
+
+    // Then only the byte written through this iterator is counted, not the preexisting content
+    const auto result = iterator.GetResult();
+    ASSERT_TRUE(result.has_value());
+    EXPECT_EQ(result.value(), 1);
+
+    // And the preexisting content is preserved, the new byte appended
+    ASSERT_EQ(buffer.size(), 3U);
+    EXPECT_EQ(buffer[0], 0xAA);
+    EXPECT_EQ(buffer[1], 0xBB);
+    EXPECT_EQ(buffer[2], 0x01);
 }
 
 }  // namespace

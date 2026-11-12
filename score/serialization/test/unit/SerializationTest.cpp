@@ -22,8 +22,6 @@
 
 namespace score
 {
-namespace platform
-{
 namespace testing
 {
 
@@ -501,5 +499,4 @@ TEST_F(SerializationTest, serialize_in_place_uint16_to_array_with_insufficient_s
 }
 
 }  // namespace testing
-}  // namespace platform
 }  // namespace score

@@ -27,7 +27,6 @@ namespace hash
 
 constexpr std::size_t kMaxDigestSize{64U};
 
-constexpr std::uint8_t kSha1Size{20U};
 constexpr std::uint8_t kSha256Size{32U};
 constexpr std::uint8_t kSha384Size{48U};
 constexpr std::uint8_t kSha512Size{64U};
@@ -38,13 +37,13 @@ constexpr std::uint8_t kCrc32AutosarSize{4U};
 enum class HashAlgorithm : std::uint8_t
 {
     kNone = 0,
-    kSha1,
-    kSha256,
-    kSha384,
-    kSha512,
-    kCrc32,
-    kCrc32Autosar,
-    kLast
+    // Value 1 was SHA-1 and remains reserved as unsupported.
+    kSha256 = 2,
+    kSha384 = 3,
+    kSha512 = 4,
+    kCrc32 = 5,
+    kCrc32Autosar = 6,
+    kLast = 7
 };
 
 // Suppress "UNUSED C++14 A13-2-2" rule finding: "A binary arithmetic operator and a bitwise operator shall return
@@ -63,9 +62,6 @@ inline score::mw::log::LogStream& operator<<(score::mw::log::LogStream& stream, 
             break;
         case HashAlgorithm::kCrc32Autosar:
             modifiedStream << "Crc32Autosar";
-            break;
-        case HashAlgorithm::kSha1:
-            modifiedStream << "Sha1";
             break;
         case HashAlgorithm::kSha256:
             modifiedStream << "Sha256";
@@ -94,9 +90,6 @@ score::cpp::optional<std::uint8_t> HashSizeInBytes(const HashAlgorithm algorithm
 score::cpp::optional<std::uint8_t> HashSizeInCharacters(const HashAlgorithm algorithm) noexcept;
 
 /// @brief identify the hash algorithm from the \p hash_string
-/// @example if input is sha1sum as string "526eac4f80dd6e6e73c7a501dff1abc83f0b7ccc" the return will be
-/// HashAlgorithm::kSha1
-///
 /// @param[in] hash_string  - the hash as a string
 /// @return HashAlgorithm   - the \p hash_string algorithm type
 HashAlgorithm IdentifyHash(std::string_view hash_string) noexcept;

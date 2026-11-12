@@ -14,49 +14,173 @@
 #include "score/json/internal/writer/serializer.h"
 
 #include "score/json/internal/model/error.h"
-#include "score/json/internal/writer/vajson/any_serializer.h"
+#include "score/json/internal/writer/vajson/escaped_json_string.h"
+#include "score/json/internal/writer/vajson/formatting_writer.h"
 
-#include <functional>
+#include <score/assert.hpp>
+
+#include <charconv>
+#include <array>
+#include <cmath>
+#include <cstddef>
+#include <cstdint>
+#include <ios>
 #include <sstream>
+#include <string_view>
+#include <system_error>
 #include <type_traits>
-#include <utility>
 
+namespace score::json::internal::writer
+{
 namespace
 {
 
-template <typename T>
-score::Result<void> SerializeToStreamInternal(std::ostream& out_stream,
-                                              const T& json_data,
-                                              const score::json::Formatting formatting)
+using score::json::vajson::FormattingWriter;
+using score::json::vajson::internal::EscapedJsonString;
+
+void WriteText(std::ostream& out_stream, const std::string_view text) noexcept
 {
-    score::json::vajson::FormattingWriter writer{out_stream, formatting};
-    auto serializer = score::json::vajson::DocumentSerializer{std::ref(writer)};
-    if constexpr (std::is_same_v<T, score::json::Object>)
+    static_cast<void>(out_stream.write(text.data(), static_cast<std::streamsize>(text.size())));
+}
+
+void WriteString(std::ostream& out_stream, const std::string_view value) noexcept
+{
+    static_cast<void>(out_stream.put('"'));
+    out_stream << EscapedJsonString{value};
+    static_cast<void>(out_stream.put('"'));
+}
+
+template <typename T>
+void WriteArithmetic(std::ostream& out_stream, const T value) noexcept
+{
+    // Longer than the longest output: 24 characters for double, 20 for std::int64_t.
+    constexpr std::size_t kBufferSize{64U};
+    std::array<char, kBufferSize> buffer{};
+    const auto conversion_result{std::to_chars(buffer.data(), buffer.data() + buffer.size(), value)};
+    SCORE_LANGUAGE_FUTURECPP_ASSERT_PRD_MESSAGE(conversion_result.ec == std::errc{},
+                                                "Could not convert number to textual representation.");
+    WriteText(out_stream,
+              std::string_view{buffer.data(), static_cast<std::size_t>(conversion_result.ptr - buffer.data())});
+}
+
+void WriteNumber(std::ostream& out_stream, const Number& number) noexcept
+{
+    number.Visit([&out_stream](const auto value) noexcept {
+        using Stored = std::decay_t<decltype(value)>;
+        if constexpr (std::is_floating_point_v<Stored>)
+        {
+            // RFC 8259, section 6 has no representation for infinity and NaN.
+            if (std::isfinite(value))
+            {
+                WriteArithmetic(out_stream, value);
+            }
+            else
+            {
+                out_stream.setstate(std::ios_base::failbit);
+            }
+        }
+        else if constexpr (std::is_unsigned_v<Stored>)
+        {
+            WriteArithmetic(out_stream, static_cast<std::uint64_t>(value));
+        }
+        else
+        {
+            WriteArithmetic(out_stream, static_cast<std::int64_t>(value));
+        }
+    });
+}
+
+void WriteValue(FormattingWriter& writer, const Any& value) noexcept;
+
+// NOLINTNEXTLINE(misc-no-recursion) stack depth equals the nesting depth of the written Any
+void WriteObject(FormattingWriter& writer, const Object& object) noexcept
+{
+    writer.BeginContainer('{');
+    bool written_before{false};
+    for (const auto& [key, value] : object)
     {
-        static_cast<void>(score::json::internal::writer::vajson::SerializeObject(std::move(serializer), json_data));
+        writer.BeginElement(written_before);
+        WriteString(writer.Stream(), key.GetAsStringView());
+        writer.WriteNameSeparator();
+        WriteValue(writer, value);
+        written_before = true;
     }
-    else if constexpr (std::is_same_v<T, score::json::List>)
+    writer.EndContainer('}');
+}
+
+// NOLINTNEXTLINE(misc-no-recursion) stack depth equals the nesting depth of the written Any
+void WriteList(FormattingWriter& writer, const List& list) noexcept
+{
+    writer.BeginContainer('[');
+    bool written_before{false};
+    for (const auto& value : list)
     {
-        static_cast<void>(score::json::internal::writer::vajson::SerializeList(std::move(serializer), json_data));
+        writer.BeginElement(written_before);
+        WriteValue(writer, value);
+        written_before = true;
+    }
+    writer.EndContainer(']');
+}
+
+// NOLINTNEXTLINE(misc-no-recursion) stack depth equals the nesting depth of the written Any
+void WriteValue(FormattingWriter& writer, const Any& value) noexcept
+{
+    if (const auto object = value.As<Object>(); object.has_value())
+    {
+        WriteObject(writer, object->get());
+    }
+    else if (const auto list = value.As<List>(); list.has_value())
+    {
+        WriteList(writer, list->get());
+    }
+    else if (const auto string_value = value.As<std::string_view>(); string_value.has_value())
+    {
+        WriteString(writer.Stream(), *string_value);
+    }
+    else if (const auto number = value.As<Number>(); number.has_value())
+    {
+        WriteNumber(writer.Stream(), number->get());
+    }
+    else if (const auto boolean = value.As<bool>(); boolean.has_value())
+    {
+        WriteText(writer.Stream(), *boolean ? "true" : "false");
     }
     else
     {
-        static_cast<void>(score::json::internal::writer::vajson::SerializeValue(std::move(serializer), json_data));
+        // Null is the only alternative of Any left.
+        WriteText(writer.Stream(), "null");
+    }
+}
+
+template <typename T>
+score::Result<void> SerializeToStreamInternal(std::ostream& out_stream, const T& json_data, const Formatting formatting)
+{
+    FormattingWriter writer{out_stream, formatting};
+    if constexpr (std::is_same_v<T, Object>)
+    {
+        WriteObject(writer, json_data);
+    }
+    else if constexpr (std::is_same_v<T, List>)
+    {
+        WriteList(writer, json_data);
+    }
+    else
+    {
+        WriteValue(writer, json_data);
     }
 
     // A default constructed Result<void> already carries the success state.
     score::Result<void> result{};
     if (out_stream.fail())
     {
-        result =
-            score::MakeUnexpected(score::json::Error::kUnknownError, "vaJSON serializer failed to write to stream");
+        result = score::MakeUnexpected(Error::kUnknownError, "JSON writer failed to write to stream");
     }
 
     return result;
 }
 
 template <typename T>
-score::Result<std::string> SerializeToBufferInternal(const T& json_data, const score::json::Formatting formatting)
+score::Result<std::string> SerializeToBufferInternal(const T& json_data, const Formatting formatting)
 {
     std::ostringstream out_stream{};
 
@@ -69,9 +193,6 @@ score::Result<std::string> SerializeToBufferInternal(const T& json_data, const s
 }
 
 }  // namespace
-
-namespace score::json::internal::writer
-{
 
 score::Result<void> SerializeToStream(std::ostream& out_stream,
                                       const score::json::Object& json_data,

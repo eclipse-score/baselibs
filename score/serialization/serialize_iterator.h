@@ -22,7 +22,6 @@
 #include <score/assert.hpp>
 
 #include <iterator>
-#include <limits>
 #include <type_traits>
 
 namespace score
@@ -33,22 +32,50 @@ namespace serialization
 namespace helper
 {
 
-/// @brief We use free function overloads, in order to change the store routine based on the container. If we would want
-/// to-do this inside the iterator (as one normally would expect) we would need to specialize the iterator which could
-/// cause some more code duplication. Thus, extracting this functionality for overloading is the more elegant solution
-template <typename Container, std::enable_if_t<details::supports_emplace_back<Container>::value, bool> = true>
-bool StoreIn(Container& container, typename Container::iterator& iterator, const typename Container::value_type& value)
+/// @brief Appends value via emplace_back and moves the iterator to end(). Caller must ensure capacity is available.
+template <typename Container>
+bool EmplaceBackInto(Container& container,
+                     typename Container::iterator& iterator,
+                     const typename Container::value_type& value)
 {
     // Suppress "AUTOSAR C++14 A0-1-2", The rule states: "The value returned by a function having a non-void return type
     // that is not an overloaded operator shall be used." This is false positive. API returns void.
     // coverity[autosar_cpp14_a0_1_2_violation : FALSE]
     container.emplace_back(value);
     iterator = container.end();  // we cannot be sure that the iterator stays valid (most certainly it did not)
-    return true;  // if emplace back does not work, we will get an exception and thus terminate. maybe we can come up
-                  // with a more robust solution once we switched to PMR.
+    return true;
 }
 
-template <typename Container, std::enable_if_t<details::supports_emplace_back<Container>::value == false, bool> = true>
+/// @brief We use free function overloads, in order to change the store routine based on the container. If we would want
+/// to-do this inside the iterator (as one normally would expect) we would need to specialize the iterator which could
+/// cause some more code duplication. Thus, extracting this functionality for overloading is the more elegant solution
+template <typename Container,
+          std::enable_if_t<details::supports_emplace_back<Container>::value &&
+                               (!details::has_bounded_capacity<Container>::value),
+                           bool> = true>
+bool StoreIn(Container& container, typename Container::iterator& iterator, const typename Container::value_type& value)
+{
+    // if emplace back does not work, we will get an exception and thus terminate. maybe we can come up with a more
+    // robust solution once we switched to PMR.
+    return EmplaceBackInto(container, iterator, value);
+}
+
+/// @brief Overload for bounded containers (e.g. score::cpp::static_vector) whose emplace_back has a size() < capacity()
+/// precondition. We check capacity ourselves and report an out-of-bounds write instead of terminating.
+template <typename Container,
+          std::enable_if_t<details::supports_emplace_back<Container>::value &&
+                               details::has_bounded_capacity<Container>::value,
+                           bool> = true>
+bool StoreIn(Container& container, typename Container::iterator& iterator, const typename Container::value_type& value)
+{
+    if (container.size() >= container.capacity())
+    {
+        return false;
+    }
+    return EmplaceBackInto(container, iterator, value);
+}
+
+template <typename Container, std::enable_if_t<!details::supports_emplace_back<Container>::value, bool> = true>
 bool StoreIn(Container& container, typename Container::iterator& iterator, const typename Container::value_type& value)
 {
     // ensure no out of bounds access
@@ -84,7 +111,7 @@ class SerializeIterator
     explicit SerializeIterator(Container& container)
         : container_(container),
           iterator_{std::make_shared<typename Container::iterator>(container_.begin())},
-          result_{std::make_shared<Result<std::size_t>>()}
+          result_{std::make_shared<Result<std::size_t>>(0U)}
     {
         static_assert(details::is_supported_sequence_container<Container>::value,
                       "Provided Container is not supported.");
@@ -96,9 +123,14 @@ class SerializeIterator
     SerializeIterator<Container>& operator=(const typename Container::value_type& value) &
     {
         const auto result = helper::StoreIn(container_, *iterator_, value);
-        if (result == false)
+        if (!result)
         {
             *result_ = MakeUnexpected(SerializationError::kOutOfBoundsWrite);
+        }
+        else if (result_->has_value())
+        {
+            // result_'s success value counts bytes stored through this iterator; skip once an error is latched.
+            ++result_->value();
         }
         return *this;
     }
@@ -129,29 +161,32 @@ class SerializeIterator
         return *this;
     }
 
-    Result<std::size_t> GetResult() const
+    /// @brief Overwrites an already-written element at the given offset (counted from the start of this iterator).
+    /// @details Needed because SOME/IP requires the length prefix of a dynamic-length array to hold the byte length of
+    /// the serialized array data, not the element count; that byte length is only known after the
+    /// elements are written, so the prefix is written as a placeholder and patched afterwards. Offsets not yet written
+    /// latch kOutOfBoundsWrite.
+    SerializeIterator<Container>& WriteAt(const std::size_t offset, const typename Container::value_type& value) &
     {
         if (not result_->has_value())
         {
-            return *result_;
+            return *this;  // keep the first latched error
         }
+        if (offset >= result_->value())
+        {
+            *result_ = MakeUnexpected(SerializationError::kOutOfBoundsWrite);
+            return *this;
+        }
+        *std::next(container_.begin(), static_cast<difference_type>(offset)) = value;
+        return *this;
+    }
 
-        return GetNumberOfBytesWritten();
+    [[nodiscard]] Result<std::size_t> GetResult() const
+    {
+        return *result_;
     }
 
   private:
-    // Suppress "AUTOSAR C++14 A0-1-3" rule findings. This rule states: "Every function defined in an anonymous
-    // namespace, or static function with internal linkage, or private member function shall be used." False-positive,
-    // method is used in GetResult().
-    // coverity[autosar_cpp14_a0_1_3_violation : FALSE]
-    std::size_t GetNumberOfBytesWritten() const
-    {
-        const auto distance = std::distance(container_.begin(), *iterator_);
-        SCORE_LANGUAGE_FUTURECPP_ASSERT_PRD(distance >=
-                                            0);  // we start at begin and go on from there, it can not be negative.
-        return static_cast<std::size_t>(distance);
-    }
-
     Container& container_;
     std::shared_ptr<typename Container::iterator> iterator_;
     std::shared_ptr<Result<std::size_t>> result_;
@@ -197,6 +232,13 @@ class DeSerializeIterator
         return *iterator_;
     }
 
+    /// @brief Latches a deserialization error detected by the caller (e.g. a declared length that cannot be read).
+    /// Surfaced through GetResult().
+    void SetError(const SerializationError error)
+    {
+        *result_ = MakeUnexpected(error);
+    }
+
     /// @brief Move iterator to next position (but not past end())
     DeSerializeIterator<Container>& operator++()
     {
@@ -214,15 +256,16 @@ class DeSerializeIterator
     /// @brief Move iterator to next position (but not past end())
     DeSerializeIterator<Container> operator++(int)
     {
+        DeSerializeIterator<Container> previous{*this};
         if (iterator_ != container_.cend())
         {
             ++iterator_;
         }
-        return *this;
+        return previous;
     }
 
     /// @brief Indicate how much the iterator was moved and if an out-of-bound access happend
-    Result<std::size_t> GetResult() const
+    [[nodiscard]] Result<std::size_t> GetResult() const
     {
         if (not result_->has_value())
         {
@@ -230,6 +273,11 @@ class DeSerializeIterator
         }
 
         return GetNumberOfBytesWritten();
+    }
+
+    bool HasError() const noexcept
+    {
+        return not result_->has_value();
     }
 
     // Suppress "AUTOSAR C++14 A3-3-1" rule finding. This rule states:"Objects or functions with external linkage
@@ -254,15 +302,13 @@ class DeSerializeIterator
     DeSerializeIterator End() const
     {
         DeSerializeIterator end{container_};
-        constexpr difference_type max_difference_type = std::numeric_limits<difference_type>::max();
-        SCORE_LANGUAGE_FUTURECPP_ASSERT_PRD(static_cast<difference_type>(container_.size()) < max_difference_type);
-        std::advance(end, static_cast<difference_type>(container_.size()));
+        end.iterator_ = container_.cend();
         return end;
     }
 
   private:
     // coverity[autosar_cpp14_a0_1_3_violation : FALSE]
-    std::size_t GetNumberOfBytesWritten() const
+    [[nodiscard]] std::size_t GetNumberOfBytesWritten() const
     {
         const auto distance = std::distance(container_.cbegin(), iterator_);
         SCORE_LANGUAGE_FUTURECPP_ASSERT_PRD(distance >=
@@ -272,6 +318,9 @@ class DeSerializeIterator
 
     const Container& container_;
     typename Container::const_iterator iterator_;
+    // Sticky, copy-shared flag that latches an out-of-bounds read so GetResult()/HasError() can report it later.
+    // Needed because operator++ must return an iterator (and this repo forbids exceptions), so it cannot return the
+    // error directly.
     std::shared_ptr<Result<std::size_t>> result_;
 };
 

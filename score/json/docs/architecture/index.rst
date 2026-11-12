@@ -43,7 +43,7 @@ Design Decisions:
 
 It was decided to use the vaJson parser from Vector (see :need:`doc__vajson`), which is ASIL D certified.
 
-JSON writing functionality is provided by the vaJson serializer, which is wrapped by the "Wrapper" component.
+JSON writing is built on the vaJson output formatting and string escaping, and is wrapped by the "Wrapper" component.
 
 Design Constraints:
 
@@ -74,8 +74,8 @@ Static Architecture
    :security: YES
    :safety:  ASIL_B
    :status: valid
-   :version: 2
-   :fulfils: comp_req__json__deserialization[version==1], comp_req__json__serialization[version==1], comp_req__json__user_format[version==1], comp_req__json__lang_idioms[version==1], comp_req__json__lang_infra[version==1], comp_req__json__type_compatibility[version==1], comp_req__json__full_testability[version==1], comp_req__json__asil[version==1]
+   :version: 3
+   :fulfils: comp_req__json__deserialization[version==1], comp_req__json__serialization[version==1], comp_req__json__user_format[version==1], comp_req__json__duplicate_member_names[version==1], comp_req__json__lang_idioms[version==1], comp_req__json__lang_infra[version==1], comp_req__json__type_compatibility[version==1], comp_req__json__full_testability[version==1], comp_req__json__asil[version==1]
    :belongs_to: comp__baselibs_json[version==2]
 
    .. needarch::
@@ -93,8 +93,8 @@ Dynamic Architecture
    :security: YES
    :safety: ASIL_B
    :status: invalid
-   :version: 2
-   :fulfils: comp_req__json__deserialization[version==1], comp_req__json__serialization[version==1], comp_req__json__user_format[version==1], comp_req__json__lang_idioms[version==1], comp_req__json__lang_infra[version==1], comp_req__json__type_compatibility[version==1], comp_req__json__full_testability[version==1], comp_req__json__asil[version==1]
+   :version: 3
+   :fulfils: comp_req__json__deserialization[version==1], comp_req__json__serialization[version==1], comp_req__json__user_format[version==1], comp_req__json__duplicate_member_names[version==1], comp_req__json__lang_idioms[version==1], comp_req__json__lang_infra[version==1], comp_req__json__type_compatibility[version==1], comp_req__json__full_testability[version==1], comp_req__json__asil[version==1]
    :belongs_to: comp__baselibs_json[version==2]
 
    put here a sequence diagram (TBD)

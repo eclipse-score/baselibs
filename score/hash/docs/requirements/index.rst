@@ -97,10 +97,10 @@ Functional Requirements
    :safety: ASIL_B
    :derived_from: feat_req__baselibs__hash_library[version==2]
    :status: valid
-   :version: 1
+   :version: 2
    :satisfied_by: comp__baselibs_hash[version==1]
 
-   The hash library shall support SHA-1, SHA-256, SHA-384, and SHA-512 as
+   The hash library shall support SHA-256, SHA-384, and SHA-512 as
    cryptographic hash algorithms.
 
 .. comp_req:: CRC-32 Checksum Algorithm

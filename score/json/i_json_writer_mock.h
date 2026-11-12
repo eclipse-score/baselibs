@@ -10,8 +10,8 @@
  *
  * SPDX-License-Identifier: Apache-2.0
  ********************************************************************************/
-#ifndef SCORE_LIB_JSON_I_JSON_WRITER_MOCK_H
-#define SCORE_LIB_JSON_I_JSON_WRITER_MOCK_H
+#ifndef SCORE_JSON_I_JSON_WRITER_MOCK_H
+#define SCORE_JSON_I_JSON_WRITER_MOCK_H
 
 #include "score/json/i_json_writer.h"
 
@@ -22,6 +22,7 @@ namespace score
 namespace json
 {
 
+/// @brief gMock implementation of IJsonWriter for tests.
 class IJsonWriterMock : public IJsonWriter
 {
   public:
@@ -51,4 +52,4 @@ class IJsonWriterMock : public IJsonWriter
 }  // namespace json
 }  // namespace score
 
-#endif  // SCORE_LIB_JSON_I_JSON_WRITER_MOCK_H
+#endif  // SCORE_JSON_I_JSON_WRITER_MOCK_H

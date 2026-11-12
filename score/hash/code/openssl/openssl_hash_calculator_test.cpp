@@ -76,29 +76,6 @@ void HashCalculatorTest::ExpectSha256Call()
     EXPECT_CALL(openssl_lib_mock_, ResetDigestCtx(_)).Times(1);
 }
 
-TEST_F(HashCalculatorTest, HashAlgorithmsSimpleSha1Test)
-{
-    RecordProperty("PartiallyVerifies", "comp_req__hash__sha_algorithms");
-    RecordProperty("TestType", "requirements-based");
-    RecordProperty("DerivationTechnique", "equivalence-classes");
-    RecordProperty("Description",
-                   "Check that OpensslHashCalculator::Create() successfully creates a SHA-1 calculator.");
-
-    const StructDigest* digest_type_sha1 = openssl_lib_.DigestAlgoSha1();
-    StructDigestCtx* digest_context_sha1 = openssl_lib_.CreateDigestCtx();
-    std::int32_t hash_digest_sha1 = openssl_lib_.InitDigestCtx(digest_context_sha1, digest_type_sha1, nullptr);
-
-    EXPECT_CALL(openssl_lib_mock_, DigestAlgoSha1()).WillOnce(Return(digest_type_sha1));
-    EXPECT_CALL(openssl_lib_mock_, CreateDigestCtx()).WillOnce(Return(digest_context_sha1));
-    EXPECT_CALL(openssl_lib_mock_, InitDigestCtx(_, _, _)).WillOnce(Return(hash_digest_sha1));
-
-    auto digest = OpensslHashCalculator::Create(HashAlgorithm::kSha1, openssl_lib_mock_);
-    openssl_lib_.ResetDigestCtx(digest_context_sha1);
-    digest_context_sha1 = nullptr;
-
-    ASSERT_TRUE(digest.has_value());
-}
-
 TEST_F(HashCalculatorTest, HashAlgorithmsSimpleSha256Test)
 {
     RecordProperty("PartiallyVerifies", "comp_req__hash__sha_algorithms");
@@ -221,12 +198,17 @@ TEST_F(HashCalculatorTest, InvalidDigestInitCreateAlgoTest)
 
 TEST_F(HashCalculatorTest, InvalidCreateAlgorthimTest)
 {
-    RecordProperty("PartiallyVerifies", "comp_req__hash__safe_computation");
+    RecordProperty("PartiallyVerifies", "comp_req__hash__safe_computation, comp_req__hash__sha_algorithms");
     RecordProperty("TestType", "requirements-based");
     RecordProperty("DerivationTechnique", "boundary-values");
     RecordProperty("Description",
                    "Check that Create() returns an instantiation error, instead of throwing, for the unsupported "
-                   "kNone and kLast algorithm identifiers.");
+                   "kNone and kLast sentinels and the former SHA-1 numeric identifier.");
+
+    EXPECT_CALL(openssl_lib_mock_, DigestAlgoSha256()).Times(0);
+    EXPECT_CALL(openssl_lib_mock_, DigestAlgoSha384()).Times(0);
+    EXPECT_CALL(openssl_lib_mock_, DigestAlgoSha512()).Times(0);
+    EXPECT_CALL(openssl_lib_mock_, CreateDigestCtx()).Times(0);
 
     auto hash_calculator = OpensslHashCalculator::Create(HashAlgorithm::kNone, openssl_lib_mock_);
     ASSERT_FALSE(hash_calculator.has_value());
@@ -235,6 +217,11 @@ TEST_F(HashCalculatorTest, InvalidCreateAlgorthimTest)
     auto digest = OpensslHashCalculator::Create(HashAlgorithm::kLast, openssl_lib_mock_);
     ASSERT_FALSE(digest.has_value());
     EXPECT_EQ(digest.error(), ErrorCode::kCouldNotCreateDigest);
+
+    const auto legacy_sha1_algorithm{static_cast<HashAlgorithm>(1U)};
+    const auto legacy_sha1_digest{OpensslHashCalculator::Create(legacy_sha1_algorithm, openssl_lib_mock_)};
+    EXPECT_FALSE(legacy_sha1_digest.has_value());
+    EXPECT_EQ(legacy_sha1_digest.error(), ErrorCode::kCouldNotCreateDigest);
 }
 
 TEST_F(HashCalculatorTest, UpdateStreamTest)
