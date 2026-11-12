@@ -12,8 +12,8 @@
  ********************************************************************************/
 
 #include "score/json/json_writer.h"
+#include "score/json/error.h"
 #include "score/json/i_json_writer.h"
-#include "score/json/internal/model/error.h"
 #include "score/json/internal/writer/serializer.h"
 
 #include <ios>

@@ -11,10 +11,10 @@
  * SPDX-License-Identifier: Apache-2.0
  ********************************************************************************/
 
-#ifndef SCORE_LIB_JSON_INTERNAL_MODEL_OBJECT_H
-#define SCORE_LIB_JSON_INTERNAL_MODEL_OBJECT_H
+#ifndef SCORE_JSON_OBJECT_H
+#define SCORE_JSON_OBJECT_H
 
-#include "score/json/internal/model/any.h"
+#include "score/json/any.h"
 
 #include <cstdint>
 #include <memory>
@@ -93,4 +93,4 @@ auto GetAttribute(T object, const std::string_view& key) noexcept
 }  // namespace json
 }  // namespace score
 
-#endif  // SCORE_LIB_JSON_INTERNAL_MODEL_OBJECT_H
+#endif  // SCORE_JSON_OBJECT_H

@@ -11,12 +11,12 @@
  * SPDX-License-Identifier: Apache-2.0
  ********************************************************************************/
 
-#ifndef SCORE_LIB_JSON_INTERNAL_MODEL_ANY_H
-#define SCORE_LIB_JSON_INTERNAL_MODEL_ANY_H
+#ifndef SCORE_JSON_ANY_H
+#define SCORE_JSON_ANY_H
 
-#include "score/json/internal/model/error.h"
-#include "score/json/internal/model/null.h"
-#include "score/json/internal/model/number.h"
+#include "score/json/error.h"
+#include "score/json/null.h"
+#include "score/json/number.h"
 #include "score/result/result.h"
 #include "score/string_manipulation/string_comparison_adaptor.h"
 
@@ -245,4 +245,4 @@ class Any
 }  // namespace json
 }  // namespace score
 
-#endif  // SCORE_LIB_JSON_INTERNAL_MODEL_ANY_H
+#endif  // SCORE_JSON_ANY_H

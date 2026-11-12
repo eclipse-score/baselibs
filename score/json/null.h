@@ -11,8 +11,8 @@
  * SPDX-License-Identifier: Apache-2.0
  ********************************************************************************/
 
-#ifndef SCORE_LIB_JSON_INTERNAL_MODEL_NULL_H
-#define SCORE_LIB_JSON_INTERNAL_MODEL_NULL_H
+#ifndef SCORE_JSON_NULL_H
+#define SCORE_JSON_NULL_H
 
 namespace score
 {
@@ -35,4 +35,4 @@ bool operator==(const Null&, const Null&) noexcept;
 }  // namespace json
 }  // namespace score
 
-#endif  // SCORE_LIB_JSON_INTERNAL_MODEL_NULL_H
+#endif  // SCORE_JSON_NULL_H

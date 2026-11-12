@@ -11,10 +11,10 @@
  * SPDX-License-Identifier: Apache-2.0
  ********************************************************************************/
 
-#ifndef SCORE_LIB_JSON_INTERNAL_MODEL_NUMBER_H
-#define SCORE_LIB_JSON_INTERNAL_MODEL_NUMBER_H
+#ifndef SCORE_JSON_NUMBER_H
+#define SCORE_JSON_NUMBER_H
 
-#include "score/json/internal/model/error.h"
+#include "score/json/error.h"
 #include "score/result/result.h"
 
 #include <type_traits>
@@ -90,4 +90,4 @@ extern template score::Result<bool> score::json::Number::As() const noexcept;
 }  // namespace json
 }  // namespace score
 
-#endif  // SCORE_LIB_JSON_INTERNAL_MODEL_NUMBER_H
+#endif  // SCORE_JSON_NUMBER_H

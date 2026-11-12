@@ -11,8 +11,8 @@
  * SPDX-License-Identifier: Apache-2.0
  ********************************************************************************/
 
-#ifndef SCORE_LIB_JSON_INTERNAL_MODEL_ERROR_H
-#define SCORE_LIB_JSON_INTERNAL_MODEL_ERROR_H
+#ifndef SCORE_JSON_ERROR_H
+#define SCORE_JSON_ERROR_H
 
 #include "score/result/error.h"
 
@@ -39,4 +39,4 @@ score::result::Error MakeError(const score::json::Error code, const std::string_
 
 }  // namespace json
 }  // namespace score
-#endif  // SCORE_LIB_JSON_INTERNAL_MODEL_ERROR_H
+#endif  // SCORE_JSON_ERROR_H

@@ -13,7 +13,7 @@
 
 #include "score/json/internal/writer/serializer.h"
 
-#include "score/json/internal/model/error.h"
+#include "score/json/error.h"
 #include "score/json/internal/writer/vajson/escaped_json_string.h"
 #include "score/json/internal/writer/vajson/formatting_writer.h"
 

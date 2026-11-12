@@ -204,7 +204,7 @@ Specially when dealing with nested objects, the boilerplate code resulting from
 the successive searches and conversions can get in the way of readability.
 
 Thus an optional layer of syntax-sugar is provided by `score::json::GetAttribute`
-(declared in `score/json/internal/model/object.h`, which is pulled in by
+(declared in `score/json/object.h`, which is pulled in by
 `score/json/json_parser.h`), that aims to avoid the repetitive code.
 
 #### Calling convention: pass the object by `std::cref`
@@ -297,7 +297,7 @@ Result<std::uint64_t> GetTimeoutMs(const json::Object& config, const std::uint64
 The same pattern works for optional nested objects, where `kKeyNotFound` means
 "section not configured" and `kWrongType` means "section is malformed".
 
-See the [unit tests](./internal/model/object_test.cpp) for details.
+See the [unit tests](./object_test.cpp) for details.
 
 ### Declarative parsing of JSON data
 
