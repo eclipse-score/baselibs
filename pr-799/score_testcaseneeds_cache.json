@@ -630,6 +630,20 @@
     "FullyVerifies": null
   },
   {
+    "name": "dependable_element/fta_metamodel_copy_test-test.sh",
+    "file": null,
+    "line": null,
+    "result": "passed",
+    "repo_name": null,
+    "hash": null,
+    "url": null,
+    "TestType": null,
+    "DerivationTechnique": null,
+    "result_text": "",
+    "PartiallyVerifies": null,
+    "FullyVerifies": null
+  },
+  {
     "name": "dependable_element/bitmanipulation_failure_modes_test",
     "file": null,
     "line": null,
