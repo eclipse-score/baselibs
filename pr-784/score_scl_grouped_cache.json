@@ -56,6 +56,26 @@
     }
   },
   {
+    "need": "comp_req__trace__configurable_implementation",
+    "links": {
+      "CodeLinks": [],
+      "TestLinks": [
+        {
+          "name": "GenericTraceApiStubTest__TraceForwardsToConfiguredImplementation",
+          "file": "score/analysis/tracing/generic_trace_library/stub_implementation/tests/generic_trace_api_stub_test.cpp",
+          "line": 25,
+          "need": "comp_req__trace__configurable_implementation",
+          "verify_type": "partially",
+          "result": "passed",
+          "result_text": "",
+          "repo_name": "local_repo",
+          "hash": "",
+          "url": ""
+        }
+      ]
+    }
+  },
+  {
     "need": "comp_req__flatbuffers__buffer_identification",
     "links": {
       "CodeLinks": [],
@@ -7065,6 +7085,58 @@
           "file": "score/mw/log/log_stream_test.cpp",
           "line": 812,
           "need": "comp_req__log__cfg_custom_types",
+          "verify_type": "partially",
+          "result": "passed",
+          "result_text": "",
+          "repo_name": "local_repo",
+          "hash": "",
+          "url": ""
+        }
+      ]
+    }
+  },
+  {
+    "need": "comp_req__log__console_backend",
+    "links": {
+      "CodeLinks": [],
+      "TestLinks": [
+        {
+          "name": "ConsoleRegistrantTest__ConsoleBackendIsRegisteredAfterStaticInitialization",
+          "file": "score/mw/log/detail/console_registrant_enabled_test.cpp",
+          "line": 28,
+          "need": "comp_req__log__console_backend",
+          "verify_type": "partially",
+          "result": "passed",
+          "result_text": "",
+          "repo_name": "local_repo",
+          "hash": "",
+          "url": ""
+        },
+        {
+          "name": "ConsoleRegistrantTest__ConsoleBackendCreatorReturnsNonNullRecorder",
+          "file": "score/mw/log/detail/console_registrant_enabled_test.cpp",
+          "line": 38,
+          "need": "comp_req__log__console_backend",
+          "verify_type": "partially",
+          "result": "passed",
+          "result_text": "",
+          "repo_name": "local_repo",
+          "hash": "",
+          "url": ""
+        }
+      ]
+    }
+  },
+  {
+    "need": "comp_req__log__system_logger",
+    "links": {
+      "CodeLinks": [],
+      "TestLinks": [
+        {
+          "name": "TextRecorderFixture__LogSlog2Message",
+          "file": "score/mw/log/detail/text_recorder/text_recorder_test.cpp",
+          "line": 417,
+          "need": "comp_req__log__system_logger",
           "verify_type": "partially",
           "result": "passed",
           "result_text": "",

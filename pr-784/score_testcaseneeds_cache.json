@@ -18298,6 +18298,20 @@
     "FullyVerifies": null
   },
   {
+    "name": "GenericTraceApiStubTest__TraceForwardsToConfiguredImplementation",
+    "file": "score/analysis/tracing/generic_trace_library/stub_implementation/tests/generic_trace_api_stub_test.cpp",
+    "line": "25",
+    "result": "passed",
+    "repo_name": "local_repo",
+    "hash": "",
+    "url": "",
+    "TestType": "interface-test",
+    "DerivationTechnique": "requirements-analysis",
+    "result_text": "",
+    "PartiallyVerifies": "comp_req__trace__configurable_implementation",
+    "FullyVerifies": null
+  },
+  {
     "name": "SocketUDPTest__CreationSuccess",
     "file": "score/network/sock_async_udp/socket_udp_test.cpp",
     "line": "69",
@@ -324072,7 +324086,7 @@
     "FullyVerifies": null
   },
   {
-    "name": "RegistryAwareRecorderFactoryConfigFixture__NoRecorderConfiguredShallReturnEmptyRecorder",
+    "name": "RegistryAwareRecorderFactoryConfigFixture__NoRecorderConfiguredShallFallBackToConsole",
     "file": "score/mw/log/detail/registry_aware_recorder_factory_test.cpp",
     "line": "276",
     "result": "passed",
@@ -324088,7 +324102,7 @@
   {
     "name": "RegistryAwareRecorderFactoryConfigFixture__ConsoleConfiguredShallReturnConsoleRecorder",
     "file": "score/mw/log/detail/registry_aware_recorder_factory_test.cpp",
-    "line": "290",
+    "line": "297",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -324100,9 +324114,9 @@
     "FullyVerifies": null
   },
   {
-    "name": "RegistryAwareRecorderFactoryConfigFixture__InvalidLogModeShallReturnEmptyRecorder",
+    "name": "RegistryAwareRecorderFactoryConfigFixture__InvalidLogModeShallFallBackToConsole",
     "file": "score/mw/log/detail/registry_aware_recorder_factory_test.cpp",
-    "line": "311",
+    "line": "318",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -324114,9 +324128,9 @@
     "FullyVerifies": null
   },
   {
-    "name": "RegistryAwareRecorderFactoryConfigFixture__OutOfRangeLogModeShallReturnEmptyRecorder",
+    "name": "RegistryAwareRecorderFactoryConfigFixture__OutOfRangeLogModeShallFallBackToConsole",
     "file": "score/mw/log/detail/registry_aware_recorder_factory_test.cpp",
-    "line": "324",
+    "line": "338",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -324130,7 +324144,7 @@
   {
     "name": "RegistryAwareRecorderFactoryConfigFixture__MultipleLogModesShallReturnCompositeRecorder",
     "file": "score/mw/log/detail/registry_aware_recorder_factory_test.cpp",
-    "line": "339",
+    "line": "360",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -324144,7 +324158,7 @@
   {
     "name": "RegistryAwareRecorderFactoryConfigFixture__CreateRecorderFromLogModeMemoryErrorShallReturnEmptyRecorder",
     "file": "score/mw/log/detail/registry_aware_recorder_factory_test.cpp",
-    "line": "371",
+    "line": "392",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -324158,7 +324172,7 @@
   {
     "name": "RegistryAwareRecorderFactoryConfigFixture__CreateFromConfigurationFallsBackToConsoleWhenConfigFilesNotFound",
     "file": "score/mw/log/detail/registry_aware_recorder_factory_test.cpp",
-    "line": "386",
+    "line": "407",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -324172,7 +324186,7 @@
   {
     "name": "RegistryAwareRecorderFactoryConfigFixture__CreateFromConfigurationWithConsoleModeParsesConfigAndReturnsSingleRecorder",
     "file": "score/mw/log/detail/registry_aware_recorder_factory_test.cpp",
-    "line": "411",
+    "line": "432",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -324184,9 +324198,23 @@
     "FullyVerifies": null
   },
   {
+    "name": "RegistryAwareRecorderFactoryConfigFixture__CreateFromConfigurationShallCreateConsoleRecorderOnlyOnce",
+    "file": "score/mw/log/detail/registry_aware_recorder_factory_test.cpp",
+    "line": "458",
+    "result": "passed",
+    "repo_name": "local_repo",
+    "hash": "",
+    "url": "",
+    "TestType": null,
+    "DerivationTechnique": "error-guessing",
+    "result_text": "",
+    "PartiallyVerifies": null,
+    "FullyVerifies": null
+  },
+  {
     "name": "RegistryAwareRecorderFactoryConfigFixture__CreateFromConfigurationWithUnavailableModeConsoleAvailableFallsBackToConsole",
     "file": "score/mw/log/detail/registry_aware_recorder_factory_test.cpp",
-    "line": "437",
+    "line": "483",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -324200,7 +324228,7 @@
   {
     "name": "RegistryAwareRecorderFactoryConfigFixture__CreateFromConfigurationWithNoAvailableBackendAndNoConsoleReturnsEmptyRecorder",
     "file": "score/mw/log/detail/registry_aware_recorder_factory_test.cpp",
-    "line": "467",
+    "line": "513",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -324214,7 +324242,7 @@
   {
     "name": "RegistryAwareRecorderFactoryConfigFixture__CreateFromConfigurationWithMultipleAvailableModesReturnsCompositeRecorder",
     "file": "score/mw/log/detail/registry_aware_recorder_factory_test.cpp",
-    "line": "490",
+    "line": "536",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -324228,7 +324256,7 @@
   {
     "name": "RegistryAwareRecorderFactoryConfigFixture__CreateFromConfigurationAvailableBackendReturningNullRecorderResultsInEmpty",
     "file": "score/mw/log/detail/registry_aware_recorder_factory_test.cpp",
-    "line": "524",
+    "line": "570",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -324242,7 +324270,7 @@
   {
     "name": "RegistryAwareRecorderFactoryConfigFixture__CreateFromConfigurationConsoleFallbackCreatorReturningNullIsSkipped",
     "file": "score/mw/log/detail/registry_aware_recorder_factory_test.cpp",
-    "line": "551",
+    "line": "597",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -325706,13 +325734,13 @@
     "TestType": "control-flow-analysis",
     "DerivationTechnique": "Analysis of functional dependencies",
     "result_text": "",
-    "PartiallyVerifies": null,
+    "PartiallyVerifies": "comp_req__log__console_backend",
     "FullyVerifies": null
   },
   {
     "name": "ConsoleRegistrantTest__ConsoleBackendCreatorReturnsNonNullRecorder",
     "file": "score/mw/log/detail/console_registrant_enabled_test.cpp",
-    "line": "37",
+    "line": "38",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -325720,7 +325748,7 @@
     "TestType": "interface-test",
     "DerivationTechnique": "Analysis of functional dependencies",
     "result_text": "",
-    "PartiallyVerifies": null,
+    "PartiallyVerifies": "comp_req__log__console_backend",
     "FullyVerifies": null
   },
   {
@@ -325878,9 +325906,23 @@
     "FullyVerifies": null
   },
   {
-    "name": "SlotDrainerFixture__TestOneSlotOneSpan",
+    "name": "SlotDrainerFixture__SlotBeingFlushedShallBeReleasedEvenIfQueueIsRefilledMeanwhile",
     "file": "score/mw/log/detail/text_recorder/slot_drainer_test.cpp",
     "line": "138",
+    "result": "passed",
+    "repo_name": "local_repo",
+    "hash": "",
+    "url": "",
+    "TestType": "interface-test",
+    "DerivationTechnique": "error-guessing",
+    "result_text": "",
+    "PartiallyVerifies": null,
+    "FullyVerifies": null
+  },
+  {
+    "name": "SlotDrainerFixture__TestOneSlotOneSpan",
+    "file": "score/mw/log/detail/text_recorder/slot_drainer_test.cpp",
+    "line": "185",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -325894,7 +325936,7 @@
   {
     "name": "SlotDrainerFixture__TestTooManySlotsForSingleCallShallNotBeAbleToFlushAllSlots",
     "file": "score/mw/log/detail/text_recorder/slot_drainer_test.cpp",
-    "line": "172",
+    "line": "219",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -327117,16 +327159,16 @@
     "repo_name": "local_repo",
     "hash": "",
     "url": "",
-    "TestType": null,
-    "DerivationTechnique": null,
+    "TestType": "interface-test",
+    "DerivationTechnique": "requirements-analysis",
     "result_text": "",
-    "PartiallyVerifies": null,
+    "PartiallyVerifies": "comp_req__log__system_logger",
     "FullyVerifies": null
   },
   {
     "name": "TextRecorderTests__DefaultLogLevelShallBeUsedIfCheckForConsoleIsDisabled",
     "file": "score/mw/log/detail/text_recorder/text_recorder_test.cpp",
-    "line": "425",
+    "line": "428",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -327140,7 +327182,7 @@
   {
     "name": "TextRecorderTests__TextRecorderShouldClearSlotOnStart",
     "file": "score/mw/log/detail/text_recorder/text_recorder_test.cpp",
-    "line": "458",
+    "line": "461",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
