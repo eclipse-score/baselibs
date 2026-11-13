@@ -36,15 +36,9 @@ string_flag(
 cc_library(
     name = "parser_interface",
     srcs = ["i_json_parser.cpp"],
-    hdrs = [
-        "i_json_parser.h",
-        "json_parser.h",
-    ],
+    hdrs = ["i_json_parser.h"],
     features = COMPILER_WARNING_FEATURES,
     tags = ["FFI"],
-    visibility = [
-        "@score_baselibs//score/json:__subpackages__",
-    ],
     deps = [
         "@score_baselibs//score/json/internal/model",
         "@score_baselibs//score/result",
@@ -57,73 +51,54 @@ cc_library(
     features = COMPILER_WARNING_FEATURES,
     tags = ["FFI"],
     visibility = [
-        "@score_baselibs//score/json:__subpackages__",
+        "@score_baselibs//score/json/internal/writer:__pkg__",
+        "@score_baselibs//score/json/internal/writer/vajson:__pkg__",
     ],
 )
 
 cc_library(
     name = "writer_interface",
     srcs = ["i_json_writer.cpp"],
-    hdrs = [
-        "i_json_writer.h",
-        "json_writer.h",
-    ],
+    hdrs = ["i_json_writer.h"],
     features = COMPILER_WARNING_FEATURES,
     tags = ["FFI"],
-    visibility = [
-        "@score_baselibs//score/json:__subpackages__",
-    ],
     deps = [
-        ":formatting",
         "@score_baselibs//score/filesystem/filestream",
         "@score_baselibs//score/json/internal/model",
-        "@score_baselibs//score/language/futurecpp",
         "@score_baselibs//score/result",
-    ],
-)
-
-cc_library(
-    name = "interface",
-    features = COMPILER_WARNING_FEATURES,
-    tags = ["FFI"],
-    visibility = [
-        # Coverage scope root (//tools/coverage, eclipse-score/baselibs#512).
-        "//tools/coverage:__pkg__",
-        "@score_baselibs//score/json:__subpackages__",
-    ],
-    deps = [
-        ":parser_interface",
-        ":writer_interface",
     ],
 )
 
 cc_library(
     name = "json_parser_impl",
     srcs = ["json_parser.cpp"],
+    hdrs = ["json_parser.h"],
     features = COMPILER_WARNING_FEATURES,
     implementation_deps = [
-        "@score_baselibs//score/json/internal/model",
         "@score_baselibs//score/json/internal/parser/vajson",
-        "@score_baselibs//score/result",
     ],
     tags = ["FFI"],
-    visibility = ["@score_baselibs//score/json:__subpackages__"],
     deps = [
         ":parser_interface",
+        "@score_baselibs//score/json/internal/model",
+        "@score_baselibs//score/result",
     ],
 )
 
 cc_library(
     name = "json_writer_impl",
     srcs = ["json_writer.cpp"],
+    hdrs = ["json_writer.h"],
     features = COMPILER_WARNING_FEATURES,
     implementation_deps = [
+        "@score_baselibs//score/json/internal/model",
         "@score_baselibs//score/json/internal/writer:serializer",
     ],
     tags = ["FFI"],
-    visibility = ["@score_baselibs//score/json:__subpackages__"],
     deps = [
+        ":formatting",
         ":writer_interface",
+        "@score_baselibs//score/filesystem/filestream",
     ],
 )
 
@@ -148,6 +123,7 @@ cc_library(
         "//visibility:public",  # platform_only
     ],
     deps = [
+        # Aggregate kept so existing consumers still get the writer API transitively.
         ":json",
         "@score_baselibs//score/language/futurecpp",
         "@score_baselibs//score/result",
@@ -179,7 +155,8 @@ cc_library(
     features = COMPILER_WARNING_FEATURES,
     visibility = LIB_JSON_VISIBILITY,
     deps = [
-        ":interface",
+        ":parser_interface",
+        ":writer_interface",
         "@googletest//:gtest",
     ],
 )
