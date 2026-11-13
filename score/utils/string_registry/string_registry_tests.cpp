@@ -16,14 +16,14 @@
 #include <string>
 #include <string_view>
 
-#include "score/containers/string_registry.h"
+#include "score/utils/string_registry/string_registry.h"
 
-namespace score::containers
+namespace score::utils::string_registry
 {
 
 TEST(StringRegistryTest, InsertMultipleStrings)
 {
-    RecordProperty("PartiallyVerifies", "comp_req__containers__string_registry");
+    RecordProperty("PartiallyVerifies", "comp_req__utils__string_registry__string_registry");
     RecordProperty("TestType", "requirements-based");
     RecordProperty("DerivationTechnique", "equivalence-classes");
     RecordProperty("Description",
@@ -32,7 +32,7 @@ TEST(StringRegistryTest, InsertMultipleStrings)
 
     String_registry registry;
 
-    /// Verify the existence of the type cara::core::util::String_registry interface.
+    /// Verify the existence of the type score::utils::string_registry::String_registry interface.
     const auto insert1 = registry.insert(std::string("TestString"));
     /// String from an std::String is added to the registry when it is not there yet.
     EXPECT_TRUE(insert1.second);
@@ -48,7 +48,7 @@ TEST(StringRegistryTest, InsertMultipleStrings)
 
 TEST(StringRegistryTest, InsertMultipleStringViews)
 {
-    RecordProperty("PartiallyVerifies", "comp_req__containers__string_registry");
+    RecordProperty("PartiallyVerifies", "comp_req__utils__string_registry__string_registry");
     RecordProperty("TestType", "requirements-based");
     RecordProperty("DerivationTechnique", "equivalence-classes");
     RecordProperty("Description",
@@ -80,7 +80,7 @@ TEST(StringRegistryTest, InsertMultipleStringViews)
 
 TEST(StringRegistryTest, InsertMultipleStringViewLiterals)
 {
-    RecordProperty("PartiallyVerifies", "comp_req__containers__string_registry");
+    RecordProperty("PartiallyVerifies", "comp_req__utils__string_registry__string_registry");
     RecordProperty("TestType", "requirements-based");
     RecordProperty("DerivationTechnique", "equivalence-classes");
     RecordProperty("Description",
@@ -114,7 +114,7 @@ TEST(StringRegistryTest, InsertMultipleStringViewLiterals)
 
 TEST(StringRegistryTest, EqualStringsFromSeparateAllocationsArePointerIdentical)
 {
-    RecordProperty("PartiallyVerifies", "comp_req__containers__string_registry");
+    RecordProperty("PartiallyVerifies", "comp_req__utils__string_registry__string_registry");
     RecordProperty("TestType", "requirements-based");
     RecordProperty("DerivationTechnique", "equivalence-classes");
     RecordProperty("Description",
@@ -137,7 +137,7 @@ TEST(StringRegistryTest, EqualStringsFromSeparateAllocationsArePointerIdentical)
 
 TEST(StringRegistryTest, StringViewThenStringOverloadYieldPointerIdenticalViews)
 {
-    RecordProperty("PartiallyVerifies", "comp_req__containers__string_registry");
+    RecordProperty("PartiallyVerifies", "comp_req__utils__string_registry__string_registry");
     RecordProperty("TestType", "requirements-based");
     RecordProperty("DerivationTechnique", "equivalence-classes");
     RecordProperty("Description",
@@ -160,7 +160,7 @@ TEST(StringRegistryTest, StringViewThenStringOverloadYieldPointerIdenticalViews)
 
 TEST(StringRegistryTest, LiteralThenStringOverloadYieldPointerIdenticalViews)
 {
-    RecordProperty("PartiallyVerifies", "comp_req__containers__string_registry");
+    RecordProperty("PartiallyVerifies", "comp_req__utils__string_registry__string_registry");
     RecordProperty("TestType", "requirements-based");
     RecordProperty("DerivationTechnique", "equivalence-classes");
     RecordProperty(
@@ -184,7 +184,7 @@ TEST(StringRegistryTest, LiteralThenStringOverloadYieldPointerIdenticalViews)
 
 TEST(StringRegistryTest, ViewIdentityIsStableAfterRegistryGrowth)
 {
-    RecordProperty("PartiallyVerifies", "comp_req__containers__string_registry");
+    RecordProperty("PartiallyVerifies", "comp_req__utils__string_registry__string_registry");
     RecordProperty("TestType", "requirements-based");
     RecordProperty("DerivationTechnique", "equivalence-classes");
     RecordProperty(
@@ -212,7 +212,7 @@ TEST(StringRegistryTest, ViewIdentityIsStableAfterRegistryGrowth)
 
 TEST(StringRegistryTest, SlicedLiteralAndFullStringAreDistinct)
 {
-    RecordProperty("PartiallyVerifies", "comp_req__containers__string_registry");
+    RecordProperty("PartiallyVerifies", "comp_req__utils__string_registry__string_registry");
     RecordProperty("TestType", "requirements-based");
     RecordProperty("DerivationTechnique", "boundary-values");
     RecordProperty("Description",
@@ -233,7 +233,7 @@ TEST(StringRegistryTest, SlicedLiteralAndFullStringAreDistinct)
 
 TEST(StringRegistryTest, EmbeddedNulsAreDistinct)
 {
-    RecordProperty("PartiallyVerifies", "comp_req__containers__string_registry");
+    RecordProperty("PartiallyVerifies", "comp_req__utils__string_registry__string_registry");
     RecordProperty("TestType", "requirements-based");
     RecordProperty("DerivationTechnique", "boundary-values");
     RecordProperty("Description",
@@ -258,4 +258,4 @@ TEST(StringRegistryTest, EmbeddedNulsAreDistinct)
     EXPECT_EQ(insert3.first.string_view().size(), 5U);
 }
 
-}  // namespace score::containers
+}  // namespace score::utils::string_registry

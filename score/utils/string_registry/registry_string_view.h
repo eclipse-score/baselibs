@@ -11,13 +11,13 @@
  * SPDX-License-Identifier: Apache-2.0
  ********************************************************************************/
 
-#ifndef SCORE_CONTAINERS_REGISTRY_STRING_VIEW_H
-#define SCORE_CONTAINERS_REGISTRY_STRING_VIEW_H
+#ifndef SCORE_UTILS_STRING_REGISTRY_REGISTRY_STRING_VIEW_H
+#define SCORE_UTILS_STRING_REGISTRY_REGISTRY_STRING_VIEW_H
 
 #include <ostream>
 #include <string_view>
 
-namespace score::containers
+namespace score::utils::string_registry
 {
 
 ///
@@ -204,7 +204,7 @@ inline std::ostream& operator<<(std::ostream& os, Registry_string_view v)
     return os.write(v.data(), static_cast<std::streamsize>(v.length()));
 }
 
-}  // namespace score::containers
+}  // namespace score::utils::string_registry
 
 namespace std
 {
@@ -214,9 +214,9 @@ namespace std
 /// \return Hash value for the given Registry_string_view
 ///
 template <>
-struct hash<::score::containers::Registry_string_view>
+struct hash<::score::utils::string_registry::Registry_string_view>
 {
-    size_t operator()(const ::score::containers::Registry_string_view& sv) const noexcept
+    size_t operator()(const ::score::utils::string_registry::Registry_string_view& sv) const noexcept
     {
         // For the conversion of Registry_string_view data pointer to intptr_t, the reinterpret_cast
         // is necessary.
@@ -228,4 +228,4 @@ struct hash<::score::containers::Registry_string_view>
 
 }  // namespace std
 
-#endif  // SCORE_CONTAINERS_REGISTRY_STRING_VIEW_H
+#endif  // SCORE_UTILS_STRING_REGISTRY_REGISTRY_STRING_VIEW_H

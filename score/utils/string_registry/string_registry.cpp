@@ -11,9 +11,9 @@
  * SPDX-License-Identifier: Apache-2.0
  ********************************************************************************/
 
-#include "score/containers/string_registry.h"
+#include "score/utils/string_registry/string_registry.h"
 
-namespace score::containers
+namespace score::utils::string_registry
 {
 
 // This insert should be used for inserting compile time string literals into the registry.
@@ -63,4 +63,4 @@ std::pair<Registry_string_view, bool> String_registry::insert(std::string&& new_
     return std::pair<Registry_string_view, bool>{Registry_string_view{*iter}, false};
 }
 
-}  // namespace score::containers
+}  // namespace score::utils::string_registry

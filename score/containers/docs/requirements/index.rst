@@ -63,31 +63,6 @@ Functional Requirements
 
    The Containers library shall provide a non-relocatable vector container that maintains stable element addresses.
 
-.. comp_req:: String Registry
-   :id: comp_req__containers__string_registry
-   :reqtype: Functional
-   :security: YES
-   :safety: ASIL_B
-   :derived_from: feat_req__baselibs__containers_library[version==2]
-   :status: valid
-   :version: 1
-   :satisfied_by: comp__baselibs_containers[version==2]
-
-   The Containers library shall provide a string registry that deduplicates strings into a single backing allocation and guarantees stable memory addresses across the registry's lifetime.
-
-.. comp_req:: Registry String View
-   :id: comp_req__containers__registry_string_view
-   :reqtype: Functional
-   :security: YES
-   :safety: ASIL_B
-   :derived_from: feat_req__baselibs__containers_library[version==2]
-   :status: valid
-   :version: 1
-   :satisfied_by: comp__baselibs_containers[version==2]
-
-   The Containers library shall provide a Registry_string_view that uses pointer equality and pointer-based hashing to enable O(1) identity comparisons between views originating from the same String_registry.
-
-
 Non-Functional Requirements
 ===========================
 
