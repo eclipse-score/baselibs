@@ -170,9 +170,28 @@ bazel_dep(name = "cxx.rs", version = "1.0.186")
 ## Custom Module Loading
 
 bazel_dep(name = "score_docs_as_code", version = "8.6.0")
-bazel_dep(name = "score_process_description", version = "2.2.2")
+
+# Prototype dependable element (//dependable_element). Remove once released:
+# docs-as-code: docs_bundle(external_needs) for the bundle's own Needs export
+# (eclipse-score/docs-as-code#1039); tooling: lobster_sphinx_needs and `needs`
+# for the requirement macros (branch feat/lobster-sphinx-needs).
+git_override(
+    module_name = "score_docs_as_code",
+    commit = "8881d3461b71c96652e250ceb344b4b44ad652df",
+    remote = "https://github.com/eclipse-score/docs-as-code.git",
+)
+
+bazel_dep(name = "score_process_description", version = "2.2.3")
 
 bazel_dep(name = "score_tooling", version = "3.0.2", dev_dependency = True)
+git_override(
+    module_name = "score_tooling",
+    commit = "db8e3b32876e1142ff0f2cfe9594c09bf0fe65a5",
+    remote = "https://github.com/eclipse-score/tooling.git",
+)
+
+# The failure_modes test of rules_score resolves @trlc from the calling module.
+bazel_dep(name = "trlc", version = "3.1.1", dev_dependency = True)
 
 # LLVM source-based coverage pipeline (successor of @score_tooling//coverage),
 # see tools/coverage/. 0.2.0 fixes eclipse-score/baselibs#558 and

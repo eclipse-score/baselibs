@@ -1,0 +1,23 @@
+' *******************************************************************************
+' Copyright (c) 2026 Contributors to the Eclipse Foundation
+'
+' See the NOTICE file(s) distributed with this work for additional
+' information regarding copyright ownership.
+'
+' This program and the accompanying materials are made available under the
+' terms of the Apache License Version 2.0 which is available at
+' https://www.apache.org/licenses/LICENSE-2.0
+'
+' SPDX-License-Identifier: Apache-2.0
+' *******************************************************************************
+
+@startuml
+
+!include fta_metamodel.puml
+
+$FailureMode("Bitmanipulation Constraints", "BitmanipulationFmea.comp_saf_fmea__bitmanipulation__constraints")
+$OrGate("OG_CO", "BitmanipulationFmea.comp_saf_fmea__bitmanipulation__constraints")
+$RootCause("Bit position exceeds the width of the type", "BitPositionOutOfRange", "OG_CO")
+$RootCause("Byte index exceeds the size of the raw value", "ByteIndexOutOfRange", "OG_CO")
+
+@enduml

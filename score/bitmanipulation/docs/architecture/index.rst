@@ -57,13 +57,64 @@ Static Architecture
 
       {{ draw_component(need(), needs) }}
 
+.. comp_arc_sta:: Bit Manipulation Unit Static view
+   :id: comp_arc_sta__baselibs__bit_manipulation_unit
+   :security: NO
+   :safety:  ASIL_B
+   :status: valid
+   :version: 1
+   :fulfils: comp_req__bitmanipulation__bit_operations[version==1],comp_req__bitmanipulation__byte_operations[version==2],comp_req__bitmanipulation__byte_extraction[version==1],comp_req__bitmanipulation__bounds_safety[version==1]
+   :belongs_to: comp__baselibs_bit_manipulation[version==1]
+
+   Byte types of ``bit_manipulation.h``; the bit functions are free function templates.
+
+   .. uml:: bit_manipulation.puml
+      :scale: 50
+      :align: center
+
+.. comp_arc_sta:: Bitmask Operators Unit Static view
+   :id: comp_arc_sta__baselibs__bitmask_operator_unit
+   :security: NO
+   :safety:  ASIL_B
+   :status: valid
+   :version: 1
+   :fulfils: comp_req__bitmanipulation__bitmask_operators[version==1]
+   :belongs_to: comp__baselibs_bit_manipulation[version==1]
+
+   Opt-in trait of ``bitmask_operators.h``; the operators are free function templates.
+
+   .. uml:: bitmask_operators.puml
+      :scale: 50
+      :align: center
+
 Dynamic Architecture
 --------------------
 
-No need for sequence diagram. Simple caller callee flow.
+.. comp_arc_dyn:: Bit Manipulation Dynamic view
+   :id: comp_arc_dyn__baselibs__bit_manipulation
+   :security: NO
+   :safety:  ASIL_B
+   :status: valid
+   :version: 1
+   :fulfils: comp_req__bitmanipulation__bit_operations[version==1],comp_req__bitmanipulation__bitmask_operators[version==1]
+   :belongs_to: comp__baselibs_bit_manipulation[version==1]
+
+   A user combines and queries scoped-enum flags and sets and checks a bit; every call
+   goes through the public API (validated by ``//dependable_element:architectural_design``).
+
+   .. uml:: dynamic.puml
+      :scale: 50
+      :align: center
 
 Interfaces
 ----------
+
+Public API of the component; the architecture validation of the dependable element
+checks it against the static and dynamic views.
+
+.. uml:: public_api.puml
+   :scale: 50
+   :align: center
 
 .. logic_arc_int_op:: Set Bit
    :id: logic_arc_int_op__baselibs__set_bit
@@ -144,3 +195,126 @@ Interfaces
    :status: valid
    :version: 1
    :included_by: logic_arc_int__baselibs__bit_mask_operator[version==1]
+
+Component Interfaces
+^^^^^^^^^^^^^^^^^^^^
+
+The interfaces and operations of ``public_api.puml``. The FMEA names the operations a
+failure mode violates; the dependable element checks that every operation is covered.
+
+.. real_arc_int:: BitManipulationApi
+   :id: real_arc_int__baselibs__bit_manipulation
+   :security: NO
+   :safety: ASIL_B
+   :status: valid
+   :version: 1
+   :language: cpp
+   :fulfils: comp_req__bitmanipulation__bit_operations[version==1],comp_req__bitmanipulation__byte_extraction[version==1]
+
+.. real_arc_int_op:: SetBit
+   :id: real_arc_int_op__baselibs__set_bit
+   :security: NO
+   :safety: ASIL_B
+   :status: valid
+   :version: 1
+   :included_by: real_arc_int__baselibs__bit_manipulation[version==1]
+   :implements: logic_arc_int_op__baselibs__set_bit[version==1]
+
+.. real_arc_int_op:: ClearBit
+   :id: real_arc_int_op__baselibs__clear_bit
+   :security: NO
+   :safety: ASIL_B
+   :status: valid
+   :version: 1
+   :included_by: real_arc_int__baselibs__bit_manipulation[version==1]
+   :implements: logic_arc_int_op__baselibs__clear_bit[version==1]
+
+.. real_arc_int_op:: ToggleBit
+   :id: real_arc_int_op__baselibs__toggle_bit
+   :security: NO
+   :safety: ASIL_B
+   :status: valid
+   :version: 1
+   :included_by: real_arc_int__baselibs__bit_manipulation[version==1]
+   :implements: logic_arc_int_op__baselibs__toggle_bit[version==1]
+
+.. real_arc_int_op:: CheckBit
+   :id: real_arc_int_op__baselibs__check_bit
+   :security: NO
+   :safety: ASIL_B
+   :status: valid
+   :version: 1
+   :included_by: real_arc_int__baselibs__bit_manipulation[version==1]
+   :implements: logic_arc_int_op__baselibs__test_bit[version==1]
+
+.. real_arc_int_op:: GetByte
+   :id: real_arc_int_op__baselibs__get_byte
+   :security: NO
+   :safety: ASIL_B
+   :status: valid
+   :version: 1
+   :included_by: real_arc_int__baselibs__bit_manipulation[version==1]
+   :implements: logic_arc_int_op__baselibs__extract_byte[version==1]
+
+.. real_arc_int:: BitmaskOperatorsApi
+   :id: real_arc_int__baselibs__bitmask_operators
+   :security: NO
+   :safety: ASIL_B
+   :status: valid
+   :version: 1
+   :language: cpp
+   :fulfils: comp_req__bitmanipulation__bitmask_operators[version==1]
+
+.. real_arc_int_op:: operator|
+   :id: real_arc_int_op__baselibs__bitmask_or
+   :security: NO
+   :safety: ASIL_B
+   :status: valid
+   :version: 1
+   :included_by: real_arc_int__baselibs__bitmask_operators[version==1]
+   :implements: logic_arc_int_op__baselibs__bitmask_or[version==1]
+
+.. real_arc_int_op:: operator&
+   :id: real_arc_int_op__baselibs__bitmask_and
+   :security: NO
+   :safety: ASIL_B
+   :status: valid
+   :version: 1
+   :included_by: real_arc_int__baselibs__bitmask_operators[version==1]
+   :implements: logic_arc_int_op__baselibs__bitmask_and[version==1]
+
+.. real_arc_int_op:: operator^
+   :id: real_arc_int_op__baselibs__bitmask_xor
+   :security: NO
+   :safety: ASIL_B
+   :status: valid
+   :version: 1
+   :included_by: real_arc_int__baselibs__bitmask_operators[version==1]
+   :implements: logic_arc_int_op__baselibs__bitmask_xor[version==1]
+
+.. real_arc_int_op:: operator~
+   :id: real_arc_int_op__baselibs__bitmask_not
+   :security: NO
+   :safety: ASIL_B
+   :status: valid
+   :version: 1
+   :included_by: real_arc_int__baselibs__bitmask_operators[version==1]
+   :implements: logic_arc_int_op__baselibs__bitmask_not[version==1]
+
+.. real_arc_int_op:: operator|=
+   :id: real_arc_int_op__baselibs__bitmask_or_assign
+   :security: NO
+   :safety: ASIL_B
+   :status: valid
+   :version: 1
+   :included_by: real_arc_int__baselibs__bitmask_operators[version==1]
+   :implements: logic_arc_int_op__baselibs__bitmask_assignmnt[version==1]
+
+.. real_arc_int_op:: operator&=
+   :id: real_arc_int_op__baselibs__bitmask_and_assign
+   :security: NO
+   :safety: ASIL_B
+   :status: valid
+   :version: 1
+   :included_by: real_arc_int__baselibs__bitmask_operators[version==1]
+   :implements: logic_arc_int_op__baselibs__bitmask_assignmnt[version==1]

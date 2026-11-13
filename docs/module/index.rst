@@ -47,6 +47,20 @@
 
       {{ draw_module(need(), needs) }}
 
+.. mod_view_sta:: Baselibs Dependable Element Static View
+   :id: mod_view_sta__baselibs__dependable_element
+   :version: 1
+   :belongs_to: mod__baselibs[version==3]
+   :includes: comp__baselibs_bit_manipulation[version==1]
+
+   Components and units of the ``baselibs`` dependable element (prototype, currently
+   bitmanipulation only). The architecture validation of ``//dependable_element:baselibs``
+   checks this diagram against the Bazel targets.
+
+   .. uml:: dependable_element.puml
+      :scale: 50
+      :align: center
+
 .. _baselibs_module_docs:
 
 Module

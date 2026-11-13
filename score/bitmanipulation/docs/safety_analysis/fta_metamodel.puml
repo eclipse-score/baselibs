@@ -1,0 +1,88 @@
+' *******************************************************************************
+' Copyright (c) 2025 Contributors to the Eclipse Foundation
+'
+' See the NOTICE file(s) distributed with this work for additional
+' information regarding copyright ownership.
+'
+' This program and the accompanying materials are made available under the
+' terms of the Apache License Version 2.0 which is available at
+' https://www.apache.org/licenses/LICENSE-2.0
+'
+' SPDX-License-Identifier: Apache-2.0
+' *******************************************************************************
+
+' AND gate: flat bottom + elliptic arch on top
+sprite $and <svg width="60" height="70" viewBox="0 0 60 70" xmlns="http://www.w3.org/2000/svg">
+  <path d="M 8,58 H 52 V 35 A 22,27 0 0,0 8,35 L 8,58 Z" fill="white" stroke="black" stroke-width="2.5"/>
+</svg>
+
+' OR gate: pointed top, bowed sides, concave bottom
+sprite $or <svg width="60" height="70" viewBox="0 0 60 70" xmlns="http://www.w3.org/2000/svg">
+  <path d="M 30,8 C 55,25 54,42 52,58 Q 30,48 8,58 C 6,42 5,25 30,8 Z" fill="white" stroke="black" stroke-width="2.5"/>
+</svg>
+
+' Transfer-In gate: upward triangle
+sprite $transferin <svg width="60" height="70" viewBox="0 0 60 70" xmlns="http://www.w3.org/2000/svg">
+  <polygon points="30,8 52,60 8,60" fill="white" stroke="black" stroke-width="2.5"/>
+</svg>
+
+'skinparam linetype polyline
+'skinparam linetype ortho
+
+' $FailureMode(name, fm1, fm2, ..., fm8): a fault-tree top-level node covering
+' one or more failure modes, each given as a TRLC 'Package.Name' fully-qualified
+' name. The *first* failure mode ($fm1) doubles as this node's alias -- the
+' connection point every gate/root-cause ancestor attaches to. Any further
+' failure modes ($fm2..$fm8) are rendered as extra notes so a reader can see
+' at a glance that this node covers more than one failure mode. PlantUML
+' procedures have no true variadic arguments, only trailing defaults, so the
+' argument count is capped at 8 failure modes per node.
+!procedure $FailureMode($name, $fm1, $fm2="", $fm3="", $fm4="", $fm5="", $fm6="", $fm7="", $fm8="")
+  rectangle "$name" as $fm1
+  !if ($fm2 != "")
+  note right of $fm1: $fm2
+  !endif
+  !if ($fm3 != "")
+  note right of $fm1: $fm3
+  !endif
+  !if ($fm4 != "")
+  note right of $fm1: $fm4
+  !endif
+  !if ($fm5 != "")
+  note right of $fm1: $fm5
+  !endif
+  !if ($fm6 != "")
+  note right of $fm1: $fm6
+  !endif
+  !if ($fm7 != "")
+  note right of $fm1: $fm7
+  !endif
+  !if ($fm8 != "")
+  note right of $fm1: $fm8
+  !endif
+!endprocedure
+
+!procedure $IntermediateEvent($name, $alias, $connection)
+  rectangle "$name" as $alias
+  $alias -u-> $connection
+!endprocedure
+
+!procedure $RootCause($name, $alias, $connection)
+  usecase "$name" as $alias
+  $alias -u-> $connection
+!endprocedure
+
+!procedure $AndGate($alias, $connection)
+  rectangle " " <<$and>> as $alias
+  $alias -u-> $connection
+!endprocedure
+
+!procedure $OrGate($alias, $connection)
+  rectangle " " <<$or>> as $alias
+  $alias -u-> $connection
+!endprocedure
+
+!procedure $TransferInGate($alias, $connection)
+  rectangle " " <<$transferin>> as $alias
+  $alias -u-> $connection
+!endprocedure

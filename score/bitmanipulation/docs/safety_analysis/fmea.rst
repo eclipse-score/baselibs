@@ -101,7 +101,13 @@ FMEA
 For all identified applicable failure initiators, the FMEA is performed in the following section.
 
 .. comp_saf_fmea:: Bitmanipulation No Return
-   :violates: comp_arc_sta__baselibs__bit_manipulation[version==1]
+   :violates: comp_arc_sta__baselibs__bit_manipulation[version==1],
+              real_arc_int_op__baselibs__set_bit[version==1], real_arc_int_op__baselibs__clear_bit[version==1],
+              real_arc_int_op__baselibs__toggle_bit[version==1], real_arc_int_op__baselibs__check_bit[version==1],
+              real_arc_int_op__baselibs__get_byte[version==1], real_arc_int_op__baselibs__bitmask_or[version==1],
+              real_arc_int_op__baselibs__bitmask_and[version==1], real_arc_int_op__baselibs__bitmask_xor[version==1],
+              real_arc_int_op__baselibs__bitmask_not[version==1], real_arc_int_op__baselibs__bitmask_or_assign[version==1],
+              real_arc_int_op__baselibs__bitmask_and_assign[version==1]
    :id: comp_saf_fmea__bitmanipulation__no_return
    :fault_id: MF_01_01,MF_01_06,EX_01_04
    :failure_effect: Bitmanipulation is not executed, if safety function relies on this there may be violation of the safety requirements.
@@ -116,7 +122,13 @@ For all identified applicable failure initiators, the FMEA is performed in the f
    return is needed.
 
 .. comp_saf_fmea:: Bitmanipulation Late Return
-   :violates: comp_arc_sta__baselibs__bit_manipulation[version==1]
+   :violates: comp_arc_sta__baselibs__bit_manipulation[version==1],
+              real_arc_int_op__baselibs__set_bit[version==1], real_arc_int_op__baselibs__clear_bit[version==1],
+              real_arc_int_op__baselibs__toggle_bit[version==1], real_arc_int_op__baselibs__check_bit[version==1],
+              real_arc_int_op__baselibs__get_byte[version==1], real_arc_int_op__baselibs__bitmask_or[version==1],
+              real_arc_int_op__baselibs__bitmask_and[version==1], real_arc_int_op__baselibs__bitmask_xor[version==1],
+              real_arc_int_op__baselibs__bitmask_not[version==1], real_arc_int_op__baselibs__bitmask_or_assign[version==1],
+              real_arc_int_op__baselibs__bitmask_and_assign[version==1]
    :id: comp_saf_fmea__bitmanipulation__late_return
    :fault_id: MF_01_02,EX_01_06
    :failure_effect: Bitmanipulation is executed too late or stalls, so there may be violation of its safety requirements.
@@ -128,7 +140,10 @@ For all identified applicable failure initiators, the FMEA is performed in the f
    There is already an aou on platform level which states that a user has to use program flow monitoring
 
 .. comp_saf_fmea:: Bitmanipulation Constraints
-   :violates: comp_arc_sta__baselibs__bit_manipulation[version==1]
+   :violates: comp_arc_sta__baselibs__bit_manipulation[version==1],
+              real_arc_int_op__baselibs__set_bit[version==1], real_arc_int_op__baselibs__clear_bit[version==1],
+              real_arc_int_op__baselibs__toggle_bit[version==1], real_arc_int_op__baselibs__check_bit[version==1],
+              real_arc_int_op__baselibs__get_byte[version==1]
    :id: comp_saf_fmea__bitmanipulation__constraints
    :fault_id: CO_01_01,CO_01_02
    :failure_effect: If constraints are violated there may be out-of bounds memory corruption.
@@ -140,7 +155,10 @@ For all identified applicable failure initiators, the FMEA is performed in the f
    Constraints are checked, see mitigation requirement.
 
 .. comp_saf_fmea:: Bitmanipulation Wrong Input
-   :violates: comp_arc_sta__baselibs__bit_manipulation[version==1]
+   :violates: comp_arc_sta__baselibs__bit_manipulation[version==1],
+              real_arc_int_op__baselibs__bitmask_or[version==1], real_arc_int_op__baselibs__bitmask_and[version==1],
+              real_arc_int_op__baselibs__bitmask_xor[version==1], real_arc_int_op__baselibs__bitmask_not[version==1],
+              real_arc_int_op__baselibs__bitmask_or_assign[version==1], real_arc_int_op__baselibs__bitmask_and_assign[version==1]
    :id: comp_saf_fmea__bitmanipulation__wrong_input
    :fault_id: MF_01_05
    :failure_effect: If enums are wrongly defined, the expectation of what bit(s) are set will not be met.
@@ -154,3 +172,17 @@ For all identified applicable failure initiators, the FMEA is performed in the f
 
 .. needextend:: c.this_doc() and type == "comp_saf_fmea"
    :+tags: baselibs, bitmanipulation
+
+Fault Trees
+-----------
+
+Root causes of the failure modes. The dependable element (``//dependable_element``) checks
+that every root cause of a failure mode rated sufficient is assessed by its FMEA entry.
+
+.. uml:: fta_no_return.puml
+
+.. uml:: fta_late_return.puml
+
+.. uml:: fta_constraints.puml
+
+.. uml:: fta_wrong_input.puml

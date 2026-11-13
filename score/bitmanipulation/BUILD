@@ -15,6 +15,22 @@ load("@rules_cc//cc:defs.bzl", "cc_library", "cc_test")
 load("@score_baselibs//score/language/safecpp:toolchain_features.bzl", "COMPILER_WARNING_FEATURES")
 load("@score_docs_as_code//:docs.bzl", "docs_bundle")
 
+# Unit designs, public API, dynamic view and fault trees: documented in docs/, validated by //dependable_element.
+exports_files(
+    [
+        "docs/architecture/bit_manipulation.puml",
+        "docs/architecture/bitmask_operators.puml",
+        "docs/architecture/dynamic.puml",
+        "docs/architecture/public_api.puml",
+        "docs/safety_analysis/fta_constraints.puml",
+        "docs/safety_analysis/fta_late_return.puml",
+        "docs/safety_analysis/fta_metamodel.puml",
+        "docs/safety_analysis/fta_no_return.puml",
+        "docs/safety_analysis/fta_wrong_input.puml",
+    ],
+    visibility = ["//dependable_element:__pkg__"],
+)
+
 cc_test(
     name = "bit_manipulation_test",
     srcs = ["bit_manipulation_test.cpp"],
@@ -23,6 +39,7 @@ cc_test(
         "strict_warnings",
     ],
     tags = ["unit"],
+    visibility = ["//dependable_element:__pkg__"],
     deps = [
         ":bitmanipulation",
         "@googletest//:gtest_main",
@@ -37,6 +54,7 @@ cc_test(
         "strict_warnings",
     ],
     tags = ["unit"],
+    visibility = ["//dependable_element:__pkg__"],
     deps = [
         ":bitmask_operators",
         "@googletest//:gtest_main",
@@ -67,9 +85,10 @@ cc_library(
 
 docs_bundle(
     name = "docs",
-    code_targets = [
-        ":bitmanipulation",
-        ":bitmask_operators",
+    # Lets the bundle export its own Needs, which feed component_requirements below.
+    external_needs = [
+        "@score_platform//:needs_json_file",
+        "@score_process_description//:needs_json_file",
     ],
     primary_need_id = "comp__baselibs_bit_manipulation",
     source_dir = "docs",

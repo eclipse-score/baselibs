@@ -25,6 +25,12 @@ exports_files(
     visibility = ["//tools:__pkg__"],
 )
 
+# Dependable element architecture: documented as mod_view_sta, validated by //dependable_element.
+exports_files(
+    ["docs/module/dependable_element.puml"],
+    visibility = ["//dependable_element:__pkg__"],
+)
+
 docs(
     bundles = [
         {
@@ -112,6 +118,8 @@ docs(
             "mount_at": "baselibs/components/utils",
         },
     ],
+    # Test cases of the rules_score dependable element (prototype).
+    dependable_elements = ["//dependable_element:baselibs_needs.json"],
     external_needs = [
         "@score_platform//:needs_json_file",
         "@score_process_description//:needs_json_file",
