@@ -19,13 +19,13 @@ mod ffi {
         include!("score/language/rust/stop_token/cpp/stop_token_adapter.h");
 
         /// Opaque C++ `score::cpp::stop_token`.
-        #[namespace = "score"]
-        #[cxx_name = "CxxStopToken"]
+        #[namespace = "score::cpp"]
+        #[cxx_name = "stop_token"]
         type stop_token;
 
         /// Opaque C++ `score::cpp::stop_source`.
-        #[namespace = "score"]
-        #[cxx_name = "CxxStopSource"]
+        #[namespace = "score::cpp"]
+        #[cxx_name = "stop_source"]
         type stop_source;
 
         #[namespace = "score::language::rust::stop_token"]
@@ -77,9 +77,9 @@ mod ffi {
 /// another CXX bridge.
 pub use ffi::stop_token as RawStopToken;
 
-// SAFETY: `score::cpp::stop_token` exposes only read-only stop-state
-// observation through this public raw API. The underlying stop state is
-// designed for concurrent observation by FutureCpp.
+/// SAFETY: A `&RawStopToken` only permits const observation of the stop state.
+/// `stop_requested()` and `stop_possible()` are const noexcept C++ methods that read atomics with acquire ordering.
+/// Future FFI functions accepting `&stop_token` must not mutate through the shared reference.
 unsafe impl Sync for RawStopToken {}
 
 impl RawStopToken {

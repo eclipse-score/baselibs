@@ -24,10 +24,26 @@ cc_library(
     deps = ["@score_baselibs//score/language/futurecpp"],
 )
 
+cc_library(
+    name = "stop_token_consumer",
+    testonly = True,
+    srcs = ["cpp/stop_token_consumer.cpp"],
+    hdrs = ["cpp/stop_token_consumer.h"],
+    features = COMPILER_WARNING_FEATURES,
+    deps = ["@score_baselibs//score/language/futurecpp"],
+)
+
 rust_cxx_bridge(
     name = "stop_token_bridge",
     src = "src/lib.rs",
     deps = [":stop_token_adapter"],
+)
+
+rust_cxx_bridge(
+    name = "stop_token_consumer_bridge",
+    testonly = True,
+    src = "src/consumer_test.rs",
+    deps = [":stop_token_consumer"],
 )
 
 rust_library(
@@ -45,4 +61,16 @@ rust_test(
     crate = ":stop_token",
     features = ["link_std_cpp_lib"],
     tags = ["unit"],
+)
+
+rust_test(
+    name = "stop_token_consumer_test",
+    srcs = ["src/consumer_test.rs"],
+    features = ["link_std_cpp_lib"],
+    tags = ["unit"],
+    deps = [
+        ":stop_token",
+        ":stop_token_consumer_bridge",
+        "@cxx.rs//:cxx",
+    ],
 )

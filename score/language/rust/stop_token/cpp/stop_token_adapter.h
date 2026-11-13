@@ -18,12 +18,6 @@
 
 #include <memory>
 
-namespace score
-{
-using CxxStopSource = cpp::stop_source;
-using CxxStopToken = cpp::stop_token;
-}  // namespace score
-
 namespace score::language::rust::stop_token
 {
 
