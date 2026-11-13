@@ -107,7 +107,7 @@ class LoadFlatbufferTest : public ::testing::Test
         ON_CALL(os_.unistd, close(kTestFd)).WillByDefault(Return(score::cpp::expected_blank<score::os::Error>{}));
     }
 
-    void SetUpSuccessfulReadAll(const std::vector<uint8_t>& content)
+    void SetUpSuccessfulReadAll(const score::cpp::pmr::vector<uint8_t>& content)
     {
         ON_CALL(os_.unistd, read(kTestFd, _, _))
             .WillByDefault(Invoke([content](std::int32_t,
@@ -140,7 +140,7 @@ TEST_F(LoadFlatbufferTest, OpenFailureReturnsError)
     const auto open_error = score::os::Error::createFromErrno(ENOENT);
     EXPECT_CALL(os_.fcntl, open(_, _)).WillOnce(Return(score::cpp::make_unexpected(open_error)));
 
-    std::vector<uint8_t> data;
+    score::cpp::pmr::vector<uint8_t> data;
     const auto result = call_impl(kTestPath, data);
 
     ASSERT_FALSE(result.has_value());
@@ -155,7 +155,7 @@ TEST_F(LoadFlatbufferTest, FstatFailureReturnsErrorAndClosesFile)
     EXPECT_CALL(os_.stat, fstat(kTestFd, _)).WillOnce(Return(score::cpp::make_unexpected(stat_error)));
     EXPECT_CALL(os_.unistd, close(kTestFd)).WillOnce(Return(score::cpp::expected_blank<score::os::Error>{}));
 
-    std::vector<uint8_t> data;
+    score::cpp::pmr::vector<uint8_t> data;
     const auto result = call_impl(kTestPath, data);
 
     ASSERT_FALSE(result.has_value());
@@ -173,7 +173,7 @@ TEST_F(LoadFlatbufferTest, NegativeFileSizeReturnsErrorAndClosesFile)
                         }),
                         Return(score::cpp::expected_blank<score::os::Error>{})));
 
-    std::vector<uint8_t> data;
+    score::cpp::pmr::vector<uint8_t> data;
     const auto result = call_impl(kTestPath, data);
 
     ASSERT_FALSE(result.has_value());
@@ -189,7 +189,7 @@ TEST_F(LoadFlatbufferTest, ReadFailureReturnsErrorAndClosesFile)
     const auto read_error = score::os::Error::createFromErrno(EIO);
     EXPECT_CALL(os_.unistd, read(kTestFd, _, _)).WillOnce(Return(score::cpp::make_unexpected(read_error)));
 
-    std::vector<uint8_t> data;
+    score::cpp::pmr::vector<uint8_t> data;
     const auto result = call_impl(kTestPath, data);
 
     ASSERT_FALSE(result.has_value());
@@ -205,7 +205,7 @@ TEST_F(LoadFlatbufferTest, ReadReturnsZeroBytesReportsUnexpectedEof)
     EXPECT_CALL(os_.unistd, read(kTestFd, _, _))
         .WillOnce(Return(score::cpp::expected<ssize_t, score::os::Error>{static_cast<ssize_t>(0)}));
 
-    std::vector<uint8_t> data;
+    score::cpp::pmr::vector<uint8_t> data;
     const auto result = call_impl(kTestPath, data);
 
     ASSERT_FALSE(result.has_value());
@@ -214,7 +214,7 @@ TEST_F(LoadFlatbufferTest, ReadReturnsZeroBytesReportsUnexpectedEof)
 
 TEST_F(LoadFlatbufferTest, PartialReadsAreHandledCorrectly)
 {
-    const std::vector<uint8_t> expected_data{'A', 'B', 'C', 'D', 'E'};
+    const score::cpp::pmr::vector<uint8_t> expected_data{'A', 'B', 'C', 'D', 'E'};
 
     SetUpSuccessfulOpen();
     SetUpSuccessfulFstat(static_cast<std::int64_t>(expected_data.size()));
@@ -238,7 +238,7 @@ TEST_F(LoadFlatbufferTest, PartialReadsAreHandledCorrectly)
             return static_cast<ssize_t>(1);
         }));
 
-    std::vector<uint8_t> data;
+    score::cpp::pmr::vector<uint8_t> data;
     const auto result = call_impl(kTestPath, data);
 
     ASSERT_TRUE(result.has_value());
@@ -247,7 +247,7 @@ TEST_F(LoadFlatbufferTest, PartialReadsAreHandledCorrectly)
 
 TEST_F(LoadFlatbufferTest, InterruptedReadIsRetried)
 {
-    const std::vector<uint8_t> expected_data{'X', 'Y'};
+    const score::cpp::pmr::vector<uint8_t> expected_data{'X', 'Y'};
     const auto eintr_error = score::os::Error::createFromErrno(EINTR);
 
     SetUpSuccessfulOpen();
@@ -263,7 +263,7 @@ TEST_F(LoadFlatbufferTest, InterruptedReadIsRetried)
                 return static_cast<ssize_t>(to_copy);
             }));
 
-    std::vector<uint8_t> data;
+    score::cpp::pmr::vector<uint8_t> data;
     const auto result = call_impl(kTestPath, data);
 
     ASSERT_TRUE(result.has_value());
@@ -276,7 +276,7 @@ TEST_F(LoadFlatbufferTest, EmptyFileReturnsEmptyVector)
     SetUpSuccessfulFstat(0);
     SetUpSuccessfulClose();
 
-    std::vector<uint8_t> data;
+    score::cpp::pmr::vector<uint8_t> data;
     const auto result = call_impl(kTestPath, data);
 
     ASSERT_TRUE(result.has_value());
@@ -291,7 +291,7 @@ TEST_F(LoadFlatbufferTest, CloseFailureOnEmptyFilePropagatesCloseError)
     const auto close_error = score::os::Error::createFromErrno(EIO);
     EXPECT_CALL(os_.unistd, close(kTestFd)).WillOnce(Return(score::cpp::make_unexpected(close_error)));
 
-    std::vector<uint8_t> data;
+    score::cpp::pmr::vector<uint8_t> data;
     const auto result = call_impl(kTestPath, data);
 
     ASSERT_FALSE(result.has_value());
@@ -300,7 +300,7 @@ TEST_F(LoadFlatbufferTest, CloseFailureOnEmptyFilePropagatesCloseError)
 
 TEST_F(LoadFlatbufferTest, CloseFailureAfterSuccessfulReadPropagatesCloseError)
 {
-    const std::vector<uint8_t> expected_data{'Z'};
+    const score::cpp::pmr::vector<uint8_t> expected_data{'Z'};
 
     SetUpSuccessfulOpen();
     SetUpSuccessfulFstat(static_cast<std::int64_t>(expected_data.size()));
@@ -309,7 +309,7 @@ TEST_F(LoadFlatbufferTest, CloseFailureAfterSuccessfulReadPropagatesCloseError)
     const auto close_error = score::os::Error::createFromErrno(EIO);
     EXPECT_CALL(os_.unistd, close(kTestFd)).WillOnce(Return(score::cpp::make_unexpected(close_error)));
 
-    std::vector<uint8_t> data;
+    score::cpp::pmr::vector<uint8_t> data;
     const auto result = call_impl(kTestPath, data);
 
     ASSERT_FALSE(result.has_value());
@@ -327,7 +327,7 @@ TEST_F(LoadFlatbufferTest, CloseFailureAfterReadErrorPropagatesOriginalError)
     const auto close_error = score::os::Error::createFromErrno(EIO);
     EXPECT_CALL(os_.unistd, close(kTestFd)).WillOnce(Return(score::cpp::make_unexpected(close_error)));
 
-    std::vector<uint8_t> data;
+    score::cpp::pmr::vector<uint8_t> data;
     const auto result = call_impl(kTestPath, data);
 
     ASSERT_FALSE(result.has_value());
@@ -349,7 +349,7 @@ TEST_F(LoadFlatbufferTest, ReadErrorAfterPartialReadReportsError)
         }))
         .WillOnce(Return(score::cpp::make_unexpected(read_error)));
 
-    std::vector<uint8_t> data;
+    score::cpp::pmr::vector<uint8_t> data;
     const auto result = call_impl(kTestPath, data);
 
     ASSERT_FALSE(result.has_value());
@@ -370,7 +370,7 @@ TEST_F(LoadFlatbufferTest, UnexpectedEofAfterPartialReadReportsError)
         }))
         .WillOnce(Return(score::cpp::expected<ssize_t, score::os::Error>{static_cast<ssize_t>(0)}));
 
-    std::vector<uint8_t> data;
+    score::cpp::pmr::vector<uint8_t> data;
     const auto result = call_impl(kTestPath, data);
 
     ASSERT_FALSE(result.has_value());
@@ -379,7 +379,7 @@ TEST_F(LoadFlatbufferTest, UnexpectedEofAfterPartialReadReportsError)
 
 TEST_F(LoadFlatbufferTest, MultipleInterruptsFollowedBySuccessfulRead)
 {
-    const std::vector<uint8_t> expected_data{'I'};
+    const score::cpp::pmr::vector<uint8_t> expected_data{'I'};
     const auto eintr_error = score::os::Error::createFromErrno(EINTR);
 
     SetUpSuccessfulOpen();
@@ -396,7 +396,7 @@ TEST_F(LoadFlatbufferTest, MultipleInterruptsFollowedBySuccessfulRead)
                 return static_cast<ssize_t>(to_copy);
             }));
 
-    std::vector<uint8_t> data;
+    score::cpp::pmr::vector<uint8_t> data;
     const auto result = call_impl(kTestPath, data);
 
     ASSERT_TRUE(result.has_value());
@@ -413,7 +413,7 @@ TEST_F(LoadFlatbufferTest, CloseFailureAfterFstatErrorPropagatesFstatError)
     const auto close_error = score::os::Error::createFromErrno(EIO);
     EXPECT_CALL(os_.unistd, close(kTestFd)).WillOnce(Return(score::cpp::make_unexpected(close_error)));
 
-    std::vector<uint8_t> data;
+    score::cpp::pmr::vector<uint8_t> data;
     const auto result = call_impl(kTestPath, data);
 
     ASSERT_FALSE(result.has_value());
@@ -461,7 +461,7 @@ TEST_F(LoadFlatbufferTest, CloseFailureAfterNegativeSizePropagatesInvalidArgumen
     const auto close_error = score::os::Error::createFromErrno(EIO);
     EXPECT_CALL(os_.unistd, close(kTestFd)).WillOnce(Return(score::cpp::make_unexpected(close_error)));
 
-    std::vector<uint8_t> data;
+    score::cpp::pmr::vector<uint8_t> data;
     const auto result = call_impl(kTestPath, data);
 
     ASSERT_FALSE(result.has_value());
