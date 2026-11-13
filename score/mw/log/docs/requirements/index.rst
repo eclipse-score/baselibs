@@ -55,6 +55,18 @@ Configuration
     ``mw::log`` shall load configurations from an application-specific
     configuration file.
 
+.. comp_req:: Inactive LogStream Behavior
+   :id: comp_req__log__inactive_logstream
+   :version: 1
+   :reqtype: Functional
+   :security: NO
+   :safety: QM
+   :derived_from: feat_req__logging__filtering_log_levels, feat_req__logging__resource_performance
+   :status: valid
+   :satisfied_by: comp__mw_log_backend
+
+    ``mw::log`` LogStream object shall not generate serialized messages if the
+    severity of the message does not allow it to be sent.
 
 .. comp_req:: Logging Configuration File Location
    :id: comp_req__log__cfg_file_loc
@@ -66,8 +78,8 @@ Configuration
    :satisfied_by: comp__log[version==1]
    :version: 1
 
-    The application specific file shall be the first valid configuration file
-    from the following locations.
+    ``mw::log`` shall use the first valid configuration file found in the
+    following order as the application-specific configuration file:
 
     1. location pointed to by the environmental variable ``MW_LOG_CONFIG_FILE``
     2. ``<cwd>/etc/logging.json``
@@ -117,8 +129,8 @@ Configuration
    :satisfied_by: comp__log[version==1]
    :version: 1
 
-    For each configuration field, ``mw::log`` shall resolve values using the
-    following precedence order:
+    ``mw::log`` shall resolve the value of each configuration field from the
+    first source that provides it, in the following order:
 
     1. Application configuration file
     2. Global configuration file
@@ -273,7 +285,11 @@ Console Backend
    :satisfied_by: comp__log[version==1]
    :version: 1
 
-    ``mw::log`` shall support output log messages to stdout when running unit tests.
+    ``mw::log`` shall support output log messages to stdout.
+
+    .. note::
+       The console backend is intended for use when running unit tests.
+
 
 Non-Functional Requirements
 ===========================
@@ -290,7 +306,7 @@ Non-Functional Requirements
 
    mw::log shall allocate heap memory only during the initialization phase of
    the application lifecycle, and shall therefore satisfy any memory needs after
-   that phase from pre-allocated, bounded memory resources.
+
 
 Compatibility
 =============
