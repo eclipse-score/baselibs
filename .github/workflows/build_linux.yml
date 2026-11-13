@@ -83,6 +83,37 @@ jobs:
         working-directory: ${{ matrix.working-directory }}
         run: |
           bazel test --config ${{ matrix.bazel-config }} ${{ matrix.bazel-test-extra-flags }} -- ${{ matrix.bazel-test-target }}
+      - name: Report JSONTestSuite known deviations
+        if: always() && matrix.name == 'score-linux-x86_64'
+        run: |
+          python3 - <<'EOF'
+          import collections
+          import os
+          import xml.etree.ElementTree as ET
+
+          path = "bazel-testlogs/score/json/json_test_suite_test/test.xml"
+          if not os.path.exists(path):
+              raise SystemExit(0)
+
+          cases_by_reason = collections.defaultdict(list)
+          for case in ET.parse(path).getroot().iter("testcase"):
+              for prop in case.iter("property"):
+                  if prop.get("name") == "KnownDeviation":
+                      cases_by_reason[prop.get("value")].append(case.get("name").split("/")[-1])
+
+          total = sum(len(cases) for cases in cases_by_reason.values())
+          lines = [f"JSONTestSuite known deviations: {total}"]
+          for reason, cases in sorted(cases_by_reason.items(), key=lambda item: -len(item[1])):
+              lines.append(f"  {len(cases):3d}  {reason}")
+              lines.extend(f"         {name}" for name in sorted(cases))
+          print("\n".join(lines))
+
+          print(f"::notice title=JSONTestSuite::{total} known deviations in score/json, see the job summary")
+          with open(os.environ["GITHUB_STEP_SUMMARY"], "a", encoding="utf-8") as summary:
+              summary.write("### JSONTestSuite known deviations\n\n| Files | Reason |\n|---|---|\n")
+              for reason, cases in sorted(cases_by_reason.items(), key=lambda item: -len(item[1])):
+                  summary.write(f"| {len(cases)} | {reason} |\n")
+          EOF
       - name: Upload test report
         if: always()
         uses: actions/upload-artifact@v7
