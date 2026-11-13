@@ -21,6 +21,9 @@
 namespace score::language::rust::stop_token
 {
 
+using CxxStopSource = score::cpp::stop_source;
+using CxxStopToken = score::cpp::stop_token;
+
 /// @brief Returns whether stop has been requested on a stop token.
 bool StopTokenStopRequested(const score::cpp::stop_token& token) noexcept;
 
