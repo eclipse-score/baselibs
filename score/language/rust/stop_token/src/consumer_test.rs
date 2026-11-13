@@ -14,10 +14,11 @@
 #[cxx::bridge]
 mod ffi {
     unsafe extern "C++" {
+        include!("score/language/rust/stop_token/cpp/stop_token_adapter.h");
         include!("score/language/rust/stop_token/cpp/stop_token_consumer.h");
 
-        #[namespace = "score::cpp"]
-        #[cxx_name = "stop_token"]
+        #[namespace = "score::language::rust::stop_token"]
+        #[cxx_name = "CxxStopToken"]
         type StopToken = stop_token::RawStopToken;
 
         #[namespace = "score::language::rust::stop_token::test"]

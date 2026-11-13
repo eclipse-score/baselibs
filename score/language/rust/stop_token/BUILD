@@ -21,6 +21,7 @@ cc_library(
     srcs = ["cpp/stop_token_adapter.cpp"],
     hdrs = ["cpp/stop_token_adapter.h"],
     features = COMPILER_WARNING_FEATURES,
+    visibility = ["//visibility:public"],
     deps = ["@score_baselibs//score/language/futurecpp"],
 )
 
@@ -43,7 +44,10 @@ rust_cxx_bridge(
     name = "stop_token_consumer_bridge",
     testonly = True,
     src = "src/consumer_test.rs",
-    deps = [":stop_token_consumer"],
+    deps = [
+        ":stop_token_adapter",
+        ":stop_token_consumer",
+    ],
 )
 
 rust_library(
