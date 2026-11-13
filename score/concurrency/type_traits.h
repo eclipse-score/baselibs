@@ -13,6 +13,7 @@
 #ifndef SCORE_LIB_CONCURRENCY_TYPE_TRAITS_H
 #define SCORE_LIB_CONCURRENCY_TYPE_TRAITS_H
 
+#include <chrono>
 #include <type_traits>
 #include <utility>
 
@@ -34,6 +35,38 @@ template <typename T>
 inline constexpr bool is_basic_lockable_v = is_basic_lockable<T>::value;
 template <typename T>
 using is_basic_lockable_t = typename is_basic_lockable<T>::type;
+
+template <typename T, typename Duration = std::chrono::milliseconds, typename = void>
+struct is_timed_lockable_for : std::false_type
+{
+};
+
+template <typename T, typename Duration>
+struct is_timed_lockable_for<T,
+                             Duration,
+                             std::void_t<decltype(static_cast<bool>(std::declval<T&>().try_lock_for(Duration{})))>>
+    : is_basic_lockable<T>
+{
+};
+
+template <typename T, typename Duration = std::chrono::milliseconds>
+inline constexpr bool is_timed_lockable_for_v = is_timed_lockable_for<T, Duration>::value;
+
+template <typename T, typename TimePoint = std::chrono::steady_clock::time_point, typename = void>
+struct is_timed_lockable_until : std::false_type
+{
+};
+
+template <typename T, typename TimePoint>
+struct is_timed_lockable_until<T,
+                               TimePoint,
+                               std::void_t<decltype(static_cast<bool>(std::declval<T&>().try_lock_until(TimePoint{})))>>
+    : is_basic_lockable<T>
+{
+};
+
+template <typename T, typename TimePoint = std::chrono::steady_clock::time_point>
+inline constexpr bool is_timed_lockable_until_v = is_timed_lockable_until<T, TimePoint>::value;
 
 template <typename T, typename = void>
 struct LockWithOwnsLock : std::false_type
