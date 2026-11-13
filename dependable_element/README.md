@@ -76,20 +76,39 @@ generated in the build only. Red: checking instances.
 
 ```mermaid
 flowchart TD
+  subgraph RAT["Requirements, architecture and tests"]
+    FR["feat_req<br/>score_platform .rst"]
+    CR["comp_req<br/>requirements/index.rst"]
+    ARC["comp, comp_arc_sta, comp_arc_dyn<br/>architecture/index.rst + puml"]
+    API["real_arc_int, real_arc_int_op<br/>architecture/index.rst<br/>+ public_api.puml"]
+    TEST["gtest<br/>test.cpp with lobster-tracing"]
+    CODE["C++ code<br/>score/bitmanipulation"]
+  end
+
+  subgraph SAF["Safety analysis"]
+    FML["Failure mode list<br/>table in fmea.rst"]
+    FMEA["comp_saf_fmea<br/>fmea.rst"]
+    FTA["Fault trees<br/>fta puml files"]
+    DFA["comp_saf_dfa<br/>dfa.rst"]
+  end
+
+  FR --> CR
+  CR --> ARC
+  ARC --> API
+  ARC --> CODE
+  CR --> TEST
+  TEST --> CODE
+  API -->|"violated by (violates)"| FMEA
+  CR -->|"measure (mitigated_by)"| FMEA
+  FML -->|fault_id| FMEA
+  FTA -->|FailureMode macro| FMEA
+
   classDef src fill:#FFF2CC,stroke:#B7950B,color:#000000
   classDef saf fill:#F8CECC,stroke:#B85450,color:#000000
-
-  FR["feat_req<br/>score_platform .rst"]:::src --> CR["comp_req<br/>requirements/index.rst"]:::src
-  CR --> ARC["comp / comp_arc_sta / comp_arc_dyn<br/>architecture/index.rst + *.puml"]:::src
-  ARC --> API["real_arc_int / real_arc_int_op<br/>architecture/index.rst<br/>+ public_api.puml"]:::src
-  ARC --> CODE["C++ code<br/>//score/bitmanipulation"]:::src
-  CR --> TEST["gtest<br/>*_test.cpp with lobster-tracing"]:::src
-  TEST --> CODE
-  FML["Failure mode list<br/>table in fmea.rst"]:::saf -. fault_id .-> FMEA
-  FMEA["comp_saf_fmea<br/>fmea.rst"]:::saf -- violates --> API
-  FMEA -- mitigated_by --> CR
-  FTA["Fault trees<br/>fta_*.puml"]:::saf -- "$FailureMode" --> FMEA
-  DFA["comp_saf_dfa<br/>dfa.rst"]:::saf
+  class FR,CR,ARC,API,TEST,CODE src
+  class FML,FMEA,FTA,DFA saf
+  style RAT color:#000000
+  style SAF color:#000000
 ```
 
 ## Safety analysis (FMEA / FTA)
