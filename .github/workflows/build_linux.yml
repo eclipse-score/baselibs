@@ -28,7 +28,6 @@ on:
 jobs:
   linux-build-and-test:
     name: Build and Test ${{ matrix.name }}
-    runs-on: ubuntu-24.04
     strategy:
       fail-fast: false
       matrix:
@@ -50,49 +49,29 @@ jobs:
               -//score/os/test:acl_test
               -//score/os/test:errno_test
               -//score/os/test:socket_test
-            bazel-test-extra-flags: "--test_timeout=180,900,2700,10800 --test_tag_filters=-no_rust_doc_test" # Increase test timeout due to QEMU emulation
+            # Emulated tests need longer timeouts than native tests.
+            bazel-test-extra-flags: "--test_timeout=180,900,2700,10800 --test_tag_filters=-no_rust_doc_test"
           - name: x86_64-linux (examples/integration)
             artifact-name: x86_64-linux-integration
             bazel-config: x86_64-linux
+            # This example is a separate Bazel workspace with its own configuration.
             working-directory: "examples/integration"
             bazel-build-target: "//..."
             bazel-test-target: "//..."
-    steps:
-      - uses: eclipse-score/more-disk-space@6a3b48901846bf7f8cc985925157d71a8973e61f # v1
-        with:
-          level: 4
-      - name: Checkout Repository
-        uses: actions/checkout@v6
-      - name: Setup Bazel Cache
-        uses: eclipse-score/cicd-actions/setup-bazel-cache@659dcbed63f6b7fbde88c7850125ea0a0a92f939
-        with:
-          unique-cache-name: ${{ github.workflow }}-${{ github.job }}-${{ matrix.name }}
-      - name: Configure fast APT mirror
-        if: matrix.bazel-config == 'score-linux-aarch64'
-        uses: vegardit/fast-apt-mirror.sh@5861fa3e23a90b3adfbb5e40067d1ed1a054e980 # v1
-      - name: Install QEMU
-        if: matrix.bazel-config == 'score-linux-aarch64'
-        run: |
-          sudo apt-get update
-          sudo apt install -y qemu-user
-      - name: Bazel Build
-        working-directory: ${{ matrix.working-directory }}
-        run: |
-          bazel build --config ${{ matrix.bazel-config }} -- ${{ matrix.bazel-build-target }}
-      - name: Bazel Test
-        working-directory: ${{ matrix.working-directory }}
-        run: |
-          bazel test --config ${{ matrix.bazel-config }} ${{ matrix.bazel-test-extra-flags }} -- ${{ matrix.bazel-test-target }}
-      - name: Upload test report
-        if: always()
-        uses: actions/upload-artifact@v7
-        with:
-          name: test-report-${{ matrix.artifact-name }}
-          path: |
-            ${{ matrix.working-directory }}/bazel-testlogs/**/test.log
-            ${{ matrix.working-directory }}/bazel-testlogs/**/test.xml
-          retention-days: 5
-          if-no-files-found: warn
+    uses: eclipse-score/cicd-workflows/.github/workflows/bazel.yml@d241348e8670bf5b8902d67ff3ac77e7f60f9ec7 # main (2026-11-11)
+    with:
+      build-targets: ${{ matrix.bazel-build-target }}
+      test-targets: ${{ matrix.bazel-test-target }}
+      bazel-configs: ${{ matrix.bazel-config }}
+      test-args: ${{ matrix.bazel-test-extra-flags || '' }}
+      working-directory: ${{ matrix.working-directory }}
+      # Keep cached build results separate for each platform and workspace.
+      cache-key: ${{ github.workflow }}-linux-build-and-test-${{ matrix.name }}
+      # Run the AArch64 test binaries on the x86_64 runner through QEMU.
+      apt-packages: ${{ matrix.bazel-config == 'score-linux-aarch64' && 'qemu-user' || '' }}
+      disk-cleanup-level: 4
+      # The Docs job below selects the native x86_64 report by its fixed name.
+      artifact-name: test-report-${{ matrix.artifact-name }}
   coverage-report:
     uses: ./.github/workflows/coverage_report.yml
   docs-build:
