@@ -80,11 +80,65 @@ struct vector
 struct optional
 {
 };
+// Distinct tag for enum-typed fields whose enumerator name table is known via a specialization
+// of ::score::common::visitor::EnumTraits<T>. Carries the same wire-level integer encoding as
+// signed_le / unsigned_le (see enum_serialized_descriptor::wire_tag) but lets downstream
+// consumers (e.g. FIBEX generation) detect "this is a named enum" instead of falling through to
+// the generic integral overloads.
+struct enum_le
+{
+};
 
 }  // namespace payload_tags
 
+// One value <-> name mapping of an enumerator, as declared in the originating proto `enum`.
+struct Enumerator
+{
+    std::int64_t value;
+    const char* name;
+};
+
+// Per-enum-type metadata carrier, used by the serialization visitor and, downstream, by FIBEX
+// generation to recover the enumerator name<->value table that would otherwise be lost once the
+// enum is folded into a plain integral wire type.
+//
+// The primary (unspecialized) template intentionally carries no names: any C++ enum works with
+// the existing signed/unsigned integral serialization path unless a specialization of this trait
+// is provided for it. Code generators are expected to emit a specialization for every proto
+// `enum` they generate, reusing the enumerator list they already have in memory during codegen.
+// This is a compile-time-only, zero-runtime-cost side channel: it does not alter the wire format
+// of the enum itself.
+template <typename T>
+struct EnumTraits
+{
+    static constexpr bool kHasNames = false;
+};
+
 namespace details
 {
+/// \brief Compile-time predicate for "is T an enum with a signed underlying type?".
+///
+/// std::is_signed<T> is only meaningful for arithmetic types and is always false for enum types
+/// (enums are not arithmetic types per the standard), even when their underlying type is signed.
+/// This trait instead inspects the enum's underlying type, and is only instantiated for enum
+/// types (via the bool non-type template parameter) so it stays safe to use unconditionally in
+/// enable_if_t expressions alongside is_enum<T> for non-enum T.
+/// \tparam T Candidate type; only its is_enum-ness is inspected here (this primary/false-type
+///           template is selected for all non-enum T).
+template <typename T, bool = std::is_enum<T>::value>
+struct is_signed_enum : std::false_type
+{
+};
+
+/// \brief Specialization selected for enum types: inherits from
+///        std::is_signed<std::underlying_type_t<T>>, i.e. ::value is true iff T's underlying
+///        integer type is signed.
+/// \tparam T Enum type to inspect.
+template <typename T>
+struct is_signed_enum<T, true> : std::is_signed<typename std::underlying_type<T>::type>
+{
+};
+
 template <typename S, typename T>
 auto cast_to_source_serializable_data_span(const T* data, size_t size) -> score::cpp::span<const S>
 {
@@ -972,6 +1026,21 @@ struct memcpy_serialized_descriptor
     using payload_type = memcpy_serialized<sizeof(T)>;
 };
 
+// Descriptor for enum-typed fields whose enumerator names are known via EnumTraits<T>. Keeps the
+// same on-wire integer representation as memcpy_serialized_descriptor (Tag is signed_le or
+// unsigned_le, matching the enum's underlying signedness) but exposes the original enum type so
+// that downstream consumers (e.g. the FIBEX generator's visitor) can look up EnumTraits<T> and
+// recover the enumerator name<->value table. This does not change the serialized byte layout.
+template <typename Tag, typename T>
+// coverity[autosar_cpp14_a11_0_2_violation]
+struct enum_serialized_descriptor
+{
+    using payload_tag = payload_tags::enum_le;
+    using payload_type = memcpy_serialized<sizeof(T)>;
+    using wire_tag = Tag;
+    using enum_type = T;
+};
+
 template <typename A,
           typename T,
           std::enable_if_t<(std::is_integral<T>::value) && (std::is_signed<T>::value), std::int32_t> = 0>
@@ -1003,9 +1072,34 @@ inline auto visit_as(serialized_visitor<A>& /*unused*/, T& /*unused*/)
     return memcpy_serialized_descriptor<payload_tags::ieee754_float_le, T>();
 }
 
-template <typename A,
-          typename T,
-          std::enable_if_t<(std::is_enum<T>::value) && (std::is_signed<T>::value), std::int32_t> = 0>
+template <
+    typename A,
+    typename T,
+    std::enable_if_t<(std::is_enum<T>::value) && (details::is_signed_enum<T>::value) && (EnumTraits<T>::kHasNames),
+                     std::int32_t> = 0>
+/// \brief Dispatches a signed enum with a registered EnumTraits<T> specialization to the
+///        enum-aware descriptor.
+/// \param T Enum type with a signed underlying type and EnumTraits<T>::kHasNames == true.
+/// \return enum_serialized_descriptor<payload_tags::signed_le, T>, i.e. the same on-wire
+///         signed integer representation as memcpy_serialized_descriptor, but additionally
+///         exposing T so that EnumTraits<T> can be looked up by downstream consumers.
+// This is false positive, Overload signatures are different.
+// coverity[autosar_cpp14_m3_2_3_violation : FALSE]
+// coverity[autosar_cpp14_a2_10_4_violation : FALSE]
+inline auto visit_as(serialized_visitor<A>& /*unused*/, T& /*unused*/)
+{
+    return enum_serialized_descriptor<payload_tags::signed_le, T>();
+}
+
+template <
+    typename A,
+    typename T,
+    std::enable_if_t<(std::is_enum<T>::value) && (details::is_signed_enum<T>::value) && (!EnumTraits<T>::kHasNames),
+                     std::int32_t> = 0>
+/// \brief Dispatches a signed enum without a registered EnumTraits<T> specialization to the
+///        plain integral descriptor (previous behavior, unchanged).
+/// \param T Enum type with a signed underlying type and EnumTraits<T>::kHasNames == false.
+/// \return memcpy_serialized_descriptor<payload_tags::signed_le, T>.
 // This is false positive, Overload signatures are different.
 // coverity[autosar_cpp14_m3_2_3_violation : FALSE]
 // coverity[autosar_cpp14_a2_10_4_violation : FALSE]
@@ -1014,9 +1108,34 @@ inline auto visit_as(serialized_visitor<A>& /*unused*/, T& /*unused*/)
     return memcpy_serialized_descriptor<payload_tags::signed_le, T>();
 }
 
-template <typename A,
-          typename T,
-          std::enable_if_t<(std::is_enum<T>::value) && (!std::is_signed<T>::value), std::int32_t> = 0>
+template <
+    typename A,
+    typename T,
+    std::enable_if_t<(std::is_enum<T>::value) && (!details::is_signed_enum<T>::value) && (EnumTraits<T>::kHasNames),
+                     std::int32_t> = 0>
+/// \brief Dispatches an unsigned enum with a registered EnumTraits<T> specialization to the
+///        enum-aware descriptor.
+/// \param T Enum type with an unsigned underlying type and EnumTraits<T>::kHasNames == true.
+/// \return enum_serialized_descriptor<payload_tags::unsigned_le, T>, i.e. the same on-wire
+///         unsigned integer representation as memcpy_serialized_descriptor, but additionally
+///         exposing T so that EnumTraits<T> can be looked up by downstream consumers.
+// This is false positive, Overload signatures are different.
+// coverity[autosar_cpp14_m3_2_3_violation : FALSE]
+// coverity[autosar_cpp14_a2_10_4_violation : FALSE]
+inline auto visit_as(serialized_visitor<A>& /*unused*/, T& /*unused*/)
+{
+    return enum_serialized_descriptor<payload_tags::unsigned_le, T>();
+}
+
+template <
+    typename A,
+    typename T,
+    std::enable_if_t<(std::is_enum<T>::value) && (!details::is_signed_enum<T>::value) && (!EnumTraits<T>::kHasNames),
+                     std::int32_t> = 0>
+/// \brief Dispatches an unsigned enum without a registered EnumTraits<T> specialization to the
+///        plain integral descriptor (previous behavior, unchanged).
+/// \param T Enum type with an unsigned underlying type and EnumTraits<T>::kHasNames == false.
+/// \return memcpy_serialized_descriptor<payload_tags::unsigned_le, T>.
 // This is false positive, Overload signatures are different.
 // coverity[autosar_cpp14_m3_2_3_violation : FALSE]
 // coverity[autosar_cpp14_a2_10_4_violation : FALSE]
