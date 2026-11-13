@@ -1,5 +1,13 @@
 # Dependable element prototype: baselibs / bitmanipulation
 
+Related pull requests (all drafts, to be reviewed together):
+
+| Repository | Pull request | Content |
+|---|---|---|
+| baselibs | [#799](https://github.com/eclipse-score/baselibs/pull/799) | this prototype: dependable element, interfaces, FMEA, fault trees (do not merge) |
+| score_tooling | [#575](https://github.com/eclipse-score/tooling/pull/575) | rules_score: requirements and FMEA from Sphinx-Needs, test cases back as needs |
+| score_docs_as_code | [#1039](https://github.com/eclipse-score/docs-as-code/pull/1039) | import of the test cases; `comp_saf_fmea` may violate `real_arc_int_op` |
+
 Proof of concept for using the rules_score `dependable_element` of
 [score_tooling](https://github.com/eclipse-score/tooling) with requirements, architecture
 and the FMEA written as Sphinx-Needs in score_docs_as_code. Authors only maintain **RST**,
@@ -10,7 +18,7 @@ and the FMEA written as Sphinx-Needs in score_docs_as_code. Authors only maintai
 * **The dependable element** (`//dependable_element/...`, rules_score) checks that the
   traceability chain is complete and matches code, Bazel targets and test results.
 
-## Overview
+## Checks overview
 
 ```mermaid
 flowchart LR
@@ -72,7 +80,7 @@ flowchart LR
 Yellow: maintained sources. Blue: docs-as-code. Green: dependable element. Grey dashed:
 generated in the build only. Red: checking instances.
 
-## Chain overview
+## Metamodel overview
 
 ```mermaid
 flowchart TD
