@@ -72,7 +72,7 @@ GroupBuffer GrpImpl::GroupToGroupBuffer(const struct group& native_group) noexce
     // Suppressed here because usage of this OSAL method is on banned list
     // NOLINTNEXTLINE(score-banned-function) see comment above
     score::cpp::ignore = std::memcpy(static_cast<char*>(group_buffer.name), native_group.gr_name, max_groupname_length);
-    group_buffer.gid = native_group.gr_gid;
+    group_buffer.gid = GroupId{native_group.gr_gid};
     return group_buffer;
 }
 

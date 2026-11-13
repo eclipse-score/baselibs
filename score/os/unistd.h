@@ -16,10 +16,12 @@
 #include "score/bitmanipulation/bitmask_operators.h"
 #include "score/os/ObjectSeam.h"
 #include "score/os/errno.h"
+#include "score/os/user_id.h"
 #include "score/utils/static_destruction_guard.h"
 
 #include "score/expected.hpp"
 #include "score/memory.hpp"
+#include "score/optional.hpp"
 
 #include <pwd.h>
 #include <sys/types.h>
@@ -57,6 +59,13 @@ class Unistd : public ObjectSeam<Unistd>
         kExists = 8,
     };
 
+    /// \brief Identities of a user database entry, see getpwnam_r().
+    struct PasswdIdentity
+    {
+        UserId uid;
+        GroupId gid;
+    };
+
     virtual score::cpp::expected_blank<score::os::Error> close(const std::int32_t fd) const noexcept = 0;
     virtual score::cpp::expected_blank<score::os::Error> unlink(const char* const pathname) const noexcept = 0;
     virtual score::cpp::expected_blank<score::os::Error> access(const char* const pathname,
@@ -91,11 +100,11 @@ class Unistd : public ObjectSeam<Unistd>
     /// @returns the ID of the current thread.
     virtual std::int64_t gettid() const noexcept = 0;
 
-    virtual uid_t getuid() const noexcept = 0;
-    virtual gid_t getgid() const noexcept = 0;
+    virtual UserId getuid() const noexcept = 0;
+    virtual GroupId getgid() const noexcept = 0;
     virtual pid_t getppid() const noexcept = 0;
-    virtual score::cpp::expected_blank<score::os::Error> setuid(const uid_t uid) const noexcept = 0;
-    virtual score::cpp::expected_blank<score::os::Error> setgid(const gid_t gid) const noexcept = 0;
+    virtual score::cpp::expected_blank<score::os::Error> setuid(const UserId uid) const noexcept = 0;
+    virtual score::cpp::expected_blank<score::os::Error> setgid(const GroupId gid) const noexcept = 0;
 
     virtual score::cpp::expected<ssize_t, score::os::Error> readlink(const char* const path,
                                                                      char* const buf,
@@ -112,9 +121,11 @@ class Unistd : public ObjectSeam<Unistd>
 
     virtual score::cpp::expected_blank<score::os::Error> chdir(const char* const path) const noexcept = 0;
 
+    /// \param uid kUnchangedUserId leaves the owner unchanged
+    /// \param gid kUnchangedGroupId leaves the group unchanged
     virtual score::cpp::expected_blank<score::os::Error> chown(const char* const path,
-                                                               const uid_t uid,
-                                                               const gid_t gid) const noexcept = 0;
+                                                               const UserId uid,
+                                                               const GroupId gid) const noexcept = 0;
 
     virtual score::cpp::expected<char*, score::os::Error> getcwd(char* const buf, const size_t size) const noexcept = 0;
 
@@ -127,6 +138,12 @@ class Unistd : public ObjectSeam<Unistd>
                                                                     char* buffer,
                                                                     size_t bufsize,
                                                                     struct passwd** result) const noexcept = 0;
+
+    /// \brief Looks up \p name in the user database.
+    /// \param buffer scratch memory for the lookup, size it with sysconf(_SC_GETPW_R_SIZE_MAX)
+    /// \return Identities of the user, empty optional if the user does not exist
+    virtual score::cpp::expected<score::cpp::optional<PasswdIdentity>, score::os::Error>
+    getpwnam_r(const char* name, char* buffer, size_t bufsize) const noexcept = 0;
 
     ~Unistd() override = default;
     // Below special member functions declared to avoid autosar_cpp14_a12_0_1_violation
@@ -185,14 +202,14 @@ class UnistdImpl final : public Unistd
     pid_t getpid() const noexcept override;
 
     std::int64_t gettid() const noexcept override;
-    uid_t getuid() const noexcept override;
+    UserId getuid() const noexcept override;
 
-    gid_t getgid() const noexcept override;
+    GroupId getgid() const noexcept override;
 
     pid_t getppid() const noexcept override;
 
-    score::cpp::expected_blank<score::os::Error> setuid(const uid_t uid) const noexcept override;
-    score::cpp::expected_blank<score::os::Error> setgid(const gid_t gid) const noexcept override;
+    score::cpp::expected_blank<score::os::Error> setuid(const UserId uid) const noexcept override;
+    score::cpp::expected_blank<score::os::Error> setgid(const GroupId gid) const noexcept override;
     score::cpp::expected<ssize_t, score::os::Error> readlink(const char* const path,
                                                              char* const buf,
                                                              const size_t bufsize) const noexcept override;
@@ -215,8 +232,8 @@ class UnistdImpl final : public Unistd
     score::cpp::expected_blank<score::os::Error> chdir(const char* const path) const noexcept override;
 
     score::cpp::expected_blank<score::os::Error> chown(const char* const path,
-                                                       const uid_t uid,
-                                                       const gid_t gid) const noexcept override;
+                                                       const UserId uid,
+                                                       const GroupId gid) const noexcept override;
 
     score::cpp::expected<char*, score::os::Error> getcwd(char* const buf, const size_t size) const noexcept override;
 
@@ -229,6 +246,9 @@ class UnistdImpl final : public Unistd
                                                             char* buffer,
                                                             size_t bufsize,
                                                             struct passwd** result) const noexcept override;
+
+    score::cpp::expected<score::cpp::optional<PasswdIdentity>, score::os::Error>
+    getpwnam_r(const char* name, char* buffer, size_t bufsize) const noexcept override;
 };
 
 }  // namespace internal

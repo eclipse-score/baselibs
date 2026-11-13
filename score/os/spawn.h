@@ -15,6 +15,7 @@
 
 #include "score/os/ObjectSeam.h"
 #include "score/os/errno.h"
+#include "score/os/user_id.h"
 
 #include "score/expected.hpp"
 
@@ -182,10 +183,9 @@ class Spawn : public ObjectSeam<Spawn>
         posix_spawnattr_t* attrp,
         std::uint32_t node) const noexcept = 0;
     virtual score::cpp::expected<std::int32_t, score::os::Error>
-    posix_spawnattr_getcred(const posix_spawnattr_t* attrp, uid_t* uid_p, gid_t* gid_p) const noexcept = 0;
-    virtual score::cpp::expected<std::int32_t, score::os::Error> posix_spawnattr_setcred(posix_spawnattr_t* attrp,
-                                                                                         uid_t uid,
-                                                                                         gid_t gid) const noexcept = 0;
+    posix_spawnattr_getcred(const posix_spawnattr_t* attrp, UserId* uid_p, GroupId* gid_p) const noexcept = 0;
+    virtual score::cpp::expected<std::int32_t, score::os::Error>
+    posix_spawnattr_setcred(posix_spawnattr_t* attrp, UserId uid, GroupId gid) const noexcept = 0;
     virtual score::cpp::expected<std::int32_t, score::os::Error> posix_spawnattr_gettypeid(
         const posix_spawnattr_t* attrp,
         std::uint32_t* type_id_p) const noexcept = 0;
