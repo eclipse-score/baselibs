@@ -14,6 +14,8 @@
 
 #include <gtest/gtest.h>
 
+#include <sys/stat.h>
+
 #include <algorithm>
 #include <cmath>
 #include <cstdint>
@@ -451,6 +453,53 @@ TEST_F(ParserTest, FromFileFail)
     auto foo{JsonParser{}.FromFile("foo")};
 
     EXPECT_FALSE(foo.has_value());
+}
+
+TEST_F(ParserTest, FromFileRejectsDirectory)
+{
+    RecordProperty("PartiallyVerifies", "comp_req__json__regular_file");
+    RecordProperty("Description", "Check that parsing from a directory path returns a parsing error.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
+
+    const auto result{JsonParser{}.FromFile(::testing::TempDir())};
+
+    ASSERT_FALSE(result.has_value());
+    EXPECT_EQ(result.error(), score::json::Error::kParsingError);
+}
+
+TEST_F(ParserTest, FromFileRejectsFifoWithoutBlocking)
+{
+    RecordProperty("PartiallyVerifies", "comp_req__json__regular_file");
+    RecordProperty("Description", "Check that parsing from a FIFO without a writer returns a parsing error.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
+    const std::string fifo_path{::testing::TempDir() + "fifo.json"};
+    static_cast<void>(std::remove(fifo_path.c_str()));
+    ASSERT_EQ(::mkfifo(fifo_path.c_str(), S_IRUSR | S_IWUSR), 0);
+
+    const auto result{JsonParser{}.FromFile(fifo_path)};
+    static_cast<void>(std::remove(fifo_path.c_str()));
+
+    ASSERT_FALSE(result.has_value());
+    EXPECT_EQ(result.error(), score::json::Error::kParsingError);
+}
+
+TEST_F(ParserTest, FromFileRejectsFileAboveMaxFileSize)
+{
+    RecordProperty("PartiallyVerifies", "comp_req__json__max_file_size");
+    RecordProperty("Description", "Check that parsing valid JSON from a file of 64 MiB + 1 byte fails.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "boundary-values");
+    std::string json(JsonParser::kMaxFileSize + 1U, ' ');
+    static_cast<void>(json.replace(0U, 2U, "{}"));
+    const auto file_path{CreateJsonFile("too_large.json", json)};
+
+    const auto result{JsonParser{}.FromFile(file_path)};
+    static_cast<void>(std::remove(file_path.c_str()));
+
+    ASSERT_FALSE(result.has_value());
+    EXPECT_EQ(result.error(), score::json::Error::kParsingError);
 }
 
 TEST_F(ParserTest, ParsingFromFileWorks)

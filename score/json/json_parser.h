@@ -19,6 +19,7 @@
 #include "score/json/internal/model/error.h"
 #include "score/result/result.h"
 
+#include <cstddef>
 #include <string_view>
 
 namespace score
@@ -30,9 +31,13 @@ namespace json
 class JsonParser : public IJsonParser
 {
   public:
+    /// @brief Maximum size in bytes of a file accepted by FromFile.
+    static constexpr std::size_t kMaxFileSize{std::size_t{64U} * 1024U * 1024U};
+
     /// @brief Parses the underlying file and creates a tree of JSON data
     /// @param file_path The path to the file that shall be parsed
-    /// @return root to the tree of JSON data, error on error
+    /// @return root to the tree of JSON data, or an error if parsing fails, the path is not a regular file, or the
+    ///     file exceeds kMaxFileSize
     score::Result<Any> FromFile(const std::string_view file_path) const noexcept override;
 
     /// @brief Parses the underlying buffer and creates a tree of JSON data

@@ -14,7 +14,10 @@
 /// @brief  Contains tests concerning the JsonData class.
 #include "score/json/internal/parser/vajson/json_data.h"
 
+#include <cstddef>
 #include <cstdio>
+#include <fstream>
+#include <limits>
 #include <string>
 #include <utility>
 
@@ -32,6 +35,8 @@ namespace vajson
 namespace unit_test
 {
 
+constexpr std::size_t kNoSizeLimit{std::numeric_limits<std::size_t>::max()};
+
 /// Test that JsonData can open a file.
 TEST(UT__JsonOps__JsonData, ConstructFromFile)
 {
@@ -40,7 +45,7 @@ TEST(UT__JsonOps__JsonData, ConstructFromFile)
     ASSERT_NE(fp, nullptr);
     ASSERT_EQ(std::fclose(fp), 0);
 
-    const Result<JsonData> result{JsonData::FromFile(file)};
+    const Result<JsonData> result{JsonData::FromFile(file, kNoSizeLimit)};
     ASSERT_TRUE(result.has_value());
 }
 
@@ -80,11 +85,57 @@ TEST(UT__JsonOps__JsonData, ConstructFromSpan)
 /// Test that JsonData returns a JsonErrc if the file cannot be opened.
 TEST(UT__JsonOps__JsonData, ConstructFromNonExistingFile)
 {
-    const Result<JsonData> result{JsonData::FromFile("doesnotexist")};
+    const Result<JsonData> result{JsonData::FromFile("doesnotexist", kNoSizeLimit)};
 
     ASSERT_FALSE(result.has_value());
     ASSERT_EQ(result.error(), JsonErrc::kStreamFailure);
 }
+
+class UT__JsonOps__JsonDataFileSize : public ::testing::TestWithParam<std::size_t>
+{
+  protected:
+    void SetUp() override
+    {
+        RecordProperty("PartiallyVerifies", "comp_req__json__max_file_size");
+        RecordProperty("TestType", "requirements-based");
+        RecordProperty("DerivationTechnique", "boundary-values");
+
+        std::ofstream file{file_path_, std::ios::binary};
+        file << std::string(GetParam(), ' ');
+        file.close();
+        ASSERT_FALSE(file.fail());
+    }
+
+    void TearDown() override
+    {
+        static_cast<void>(std::remove(file_path_.c_str()));
+    }
+
+    const std::string file_path_{::testing::TempDir() + "size_limit.json"};
+};
+
+TEST_P(UT__JsonOps__JsonDataFileSize, AcceptsFileAtSizeLimit)
+{
+    RecordProperty("Description", "Check that FromFile accepts a file whose size equals the limit.");
+
+    const Result<JsonData> result{JsonData::FromFile(file_path_, GetParam())};
+
+    EXPECT_TRUE(result.has_value());
+}
+
+TEST_P(UT__JsonOps__JsonDataFileSize, RejectsFileAboveSizeLimit)
+{
+    RecordProperty("Description", "Check that FromFile rejects a file one byte larger than the limit.");
+
+    const Result<JsonData> result{JsonData::FromFile(file_path_, GetParam() - 1U)};
+
+    ASSERT_FALSE(result.has_value());
+    EXPECT_EQ(result.error(), JsonErrc::kStreamFailure);
+}
+
+INSTANTIATE_TEST_SUITE_P(ChunkBoundaries,
+                         UT__JsonOps__JsonDataFileSize,
+                         ::testing::Values(1U, 65535U, 65536U, 65537U, 200000U));
 
 /// Test that a document with an UTF-8 BOM can be parsed.
 ///
