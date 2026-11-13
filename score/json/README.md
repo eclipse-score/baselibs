@@ -4,6 +4,7 @@
   - [Usage](#usage)
     - [Bazel target](#bazel-target)
     - [Loading a JSON document from a file](#loading-a-json-document-from-a-file)
+    - [Maximum nesting depth](#maximum-nesting-depth)
     - [Accessing elements from a JSON object](#accessing-elements-from-a-json-object)
     - [Accessing elements from a JSON list](#accessing-elements-from-a-json-list)
     - [Accessing numbers from a JSON document](#accessing-numbers-from-a-json-document)
@@ -50,6 +51,23 @@ if (!root.has_value())
     return root.error();
 }
 ```
+
+### Maximum nesting depth
+
+`JsonParser` limits nesting to a fixed maximum depth of 64.
+The limit is not configurable.
+
+Depth counts arrays and objects on a root-to-value path, including the root container.
+A scalar root has depth 0, `[]` and `{}` have depth 1, and `[[0]]` has depth 2.
+Sibling containers, keys, scalar leaves and brackets inside strings do not add depth.
+The limit is inclusive; a document nested 64 levels deep is accepted and one nested 65 levels deep is rejected.
+`FromBuffer` and `FromFile` return `Error::kParsingError` when a container would exceed the limit.
+Each call has an independent depth budget, including after a rejected document.
+The `_json` literal uses the same limit and terminates on excessive depth, like any other parse error.
+
+The limit is a conservative policy value, not a platform-qualified stack bound.
+Integrators must validate it against their thread stack, platform and toolchain, including partial-tree cleanup, destruction, cloning, comparison and serialization.
+This limit does not constrain manually constructed or later-mutated trees, document length, container width, key/string sizes, heap consumption or processing time.
 
 ### Accessing elements from a JSON object
 

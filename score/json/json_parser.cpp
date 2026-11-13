@@ -16,6 +16,7 @@
 #include "score/json/internal/parser/vajson/json_data.h"
 #include "score/json/internal/parser/vajson/structure_parser.h"
 
+#include <cstddef>
 #include <iostream>
 #include <optional>
 #include <stack>
@@ -30,6 +31,10 @@ namespace json
 {
 namespace
 {
+
+/// @brief Maximum number of nested arrays and objects, including the root container.
+/// @details This is a policy value, not a platform-qualified stack bound.
+constexpr std::size_t kMaxNestingDepth{64U};
 
 /// @brief Builds the tree of data elements from the events reported by the vaJson parser.
 class AnyTreeBuilder final : private score::json::vajson::internal::StructureParser
@@ -215,6 +220,12 @@ template <typename T>
 // coverity[autosar_cpp14_a15_5_3_violation : FALSE]
 auto AnyTreeBuilder::StartContainer(T&& value) noexcept -> score::json::vajson::ParserResult
 {
+    if (hierarchy_.size() >= kMaxNestingDepth)
+    {
+        return score::json::vajson::MakeErrorResult<score::json::vajson::ParserState>(
+            score::json::vajson::JsonErrc::kInvalidJson);
+    }
+
     auto result{Store(std::forward<T>(value))};
     if (!result.has_value())
     {

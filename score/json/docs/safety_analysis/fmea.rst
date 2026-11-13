@@ -50,3 +50,16 @@ Failure Mode List
 
     - The above "code-block" directive must be updated
     - Fill in all the needed information in the <brackets>
+
+Excessive Nesting Depth
+-----------------------
+
+Failure mode: A parsed tree is nested deeper than the available thread stack supports.
+
+Failure effect: Recursive destruction, cloning, comparison or serialization of the tree, including destruction of a partially parsed tree, exhausts the thread stack.
+
+Mitigation: :need:`comp_req__json__nesting_depth` rejects input exceeding the maximum nesting depth.
+The limit is a policy value, not a qualified resource bound, so the integrator validates it according to :need:`aou_req__json__stack_budget`.
+
+Residual risk: Manually constructed or modified trees and other resource exhaustion are not mitigated.
+This entry is not a completed FMEA.
