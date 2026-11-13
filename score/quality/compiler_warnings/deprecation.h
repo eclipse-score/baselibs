@@ -13,6 +13,12 @@
 #ifndef SCORE_QUALITY_COMPILER_WARNINGS_DEPRECATION_H
 #define SCORE_QUALITY_COMPILER_WARNINGS_DEPRECATION_H
 
+#include "score/quality/compiler_warnings/warnings.h"
+
+#include <functional>
+#include <type_traits>
+#include <utility>
+
 // clang-format off
 // Emit deprecation warnings from macro aliases by referencing a deprecated type alias.
 #ifndef SCORE_DEPRECATE_MACRO_USE
@@ -22,4 +28,5 @@
     static_assert(sizeof(score_deprecated_macro_def_##ID) > 0, "")
 #endif
 // clang-format on
+
 #endif  // SCORE_QUALITY_COMPILER_WARNINGS_DEPRECATION_H

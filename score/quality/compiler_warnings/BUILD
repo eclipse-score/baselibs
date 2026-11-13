@@ -22,8 +22,9 @@ cc_library(
 )
 
 cc_library(
-    name = "macro_deprecation",
+    name = "deprecation",
     hdrs = ["deprecation.h"],
     tags = ["FFI"],
     visibility = ["@score_baselibs//score:__subpackages__"],
+    deps = [":compiler_warnings"],
 )
