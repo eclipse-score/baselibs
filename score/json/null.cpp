@@ -11,7 +11,7 @@
  * SPDX-License-Identifier: Apache-2.0
  ********************************************************************************/
 
-#include "score/json/internal/model/null.h"
+#include "score/json/null.h"
 
 bool score::json::operator==(const Null&, const Null&) noexcept
 {

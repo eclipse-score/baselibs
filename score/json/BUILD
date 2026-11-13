@@ -34,13 +34,45 @@ string_flag(
 )
 
 cc_library(
+    name = "model",
+    srcs = [
+        "any.cpp",
+        "error.cpp",
+        "null.cpp",
+        "number.cpp",
+    ],
+    hdrs = [
+        "any.h",
+        "error.h",
+        "null.h",
+        "number.h",
+        "object.h",
+        # Deprecated forwarding headers, kept so existing includes keep compiling.
+        # Remove them in a future breaking release.
+        "internal/model/any.h",
+        "internal/model/error.h",
+        "internal/model/null.h",
+        "internal/model/number.h",
+        "internal/model/object.h",
+    ],
+    features = COMPILER_WARNING_FEATURES,
+    tags = ["FFI"],
+    visibility = ["@score_baselibs//score/json:__subpackages__"],
+    deps = [
+        "@score_baselibs//score/language/futurecpp",
+        "@score_baselibs//score/result",
+        "@score_baselibs//score/string_manipulation:string_comparison_adaptor",
+    ],
+)
+
+cc_library(
     name = "parser_interface",
     srcs = ["i_json_parser.cpp"],
     hdrs = ["i_json_parser.h"],
     features = COMPILER_WARNING_FEATURES,
     tags = ["FFI"],
     deps = [
-        "@score_baselibs//score/json/internal/model",
+        ":model",
         "@score_baselibs//score/result",
     ],
 )
@@ -63,8 +95,8 @@ cc_library(
     features = COMPILER_WARNING_FEATURES,
     tags = ["FFI"],
     deps = [
+        ":model",
         "@score_baselibs//score/filesystem/filestream",
-        "@score_baselibs//score/json/internal/model",
         "@score_baselibs//score/result",
     ],
 )
@@ -79,8 +111,8 @@ cc_library(
     ],
     tags = ["FFI"],
     deps = [
+        ":model",
         ":parser_interface",
-        "@score_baselibs//score/json/internal/model",
         "@score_baselibs//score/result",
     ],
 )
@@ -91,7 +123,7 @@ cc_library(
     hdrs = ["json_writer.h"],
     features = COMPILER_WARNING_FEATURES,
     implementation_deps = [
-        "@score_baselibs//score/json/internal/model",
+        ":model",
         "@score_baselibs//score/json/internal/writer:serializer",
     ],
     tags = ["FFI"],
@@ -158,6 +190,25 @@ cc_library(
         ":parser_interface",
         ":writer_interface",
         "@googletest//:gtest",
+    ],
+)
+
+cc_test(
+    name = "model_test",
+    srcs = [
+        "any_test.cpp",
+        "error_test.cpp",
+        "number_test.cpp",
+        "object_test.cpp",
+    ],
+    features = COMPILER_WARNING_FEATURES + ["aborts_upon_exception"],
+    tags = ["unit"],
+    visibility = [
+        "@score_baselibs//score/json:__pkg__",
+    ],
+    deps = [
+        ":model",
+        "@googletest//:gtest_main",
     ],
 )
 

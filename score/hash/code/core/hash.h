@@ -15,7 +15,7 @@
 #define SCORE_LIB_HASH_HASH_H
 
 #include "score/hash/code/common/algorithms.h"
-#include "score/json/internal/model/any.h"
+#include "score/json/any.h"
 #include "score/result/result.h"
 
 #include <score/span.hpp>

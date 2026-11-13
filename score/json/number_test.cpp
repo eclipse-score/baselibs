@@ -10,7 +10,7 @@
  *
  * SPDX-License-Identifier: Apache-2.0
  ********************************************************************************/
-#include "score/json/internal/model/number.h"
+#include "score/json/number.h"
 
 #include "gtest/gtest.h"
 
