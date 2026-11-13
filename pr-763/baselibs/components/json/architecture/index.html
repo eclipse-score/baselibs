@@ -406,6 +406,7 @@
      aria-label="Section Navigation">
   <p class="bd-links__title" role="heading" aria-level="1">Section Navigation</p>
   <div class="bd-toc-item navbar-nav"><ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../generic_trace_library/index.html">Generic Trace Library</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../bitmanipulation/index.html">bitmanipulation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../concurrency/index.html">concurrency</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../containers/index.html">containers</a></li>
@@ -500,7 +501,7 @@
                   
   <section id="json-component-architecture">
 <h1>JSON Component Architecture<a class="headerlink" href="#json-component-architecture" title="Link to this heading">#</a></h1>
-<div class="need_container docutils container" id="SNCB-5c9f05c1">
+<div class="need_container docutils container" id="SNCB-f99cefff">
 <div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_document table" id="doc__json_architecture">
 <tbody>
 <tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
@@ -558,7 +559,7 @@ It provides currently only a C++ API.</p>
 implementation provided. But generally there is a “Wrapper” and an “Implementation” lower-level component.</p>
 <p>Design Decisions:</p>
 <p>It was decided to use the vaJson parser from Vector (see <a class="reference internal" href="../vajson/index.html#doc__vajson" title="doc__vajson"><em class="xref need">vajson (doc__vajson)</em></a>), which is ASIL D certified.</p>
-<p>JSON writing functionality is provided by the vaJson serializer, which is wrapped by the “Wrapper” component.</p>
+<p>JSON writing is built on the vaJson output formatting and string escaping, and is wrapped by the “Wrapper” component.</p>
 <p>Design Constraints:</p>
 <p>The feature description states that this component provides a “JSON abstraction layer that can switch between different parsers/serializers under the hood.”
 Currently vaJson is the only implementation, for parsing as well as for serialization, so nothing is selectable.</p>
@@ -570,7 +571,7 @@ the main driver is to re-use existing implementation(s) and to allow replacing t
 </section>
 <section id="static-architecture">
 <h2>Static Architecture<a class="headerlink" href="#static-architecture" title="Link to this heading">#</a></h2>
-<div class="need_container docutils container" id="SNCB-319937ef">
+<div class="need_container docutils container" id="SNCB-c454cd88">
 <div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_comp table" id="comp__baselibs_json">
 <tbody>
 <tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
@@ -600,7 +601,7 @@ the main driver is to re-use existing implementation(s) and to allow replacing t
 <div class="line">implements: <span class="implements"><span><a class="external_link reference external" href="https://eclipse-score.github.io/score/main/features/baselibs/architecture/index.html#logic_arc_int__baselibs__json">logic_arc_int__baselibs__json</a></span></span></div>
 <div class="line">included by: <span class="includes"><span><a class="reference internal" href="../../../../module/index.html#mod__baselibs" title="comp__baselibs_json">mod__baselibs</a>, <a class="reference internal" href="../../../../module/index.html#mod_view_sta__baselibs__baselibs" title="comp__baselibs_json">mod_view_sta__baselibs__baselibs</a></span></span></div>
 </span></div>
-<div class="score-coverage line"><span class="needs_label">coverage: </span><span class="needs_data">lines 97% · branches 90% · files 15/20</span></div>
+<div class="score-coverage line"><span class="needs_label">coverage: </span><span class="needs_data">lines 97% · branches 90% · files 15/25</span></div>
 </div>
 </td>
 <td class="meta" colspan="3"></td>
@@ -621,7 +622,7 @@ the main driver is to re-use existing implementation(s) and to allow replacing t
 </table>
 </div>
 </div>
-<div class="need_container docutils container" id="SNCB-63b39516">
+<div class="need_container docutils container" id="SNCB-b1b10cbb">
 <div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_comp_arc_sta table" id="comp_arc_sta__baselibs__json">
 <tbody>
 <tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
@@ -670,7 +671,7 @@ the main driver is to re-use existing implementation(s) and to allow replacing t
 </section>
 <section id="dynamic-architecture">
 <h2>Dynamic Architecture<a class="headerlink" href="#dynamic-architecture" title="Link to this heading">#</a></h2>
-<div class="need_container docutils container" id="SNCB-88e2f344">
+<div class="need_container docutils container" id="SNCB-e9814cf7">
 <div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_comp_arc_dyn table" id="comp_arc_dyn__baselibs__json_dynamic_view">
 <tbody>
 <tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
@@ -717,7 +718,7 @@ the main driver is to re-use existing implementation(s) and to allow replacing t
 </section>
 <section id="interfaces">
 <h2>Interfaces<a class="headerlink" href="#interfaces" title="Link to this heading">#</a></h2>
-<div class="need_container docutils container" id="SNCB-351181f0">
+<div class="need_container docutils container" id="SNCB-8a6fcf5b">
 <div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_logic_arc_int_op table" id="logic_arc_int_op__baselibs__parse">
 <tbody>
 <tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
@@ -760,7 +761,7 @@ the main driver is to re-use existing implementation(s) and to allow replacing t
 </table>
 </div>
 </div>
-<div class="need_container docutils container" id="SNCB-b2691a53">
+<div class="need_container docutils container" id="SNCB-4c5df608">
 <div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_logic_arc_int_op table" id="logic_arc_int_op__baselibs__write">
 <tbody>
 <tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
@@ -806,7 +807,7 @@ the main driver is to re-use existing implementation(s) and to allow replacing t
 </section>
 <section id="lower-level-components">
 <h2>Lower Level Components<a class="headerlink" href="#lower-level-components" title="Link to this heading">#</a></h2>
-<div class="need_container docutils container" id="SNCB-1c34b5c6">
+<div class="need_container docutils container" id="SNCB-4c852105">
 <div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_comp table" id="comp__baselibs_json_wrapper">
 <tbody>
 <tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
