@@ -150,3 +150,66 @@ flowchart TD
 | Tests run and reference existing requirements | ✔ links of the imported test cases | ✔ gtest results, `lobster-tracing` | yes |
 | Static / dynamic architecture against Bazel targets and public API | – | ✔ architecture validators | – |
 | Unit design (class diagram) against C++ code | – | ✔ libclang | – |
+
+## Metamodel discrepancies
+
+Comparison of the docs-as-code metamodel (`metamodel.yaml`) with the TRLC model of
+rules_score (`score_requirements_model.rsl`) and the mapping in `lobster_sphinx_needs.yaml`.
+Overall: small for requirements, medium for safety analysis and architecture; real gaps
+where one side has a type the other side does not know.
+
+### Requirements (small)
+
+| Topic | docs-as-code | rules_score (TRLC) | Effect |
+|---|---|---|---|
+| Types | `stkh_req`, `feat_req`, `comp_req`, `aou_req` | `AssumedSystemReq`, `FeatReq`, `CompReq`, `AoU` | mapped 1:1 ✔ |
+| ASIL | `QM`, `ASIL_B` | `QM`, `B`, `D` | compatible (subset); `D` is not used in docs-as-code |
+| Status | `valid`, `invalid`, `valid_inspected` | `valid`, `invalid` | `invalid` is filtered out, `valid_inspected` counts as valid ✔ |
+| `version` | mandatory | mandatory | ✔ |
+| `feat_req` `derived_from` → `stkh_req` | optional | mandatory | **gap**: not mapped in the central configuration, so the dependable element does not check stakeholder → feature |
+| `comp_req` `derived_from` | optional | mandatory | the dependable element reports missing links (warning for now) |
+| AoU as source of a requirement | own link `covers` | part of `derived_from` | solved by the mapping ✔ |
+| Received / forwarded / own AoUs | no concept, `aou_req` has no links | modelled (`aou_forwarding.yaml`) | **gap**: cannot be expressed in docs-as-code |
+| ASIL inheritance (derived requirement not lower) | graph checks | TRLC checks | for requirements from `needs.json` only docs-as-code checks it; the dependable element gets no ASIL |
+| `reqtype`, `security`, `valid_from` / `valid_until`, `satisfied_by` | yes | – | docs-as-code only; `satisfied_by` is the `feat_id` / `comp_id` filter of the dependable element |
+
+### Safety analysis (medium)
+
+| Topic | docs-as-code | rules_score | Effect |
+|---|---|---|---|
+| `comp_saf_fmea` ↔ `FailureMode` | yes | yes | converted, partly lossy: |
+| ↳ `fault_id` ↔ `guidewords` | free text (`^.+$`) | enum | n:1 table; the mapping of `CO_01_*` is questionable |
+| ↳ ASIL | **missing** on the FMEA | mandatory | derived from the violated needs |
+| ↳ `violates` | `comp_arc_*` or `real_arc_int_op` | `interface` (`ApiMethod`) | only `real_arc_int_op` is taken over |
+| ↳ `safety_relevant`, `mitigation_issue` | yes | – | ignored |
+| ↳ `failure_root_cause` (free text) | yes | `RootCause` from the fault tree | may duplicate, not reconciled |
+| Fault tree / `RootCause` | **no type** (rendering only) | yes | cannot be expressed in the metamodel |
+| Assessment | `sufficient` + `mitigated_by` per FMEA entry | `RootCauseAssessment` per root cause with ASIL check | derived in a simplified way: coarser, no ASIL check |
+| `feat_saf_fmea` | yes | – | feature level missing in the dependable element |
+| DFA (`plat_` / `feat_` / `comp_saf_dfa`) | yes | placeholder only | **gap** in the dependable element |
+| Security (`feat_` / `comp_sec_threat`, `*_sec_ana`) | yes | placeholder only | **gap** in the dependable element |
+
+### Architecture and design (medium)
+
+| Topic | docs-as-code | rules_score | Effect |
+|---|---|---|---|
+| Interfaces | `real_arc_int(_op)` maintained in `.rst` | `ApiMethod` generated from `public_api.puml` | **maintained twice**, linked by title only; nothing checks that every method has a `real_arc_int_op` |
+| Views `comp_arc_sta` / `dyn`, `mod_view_*` | needs embedding the `.puml` | validates the same `.puml` | need ID and dependable element target are not linked |
+| Unit / detailed design | **no type** | `unit_design`, `unit` (validated against C++) | cannot be expressed in the metamodel |
+| Component `comp` | need | `component` target | linked by the `comp_id` filter only |
+
+### Tests (none worth mentioning)
+
+`testcase` is exported with the docs-as-code fields. Only a test traced by `lobster-tracing`
+alone is counted as `partially_verifies`.
+
+### Next steps by effort
+
+1. **Small**: map `derived_from` of `feat_req` in the central configuration (stakeholder →
+   feature).
+2. **Small to medium**: check that every `ApiMethod` has a `real_arc_int_op` (and vice versa)
+   against the double maintenance.
+3. **Medium**: ASIL on `comp_saf_fmea`, root cause / assessment as need types (process
+   change).
+4. **Large**: DFA, security and feature FMEA in the dependable element, unit design as need
+   type, received / forwarded AoUs in docs-as-code.
