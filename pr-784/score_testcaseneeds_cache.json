@@ -309764,9 +309764,23 @@
     "FullyVerifies": null
   },
   {
-    "name": "JsonWriterDefaultFormattingTest__PrettyPrintsWhenFormattingIsOmitted",
+    "name": "JsonWriterSyncedFileTest__SerializationFailureKeepsTargetUnchanged",
     "file": "score/json/json_writer_test.cpp",
     "line": "255",
+    "result": "passed",
+    "repo_name": "local_repo",
+    "hash": "",
+    "url": "",
+    "TestType": "interface-test",
+    "DerivationTechnique": "error-guessing",
+    "result_text": "",
+    "PartiallyVerifies": "comp_req__json__serialization",
+    "FullyVerifies": null
+  },
+  {
+    "name": "JsonWriterDefaultFormattingTest__PrettyPrintsWhenFormattingIsOmitted",
+    "file": "score/json/json_writer_test.cpp",
+    "line": "280",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -309780,7 +309794,7 @@
   {
     "name": "JsonWriterIntegerTest/0__FormatsIntegralValuesCorrectly",
     "file": "score/json/json_writer_test.cpp",
-    "line": "284",
+    "line": "309",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -309794,7 +309808,7 @@
   {
     "name": "JsonWriterIntegerTest/1__FormatsIntegralValuesCorrectly",
     "file": "score/json/json_writer_test.cpp",
-    "line": "284",
+    "line": "309",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -309808,7 +309822,7 @@
   {
     "name": "JsonWriterIntegerTest/2__FormatsIntegralValuesCorrectly",
     "file": "score/json/json_writer_test.cpp",
-    "line": "284",
+    "line": "309",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -309822,7 +309836,7 @@
   {
     "name": "JsonWriterIntegerTest/3__FormatsIntegralValuesCorrectly",
     "file": "score/json/json_writer_test.cpp",
-    "line": "284",
+    "line": "309",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -309845,6 +309859,20 @@
     "DerivationTechnique": "requirements-analysis",
     "result_text": "",
     "PartiallyVerifies": null,
+    "FullyVerifies": null
+  },
+  {
+    "name": "JsonTest__ReadWriteEmptyMemberName",
+    "file": "score/json/json_test.cpp",
+    "line": "69",
+    "result": "passed",
+    "repo_name": "local_repo",
+    "hash": "",
+    "url": "",
+    "TestType": "requirements-based",
+    "DerivationTechnique": "boundary-values",
+    "result_text": "",
+    "PartiallyVerifies": "comp_req__json__serialization, comp_req__json__deserialization",
     "FullyVerifies": null
   },
   {
@@ -310438,7 +310466,7 @@
   {
     "name": "ParserTest__EmitsErrorWhenParsingObjectWithDuplicateEscapedMemberName",
     "file": "score/json/json_parser_test.cpp",
-    "line": "526",
+    "line": "527",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -310452,7 +310480,7 @@
   {
     "name": "ParserTest__CanParseSameMemberNameInDifferentObjects",
     "file": "score/json/json_parser_test.cpp",
-    "line": "541",
+    "line": "542",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -310464,9 +310492,23 @@
     "FullyVerifies": null
   },
   {
+    "name": "ParserTest__CanParseEmptyMemberName",
+    "file": "score/json/json_parser_test.cpp",
+    "line": "561",
+    "result": "passed",
+    "repo_name": "local_repo",
+    "hash": "",
+    "url": "",
+    "TestType": "requirements-based",
+    "DerivationTechnique": "boundary-values",
+    "result_text": "",
+    "PartiallyVerifies": "comp_req__json__deserialization",
+    "FullyVerifies": null
+  },
+  {
     "name": "JsonParserVajsonTest__CanParseObjectHexadecimalNumber",
     "file": "score/json/json_parser_test.cpp",
-    "line": "560",
+    "line": "581",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -310480,7 +310522,7 @@
   {
     "name": "JsonParserVajsonTest__CanParseTwoByteBuffer",
     "file": "score/json/json_parser_test.cpp",
-    "line": "610",
+    "line": "631",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -310494,7 +310536,7 @@
   {
     "name": "JsonParserVajsonTest__CanParseBufferWithUtf8Bom",
     "file": "score/json/json_parser_test.cpp",
-    "line": "629",
+    "line": "650",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -310508,7 +310550,7 @@
   {
     "name": "NumberTest__WhenParsingABoolStoredInAJsonThenParsingIsSuccessfulAndCorrectValueIsReturned",
     "file": "score/json/json_parser_test.cpp",
-    "line": "701",
+    "line": "722",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -310522,7 +310564,7 @@
   {
     "name": "NumberTest__WhenParsingAUint8StoredInAJsonThenParsingIsSuccessfulAndCorrectValueIsReturned",
     "file": "score/json/json_parser_test.cpp",
-    "line": "723",
+    "line": "744",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -310536,7 +310578,7 @@
   {
     "name": "NumberTest__WhenParsingAUint16StoredInAJsonThenParsingIsSuccessfulAndCorrectValueIsReturned",
     "file": "score/json/json_parser_test.cpp",
-    "line": "746",
+    "line": "767",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -310550,7 +310592,7 @@
   {
     "name": "NumberTest__WhenParsingAUint32StoredInAJsonThenParsingIsSuccessfulAndCorrectValueIsReturned",
     "file": "score/json/json_parser_test.cpp",
-    "line": "769",
+    "line": "790",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -310564,7 +310606,7 @@
   {
     "name": "NumberTest__WhenParsingAUint64StoredInAJsonThenParsingIsSuccessfulAndCorrectValueIsReturned",
     "file": "score/json/json_parser_test.cpp",
-    "line": "792",
+    "line": "813",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -310578,7 +310620,7 @@
   {
     "name": "NumberTest__WhenParsingAInt8StoredInAJsonThenParsingIsSuccessfulAndCorrectValueIsReturned",
     "file": "score/json/json_parser_test.cpp",
-    "line": "815",
+    "line": "836",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -310592,7 +310634,7 @@
   {
     "name": "NumberTest__WhenParsingAInt16StoredInAJsonThenParsingIsSuccessfulAndCorrectValueIsReturned",
     "file": "score/json/json_parser_test.cpp",
-    "line": "838",
+    "line": "859",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -310606,7 +310648,7 @@
   {
     "name": "NumberTest__WhenParsingAInt32StoredInAJsonThenParsingIsSuccessfulAndCorrectValueIsReturned",
     "file": "score/json/json_parser_test.cpp",
-    "line": "861",
+    "line": "882",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -310620,7 +310662,7 @@
   {
     "name": "NumberTest__WhenParsingAInt64StoredInAJsonThenParsingIsSuccessfulAndCorrectValueIsReturned",
     "file": "score/json/json_parser_test.cpp",
-    "line": "884",
+    "line": "905",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -310634,7 +310676,7 @@
   {
     "name": "NumberTest__WhenParsingAFloatStoredInAJsonThenParsingIsSuccessfulAndCorrectValueIsReturned",
     "file": "score/json/json_parser_test.cpp",
-    "line": "906",
+    "line": "927",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -310648,7 +310690,7 @@
   {
     "name": "NumberTest__WhenParsingADoubleStoredInAJsonThenParsingIsSuccessfulAndCorrectValueIsReturned",
     "file": "score/json/json_parser_test.cpp",
-    "line": "929",
+    "line": "950",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -310801,6 +310843,20 @@
   },
   {
     "name": "ParserTest/DuplicateMemberNameTest__EmitsErrorWhenParsingObjectWithDuplicateMemberName/NotAdjacent",
+    "file": "score/json/json_parser_test.cpp",
+    "line": "492",
+    "result": "passed",
+    "repo_name": "local_repo",
+    "hash": "",
+    "url": "",
+    "TestType": "requirements-based",
+    "DerivationTechnique": "equivalence-classes",
+    "result_text": "",
+    "PartiallyVerifies": "comp_req__json__duplicate_member_names",
+    "FullyVerifies": null
+  },
+  {
+    "name": "ParserTest/DuplicateMemberNameTest__EmitsErrorWhenParsingObjectWithDuplicateMemberName/EmptyName",
     "file": "score/json/json_parser_test.cpp",
     "line": "492",
     "result": "passed",
@@ -321090,6 +321146,20 @@
     "FullyVerifies": null
   },
   {
+    "name": "FileBufTest__DiscardClosesFile",
+    "file": "score/filesystem/filestream/file_buf_test.cpp",
+    "line": "116",
+    "result": "passed",
+    "repo_name": "local_repo",
+    "hash": "",
+    "url": "",
+    "TestType": "interface-test",
+    "DerivationTechnique": "requirements-analysis",
+    "result_text": "",
+    "PartiallyVerifies": "comp_req__filesystem__file_io",
+    "FullyVerifies": null
+  },
+  {
     "name": "AtomicFileBufTest__TestFailureOnSync",
     "file": "score/filesystem/filestream/file_buf_test.cpp",
     "line": "60",
@@ -321146,9 +321216,51 @@
     "FullyVerifies": null
   },
   {
+    "name": "AtomicFileBufTest__DiscardRemovesTemporaryFileWithoutRename",
+    "file": "score/filesystem/filestream/file_buf_test.cpp",
+    "line": "129",
+    "result": "passed",
+    "repo_name": "local_repo",
+    "hash": "",
+    "url": "",
+    "TestType": "interface-test",
+    "DerivationTechnique": "requirements-analysis",
+    "result_text": "",
+    "PartiallyVerifies": "comp_req__filesystem__file_io",
+    "FullyVerifies": null
+  },
+  {
+    "name": "AtomicFileBufTest__DiscardReportsCloseFailure",
+    "file": "score/filesystem/filestream/file_buf_test.cpp",
+    "line": "147",
+    "result": "passed",
+    "repo_name": "local_repo",
+    "hash": "",
+    "url": "",
+    "TestType": "fault-injection",
+    "DerivationTechnique": "error-guessing",
+    "result_text": "",
+    "PartiallyVerifies": "comp_req__filesystem__file_io",
+    "FullyVerifies": null
+  },
+  {
+    "name": "AtomicFileBufTest__DiscardOnClosedFileDoesNothing",
+    "file": "score/filesystem/filestream/file_buf_test.cpp",
+    "line": "165",
+    "result": "passed",
+    "repo_name": "local_repo",
+    "hash": "",
+    "url": "",
+    "TestType": "interface-test",
+    "DerivationTechnique": "boundary-values",
+    "result_text": "",
+    "PartiallyVerifies": "comp_req__filesystem__file_io",
+    "FullyVerifies": null
+  },
+  {
     "name": "FileStreamTest__TestNullBuffer",
     "file": "score/filesystem/filestream/file_buf_test.cpp",
-    "line": "116",
+    "line": "179",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -321162,7 +321274,7 @@
   {
     "name": "AtomicFileBufTempFileCleanupTest__CloseFailureRemovesTempFileFromDisk",
     "file": "score/filesystem/filestream/file_buf_test.cpp",
-    "line": "144",
+    "line": "207",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -321176,7 +321288,7 @@
   {
     "name": "AtomicFileBufTempFileCleanupTest__DestructorRemovesTempFileWhenCloseNeverCalled",
     "file": "score/filesystem/filestream/file_buf_test.cpp",
-    "line": "157",
+    "line": "220",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -321190,7 +321302,7 @@
   {
     "name": "AtomicFileBufTempFileCleanupTest__DestructorDoesNothingAfterSuccessfulClose",
     "file": "score/filesystem/filestream/file_buf_test.cpp",
-    "line": "167",
+    "line": "230",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -321258,9 +321370,37 @@
     "FullyVerifies": null
   },
   {
+    "name": "FileFactoryFakeTest__AtomicUpdateOfFailedStreamKeepsContent",
+    "file": "score/filesystem/filestream/file_factory_fake_test.cpp",
+    "line": "53",
+    "result": "passed",
+    "repo_name": "local_repo",
+    "hash": "",
+    "url": "",
+    "TestType": "interface-test",
+    "DerivationTechnique": "error-guessing",
+    "result_text": "",
+    "PartiallyVerifies": "comp_req__filesystem__mock_fake",
+    "FullyVerifies": null
+  },
+  {
+    "name": "FileFactoryFakeTest__AtomicUpdateKeepsContentOfStreamFailingAfterClose",
+    "file": "score/filesystem/filestream/file_factory_fake_test.cpp",
+    "line": "75",
+    "result": "passed",
+    "repo_name": "local_repo",
+    "hash": "",
+    "url": "",
+    "TestType": "interface-test",
+    "DerivationTechnique": "error-guessing",
+    "result_text": "",
+    "PartiallyVerifies": "comp_req__filesystem__mock_fake",
+    "FullyVerifies": null
+  },
+  {
     "name": "FileFactoryTest__OpensFile",
     "file": "score/filesystem/filestream/file_factory_test.cpp",
-    "line": "90",
+    "line": "95",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -321274,7 +321414,7 @@
   {
     "name": "FileFactoryTest__OpensFileForAppending",
     "file": "score/filesystem/filestream/file_factory_test.cpp",
-    "line": "101",
+    "line": "106",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -321288,7 +321428,7 @@
   {
     "name": "FileFactoryTest__OpensNonExistingFile",
     "file": "score/filesystem/filestream/file_factory_test.cpp",
-    "line": "112",
+    "line": "117",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -321302,7 +321442,7 @@
   {
     "name": "FileFactoryTest__OpenForAtomicUpdate",
     "file": "score/filesystem/filestream/file_factory_test.cpp",
-    "line": "120",
+    "line": "125",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -321316,7 +321456,7 @@
   {
     "name": "FileFactoryTest__AtomicUpdateInvalidMode",
     "file": "score/filesystem/filestream/file_factory_test.cpp",
-    "line": "148",
+    "line": "153",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -321330,7 +321470,7 @@
   {
     "name": "FileFactoryTest__OldContentVisibleBeforeAtomicObjectGetsDeleted",
     "file": "score/filesystem/filestream/file_factory_test.cpp",
-    "line": "158",
+    "line": "163",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -321344,7 +321484,7 @@
   {
     "name": "FileFactoryTest__ErrorOnFailingAtomicUpdate",
     "file": "score/filesystem/filestream/file_factory_test.cpp",
-    "line": "199",
+    "line": "284",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -321358,7 +321498,7 @@
   {
     "name": "FileFactoryTest__AtomicUpdateWithEmptyPath",
     "file": "score/filesystem/filestream/file_factory_test.cpp",
-    "line": "214",
+    "line": "299",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -321370,9 +321510,37 @@
     "FullyVerifies": null
   },
   {
+    "name": "FileFactoryFailedAtomicUpdateTest__CloseKeepsTargetUnchanged",
+    "file": "score/filesystem/filestream/file_factory_test.cpp",
+    "line": "242",
+    "result": "passed",
+    "repo_name": "local_repo",
+    "hash": "",
+    "url": "",
+    "TestType": "interface-test",
+    "DerivationTechnique": "error-guessing",
+    "result_text": "",
+    "PartiallyVerifies": "comp_req__filesystem__file_io",
+    "FullyVerifies": null
+  },
+  {
+    "name": "FileFactoryFailedAtomicUpdateTest__DestructionKeepsTargetUnchanged",
+    "file": "score/filesystem/filestream/file_factory_test.cpp",
+    "line": "264",
+    "result": "passed",
+    "repo_name": "local_repo",
+    "hash": "",
+    "url": "",
+    "TestType": "interface-test",
+    "DerivationTechnique": "error-guessing",
+    "result_text": "",
+    "PartiallyVerifies": "comp_req__filesystem__file_io",
+    "FullyVerifies": null
+  },
+  {
     "name": "FileFactoryTestWithFcntlMock__OpenFileHandleFailedOnOpen",
     "file": "score/filesystem/filestream/file_factory_test.cpp",
-    "line": "227",
+    "line": "312",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -321386,7 +321554,7 @@
   {
     "name": "FileFactoryTestWithFcntlMock__OpenFileHandleFailedOnOpen_AppendMode",
     "file": "score/filesystem/filestream/file_factory_test.cpp",
-    "line": "243",
+    "line": "328",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -321400,7 +321568,7 @@
   {
     "name": "FileFactoryTestWithFcntlMock__AtomicUpdateFileHandleFailedOnOpen",
     "file": "score/filesystem/filestream/file_factory_test.cpp",
-    "line": "259",
+    "line": "344",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -321414,7 +321582,7 @@
   {
     "name": "FileFactoryTestWithStatMock__AtomicUpdateFileHandleFailedOnStat",
     "file": "score/filesystem/filestream/file_factory_test.cpp",
-    "line": "271",
+    "line": "356",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -321428,7 +321596,7 @@
   {
     "name": "FileFactoryTestWithStatMock__OpenForAtomicUpdateWithOwnershipChange",
     "file": "score/filesystem/filestream/file_factory_test.cpp",
-    "line": "282",
+    "line": "367",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -321442,7 +321610,7 @@
   {
     "name": "FileFactoryTestWithStatMock__AtomicUpdateFileHandleFailedOnChown",
     "file": "score/filesystem/filestream/file_factory_test.cpp",
-    "line": "307",
+    "line": "392",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -321456,7 +321624,7 @@
   {
     "name": "FileFactoryTestWithStatMock__AtomicUpdateFailsWhenWriteAccessDenied",
     "file": "score/filesystem/filestream/file_factory_test.cpp",
-    "line": "328",
+    "line": "413",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -321470,7 +321638,7 @@
   {
     "name": "FileFactoryTestWithStatMock__AtomicUpdateSucceedsWhenWriteAccessGranted",
     "file": "score/filesystem/filestream/file_factory_test.cpp",
-    "line": "350",
+    "line": "435",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -321484,7 +321652,7 @@
   {
     "name": "FileFactoryTestWithStatMock__AtomicUpdateFailsOnNonRegularFile",
     "file": "score/filesystem/filestream/file_factory_test.cpp",
-    "line": "371",
+    "line": "456",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -321498,7 +321666,7 @@
   {
     "name": "FileFactoryHelpersTest__ComposeTempFilenameUsesAllParameters",
     "file": "score/filesystem/filestream/file_factory_test.cpp",
-    "line": "390",
+    "line": "475",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -324086,7 +324254,7 @@
     "FullyVerifies": null
   },
   {
-    "name": "RegistryAwareRecorderFactoryConfigFixture__NoRecorderConfiguredShallFallBackToConsole",
+    "name": "RegistryAwareRecorderFactoryConfigFixture__NoRecorderConfiguredShallReturnEmptyRecorder",
     "file": "score/mw/log/detail/registry_aware_recorder_factory_test.cpp",
     "line": "276",
     "result": "passed",
@@ -324102,7 +324270,7 @@
   {
     "name": "RegistryAwareRecorderFactoryConfigFixture__ConsoleConfiguredShallReturnConsoleRecorder",
     "file": "score/mw/log/detail/registry_aware_recorder_factory_test.cpp",
-    "line": "297",
+    "line": "290",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -324114,9 +324282,9 @@
     "FullyVerifies": null
   },
   {
-    "name": "RegistryAwareRecorderFactoryConfigFixture__InvalidLogModeShallFallBackToConsole",
+    "name": "RegistryAwareRecorderFactoryConfigFixture__InvalidLogModeShallReturnEmptyRecorder",
     "file": "score/mw/log/detail/registry_aware_recorder_factory_test.cpp",
-    "line": "318",
+    "line": "311",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -324128,9 +324296,9 @@
     "FullyVerifies": null
   },
   {
-    "name": "RegistryAwareRecorderFactoryConfigFixture__OutOfRangeLogModeShallFallBackToConsole",
+    "name": "RegistryAwareRecorderFactoryConfigFixture__OutOfRangeLogModeShallReturnEmptyRecorder",
     "file": "score/mw/log/detail/registry_aware_recorder_factory_test.cpp",
-    "line": "338",
+    "line": "324",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -324144,7 +324312,7 @@
   {
     "name": "RegistryAwareRecorderFactoryConfigFixture__MultipleLogModesShallReturnCompositeRecorder",
     "file": "score/mw/log/detail/registry_aware_recorder_factory_test.cpp",
-    "line": "360",
+    "line": "339",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -324158,7 +324326,7 @@
   {
     "name": "RegistryAwareRecorderFactoryConfigFixture__CreateRecorderFromLogModeMemoryErrorShallReturnEmptyRecorder",
     "file": "score/mw/log/detail/registry_aware_recorder_factory_test.cpp",
-    "line": "392",
+    "line": "371",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -324172,7 +324340,7 @@
   {
     "name": "RegistryAwareRecorderFactoryConfigFixture__CreateFromConfigurationFallsBackToConsoleWhenConfigFilesNotFound",
     "file": "score/mw/log/detail/registry_aware_recorder_factory_test.cpp",
-    "line": "407",
+    "line": "386",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -324186,7 +324354,7 @@
   {
     "name": "RegistryAwareRecorderFactoryConfigFixture__CreateFromConfigurationWithConsoleModeParsesConfigAndReturnsSingleRecorder",
     "file": "score/mw/log/detail/registry_aware_recorder_factory_test.cpp",
-    "line": "432",
+    "line": "411",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -324198,23 +324366,9 @@
     "FullyVerifies": null
   },
   {
-    "name": "RegistryAwareRecorderFactoryConfigFixture__CreateFromConfigurationShallCreateConsoleRecorderOnlyOnce",
-    "file": "score/mw/log/detail/registry_aware_recorder_factory_test.cpp",
-    "line": "458",
-    "result": "passed",
-    "repo_name": "local_repo",
-    "hash": "",
-    "url": "",
-    "TestType": null,
-    "DerivationTechnique": "error-guessing",
-    "result_text": "",
-    "PartiallyVerifies": null,
-    "FullyVerifies": null
-  },
-  {
     "name": "RegistryAwareRecorderFactoryConfigFixture__CreateFromConfigurationWithUnavailableModeConsoleAvailableFallsBackToConsole",
     "file": "score/mw/log/detail/registry_aware_recorder_factory_test.cpp",
-    "line": "483",
+    "line": "437",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -324228,7 +324382,7 @@
   {
     "name": "RegistryAwareRecorderFactoryConfigFixture__CreateFromConfigurationWithNoAvailableBackendAndNoConsoleReturnsEmptyRecorder",
     "file": "score/mw/log/detail/registry_aware_recorder_factory_test.cpp",
-    "line": "513",
+    "line": "467",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -324242,7 +324396,7 @@
   {
     "name": "RegistryAwareRecorderFactoryConfigFixture__CreateFromConfigurationWithMultipleAvailableModesReturnsCompositeRecorder",
     "file": "score/mw/log/detail/registry_aware_recorder_factory_test.cpp",
-    "line": "536",
+    "line": "490",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -324256,7 +324410,7 @@
   {
     "name": "RegistryAwareRecorderFactoryConfigFixture__CreateFromConfigurationAvailableBackendReturningNullRecorderResultsInEmpty",
     "file": "score/mw/log/detail/registry_aware_recorder_factory_test.cpp",
-    "line": "570",
+    "line": "524",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -324270,7 +324424,7 @@
   {
     "name": "RegistryAwareRecorderFactoryConfigFixture__CreateFromConfigurationConsoleFallbackCreatorReturningNullIsSkipped",
     "file": "score/mw/log/detail/registry_aware_recorder_factory_test.cpp",
-    "line": "597",
+    "line": "551",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -324760,7 +324914,7 @@
   {
     "name": "LgDetailErrorUnknown__TestUnknownError",
     "file": "score/mw/log/detail/error_test.cpp",
-    "line": "71",
+    "line": "70",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -324774,7 +324928,7 @@
   {
     "name": "ErrorCodes/LogDetailErrorFixture__EachErrorShallReturnNonEmptyMessage/0",
     "file": "score/mw/log/detail/error_test.cpp",
-    "line": "60",
+    "line": "59",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -324788,7 +324942,7 @@
   {
     "name": "ErrorCodes/LogDetailErrorFixture__EachErrorShallReturnNonEmptyMessage/1",
     "file": "score/mw/log/detail/error_test.cpp",
-    "line": "60",
+    "line": "59",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -324802,7 +324956,7 @@
   {
     "name": "ErrorCodes/LogDetailErrorFixture__EachErrorShallReturnNonEmptyMessage/2",
     "file": "score/mw/log/detail/error_test.cpp",
-    "line": "60",
+    "line": "59",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -324816,7 +324970,7 @@
   {
     "name": "ErrorCodes/LogDetailErrorFixture__EachErrorShallReturnNonEmptyMessage/3",
     "file": "score/mw/log/detail/error_test.cpp",
-    "line": "60",
+    "line": "59",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -324830,7 +324984,7 @@
   {
     "name": "ErrorCodes/LogDetailErrorFixture__EachErrorShallReturnNonEmptyMessage/4",
     "file": "score/mw/log/detail/error_test.cpp",
-    "line": "60",
+    "line": "59",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -324844,7 +324998,7 @@
   {
     "name": "ErrorCodes/LogDetailErrorFixture__EachErrorShallReturnNonEmptyMessage/5",
     "file": "score/mw/log/detail/error_test.cpp",
-    "line": "60",
+    "line": "59",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -324858,7 +325012,7 @@
   {
     "name": "ErrorCodes/LogDetailErrorFixture__EachErrorShallReturnNonEmptyMessage/6",
     "file": "score/mw/log/detail/error_test.cpp",
-    "line": "60",
+    "line": "59",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -324872,7 +325026,7 @@
   {
     "name": "ErrorCodes/LogDetailErrorFixture__EachErrorShallReturnNonEmptyMessage/7",
     "file": "score/mw/log/detail/error_test.cpp",
-    "line": "60",
+    "line": "59",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -324886,7 +325040,7 @@
   {
     "name": "ErrorCodes/LogDetailErrorFixture__EachErrorShallReturnNonEmptyMessage/8",
     "file": "score/mw/log/detail/error_test.cpp",
-    "line": "60",
+    "line": "59",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -324900,7 +325054,7 @@
   {
     "name": "ErrorCodes/LogDetailErrorFixture__EachErrorShallReturnNonEmptyMessage/9",
     "file": "score/mw/log/detail/error_test.cpp",
-    "line": "60",
+    "line": "59",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -324914,7 +325068,7 @@
   {
     "name": "ErrorCodes/LogDetailErrorFixture__EachErrorShallReturnNonEmptyMessage/10",
     "file": "score/mw/log/detail/error_test.cpp",
-    "line": "60",
+    "line": "59",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -324928,7 +325082,7 @@
   {
     "name": "ErrorCodes/LogDetailErrorFixture__EachErrorShallReturnNonEmptyMessage/11",
     "file": "score/mw/log/detail/error_test.cpp",
-    "line": "60",
+    "line": "59",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -324942,7 +325096,7 @@
   {
     "name": "ErrorCodes/LogDetailErrorFixture__EachErrorShallReturnNonEmptyMessage/12",
     "file": "score/mw/log/detail/error_test.cpp",
-    "line": "60",
+    "line": "59",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -324956,7 +325110,7 @@
   {
     "name": "ErrorCodes/LogDetailErrorFixture__EachErrorShallReturnNonEmptyMessage/13",
     "file": "score/mw/log/detail/error_test.cpp",
-    "line": "60",
+    "line": "59",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -324970,7 +325124,7 @@
   {
     "name": "ErrorCodes/LogDetailErrorFixture__EachErrorShallReturnNonEmptyMessage/14",
     "file": "score/mw/log/detail/error_test.cpp",
-    "line": "60",
+    "line": "59",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -324984,7 +325138,7 @@
   {
     "name": "ErrorCodes/LogDetailErrorFixture__EachErrorShallReturnNonEmptyMessage/15",
     "file": "score/mw/log/detail/error_test.cpp",
-    "line": "60",
+    "line": "59",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -324998,21 +325152,7 @@
   {
     "name": "ErrorCodes/LogDetailErrorFixture__EachErrorShallReturnNonEmptyMessage/16",
     "file": "score/mw/log/detail/error_test.cpp",
-    "line": "60",
-    "result": "passed",
-    "repo_name": "local_repo",
-    "hash": "",
-    "url": "",
-    "TestType": "interface-test",
-    "DerivationTechnique": "equivalence-classes",
-    "result_text": "",
-    "PartiallyVerifies": null,
-    "FullyVerifies": null
-  },
-  {
-    "name": "ErrorCodes/LogDetailErrorFixture__EachErrorShallReturnNonEmptyMessage/17",
-    "file": "score/mw/log/detail/error_test.cpp",
-    "line": "60",
+    "line": "59",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -325906,23 +326046,9 @@
     "FullyVerifies": null
   },
   {
-    "name": "SlotDrainerFixture__SlotBeingFlushedShallBeReleasedEvenIfQueueIsRefilledMeanwhile",
-    "file": "score/mw/log/detail/text_recorder/slot_drainer_test.cpp",
-    "line": "138",
-    "result": "passed",
-    "repo_name": "local_repo",
-    "hash": "",
-    "url": "",
-    "TestType": "interface-test",
-    "DerivationTechnique": "error-guessing",
-    "result_text": "",
-    "PartiallyVerifies": null,
-    "FullyVerifies": null
-  },
-  {
     "name": "SlotDrainerFixture__TestOneSlotOneSpan",
     "file": "score/mw/log/detail/text_recorder/slot_drainer_test.cpp",
-    "line": "185",
+    "line": "138",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -325936,7 +326062,7 @@
   {
     "name": "SlotDrainerFixture__TestTooManySlotsForSingleCallShallNotBeAbleToFlushAllSlots",
     "file": "score/mw/log/detail/text_recorder/slot_drainer_test.cpp",
-    "line": "219",
+    "line": "172",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -327530,37 +327656,9 @@
     "FullyVerifies": null
   },
   {
-    "name": "ConfigurationFileDiscovererFixture__DiscovererShallPreferCwdConfigurationFilesOverExecPath",
-    "file": "score/mw/log/configuration/configuration_file_discoverer_test.cpp",
-    "line": "218",
-    "result": "passed",
-    "repo_name": "local_repo",
-    "hash": "",
-    "url": "",
-    "TestType": "requirements-based",
-    "DerivationTechnique": "requirements-analysis",
-    "result_text": "",
-    "PartiallyVerifies": "comp_req__log__cfg_file_loc",
-    "FullyVerifies": null
-  },
-  {
-    "name": "ConfigurationFileDiscovererFixture__DiscovererShallPreferCwdOverExecPathIfCwdEtcIsMissing",
-    "file": "score/mw/log/configuration/configuration_file_discoverer_test.cpp",
-    "line": "240",
-    "result": "passed",
-    "repo_name": "local_repo",
-    "hash": "",
-    "url": "",
-    "TestType": "requirements-based",
-    "DerivationTechnique": "requirements-analysis",
-    "result_text": "",
-    "PartiallyVerifies": "comp_req__log__cfg_file_loc",
-    "FullyVerifies": null
-  },
-  {
     "name": "ConfigurationFileDiscovererFixture__DiscovererShallFindConfigurationFileInEnvPath",
     "file": "score/mw/log/configuration/configuration_file_discoverer_test.cpp",
-    "line": "258",
+    "line": "220",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -327574,7 +327672,7 @@
   {
     "name": "ConfigurationFileDiscovererFixture__DiscovererShallFindConfigurationFileInEnvPathOverrideCwdEtc",
     "file": "score/mw/log/configuration/configuration_file_discoverer_test.cpp",
-    "line": "281",
+    "line": "243",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -327588,7 +327686,7 @@
   {
     "name": "ConfigurationFileDiscovererFixture__DiscovererShallFindConfigurationFileInEnvPathOverrideCwd",
     "file": "score/mw/log/configuration/configuration_file_discoverer_test.cpp",
-    "line": "305",
+    "line": "267",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -327602,7 +327700,7 @@
   {
     "name": "ConfigurationFileDiscovererFixture__DiscovererShallFindConfigurationFileInEnvPathOverrideExecPath",
     "file": "score/mw/log/configuration/configuration_file_discoverer_test.cpp",
-    "line": "329",
+    "line": "291",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -327616,7 +327714,7 @@
   {
     "name": "ConfigurationFileDiscovererFixture__DiscovererShallReturnEmptyIfNothingExists",
     "file": "score/mw/log/configuration/configuration_file_discoverer_test.cpp",
-    "line": "353",
+    "line": "315",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -327630,7 +327728,7 @@
   {
     "name": "ConfigurationFileDiscovererFixture__DiscovererShallReturnEmptyIfExecPathFails",
     "file": "score/mw/log/configuration/configuration_file_discoverer_test.cpp",
-    "line": "366",
+    "line": "328",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -327770,7 +327868,7 @@
   {
     "name": "TargetConfigReaderFixture__NoConfigFilesShallFail",
     "file": "score/mw/log/configuration/target_config_reader_test.cpp",
-    "line": "155",
+    "line": "151",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -327784,7 +327882,7 @@
   {
     "name": "TargetConfigReaderFixture__ConfigReaderShallParseEcuIdFromEcuConfig",
     "file": "score/mw/log/configuration/target_config_reader_test.cpp",
-    "line": "170",
+    "line": "166",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -327798,7 +327896,7 @@
   {
     "name": "TargetConfigReaderFixture__ConfigReaderShallParseAppIdFromAppConfig",
     "file": "score/mw/log/configuration/target_config_reader_test.cpp",
-    "line": "184",
+    "line": "180",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -327810,23 +327908,9 @@
     "FullyVerifies": null
   },
   {
-    "name": "TargetConfigReaderFixture__ConfigReaderShallRejectNonUppercaseIdentifiers",
-    "file": "score/mw/log/configuration/target_config_reader_test.cpp",
-    "line": "198",
-    "result": "passed",
-    "repo_name": "local_repo",
-    "hash": "",
-    "url": "",
-    "TestType": "requirements-based",
-    "DerivationTechnique": "requirements-analysis",
-    "result_text": "",
-    "PartiallyVerifies": "comp_req__log__cfg_log_ecu_id, comp_req__log__cfg_log_app_id",
-    "FullyVerifies": null
-  },
-  {
     "name": "TargetConfigReaderFixture__ConfigReaderShallParseLogLevelFromAppConfig",
     "file": "score/mw/log/configuration/target_config_reader_test.cpp",
-    "line": "217",
+    "line": "194",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -327840,7 +327924,7 @@
   {
     "name": "TargetConfigReaderFixture__ConfigReaderShallParseLogModeFromAppConfig",
     "file": "score/mw/log/configuration/target_config_reader_test.cpp",
-    "line": "232",
+    "line": "209",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -327854,7 +327938,7 @@
   {
     "name": "TargetConfigReaderFixture__ConfigReaderShallParseAppDescriptionFromAppConfig",
     "file": "score/mw/log/configuration/target_config_reader_test.cpp",
-    "line": "246",
+    "line": "223",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -327868,7 +327952,7 @@
   {
     "name": "TargetConfigReaderFixture__ConfigReaderShallParseBufferOverwriteOnFullStatusFromAppConfig",
     "file": "score/mw/log/configuration/target_config_reader_test.cpp",
-    "line": "258",
+    "line": "235",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -327882,7 +327966,7 @@
   {
     "name": "TargetConfigReaderFixture__ConfigReaderShallParseStackBufferSizeFromEcuConfig",
     "file": "score/mw/log/configuration/target_config_reader_test.cpp",
-    "line": "271",
+    "line": "248",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -327896,7 +327980,7 @@
   {
     "name": "TargetConfigReaderFixture__ConfigReaderShallParseRingBufferSizeFromEcuConfig",
     "file": "score/mw/log/configuration/target_config_reader_test.cpp",
-    "line": "286",
+    "line": "263",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -327910,7 +327994,7 @@
   {
     "name": "TargetConfigReaderFixture__ConfigReaderShallParseLogLevelConsoleFromEcuConfig",
     "file": "score/mw/log/configuration/target_config_reader_test.cpp",
-    "line": "301",
+    "line": "278",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -327924,7 +328008,7 @@
   {
     "name": "TargetConfigReaderFixture__ConfigReaderShallParseLogFilePathFromAppConfig",
     "file": "score/mw/log/configuration/target_config_reader_test.cpp",
-    "line": "314",
+    "line": "291",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -327938,7 +328022,7 @@
   {
     "name": "TargetConfigReaderFixture__ConfigReaderShallParseContextLogLevelFromEcuAndAppConfig",
     "file": "score/mw/log/configuration/target_config_reader_test.cpp",
-    "line": "329",
+    "line": "306",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -327952,7 +328036,7 @@
   {
     "name": "TargetConfigReaderFixture__ConfigReaderShallParseNumberOfSlots",
     "file": "score/mw/log/configuration/target_config_reader_test.cpp",
-    "line": "344",
+    "line": "321",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -327966,7 +328050,7 @@
   {
     "name": "TargetConfigReaderFixture__ConfigReaderShallParseSlotSizeBytes",
     "file": "score/mw/log/configuration/target_config_reader_test.cpp",
-    "line": "357",
+    "line": "334",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -327980,7 +328064,7 @@
   {
     "name": "TargetConfigReaderFixture__ConfigReaderShallParseDynamicDatarouterIdentifiers",
     "file": "score/mw/log/configuration/target_config_reader_test.cpp",
-    "line": "370",
+    "line": "347",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -327994,7 +328078,7 @@
   {
     "name": "TargetConfigReaderFixture__ConfigReaderShallParseDataRouterUid",
     "file": "score/mw/log/configuration/target_config_reader_test.cpp",
-    "line": "382",
+    "line": "359",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -328008,7 +328092,7 @@
   {
     "name": "TargetConfigReaderFixture__AppConfigSyntaxErrorShallFallbackToEcuConfig",
     "file": "score/mw/log/configuration/target_config_reader_test.cpp",
-    "line": "393",
+    "line": "370",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -328022,7 +328106,7 @@
   {
     "name": "TargetConfigReaderFixture__WrongStructureConfigFileShallCauseDefaultAppId",
     "file": "score/mw/log/configuration/target_config_reader_test.cpp",
-    "line": "412",
+    "line": "389",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -328036,7 +328120,7 @@
   {
     "name": "TargetConfigReaderFixture__WrongLogLevelValueShallFallbackToEcuConfig",
     "file": "score/mw/log/configuration/target_config_reader_test.cpp",
-    "line": "429",
+    "line": "406",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -328050,7 +328134,7 @@
   {
     "name": "TargetConfigReaderFixture__AppConfigInvalidLogLevelFallbackToEcuConfig",
     "file": "score/mw/log/configuration/target_config_reader_test.cpp",
-    "line": "448",
+    "line": "425",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -328064,7 +328148,7 @@
   {
     "name": "TargetConfigReaderFixture__AppConfigInvalidLogModeFallbackToEcuConfig",
     "file": "score/mw/log/configuration/target_config_reader_test.cpp",
-    "line": "467",
+    "line": "444",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -328078,7 +328162,7 @@
   {
     "name": "TargetConfigReaderFixture__AppConfigInvalidContextConfigFallbackToEcuConfig",
     "file": "score/mw/log/configuration/target_config_reader_test.cpp",
-    "line": "486",
+    "line": "463",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -328092,7 +328176,7 @@
   {
     "name": "TargetConfigReaderFixture__WrongEntriesToContextConfigslShallReturnEmptyContextLogLevel",
     "file": "score/mw/log/configuration/target_config_reader_test.cpp",
-    "line": "505",
+    "line": "482",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -328106,7 +328190,7 @@
   {
     "name": "TargetConfigReaderFixture__WhenInvalidFilePathReaderShallReturnDefaultAppId",
     "file": "score/mw/log/configuration/target_config_reader_test.cpp",
-    "line": "521",
+    "line": "498",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -328120,7 +328204,7 @@
   {
     "name": "TargetConfigReaderFixture__EmptyConfigFileShallCauseDefaultAppId",
     "file": "score/mw/log/configuration/target_config_reader_test.cpp",
-    "line": "540",
+    "line": "517",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -328134,7 +328218,7 @@
   {
     "name": "TargetConfigReaderFixture__ConfigReaderShallFallBackToContextLogLevelDefaultWhenNoValidValueInConfigurationFiles",
     "file": "score/mw/log/configuration/target_config_reader_test.cpp",
-    "line": "559",
+    "line": "536",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",

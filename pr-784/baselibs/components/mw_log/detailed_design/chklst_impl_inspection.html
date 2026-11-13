@@ -512,7 +512,7 @@
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <div class="need_container docutils container" id="SNCB-3f16c14f">
+  <div class="need_container docutils container" id="SNCB-7b8f6f9c">
 <div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_document table" id="doc__log_impl_inspection">
 <tbody>
 <tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
@@ -619,10 +619,21 @@ outside <code class="docutils literal notranslate"><span class="pre">score/mw/lo
 <td><p>Is the implementation according to specification?</p></td>
 <td><p>Check if the linked component requirements are fulfilled
 and detailed design also matches architecture description.</p></td>
-<td><p>yes</p></td>
-<td><p>Checked: 75 existing test cases are linked to 14 of the 18 component
+<td><p>no</p></td>
+<td><p>Checked: 72 existing test cases are linked to 14 of the 18 component
 requirements. The requirement-to-test traceability is shown in
 <a class="reference internal" href="../../../../verification_report/requirements_statistics.html"><span class="doc">Component Requirements Statistics</span></a>.</p>
+<p>Following issues need to be addressed:</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="../requirements/index.html#comp_req__log__cfg_file_loc" title="comp_req__log__cfg_file_loc"><em class="xref need">Logging Configuration File ... (comp_req__log__cfg_file_loc)</em></a> is not fulfilled.
+<code class="docutils literal notranslate"><span class="pre">ConfigurationFileDiscoverer</span></code> searches
+<code class="docutils literal notranslate"><span class="pre">&lt;binary</span> <span class="pre">path&gt;/../etc/logging.json</span></code> before <code class="docutils literal notranslate"><span class="pre">&lt;cwd&gt;/etc/logging.json</span></code>
+and <code class="docutils literal notranslate"><span class="pre">&lt;cwd&gt;/logging.json</span></code>, the requirement places it last.</p></li>
+<li><p><a class="reference internal" href="../requirements/index.html#comp_req__log__cfg_log_ecu_id" title="comp_req__log__cfg_log_ecu_id"><em class="xref need">Logging Configuration Log E... (comp_req__log__cfg_log_ecu_id)</em></a> and
+<a class="reference internal" href="../requirements/index.html#comp_req__log__cfg_log_app_id" title="comp_req__log__cfg_log_app_id"><em class="xref need">Logging Configuration Log A... (comp_req__log__cfg_log_app_id)</em></a> are not fulfilled.
+<code class="docutils literal notranslate"><span class="pre">TargetConfigReader</span></code> accepts any string as ECU and application ID
+and does not check for 4 uppercase ASCII characters.</p></li>
+</ul>
 <p>Deviations:</p>
 <ul class="simple">
 <li><p><a class="reference internal" href="../requirements/index.html#comp_req__log__system_logger" title="comp_req__log__system_logger"><em class="xref need">System Logger Backend (comp_req__log__system_logger)</em></a> is QNX only, the slog backend is
@@ -637,7 +648,7 @@ in <code class="docutils literal notranslate"><span class="pre">score_docs_as_co
 their Rust tests either.</p></li>
 </ul>
 </td>
-<td></td>
+<td><p>To be added</p></td>
 </tr>
 <tr class="row-even"><td><p>IMPL_01_03</p></td>
 <td><p>Are the design decisions and constraints documented?</p></td>
@@ -653,7 +664,7 @@ queued slots) are expressed by the expectations of the unit tests.</p></td>
 <td><p>Are all external libraries used by the component specified in the detailed design?</p></td>
 <td><p>Check the automated dependency analysis.
 Also make sure ASIL rated units also only use ASIL rated libraries.</p></td>
-<td><p>no</p></td>
+<td><p>yes</p></td>
 <td><p>Dependency and FFI metadata are maintained in Bazel. The external
 libraries are listed in <a class="reference internal" href="external_libraries.html"><span class="doc">External Libraries</span></a>, generated with:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">bazel</span> <span class="n">query</span> <span class="s2">"kind('.*_library|rust_proc_macro',</span>
@@ -705,11 +716,23 @@ Resolve the gap with unit tests or justify it by this scope.</p>
 <tr class="row-odd"><td><p>IMPL_02_02</p></td>
 <td><p>Do manual checks, that are derived from the coding guideline, find no safety critical error?</p></td>
 <td><p>Check this for the programming language used (e.g. C++ &lt;link_to_checks_list&gt;, Rust &lt;link_to_checks_list&gt;)</p></td>
-<td><p>yes</p></td>
-<td><p>Manual checks were done with a code review and against the <a class="reference external" href="https://eclipse-score.github.io/score/main/contribute/development/cpp/coding_guidelines.html">C++ guideline</a>.
-The findings of the review (dangling reference in <code class="docutils literal notranslate"><span class="pre">SlotDrainer</span></code>, slot
-limit per cycle, double console recorder, different behavior of the
-<code class="docutils literal notranslate"><span class="pre">CreateFromConfiguration</span></code> overloads) were fixed.</p>
+<td><p>no</p></td>
+<td><p>Manual checks were done with a code review and against the <a class="reference external" href="https://eclipse-score.github.io/score/main/contribute/development/cpp/coding_guidelines.html">C++ guideline</a>.</p>
+<p>Following issues need to be addressed:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">SlotDrainer::current_slot_</span></code> refers to the queue element that is
+removed by <code class="docutils literal notranslate"><span class="pre">pop_front()</span></code>. A later <code class="docutils literal notranslate"><span class="pre">PushBack()</span></code> can overwrite it,
+so the wrong slot is released.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">SlotDrainer</span></code> processes one slot more than
+<code class="docutils literal notranslate"><span class="pre">limit_slots_in_one_cycle_</span></code> per drain cycle.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">RegistryAwareRecorderFactory</span></code> creates a second console recorder if
+an unavailable log mode triggers the console fallback before
+<code class="docutils literal notranslate"><span class="pre">kConsole</span></code> is processed.</p></li>
+<li><p>The <code class="docutils literal notranslate"><span class="pre">CreateFromConfiguration</span></code> overloads behave differently. The
+overload with the config reader creates an <code class="docutils literal notranslate"><span class="pre">EmptyRecorder</span></code> for an
+unavailable log mode and if no log mode is configured. The other
+overload falls back to the console in both cases.</p></li>
+</ul>
 <p>Deviations:</p>
 <ul class="simple">
 <li><p>The coding guideline asks to avoid the prefix <code class="docutils literal notranslate"><span class="pre">I</span></code> for interfaces. The
@@ -717,7 +740,7 @@ limit per cycle, double console recorder, different behavior of the
 <code class="docutils literal notranslate"><span class="pre">IConfigurationFileDiscoverer</span></code> and <code class="docutils literal notranslate"><span class="pre">INvConfig</span></code> use it.</p></li>
 </ul>
 </td>
-<td></td>
+<td><p>To be added</p></td>
 </tr>
 <tr class="row-even"><td><p>IMPL_03_01</p></td>
 <td><p>Do the UID of the interface in component documentation match the implemented interface names of the unit?</p></td>

@@ -525,7 +525,7 @@ target.</p>
 <li><p>The ECU-wide configuration file under <code class="docutils literal notranslate"><span class="pre">/etc/ecu_logging_config.json</span></code>.</p></li>
 <li><p>The environmental config file from the path saved under <code class="docutils literal notranslate"><span class="pre">MW_LOG_CONFIG_FILE</span></code> environmental variable
 or
-The application-specific configuration file under <code class="docutils literal notranslate"><span class="pre">&lt;cwd&gt;/etc/logging.json</span></code>, <code class="docutils literal notranslate"><span class="pre">&lt;cwd&gt;/logging.json</span></code> or <code class="docutils literal notranslate"><span class="pre">&lt;binary</span> <span class="pre">path&gt;/../etc/logging.json</span></code>, the first existing file in this order wins.</p></li>
+The application-specific configuration file under <code class="docutils literal notranslate"><span class="pre">&lt;binary</span> <span class="pre">path&gt;/../etc/logging.json</span></code>, <code class="docutils literal notranslate"><span class="pre">&lt;cwd&gt;/etc/logging.json</span></code> or <code class="docutils literal notranslate"><span class="pre">&lt;cwd&gt;/logging.json</span></code>, the first existing file in this order wins.</p></li>
 </ol>
 <p>In the ECU-wide config file, an attribute called ECUID is made available that shall used
 in the DLT header. The environmental configuration then shall override the ECU-wide configuration. If not defined, the application-specific configuration then shall be applied with the settings from the application developer. In particular, an application identifier (APPID) shall be provided.
@@ -546,7 +546,7 @@ the verbose logging configuration and omit the non-verbose aspect.</p>
 <p class="plantuml">
 <object data="../../../../../_images/plantuml-99fa48440293a38e3d5d5106dcf304a2292d2722.svg" type="image/svg+xml" style="width:619px;height:589px;background:#FFFFFF;"></object></p>
 <figcaption>
-<p><span class="caption-number">Fig. 14 </span><span class="caption-text">Use Case Diagram</span><a class="headerlink" href="#id1" title="Link to this image">#</a></p>
+<p><span class="caption-number">Fig. 13 </span><span class="caption-text">Use Case Diagram</span><a class="headerlink" href="#id1" title="Link to this image">#</a></p>
 </figcaption>
 </figure>
 </section>
@@ -558,9 +558,9 @@ for the <code class="docutils literal notranslate"><span class="pre">Recorder</s
 introduced in this design:</p>
 <figure class="align-default" id="id2">
 <p class="plantuml">
-<object data="../../../../../_images/plantuml-3aa5aeb94eaecd9056087f3333da3828996dc606.svg" type="image/svg+xml" style="width:2495px;height:2041px;background:#FFFFFF;"></object></p>
+<object data="../../../../../_images/plantuml-993423a42caa477d244da22ad4810369f45df574.svg" type="image/svg+xml" style="width:2495px;height:2041px;background:#FFFFFF;"></object></p>
 <figcaption>
-<p><span class="caption-number">Fig. 15 </span><span class="caption-text">Class diagram</span><a class="headerlink" href="#id2" title="Link to this image">#</a></p>
+<p><span class="caption-number">Fig. 14 </span><span class="caption-text">Class diagram</span><a class="headerlink" href="#id2" title="Link to this image">#</a></p>
 </figcaption>
 </figure>
 <p>The design is centered around the <code class="docutils literal notranslate"><span class="pre">RegistryAwareRecorderFactory</span></code> class, the
@@ -602,9 +602,9 @@ file discoverer.</p>
 the user makes the first invokes <code class="docutils literal notranslate"><span class="pre">mw::log</span></code>:</p>
 <figure class="align-default" id="id3">
 <p class="plantuml">
-<object data="../../../../../_images/plantuml-a7754d0de3ac1cb5acd074d24686f0d28bc42c8f.svg" type="image/svg+xml" style="width:2399px;height:1765px;background:#FFFFFF;"></object></p>
+<object data="../../../../../_images/plantuml-e8223e661d6a2309765245c3f2fd1ea7e811d5f8.svg" type="image/svg+xml" style="width:2399px;height:1765px;background:#FFFFFF;"></object></p>
 <figcaption>
-<p><span class="caption-number">Fig. 16 </span><span class="caption-text">Class diagram</span><a class="headerlink" href="#id3" title="Link to this image">#</a></p>
+<p><span class="caption-number">Fig. 15 </span><span class="caption-text">Class diagram</span><a class="headerlink" href="#id3" title="Link to this image">#</a></p>
 </figcaption>
 </figure>
 <p>In the diagram, the user calls <code class="docutils literal notranslate"><span class="pre">mw::log::Error()</span></code> to send the first log message

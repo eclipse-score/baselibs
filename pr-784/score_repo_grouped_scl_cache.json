@@ -4736,9 +4736,27 @@
           "CodeLinks": [],
           "TestLinks": [
             {
-              "name": "JsonWriterDefaultFormattingTest__PrettyPrintsWhenFormattingIsOmitted",
+              "name": "JsonWriterSyncedFileTest__SerializationFailureKeepsTargetUnchanged",
               "file": "score/json/json_writer_test.cpp",
               "line": 255,
+              "need": "comp_req__json__serialization",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "JsonWriterDefaultFormattingTest__PrettyPrintsWhenFormattingIsOmitted",
+              "file": "score/json/json_writer_test.cpp",
+              "line": 280,
+              "need": "comp_req__json__serialization",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "JsonTest__ReadWriteEmptyMemberName",
+              "file": "score/json/json_test.cpp",
+              "line": 69,
               "need": "comp_req__json__serialization",
               "verify_type": "partially",
               "result": "passed",
@@ -4806,6 +4824,15 @@
         "links": {
           "CodeLinks": [],
           "TestLinks": [
+            {
+              "name": "JsonTest__ReadWriteEmptyMemberName",
+              "file": "score/json/json_test.cpp",
+              "line": 69,
+              "need": "comp_req__json__deserialization",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
             {
               "name": "ParserTest__CanParseObjectBool",
               "file": "score/json/json_parser_test.cpp",
@@ -4924,9 +4951,18 @@
               "result_text": ""
             },
             {
+              "name": "ParserTest__CanParseEmptyMemberName",
+              "file": "score/json/json_parser_test.cpp",
+              "line": 561,
+              "need": "comp_req__json__deserialization",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
               "name": "JsonParserVajsonTest__CanParseObjectHexadecimalNumber",
               "file": "score/json/json_parser_test.cpp",
-              "line": 560,
+              "line": 581,
               "need": "comp_req__json__deserialization",
               "verify_type": "partially",
               "result": "passed",
@@ -4935,7 +4971,7 @@
             {
               "name": "JsonParserVajsonTest__CanParseTwoByteBuffer",
               "file": "score/json/json_parser_test.cpp",
-              "line": 610,
+              "line": 631,
               "need": "comp_req__json__deserialization",
               "verify_type": "partially",
               "result": "passed",
@@ -4944,7 +4980,7 @@
             {
               "name": "JsonParserVajsonTest__CanParseBufferWithUtf8Bom",
               "file": "score/json/json_parser_test.cpp",
-              "line": 629,
+              "line": 650,
               "need": "comp_req__json__deserialization",
               "verify_type": "partially",
               "result": "passed",
@@ -4953,7 +4989,7 @@
             {
               "name": "NumberTest__WhenParsingABoolStoredInAJsonThenParsingIsSuccessfulAndCorrectValueIsReturned",
               "file": "score/json/json_parser_test.cpp",
-              "line": 701,
+              "line": 722,
               "need": "comp_req__json__deserialization",
               "verify_type": "partially",
               "result": "passed",
@@ -4962,7 +4998,7 @@
             {
               "name": "NumberTest__WhenParsingAUint8StoredInAJsonThenParsingIsSuccessfulAndCorrectValueIsReturned",
               "file": "score/json/json_parser_test.cpp",
-              "line": 723,
+              "line": 744,
               "need": "comp_req__json__deserialization",
               "verify_type": "partially",
               "result": "passed",
@@ -4971,7 +5007,7 @@
             {
               "name": "NumberTest__WhenParsingAUint16StoredInAJsonThenParsingIsSuccessfulAndCorrectValueIsReturned",
               "file": "score/json/json_parser_test.cpp",
-              "line": 746,
+              "line": 767,
               "need": "comp_req__json__deserialization",
               "verify_type": "partially",
               "result": "passed",
@@ -4980,7 +5016,7 @@
             {
               "name": "NumberTest__WhenParsingAUint32StoredInAJsonThenParsingIsSuccessfulAndCorrectValueIsReturned",
               "file": "score/json/json_parser_test.cpp",
-              "line": 769,
+              "line": 790,
               "need": "comp_req__json__deserialization",
               "verify_type": "partially",
               "result": "passed",
@@ -4989,7 +5025,7 @@
             {
               "name": "NumberTest__WhenParsingAUint64StoredInAJsonThenParsingIsSuccessfulAndCorrectValueIsReturned",
               "file": "score/json/json_parser_test.cpp",
-              "line": 792,
+              "line": 813,
               "need": "comp_req__json__deserialization",
               "verify_type": "partially",
               "result": "passed",
@@ -4998,7 +5034,7 @@
             {
               "name": "NumberTest__WhenParsingAInt8StoredInAJsonThenParsingIsSuccessfulAndCorrectValueIsReturned",
               "file": "score/json/json_parser_test.cpp",
-              "line": 815,
+              "line": 836,
               "need": "comp_req__json__deserialization",
               "verify_type": "partially",
               "result": "passed",
@@ -5007,7 +5043,7 @@
             {
               "name": "NumberTest__WhenParsingAInt16StoredInAJsonThenParsingIsSuccessfulAndCorrectValueIsReturned",
               "file": "score/json/json_parser_test.cpp",
-              "line": 838,
+              "line": 859,
               "need": "comp_req__json__deserialization",
               "verify_type": "partially",
               "result": "passed",
@@ -5016,7 +5052,7 @@
             {
               "name": "NumberTest__WhenParsingAInt32StoredInAJsonThenParsingIsSuccessfulAndCorrectValueIsReturned",
               "file": "score/json/json_parser_test.cpp",
-              "line": 861,
+              "line": 882,
               "need": "comp_req__json__deserialization",
               "verify_type": "partially",
               "result": "passed",
@@ -5025,7 +5061,7 @@
             {
               "name": "NumberTest__WhenParsingAInt64StoredInAJsonThenParsingIsSuccessfulAndCorrectValueIsReturned",
               "file": "score/json/json_parser_test.cpp",
-              "line": 884,
+              "line": 905,
               "need": "comp_req__json__deserialization",
               "verify_type": "partially",
               "result": "passed",
@@ -5034,7 +5070,7 @@
             {
               "name": "NumberTest__WhenParsingAFloatStoredInAJsonThenParsingIsSuccessfulAndCorrectValueIsReturned",
               "file": "score/json/json_parser_test.cpp",
-              "line": 906,
+              "line": 927,
               "need": "comp_req__json__deserialization",
               "verify_type": "partially",
               "result": "passed",
@@ -5043,7 +5079,7 @@
             {
               "name": "NumberTest__WhenParsingADoubleStoredInAJsonThenParsingIsSuccessfulAndCorrectValueIsReturned",
               "file": "score/json/json_parser_test.cpp",
-              "line": 929,
+              "line": 950,
               "need": "comp_req__json__deserialization",
               "verify_type": "partially",
               "result": "passed",
@@ -5204,7 +5240,7 @@
             {
               "name": "ParserTest__EmitsErrorWhenParsingObjectWithDuplicateEscapedMemberName",
               "file": "score/json/json_parser_test.cpp",
-              "line": 526,
+              "line": 527,
               "need": "comp_req__json__duplicate_member_names",
               "verify_type": "partially",
               "result": "passed",
@@ -5213,7 +5249,7 @@
             {
               "name": "ParserTest__CanParseSameMemberNameInDifferentObjects",
               "file": "score/json/json_parser_test.cpp",
-              "line": 541,
+              "line": 542,
               "need": "comp_req__json__duplicate_member_names",
               "verify_type": "partially",
               "result": "passed",
@@ -5319,6 +5355,15 @@
               "result_text": ""
             },
             {
+              "name": "ParserTest/DuplicateMemberNameTest__EmitsErrorWhenParsingObjectWithDuplicateMemberName/EmptyName",
+              "file": "score/json/json_parser_test.cpp",
+              "line": 492,
+              "need": "comp_req__json__duplicate_member_names",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
               "name": "ParserTest/DuplicateMemberNameTest__EmitsErrorWhenParsingObjectWithDuplicateMemberName/InNestedObject",
               "file": "score/json/json_parser_test.cpp",
               "line": 492,
@@ -5332,6 +5377,94 @@
               "file": "score/json/json_parser_test.cpp",
               "line": 492,
               "need": "comp_req__json__duplicate_member_names",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            }
+          ]
+        }
+      },
+      {
+        "need": "comp_req__filesystem__file_io",
+        "links": {
+          "CodeLinks": [],
+          "TestLinks": [
+            {
+              "name": "FileBufTest__DiscardClosesFile",
+              "file": "score/filesystem/filestream/file_buf_test.cpp",
+              "line": 116,
+              "need": "comp_req__filesystem__file_io",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "AtomicFileBufTest__DiscardRemovesTemporaryFileWithoutRename",
+              "file": "score/filesystem/filestream/file_buf_test.cpp",
+              "line": 129,
+              "need": "comp_req__filesystem__file_io",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "AtomicFileBufTest__DiscardReportsCloseFailure",
+              "file": "score/filesystem/filestream/file_buf_test.cpp",
+              "line": 147,
+              "need": "comp_req__filesystem__file_io",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "AtomicFileBufTest__DiscardOnClosedFileDoesNothing",
+              "file": "score/filesystem/filestream/file_buf_test.cpp",
+              "line": 165,
+              "need": "comp_req__filesystem__file_io",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "FileFactoryFailedAtomicUpdateTest__CloseKeepsTargetUnchanged",
+              "file": "score/filesystem/filestream/file_factory_test.cpp",
+              "line": 242,
+              "need": "comp_req__filesystem__file_io",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "FileFactoryFailedAtomicUpdateTest__DestructionKeepsTargetUnchanged",
+              "file": "score/filesystem/filestream/file_factory_test.cpp",
+              "line": 264,
+              "need": "comp_req__filesystem__file_io",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            }
+          ]
+        }
+      },
+      {
+        "need": "comp_req__filesystem__mock_fake",
+        "links": {
+          "CodeLinks": [],
+          "TestLinks": [
+            {
+              "name": "FileFactoryFakeTest__AtomicUpdateOfFailedStreamKeepsContent",
+              "file": "score/filesystem/filestream/file_factory_fake_test.cpp",
+              "line": 53,
+              "need": "comp_req__filesystem__mock_fake",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "FileFactoryFakeTest__AtomicUpdateKeepsContentOfStreamFailingAfterClose",
+              "file": "score/filesystem/filestream/file_factory_fake_test.cpp",
+              "line": 75,
+              "need": "comp_req__filesystem__mock_fake",
               "verify_type": "partially",
               "result": "passed",
               "result_text": ""
@@ -5416,7 +5549,7 @@
             {
               "name": "TargetConfigReaderFixture__ConfigReaderShallParseEcuIdFromEcuConfig",
               "file": "score/mw/log/configuration/target_config_reader_test.cpp",
-              "line": 170,
+              "line": 166,
               "need": "comp_req__log__global_config",
               "verify_type": "partially",
               "result": "passed",
@@ -5458,27 +5591,9 @@
               "result_text": ""
             },
             {
-              "name": "ConfigurationFileDiscovererFixture__DiscovererShallPreferCwdConfigurationFilesOverExecPath",
-              "file": "score/mw/log/configuration/configuration_file_discoverer_test.cpp",
-              "line": 218,
-              "need": "comp_req__log__cfg_file_loc",
-              "verify_type": "partially",
-              "result": "passed",
-              "result_text": ""
-            },
-            {
-              "name": "ConfigurationFileDiscovererFixture__DiscovererShallPreferCwdOverExecPathIfCwdEtcIsMissing",
-              "file": "score/mw/log/configuration/configuration_file_discoverer_test.cpp",
-              "line": 240,
-              "need": "comp_req__log__cfg_file_loc",
-              "verify_type": "partially",
-              "result": "passed",
-              "result_text": ""
-            },
-            {
               "name": "ConfigurationFileDiscovererFixture__DiscovererShallFindConfigurationFileInEnvPath",
               "file": "score/mw/log/configuration/configuration_file_discoverer_test.cpp",
-              "line": 258,
+              "line": 220,
               "need": "comp_req__log__cfg_file_loc",
               "verify_type": "partially",
               "result": "passed",
@@ -5487,7 +5602,7 @@
             {
               "name": "ConfigurationFileDiscovererFixture__DiscovererShallFindConfigurationFileInEnvPathOverrideCwdEtc",
               "file": "score/mw/log/configuration/configuration_file_discoverer_test.cpp",
-              "line": 281,
+              "line": 243,
               "need": "comp_req__log__cfg_file_loc",
               "verify_type": "partially",
               "result": "passed",
@@ -5496,7 +5611,7 @@
             {
               "name": "ConfigurationFileDiscovererFixture__DiscovererShallFindConfigurationFileInEnvPathOverrideCwd",
               "file": "score/mw/log/configuration/configuration_file_discoverer_test.cpp",
-              "line": 305,
+              "line": 267,
               "need": "comp_req__log__cfg_file_loc",
               "verify_type": "partially",
               "result": "passed",
@@ -5505,7 +5620,7 @@
             {
               "name": "ConfigurationFileDiscovererFixture__DiscovererShallFindConfigurationFileInEnvPathOverrideExecPath",
               "file": "score/mw/log/configuration/configuration_file_discoverer_test.cpp",
-              "line": 329,
+              "line": 291,
               "need": "comp_req__log__cfg_file_loc",
               "verify_type": "partially",
               "result": "passed",
@@ -5531,16 +5646,7 @@
             {
               "name": "TargetConfigReaderFixture__ConfigReaderShallParseAppIdFromAppConfig",
               "file": "score/mw/log/configuration/target_config_reader_test.cpp",
-              "line": 184,
-              "need": "comp_req__log__cfg_log_app_id",
-              "verify_type": "partially",
-              "result": "passed",
-              "result_text": ""
-            },
-            {
-              "name": "TargetConfigReaderFixture__ConfigReaderShallRejectNonUppercaseIdentifiers",
-              "file": "score/mw/log/configuration/target_config_reader_test.cpp",
-              "line": 198,
+              "line": 180,
               "need": "comp_req__log__cfg_log_app_id",
               "verify_type": "partially",
               "result": "passed",
@@ -5566,16 +5672,7 @@
             {
               "name": "TargetConfigReaderFixture__ConfigReaderShallParseEcuIdFromEcuConfig",
               "file": "score/mw/log/configuration/target_config_reader_test.cpp",
-              "line": 170,
-              "need": "comp_req__log__cfg_log_ecu_id",
-              "verify_type": "partially",
-              "result": "passed",
-              "result_text": ""
-            },
-            {
-              "name": "TargetConfigReaderFixture__ConfigReaderShallRejectNonUppercaseIdentifiers",
-              "file": "score/mw/log/configuration/target_config_reader_test.cpp",
-              "line": 198,
+              "line": 166,
               "need": "comp_req__log__cfg_log_ecu_id",
               "verify_type": "partially",
               "result": "passed",
@@ -5592,7 +5689,7 @@
             {
               "name": "TargetConfigReaderFixture__ConfigReaderShallParseAppIdFromAppConfig",
               "file": "score/mw/log/configuration/target_config_reader_test.cpp",
-              "line": 184,
+              "line": 180,
               "need": "comp_req__log__cfg_file",
               "verify_type": "partially",
               "result": "passed",
@@ -5601,7 +5698,7 @@
             {
               "name": "TargetConfigReaderFixture__ConfigReaderShallParseLogLevelFromAppConfig",
               "file": "score/mw/log/configuration/target_config_reader_test.cpp",
-              "line": 217,
+              "line": 194,
               "need": "comp_req__log__cfg_file",
               "verify_type": "partially",
               "result": "passed",
@@ -5610,7 +5707,7 @@
             {
               "name": "TargetConfigReaderFixture__ConfigReaderShallParseLogModeFromAppConfig",
               "file": "score/mw/log/configuration/target_config_reader_test.cpp",
-              "line": 232,
+              "line": 209,
               "need": "comp_req__log__cfg_file",
               "verify_type": "partially",
               "result": "passed",
@@ -5627,7 +5724,7 @@
             {
               "name": "TargetConfigReaderFixture__ConfigReaderShallParseAppIdFromAppConfig",
               "file": "score/mw/log/configuration/target_config_reader_test.cpp",
-              "line": 184,
+              "line": 180,
               "need": "comp_req__log__cfg_precedence",
               "verify_type": "partially",
               "result": "passed",
@@ -5636,7 +5733,7 @@
             {
               "name": "TargetConfigReaderFixture__ConfigReaderShallParseContextLogLevelFromEcuAndAppConfig",
               "file": "score/mw/log/configuration/target_config_reader_test.cpp",
-              "line": 329,
+              "line": 306,
               "need": "comp_req__log__cfg_precedence",
               "verify_type": "partially",
               "result": "passed",
@@ -5653,7 +5750,7 @@
             {
               "name": "TargetConfigReaderFixture__ConfigReaderShallParseStackBufferSizeFromEcuConfig",
               "file": "score/mw/log/configuration/target_config_reader_test.cpp",
-              "line": 271,
+              "line": 248,
               "need": "comp_req__log__cfg_buffer_size",
               "verify_type": "partially",
               "result": "passed",
@@ -5662,7 +5759,7 @@
             {
               "name": "TargetConfigReaderFixture__ConfigReaderShallParseRingBufferSizeFromEcuConfig",
               "file": "score/mw/log/configuration/target_config_reader_test.cpp",
-              "line": 286,
+              "line": 263,
               "need": "comp_req__log__cfg_buffer_size",
               "verify_type": "partially",
               "result": "passed",
@@ -5671,7 +5768,7 @@
             {
               "name": "TargetConfigReaderFixture__ConfigReaderShallParseNumberOfSlots",
               "file": "score/mw/log/configuration/target_config_reader_test.cpp",
-              "line": 344,
+              "line": 321,
               "need": "comp_req__log__cfg_buffer_size",
               "verify_type": "partially",
               "result": "passed",
@@ -5680,7 +5777,7 @@
             {
               "name": "TargetConfigReaderFixture__ConfigReaderShallParseSlotSizeBytes",
               "file": "score/mw/log/configuration/target_config_reader_test.cpp",
-              "line": 357,
+              "line": 334,
               "need": "comp_req__log__cfg_buffer_size",
               "verify_type": "partially",
               "result": "passed",
@@ -5697,7 +5794,7 @@
             {
               "name": "TargetConfigReaderFixture__ConfigReaderShallParseLogFilePathFromAppConfig",
               "file": "score/mw/log/configuration/target_config_reader_test.cpp",
-              "line": 314,
+              "line": 291,
               "need": "comp_req__log__cfg_sink_device",
               "verify_type": "partially",
               "result": "passed",
@@ -5714,7 +5811,7 @@
             {
               "name": "TargetConfigReaderFixture__AppConfigSyntaxErrorShallFallbackToEcuConfig",
               "file": "score/mw/log/configuration/target_config_reader_test.cpp",
-              "line": 393,
+              "line": 370,
               "need": "comp_req__log__cfg_syntax_err",
               "verify_type": "partially",
               "result": "passed",
@@ -5731,7 +5828,7 @@
             {
               "name": "TargetConfigReaderFixture__WrongLogLevelValueShallFallbackToEcuConfig",
               "file": "score/mw/log/configuration/target_config_reader_test.cpp",
-              "line": 429,
+              "line": 406,
               "need": "comp_req__log__cfg_invalid",
               "verify_type": "partially",
               "result": "passed",
@@ -5740,7 +5837,7 @@
             {
               "name": "TargetConfigReaderFixture__AppConfigInvalidLogLevelFallbackToEcuConfig",
               "file": "score/mw/log/configuration/target_config_reader_test.cpp",
-              "line": 448,
+              "line": 425,
               "need": "comp_req__log__cfg_invalid",
               "verify_type": "partially",
               "result": "passed",
@@ -5749,7 +5846,7 @@
             {
               "name": "TargetConfigReaderFixture__AppConfigInvalidLogModeFallbackToEcuConfig",
               "file": "score/mw/log/configuration/target_config_reader_test.cpp",
-              "line": 467,
+              "line": 444,
               "need": "comp_req__log__cfg_invalid",
               "verify_type": "partially",
               "result": "passed",
@@ -5758,7 +5855,7 @@
             {
               "name": "TargetConfigReaderFixture__AppConfigInvalidContextConfigFallbackToEcuConfig",
               "file": "score/mw/log/configuration/target_config_reader_test.cpp",
-              "line": 486,
+              "line": 463,
               "need": "comp_req__log__cfg_invalid",
               "verify_type": "partially",
               "result": "passed",
@@ -5775,7 +5872,7 @@
             {
               "name": "TargetConfigReaderFixture__WhenInvalidFilePathReaderShallReturnDefaultAppId",
               "file": "score/mw/log/configuration/target_config_reader_test.cpp",
-              "line": 521,
+              "line": 498,
               "need": "comp_req__log__cfg_defaults",
               "verify_type": "partially",
               "result": "passed",
@@ -5784,7 +5881,7 @@
             {
               "name": "TargetConfigReaderFixture__EmptyConfigFileShallCauseDefaultAppId",
               "file": "score/mw/log/configuration/target_config_reader_test.cpp",
-              "line": 540,
+              "line": 517,
               "need": "comp_req__log__cfg_defaults",
               "verify_type": "partially",
               "result": "passed",
@@ -5793,7 +5890,7 @@
             {
               "name": "TargetConfigReaderFixture__ConfigReaderShallFallBackToContextLogLevelDefaultWhenNoValidValueInConfigurationFiles",
               "file": "score/mw/log/configuration/target_config_reader_test.cpp",
-              "line": 559,
+              "line": 536,
               "need": "comp_req__log__cfg_defaults",
               "verify_type": "partially",
               "result": "passed",

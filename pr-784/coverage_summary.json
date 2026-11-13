@@ -17,7 +17,7 @@
     },
     {
       "branches": {
-        "percent": 95,
+        "percent": 96,
         "total": 270
       },
       "files": {
@@ -63,7 +63,7 @@
     {
       "branches": {
         "percent": 97,
-        "total": 666
+        "total": 672
       },
       "files": {
         "measured": 23,
@@ -71,7 +71,7 @@
       },
       "lines": {
         "percent": 99,
-        "total": 2015
+        "total": 2036
       },
       "primary_need_id": "comp__baselibs_filesystem"
     },
