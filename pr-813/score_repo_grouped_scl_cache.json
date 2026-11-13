@@ -1205,6 +1205,294 @@
               "result_text": ""
             },
             {
+              "name": "ScalarFieldTest__GetFieldReturnsStoredValue",
+              "file": "score/flatbuffers/details/flatbuffers_table_test.cpp",
+              "line": 167,
+              "need": "comp_req__flatbuffers__access",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "ScalarFieldTest__GetFieldReturnsDefaultWhenAbsent",
+              "file": "score/flatbuffers/details/flatbuffers_table_test.cpp",
+              "line": 235,
+              "need": "comp_req__flatbuffers__access",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "ScalarFieldTest__AllAccessorsTreatSkippedSlotInsideVtableAsAbsent",
+              "file": "score/flatbuffers/details/flatbuffers_table_test.cpp",
+              "line": 249,
+              "need": "comp_req__flatbuffers__access",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "ScalarFieldTest__SetFieldWithDefaultWhenAbsentReturnsWhetherValEqualsDefault",
+              "file": "score/flatbuffers/details/flatbuffers_table_test.cpp",
+              "line": 273,
+              "need": "comp_req__flatbuffers__access",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "ScalarFieldTest__SetFieldWithDefaultWhenPresentWritesAndReturnsTrue",
+              "file": "score/flatbuffers/details/flatbuffers_table_test.cpp",
+              "line": 288,
+              "need": "comp_req__flatbuffers__access",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "ScalarFieldTest__SetFieldWithoutDefaultWhenAbsentReturnsFalse",
+              "file": "score/flatbuffers/details/flatbuffers_table_test.cpp",
+              "line": 301,
+              "need": "comp_req__flatbuffers__access",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "ScalarFieldTest__SetFieldWithoutDefaultWhenPresentWritesAndReturnsTrue",
+              "file": "score/flatbuffers/details/flatbuffers_table_test.cpp",
+              "line": 313,
+              "need": "comp_req__flatbuffers__access",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "BuildFullTableTest__WritesEveryFieldWithItsExpectedValue",
+              "file": "score/flatbuffers/details/flatbuffers_table_test.cpp",
+              "line": 181,
+              "need": "comp_req__flatbuffers__access",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "PointerFieldTest__GetPointerReturnsTargetWhenPresent",
+              "file": "score/flatbuffers/details/flatbuffers_table_test.cpp",
+              "line": 329,
+              "need": "comp_req__flatbuffers__access",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "PointerFieldTest__GetPointerReturnsNullWhenAbsent",
+              "file": "score/flatbuffers/details/flatbuffers_table_test.cpp",
+              "line": 349,
+              "need": "comp_req__flatbuffers__access",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "PointerFieldTest__GetAddressOfReturnsFieldAddressWhenPresent",
+              "file": "score/flatbuffers/details/flatbuffers_table_test.cpp",
+              "line": 364,
+              "need": "comp_req__flatbuffers__access",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "PointerFieldTest__GetAddressOfReturnsNullWhenAbsent",
+              "file": "score/flatbuffers/details/flatbuffers_table_test.cpp",
+              "line": 379,
+              "need": "comp_req__flatbuffers__access",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "PointerFieldTest__SetPointerWhenAbsentReturnsFalse",
+              "file": "score/flatbuffers/details/flatbuffers_table_test.cpp",
+              "line": 394,
+              "need": "comp_req__flatbuffers__access",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "PointerFieldTest__SetPointerWhenPresentRetargetsField",
+              "file": "score/flatbuffers/details/flatbuffers_table_test.cpp",
+              "line": 408,
+              "need": "comp_req__flatbuffers__access",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "Pointer64Test__GetPointer64ReturnsTargetWhenPresent",
+              "file": "score/flatbuffers/details/flatbuffers_table_test.cpp",
+              "line": 429,
+              "need": "comp_req__flatbuffers__access",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "Pointer64Test__GetPointer64ReturnsNullWhenAbsent",
+              "file": "score/flatbuffers/details/flatbuffers_table_test.cpp",
+              "line": 450,
+              "need": "comp_req__flatbuffers__access",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "VectorFieldTest__GetVectorPointerOrEmptyReturnsVectorWhenPresent",
+              "file": "score/flatbuffers/details/flatbuffers_table_test.cpp",
+              "line": 469,
+              "need": "comp_req__flatbuffers__access",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "VectorFieldTest__GetVectorPointerOrEmptyReturnsEmptyVectorWhenAbsent",
+              "file": "score/flatbuffers/details/flatbuffers_table_test.cpp",
+              "line": 485,
+              "need": "comp_req__flatbuffers__access",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "VectorFieldTest__GetMutableVectorPointerOrEmptyAllowsMutationWhenPresent",
+              "file": "score/flatbuffers/details/flatbuffers_table_test.cpp",
+              "line": 499,
+              "need": "comp_req__flatbuffers__access",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "VectorFieldTest__GetMutableVectorPointerOrEmptyReturnsEmptyVectorWhenAbsent",
+              "file": "score/flatbuffers/details/flatbuffers_table_test.cpp",
+              "line": 516,
+              "need": "comp_req__flatbuffers__access",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "VectorField64Test__GetVectorPointer64OrEmptyReturnsVectorWhenPresent",
+              "file": "score/flatbuffers/details/flatbuffers_table_test.cpp",
+              "line": 534,
+              "need": "comp_req__flatbuffers__access",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "VectorField64Test__GetVectorPointer64OrEmptyReturnsEmptyVectorWhenAbsent",
+              "file": "score/flatbuffers/details/flatbuffers_table_test.cpp",
+              "line": 549,
+              "need": "comp_req__flatbuffers__access",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "VectorField64Test__GetMutableVectorPointer64OrEmptyAllowsMutationWhenPresent",
+              "file": "score/flatbuffers/details/flatbuffers_table_test.cpp",
+              "line": 563,
+              "need": "comp_req__flatbuffers__access",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "VectorField64Test__GetMutableVectorPointer64OrEmptyReturnsEmptyVectorWhenAbsent",
+              "file": "score/flatbuffers/details/flatbuffers_table_test.cpp",
+              "line": 581,
+              "need": "comp_req__flatbuffers__access",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "StructFieldTest__GetStructReturnsInlineStructWhenPresent",
+              "file": "score/flatbuffers/details/flatbuffers_table_test.cpp",
+              "line": 599,
+              "need": "comp_req__flatbuffers__access",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "StructFieldTest__GetStructReturnsNullWhenAbsent",
+              "file": "score/flatbuffers/details/flatbuffers_table_test.cpp",
+              "line": 614,
+              "need": "comp_req__flatbuffers__access",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "OptionalFieldTest__GetOptionalGenericReturnsValueWhenPresent",
+              "file": "score/flatbuffers/details/flatbuffers_table_test.cpp",
+              "line": 629,
+              "need": "comp_req__flatbuffers__access",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "OptionalFieldTest__GetOptionalGenericReturnsEmptyWhenAbsent",
+              "file": "score/flatbuffers/details/flatbuffers_table_test.cpp",
+              "line": 643,
+              "need": "comp_req__flatbuffers__access",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "OptionalFieldTest__GetOptionalBoolSpecializationReturnsValueWhenPresent",
+              "file": "score/flatbuffers/details/flatbuffers_table_test.cpp",
+              "line": 656,
+              "need": "comp_req__flatbuffers__access",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "OptionalFieldTest__GetOptionalBoolSpecializationReturnsFalseWhenPresentAndZero",
+              "file": "score/flatbuffers/details/flatbuffers_table_test.cpp",
+              "line": 670,
+              "need": "comp_req__flatbuffers__access",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "OptionalFieldTest__GetOptionalBoolSpecializationReturnsEmptyWhenAbsent",
+              "file": "score/flatbuffers/details/flatbuffers_table_test.cpp",
+              "line": 694,
+              "need": "comp_req__flatbuffers__access",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "CheckFieldTest__ReturnsTrueWhenPresentAndFalseWhenAbsent",
+              "file": "score/flatbuffers/details/flatbuffers_table_test.cpp",
+              "line": 709,
+              "need": "comp_req__flatbuffers__access",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
               "name": "VectorGetTest__Scalars",
               "file": "score/flatbuffers/details/flatbuffers_vector_test.cpp",
               "line": 115,
@@ -1735,36 +2023,9 @@
               "result_text": ""
             },
             {
-              "name": "ScalarFieldTest__GetFieldReturnsStoredValue",
-              "file": "score/flatbuffers/details/flatbuffers_table_test.cpp",
-              "line": 174,
-              "need": "comp_req__flatbuffers__serialization",
-              "verify_type": "partially",
-              "result": "passed",
-              "result_text": ""
-            },
-            {
-              "name": "ScalarFieldTest__BuildFullTableWritesEveryFieldWithItsExpectedValue",
-              "file": "score/flatbuffers/details/flatbuffers_table_test.cpp",
-              "line": 186,
-              "need": "comp_req__flatbuffers__serialization",
-              "verify_type": "partially",
-              "result": "passed",
-              "result_text": ""
-            },
-            {
-              "name": "ScalarFieldTest__GetFieldReturnsDefaultWhenAbsent",
-              "file": "score/flatbuffers/details/flatbuffers_table_test.cpp",
-              "line": 231,
-              "need": "comp_req__flatbuffers__serialization",
-              "verify_type": "partially",
-              "result": "passed",
-              "result_text": ""
-            },
-            {
               "name": "ScalarFieldTest__SetFieldWithDefaultWhenAbsentReturnsWhetherValEqualsDefault",
               "file": "score/flatbuffers/details/flatbuffers_table_test.cpp",
-              "line": 247,
+              "line": 273,
               "need": "comp_req__flatbuffers__serialization",
               "verify_type": "partially",
               "result": "passed",
@@ -1773,7 +2034,7 @@
             {
               "name": "ScalarFieldTest__SetFieldWithDefaultWhenPresentWritesAndReturnsTrue",
               "file": "score/flatbuffers/details/flatbuffers_table_test.cpp",
-              "line": 263,
+              "line": 288,
               "need": "comp_req__flatbuffers__serialization",
               "verify_type": "partially",
               "result": "passed",
@@ -1782,7 +2043,7 @@
             {
               "name": "ScalarFieldTest__SetFieldWithoutDefaultWhenAbsentReturnsFalse",
               "file": "score/flatbuffers/details/flatbuffers_table_test.cpp",
-              "line": 276,
+              "line": 301,
               "need": "comp_req__flatbuffers__serialization",
               "verify_type": "partially",
               "result": "passed",
@@ -1791,43 +2052,7 @@
             {
               "name": "ScalarFieldTest__SetFieldWithoutDefaultWhenPresentWritesAndReturnsTrue",
               "file": "score/flatbuffers/details/flatbuffers_table_test.cpp",
-              "line": 288,
-              "need": "comp_req__flatbuffers__serialization",
-              "verify_type": "partially",
-              "result": "passed",
-              "result_text": ""
-            },
-            {
-              "name": "PointerFieldTest__GetPointerReturnsTargetWhenPresent",
-              "file": "score/flatbuffers/details/flatbuffers_table_test.cpp",
-              "line": 306,
-              "need": "comp_req__flatbuffers__serialization",
-              "verify_type": "partially",
-              "result": "passed",
-              "result_text": ""
-            },
-            {
-              "name": "PointerFieldTest__GetPointerReturnsNullWhenAbsent",
-              "file": "score/flatbuffers/details/flatbuffers_table_test.cpp",
-              "line": 321,
-              "need": "comp_req__flatbuffers__serialization",
-              "verify_type": "partially",
-              "result": "passed",
-              "result_text": ""
-            },
-            {
-              "name": "PointerFieldTest__GetAddressOfReturnsFieldAddressWhenPresent",
-              "file": "score/flatbuffers/details/flatbuffers_table_test.cpp",
-              "line": 336,
-              "need": "comp_req__flatbuffers__serialization",
-              "verify_type": "partially",
-              "result": "passed",
-              "result_text": ""
-            },
-            {
-              "name": "PointerFieldTest__GetAddressOfReturnsNullWhenAbsent",
-              "file": "score/flatbuffers/details/flatbuffers_table_test.cpp",
-              "line": 351,
+              "line": 313,
               "need": "comp_req__flatbuffers__serialization",
               "verify_type": "partially",
               "result": "passed",
@@ -1836,7 +2061,7 @@
             {
               "name": "PointerFieldTest__SetPointerWhenAbsentReturnsFalse",
               "file": "score/flatbuffers/details/flatbuffers_table_test.cpp",
-              "line": 366,
+              "line": 394,
               "need": "comp_req__flatbuffers__serialization",
               "verify_type": "partially",
               "result": "passed",
@@ -1845,43 +2070,7 @@
             {
               "name": "PointerFieldTest__SetPointerWhenPresentRetargetsField",
               "file": "score/flatbuffers/details/flatbuffers_table_test.cpp",
-              "line": 379,
-              "need": "comp_req__flatbuffers__serialization",
-              "verify_type": "partially",
-              "result": "passed",
-              "result_text": ""
-            },
-            {
-              "name": "Pointer64Test__GetPointer64ReturnsTargetWhenPresent",
-              "file": "score/flatbuffers/details/flatbuffers_table_test.cpp",
-              "line": 399,
-              "need": "comp_req__flatbuffers__serialization",
-              "verify_type": "partially",
-              "result": "passed",
-              "result_text": ""
-            },
-            {
-              "name": "Pointer64Test__GetPointer64ReturnsNullWhenAbsent",
-              "file": "score/flatbuffers/details/flatbuffers_table_test.cpp",
-              "line": 420,
-              "need": "comp_req__flatbuffers__serialization",
-              "verify_type": "partially",
-              "result": "passed",
-              "result_text": ""
-            },
-            {
-              "name": "VectorFieldTest__GetVectorPointerOrEmptyReturnsVectorWhenPresent",
-              "file": "score/flatbuffers/details/flatbuffers_table_test.cpp",
-              "line": 441,
-              "need": "comp_req__flatbuffers__serialization",
-              "verify_type": "partially",
-              "result": "passed",
-              "result_text": ""
-            },
-            {
-              "name": "VectorFieldTest__GetVectorPointerOrEmptyReturnsEmptyVectorWhenAbsent",
-              "file": "score/flatbuffers/details/flatbuffers_table_test.cpp",
-              "line": 457,
+              "line": 408,
               "need": "comp_req__flatbuffers__serialization",
               "verify_type": "partially",
               "result": "passed",
@@ -1890,34 +2079,7 @@
             {
               "name": "VectorFieldTest__GetMutableVectorPointerOrEmptyAllowsMutationWhenPresent",
               "file": "score/flatbuffers/details/flatbuffers_table_test.cpp",
-              "line": 471,
-              "need": "comp_req__flatbuffers__serialization",
-              "verify_type": "partially",
-              "result": "passed",
-              "result_text": ""
-            },
-            {
-              "name": "VectorFieldTest__GetMutableVectorPointerOrEmptyReturnsEmptyVectorWhenAbsent",
-              "file": "score/flatbuffers/details/flatbuffers_table_test.cpp",
-              "line": 487,
-              "need": "comp_req__flatbuffers__serialization",
-              "verify_type": "partially",
-              "result": "passed",
-              "result_text": ""
-            },
-            {
-              "name": "VectorField64Test__GetVectorPointer64OrEmptyReturnsVectorWhenPresent",
-              "file": "score/flatbuffers/details/flatbuffers_table_test.cpp",
-              "line": 507,
-              "need": "comp_req__flatbuffers__serialization",
-              "verify_type": "partially",
-              "result": "passed",
-              "result_text": ""
-            },
-            {
-              "name": "VectorField64Test__GetVectorPointer64OrEmptyReturnsEmptyVectorWhenAbsent",
-              "file": "score/flatbuffers/details/flatbuffers_table_test.cpp",
-              "line": 522,
+              "line": 499,
               "need": "comp_req__flatbuffers__serialization",
               "verify_type": "partially",
               "result": "passed",
@@ -1926,214 +2088,7 @@
             {
               "name": "VectorField64Test__GetMutableVectorPointer64OrEmptyAllowsMutationWhenPresent",
               "file": "score/flatbuffers/details/flatbuffers_table_test.cpp",
-              "line": 536,
-              "need": "comp_req__flatbuffers__serialization",
-              "verify_type": "partially",
-              "result": "passed",
-              "result_text": ""
-            },
-            {
-              "name": "VectorField64Test__GetMutableVectorPointer64OrEmptyReturnsEmptyVectorWhenAbsent",
-              "file": "score/flatbuffers/details/flatbuffers_table_test.cpp",
-              "line": 553,
-              "need": "comp_req__flatbuffers__serialization",
-              "verify_type": "partially",
-              "result": "passed",
-              "result_text": ""
-            },
-            {
-              "name": "StructFieldTest__GetStructReturnsInlineStructWhenPresent",
-              "file": "score/flatbuffers/details/flatbuffers_table_test.cpp",
-              "line": 573,
-              "need": "comp_req__flatbuffers__serialization",
-              "verify_type": "partially",
-              "result": "passed",
-              "result_text": ""
-            },
-            {
-              "name": "StructFieldTest__GetStructReturnsNullWhenAbsent",
-              "file": "score/flatbuffers/details/flatbuffers_table_test.cpp",
-              "line": 588,
-              "need": "comp_req__flatbuffers__serialization",
-              "verify_type": "partially",
-              "result": "passed",
-              "result_text": ""
-            },
-            {
-              "name": "OptionalFieldTest__GetOptionalGenericReturnsValueWhenPresent",
-              "file": "score/flatbuffers/details/flatbuffers_table_test.cpp",
-              "line": 605,
-              "need": "comp_req__flatbuffers__serialization",
-              "verify_type": "partially",
-              "result": "passed",
-              "result_text": ""
-            },
-            {
-              "name": "OptionalFieldTest__GetOptionalGenericReturnsEmptyWhenAbsent",
-              "file": "score/flatbuffers/details/flatbuffers_table_test.cpp",
-              "line": 619,
-              "need": "comp_req__flatbuffers__serialization",
-              "verify_type": "partially",
-              "result": "passed",
-              "result_text": ""
-            },
-            {
-              "name": "OptionalFieldTest__GetOptionalBoolSpecializationReturnsValueWhenPresent",
-              "file": "score/flatbuffers/details/flatbuffers_table_test.cpp",
-              "line": 632,
-              "need": "comp_req__flatbuffers__serialization",
-              "verify_type": "partially",
-              "result": "passed",
-              "result_text": ""
-            },
-            {
-              "name": "OptionalFieldTest__GetOptionalBoolSpecializationReturnsFalseWhenPresentAndZero",
-              "file": "score/flatbuffers/details/flatbuffers_table_test.cpp",
-              "line": 646,
-              "need": "comp_req__flatbuffers__serialization",
-              "verify_type": "partially",
-              "result": "passed",
-              "result_text": ""
-            },
-            {
-              "name": "OptionalFieldTest__GetOptionalBoolSpecializationReturnsEmptyWhenAbsent",
-              "file": "score/flatbuffers/details/flatbuffers_table_test.cpp",
-              "line": 671,
-              "need": "comp_req__flatbuffers__serialization",
-              "verify_type": "partially",
-              "result": "passed",
-              "result_text": ""
-            },
-            {
-              "name": "CheckFieldTest__ReturnsTrueWhenPresentAndFalseWhenAbsent",
-              "file": "score/flatbuffers/details/flatbuffers_table_test.cpp",
-              "line": 688,
-              "need": "comp_req__flatbuffers__serialization",
-              "verify_type": "partially",
-              "result": "passed",
-              "result_text": ""
-            },
-            {
-              "name": "VerifyTest__VerifyTableStartSucceeds",
-              "file": "score/flatbuffers/details/flatbuffers_table_test.cpp",
-              "line": 707,
-              "need": "comp_req__flatbuffers__serialization",
-              "verify_type": "partially",
-              "result": "passed",
-              "result_text": ""
-            },
-            {
-              "name": "VerifyTest__VerifyTableStartFailsForATruncatedBuffer",
-              "file": "score/flatbuffers/details/flatbuffers_table_test.cpp",
-              "line": 720,
-              "need": "comp_req__flatbuffers__serialization",
-              "verify_type": "partially",
-              "result": "passed",
-              "result_text": ""
-            },
-            {
-              "name": "VerifyTest__VerifyFieldShortCircuitsWhenAbsentAndDelegatesWhenPresent",
-              "file": "score/flatbuffers/details/flatbuffers_table_test.cpp",
-              "line": 741,
-              "need": "comp_req__flatbuffers__serialization",
-              "verify_type": "partially",
-              "result": "passed",
-              "result_text": ""
-            },
-            {
-              "name": "VerifyTest__VerifyFieldRequiredFailsWhenAbsentAndSucceedsWhenPresent",
-              "file": "score/flatbuffers/details/flatbuffers_table_test.cpp",
-              "line": 759,
-              "need": "comp_req__flatbuffers__serialization",
-              "verify_type": "partially",
-              "result": "passed",
-              "result_text": ""
-            },
-            {
-              "name": "VerifyTest__VerifyOffsetShortCircuitsWhenAbsentAndDelegatesWhenPresent",
-              "file": "score/flatbuffers/details/flatbuffers_table_test.cpp",
-              "line": 774,
-              "need": "comp_req__flatbuffers__serialization",
-              "verify_type": "partially",
-              "result": "passed",
-              "result_text": ""
-            },
-            {
-              "name": "VerifyTest__VerifyOffsetRequiredFailsWhenAbsentAndSucceedsWhenPresent",
-              "file": "score/flatbuffers/details/flatbuffers_table_test.cpp",
-              "line": 792,
-              "need": "comp_req__flatbuffers__serialization",
-              "verify_type": "partially",
-              "result": "passed",
-              "result_text": ""
-            },
-            {
-              "name": "VerifyTest__VerifyOffset64AndRequiredSucceedForA64BitOffsetField",
-              "file": "score/flatbuffers/details/flatbuffers_table_test.cpp",
-              "line": 807,
-              "need": "comp_req__flatbuffers__serialization",
-              "verify_type": "partially",
-              "result": "passed",
-              "result_text": ""
-            },
-            {
-              "name": "VerifyTest__VerifyOffset64FamilyFailsWhenAbsentOrOutOfBounds",
-              "file": "score/flatbuffers/details/flatbuffers_table_test.cpp",
-              "line": 823,
-              "need": "comp_req__flatbuffers__serialization",
-              "verify_type": "partially",
-              "result": "passed",
-              "result_text": ""
-            },
-            {
-              "name": "VerifyTest__VerifyStringWithDefaultHandlesAbsentAndPresentFields",
-              "file": "score/flatbuffers/details/flatbuffers_table_test.cpp",
-              "line": 856,
-              "need": "comp_req__flatbuffers__serialization",
-              "verify_type": "partially",
-              "result": "passed",
-              "result_text": ""
-            },
-            {
-              "name": "VerifyTest__VerifyVectorWithDefaultHandlesAbsentAndPresentFields",
-              "file": "score/flatbuffers/details/flatbuffers_table_test.cpp",
-              "line": 873,
-              "need": "comp_req__flatbuffers__serialization",
-              "verify_type": "partially",
-              "result": "passed",
-              "result_text": ""
-            },
-            {
-              "name": "VerifyTest__VerifyVector64WithDefaultSucceedsForA64BitVectorField",
-              "file": "score/flatbuffers/details/flatbuffers_table_test.cpp",
-              "line": 890,
-              "need": "comp_req__flatbuffers__serialization",
-              "verify_type": "partially",
-              "result": "passed",
-              "result_text": ""
-            },
-            {
-              "name": "VerifyTest__VerifyFieldAndVerifyFieldRequiredFailWhenAlignmentCannotBeSatisfied",
-              "file": "score/flatbuffers/details/flatbuffers_table_test.cpp",
-              "line": 905,
-              "need": "comp_req__flatbuffers__serialization",
-              "verify_type": "partially",
-              "result": "passed",
-              "result_text": ""
-            },
-            {
-              "name": "VerifyTest__VerifyOffsetFamilyFailWhenTargetIsOutOfBounds",
-              "file": "score/flatbuffers/details/flatbuffers_table_test.cpp",
-              "line": 923,
-              "need": "comp_req__flatbuffers__serialization",
-              "verify_type": "partially",
-              "result": "passed",
-              "result_text": ""
-            },
-            {
-              "name": "VerifyTest__VerifyVectorWithDefaultFamilyFailsWhenTargetIsOutOfBounds",
-              "file": "score/flatbuffers/details/flatbuffers_table_test.cpp",
-              "line": 948,
+              "line": 563,
               "need": "comp_req__flatbuffers__serialization",
               "verify_type": "partially",
               "result": "passed",
@@ -2315,6 +2270,140 @@
               "file": "score/flatbuffers/details/flatbuffers_allocator_test.cpp",
               "line": 285,
               "need": "comp_req__flatbuffers__serialization",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            }
+          ]
+        }
+      },
+      {
+        "need": "comp_req__flatbuffers__verification",
+        "links": {
+          "CodeLinks": [],
+          "TestLinks": [
+            {
+              "name": "VerifyTest__VerifyTableStartSucceeds",
+              "file": "score/flatbuffers/details/flatbuffers_table_test.cpp",
+              "line": 725,
+              "need": "comp_req__flatbuffers__verification",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "VerifyTest__VerifyTableStartFailsForATruncatedBuffer",
+              "file": "score/flatbuffers/details/flatbuffers_table_test.cpp",
+              "line": 738,
+              "need": "comp_req__flatbuffers__verification",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "VerifyTest__VerifyFieldShortCircuitsWhenAbsentAndDelegatesWhenPresent",
+              "file": "score/flatbuffers/details/flatbuffers_table_test.cpp",
+              "line": 755,
+              "need": "comp_req__flatbuffers__verification",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "VerifyTest__VerifyFieldRequiredFailsWhenAbsentAndSucceedsWhenPresent",
+              "file": "score/flatbuffers/details/flatbuffers_table_test.cpp",
+              "line": 773,
+              "need": "comp_req__flatbuffers__verification",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "VerifyTest__VerifyOffsetShortCircuitsWhenAbsentAndDelegatesWhenPresent",
+              "file": "score/flatbuffers/details/flatbuffers_table_test.cpp",
+              "line": 788,
+              "need": "comp_req__flatbuffers__verification",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "VerifyTest__VerifyOffsetRequiredFailsWhenAbsentAndSucceedsWhenPresent",
+              "file": "score/flatbuffers/details/flatbuffers_table_test.cpp",
+              "line": 806,
+              "need": "comp_req__flatbuffers__verification",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "VerifyTest__VerifyOffset64AndRequiredSucceedForA64BitOffsetField",
+              "file": "score/flatbuffers/details/flatbuffers_table_test.cpp",
+              "line": 821,
+              "need": "comp_req__flatbuffers__verification",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "VerifyTest__VerifyOffset64FamilyFailsWhenAbsentOrOutOfBounds",
+              "file": "score/flatbuffers/details/flatbuffers_table_test.cpp",
+              "line": 837,
+              "need": "comp_req__flatbuffers__verification",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "VerifyTest__VerifyStringWithDefaultHandlesAbsentAndPresentFields",
+              "file": "score/flatbuffers/details/flatbuffers_table_test.cpp",
+              "line": 864,
+              "need": "comp_req__flatbuffers__verification",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "VerifyTest__VerifyVectorWithDefaultHandlesAbsentAndPresentFields",
+              "file": "score/flatbuffers/details/flatbuffers_table_test.cpp",
+              "line": 880,
+              "need": "comp_req__flatbuffers__verification",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "VerifyTest__VerifyVector64WithDefaultSucceedsForA64BitVectorField",
+              "file": "score/flatbuffers/details/flatbuffers_table_test.cpp",
+              "line": 896,
+              "need": "comp_req__flatbuffers__verification",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "VerifyTest__VerifyFieldAndVerifyFieldRequiredFailWhenAlignmentCannotBeSatisfied",
+              "file": "score/flatbuffers/details/flatbuffers_table_test.cpp",
+              "line": 911,
+              "need": "comp_req__flatbuffers__verification",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "VerifyTest__VerifyOffsetFamilyFailWhenTargetIsOutOfBounds",
+              "file": "score/flatbuffers/details/flatbuffers_table_test.cpp",
+              "line": 933,
+              "need": "comp_req__flatbuffers__verification",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "VerifyTest__VerifyVectorWithDefaultFamilyFailsWhenTargetIsOutOfBounds",
+              "file": "score/flatbuffers/details/flatbuffers_table_test.cpp",
+              "line": 954,
+              "need": "comp_req__flatbuffers__verification",
               "verify_type": "partially",
               "result": "passed",
               "result_text": ""
