@@ -136,6 +136,8 @@ generate_cpp = rule(
             doc = "Automatically included buffer_version.fbs for common buffer version support.",
         ),
     },
+
+    # req-Id: logic_arc_int_op__flatbuffers__generatedcode
     doc = """Generates a C++ header file from a FlatBuffer schema (.fbs) file.
 
     This rule uses the flatc compiler from the @flatbuffers repository with
