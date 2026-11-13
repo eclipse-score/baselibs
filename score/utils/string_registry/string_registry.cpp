@@ -16,51 +16,50 @@
 namespace score::utils::string_registry
 {
 
-// This insert should be used for inserting compile time string literals into the registry.
-std::pair<Registry_string_view, bool> String_registry::insert(const std::string_view new_string,
-                                                              Literal_tag /*is_static_string_literal*/) noexcept
+// This Insert should be used for inserting compile time string literals into the registry.
+std::pair<RegistryStringView, bool> StringRegistry::Insert(const std::string_view new_string,
+                                                           LiteralTag /*is_static_string_literal*/) noexcept
 {
-    const std::lock_guard<std::mutex> locked{m_mutex};
+    const std::lock_guard<std::mutex> locked{mutex_};
 
     // emplace will already search for previously existing entry
-    const auto registered_string = m_registered_strings.emplace(new_string);
-    return std::pair<Registry_string_view, bool>{Registry_string_view{*registered_string.first},
-                                                 registered_string.second};
+    const auto registered_string = registered_strings_.emplace(new_string);
+    return std::pair<RegistryStringView, bool>{RegistryStringView{*registered_string.first}, registered_string.second};
 }
 
-std::pair<Registry_string_view, bool>
+std::pair<RegistryStringView, bool>
 // NOLINTNEXTLINE(bugprone-exception-escape): All exceptions are either handled or left unhandled as
 // a design decision.
-String_registry::insert(const std::string_view new_string) noexcept
+StringRegistry::Insert(const std::string_view new_string) noexcept
 {
-    const std::lock_guard<std::mutex> locked{m_mutex};
+    const std::lock_guard<std::mutex> locked{mutex_};
 
-    const auto iter = m_registered_strings.find(new_string);
-    if (iter == m_registered_strings.end())
+    const auto iter = registered_strings_.find(new_string);
+    if (iter == registered_strings_.end())
     {
-        auto& inserted_string = m_dynamic_allocated.emplace_front(new_string);
-        const auto registered_string = m_registered_strings.insert(inserted_string);
-        return std::pair<Registry_string_view, bool>{Registry_string_view{*registered_string.first},
-                                                     registered_string.second};
+        auto& inserted_string = dynamic_allocated_.emplace_front(new_string);
+        const auto registered_string = registered_strings_.insert(inserted_string);
+        return std::pair<RegistryStringView, bool>{RegistryStringView{*registered_string.first},
+                                                   registered_string.second};
     }
 
-    return std::pair<Registry_string_view, bool>{Registry_string_view{*iter}, false};
+    return std::pair<RegistryStringView, bool>{RegistryStringView{*iter}, false};
 }
 
-std::pair<Registry_string_view, bool> String_registry::insert(std::string&& new_string) noexcept
+std::pair<RegistryStringView, bool> StringRegistry::Insert(std::string&& new_string) noexcept
 {
-    const std::lock_guard<std::mutex> locked{m_mutex};
+    const std::lock_guard<std::mutex> locked{mutex_};
 
-    const auto iter = m_registered_strings.find(new_string);
-    if (iter == m_registered_strings.end())
+    const auto iter = registered_strings_.find(new_string);
+    if (iter == registered_strings_.end())
     {
-        auto& inserted_string = m_dynamic_allocated.emplace_front(std::move(new_string));
-        const auto registered_string = m_registered_strings.insert(inserted_string);
-        return std::pair<Registry_string_view, bool>{Registry_string_view{*registered_string.first},
-                                                     registered_string.second};
+        auto& inserted_string = dynamic_allocated_.emplace_front(std::move(new_string));
+        const auto registered_string = registered_strings_.insert(inserted_string);
+        return std::pair<RegistryStringView, bool>{RegistryStringView{*registered_string.first},
+                                                   registered_string.second};
     }
 
-    return std::pair<Registry_string_view, bool>{Registry_string_view{*iter}, false};
+    return std::pair<RegistryStringView, bool>{RegistryStringView{*iter}, false};
 }
 
 }  // namespace score::utils::string_registry

@@ -21,187 +21,190 @@ namespace score::utils::string_registry
 {
 
 ///
-/// \class Registry_string_view
+/// @class RegistryStringView
 ///
-/// \brief Registry_string_view is an unmodifiable view of a string held in String_registry.
-///        For performance reasons the comparison between instances of Registry_string_view is done
+/// @brief RegistryStringView is an unmodifiable view of a string held in StringRegistry.
+///        For performance reasons the comparison between instances of RegistryStringView is done
 ///        using simple pointer equality check and a check against other String_views is done by
 ///        character comparison.
-///        It is the programmer's responsibility to ensure that Registry_string_view does not
-///        outlive the String_registry it is referring to.
+///        It is the programmer's responsibility to ensure that RegistryStringView does not
+///        outlive the StringRegistry it is referring to.
 ///
-class Registry_string_view final
+class RegistryStringView final
 {
-    friend class String_registry;
+    friend class StringRegistry;
 
   public:
-    using const_pointer = std::string_view::const_pointer;
-    using const_iterator = std::string_view::const_iterator;
-    using difference_type = std::string_view::difference_type;
-    using size_type = std::string_view::size_type;
-    // npos is a constant representing the largest possible value of size_type, because of
+    using ConstPointer = std::string_view::const_pointer;
+    using ConstIterator = std::string_view::const_iterator;
+    using DifferenceType = std::string_view::difference_type;
+    using SizeType = std::string_view::size_type;
+    // npos is a constant representing the largest possible value of SizeType, because of
     // signed-to-unsigned implicit conversion. It is used as an "end of string" or "not found"
     // indicator. More details: https://en.cppreference.com/w/cpp/string/basic_string/npos
-    static constexpr size_type npos = static_cast<size_type>(-1);
+    static constexpr SizeType kNpos{static_cast<SizeType>(-1)};
 
     ///
-    /// \brief Copy constructor (default)
+    /// @brief Copy constructor (default)
     ///
-    constexpr Registry_string_view(const Registry_string_view& other) noexcept = default;
+    constexpr RegistryStringView(const RegistryStringView& other) noexcept = default;
 
     ///
-    /// \brief Move constructor (default)
+    /// @brief Move constructor (default)
     ///
-    constexpr Registry_string_view(Registry_string_view&& other) noexcept = default;
+    constexpr RegistryStringView(RegistryStringView&& other) noexcept = default;
 
     ///
-    /// \brief Destructor (default)
+    /// @brief Destructor (default)
     ///
-    ~Registry_string_view() noexcept = default;
+    ~RegistryStringView() noexcept = default;
 
     ///
-    /// \brief Copy assignment operator (default)
+    /// @brief Copy assignment operator (default)
     ///
-    constexpr Registry_string_view& operator=(const Registry_string_view& view) & noexcept = default;
+    constexpr RegistryStringView& operator=(const RegistryStringView& view) & noexcept = default;
 
     ///
-    /// \brief Move assignment operator (default)
+    /// @brief Move assignment operator (default)
     ///
-    constexpr Registry_string_view& operator=(Registry_string_view&& view) & noexcept = default;
+    constexpr RegistryStringView& operator=(RegistryStringView&& view) & noexcept = default;
 
     ///
-    /// \brief Get string data
+    /// @brief Get string data
     ///
-    [[nodiscard]] constexpr const_pointer data() const noexcept
+    [[nodiscard]] constexpr ConstPointer Data() const noexcept
     {
-        return m_string_view.data();
+        return string_view_.data();
     }
 
     ///
-    /// \brief Get string length
+    /// @brief Get string length
     ///
-    [[nodiscard]] constexpr size_type length() const noexcept
+    [[nodiscard]] constexpr SizeType Length() const noexcept
     {
-        return m_string_view.length();
+        return string_view_.length();
     }
 
     ///
-    /// \brief Get string length
+    /// @brief Get string length
     ///
-    [[nodiscard]] constexpr size_type size() const noexcept
+    [[nodiscard]] constexpr SizeType Size() const noexcept
     {
-        return m_string_view.size();
+        return string_view_.size();
     }
 
     ///
-    /// \brief Get whether the string is empty
+    /// @brief Get whether the string is empty
     ///
-    [[nodiscard]] constexpr bool empty() const noexcept
+    [[nodiscard]] constexpr bool Empty() const noexcept
     {
-        return m_string_view.empty();
+        return string_view_.empty();
     }
 
     ///
-    /// \brief Const iterator to the beginning
+    /// @brief Const iterator to the beginning
     ///
-    [[nodiscard]] constexpr const_iterator begin() const noexcept
+    [[nodiscard]] constexpr ConstIterator Begin() const noexcept
     {
-        return data();
+        return Data();
     }
 
     ///
-    /// \brief Const iterator to the beginning
+    /// @brief Const iterator to the beginning
     ///
-    [[nodiscard]] constexpr const_iterator cbegin() const noexcept
+    [[nodiscard]] constexpr ConstIterator CBegin() const noexcept
     {
-        return data();
+        return Data();
     }
 
     ///
-    /// \brief Iterator to end
+    /// @brief Iterator to end
     ///
-    [[nodiscard]] const_iterator end() const noexcept
+    [[nodiscard]] ConstIterator End() const noexcept
     {
-        return std::next(data(), static_cast<difference_type>(length()));
+        return std::next(Data(), static_cast<DifferenceType>(Length()));
     }
 
     ///
-    /// \brief Const iterator to the end
+    /// @brief Const iterator to the end
     ///
-    [[nodiscard]] const_iterator cend() const noexcept
+    [[nodiscard]] ConstIterator CEnd() const noexcept
     {
-        return std::next(data(), static_cast<difference_type>(length()));
+        return std::next(Data(), static_cast<DifferenceType>(Length()));
     }
 
-    [[nodiscard]] constexpr std::string_view string_view() const noexcept
+    ///
+    /// @brief Get the underlying std::string_view
+    ///
+    [[nodiscard]] constexpr std::string_view StringView() const noexcept
     {
-        return m_string_view;
+        return string_view_;
     }
 
   private:
-    std::string_view m_string_view;
+    std::string_view string_view_;  ///< Underlying view pointing into StringRegistry storage
 
-    explicit constexpr Registry_string_view(std::string_view view) : m_string_view{view} {}
+    explicit constexpr RegistryStringView(std::string_view view) : string_view_{view} {}
 };
 
 ///
-/// \brief operator==
+/// @brief operator==
 ///
-constexpr bool operator==(Registry_string_view lhs, Registry_string_view rhs) noexcept
+constexpr bool operator==(RegistryStringView lhs, RegistryStringView rhs) noexcept
 {
-    return (lhs.data() == rhs.data()) && (lhs.length() == rhs.length());
+    return (lhs.Data() == rhs.Data()) && (lhs.Length() == rhs.Length());
 }
 
 ///
-/// \brief operator!=
+/// @brief operator!=
 ///
-constexpr bool operator!=(Registry_string_view lhs, Registry_string_view rhs) noexcept
+constexpr bool operator!=(RegistryStringView lhs, RegistryStringView rhs) noexcept
 {
     return !(lhs == rhs);
 }
 
 ///
-/// \brief operator<
+/// @brief operator<
 ///
-constexpr bool operator<(Registry_string_view lhs, Registry_string_view rhs) noexcept
+constexpr bool operator<(RegistryStringView lhs, RegistryStringView rhs) noexcept
 {
-    return lhs.string_view() < rhs.string_view();
+    return lhs.StringView() < rhs.StringView();
 }
 
 ///
-/// \brief operator<=
+/// @brief operator<=
 ///
-constexpr bool operator<=(Registry_string_view lhs, Registry_string_view rhs) noexcept
+constexpr bool operator<=(RegistryStringView lhs, RegistryStringView rhs) noexcept
 {
-    return lhs.string_view() <= rhs.string_view();
+    return lhs.StringView() <= rhs.StringView();
 }
 
 ///
-/// \brief operator>
+/// @brief operator>
 ///
-constexpr bool operator>(Registry_string_view lhs, Registry_string_view rhs) noexcept
+constexpr bool operator>(RegistryStringView lhs, RegistryStringView rhs) noexcept
 {
-    return lhs.string_view() > rhs.string_view();
+    return lhs.StringView() > rhs.StringView();
 }
 
 ///
-/// \brief operator>=
+/// @brief operator>=
 ///
-constexpr bool operator>=(Registry_string_view lhs, Registry_string_view rhs) noexcept
+constexpr bool operator>=(RegistryStringView lhs, RegistryStringView rhs) noexcept
 {
-    return lhs.string_view() >= rhs.string_view();
+    return lhs.StringView() >= rhs.StringView();
 }
 
 ///
-/// \brief operator<<
-///        Overload of << to write the string from a Registry_string_view to ostream.
+/// @brief operator<<
+///        Overload of << to write the string from a RegistryStringView to ostream.
 ///
-/// \return Reference to the ostream object used for writing, to enable chaining of << operations
+/// @return Reference to the ostream object used for writing, to enable chaining of << operations
 ///         as usual.
 ///
-inline std::ostream& operator<<(std::ostream& os, Registry_string_view v)
+inline std::ostream& operator<<(std::ostream& os, RegistryStringView v)
 {
-    return os.write(v.data(), static_cast<std::streamsize>(v.length()));
+    return os.write(v.Data(), static_cast<std::streamsize>(v.Length()));
 }
 
 }  // namespace score::utils::string_registry
@@ -209,20 +212,20 @@ inline std::ostream& operator<<(std::ostream& os, Registry_string_view v)
 namespace std
 {
 
-/// \brief std::hash specialization for Registry_string_view
+/// @brief std::hash specialization for RegistryStringView
 ///
-/// \return Hash value for the given Registry_string_view
+/// @return Hash value for the given RegistryStringView
 ///
 template <>
-struct hash<::score::utils::string_registry::Registry_string_view>
+struct hash<::score::utils::string_registry::RegistryStringView>
 {
-    size_t operator()(const ::score::utils::string_registry::Registry_string_view& sv) const noexcept
+    size_t operator()(const ::score::utils::string_registry::RegistryStringView& sv) const noexcept
     {
-        // For the conversion of Registry_string_view data pointer to intptr_t, the reinterpret_cast
+        // For the conversion of RegistryStringView data pointer to intptr_t, the reinterpret_cast
         // is necessary.
-        // Pointer-to-integer conversion is required for memory address hashing in  this case.
+        // Pointer-to-integer conversion is required for memory address hashing in this case.
         // NOLINTNEXTLINE(cppcoreguidelines-pro-type-reinterpret-cast)
-        return std::hash<std::intptr_t>{}(reinterpret_cast<std::intptr_t>(sv.data()));
+        return std::hash<std::intptr_t>{}(reinterpret_cast<std::intptr_t>(sv.Data()));
     }
 };
 

@@ -26,58 +26,59 @@
 namespace score::utils::string_registry
 {
 
-/// \brief Tag to select StringView literal version
-struct Literal_tag
+/// @brief Tag to select the string-literal overload of Insert
+struct LiteralTag
 {
 };
 
 ///
-/// \class String_registry
+/// @class StringRegistry
 ///
-/// \brief A central registry for strings to avoid copying and to facilitate cheap comparison.
+/// @brief A central registry for strings to avoid copying and to facilitate cheap comparison.
 ///
-class String_registry final
+class StringRegistry final
 {
   public:
     ///
-    /// \brief Insert a new StringView literal into the string registry.
+    /// @brief Insert a new StringView literal into the string registry.
     ///
-    /// \param[in]      new_string        String to be added to the registry.
-    /// \param[in]      (no name)         Used only to select StringView literal version of the
+    /// @param[in]      new_string        String to be added to the registry.
+    /// @param[in]      (no name)         Used only to select StringView literal version of the
     /// method.
     ///
-    /// \return String_view of the string in registry and boolean denoting whether the string was
+    /// @return String_view of the string in registry and boolean denoting whether the string was
     ///         newly added (true) or was present already (false).
     ///
-    std::pair<Registry_string_view, bool> insert(std::string_view new_string,
-                                                 Literal_tag /*is_static_string_literal*/) noexcept;
+    std::pair<RegistryStringView, bool> Insert(std::string_view new_string,
+                                               LiteralTag /*is_static_string_literal*/) noexcept;
 
     ///
-    /// \brief Insert a new StringView into the string registry.
+    /// @brief Insert a new StringView into the string registry.
     ///
-    /// \param[in]      new_string        String to be added to the registry.
+    /// @param[in]      new_string        String to be added to the registry.
     ///
-    /// \return String_view of the string in registry and boolean denoting whether the string was
+    /// @return String_view of the string in registry and boolean denoting whether the string was
     ///         newly added (true) or was present already (false).
     ///
     // NOLINTNEXTLINE(bugprone-exception-escape): If exception is thrown it shall be considered as
     // fatal error and std::terminate is desired behavior.
-    std::pair<Registry_string_view, bool> insert(std::string_view new_string) noexcept;
+    std::pair<RegistryStringView, bool> Insert(std::string_view new_string) noexcept;
 
     ///
-    /// \brief Insert a new new std::string into the string registry.
+    /// @brief Insert a new std::string into the string registry.
     ///
-    /// \param[in]      new_string        String to be added to the registry.
+    /// @param[in]      new_string        String to be added to the registry.
     ///
-    /// \return String_view of the string in registry and boolean denoting whether the string was
+    /// @return String_view of the string in registry and boolean denoting whether the string was
     ///         newly added (true) or was present already (false).
     ///
-    std::pair<Registry_string_view, bool> insert(std::string&& new_string) noexcept;
+    std::pair<RegistryStringView, bool> Insert(std::string&& new_string) noexcept;
 
   private:
-    std::unordered_set<std::string_view> m_registered_strings;
-    std::forward_list<std::string> m_dynamic_allocated;
-    std::mutex m_mutex;
+    std::unordered_set<std::string_view>
+        registered_strings_;                            ///< All registered string views, used for deduplication lookups
+    std::forward_list<std::string> dynamic_allocated_;  ///< Backing storage for heap-allocated strings
+    std::mutex mutex_;                                  ///< Guards concurrent access to the registry
 };
 
 }  // namespace score::utils::string_registry

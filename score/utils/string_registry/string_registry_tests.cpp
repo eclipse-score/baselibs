@@ -30,20 +30,20 @@ TEST(StringRegistryTest, InsertMultipleStrings)
                    "Check that inserting the same std::string twice returns false on the second insert and the same "
                    "backing storage.");
 
-    String_registry registry;
+    StringRegistry registry;
 
-    /// Verify the existence of the type score::utils::string_registry::String_registry interface.
-    const auto insert1 = registry.insert(std::string("TestString"));
+    /// Verify the existence of the type score::utils::string_registry::StringRegistry interface.
+    const auto insert1 = registry.Insert(std::string("TestString"));
     /// String from an std::String is added to the registry when it is not there yet.
     EXPECT_TRUE(insert1.second);
     /// StringView of the correct string is returned.
-    EXPECT_TRUE(insert1.first.data() == std::string("TestString"));
+    EXPECT_TRUE(insert1.first.Data() == std::string("TestString"));
 
-    const auto insert2 = registry.insert(std::string("TestString"));
+    const auto insert2 = registry.Insert(std::string("TestString"));
     /// String from an std::String is not added to the registry when it is already there.
     EXPECT_FALSE(insert2.second);
     /// StringView of the correct string is returned.
-    EXPECT_TRUE(insert2.first.data() == std::string("TestString"));
+    EXPECT_TRUE(insert2.first.Data() == std::string("TestString"));
 }
 
 TEST(StringRegistryTest, InsertMultipleStringViews)
@@ -54,28 +54,28 @@ TEST(StringRegistryTest, InsertMultipleStringViews)
     RecordProperty("Description",
                    "Check that inserting equal std::string_views deduplicates to a single backing entry.");
 
-    String_registry registry;
+    StringRegistry registry;
     const std::string_view string_view("TestString");
     const std::string_view second_string_view("TestString");
 
-    const auto insert1 = registry.insert(string_view);
+    const auto insert1 = registry.Insert(string_view);
     /// String from a std::string_view is added to the registry when it is not there yet.
     EXPECT_TRUE(insert1.second);
     /// std::string_view of the correct string is returned.
-    EXPECT_TRUE(insert1.first.string_view() == string_view);
+    EXPECT_TRUE(insert1.first.StringView() == string_view);
 
-    const auto insert2 = registry.insert(string_view);
+    const auto insert2 = registry.Insert(string_view);
     /// String from a std::string_view is not added to registry when it is already there.
     EXPECT_FALSE(insert2.second);
     /// std::string_view of the correct string is returned.
-    EXPECT_TRUE(insert2.first.string_view() == string_view);
+    EXPECT_TRUE(insert2.first.StringView() == string_view);
 
-    const auto insert3 = registry.insert(second_string_view);
+    const auto insert3 = registry.Insert(second_string_view);
     /// String from a different std::string_view is not added to the registry when an identical
     /// string is already there.
     EXPECT_FALSE(insert3.second);
     /// std::string_view of the correct string is returned.
-    EXPECT_TRUE(insert3.first.string_view() == string_view);
+    EXPECT_TRUE(insert3.first.StringView() == string_view);
 }
 
 TEST(StringRegistryTest, InsertMultipleStringViewLiterals)
@@ -84,32 +84,32 @@ TEST(StringRegistryTest, InsertMultipleStringViewLiterals)
     RecordProperty("TestType", "requirements-based");
     RecordProperty("DerivationTechnique", "equivalence-classes");
     RecordProperty("Description",
-                   "Check that Literal_tag insertions of equal string_views deduplicate to a single entry without heap "
+                   "Check that LiteralTag insertions of equal string_views deduplicate to a single entry without heap "
                    "allocation.");
 
-    String_registry registry;
+    StringRegistry registry;
     const std::string_view string_view("TestStringLiteral");
     const std::string_view second_string_view("TestStringLiteral");
 
-    const auto insert1 = registry.insert(string_view, Literal_tag{});
+    const auto insert1 = registry.Insert(string_view, LiteralTag{});
     /// String from a std::string_view literal is added to the registry when it is not there yet.
     EXPECT_TRUE(insert1.second);
     /// std::string_view of the correct string is returned.
-    EXPECT_TRUE(insert1.first.string_view() == string_view);
+    EXPECT_TRUE(insert1.first.StringView() == string_view);
 
-    const auto insert2 = registry.insert(string_view, Literal_tag{});
+    const auto insert2 = registry.Insert(string_view, LiteralTag{});
     /// String from a std::string_view literal is not added to the registry when it is already
     /// there.
     EXPECT_FALSE(insert2.second);
     /// std::string_view of the correct string is returned.
-    EXPECT_TRUE(insert2.first.string_view() == string_view);
+    EXPECT_TRUE(insert2.first.StringView() == string_view);
 
-    const auto insert3 = registry.insert(second_string_view, Literal_tag{});
+    const auto insert3 = registry.Insert(second_string_view, LiteralTag{});
     /// String from a different instance of std::string_view literal is not added to the registry
     /// when an identical string is already there.
     EXPECT_FALSE(insert3.second);
     /// std::string_view of the correct string is returned.
-    EXPECT_TRUE(insert3.first.string_view() == string_view);
+    EXPECT_TRUE(insert3.first.StringView() == string_view);
 }
 
 TEST(StringRegistryTest, EqualStringsFromSeparateAllocationsArePointerIdentical)
@@ -121,18 +121,18 @@ TEST(StringRegistryTest, EqualStringsFromSeparateAllocationsArePointerIdentical)
                    "Check that two independently heap-allocated strings with equal content map to the same backing "
                    "pointer after registry insertion.");
 
-    String_registry registry;
+    StringRegistry registry;
 
     // Two independently heap-allocated strings with equal content
-    const auto [view1, inserted1] = registry.insert(std::string{"Deduplicated"});
+    const auto [view1, inserted1] = registry.Insert(std::string{"Deduplicated"});
     EXPECT_TRUE(inserted1);
 
-    const auto [view2, inserted2] = registry.insert(std::string{"Deduplicated"});
+    const auto [view2, inserted2] = registry.Insert(std::string{"Deduplicated"});
     EXPECT_FALSE(inserted2);
 
     // Registry contract: equal content must map to identical backing storage
     EXPECT_EQ(view1, view2);
-    EXPECT_EQ(view1.data(), view2.data());
+    EXPECT_EQ(view1.Data(), view2.Data());
 }
 
 TEST(StringRegistryTest, StringViewThenStringOverloadYieldPointerIdenticalViews)
@@ -144,18 +144,18 @@ TEST(StringRegistryTest, StringViewThenStringOverloadYieldPointerIdenticalViews)
                    "Check that inserting equal content via the string_view and string&& overloads returns the same "
                    "backing pointer.");
 
-    String_registry registry;
+    StringRegistry registry;
 
     // First insertion via string_view: allocates a copy in the registry
-    const auto [view1, inserted1] = registry.insert(std::string_view{"CrossOverload"});
+    const auto [view1, inserted1] = registry.Insert(std::string_view{"CrossOverload"});
     EXPECT_TRUE(inserted1);
 
     // Second insertion via string&&: must find the existing entry, not create a new allocation
-    const auto [view2, inserted2] = registry.insert(std::string{"CrossOverload"});
+    const auto [view2, inserted2] = registry.Insert(std::string{"CrossOverload"});
     EXPECT_FALSE(inserted2);
 
     EXPECT_EQ(view1, view2);
-    EXPECT_EQ(view1.data(), view2.data());
+    EXPECT_EQ(view1.Data(), view2.Data());
 }
 
 TEST(StringRegistryTest, LiteralThenStringOverloadYieldPointerIdenticalViews)
@@ -165,21 +165,21 @@ TEST(StringRegistryTest, LiteralThenStringOverloadYieldPointerIdenticalViews)
     RecordProperty("DerivationTechnique", "equivalence-classes");
     RecordProperty(
         "Description",
-        "Check that inserting equal content via Literal_tag and string&& overloads returns the same backing pointer.");
+        "Check that inserting equal content via LiteralTag and string&& overloads returns the same backing pointer.");
 
-    String_registry registry;
+    StringRegistry registry;
 
-    // Literal_tag insertion: stores a view directly into static storage — no heap allocation
+    // LiteralTag insertion: stores a view directly into static storage — no heap allocation
     const std::string_view literal{"CrossLiteral"};
-    const auto [view1, inserted1] = registry.insert(literal, Literal_tag{});
+    const auto [view1, inserted1] = registry.Insert(literal, LiteralTag{});
     EXPECT_TRUE(inserted1);
 
     // string&& insertion: must find the existing literal-backed entry
-    const auto [view2, inserted2] = registry.insert(std::string{"CrossLiteral"});
+    const auto [view2, inserted2] = registry.Insert(std::string{"CrossLiteral"});
     EXPECT_FALSE(inserted2);
 
     EXPECT_EQ(view1, view2);
-    EXPECT_EQ(view1.data(), view2.data());
+    EXPECT_EQ(view1.Data(), view2.Data());
 }
 
 TEST(StringRegistryTest, ViewIdentityIsStableAfterRegistryGrowth)
@@ -191,23 +191,23 @@ TEST(StringRegistryTest, ViewIdentityIsStableAfterRegistryGrowth)
         "Description",
         "Check that the backing pointer of a registered string remains stable after the registry grows and rehashes.");
 
-    String_registry registry;
+    StringRegistry registry;
 
-    const auto [view1, inserted1] = registry.insert(std::string{"Stable"});
+    const auto [view1, inserted1] = registry.Insert(std::string{"Stable"});
     EXPECT_TRUE(inserted1);
 
     // Grow the registry to trigger potential unordered_set rehashing
     for (int i = 0; i < 128; ++i)
     {
-        registry.insert(std::string{"Growth"} + std::to_string(i));
+        registry.Insert(std::string{"Growth"} + std::to_string(i));
     }
 
     // The original entry must still be found and return the same backing storage
-    const auto [view2, inserted2] = registry.insert(std::string{"Stable"});
+    const auto [view2, inserted2] = registry.Insert(std::string{"Stable"});
     EXPECT_FALSE(inserted2);
 
     EXPECT_EQ(view1, view2);
-    EXPECT_EQ(view1.data(), view2.data());
+    EXPECT_EQ(view1.Data(), view2.Data());
 }
 
 TEST(StringRegistryTest, SlicedLiteralAndFullStringAreDistinct)
@@ -218,17 +218,17 @@ TEST(StringRegistryTest, SlicedLiteralAndFullStringAreDistinct)
     RecordProperty("Description",
                    "Check that a sliced string_view literal and the full string are treated as distinct entries.");
 
-    String_registry registry;
+    StringRegistry registry;
 
-    // Register only "abc" (first 3 chars of a longer buffer) via Literal_tag
-    const auto insert1 = registry.insert(std::string_view{"abcdef", 3}, Literal_tag{});
+    // Register only "abc" (first 3 chars of a longer buffer) via LiteralTag
+    const auto insert1 = registry.Insert(std::string_view{"abcdef", 3}, LiteralTag{});
     EXPECT_TRUE(insert1.second);
-    EXPECT_EQ(insert1.first.string_view(), std::string_view{"abc"});
+    EXPECT_EQ(insert1.first.StringView(), std::string_view{"abc"});
 
     // Inserting the full 6-char string must NOT return the existing 3-char entry
-    const auto insert2 = registry.insert(std::string{"abcdef"});
+    const auto insert2 = registry.Insert(std::string{"abcdef"});
     EXPECT_TRUE(insert2.second);
-    EXPECT_EQ(insert2.first.string_view(), std::string_view{"abcdef"});
+    EXPECT_EQ(insert2.first.StringView(), std::string_view{"abcdef"});
 }
 
 TEST(StringRegistryTest, EmbeddedNulsAreDistinct)
@@ -240,22 +240,22 @@ TEST(StringRegistryTest, EmbeddedNulsAreDistinct)
                    "Check that strings containing embedded NUL characters are distinct from shorter strings sharing "
                    "the same prefix.");
 
-    String_registry registry;
+    StringRegistry registry;
 
     // Register a 5-char string containing an embedded NUL
-    const auto insert1 = registry.insert(std::string("ab\0cd", 5));
+    const auto insert1 = registry.Insert(std::string("ab\0cd", 5));
     EXPECT_TRUE(insert1.second);
-    EXPECT_EQ(insert1.first.string_view().size(), 5U);
+    EXPECT_EQ(insert1.first.StringView().size(), 5U);
 
     // "ab" (2 chars) must not match "ab\0cd" (5 chars)
-    const auto insert2 = registry.insert(std::string{"ab"});
+    const auto insert2 = registry.Insert(std::string{"ab"});
     EXPECT_TRUE(insert2.second);
-    EXPECT_EQ(insert2.first.string_view().size(), 2U);
+    EXPECT_EQ(insert2.first.StringView().size(), 2U);
 
     // Re-inserting the same 5-char string must find the existing entry
-    const auto insert3 = registry.insert(std::string("ab\0cd", 5));
+    const auto insert3 = registry.Insert(std::string("ab\0cd", 5));
     EXPECT_FALSE(insert3.second);
-    EXPECT_EQ(insert3.first.string_view().size(), 5U);
+    EXPECT_EQ(insert3.first.StringView().size(), 5U);
 }
 
 }  // namespace score::utils::string_registry
