@@ -406,6 +406,7 @@
      aria-label="Section Navigation">
   <p class="bd-links__title" role="heading" aria-level="1">Section Navigation</p>
   <div class="bd-toc-item navbar-nav"><ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../generic_trace_library/index.html">Generic Trace Library</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../bitmanipulation/index.html">bitmanipulation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../concurrency/index.html">concurrency</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../containers/index.html">containers</a></li>
@@ -500,7 +501,7 @@
                   
   <section id="json-component-architecture">
 <h1>JSON Component Architecture<a class="headerlink" href="#json-component-architecture" title="Link to this heading">#</a></h1>
-<div class="need_container docutils container" id="SNCB-dfb6545d">
+<div class="need_container docutils container" id="SNCB-74f82a5c">
 <div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_document table" id="doc__json_architecture">
 <tbody>
 <tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
@@ -558,7 +559,7 @@ It provides currently only a C++ API.</p>
 implementation provided. But generally there is a “Wrapper” and an “Implementation” lower-level component.</p>
 <p>Design Decisions:</p>
 <p>It was decided to use the vaJson parser from Vector (see <a class="reference internal" href="../vajson/index.html#doc__vajson" title="doc__vajson"><em class="xref need">vajson (doc__vajson)</em></a>), which is ASIL D certified.</p>
-<p>JSON writing functionality is provided by the vaJson serializer, which is wrapped by the “Wrapper” component.</p>
+<p>JSON writing is built on the vaJson output formatting and string escaping, and is wrapped by the “Wrapper” component.</p>
 <p>Design Constraints:</p>
 <p>The feature description states that this component provides a “JSON abstraction layer that can switch between different parsers/serializers under the hood.”
 Currently vaJson is the only implementation, for parsing as well as for serialization, so nothing is selectable.</p>
@@ -570,7 +571,7 @@ the main driver is to re-use existing implementation(s) and to allow replacing t
 </section>
 <section id="static-architecture">
 <h2>Static Architecture<a class="headerlink" href="#static-architecture" title="Link to this heading">#</a></h2>
-<div class="need_container docutils container" id="SNCB-e37c4c3b">
+<div class="need_container docutils container" id="SNCB-81a2ce64">
 <div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_comp table" id="comp__baselibs_json">
 <tbody>
 <tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
@@ -621,7 +622,7 @@ the main driver is to re-use existing implementation(s) and to allow replacing t
 </table>
 </div>
 </div>
-<div class="need_container docutils container" id="SNCB-8c324ddc">
+<div class="need_container docutils container" id="SNCB-9c81d488">
 <div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_comp_arc_sta table" id="comp_arc_sta__baselibs__json">
 <tbody>
 <tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
@@ -670,7 +671,7 @@ the main driver is to re-use existing implementation(s) and to allow replacing t
 </section>
 <section id="dynamic-architecture">
 <h2>Dynamic Architecture<a class="headerlink" href="#dynamic-architecture" title="Link to this heading">#</a></h2>
-<div class="need_container docutils container" id="SNCB-5c512b39">
+<div class="need_container docutils container" id="SNCB-5d19388e">
 <div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_comp_arc_dyn table" id="comp_arc_dyn__baselibs__json_dynamic_view">
 <tbody>
 <tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
@@ -717,7 +718,7 @@ the main driver is to re-use existing implementation(s) and to allow replacing t
 </section>
 <section id="interfaces">
 <h2>Interfaces<a class="headerlink" href="#interfaces" title="Link to this heading">#</a></h2>
-<div class="need_container docutils container" id="SNCB-797ab9dc">
+<div class="need_container docutils container" id="SNCB-94f4f085">
 <div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_logic_arc_int_op table" id="logic_arc_int_op__baselibs__parse">
 <tbody>
 <tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
@@ -760,7 +761,7 @@ the main driver is to re-use existing implementation(s) and to allow replacing t
 </table>
 </div>
 </div>
-<div class="need_container docutils container" id="SNCB-0246717a">
+<div class="need_container docutils container" id="SNCB-7d1e8288">
 <div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_logic_arc_int_op table" id="logic_arc_int_op__baselibs__write">
 <tbody>
 <tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
@@ -806,7 +807,7 @@ the main driver is to re-use existing implementation(s) and to allow replacing t
 </section>
 <section id="lower-level-components">
 <h2>Lower Level Components<a class="headerlink" href="#lower-level-components" title="Link to this heading">#</a></h2>
-<div class="need_container docutils container" id="SNCB-4f2004de">
+<div class="need_container docutils container" id="SNCB-c14b27cf">
 <div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_comp table" id="comp__baselibs_json_wrapper">
 <tbody>
 <tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
