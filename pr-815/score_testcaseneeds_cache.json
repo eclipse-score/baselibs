@@ -310900,7 +310900,7 @@
   {
     "name": "JsonTestSuiteCorpusTest__CorpusIsAvailable",
     "file": "score/json/json_test_suite_test.cpp",
-    "line": "161",
+    "line": "179",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -310914,7 +310914,7 @@
   {
     "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/i_number_double_huge_neg_exp",
     "file": "score/json/json_test_suite_test.cpp",
-    "line": "176",
+    "line": "194",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -310928,7 +310928,7 @@
   {
     "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/i_number_huge_exp",
     "file": "score/json/json_test_suite_test.cpp",
-    "line": "176",
+    "line": "194",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -310942,7 +310942,7 @@
   {
     "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/i_number_neg_int_huge_exp",
     "file": "score/json/json_test_suite_test.cpp",
-    "line": "176",
+    "line": "194",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -310956,7 +310956,7 @@
   {
     "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/i_number_pos_double_huge_exp",
     "file": "score/json/json_test_suite_test.cpp",
-    "line": "176",
+    "line": "194",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -310970,7 +310970,7 @@
   {
     "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/i_number_real_neg_overflow",
     "file": "score/json/json_test_suite_test.cpp",
-    "line": "176",
+    "line": "194",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -310984,7 +310984,7 @@
   {
     "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/i_number_real_pos_overflow",
     "file": "score/json/json_test_suite_test.cpp",
-    "line": "176",
+    "line": "194",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -310998,7 +310998,7 @@
   {
     "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/i_number_real_underflow",
     "file": "score/json/json_test_suite_test.cpp",
-    "line": "176",
+    "line": "194",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -311012,7 +311012,7 @@
   {
     "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/i_number_too_big_neg_int",
     "file": "score/json/json_test_suite_test.cpp",
-    "line": "176",
+    "line": "194",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -311026,7 +311026,7 @@
   {
     "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/i_number_too_big_pos_int",
     "file": "score/json/json_test_suite_test.cpp",
-    "line": "176",
+    "line": "194",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -311040,7 +311040,7 @@
   {
     "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/i_number_very_big_negative_int",
     "file": "score/json/json_test_suite_test.cpp",
-    "line": "176",
+    "line": "194",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -311054,7 +311054,7 @@
   {
     "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/i_object_key_lone_2nd_surrogate",
     "file": "score/json/json_test_suite_test.cpp",
-    "line": "176",
+    "line": "194",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -311068,7 +311068,7 @@
   {
     "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/i_string_1st_surrogate_but_2nd_missing",
     "file": "score/json/json_test_suite_test.cpp",
-    "line": "176",
+    "line": "194",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -311082,7 +311082,7 @@
   {
     "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/i_string_1st_valid_surrogate_2nd_invalid",
     "file": "score/json/json_test_suite_test.cpp",
-    "line": "176",
+    "line": "194",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -311096,7 +311096,7 @@
   {
     "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/i_string_UTF_2d16LE_with_BOM",
     "file": "score/json/json_test_suite_test.cpp",
-    "line": "176",
+    "line": "194",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -311110,7 +311110,7 @@
   {
     "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/i_string_UTF_2d8_invalid_sequence",
     "file": "score/json/json_test_suite_test.cpp",
-    "line": "176",
+    "line": "194",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -311124,7 +311124,7 @@
   {
     "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/i_string_UTF8_surrogate_U_2bD800",
     "file": "score/json/json_test_suite_test.cpp",
-    "line": "176",
+    "line": "194",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -311138,7 +311138,7 @@
   {
     "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/i_string_incomplete_surrogate_and_escape_valid",
     "file": "score/json/json_test_suite_test.cpp",
-    "line": "176",
+    "line": "194",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -311152,7 +311152,7 @@
   {
     "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/i_string_incomplete_surrogate_pair",
     "file": "score/json/json_test_suite_test.cpp",
-    "line": "176",
+    "line": "194",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -311166,7 +311166,7 @@
   {
     "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/i_string_incomplete_surrogates_escape_valid",
     "file": "score/json/json_test_suite_test.cpp",
-    "line": "176",
+    "line": "194",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -311180,7 +311180,7 @@
   {
     "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/i_string_invalid_lonely_surrogate",
     "file": "score/json/json_test_suite_test.cpp",
-    "line": "176",
+    "line": "194",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -311194,7 +311194,7 @@
   {
     "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/i_string_invalid_surrogate",
     "file": "score/json/json_test_suite_test.cpp",
-    "line": "176",
+    "line": "194",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -311208,7 +311208,7 @@
   {
     "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/i_string_invalid_utf_2d8",
     "file": "score/json/json_test_suite_test.cpp",
-    "line": "176",
+    "line": "194",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -311222,7 +311222,7 @@
   {
     "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/i_string_inverted_surrogates_U_2b1D11E",
     "file": "score/json/json_test_suite_test.cpp",
-    "line": "176",
+    "line": "194",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -311236,7 +311236,7 @@
   {
     "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/i_string_iso_latin_1",
     "file": "score/json/json_test_suite_test.cpp",
-    "line": "176",
+    "line": "194",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -311250,7 +311250,7 @@
   {
     "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/i_string_lone_second_surrogate",
     "file": "score/json/json_test_suite_test.cpp",
-    "line": "176",
+    "line": "194",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -311264,7 +311264,7 @@
   {
     "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/i_string_lone_utf8_continuation_byte",
     "file": "score/json/json_test_suite_test.cpp",
-    "line": "176",
+    "line": "194",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -311278,7 +311278,7 @@
   {
     "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/i_string_not_in_unicode_range",
     "file": "score/json/json_test_suite_test.cpp",
-    "line": "176",
+    "line": "194",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -311292,7 +311292,7 @@
   {
     "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/i_string_overlong_sequence_2_bytes",
     "file": "score/json/json_test_suite_test.cpp",
-    "line": "176",
+    "line": "194",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -311306,7 +311306,7 @@
   {
     "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/i_string_overlong_sequence_6_bytes",
     "file": "score/json/json_test_suite_test.cpp",
-    "line": "176",
+    "line": "194",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -311320,7 +311320,7 @@
   {
     "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/i_string_overlong_sequence_6_bytes_null",
     "file": "score/json/json_test_suite_test.cpp",
-    "line": "176",
+    "line": "194",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -311334,7 +311334,7 @@
   {
     "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/i_string_truncated_2dutf_2d8",
     "file": "score/json/json_test_suite_test.cpp",
-    "line": "176",
+    "line": "194",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -311348,7 +311348,7 @@
   {
     "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/i_string_utf16BE_no_BOM",
     "file": "score/json/json_test_suite_test.cpp",
-    "line": "176",
+    "line": "194",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -311362,7 +311362,7 @@
   {
     "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/i_string_utf16LE_no_BOM",
     "file": "score/json/json_test_suite_test.cpp",
-    "line": "176",
+    "line": "194",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -311376,7 +311376,7 @@
   {
     "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/i_structure_500_nested_arrays",
     "file": "score/json/json_test_suite_test.cpp",
-    "line": "176",
+    "line": "194",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -311390,7 +311390,7 @@
   {
     "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/i_structure_UTF_2d8_BOM_empty_object",
     "file": "score/json/json_test_suite_test.cpp",
-    "line": "176",
+    "line": "194",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -311404,7 +311404,7 @@
   {
     "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/n_array_1_true_without_comma",
     "file": "score/json/json_test_suite_test.cpp",
-    "line": "176",
+    "line": "194",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -311418,7 +311418,7 @@
   {
     "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/n_array_a_invalid_utf8",
     "file": "score/json/json_test_suite_test.cpp",
-    "line": "176",
+    "line": "194",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -311432,7 +311432,7 @@
   {
     "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/n_array_colon_instead_of_comma",
     "file": "score/json/json_test_suite_test.cpp",
-    "line": "176",
+    "line": "194",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -311446,7 +311446,7 @@
   {
     "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/n_array_comma_after_close",
     "file": "score/json/json_test_suite_test.cpp",
-    "line": "176",
+    "line": "194",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -311460,7 +311460,7 @@
   {
     "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/n_array_comma_and_number",
     "file": "score/json/json_test_suite_test.cpp",
-    "line": "176",
+    "line": "194",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -311474,7 +311474,7 @@
   {
     "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/n_array_double_comma",
     "file": "score/json/json_test_suite_test.cpp",
-    "line": "176",
+    "line": "194",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -311488,7 +311488,7 @@
   {
     "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/n_array_double_extra_comma",
     "file": "score/json/json_test_suite_test.cpp",
-    "line": "176",
+    "line": "194",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -311502,7 +311502,7 @@
   {
     "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/n_array_extra_close",
     "file": "score/json/json_test_suite_test.cpp",
-    "line": "176",
+    "line": "194",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -311516,7 +311516,7 @@
   {
     "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/n_array_extra_comma",
     "file": "score/json/json_test_suite_test.cpp",
-    "line": "176",
+    "line": "194",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -311530,7 +311530,7 @@
   {
     "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/n_array_incomplete",
     "file": "score/json/json_test_suite_test.cpp",
-    "line": "176",
+    "line": "194",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -311544,7 +311544,7 @@
   {
     "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/n_array_incomplete_invalid_value",
     "file": "score/json/json_test_suite_test.cpp",
-    "line": "176",
+    "line": "194",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -311558,7 +311558,7 @@
   {
     "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/n_array_inner_array_no_comma",
     "file": "score/json/json_test_suite_test.cpp",
-    "line": "176",
+    "line": "194",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -311572,7 +311572,7 @@
   {
     "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/n_array_invalid_utf8",
     "file": "score/json/json_test_suite_test.cpp",
-    "line": "176",
+    "line": "194",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -311586,7 +311586,7 @@
   {
     "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/n_array_items_separated_by_semicolon",
     "file": "score/json/json_test_suite_test.cpp",
-    "line": "176",
+    "line": "194",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -311600,7 +311600,7 @@
   {
     "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/n_array_just_comma",
     "file": "score/json/json_test_suite_test.cpp",
-    "line": "176",
+    "line": "194",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -311614,7 +311614,7 @@
   {
     "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/n_array_just_minus",
     "file": "score/json/json_test_suite_test.cpp",
-    "line": "176",
+    "line": "194",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -311628,7 +311628,7 @@
   {
     "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/n_array_missing_value",
     "file": "score/json/json_test_suite_test.cpp",
-    "line": "176",
+    "line": "194",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -311642,7 +311642,7 @@
   {
     "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/n_array_newlines_unclosed",
     "file": "score/json/json_test_suite_test.cpp",
-    "line": "176",
+    "line": "194",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -311656,7 +311656,7 @@
   {
     "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/n_array_number_and_comma",
     "file": "score/json/json_test_suite_test.cpp",
-    "line": "176",
+    "line": "194",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -311670,7 +311670,7 @@
   {
     "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/n_array_number_and_several_commas",
     "file": "score/json/json_test_suite_test.cpp",
-    "line": "176",
+    "line": "194",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -311684,7 +311684,7 @@
   {
     "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/n_array_spaces_vertical_tab_formfeed",
     "file": "score/json/json_test_suite_test.cpp",
-    "line": "176",
+    "line": "194",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -311698,7 +311698,7 @@
   {
     "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/n_array_star_inside",
     "file": "score/json/json_test_suite_test.cpp",
-    "line": "176",
+    "line": "194",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -311712,7 +311712,7 @@
   {
     "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/n_array_unclosed",
     "file": "score/json/json_test_suite_test.cpp",
-    "line": "176",
+    "line": "194",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -311726,7 +311726,7 @@
   {
     "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/n_array_unclosed_trailing_comma",
     "file": "score/json/json_test_suite_test.cpp",
-    "line": "176",
+    "line": "194",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -311740,7 +311740,7 @@
   {
     "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/n_array_unclosed_with_new_lines",
     "file": "score/json/json_test_suite_test.cpp",
-    "line": "176",
+    "line": "194",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -311754,7 +311754,7 @@
   {
     "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/n_array_unclosed_with_object_inside",
     "file": "score/json/json_test_suite_test.cpp",
-    "line": "176",
+    "line": "194",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -311768,7 +311768,7 @@
   {
     "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/n_incomplete_false",
     "file": "score/json/json_test_suite_test.cpp",
-    "line": "176",
+    "line": "194",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -311782,7 +311782,7 @@
   {
     "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/n_incomplete_null",
     "file": "score/json/json_test_suite_test.cpp",
-    "line": "176",
+    "line": "194",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -311796,7 +311796,7 @@
   {
     "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/n_incomplete_true",
     "file": "score/json/json_test_suite_test.cpp",
-    "line": "176",
+    "line": "194",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -311810,7 +311810,7 @@
   {
     "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/n_multidigit_number_then_00",
     "file": "score/json/json_test_suite_test.cpp",
-    "line": "176",
+    "line": "194",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -311824,7 +311824,7 @@
   {
     "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/n_number__2b_2b",
     "file": "score/json/json_test_suite_test.cpp",
-    "line": "176",
+    "line": "194",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -311838,7 +311838,7 @@
   {
     "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/n_number__2b1",
     "file": "score/json/json_test_suite_test.cpp",
-    "line": "176",
+    "line": "194",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -311852,7 +311852,7 @@
   {
     "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/n_number__2bInf",
     "file": "score/json/json_test_suite_test.cpp",
-    "line": "176",
+    "line": "194",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -311866,7 +311866,7 @@
   {
     "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/n_number__2d01",
     "file": "score/json/json_test_suite_test.cpp",
-    "line": "176",
+    "line": "194",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -311880,7 +311880,7 @@
   {
     "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/n_number__2d1_2e0_2e",
     "file": "score/json/json_test_suite_test.cpp",
-    "line": "176",
+    "line": "194",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -311894,7 +311894,7 @@
   {
     "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/n_number__2d2_2e",
     "file": "score/json/json_test_suite_test.cpp",
-    "line": "176",
+    "line": "194",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -311908,7 +311908,7 @@
   {
     "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/n_number__2dNaN",
     "file": "score/json/json_test_suite_test.cpp",
-    "line": "176",
+    "line": "194",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -311922,7 +311922,7 @@
   {
     "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/n_number__2e_2d1",
     "file": "score/json/json_test_suite_test.cpp",
-    "line": "176",
+    "line": "194",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -311936,7 +311936,7 @@
   {
     "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/n_number__2e2e_2d3",
     "file": "score/json/json_test_suite_test.cpp",
-    "line": "176",
+    "line": "194",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -311950,7 +311950,7 @@
   {
     "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/n_number_0_2e1_2e2",
     "file": "score/json/json_test_suite_test.cpp",
-    "line": "176",
+    "line": "194",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -311964,7 +311964,7 @@
   {
     "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/n_number_0_2e3e_2b",
     "file": "score/json/json_test_suite_test.cpp",
-    "line": "176",
+    "line": "194",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -311978,7 +311978,7 @@
   {
     "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/n_number_0_2e3e",
     "file": "score/json/json_test_suite_test.cpp",
-    "line": "176",
+    "line": "194",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -311992,7 +311992,7 @@
   {
     "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/n_number_0_2ee1",
     "file": "score/json/json_test_suite_test.cpp",
-    "line": "176",
+    "line": "194",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -312006,7 +312006,7 @@
   {
     "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/n_number_0_capital_E_2b",
     "file": "score/json/json_test_suite_test.cpp",
-    "line": "176",
+    "line": "194",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -312020,7 +312020,7 @@
   {
     "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/n_number_0_capital_E",
     "file": "score/json/json_test_suite_test.cpp",
-    "line": "176",
+    "line": "194",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -312034,7 +312034,7 @@
   {
     "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/n_number_0e_2b",
     "file": "score/json/json_test_suite_test.cpp",
-    "line": "176",
+    "line": "194",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -312048,7 +312048,7 @@
   {
     "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/n_number_0e",
     "file": "score/json/json_test_suite_test.cpp",
-    "line": "176",
+    "line": "194",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -312062,7 +312062,7 @@
   {
     "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/n_number_1_2e0e_2b",
     "file": "score/json/json_test_suite_test.cpp",
-    "line": "176",
+    "line": "194",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -312076,7 +312076,7 @@
   {
     "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/n_number_1_2e0e_2d",
     "file": "score/json/json_test_suite_test.cpp",
-    "line": "176",
+    "line": "194",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -312090,7 +312090,7 @@
   {
     "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/n_number_1_2e0e",
     "file": "score/json/json_test_suite_test.cpp",
-    "line": "176",
+    "line": "194",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -312104,7 +312104,7 @@
   {
     "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/n_number_1_000",
     "file": "score/json/json_test_suite_test.cpp",
-    "line": "176",
+    "line": "194",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -312118,7 +312118,7 @@
   {
     "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/n_number_1eE2",
     "file": "score/json/json_test_suite_test.cpp",
-    "line": "176",
+    "line": "194",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -312132,7 +312132,7 @@
   {
     "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/n_number_2_2ee_2b3",
     "file": "score/json/json_test_suite_test.cpp",
-    "line": "176",
+    "line": "194",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -312146,7 +312146,7 @@
   {
     "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/n_number_2_2ee_2d3",
     "file": "score/json/json_test_suite_test.cpp",
-    "line": "176",
+    "line": "194",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -312160,7 +312160,7 @@
   {
     "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/n_number_2_2ee3",
     "file": "score/json/json_test_suite_test.cpp",
-    "line": "176",
+    "line": "194",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -312174,7 +312174,7 @@
   {
     "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/n_number_9_2ee_2b",
     "file": "score/json/json_test_suite_test.cpp",
-    "line": "176",
+    "line": "194",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -312188,7 +312188,7 @@
   {
     "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/n_number_Inf",
     "file": "score/json/json_test_suite_test.cpp",
-    "line": "176",
+    "line": "194",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -312202,7 +312202,7 @@
   {
     "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/n_number_NaN",
     "file": "score/json/json_test_suite_test.cpp",
-    "line": "176",
+    "line": "194",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -312216,7 +312216,7 @@
   {
     "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/n_number_U_2bFF11_fullwidth_digit_one",
     "file": "score/json/json_test_suite_test.cpp",
-    "line": "176",
+    "line": "194",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -312230,7 +312230,7 @@
   {
     "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/n_number_expression",
     "file": "score/json/json_test_suite_test.cpp",
-    "line": "176",
+    "line": "194",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -312244,7 +312244,7 @@
   {
     "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/n_number_hex_1_digit",
     "file": "score/json/json_test_suite_test.cpp",
-    "line": "176",
+    "line": "194",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -312258,7 +312258,7 @@
   {
     "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/n_number_hex_2_digits",
     "file": "score/json/json_test_suite_test.cpp",
-    "line": "176",
+    "line": "194",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -312272,7 +312272,7 @@
   {
     "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/n_number_infinity",
     "file": "score/json/json_test_suite_test.cpp",
-    "line": "176",
+    "line": "194",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -312286,7 +312286,7 @@
   {
     "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/n_number_invalid_2b_2d",
     "file": "score/json/json_test_suite_test.cpp",
-    "line": "176",
+    "line": "194",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -312300,7 +312300,7 @@
   {
     "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/n_number_invalid_2dnegative_2dreal",
     "file": "score/json/json_test_suite_test.cpp",
-    "line": "176",
+    "line": "194",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -312314,7 +312314,7 @@
   {
     "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/n_number_invalid_2dutf_2d8_2din_2dbigger_2dint",
     "file": "score/json/json_test_suite_test.cpp",
-    "line": "176",
+    "line": "194",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -312328,7 +312328,7 @@
   {
     "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/n_number_invalid_2dutf_2d8_2din_2dexponent",
     "file": "score/json/json_test_suite_test.cpp",
-    "line": "176",
+    "line": "194",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -312342,7 +312342,7 @@
   {
     "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/n_number_invalid_2dutf_2d8_2din_2dint",
     "file": "score/json/json_test_suite_test.cpp",
-    "line": "176",
+    "line": "194",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -312356,7 +312356,7 @@
   {
     "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/n_number_minus_infinity",
     "file": "score/json/json_test_suite_test.cpp",
-    "line": "176",
+    "line": "194",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -312370,7 +312370,7 @@
   {
     "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/n_number_minus_sign_with_trailing_garbage",
     "file": "score/json/json_test_suite_test.cpp",
-    "line": "176",
+    "line": "194",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -312384,7 +312384,7 @@
   {
     "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/n_number_minus_space_1",
     "file": "score/json/json_test_suite_test.cpp",
-    "line": "176",
+    "line": "194",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -312398,7 +312398,7 @@
   {
     "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/n_number_neg_int_starting_with_zero",
     "file": "score/json/json_test_suite_test.cpp",
-    "line": "176",
+    "line": "194",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -312412,7 +312412,7 @@
   {
     "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/n_number_neg_real_without_int_part",
     "file": "score/json/json_test_suite_test.cpp",
-    "line": "176",
+    "line": "194",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -312426,7 +312426,7 @@
   {
     "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/n_number_neg_with_garbage_at_end",
     "file": "score/json/json_test_suite_test.cpp",
-    "line": "176",
+    "line": "194",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -312440,7 +312440,7 @@
   {
     "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/n_number_real_garbage_after_e",
     "file": "score/json/json_test_suite_test.cpp",
-    "line": "176",
+    "line": "194",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -312454,7 +312454,7 @@
   {
     "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/n_number_real_with_invalid_utf8_after_e",
     "file": "score/json/json_test_suite_test.cpp",
-    "line": "176",
+    "line": "194",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -312468,7 +312468,7 @@
   {
     "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/n_number_real_without_fractional_part",
     "file": "score/json/json_test_suite_test.cpp",
-    "line": "176",
+    "line": "194",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -312482,7 +312482,7 @@
   {
     "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/n_number_starting_with_dot",
     "file": "score/json/json_test_suite_test.cpp",
-    "line": "176",
+    "line": "194",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -312496,7 +312496,7 @@
   {
     "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/n_number_with_alpha",
     "file": "score/json/json_test_suite_test.cpp",
-    "line": "176",
+    "line": "194",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -312510,7 +312510,7 @@
   {
     "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/n_number_with_alpha_char",
     "file": "score/json/json_test_suite_test.cpp",
-    "line": "176",
+    "line": "194",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -312524,7 +312524,7 @@
   {
     "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/n_number_with_leading_zero",
     "file": "score/json/json_test_suite_test.cpp",
-    "line": "176",
+    "line": "194",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -312538,7 +312538,7 @@
   {
     "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/n_object_bad_value",
     "file": "score/json/json_test_suite_test.cpp",
-    "line": "176",
+    "line": "194",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -312552,7 +312552,7 @@
   {
     "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/n_object_bracket_key",
     "file": "score/json/json_test_suite_test.cpp",
-    "line": "176",
+    "line": "194",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -312566,7 +312566,7 @@
   {
     "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/n_object_comma_instead_of_colon",
     "file": "score/json/json_test_suite_test.cpp",
-    "line": "176",
+    "line": "194",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -312580,7 +312580,7 @@
   {
     "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/n_object_double_colon",
     "file": "score/json/json_test_suite_test.cpp",
-    "line": "176",
+    "line": "194",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -312594,7 +312594,7 @@
   {
     "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/n_object_emoji",
     "file": "score/json/json_test_suite_test.cpp",
-    "line": "176",
+    "line": "194",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -312608,7 +312608,7 @@
   {
     "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/n_object_garbage_at_end",
     "file": "score/json/json_test_suite_test.cpp",
-    "line": "176",
+    "line": "194",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -312622,7 +312622,7 @@
   {
     "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/n_object_key_with_single_quotes",
     "file": "score/json/json_test_suite_test.cpp",
-    "line": "176",
+    "line": "194",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -312636,7 +312636,7 @@
   {
     "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/n_object_lone_continuation_byte_in_key_and_trailing_comma",
     "file": "score/json/json_test_suite_test.cpp",
-    "line": "176",
+    "line": "194",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -312650,7 +312650,7 @@
   {
     "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/n_object_missing_colon",
     "file": "score/json/json_test_suite_test.cpp",
-    "line": "176",
+    "line": "194",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -312664,7 +312664,7 @@
   {
     "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/n_object_missing_key",
     "file": "score/json/json_test_suite_test.cpp",
-    "line": "176",
+    "line": "194",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -312678,7 +312678,7 @@
   {
     "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/n_object_missing_semicolon",
     "file": "score/json/json_test_suite_test.cpp",
-    "line": "176",
+    "line": "194",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -312692,7 +312692,7 @@
   {
     "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/n_object_missing_value",
     "file": "score/json/json_test_suite_test.cpp",
-    "line": "176",
+    "line": "194",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -312706,7 +312706,7 @@
   {
     "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/n_object_no_2dcolon",
     "file": "score/json/json_test_suite_test.cpp",
-    "line": "176",
+    "line": "194",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -312720,7 +312720,7 @@
   {
     "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/n_object_non_string_key",
     "file": "score/json/json_test_suite_test.cpp",
-    "line": "176",
+    "line": "194",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -312734,7 +312734,7 @@
   {
     "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/n_object_non_string_key_but_huge_number_instead",
     "file": "score/json/json_test_suite_test.cpp",
-    "line": "176",
+    "line": "194",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -312748,7 +312748,7 @@
   {
     "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/n_object_repeated_null_null",
     "file": "score/json/json_test_suite_test.cpp",
-    "line": "176",
+    "line": "194",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -312762,7 +312762,7 @@
   {
     "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/n_object_several_trailing_commas",
     "file": "score/json/json_test_suite_test.cpp",
-    "line": "176",
+    "line": "194",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -312776,7 +312776,7 @@
   {
     "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/n_object_single_quote",
     "file": "score/json/json_test_suite_test.cpp",
-    "line": "176",
+    "line": "194",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -312790,7 +312790,7 @@
   {
     "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/n_object_trailing_comma",
     "file": "score/json/json_test_suite_test.cpp",
-    "line": "176",
+    "line": "194",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -312804,7 +312804,7 @@
   {
     "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/n_object_trailing_comment",
     "file": "score/json/json_test_suite_test.cpp",
-    "line": "176",
+    "line": "194",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -312818,7 +312818,7 @@
   {
     "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/n_object_trailing_comment_open",
     "file": "score/json/json_test_suite_test.cpp",
-    "line": "176",
+    "line": "194",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -312832,7 +312832,7 @@
   {
     "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/n_object_trailing_comment_slash_open",
     "file": "score/json/json_test_suite_test.cpp",
-    "line": "176",
+    "line": "194",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -312846,7 +312846,7 @@
   {
     "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/n_object_trailing_comment_slash_open_incomplete",
     "file": "score/json/json_test_suite_test.cpp",
-    "line": "176",
+    "line": "194",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -312860,7 +312860,7 @@
   {
     "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/n_object_two_commas_in_a_row",
     "file": "score/json/json_test_suite_test.cpp",
-    "line": "176",
+    "line": "194",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -312874,7 +312874,7 @@
   {
     "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/n_object_unquoted_key",
     "file": "score/json/json_test_suite_test.cpp",
-    "line": "176",
+    "line": "194",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -312888,7 +312888,7 @@
   {
     "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/n_object_unterminated_2dvalue",
     "file": "score/json/json_test_suite_test.cpp",
-    "line": "176",
+    "line": "194",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -312902,7 +312902,7 @@
   {
     "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/n_object_with_single_string",
     "file": "score/json/json_test_suite_test.cpp",
-    "line": "176",
+    "line": "194",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -312916,7 +312916,7 @@
   {
     "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/n_object_with_trailing_garbage",
     "file": "score/json/json_test_suite_test.cpp",
-    "line": "176",
+    "line": "194",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -312930,7 +312930,7 @@
   {
     "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/n_single_space",
     "file": "score/json/json_test_suite_test.cpp",
-    "line": "176",
+    "line": "194",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -312944,7 +312944,7 @@
   {
     "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/n_string_1_surrogate_then_escape",
     "file": "score/json/json_test_suite_test.cpp",
-    "line": "176",
+    "line": "194",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -312958,7 +312958,7 @@
   {
     "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/n_string_1_surrogate_then_escape_u",
     "file": "score/json/json_test_suite_test.cpp",
-    "line": "176",
+    "line": "194",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -312972,7 +312972,7 @@
   {
     "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/n_string_1_surrogate_then_escape_u1",
     "file": "score/json/json_test_suite_test.cpp",
-    "line": "176",
+    "line": "194",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -312986,7 +312986,7 @@
   {
     "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/n_string_1_surrogate_then_escape_u1x",
     "file": "score/json/json_test_suite_test.cpp",
-    "line": "176",
+    "line": "194",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -313000,7 +313000,7 @@
   {
     "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/n_string_accentuated_char_no_quotes",
     "file": "score/json/json_test_suite_test.cpp",
-    "line": "176",
+    "line": "194",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -313014,7 +313014,7 @@
   {
     "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/n_string_backslash_00",
     "file": "score/json/json_test_suite_test.cpp",
-    "line": "176",
+    "line": "194",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -313028,7 +313028,7 @@
   {
     "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/n_string_escape_x",
     "file": "score/json/json_test_suite_test.cpp",
-    "line": "176",
+    "line": "194",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -313042,7 +313042,7 @@
   {
     "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/n_string_escaped_backslash_bad",
     "file": "score/json/json_test_suite_test.cpp",
-    "line": "176",
+    "line": "194",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -313056,7 +313056,7 @@
   {
     "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/n_string_escaped_ctrl_char_tab",
     "file": "score/json/json_test_suite_test.cpp",
-    "line": "176",
+    "line": "194",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -313070,7 +313070,7 @@
   {
     "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/n_string_escaped_emoji",
     "file": "score/json/json_test_suite_test.cpp",
-    "line": "176",
+    "line": "194",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -313084,7 +313084,7 @@
   {
     "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/n_string_incomplete_escape",
     "file": "score/json/json_test_suite_test.cpp",
-    "line": "176",
+    "line": "194",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -313098,7 +313098,7 @@
   {
     "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/n_string_incomplete_escaped_character",
     "file": "score/json/json_test_suite_test.cpp",
-    "line": "176",
+    "line": "194",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -313112,7 +313112,7 @@
   {
     "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/n_string_incomplete_surrogate",
     "file": "score/json/json_test_suite_test.cpp",
-    "line": "176",
+    "line": "194",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -313126,7 +313126,7 @@
   {
     "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/n_string_incomplete_surrogate_escape_invalid",
     "file": "score/json/json_test_suite_test.cpp",
-    "line": "176",
+    "line": "194",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -313140,7 +313140,7 @@
   {
     "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/n_string_invalid_2dutf_2d8_2din_2descape",
     "file": "score/json/json_test_suite_test.cpp",
-    "line": "176",
+    "line": "194",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -313154,7 +313154,7 @@
   {
     "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/n_string_invalid_backslash_esc",
     "file": "score/json/json_test_suite_test.cpp",
-    "line": "176",
+    "line": "194",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -313168,7 +313168,7 @@
   {
     "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/n_string_invalid_unicode_escape",
     "file": "score/json/json_test_suite_test.cpp",
-    "line": "176",
+    "line": "194",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -313182,7 +313182,7 @@
   {
     "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/n_string_invalid_utf8_after_escape",
     "file": "score/json/json_test_suite_test.cpp",
-    "line": "176",
+    "line": "194",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -313196,7 +313196,7 @@
   {
     "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/n_string_leading_uescaped_thinspace",
     "file": "score/json/json_test_suite_test.cpp",
-    "line": "176",
+    "line": "194",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -313210,7 +313210,7 @@
   {
     "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/n_string_no_quotes_with_bad_escape",
     "file": "score/json/json_test_suite_test.cpp",
-    "line": "176",
+    "line": "194",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -313224,7 +313224,7 @@
   {
     "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/n_string_single_doublequote",
     "file": "score/json/json_test_suite_test.cpp",
-    "line": "176",
+    "line": "194",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -313238,7 +313238,7 @@
   {
     "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/n_string_single_quote",
     "file": "score/json/json_test_suite_test.cpp",
-    "line": "176",
+    "line": "194",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -313252,7 +313252,7 @@
   {
     "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/n_string_single_string_no_double_quotes",
     "file": "score/json/json_test_suite_test.cpp",
-    "line": "176",
+    "line": "194",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -313266,7 +313266,7 @@
   {
     "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/n_string_start_escape_unclosed",
     "file": "score/json/json_test_suite_test.cpp",
-    "line": "176",
+    "line": "194",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -313280,7 +313280,7 @@
   {
     "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/n_string_unescaped_ctrl_char",
     "file": "score/json/json_test_suite_test.cpp",
-    "line": "176",
+    "line": "194",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -313294,7 +313294,7 @@
   {
     "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/n_string_unescaped_newline",
     "file": "score/json/json_test_suite_test.cpp",
-    "line": "176",
+    "line": "194",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -313308,7 +313308,7 @@
   {
     "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/n_string_unescaped_tab",
     "file": "score/json/json_test_suite_test.cpp",
-    "line": "176",
+    "line": "194",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -313322,7 +313322,7 @@
   {
     "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/n_string_unicode_CapitalU",
     "file": "score/json/json_test_suite_test.cpp",
-    "line": "176",
+    "line": "194",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -313336,7 +313336,7 @@
   {
     "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/n_string_with_trailing_garbage",
     "file": "score/json/json_test_suite_test.cpp",
-    "line": "176",
+    "line": "194",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -313350,21 +313350,21 @@
   {
     "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/n_structure_100000_opening_arrays",
     "file": "score/json/json_test_suite_test.cpp",
-    "line": "176",
+    "line": "194",
     "result": "skipped",
     "repo_name": "local_repo",
     "hash": "",
     "url": "",
     "TestType": "requirements-based",
     "DerivationTechnique": "requirements-analysis",
-    "result_text": "score/json/json_test_suite_test.cpp:188 n_structure_100000_opening_arrays.json crashes the parser, see kCrashingFiles",
+    "result_text": "score/json/json_test_suite_test.cpp:207 n_structure_100000_opening_arrays.json crashes the parser: Stack overflow when the deeply nested parse tree is destroyed.",
     "PartiallyVerifies": "comp_req__json__deserialization",
     "FullyVerifies": null
   },
   {
     "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/n_structure_U_2b2060_word_joined",
     "file": "score/json/json_test_suite_test.cpp",
-    "line": "176",
+    "line": "194",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -313378,7 +313378,7 @@
   {
     "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/n_structure_UTF8_BOM_no_data",
     "file": "score/json/json_test_suite_test.cpp",
-    "line": "176",
+    "line": "194",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -313392,7 +313392,7 @@
   {
     "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/n_structure_angle_bracket__2e",
     "file": "score/json/json_test_suite_test.cpp",
-    "line": "176",
+    "line": "194",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -313406,7 +313406,7 @@
   {
     "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/n_structure_angle_bracket_null",
     "file": "score/json/json_test_suite_test.cpp",
-    "line": "176",
+    "line": "194",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -313420,7 +313420,7 @@
   {
     "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/n_structure_array_trailing_garbage",
     "file": "score/json/json_test_suite_test.cpp",
-    "line": "176",
+    "line": "194",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -313434,7 +313434,7 @@
   {
     "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/n_structure_array_with_extra_array_close",
     "file": "score/json/json_test_suite_test.cpp",
-    "line": "176",
+    "line": "194",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -313448,7 +313448,7 @@
   {
     "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/n_structure_array_with_unclosed_string",
     "file": "score/json/json_test_suite_test.cpp",
-    "line": "176",
+    "line": "194",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -313462,7 +313462,7 @@
   {
     "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/n_structure_ascii_2dunicode_2didentifier",
     "file": "score/json/json_test_suite_test.cpp",
-    "line": "176",
+    "line": "194",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -313476,7 +313476,7 @@
   {
     "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/n_structure_capitalized_True",
     "file": "score/json/json_test_suite_test.cpp",
-    "line": "176",
+    "line": "194",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -313490,7 +313490,7 @@
   {
     "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/n_structure_close_unopened_array",
     "file": "score/json/json_test_suite_test.cpp",
-    "line": "176",
+    "line": "194",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -313504,7 +313504,7 @@
   {
     "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/n_structure_comma_instead_of_closing_brace",
     "file": "score/json/json_test_suite_test.cpp",
-    "line": "176",
+    "line": "194",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -313518,7 +313518,7 @@
   {
     "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/n_structure_double_array",
     "file": "score/json/json_test_suite_test.cpp",
-    "line": "176",
+    "line": "194",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -313532,7 +313532,7 @@
   {
     "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/n_structure_end_array",
     "file": "score/json/json_test_suite_test.cpp",
-    "line": "176",
+    "line": "194",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -313546,7 +313546,7 @@
   {
     "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/n_structure_incomplete_UTF8_BOM",
     "file": "score/json/json_test_suite_test.cpp",
-    "line": "176",
+    "line": "194",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -313560,7 +313560,7 @@
   {
     "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/n_structure_lone_2dinvalid_2dutf_2d8",
     "file": "score/json/json_test_suite_test.cpp",
-    "line": "176",
+    "line": "194",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -313574,7 +313574,7 @@
   {
     "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/n_structure_lone_2dopen_2dbracket",
     "file": "score/json/json_test_suite_test.cpp",
-    "line": "176",
+    "line": "194",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -313588,7 +313588,7 @@
   {
     "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/n_structure_no_data",
     "file": "score/json/json_test_suite_test.cpp",
-    "line": "176",
+    "line": "194",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -313602,7 +313602,7 @@
   {
     "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/n_structure_null_2dbyte_2doutside_2dstring",
     "file": "score/json/json_test_suite_test.cpp",
-    "line": "176",
+    "line": "194",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -313616,7 +313616,7 @@
   {
     "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/n_structure_number_with_trailing_garbage",
     "file": "score/json/json_test_suite_test.cpp",
-    "line": "176",
+    "line": "194",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -313630,7 +313630,7 @@
   {
     "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/n_structure_object_followed_by_closing_object",
     "file": "score/json/json_test_suite_test.cpp",
-    "line": "176",
+    "line": "194",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -313644,7 +313644,7 @@
   {
     "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/n_structure_object_unclosed_no_value",
     "file": "score/json/json_test_suite_test.cpp",
-    "line": "176",
+    "line": "194",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -313658,7 +313658,7 @@
   {
     "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/n_structure_object_with_comment",
     "file": "score/json/json_test_suite_test.cpp",
-    "line": "176",
+    "line": "194",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -313672,7 +313672,7 @@
   {
     "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/n_structure_object_with_trailing_garbage",
     "file": "score/json/json_test_suite_test.cpp",
-    "line": "176",
+    "line": "194",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -313686,7 +313686,7 @@
   {
     "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/n_structure_open_array_apostrophe",
     "file": "score/json/json_test_suite_test.cpp",
-    "line": "176",
+    "line": "194",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -313700,7 +313700,7 @@
   {
     "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/n_structure_open_array_comma",
     "file": "score/json/json_test_suite_test.cpp",
-    "line": "176",
+    "line": "194",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -313714,21 +313714,21 @@
   {
     "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/n_structure_open_array_object",
     "file": "score/json/json_test_suite_test.cpp",
-    "line": "176",
+    "line": "194",
     "result": "skipped",
     "repo_name": "local_repo",
     "hash": "",
     "url": "",
     "TestType": "requirements-based",
     "DerivationTechnique": "requirements-analysis",
-    "result_text": "score/json/json_test_suite_test.cpp:188 n_structure_open_array_object.json crashes the parser, see kCrashingFiles",
+    "result_text": "score/json/json_test_suite_test.cpp:207 n_structure_open_array_object.json crashes the parser: Stack overflow when the deeply nested parse tree is destroyed.",
     "PartiallyVerifies": "comp_req__json__deserialization",
     "FullyVerifies": null
   },
   {
     "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/n_structure_open_array_open_object",
     "file": "score/json/json_test_suite_test.cpp",
-    "line": "176",
+    "line": "194",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -313742,7 +313742,7 @@
   {
     "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/n_structure_open_array_open_string",
     "file": "score/json/json_test_suite_test.cpp",
-    "line": "176",
+    "line": "194",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -313756,7 +313756,7 @@
   {
     "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/n_structure_open_array_string",
     "file": "score/json/json_test_suite_test.cpp",
-    "line": "176",
+    "line": "194",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -313770,7 +313770,7 @@
   {
     "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/n_structure_open_object",
     "file": "score/json/json_test_suite_test.cpp",
-    "line": "176",
+    "line": "194",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -313784,7 +313784,7 @@
   {
     "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/n_structure_open_object_close_array",
     "file": "score/json/json_test_suite_test.cpp",
-    "line": "176",
+    "line": "194",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -313798,7 +313798,7 @@
   {
     "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/n_structure_open_object_comma",
     "file": "score/json/json_test_suite_test.cpp",
-    "line": "176",
+    "line": "194",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -313812,7 +313812,7 @@
   {
     "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/n_structure_open_object_open_array",
     "file": "score/json/json_test_suite_test.cpp",
-    "line": "176",
+    "line": "194",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -313826,7 +313826,7 @@
   {
     "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/n_structure_open_object_open_string",
     "file": "score/json/json_test_suite_test.cpp",
-    "line": "176",
+    "line": "194",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -313840,7 +313840,7 @@
   {
     "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/n_structure_open_object_string_with_apostrophes",
     "file": "score/json/json_test_suite_test.cpp",
-    "line": "176",
+    "line": "194",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -313854,7 +313854,7 @@
   {
     "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/n_structure_open_open",
     "file": "score/json/json_test_suite_test.cpp",
-    "line": "176",
+    "line": "194",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -313868,7 +313868,7 @@
   {
     "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/n_structure_single_eacute",
     "file": "score/json/json_test_suite_test.cpp",
-    "line": "176",
+    "line": "194",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -313882,7 +313882,7 @@
   {
     "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/n_structure_single_star",
     "file": "score/json/json_test_suite_test.cpp",
-    "line": "176",
+    "line": "194",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -313896,7 +313896,7 @@
   {
     "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/n_structure_trailing__23",
     "file": "score/json/json_test_suite_test.cpp",
-    "line": "176",
+    "line": "194",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -313910,7 +313910,7 @@
   {
     "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/n_structure_uescaped_LF_before_string",
     "file": "score/json/json_test_suite_test.cpp",
-    "line": "176",
+    "line": "194",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -313924,7 +313924,7 @@
   {
     "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/n_structure_unclosed_array",
     "file": "score/json/json_test_suite_test.cpp",
-    "line": "176",
+    "line": "194",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -313938,7 +313938,7 @@
   {
     "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/n_structure_unclosed_array_partial_null",
     "file": "score/json/json_test_suite_test.cpp",
-    "line": "176",
+    "line": "194",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -313952,7 +313952,7 @@
   {
     "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/n_structure_unclosed_array_unfinished_false",
     "file": "score/json/json_test_suite_test.cpp",
-    "line": "176",
+    "line": "194",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -313966,7 +313966,7 @@
   {
     "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/n_structure_unclosed_array_unfinished_true",
     "file": "score/json/json_test_suite_test.cpp",
-    "line": "176",
+    "line": "194",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -313980,7 +313980,7 @@
   {
     "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/n_structure_unclosed_object",
     "file": "score/json/json_test_suite_test.cpp",
-    "line": "176",
+    "line": "194",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -313994,7 +313994,7 @@
   {
     "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/n_structure_unicode_2didentifier",
     "file": "score/json/json_test_suite_test.cpp",
-    "line": "176",
+    "line": "194",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -314008,7 +314008,7 @@
   {
     "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/n_structure_whitespace_U_2b2060_word_joiner",
     "file": "score/json/json_test_suite_test.cpp",
-    "line": "176",
+    "line": "194",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -314022,7 +314022,7 @@
   {
     "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/n_structure_whitespace_formfeed",
     "file": "score/json/json_test_suite_test.cpp",
-    "line": "176",
+    "line": "194",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -314036,7 +314036,7 @@
   {
     "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/y_array_arraysWithSpaces",
     "file": "score/json/json_test_suite_test.cpp",
-    "line": "176",
+    "line": "194",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -314050,7 +314050,7 @@
   {
     "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/y_array_empty_2dstring",
     "file": "score/json/json_test_suite_test.cpp",
-    "line": "176",
+    "line": "194",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -314064,7 +314064,7 @@
   {
     "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/y_array_empty",
     "file": "score/json/json_test_suite_test.cpp",
-    "line": "176",
+    "line": "194",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -314078,7 +314078,7 @@
   {
     "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/y_array_ending_with_newline",
     "file": "score/json/json_test_suite_test.cpp",
-    "line": "176",
+    "line": "194",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -314092,7 +314092,7 @@
   {
     "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/y_array_false",
     "file": "score/json/json_test_suite_test.cpp",
-    "line": "176",
+    "line": "194",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -314106,7 +314106,7 @@
   {
     "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/y_array_heterogeneous",
     "file": "score/json/json_test_suite_test.cpp",
-    "line": "176",
+    "line": "194",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -314120,7 +314120,7 @@
   {
     "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/y_array_null",
     "file": "score/json/json_test_suite_test.cpp",
-    "line": "176",
+    "line": "194",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -314134,7 +314134,7 @@
   {
     "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/y_array_with_1_and_newline",
     "file": "score/json/json_test_suite_test.cpp",
-    "line": "176",
+    "line": "194",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -314148,7 +314148,7 @@
   {
     "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/y_array_with_leading_space",
     "file": "score/json/json_test_suite_test.cpp",
-    "line": "176",
+    "line": "194",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -314162,7 +314162,7 @@
   {
     "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/y_array_with_several_null",
     "file": "score/json/json_test_suite_test.cpp",
-    "line": "176",
+    "line": "194",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -314176,7 +314176,7 @@
   {
     "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/y_array_with_trailing_space",
     "file": "score/json/json_test_suite_test.cpp",
-    "line": "176",
+    "line": "194",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -314190,7 +314190,7 @@
   {
     "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/y_number",
     "file": "score/json/json_test_suite_test.cpp",
-    "line": "176",
+    "line": "194",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -314204,7 +314204,7 @@
   {
     "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/y_number_0e_2b1",
     "file": "score/json/json_test_suite_test.cpp",
-    "line": "176",
+    "line": "194",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -314218,7 +314218,7 @@
   {
     "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/y_number_0e1",
     "file": "score/json/json_test_suite_test.cpp",
-    "line": "176",
+    "line": "194",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -314232,7 +314232,7 @@
   {
     "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/y_number_after_space",
     "file": "score/json/json_test_suite_test.cpp",
-    "line": "176",
+    "line": "194",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -314246,7 +314246,7 @@
   {
     "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/y_number_double_close_to_zero",
     "file": "score/json/json_test_suite_test.cpp",
-    "line": "176",
+    "line": "194",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -314260,7 +314260,7 @@
   {
     "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/y_number_int_with_exp",
     "file": "score/json/json_test_suite_test.cpp",
-    "line": "176",
+    "line": "194",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -314274,7 +314274,7 @@
   {
     "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/y_number_minus_zero",
     "file": "score/json/json_test_suite_test.cpp",
-    "line": "176",
+    "line": "194",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -314288,7 +314288,7 @@
   {
     "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/y_number_negative_int",
     "file": "score/json/json_test_suite_test.cpp",
-    "line": "176",
+    "line": "194",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -314302,7 +314302,7 @@
   {
     "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/y_number_negative_one",
     "file": "score/json/json_test_suite_test.cpp",
-    "line": "176",
+    "line": "194",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -314316,7 +314316,7 @@
   {
     "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/y_number_negative_zero",
     "file": "score/json/json_test_suite_test.cpp",
-    "line": "176",
+    "line": "194",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -314330,7 +314330,7 @@
   {
     "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/y_number_real_capital_e",
     "file": "score/json/json_test_suite_test.cpp",
-    "line": "176",
+    "line": "194",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -314344,7 +314344,7 @@
   {
     "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/y_number_real_capital_e_neg_exp",
     "file": "score/json/json_test_suite_test.cpp",
-    "line": "176",
+    "line": "194",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -314358,7 +314358,7 @@
   {
     "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/y_number_real_capital_e_pos_exp",
     "file": "score/json/json_test_suite_test.cpp",
-    "line": "176",
+    "line": "194",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -314372,7 +314372,7 @@
   {
     "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/y_number_real_exponent",
     "file": "score/json/json_test_suite_test.cpp",
-    "line": "176",
+    "line": "194",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -314386,7 +314386,7 @@
   {
     "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/y_number_real_fraction_exponent",
     "file": "score/json/json_test_suite_test.cpp",
-    "line": "176",
+    "line": "194",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -314400,7 +314400,7 @@
   {
     "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/y_number_real_neg_exp",
     "file": "score/json/json_test_suite_test.cpp",
-    "line": "176",
+    "line": "194",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -314414,7 +314414,7 @@
   {
     "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/y_number_real_pos_exponent",
     "file": "score/json/json_test_suite_test.cpp",
-    "line": "176",
+    "line": "194",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -314428,7 +314428,7 @@
   {
     "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/y_number_simple_int",
     "file": "score/json/json_test_suite_test.cpp",
-    "line": "176",
+    "line": "194",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -314442,7 +314442,7 @@
   {
     "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/y_number_simple_real",
     "file": "score/json/json_test_suite_test.cpp",
-    "line": "176",
+    "line": "194",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -314456,7 +314456,7 @@
   {
     "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/y_object",
     "file": "score/json/json_test_suite_test.cpp",
-    "line": "176",
+    "line": "194",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -314470,7 +314470,7 @@
   {
     "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/y_object_basic",
     "file": "score/json/json_test_suite_test.cpp",
-    "line": "176",
+    "line": "194",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -314484,7 +314484,7 @@
   {
     "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/y_object_duplicated_key",
     "file": "score/json/json_test_suite_test.cpp",
-    "line": "176",
+    "line": "194",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -314498,7 +314498,7 @@
   {
     "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/y_object_duplicated_key_and_value",
     "file": "score/json/json_test_suite_test.cpp",
-    "line": "176",
+    "line": "194",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -314512,7 +314512,7 @@
   {
     "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/y_object_empty",
     "file": "score/json/json_test_suite_test.cpp",
-    "line": "176",
+    "line": "194",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -314526,7 +314526,7 @@
   {
     "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/y_object_empty_key",
     "file": "score/json/json_test_suite_test.cpp",
-    "line": "176",
+    "line": "194",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -314540,7 +314540,7 @@
   {
     "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/y_object_escaped_null_in_key",
     "file": "score/json/json_test_suite_test.cpp",
-    "line": "176",
+    "line": "194",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -314554,7 +314554,7 @@
   {
     "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/y_object_extreme_numbers",
     "file": "score/json/json_test_suite_test.cpp",
-    "line": "176",
+    "line": "194",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -314568,7 +314568,7 @@
   {
     "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/y_object_long_strings",
     "file": "score/json/json_test_suite_test.cpp",
-    "line": "176",
+    "line": "194",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -314582,7 +314582,7 @@
   {
     "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/y_object_simple",
     "file": "score/json/json_test_suite_test.cpp",
-    "line": "176",
+    "line": "194",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -314596,7 +314596,7 @@
   {
     "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/y_object_string_unicode",
     "file": "score/json/json_test_suite_test.cpp",
-    "line": "176",
+    "line": "194",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -314610,7 +314610,7 @@
   {
     "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/y_object_with_newlines",
     "file": "score/json/json_test_suite_test.cpp",
-    "line": "176",
+    "line": "194",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -314624,7 +314624,7 @@
   {
     "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/y_string_1_2_3_bytes_UTF_2d8_sequences",
     "file": "score/json/json_test_suite_test.cpp",
-    "line": "176",
+    "line": "194",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -314638,7 +314638,7 @@
   {
     "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/y_string_accepted_surrogate_pair",
     "file": "score/json/json_test_suite_test.cpp",
-    "line": "176",
+    "line": "194",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -314652,7 +314652,7 @@
   {
     "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/y_string_accepted_surrogate_pairs",
     "file": "score/json/json_test_suite_test.cpp",
-    "line": "176",
+    "line": "194",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -314666,7 +314666,7 @@
   {
     "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/y_string_allowed_escapes",
     "file": "score/json/json_test_suite_test.cpp",
-    "line": "176",
+    "line": "194",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -314680,7 +314680,7 @@
   {
     "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/y_string_backslash_and_u_escaped_zero",
     "file": "score/json/json_test_suite_test.cpp",
-    "line": "176",
+    "line": "194",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -314694,7 +314694,7 @@
   {
     "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/y_string_backslash_doublequotes",
     "file": "score/json/json_test_suite_test.cpp",
-    "line": "176",
+    "line": "194",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -314708,7 +314708,7 @@
   {
     "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/y_string_comments",
     "file": "score/json/json_test_suite_test.cpp",
-    "line": "176",
+    "line": "194",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -314722,7 +314722,7 @@
   {
     "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/y_string_double_escape_a",
     "file": "score/json/json_test_suite_test.cpp",
-    "line": "176",
+    "line": "194",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -314736,7 +314736,7 @@
   {
     "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/y_string_double_escape_n",
     "file": "score/json/json_test_suite_test.cpp",
-    "line": "176",
+    "line": "194",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -314750,7 +314750,7 @@
   {
     "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/y_string_escaped_control_character",
     "file": "score/json/json_test_suite_test.cpp",
-    "line": "176",
+    "line": "194",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -314764,7 +314764,7 @@
   {
     "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/y_string_escaped_noncharacter",
     "file": "score/json/json_test_suite_test.cpp",
-    "line": "176",
+    "line": "194",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -314778,7 +314778,7 @@
   {
     "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/y_string_in_array",
     "file": "score/json/json_test_suite_test.cpp",
-    "line": "176",
+    "line": "194",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -314792,7 +314792,7 @@
   {
     "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/y_string_in_array_with_leading_space",
     "file": "score/json/json_test_suite_test.cpp",
-    "line": "176",
+    "line": "194",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -314806,7 +314806,7 @@
   {
     "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/y_string_last_surrogates_1_and_2",
     "file": "score/json/json_test_suite_test.cpp",
-    "line": "176",
+    "line": "194",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -314820,7 +314820,7 @@
   {
     "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/y_string_nbsp_uescaped",
     "file": "score/json/json_test_suite_test.cpp",
-    "line": "176",
+    "line": "194",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -314834,7 +314834,7 @@
   {
     "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/y_string_nonCharacterInUTF_2d8_U_2b10FFFF",
     "file": "score/json/json_test_suite_test.cpp",
-    "line": "176",
+    "line": "194",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -314848,7 +314848,7 @@
   {
     "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/y_string_nonCharacterInUTF_2d8_U_2bFFFF",
     "file": "score/json/json_test_suite_test.cpp",
-    "line": "176",
+    "line": "194",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -314862,7 +314862,7 @@
   {
     "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/y_string_null_escape",
     "file": "score/json/json_test_suite_test.cpp",
-    "line": "176",
+    "line": "194",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -314876,7 +314876,7 @@
   {
     "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/y_string_one_2dbyte_2dutf_2d8",
     "file": "score/json/json_test_suite_test.cpp",
-    "line": "176",
+    "line": "194",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -314890,7 +314890,7 @@
   {
     "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/y_string_pi",
     "file": "score/json/json_test_suite_test.cpp",
-    "line": "176",
+    "line": "194",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -314904,7 +314904,7 @@
   {
     "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/y_string_reservedCharacterInUTF_2d8_U_2b1BFFF",
     "file": "score/json/json_test_suite_test.cpp",
-    "line": "176",
+    "line": "194",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -314918,7 +314918,7 @@
   {
     "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/y_string_simple_ascii",
     "file": "score/json/json_test_suite_test.cpp",
-    "line": "176",
+    "line": "194",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -314932,7 +314932,7 @@
   {
     "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/y_string_space",
     "file": "score/json/json_test_suite_test.cpp",
-    "line": "176",
+    "line": "194",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -314946,7 +314946,7 @@
   {
     "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/y_string_surrogates_U_2b1D11E_MUSICAL_SYMBOL_G_CLEF",
     "file": "score/json/json_test_suite_test.cpp",
-    "line": "176",
+    "line": "194",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -314960,7 +314960,7 @@
   {
     "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/y_string_three_2dbyte_2dutf_2d8",
     "file": "score/json/json_test_suite_test.cpp",
-    "line": "176",
+    "line": "194",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -314974,7 +314974,7 @@
   {
     "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/y_string_two_2dbyte_2dutf_2d8",
     "file": "score/json/json_test_suite_test.cpp",
-    "line": "176",
+    "line": "194",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -314988,7 +314988,7 @@
   {
     "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/y_string_u_2b2028_line_sep",
     "file": "score/json/json_test_suite_test.cpp",
-    "line": "176",
+    "line": "194",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -315002,7 +315002,7 @@
   {
     "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/y_string_u_2b2029_par_sep",
     "file": "score/json/json_test_suite_test.cpp",
-    "line": "176",
+    "line": "194",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -315016,7 +315016,7 @@
   {
     "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/y_string_uEscape",
     "file": "score/json/json_test_suite_test.cpp",
-    "line": "176",
+    "line": "194",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -315030,7 +315030,7 @@
   {
     "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/y_string_uescaped_newline",
     "file": "score/json/json_test_suite_test.cpp",
-    "line": "176",
+    "line": "194",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -315044,7 +315044,7 @@
   {
     "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/y_string_unescaped_char_delete",
     "file": "score/json/json_test_suite_test.cpp",
-    "line": "176",
+    "line": "194",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -315058,7 +315058,7 @@
   {
     "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/y_string_unicode",
     "file": "score/json/json_test_suite_test.cpp",
-    "line": "176",
+    "line": "194",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -315072,7 +315072,7 @@
   {
     "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/y_string_unicodeEscapedBackslash",
     "file": "score/json/json_test_suite_test.cpp",
-    "line": "176",
+    "line": "194",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -315086,7 +315086,7 @@
   {
     "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/y_string_unicode_2",
     "file": "score/json/json_test_suite_test.cpp",
-    "line": "176",
+    "line": "194",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -315100,7 +315100,7 @@
   {
     "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/y_string_unicode_U_2b10FFFE_nonchar",
     "file": "score/json/json_test_suite_test.cpp",
-    "line": "176",
+    "line": "194",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -315114,7 +315114,7 @@
   {
     "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/y_string_unicode_U_2b1FFFE_nonchar",
     "file": "score/json/json_test_suite_test.cpp",
-    "line": "176",
+    "line": "194",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -315128,7 +315128,7 @@
   {
     "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/y_string_unicode_U_2b200B_ZERO_WIDTH_SPACE",
     "file": "score/json/json_test_suite_test.cpp",
-    "line": "176",
+    "line": "194",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -315142,7 +315142,7 @@
   {
     "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/y_string_unicode_U_2b2064_invisible_plus",
     "file": "score/json/json_test_suite_test.cpp",
-    "line": "176",
+    "line": "194",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -315156,7 +315156,7 @@
   {
     "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/y_string_unicode_U_2bFDD0_nonchar",
     "file": "score/json/json_test_suite_test.cpp",
-    "line": "176",
+    "line": "194",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -315170,7 +315170,7 @@
   {
     "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/y_string_unicode_U_2bFFFE_nonchar",
     "file": "score/json/json_test_suite_test.cpp",
-    "line": "176",
+    "line": "194",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -315184,7 +315184,7 @@
   {
     "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/y_string_unicode_escaped_double_quote",
     "file": "score/json/json_test_suite_test.cpp",
-    "line": "176",
+    "line": "194",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -315198,7 +315198,7 @@
   {
     "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/y_string_utf8",
     "file": "score/json/json_test_suite_test.cpp",
-    "line": "176",
+    "line": "194",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -315212,7 +315212,7 @@
   {
     "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/y_string_with_del_character",
     "file": "score/json/json_test_suite_test.cpp",
-    "line": "176",
+    "line": "194",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -315226,7 +315226,7 @@
   {
     "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/y_structure_lonely_false",
     "file": "score/json/json_test_suite_test.cpp",
-    "line": "176",
+    "line": "194",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -315240,7 +315240,7 @@
   {
     "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/y_structure_lonely_int",
     "file": "score/json/json_test_suite_test.cpp",
-    "line": "176",
+    "line": "194",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -315254,7 +315254,7 @@
   {
     "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/y_structure_lonely_negative_real",
     "file": "score/json/json_test_suite_test.cpp",
-    "line": "176",
+    "line": "194",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -315268,7 +315268,7 @@
   {
     "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/y_structure_lonely_null",
     "file": "score/json/json_test_suite_test.cpp",
-    "line": "176",
+    "line": "194",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -315282,7 +315282,7 @@
   {
     "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/y_structure_lonely_string",
     "file": "score/json/json_test_suite_test.cpp",
-    "line": "176",
+    "line": "194",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -315296,7 +315296,7 @@
   {
     "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/y_structure_lonely_true",
     "file": "score/json/json_test_suite_test.cpp",
-    "line": "176",
+    "line": "194",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -315310,7 +315310,7 @@
   {
     "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/y_structure_string_empty",
     "file": "score/json/json_test_suite_test.cpp",
-    "line": "176",
+    "line": "194",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -315324,7 +315324,7 @@
   {
     "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/y_structure_trailing_newline",
     "file": "score/json/json_test_suite_test.cpp",
-    "line": "176",
+    "line": "194",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -315338,7 +315338,7 @@
   {
     "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/y_structure_true_in_array",
     "file": "score/json/json_test_suite_test.cpp",
-    "line": "176",
+    "line": "194",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -315352,7 +315352,7 @@
   {
     "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/y_structure_whitespace_array",
     "file": "score/json/json_test_suite_test.cpp",
-    "line": "176",
+    "line": "194",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
