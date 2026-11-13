@@ -1,13 +1,4 @@
-## Table of Contents
-
-1. [Overview](#1-overview)
-2. [targets at a Glance](#2-targets-at-a-glance)
-3. [PlantUML Diagrams](#4-plantuml-diagrams)
-4. [How to Add a New Backend Registrant](#5-how-to-add-a-new-backend-registrant)
-5. [Bazel Usage Guide](#6-bazel-usage-guide)
-6. [Fallback Behavior](#7-fallback-behavior)
-7. [Assumptions and Constraints](#8-assumptions-and-constraints)
-8. [FAQs](#9-faqs)
+# Registry Aware Recorder Factory
 
 ## 1. Overview
 
@@ -39,7 +30,7 @@ Each plugin uses `alwayslink = True` to ensure its static registrant is linked.
 | `@score_baselibs//score/mw/log:console` | Console logging | `config_KConsole_Logging` flag |
 | `//score/mw/log/backend:file` | DLT file logging | `config_KFile_Logging` flag |
 | `//score/mw/log/backend:remote` | DataRouter remote DLT | `Remote_Logging` flag |
-| `//score/mw/log/backend:remote` | GTL remote DLT ("DLTv2", see [dlt_trace_backend.md](./backend/dlt_trace_backend.md)) | `Remote_Logging` and `shm_dma_enabled` flag |
+| `//score/mw/log/backend:remote` | GTL remote DLT ("DLTv2", see `backend/dlt_trace_backend.md` in the `score_logging` repository) | `Remote_Logging` and `shm_dma_enabled` flag |
 | `//score/mw/log/backend:slog` | QNX slog2 | QNX only (`@platforms//os:qnx`) |
 
 Guarantees:
@@ -51,11 +42,26 @@ Guarantees:
 
 ## 4. PlantUML Diagrams
 
-| Diagram | Description |
-|---------|-------------|
-| Component Diagram | ![Component Diagram](./score/mw/log/design/backend_registration_component_diagram.puml) | Shows the layered architecture |
-| Sequence Diagram | ![Sequence Diagram](./score/mw/log/design/backend_registration_sequence_diagram.puml) | Traces the full lifecycle from OS load through constant initialization, dynamic registration, first `LOG_xxx()` call, recorder creation with fallback logic, to shutdown. |
-| Activity Diagram | ![Activity Diagram](./score/mw/log/design/rarf_activity_diagram.puml) | Details the decision flow including all fallback paths and error handling. |
+Component diagram: shows the layered architecture.
+
+```{uml} ../_assets/backend_registration_component_diagram.puml
+:caption: Component Diagram
+```
+
+Sequence diagram: traces the full lifecycle from OS load through constant
+initialization, dynamic registration, first `LOG_xxx()` call, recorder creation
+with fallback logic, to shutdown.
+
+```{uml} ../_assets/backend_registration_sequence_diagram.puml
+:caption: Sequence Diagram
+```
+
+Activity diagram: details the decision flow including all fallback paths and
+error handling.
+
+```{uml} ../_assets/rarf_activity_diagram.puml
+:caption: Activity Diagram
+```
 
 ## 5. How to Add a New Backend Registrant
 

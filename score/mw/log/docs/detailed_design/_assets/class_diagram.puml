@@ -8,6 +8,7 @@ package "score_log crate" {
 
     +interface Log <<trait>> {
         +enabled(&self, metadata: &Metadata<_>) : bool
+        +context(&self) : &str
         +log(&self, record: &Record) : ()
         +flush(&self) : ()
     }
@@ -226,20 +227,28 @@ package "score_log_fmt_macro crate" {
     end note
 }
 
-package "score_log_subscriber crate" {
-    note as score_log_subscriber_desc
-        Example of backend implementation.
+package "stdout_logger crate" {
+    note as stdout_logger_desc
+        String-based backend implementation, data is written to a fixed-size buffer and to stdout.
     end note
 
-    +class ExampleLog <<struct>> {
+    +class StdoutLogger <<struct>> {
         +enabled(&self, metadata: &Metadata<_>) : bool
+        +context(&self) : &str
         +log(&self, record: &Record) : ()
         +flush(&self) : ()
     }
 
-    ExampleLog ..|> Log
+    StdoutLogger ..|> Log
 
-    +class ExampleScoreWrite <<struct>> {
+    +class StdoutLoggerBuilder <<struct>> {
+        +build(self) : StdoutLogger
+        +set_as_default_logger(self) : ()
+    }
+
+    StdoutLoggerBuilder ..> StdoutLogger : builds
+
+    +class FixedBufWriter <<struct>> {
         +write_bool(&mut self, v: &bool, spec: &FormatSpec) : Result
         +write_f32(&mut self, v: &f32, spec: &FormatSpec) : Result
         +write_f64(&mut self, v: &f64, spec: &FormatSpec) : Result
@@ -254,14 +263,14 @@ package "score_log_subscriber crate" {
         +write_str(&mut self, v: &str, spec: &FormatSpec) : Result
     }
 
-    ExampleScoreWrite ..|> ScoreWrite
-    ExampleLog *-- ExampleScoreWrite
+    FixedBufWriter ..|> ScoreWrite
+    StdoutLogger *-- FixedBufWriter
 }
 
 "score_log crate" -[hidden]down-> "score_log_fmt crate"
 "score_log crate" -[hidden]up-> "score_log_fmt_macro crate"
 
-"score_log crate" -[hidden]down------> "score_log_subscriber crate"
-"score_log_fmt crate" -[hidden]down------> "score_log_subscriber crate"
+"score_log crate" -[hidden]down------> "stdout_logger crate"
+"score_log_fmt crate" -[hidden]down------> "stdout_logger crate"
 
 @enduml

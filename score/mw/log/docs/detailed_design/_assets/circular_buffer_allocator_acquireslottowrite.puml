@@ -3,17 +3,15 @@ title Circular Buffer Allocator Acquire Slot To Write
 start
 :Loop Counter = 0;
 repeat :Increment loop counter;
-    :Atomically
-    Get slot
-    Increment next slot index;
-    :Slot index = claimed slot % circular buffer capacity;
+    :Atomically claim the next sequence number
+    (one atomic fetch_add);
+    :Slot index = claimed sequence number % circular buffer capacity;
     if (Loop counter > circular buffer size) then (Yes)
         :Return empty;
         stop
     else (No)
     endif
-repeat while (Slot in use?) is (Yes) not (No);
-:Mark Slot as in use;
+repeat while (Slot::TryUse() failed?\n(atomically marks the slot as in use)) is (Yes) not (No);
 :Return Slot index;
 stop
 @enduml

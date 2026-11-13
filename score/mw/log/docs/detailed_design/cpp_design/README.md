@@ -20,7 +20,7 @@
 - Object-seam mocking — The codebase uses object seams for testability (no link-time mocking). All recorder and backend abstractions expose virtual interfaces with corresponding mock implementations.
 - No dynamic memory allocation at runtime — Buffer sizes (per slot and number of slots) are allocated at creation time. The sole exception is the remote backend (`DataRouterRecorder`), which requires one dynamic allocation for shared-memory communication.
 - Lock-free, pre-allocated buffers — The system prioritises stable, predictable performance over memory efficiency by using lock-free data structures with pre-allocated storage.
-- Stream-based API — C++ idiomatically uses [streams](https://en.cppreference.com/w/cpp/io) for I/O. The `LogStream` follows this pattern to provide a familiar interface and to efficiently support the [DLT protocol](../README.md#dlt-formatted-payload), which is the primary backend format.
+- Stream-based API — C++ idiomatically uses [streams](https://en.cppreference.com/w/cpp/io) for I/O. The `LogStream` follows this pattern to provide a familiar interface and to efficiently support the DLT protocol (see the section "DLT formatted payload" of the `mw::log` README), which is the primary backend format.
 - Free-function and context-aware entry points — Two complementary APIs coexist: free functions (`LogError()`, `LogWarn()`, …) for convenience, and a `Logger` class for context-aware logging. The free functions satisfy compatibility with the Adaptive AUTOSAR standard, while the `Logger` provides scoped context identifiers.
 - Plugin-based backend selection — Backends register themselves via static initialisation into a global function-pointer table (`BackendTable`). Applications opt in to specific backends through Bazel dependencies, and the `RegistryAwareRecorderFactory` queries the table at runtime to compose the active recorder.
 
@@ -28,9 +28,7 @@
 
 ### Core Data Structure
 
-The core data structure is a slot-oriented, lock-free ring buffer where each slot carries a flag indicating whether it is currently in use. The following graphic illustrates this layout:
-
-![Buffer Structure](./buffer_data_structure.svg)
+The core data structure is a slot-oriented, lock-free ring buffer where each slot carries a flag indicating whether it is currently in use.
 
 The `CircularAllocator` template (in `detail/circular_allocator.h`) implements this ring buffer. Each slot allows independent, concurrent writing and reading. A reader checks the slot's flag to determine readability; when every slot is occupied, the writer wraps around like a conventional ring buffer.
 
@@ -56,7 +54,7 @@ The static design is divided into five main parts:
 
 1. MessageBuilder / Format
    Responsible for encoding log data into a target wire format. Two format families exist:
-   - `DLTFormat` / `DltMessageBuilder` — Encodes payloads in the [DLT protocol](../README.md#dlt-formatted-payload) format, used by the remote and file recorders.
+   - `DLTFormat` / `DltMessageBuilder` — Encodes payloads in the DLT protocol (see the section "DLT formatted payload" of the `mw::log` README) format, used by the remote and file recorders.
    - `TextFormat` / `TextMessageBuilder` — Produces human-readable text output, used by the console recorder.
 
    The `IMessageBuilder` interface (in `detail/text_recorder/imessage_builder.h`) defines the abstraction, allowing new formats to be introduced without affecting other components.
@@ -64,7 +62,7 @@ The static design is divided into five main parts:
 2. Backend
    Abstracts the storage and transport of log data. A `Backend` (defined in `detail/backend.h`) manages slot allocation and flushing. Concrete implementations include:
    - `DataRouterBackend` — Transmits log entries to the DataRouter via shared memory for remote DLT logging.
-   - `DltTraceBackend` — Second-generation remote DLT backend ("DLTv2") that forwards log entries to the Generic Trace Library (GTL); selected in place of `DataRouterBackend` when the `shm_dma_enabled` flag is set. See [backend/dlt_trace_backend.md](./backend/dlt_trace_backend.md).
+   - `DltTraceBackend` — Second-generation remote DLT backend ("DLTv2") that forwards log entries to the Generic Trace Library (GTL); selected in place of `DataRouterBackend` when the `shm_dma_enabled` flag is set. See `dlt_trace_backend.md` in the `score_logging` repository.
    - `FileOutputBackend` — Writes log entries to local files.
    - `SlogBackend` — Forwards log entries to the QNX `slog2` system logger (QNX-only).
 
@@ -76,18 +74,24 @@ The static design is divided into five main parts:
 4. LogStream
    The primary user-facing API. `LogStream` is a RAII wrapper: construction acquires a slot from the active recorder, and destruction releases it. Content streamed via `operator<<` writes directly into the owned slot, avoiding intermediate copies. Ownership transfers from the middleware to the caller by value — no heap allocation is required.
 
-5. RecorderFactory
+5. Recorder factory
    The `RegistryAwareRecorderFactory` (in `detail/registry_aware_recorder_factory.h`) is the single implementation of `IRecorderFactory`. It queries the `BackendTable` for registered backends, creates the appropriate recorders, and composes them via `CompositeRecorder` when multiple log modes are active.
 
-![Verbose Console Logging class diagram](./score/mw/log/design/verbose_console_logging_static.puml)
+```{uml} ../_assets/verbose_console_logging_static.puml
+:caption: Verbose Console Logging class diagram
+```
 
-![Verbose Console Logging sequence diagram](./score/mw/log/design/verbose_console_logging_sequence.puml)
+```{uml} ../_assets/non_verbose_logging_static.puml
+:caption: Non-Verbose Logging class diagram
+```
 
-![Non-Verbose Logging class diagram](./score/mw/log/design/non_verbose_logging_static.puml)
+```{uml} ../_assets/error_domain.puml
+:caption: ErrorDomain class diagram
+```
 
-![ErrorDomain class diagram](./score/mw/log/design/error_domain.puml)
-
-![Frontend Dependency Graph](./score/mw/log/design/frontend_dependency_graph.puml)
+```{uml} ../_assets/frontend_dependency_graph.puml
+:caption: Frontend Dependency Graph
+```
 
 ### Types of Recorders
 
@@ -106,7 +110,9 @@ The following concrete `Recorder` implementations exist:
 
 `EmptyRecorder` serves as the default when no backend is linked or when logging is explicitly turned off.
 
-![Recorders class diagram](./score/mw/log/design/mw_log_default_recorders.puml)
+```{uml} ../_assets/mw_log_default_recorders.puml
+:caption: Recorders class diagram
+```
 
 ### Backend Registration System
 
@@ -126,23 +132,37 @@ At runtime, `RegistryAwareRecorderFactory` queries `IsBackendAvailable()` for ea
 
 Each registrant Bazel target uses `alwayslink = True` to ensure the linker does not discard the static registrant object.
 
-![Backend Registration Component Diagram](./score/mw/log/design/backend_registration_component_diagram.puml)
+```{uml} ../_assets/backend_registration_component_diagram.puml
+:caption: Backend Registration Component Diagram
+```
 
-![Backend Registration Sequence Diagram](./score/mw/log/design/backend_registration_sequence_diagram.puml)
+```{uml} ../_assets/backend_registration_sequence_diagram.puml
+:caption: Backend Registration Sequence Diagram
+```
 
-![RegistryAwareRecorderFactory Activity Diagram](./score/mw/log/design/rarf_activity_diagram.puml)
+```{uml} ../_assets/rarf_activity_diagram.puml
+:caption: RegistryAwareRecorderFactory Activity Diagram
+```
 
 For a step-by-step guide on adding a new backend, refer to [registry_aware_recorder_factory.md](./registry_aware_recorder_factory.md).
 
 ### Activity Diagrams
 
-![CircularAllocator::AcquireSlotToWrite Activity diagram](./score/mw/log/design/circular_buffer_allocator_acquireslottowrite.puml)
+```{uml} ../_assets/circular_buffer_allocator_acquireslottowrite.puml
+:caption: CircularAllocator::AcquireSlotToWrite Activity diagram
+```
 
-![WaitFreeStack::TryPush Activity diagram](./score/mw/log/design/wait_free_stack_trypush.puml)
+```{uml} ../_assets/wait_free_stack_trypush.puml
+:caption: WaitFreeStack::TryPush Activity diagram
+```
 
-![SlotDrainer Action Diagram](./score/mw/log/design/slot_drainer_action_diagram_design.puml)
+```{uml} ../_assets/slot_drainer_action_diagram_design.puml
+:caption: SlotDrainer Action Diagram
+```
 
-![SlotDrainer Sequence Diagram](./score/mw/log/design/slot_drainer_sequence_design.puml)
+```{uml} ../_assets/slot_drainer_sequence_design.puml
+:caption: SlotDrainer Sequence Diagram
+```
 
 ### User-Facing APIs
 
@@ -183,11 +203,11 @@ Both free functions and `Logger` methods return `LogStream` by value. Ownership 
 The logging library loads its configuration lazily on the first log call. For verbose logging, two configuration files are consulted:
 
 1. ECU-wide configuration — `/etc/ecu_logging_config.json` — provides the ECU identifier (`ECUID`) used in DLT headers.
-2. Application-specific configuration — discovered via the `MW_LOG_CONFIG_FILE` environment variable, or from standard paths (`/opt/<app>/etc/logging.json`, `<cwd>/etc/logging.json`, `<cwd>/logging.json`). This file specifies the application identifier (`APPID`), default log level, context-specific log levels, and active log modes.
+2. Application-specific configuration — discovered via the `MW_LOG_CONFIG_FILE` environment variable, or from standard paths (in this order `<binary path>/../etc/logging.json`, `<cwd>/etc/logging.json`, `<cwd>/logging.json`; the first existing file is used). This file specifies the application identifier (`APPID`), default log level, context-specific log levels, and active log modes.
 
 The application-specific configuration overrides ECU-wide defaults. The `Configuration` class (in `configuration/configuration.h`) aggregates these settings, and `TargetConfigReader` (in `configuration/target_config_reader.h`) handles file discovery and parsing via `ConfigurationFileDiscoverer`.
 
-For non-verbose logging, a third file — `/opt/datarouter/etc/class-id.json` — maps non-verbose message class IDs to their log levels.
+For non-verbose logging, a third file — `/bmw/platform/opt/datarouter/etc/class-id.json` — maps non-verbose message class IDs to their log levels.
 
 Refer to [configuration_design.md](./configuration_design.md) for the full class diagram and sequence diagram.
 
@@ -213,4 +233,4 @@ bazel query 'kind("cc_library", deps(@score_baselibs//score/mw/log))'
 - [registry_aware_recorder_factory.md](./registry_aware_recorder_factory.md) — Backend plugin system, Bazel targets, fallback behaviour, and guide for adding new backends.
 - [configuration_design.md](./configuration_design.md) — Configuration file discovery, loading, and class design.
 - [dependency_graph.md](./dependency_graph.md) — Frontend-to-backend dependency boundaries and the one-way dependency principle.
-- [backend/](./backend/) — Per-backend design documents (DataRouter, DLT trace / DLTv2, file output).
+- `backend/` (in the `score_logging` repository) — Per-backend design documents (DataRouter, DLT trace / DLTv2, file output).

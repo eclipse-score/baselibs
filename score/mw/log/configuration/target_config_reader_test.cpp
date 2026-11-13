@@ -165,6 +165,8 @@ TEST_F(TargetConfigReaderFixture, NoConfigFilesShallFail)
 
 TEST_F(TargetConfigReaderFixture, ConfigReaderShallParseEcuIdFromEcuConfig)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__log__global_config, comp_req__log__cfg_log_ecu_id");
+    RecordProperty("TestType", "requirements-based");
     RecordProperty("Requirement", "SCR-1633316, SCR-1634075");
     RecordProperty("ASIL", "B");
     RecordProperty("Description",
@@ -177,6 +179,8 @@ TEST_F(TargetConfigReaderFixture, ConfigReaderShallParseEcuIdFromEcuConfig)
 
 TEST_F(TargetConfigReaderFixture, ConfigReaderShallParseAppIdFromAppConfig)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__log__cfg_file, comp_req__log__cfg_precedence, comp_req__log__cfg_log_app_id");
+    RecordProperty("TestType", "requirements-based");
     RecordProperty("Requirement", "SCR-1633316");
     RecordProperty("ASIL", "B");
     RecordProperty("Description",
@@ -189,6 +193,8 @@ TEST_F(TargetConfigReaderFixture, ConfigReaderShallParseAppIdFromAppConfig)
 
 TEST_F(TargetConfigReaderFixture, ConfigReaderShallParseLogLevelFromAppConfig)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__log__cfg_file");
+    RecordProperty("TestType", "requirements-based");
     RecordProperty("Requirement", "SCR-1633316");
     RecordProperty("ASIL", "B");
     RecordProperty(
@@ -202,6 +208,8 @@ TEST_F(TargetConfigReaderFixture, ConfigReaderShallParseLogLevelFromAppConfig)
 
 TEST_F(TargetConfigReaderFixture, ConfigReaderShallParseLogModeFromAppConfig)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__log__cfg_file");
+    RecordProperty("TestType", "requirements-based");
     RecordProperty("Requirement", "SCR-1633316");
     RecordProperty("ASIL", "B");
     RecordProperty("Description",
@@ -239,6 +247,8 @@ TEST_F(TargetConfigReaderFixture, ConfigReaderShallParseBufferOverwriteOnFullSta
 
 TEST_F(TargetConfigReaderFixture, ConfigReaderShallParseStackBufferSizeFromEcuConfig)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__log__cfg_buffer_size");
+    RecordProperty("TestType", "requirements-based");
     RecordProperty("Requirement", "SCR-1633316");
     RecordProperty("ASIL", "B");
     RecordProperty(
@@ -252,6 +262,8 @@ TEST_F(TargetConfigReaderFixture, ConfigReaderShallParseStackBufferSizeFromEcuCo
 
 TEST_F(TargetConfigReaderFixture, ConfigReaderShallParseRingBufferSizeFromEcuConfig)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__log__cfg_buffer_size");
+    RecordProperty("TestType", "requirements-based");
     RecordProperty("Requirement", "SCR-1633316, SCR-1634075");
     RecordProperty("ASIL", "B");
     RecordProperty(
@@ -278,6 +290,8 @@ TEST_F(TargetConfigReaderFixture, ConfigReaderShallParseLogLevelConsoleFromEcuCo
 
 TEST_F(TargetConfigReaderFixture, ConfigReaderShallParseLogFilePathFromAppConfig)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__log__cfg_sink_device");
+    RecordProperty("TestType", "requirements-based");
     RecordProperty("Requirement", "SCR-1633316");
     RecordProperty("ASIL", "B");
     RecordProperty("Description",
@@ -291,6 +305,8 @@ TEST_F(TargetConfigReaderFixture, ConfigReaderShallParseLogFilePathFromAppConfig
 
 TEST_F(TargetConfigReaderFixture, ConfigReaderShallParseContextLogLevelFromEcuAndAppConfig)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__log__cfg_precedence");
+    RecordProperty("TestType", "requirements-based");
     RecordProperty("Requirement", "SCR-1633316, SCR-1634075");
     RecordProperty("ASIL", "B");
     RecordProperty("Description",
@@ -304,6 +320,8 @@ TEST_F(TargetConfigReaderFixture, ConfigReaderShallParseContextLogLevelFromEcuAn
 
 TEST_F(TargetConfigReaderFixture, ConfigReaderShallParseNumberOfSlots)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__log__cfg_buffer_size");
+    RecordProperty("TestType", "requirements-based");
     RecordProperty("Requirement", "SCR-1633316");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "TargetConfigReader shall parse the number of slots for preallocation correctly.");
@@ -315,6 +333,8 @@ TEST_F(TargetConfigReaderFixture, ConfigReaderShallParseNumberOfSlots)
 
 TEST_F(TargetConfigReaderFixture, ConfigReaderShallParseSlotSizeBytes)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__log__cfg_buffer_size");
+    RecordProperty("TestType", "requirements-based");
     RecordProperty("Requirement", "SCR-1633316");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "TargetConfigReader shall parse the size of the slots for preallocation correctly.");
@@ -349,6 +369,8 @@ TEST_F(TargetConfigReaderFixture, ConfigReaderShallParseDataRouterUid)
 
 TEST_F(TargetConfigReaderFixture, AppConfigSyntaxErrorShallFallbackToEcuConfig)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__log__cfg_syntax_err");
+    RecordProperty("TestType", "requirements-based");
     RecordProperty("Requirement", "SCR-7263547");
     RecordProperty("ASIL", "B");
     RecordProperty(
@@ -383,6 +405,8 @@ TEST_F(TargetConfigReaderFixture, WrongStructureConfigFileShallCauseDefaultAppId
 
 TEST_F(TargetConfigReaderFixture, WrongLogLevelValueShallFallbackToEcuConfig)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__log__cfg_invalid");
+    RecordProperty("TestType", "requirements-based");
     RecordProperty("Requirement", "SCR-7263547");
     RecordProperty("ASIL", "B");
     RecordProperty("Description",
@@ -400,6 +424,8 @@ TEST_F(TargetConfigReaderFixture, WrongLogLevelValueShallFallbackToEcuConfig)
 
 TEST_F(TargetConfigReaderFixture, AppConfigInvalidLogLevelFallbackToEcuConfig)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__log__cfg_invalid");
+    RecordProperty("TestType", "requirements-based");
     RecordProperty("Requirement", "SCR-7263548");
     RecordProperty("ASIL", "B");
     RecordProperty("Description",
@@ -417,6 +443,8 @@ TEST_F(TargetConfigReaderFixture, AppConfigInvalidLogLevelFallbackToEcuConfig)
 
 TEST_F(TargetConfigReaderFixture, AppConfigInvalidLogModeFallbackToEcuConfig)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__log__cfg_invalid");
+    RecordProperty("TestType", "requirements-based");
     RecordProperty("Requirement", "SCR-7263548");
     RecordProperty("ASIL", "B");
     RecordProperty("Description",
@@ -434,6 +462,8 @@ TEST_F(TargetConfigReaderFixture, AppConfigInvalidLogModeFallbackToEcuConfig)
 
 TEST_F(TargetConfigReaderFixture, AppConfigInvalidContextConfigFallbackToEcuConfig)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__log__cfg_invalid");
+    RecordProperty("TestType", "requirements-based");
     RecordProperty("Requirement", "SCR-7263548");
     RecordProperty("ASIL", "B");
     RecordProperty("Description",
@@ -467,6 +497,8 @@ TEST_F(TargetConfigReaderFixture, WrongEntriesToContextConfigslShallReturnEmptyC
 
 TEST_F(TargetConfigReaderFixture, WhenInvalidFilePathReaderShallReturnDefaultAppId)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__log__cfg_defaults");
+    RecordProperty("TestType", "requirements-based");
     RecordProperty("Requirement", "SCR-7263537, SCR-7263552");
     RecordProperty("ASIL", "B");
     RecordProperty("Description",
@@ -484,6 +516,8 @@ TEST_F(TargetConfigReaderFixture, WhenInvalidFilePathReaderShallReturnDefaultApp
 
 TEST_F(TargetConfigReaderFixture, EmptyConfigFileShallCauseDefaultAppId)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__log__cfg_defaults");
+    RecordProperty("TestType", "requirements-based");
     RecordProperty("Requirement", "SCR-7263552");
     RecordProperty("ASIL", "B");
     RecordProperty("Description",
@@ -501,6 +535,8 @@ TEST_F(TargetConfigReaderFixture, EmptyConfigFileShallCauseDefaultAppId)
 
 TEST_F(TargetConfigReaderFixture, ConfigReaderShallFallBackToContextLogLevelDefaultWhenNoValidValueInConfigurationFiles)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__log__cfg_defaults");
+    RecordProperty("TestType", "requirements-based");
     RecordProperty("Requirement", "SCR-7263548, SCR-7263552");
     RecordProperty("ASIL", "B");
     RecordProperty("Description",

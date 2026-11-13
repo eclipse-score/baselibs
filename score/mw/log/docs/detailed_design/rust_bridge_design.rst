@@ -20,13 +20,15 @@ Rust Bridge Detailed Design
 Description
 -----------
 
-The rust log bridge component consists of three units:
+The rust log bridge component consists of five units:
 
 - ``score_log`` - modelled after ``log`` Rust library.
 - ``score_log_fmt`` - replacement for ``core::fmt`` provided by Rust core library.
 - ``score_log_fmt_macro`` - replacement for macros provided by Rust compiler:
   - ``score_log_format_args!`` - replacement for ``format_args!``
   - ``ScoreDebug`` - replacement for ``Debug``
+- ``stdout_logger`` - string-based backend for ``score_log``, data is written to a fixed-size buffer.
+- ``stdout_logger_cpp_init`` - C++ builder and C interface to set up the ``stdout_logger`` from C++ applications.
 
 Most common approach in Rust is that formatting always results in a string.
 This means that the ``log`` library always receives a pre-formatted string.

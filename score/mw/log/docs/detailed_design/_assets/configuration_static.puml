@@ -1,6 +1,6 @@
 @startuml configuration_static
 
-interface "bmw:mw::log::Recorder" as Recorder {
+interface "score::mw::log::Recorder" as Recorder {
 }
 
 class "TextRecorder" as TextRecorder {
@@ -13,17 +13,13 @@ class "DataRouterRecorder" as DataRouterRecorder {
 class "FileRecorder" as FileRecorder {
 }
 
-class "Empty" as Empty {
+class "EmptyRecorder" as EmptyRecorder {
 }
 
 class "CompositeRecorder" as CompositeRecorder {
-  - config_: score::mw::log::detail::Configuration
-}
-
-class "RecorderComposite" as RecorderComposite {
-  + RecorderComposite(recorders: vector<Recorder>)
+  + CompositeRecorder(recorders: vector<unique_ptr<Recorder>>)
   __
-  - recorders_: vector<Recorder>
+  - recorders_: vector<unique_ptr<Recorder>>
 }
 
 class "score::mw::log::Configuration" as Configuration {
@@ -78,7 +74,7 @@ class "score::mw::log::Configuration" as Configuration {
 }
 
 class "TargetConfigReader" as TargetConfigReader {
-  - discoverer_: unique_ptr<IConfigurationFileDiscovery>
+  - discoverer_: unique_ptr<IConfigurationFileDiscoverer>
   __
   + TargetConfigReader(discoverer: IConfigurationFileDiscoverer)
   + ReadConfig(): score::Result<Configuration>
@@ -91,21 +87,17 @@ interface "ITargetConfigReader" as ITargetConfigReader {
 class "TargetConfigReaderMock" as TargetConfigReaderMock {
 }
 
-class "RecorderFactory" as RecorderFactory {
-  - GetRemoteRecorder(const Configuration&):\n  std::unique_ptr<Recorder>
-  - GetFileRecorder(const Configuration& config\n  const std::unique_ptr<score::os::Fcntl>&):\n  std::unique_ptr<Recorder>
-  - GetConsoleRecorder(const Configuration&):\n  std::unique_ptr<Recorder>
-  __
-  + CreateFromConfiguration(): std::unique_ptr<Recorder>
-  + CreateFromConfiguration(\n  const std::unique_ptr<const ITargetConfigReader>):\n  std::unique_ptr<Recorder>
-  + CreateWithConsoleLoggingOnly(): std::unique_ptr<Recorder>
+class "RegistryAwareRecorderFactory" as RegistryAwareRecorderFactory {
+  + CreateFromConfiguration(\n  memory_resource*): std::unique_ptr<Recorder>
+  + CreateFromConfiguration(\n  const std::unique_ptr<const ITargetConfigReader>,\n  memory_resource*): std::unique_ptr<Recorder>
+  + CreateWithConsoleLoggingOnly(\n  memory_resource*): std::unique_ptr<Recorder>
   + CreateStub(): std::unique_ptr<Recorder>
-  + CreateRecorderFromLogMode(\n  const LogMode&,\n  const Configuration&,\n  const std::unique_ptr<score::os::Fcntl>)
+  + CreateRecorderFromLogMode(\n  const LogMode&,\n  const Configuration&,\n  memory_resource*): std::unique_ptr<Recorder>
 }
 
 interface "IRecorderFactory" as IRecorderFactory {
-  + CreateFromConfiguration: std::unique_ptr<Recorder>
-  + CreateWithConsoleLoggingOnly(): std::unique_ptr<Recorder>
+  + CreateFromConfiguration(memory_resource*): std::unique_ptr<Recorder>
+  + CreateWithConsoleLoggingOnly(memory_resource*): std::unique_ptr<Recorder>
   + CreateStub(): std::unique_ptr<Recorder>
 }
 
@@ -162,9 +154,8 @@ package "score::os" {
 Recorder <|-- DataRouterRecorder
 Recorder <|-- TextRecorder
 Recorder <|-- FileRecorder
-Recorder <|-- Empty
+Recorder <|-- EmptyRecorder
 Recorder <|-- CompositeRecorder
-Recorder <|.. RecorderComposite
 
 ITargetConfigReader <|.. TargetConfigReader
 ITargetConfigReader <|.. TargetConfigReaderMock
@@ -174,15 +165,14 @@ IConfigurationFileDiscoverer <|-- ConfigurationFileDiscovererMock
 
 ' Composition and aggregation relationships
 DataRouterRecorder *-- Configuration
-CompositeRecorder *-- Configuration
-RecorderComposite *-- DataRouterRecorder
-RecorderComposite *-- TextRecorder
+CompositeRecorder o-- Recorder : contains one or more
 Configuration *-- LoggingIdentifier
 
 ' Usage relationships
-RecorderFactory ..> RecorderComposite : creates
-RecorderFactory ..> TargetConfigReader : uses
-RecorderFactory ..> IRecorderFactory : uses
+IRecorderFactory <|.. RegistryAwareRecorderFactory
+RegistryAwareRecorderFactory ..> CompositeRecorder : creates
+RegistryAwareRecorderFactory ..> TargetConfigReader : uses
+RegistryAwareRecorderFactory ..> ITargetConfigReader : uses
 Runtime ..> Recorder : owns instance of
 TargetConfigReader ..> Configuration : creates
 TargetConfigReader *-- IConfigurationFileDiscoverer
@@ -191,33 +181,34 @@ ConfigurationFileDiscoverer ..> Path : uses
 ConfigurationFileDiscoverer ..> Unistd : uses
 ConfigurationFileDiscoverer ..> Stdlib : uses
 
-note right of RecorderComposite
+note right of CompositeRecorder
   Forwards the logs to all recorders in the list
   passed in the constructor.
 end note
 
-note right of RecorderFactory
-  CreateForTarget(): Loads the configuration
-  and  instantiates the requested
-  recorder types.
+note right of RegistryAwareRecorderFactory
+  CreateFromConfiguration(): Loads the
+  configuration and instantiates the
+  recorders of the requested log modes.
 
-  CreateForUnitTests(): Prepares a recorder
-  that puts logs in standard output stream
-  for unit testing.
+  CreateWithConsoleLoggingOnly(): Creates the
+  console recorder with the default
+  configuration.
 
-  CreateStub(): Returns Empty recorder that
+  CreateStub(): Returns EmptyRecorder that
   discards all the logs.
 end note
 
 note right of TargetConfigReader
-  Reads config from
-  /opt/<app>/etc/logging.json
-  and /ecu/logging.json and creates the
-  Configuration object.
+  Reads the files found by the
+  ConfigurationFileDiscoverer and creates the
+  Configuration object. The application or
+  environmental configuration overrides the
+  global configuration.
 end note
 
 note bottom of TargetConfigReaderMock
-  Used for unit testing the RecorderFactory.
+  Used for unit testing the RegistryAwareRecorderFactory.
 end note
 
 note top of TargetConfigReader
@@ -241,9 +232,9 @@ note right of ConfigurationFileDiscoverer
   variable if it defined
 
   Application configuration:
-  1. <cwd>/etc/logging.json
-  2. <cwd>/logging.json
-  3. <binary path>/../etc/logging.json
+  1. <binary path>/../etc/logging.json
+  2. <cwd>/etc/logging.json
+  3. <cwd>/logging.json
 end note
 
 @enduml
