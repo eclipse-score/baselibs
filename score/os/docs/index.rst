@@ -12,13 +12,13 @@
    # SPDX-License-Identifier: Apache-2.0
    # *******************************************************************************
 
-os
-###
+Operating System Abstraction Layer (OSAL)
+#########################################
 
-.. document:: OS Library
-   :id: doc__os
+.. document:: OSAL
+   :id: doc__osal
    :status: draft
-   :version: 1
+   :version: 2
    :safety: ASIL_B
    :security: YES
    :tags: baselibs_os
@@ -38,22 +38,30 @@ os
 Abstract
 ========
 
-This component request proposes the integration of a safe OS library for operating system abstractions.
+The Operating System Abstraction Layer (OSAL) provides C++ interfaces to operating system and C standard library services for S-CORE components.
+It supports Linux and QNX through general interfaces and platform-specific extensions.
 
 Motivation and Rationale
 ========================
 
-The OS library shall provide safe and efficient abstractions for operating system functionalities.
-The library shall enable developers to interact with the underlying operating system in a type-safe manner, reducing
-the risk of runtime errors and improving code quality.
-An OS library with type-safe abstractions is needed in the S-CORE software platform due to the frequent interaction with operating system features
-and the need for reliable OS operations.
+Components use OSAL instead of calling supported native APIs directly, separating operating system access from component logic.
+Test doubles can replace service implementations to control results and exercise failure handling without exhausting real resources or altering system configuration.
 
-Specification
+Scope and Use
 =============
 
-The following details and requirements describe the aspects of the current feature in the context of S-CORE.
+Use OSAL when a component needs:
 
-General considerations
-----------------------
-The OS library should provide type-safe abstractions for operating system functionalities:
+- File and directory access, metadata queries, or memory mapping.
+- Process and thread control, synchronization, signals, or timers.
+- Socket communication, message queues, or other interprocess communication.
+- C standard library services such as environment-variable access.
+
+General interfaces cover supported POSIX and C standard library services shared by Linux and QNX.
+Platform-specific interfaces expose services of the selected operating system; they do not provide cross-platform emulation.
+
+Safety and Specification
+========================
+
+OSAL contains ASIL-B and QM functionality.
+Suitability for safety-related use depends on the selected function and its underlying operating system service, not on the interface family alone.
