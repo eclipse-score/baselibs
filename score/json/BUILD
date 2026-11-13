@@ -123,7 +123,8 @@ cc_library(
         "//visibility:public",  # platform_only
     ],
     deps = [
-        ":json_parser_impl",
+        # Aggregate kept so existing consumers still get the writer API transitively.
+        ":json",
         "@score_baselibs//score/language/futurecpp",
         "@score_baselibs//score/result",
         "@score_baselibs//score/static_reflection_with_serialization/visitor",

@@ -45,7 +45,7 @@ SCOPE_DEPS_COMMON = [
     "//score/hash/code/core/factory:factory_mock",
     "//score/hash/code/core/factory/impl:factory_headers",
     "//score/hash/code/crc:mocks",
-    # Keep both the parser and writer in scope; JsonSerializer only uses the parser.
+    # Keep both the parser and writer in scope.
     "//score/json",
     "//score/json:json_serializer",
     "//score/language/safecpp/aborts_upon_exception:abortsuponexception",
