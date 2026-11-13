@@ -112,6 +112,8 @@ SCOPE_DEPS_COMMON = [
     "//score/static_reflection_with_serialization/visitor/examples/ostream:visitor_examples",
     "//score/string_manipulation/arguments",
     "//score/utils:base64",
+    "//score/utils/string_registry:registry_string_view",
+    "//score/utils/string_registry:string_registry",
 ]
 
 # Roots that exist on one platform only. A root incompatible with the scope's
