@@ -119,7 +119,7 @@ flowchart TD
   style SAF color:#000000
 ```
 
-## Safety analysis (FMEA / FTA)
+### Safety analysis (FMEA / FTA)
 
 | Check | docs-as-code | Dependable element | Overlap |
 |---|---|---|---|
@@ -140,7 +140,7 @@ flowchart TD
 | Render FMEA and fault trees | ✔ `fmea.rst` with `.. uml::` | – (`docs = False`) | – |
 | DFA | ✔ | – (placeholder only) | – |
 
-## Requirements, architecture and tests
+### Requirements, architecture and tests
 
 | Check | docs-as-code | Dependable element | Overlap |
 |---|---|---|---|
