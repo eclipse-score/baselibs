@@ -83,21 +83,35 @@ end note
 
 TCR -> RF: Return Configuration instance
 
-alt "Console only recorder (compile option)"
+alt Configuration could not be read
+  RF -> RF: CreateWithConsoleLoggingOnly(memory_resource)
+  note right of RF
+    Creates the console recorder with the
+    default configuration, or EmptyRecorder
+    if no console backend is linked.
+  end note
+else Configuration was read
+  loop for each LogMode in the configuration
+    alt IsBackendAvailable(LogMode)
+      RF -> RF: CreateRecorderForMode(LogMode, Configuration, memory_resource)
+      note right of RF
+        Calls the creator function that the backend registered
+        in the backend table (e.g. ConsoleRecorderFactory
+        creates the TextRecorder).
+      end note
+    else no backend registered for the LogMode
+      RF -> RF: report error and fall back to console\n(only if no console recorder was created yet)
+    end
+  end
 
-Create "TextRecorder" as TR
-RF -> TR: Create instance with configuration
-
-RF -> ER: if logmode other than KConsole is provided.
-
-else "Datarouter (compile option)"
-
-Create "CompositeRecorder" as CR
-
-RF -> CR
-note left of CR
-  Recorder setup depends on the datarouter configuration.
-endnote
+  alt no recorder was created
+    RF -> RF: CreateWithConsoleLoggingOnly(memory_resource)
+  else one recorder was created
+    note right of RF: The recorder is returned directly.
+  else more than one recorder was created
+    Create "CompositeRecorder" as CR
+    RF -> CR: CompositeRecorder(recorders)
+  end
 end
 
 RF -> RT: Store returned instance
