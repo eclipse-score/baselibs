@@ -164,13 +164,13 @@ bazel_dep(name = "openssl", version = "3.5.5.bcr.4")
 
 bazel_dep(name = "rules_rust", version = "0.68.2-score")
 bazel_dep(name = "score_rust_policies", version = "0.0.5")
-bazel_dep(name = "score_crates", version = "0.0.13")
+bazel_dep(name = "score_crates", version = "0.0.15")
 bazel_dep(name = "cxx.rs", version = "1.0.186")
 
 ## Custom Module Loading
 
-bazel_dep(name = "score_docs_as_code", version = "8.6.0")
-bazel_dep(name = "score_process_description", version = "2.2.2")
+bazel_dep(name = "score_docs_as_code", version = "8.7.0")
+bazel_dep(name = "score_process_description", version = "2.2.3")
 
 bazel_dep(name = "score_tooling", version = "3.0.2", dev_dependency = True)
 
