@@ -14308,6 +14308,274 @@
     }
   },
   {
+    "need": "comp_req__utils__registry_string_view",
+    "links": {
+      "CodeLinks": [],
+      "TestLinks": [
+        {
+          "name": "RegistryStringViewTest__Iterator",
+          "file": "score/utils/string_registry/registry_string_view_tests.cpp",
+          "line": 26,
+          "need": "comp_req__utils__registry_string_view",
+          "verify_type": "partially",
+          "result": "passed",
+          "result_text": "",
+          "repo_name": "local_repo",
+          "hash": "",
+          "url": ""
+        },
+        {
+          "name": "RegistryStringViewTest__ConsistentHash",
+          "file": "score/utils/string_registry/registry_string_view_tests.cpp",
+          "line": 58,
+          "need": "comp_req__utils__registry_string_view",
+          "verify_type": "partially",
+          "result": "passed",
+          "result_text": "",
+          "repo_name": "local_repo",
+          "hash": "",
+          "url": ""
+        },
+        {
+          "name": "RegistryStringViewTest__DifferentRegistryStringViewDifferentHashes",
+          "file": "score/utils/string_registry/registry_string_view_tests.cpp",
+          "line": 78,
+          "need": "comp_req__utils__registry_string_view",
+          "verify_type": "partially",
+          "result": "passed",
+          "result_text": "",
+          "repo_name": "local_repo",
+          "hash": "",
+          "url": ""
+        },
+        {
+          "name": "RegistryStringViewTest__StreamOutput",
+          "file": "score/utils/string_registry/registry_string_view_tests.cpp",
+          "line": 101,
+          "need": "comp_req__utils__registry_string_view",
+          "verify_type": "partially",
+          "result": "passed",
+          "result_text": "",
+          "repo_name": "local_repo",
+          "hash": "",
+          "url": ""
+        },
+        {
+          "name": "RegistryStringViewTest__GlobalCompareOperator",
+          "file": "score/utils/string_registry/registry_string_view_tests.cpp",
+          "line": 120,
+          "need": "comp_req__utils__registry_string_view",
+          "verify_type": "partially",
+          "result": "passed",
+          "result_text": "",
+          "repo_name": "local_repo",
+          "hash": "",
+          "url": ""
+        },
+        {
+          "name": "RegistryStringViewTest__StringLength",
+          "file": "score/utils/string_registry/registry_string_view_tests.cpp",
+          "line": 162,
+          "need": "comp_req__utils__registry_string_view",
+          "verify_type": "partially",
+          "result": "passed",
+          "result_text": "",
+          "repo_name": "local_repo",
+          "hash": "",
+          "url": ""
+        },
+        {
+          "name": "RegistryStringViewTest__StringEmpty",
+          "file": "score/utils/string_registry/registry_string_view_tests.cpp",
+          "line": 180,
+          "need": "comp_req__utils__registry_string_view",
+          "verify_type": "partially",
+          "result": "passed",
+          "result_text": "",
+          "repo_name": "local_repo",
+          "hash": "",
+          "url": ""
+        },
+        {
+          "name": "RegistryStringViewTest__Data",
+          "file": "score/utils/string_registry/registry_string_view_tests.cpp",
+          "line": 198,
+          "need": "comp_req__utils__registry_string_view",
+          "verify_type": "partially",
+          "result": "passed",
+          "result_text": "",
+          "repo_name": "local_repo",
+          "hash": "",
+          "url": ""
+        },
+        {
+          "name": "RegistryStringViewTest__MoveConstructor",
+          "file": "score/utils/string_registry/registry_string_view_tests.cpp",
+          "line": 214,
+          "need": "comp_req__utils__registry_string_view",
+          "verify_type": "partially",
+          "result": "passed",
+          "result_text": "",
+          "repo_name": "local_repo",
+          "hash": "",
+          "url": ""
+        },
+        {
+          "name": "RegistryStringViewTest__MoveAssignmentOperator",
+          "file": "score/utils/string_registry/registry_string_view_tests.cpp",
+          "line": 236,
+          "need": "comp_req__utils__registry_string_view",
+          "verify_type": "partially",
+          "result": "passed",
+          "result_text": "",
+          "repo_name": "local_repo",
+          "hash": "",
+          "url": ""
+        },
+        {
+          "name": "RegistryStringViewTest__CopyConstructor",
+          "file": "score/utils/string_registry/registry_string_view_tests.cpp",
+          "line": 255,
+          "need": "comp_req__utils__registry_string_view",
+          "verify_type": "partially",
+          "result": "passed",
+          "result_text": "",
+          "repo_name": "local_repo",
+          "hash": "",
+          "url": ""
+        },
+        {
+          "name": "RegistryStringViewTest__CopyAssignmentOperator",
+          "file": "score/utils/string_registry/registry_string_view_tests.cpp",
+          "line": 272,
+          "need": "comp_req__utils__registry_string_view",
+          "verify_type": "partially",
+          "result": "passed",
+          "result_text": "",
+          "repo_name": "local_repo",
+          "hash": "",
+          "url": ""
+        }
+      ]
+    }
+  },
+  {
+    "need": "comp_req__utils__string_registry",
+    "links": {
+      "CodeLinks": [],
+      "TestLinks": [
+        {
+          "name": "StringRegistryTest__InsertMultipleStrings",
+          "file": "score/utils/string_registry/string_registry_tests.cpp",
+          "line": 24,
+          "need": "comp_req__utils__string_registry",
+          "verify_type": "partially",
+          "result": "passed",
+          "result_text": "",
+          "repo_name": "local_repo",
+          "hash": "",
+          "url": ""
+        },
+        {
+          "name": "StringRegistryTest__InsertMultipleStringViews",
+          "file": "score/utils/string_registry/string_registry_tests.cpp",
+          "line": 49,
+          "need": "comp_req__utils__string_registry",
+          "verify_type": "partially",
+          "result": "passed",
+          "result_text": "",
+          "repo_name": "local_repo",
+          "hash": "",
+          "url": ""
+        },
+        {
+          "name": "StringRegistryTest__InsertMultipleStringViewLiterals",
+          "file": "score/utils/string_registry/string_registry_tests.cpp",
+          "line": 81,
+          "need": "comp_req__utils__string_registry",
+          "verify_type": "partially",
+          "result": "passed",
+          "result_text": "",
+          "repo_name": "local_repo",
+          "hash": "",
+          "url": ""
+        },
+        {
+          "name": "StringRegistryTest__EqualStringsFromSeparateAllocationsArePointerIdentical",
+          "file": "score/utils/string_registry/string_registry_tests.cpp",
+          "line": 115,
+          "need": "comp_req__utils__string_registry",
+          "verify_type": "partially",
+          "result": "passed",
+          "result_text": "",
+          "repo_name": "local_repo",
+          "hash": "",
+          "url": ""
+        },
+        {
+          "name": "StringRegistryTest__StringViewThenStringOverloadYieldPointerIdenticalViews",
+          "file": "score/utils/string_registry/string_registry_tests.cpp",
+          "line": 138,
+          "need": "comp_req__utils__string_registry",
+          "verify_type": "partially",
+          "result": "passed",
+          "result_text": "",
+          "repo_name": "local_repo",
+          "hash": "",
+          "url": ""
+        },
+        {
+          "name": "StringRegistryTest__LiteralThenStringOverloadYieldPointerIdenticalViews",
+          "file": "score/utils/string_registry/string_registry_tests.cpp",
+          "line": 161,
+          "need": "comp_req__utils__string_registry",
+          "verify_type": "partially",
+          "result": "passed",
+          "result_text": "",
+          "repo_name": "local_repo",
+          "hash": "",
+          "url": ""
+        },
+        {
+          "name": "StringRegistryTest__ViewIdentityIsStableAfterRegistryGrowth",
+          "file": "score/utils/string_registry/string_registry_tests.cpp",
+          "line": 185,
+          "need": "comp_req__utils__string_registry",
+          "verify_type": "partially",
+          "result": "passed",
+          "result_text": "",
+          "repo_name": "local_repo",
+          "hash": "",
+          "url": ""
+        },
+        {
+          "name": "StringRegistryTest__SlicedLiteralAndFullStringAreDistinct",
+          "file": "score/utils/string_registry/string_registry_tests.cpp",
+          "line": 213,
+          "need": "comp_req__utils__string_registry",
+          "verify_type": "partially",
+          "result": "passed",
+          "result_text": "",
+          "repo_name": "local_repo",
+          "hash": "",
+          "url": ""
+        },
+        {
+          "name": "StringRegistryTest__EmbeddedNulsAreDistinct",
+          "file": "score/utils/string_registry/string_registry_tests.cpp",
+          "line": 234,
+          "need": "comp_req__utils__string_registry",
+          "verify_type": "partially",
+          "result": "passed",
+          "result_text": "",
+          "repo_name": "local_repo",
+          "hash": "",
+          "url": ""
+        }
+      ]
+    }
+  },
+  {
     "need": "comp_req__memory__endianness",
     "links": {
       "CodeLinks": [],
