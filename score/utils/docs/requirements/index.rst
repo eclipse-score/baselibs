@@ -68,10 +68,10 @@ Functional Requirements
    :reqtype: Functional
    :security: YES
    :safety: ASIL_B
-   :derived_from: feat_req__baselibs__containers_library[version==2]
+   :derived_from: feat_req__baselibs__utils_library[version==2]
    :status: valid
    :version: 1
-   :satisfied_by: comp__baselibs_containers[version==2]
+   :satisfied_by: comp__baselibs_utils[version==1]
 
    The Utils component shall provide a string registry that deduplicates strings into a single backing allocation and guarantees stable memory addresses across the registry's lifetime.
 
@@ -80,10 +80,10 @@ Functional Requirements
    :reqtype: Functional
    :security: YES
    :safety: ASIL_B
-   :derived_from: feat_req__baselibs__containers_library[version==2]
+   :derived_from: feat_req__baselibs__utils_library[version==2]
    :status: valid
    :version: 1
-   :satisfied_by: comp__baselibs_containers[version==2]
+   :satisfied_by: comp__baselibs_utils[version==1]
 
    The Utils component shall provide a Registry_string_view that uses pointer equality and pointer-based hashing to enable O(1) identity comparisons between views originating from the same String_registry.
 
