@@ -63,11 +63,25 @@ In addition, the following VaJson-specific requirements apply:
    :safety: ASIL_B
    :derived_from: feat_req__baselibs__json_library[version==2]
    :status: valid
+   :version: 2
+   :satisfied_by: comp__baselibs_vajson[version==1]
+
+   VaJson shall accept a number of the form ``[ "-" ] "0" ( "x" / "X" ) 1*HEXDIG`` (ABNF) as a hexadecimal integer
+   if its value is representable as a 64-bit signed or unsigned integer.
+   This behavior extends RFC 8259.
+
+.. comp_req:: JSON Deserialization number grammar
+   :id: comp_req__vajson__number_grammar
+   :reqtype: Functional
+   :security: YES
+   :safety: ASIL_B
+   :derived_from: feat_req__baselibs__json_library[version==2]
+   :status: valid
    :version: 1
    :satisfied_by: comp__baselibs_vajson[version==1]
 
-   VaJson shall accept hexadecimal integers.
-   This behavior extends RFC 8259.
+   VaJson shall reject a number that matches neither the RFC 8259 number grammar nor the hexadecimal integer extension
+   as malformed JSON.
 
 .. comp_req:: Unicode Support
    :id: comp_req__vajson__unicode
