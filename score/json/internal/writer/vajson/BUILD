@@ -14,6 +14,8 @@
 load("@rules_cc//cc:defs.bzl", "cc_library")
 load("@score_baselibs//score/language/safecpp:toolchain_features.bzl", "COMPILER_WARNING_FEATURES")
 
+package(default_package_metadata = ["//score/json:vajson_component"])
+
 cc_library(
     name = "formatting_writer",
     hdrs = [

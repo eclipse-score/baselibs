@@ -15,11 +15,14 @@ load("@rules_cc//cc:defs.bzl", "cc_library", "cc_test")
 load("@score_baselibs//:bazel/unit_tests.bzl", "cc_unit_test")
 load("@score_baselibs//score/language/safecpp:toolchain_features.bzl", "COMPILER_WARNING_FEATURES")
 load("@score_baselibs//score/quality/clang_tidy:extra_checks.bzl", "clang_tidy_extra_checks")
-load("@score_docs_as_code//:docs.bzl", "docs_bundle")
+load("@score_baselibs//tools/component:defs.bzl", "score_component")
 
-package(default_visibility = [
-    "@score_baselibs//score/memory:__subpackages__",
-])
+package(
+    default_package_metadata = [":component"],
+    default_visibility = [
+        "@score_baselibs//score/memory:__subpackages__",
+    ],
+)
 
 cc_library(
     name = "endianness",
@@ -111,14 +114,14 @@ clang_tidy_extra_checks(
     tidy_config_file = ".clang-tidy-extra",
 )
 
-docs_bundle(
-    name = "docs",
+score_component(
+    name = "component",
     code_targets = [
         ":data_type_size_info",
         ":endianness",
         ":pmr_ring_buffer",
     ],
-    primary_need_id = "comp__baselibs_memory",
-    source_dir = "docs",
-    visibility = ["//visibility:public"],
+    docs = "docs",
+    id = "comp__baselibs_memory",
+    title = "Memory",
 )

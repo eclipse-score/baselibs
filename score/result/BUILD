@@ -14,7 +14,9 @@
 load("@rules_cc//cc:defs.bzl", "cc_library")
 load("@score_baselibs//:bazel/unit_tests.bzl", "cc_gtest_unit_test")
 load("@score_baselibs//score/language/safecpp:toolchain_features.bzl", "COMPILER_WARNING_FEATURES")
-load("@score_docs_as_code//:docs.bzl", "docs_bundle")
+load("@score_baselibs//tools/component:defs.bzl", "score_component")
+
+package(default_package_metadata = [":component"])
 
 cc_library(
     name = "error",
@@ -104,8 +106,8 @@ cc_gtest_unit_test(
     ],
 )
 
-docs_bundle(
-    name = "docs",
+score_component(
+    name = "component",
     code_targets = [
         ":result",
         ":result_for_rust",
@@ -114,7 +116,7 @@ docs_bundle(
         "//score/result/rust:result_rs",
         "//score/result/rust:rust",
     ],
-    primary_need_id = "comp__baselibs_result",
-    source_dir = "docs",
-    visibility = ["//visibility:public"],
+    docs = "docs",
+    id = "comp__baselibs_result",
+    title = "Result",
 )

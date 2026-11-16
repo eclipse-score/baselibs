@@ -13,6 +13,8 @@
 
 load("@rules_cc//cc:defs.bzl", "cc_binary")
 
+package(default_package_metadata = ["//score/json:component"])
+
 cc_binary(
     name = "json_parser_benchmark",
     srcs = ["json_parser_benchmark.cpp"],

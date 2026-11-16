@@ -15,7 +15,9 @@ load("@bazel_skylib//rules:common_settings.bzl", "string_flag")
 load("@rules_cc//cc:defs.bzl", "cc_library", "cc_test")
 load("@score_baselibs//:bazel/unit_tests.bzl", "cc_gtest_unit_test")
 load("@score_baselibs//score/language/safecpp:toolchain_features.bzl", "COMPILER_WARNING_FEATURES")
-load("@score_docs_as_code//:docs.bzl", "docs_bundle")
+load("@score_baselibs//tools/component:defs.bzl", "score_component")
+
+package(default_package_metadata = [":component"])
 
 LIB_JSON_VISIBILITY = ["//visibility:public"]
 
@@ -177,6 +179,7 @@ cc_library(
         "i_json_writer_mock.h",
     ],
     features = COMPILER_WARNING_FEATURES,
+    package_metadata = [],
     visibility = LIB_JSON_VISIBILITY,
     deps = [
         ":interface",
@@ -230,13 +233,19 @@ cc_test(
     ],
 )
 
-docs_bundle(
-    name = "docs",
+score_component(
+    name = "vajson_component",
+    id = "comp__baselibs_vajson",
+    title = "VaJson",
+)
+
+score_component(
+    name = "component",
     code_targets = [
         ":json",
         ":json_serializer",
     ],
-    primary_need_id = "comp__baselibs_json",
-    source_dir = "docs",
-    visibility = ["//visibility:public"],
+    docs = "docs",
+    id = "comp__baselibs_json",
+    title = "JSON",
 )

@@ -16,6 +16,8 @@ load("@rules_cc//cc:defs.bzl", "cc_library")
 load("@rules_rust//rust:defs.bzl", "rust_doc", "rust_library", "rust_test")
 load("@score_baselibs//score/language/safecpp:toolchain_features.bzl", "COMPILER_WARNING_FEATURES")
 
+package(default_package_metadata = ["//score/result:component"])
+
 cc_library(
     name = "ffi_test_helpers",
     testonly = True,
