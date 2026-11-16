@@ -25,7 +25,7 @@ namespace score::utils::string_registry
 
 TEST(RegistryStringViewTest, Iterator)
 {
-    RecordProperty("PartiallyVerifies", "comp_req__utils__string_registry__registry_string_view");
+    RecordProperty("PartiallyVerifies", "comp_req__utils__registry_string_view");
     RecordProperty("TestType", "requirements-based");
     RecordProperty("DerivationTechnique", "equivalence-classes");
     RecordProperty(
@@ -57,7 +57,7 @@ TEST(RegistryStringViewTest, Iterator)
 
 TEST(RegistryStringViewTest, ConsistentHash)
 {
-    RecordProperty("PartiallyVerifies", "comp_req__utils__string_registry__registry_string_view");
+    RecordProperty("PartiallyVerifies", "comp_req__utils__registry_string_view");
     RecordProperty("TestType", "requirements-based");
     RecordProperty("DerivationTechnique", "equivalence-classes");
     RecordProperty("Description",
@@ -77,7 +77,7 @@ TEST(RegistryStringViewTest, ConsistentHash)
 /// same string value.
 TEST(RegistryStringViewTest, DifferentRegistryStringViewDifferentHashes)
 {
-    RecordProperty("PartiallyVerifies", "comp_req__utils__string_registry__registry_string_view");
+    RecordProperty("PartiallyVerifies", "comp_req__utils__registry_string_view");
     RecordProperty("TestType", "requirements-based");
     RecordProperty("DerivationTechnique", "equivalence-classes");
     RecordProperty("Description",
@@ -100,7 +100,7 @@ TEST(RegistryStringViewTest, DifferentRegistryStringViewDifferentHashes)
 
 TEST(RegistryStringViewTest, StreamOutput)
 {
-    RecordProperty("PartiallyVerifies", "comp_req__utils__string_registry__registry_string_view");
+    RecordProperty("PartiallyVerifies", "comp_req__utils__registry_string_view");
     RecordProperty("TestType", "requirements-based");
     RecordProperty("DerivationTechnique", "equivalence-classes");
     RecordProperty("Description", "Check that the ostream operator<< writes the correct string content.");
@@ -119,7 +119,7 @@ TEST(RegistryStringViewTest, StreamOutput)
 
 TEST(RegistryStringViewTest, GlobalCompareOperator)
 {
-    RecordProperty("PartiallyVerifies", "comp_req__utils__string_registry__registry_string_view");
+    RecordProperty("PartiallyVerifies", "comp_req__utils__registry_string_view");
     RecordProperty("TestType", "requirements-based");
     RecordProperty("DerivationTechnique", "equivalence-classes");
     RecordProperty("Description",
@@ -161,7 +161,7 @@ TEST(RegistryStringViewTest, GlobalCompareOperator)
 
 TEST(RegistryStringViewTest, StringLength)
 {
-    RecordProperty("PartiallyVerifies", "comp_req__utils__string_registry__registry_string_view");
+    RecordProperty("PartiallyVerifies", "comp_req__utils__registry_string_view");
     RecordProperty("TestType", "requirements-based");
     RecordProperty("DerivationTechnique", "equivalence-classes");
     RecordProperty("Description",
@@ -179,7 +179,7 @@ TEST(RegistryStringViewTest, StringLength)
 
 TEST(RegistryStringViewTest, StringEmpty)
 {
-    RecordProperty("PartiallyVerifies", "comp_req__utils__string_registry__registry_string_view");
+    RecordProperty("PartiallyVerifies", "comp_req__utils__registry_string_view");
     RecordProperty("TestType", "requirements-based");
     RecordProperty("DerivationTechnique", "boundary-values");
     RecordProperty("Description",
@@ -197,7 +197,7 @@ TEST(RegistryStringViewTest, StringEmpty)
 
 TEST(RegistryStringViewTest, Data)
 {
-    RecordProperty("PartiallyVerifies", "comp_req__utils__string_registry__registry_string_view");
+    RecordProperty("PartiallyVerifies", "comp_req__utils__registry_string_view");
     RecordProperty("TestType", "requirements-based");
     RecordProperty("DerivationTechnique", "equivalence-classes");
     RecordProperty("Description", "Check that Data() returns the same pointer as the underlying string_view.");
@@ -213,7 +213,7 @@ TEST(RegistryStringViewTest, Data)
 
 TEST(RegistryStringViewTest, MoveConstructor)
 {
-    RecordProperty("PartiallyVerifies", "comp_req__utils__string_registry__registry_string_view");
+    RecordProperty("PartiallyVerifies", "comp_req__utils__registry_string_view");
     RecordProperty("TestType", "requirements-based");
     RecordProperty("DerivationTechnique", "equivalence-classes");
     RecordProperty("Description", "Check that move construction transfers the string_view data to the new object.");
@@ -235,7 +235,7 @@ TEST(RegistryStringViewTest, MoveConstructor)
 
 TEST(RegistryStringViewTest, MoveAssignmentOperator)
 {
-    RecordProperty("PartiallyVerifies", "comp_req__utils__string_registry__registry_string_view");
+    RecordProperty("PartiallyVerifies", "comp_req__utils__registry_string_view");
     RecordProperty("TestType", "requirements-based");
     RecordProperty("DerivationTechnique", "equivalence-classes");
     RecordProperty("Description",
@@ -254,7 +254,7 @@ TEST(RegistryStringViewTest, MoveAssignmentOperator)
 
 TEST(RegistryStringViewTest, CopyConstructor)
 {
-    RecordProperty("PartiallyVerifies", "comp_req__utils__string_registry__registry_string_view");
+    RecordProperty("PartiallyVerifies", "comp_req__utils__registry_string_view");
     RecordProperty("TestType", "requirements-based");
     RecordProperty("DerivationTechnique", "equivalence-classes");
     RecordProperty("Description", "Check that copy construction produces a view with identical string_view data.");
@@ -271,7 +271,7 @@ TEST(RegistryStringViewTest, CopyConstructor)
 
 TEST(RegistryStringViewTest, CopyAssignmentOperator)
 {
-    RecordProperty("PartiallyVerifies", "comp_req__utils__string_registry__registry_string_view");
+    RecordProperty("PartiallyVerifies", "comp_req__utils__registry_string_view");
     RecordProperty("TestType", "requirements-based");
     RecordProperty("DerivationTechnique", "equivalence-classes");
     RecordProperty("Description",

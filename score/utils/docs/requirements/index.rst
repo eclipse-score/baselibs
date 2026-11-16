@@ -63,8 +63,8 @@ Functional Requirements
 
    The Utils component shall provide a thread-safe singleton whose instance is created exactly once when accessed concurrently by multiple threads.
 
-   .. comp_req:: String Registry
-   :id: comp_req__utils__string_registry__string_registry
+.. comp_req:: String Registry
+   :id: comp_req__utils__string_registry
    :reqtype: Functional
    :security: YES
    :safety: ASIL_B
@@ -76,7 +76,7 @@ Functional Requirements
    The Utils component shall provide a string registry that deduplicates strings into a single backing allocation and guarantees stable memory addresses across the registry's lifetime.
 
 .. comp_req:: Registry String View
-   :id: comp_req__utils__string_registry__registry_string_view
+   :id: comp_req__utils__registry_string_view
    :reqtype: Functional
    :security: YES
    :safety: ASIL_B
