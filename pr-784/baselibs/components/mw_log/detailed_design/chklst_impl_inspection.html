@@ -512,7 +512,7 @@
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <div class="need_container docutils container" id="SNCB-7b8f6f9c">
+  <div class="need_container docutils container" id="SNCB-aa5eb9a0">
 <div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_document table" id="doc__log_impl_inspection">
 <tbody>
 <tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
@@ -578,8 +578,8 @@ by linking to C++ or Rust specific documentation.</p>
 <p>It is mandatory to fill in the “passed” column with “yes” or “no” for each checklist item and additionally to add in the remarks why it is passed or not passed.
 In case of “no” an issue link to the issue tracking system has to be added in the last column (if not solved in the same issue).
 See also <a class="external_link reference external" href="https://eclipse-score.github.io/process_description//main/general_concepts/score_review_concept.html#doc_concept__wp_inspections">doc_concept__wp_inspections</a> for further information about reviews in general and inspection in particular.</p>
-<div class="pst-scrollable-table-container"><table class="table" id="id3">
-<caption><span class="caption-number">Table 43 </span><span class="caption-text">Implementation Checklist</span><a class="headerlink" href="#id3" title="Link to this table">#</a></caption>
+<div class="pst-scrollable-table-container"><table class="table" id="id8">
+<caption><span class="caption-number">Table 43 </span><span class="caption-text">Implementation Checklist</span><a class="headerlink" href="#id8" title="Link to this table">#</a></caption>
 <colgroup>
 <col style="width: 5.8%" />
 <col style="width: 14.6%" />
@@ -648,7 +648,7 @@ in <code class="docutils literal notranslate"><span class="pre">score_docs_as_co
 their Rust tests either.</p></li>
 </ul>
 </td>
-<td><p>To be added</p></td>
+<td><p><a class="reference external" href="https://github.com/eclipse-score/logging/issues/346">#346</a></p></td>
 </tr>
 <tr class="row-even"><td><p>IMPL_01_03</p></td>
 <td><p>Are the design decisions and constraints documented?</p></td>
@@ -716,31 +716,25 @@ Resolve the gap with unit tests or justify it by this scope.</p>
 <tr class="row-odd"><td><p>IMPL_02_02</p></td>
 <td><p>Do manual checks, that are derived from the coding guideline, find no safety critical error?</p></td>
 <td><p>Check this for the programming language used (e.g. C++ &lt;link_to_checks_list&gt;, Rust &lt;link_to_checks_list&gt;)</p></td>
-<td><p>no</p></td>
+<td><p>yes</p></td>
 <td><p>Manual checks were done with a code review and against the <a class="reference external" href="https://eclipse-score.github.io/score/main/contribute/development/cpp/coding_guidelines.html">C++ guideline</a>.</p>
-<p>Following issues need to be addressed:</p>
-<ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">SlotDrainer::current_slot_</span></code> refers to the queue element that is
-removed by <code class="docutils literal notranslate"><span class="pre">pop_front()</span></code>. A later <code class="docutils literal notranslate"><span class="pre">PushBack()</span></code> can overwrite it,
-so the wrong slot is released.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">SlotDrainer</span></code> processes one slot more than
-<code class="docutils literal notranslate"><span class="pre">limit_slots_in_one_cycle_</span></code> per drain cycle.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">RegistryAwareRecorderFactory</span></code> creates a second console recorder if
-an unavailable log mode triggers the console fallback before
-<code class="docutils literal notranslate"><span class="pre">kConsole</span></code> is processed.</p></li>
-<li><p>The <code class="docutils literal notranslate"><span class="pre">CreateFromConfiguration</span></code> overloads behave differently. The
-overload with the config reader creates an <code class="docutils literal notranslate"><span class="pre">EmptyRecorder</span></code> for an
-unavailable log mode and if no log mode is configured. The other
-overload falls back to the console in both cases.</p></li>
-</ul>
-<p>Deviations:</p>
+<p>The output of <code class="docutils literal notranslate"><span class="pre">mw::log</span></code> shall not be relied upon for safety (see
+<a class="reference internal" href="../safety_analysis/aou_requirements.html#aou_req__log__relying_on_logs" title="aou_req__log__relying_on_logs"><em class="xref need">Applications relying on log... (aou_req__log__relying_on_logs)</em></a>). A safety critical error is
+therefore an error by which <code class="docutils literal notranslate"><span class="pre">mw::log</span></code> interferes with its safety
+related caller (freedom from interference): undefined behavior, memory
+corruption outside of <code class="docutils literal notranslate"><span class="pre">mw::log</span></code>, unexpected termination or blocking of
+the caller. Errors that only lose or duplicate log messages are tracked
+as bugs: <a class="reference external" href="https://github.com/eclipse-score/logging/issues/418">#418</a>
+and <a class="reference external" href="https://github.com/eclipse-score/logging/issues/419">#419</a>.</p>
+<p>No safety critical error was found.</p>
+<p>Accepted deviation:</p>
 <ul class="simple">
 <li><p>The coding guideline asks to avoid the prefix <code class="docutils literal notranslate"><span class="pre">I</span></code> for interfaces. The
 <code class="docutils literal notranslate"><span class="pre">IRecorderFactory</span></code>, <code class="docutils literal notranslate"><span class="pre">IMessageBuilder</span></code>, <code class="docutils literal notranslate"><span class="pre">ITargetConfigReader</span></code>,
 <code class="docutils literal notranslate"><span class="pre">IConfigurationFileDiscoverer</span></code> and <code class="docutils literal notranslate"><span class="pre">INvConfig</span></code> use it.</p></li>
 </ul>
 </td>
-<td><p>To be added</p></td>
+<td></td>
 </tr>
 <tr class="row-even"><td><p>IMPL_03_01</p></td>
 <td><p>Do the UID of the interface in component documentation match the implemented interface names of the unit?</p></td>
@@ -761,7 +755,8 @@ feature architecture of the <code class="docutils literal notranslate"><span cla
 the UIDs.</p></li>
 </ul>
 </td>
-<td><p>To be added</p></td>
+<td><p><a class="reference external" href="https://github.com/eclipse-score/logging/issues/214">#214</a>,
+<a class="reference external" href="https://github.com/eclipse-score/logging/issues/422">#422</a></p></td>
 </tr>
 <tr class="row-odd"><td><p>IMPL_03_02</p></td>
 <td><p>Are detailed design and source code consistent and is the respective traceability established ?</p></td>
