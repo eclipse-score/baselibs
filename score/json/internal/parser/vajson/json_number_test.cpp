@@ -324,9 +324,9 @@ TEST_F(UT__Number, OnesAndZerosCanBeParsedToBool)
     ASSERT_EQ(result.error(), JsonErrc::kInvalidJson);
 }
 
-/// @brief           Tests that errno is unset before the next conversion
+/// @brief           Tests that a failed conversion does not affect the next conversion
 /// @trace           score::json::vajson::JsonNumber::New
-TEST_F(UT__Number, ErrnoIsUnsetBeforeConversion)
+TEST_F(UT__Number, FailedConversionDoesNotAffectNextConversion)
 {
     Result<std::uint64_t> result_64{JsonNumber::New("0x1FFFFFFFFFFFFFFFF").and_then([](JsonNumber num) noexcept {
         return num.TryAs<std::uint64_t>();
@@ -795,6 +795,90 @@ TEST(Number, FloatingPointOverflowIsRejected)
 
     EXPECT_FALSE(ParseNumberAs<double>("1e309").has_value());
     EXPECT_FALSE(ParseNumberAs<double>("-1e309").has_value());
+}
+
+TEST(Number, AcceptsNumbersMatchingTheGrammar)
+{
+    RecordProperty("PartiallyVerifies", "comp_req__json__deserialization, comp_req__vajson__hex_integers");
+    RecordProperty("Description",
+                   "Check that numbers matching the RFC 8259 number grammar or the hexadecimal integer extension are "
+                   "accepted.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
+
+    for (const StringView number : {"0"sv,
+                                    "-0"sv,
+                                    "10"sv,
+                                    "0.5"sv,
+                                    "-1.25"sv,
+                                    "0e0"sv,
+                                    "1E5"sv,
+                                    "1e+5"sv,
+                                    "-1.5e-3"sv,
+                                    "0x0"sv,
+                                    "0xdD"sv,
+                                    "0XFF"sv,
+                                    "-0x1"sv})
+    {
+        EXPECT_TRUE(JsonNumber::New(number).has_value()) << number;
+    }
+}
+
+TEST(Number, RejectsNumbersOutsideTheGrammar)
+{
+    RecordProperty("PartiallyVerifies", "comp_req__vajson__number_grammar");
+    RecordProperty("Description",
+                   "Check that numbers matching neither the RFC 8259 number grammar nor the hexadecimal integer "
+                   "extension are rejected as invalid JSON.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
+
+    for (const StringView number :
+         {"01"sv,    "-01"sv, "00x1"sv, "+1"sv,  "-"sv,   ".5"sv,    "-.5"sv,   "1."sv,   "1.e5"sv, "1e"sv,  "1e+"sv,
+          "1.5.2"sv, "--1"sv, "0x"sv,   "-0x"sv, "0xG"sv, "0x1p3"sv, "0x1.8"sv, "0x-1"sv, "-inf"sv, "1x10"sv})
+    {
+        const Result<JsonNumber> result{JsonNumber::New(number)};
+        ASSERT_FALSE(result.has_value()) << number;
+        EXPECT_EQ(result.error(), JsonErrc::kInvalidJson) << number;
+    }
+}
+
+TEST(Number, ConvertsHexadecimalIntegersWithinTheTargetRange)
+{
+    RecordProperty("PartiallyVerifies", "comp_req__vajson__hex_integers");
+    RecordProperty("Description",
+                   "Check that hexadecimal integers convert to integer types at the range limits and are rejected "
+                   "just outside them.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "boundary-values");
+
+    EXPECT_EQ(ParseNumberAs<std::uint8_t>("0xff"), std::uint8_t{255});
+    EXPECT_EQ(ParseNumberAs<std::uint8_t>("0XFF"), std::uint8_t{255});
+    EXPECT_FALSE(ParseNumberAs<std::uint8_t>("0x100").has_value());
+    EXPECT_FALSE(ParseNumberAs<std::uint8_t>("-0x1").has_value());
+    EXPECT_EQ(ParseNumberAs<std::int8_t>("0x7f"), std::int8_t{127});
+    EXPECT_FALSE(ParseNumberAs<std::int8_t>("0x80").has_value());
+    EXPECT_EQ(ParseNumberAs<std::int8_t>("-0x80"), std::int8_t{-128});
+    EXPECT_FALSE(ParseNumberAs<std::int8_t>("-0x81").has_value());
+    EXPECT_EQ(ParseNumberAs<std::int8_t>("-0x0"), std::int8_t{0});
+    EXPECT_EQ(ParseNumberAs<std::uint64_t>("0xFFFFFFFFFFFFFFFF"), std::numeric_limits<std::uint64_t>::max());
+    EXPECT_FALSE(ParseNumberAs<std::uint64_t>("0x10000000000000000").has_value());
+    EXPECT_EQ(ParseNumberAs<std::int64_t>("-0x8000000000000000"), std::numeric_limits<std::int64_t>::min());
+    EXPECT_FALSE(ParseNumberAs<std::int64_t>("-0x8000000000000001").has_value());
+}
+
+TEST(Number, HexadecimalIntegersDoNotConvertToFloatingPoint)
+{
+    RecordProperty("PartiallyVerifies", "comp_req__vajson__hex_integers");
+    RecordProperty("Description",
+                   "Check that hexadecimal integers, including those exceeding 64 bits, are not converted to "
+                   "floating-point types.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
+
+    EXPECT_FALSE(ParseNumberAs<double>("0x10").has_value());
+    EXPECT_FALSE(ParseNumberAs<float>("-0x10").has_value());
+    EXPECT_FALSE(ParseNumberAs<double>("0x1FFFFFFFFFFFFFFFF").has_value());
 }
 
 }  // namespace unit_test

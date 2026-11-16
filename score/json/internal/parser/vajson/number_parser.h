@@ -20,9 +20,14 @@
 
 #include "score/json/internal/parser/vajson/types.h"
 
-#include <cerrno>
+#include <charconv>
+#include <cstddef>
+#include <cstdint>
 #include <cstdlib>
+#include <iterator>
+#include <limits>
 #include <string>
+#include <system_error>
 #include <type_traits>
 
 namespace score
@@ -39,23 +44,8 @@ namespace internal
 template <typename T>
 using IsInt = std::conjunction<std::negation<std::is_same<T, bool>>, std::is_integral<T>>;
 
-/// @brief            Typedef for longlong
-/// @details         Return type of std::strtoll and transformed to fixed-size type later.
-using SignedLL = long long int;  // VECTOR SL AutosarC++17_10-A3.9.1: MD_JSON_base_type
-
-/// @brief            Typedef for unsigned longlong
-/// @details         Return type of std::strtoull and transformed to fixed-size type later.
-using UnsignedLL = unsigned long long int;  // VECTOR SL AutosarC++17_10-A3.9.1: MD_JSON_base_type
-
 namespace util
 {
-/// @brief           Resets the value of errno to zero
-inline void ResetErrno() noexcept
-{
-
-    errno = 0;
-}
-
 /// @brief Helper function to check if character is a digit, in ASCII/UTF-8.
 inline auto IsDigit(const char chr) noexcept -> bool
 {
@@ -63,6 +53,26 @@ inline auto IsDigit(const char chr) noexcept -> bool
     constexpr auto nine{std::char_traits<char>::to_int_type('9')};
     const auto intchr{std::char_traits<char>::to_int_type(chr)};
     return (intchr >= zero) && (intchr <= nine);
+}
+
+/// @brief Helper function to check if character is a hexadecimal digit, in ASCII/UTF-8.
+inline auto IsHexDigit(const char chr) noexcept -> bool
+{
+    constexpr StringView kHexLetters{"abcdefABCDEF"};
+    return IsDigit(chr) || (kHexLetters.find(chr) != StringView::npos);
+}
+
+/// @brief           Checks if a number uses the hexadecimal integer extension
+/// @param[in]       view
+///                  Number to check.
+/// @return          True if the number starts with an optional minus sign followed by "0x" or "0X".
+inline auto HasHexadecimalPrefix(StringView view) noexcept -> bool
+{
+    if ((!view.empty()) && (view.front() == '-'))
+    {
+        view.remove_prefix(1U);
+    }
+    return (view.size() >= 2U) && (view[0] == '0') && ((view[1] == 'x') || (view[1] == 'X'));
 }
 
 /// @brief           A parser for JSON numbers
@@ -90,56 +100,75 @@ class NumberParser
     // Deleted rvalue-qualified version to prevent dangling reference
     auto End() const&& noexcept -> const char* = delete;
 
-    /// @brief           Parses a StringView as a long long
+    /// @brief           Converts a JSON integer to an integer type
+    /// @details         Decimal integers are converted with base 10, hexadecimal integers with base 16.
+    /// @tparam          Integer
+    ///                  Type of integer to convert to.
     /// @param[in]       view
-    ///                  to parse.
-    /// @return          The parsed number.
+    ///                  Number to convert, without leading whitespace.
+    /// @return          The Optional containing the converted number if the whole view is an integer that fits into
+    ///                  Integer, or empty.
     /// @context         ANY
     /// @pre             -
-    /// @threadsafe      FALSE
-    /// @reentrant       FALSE
+    /// @threadsafe      TRUE
+    /// @reentrant       TRUE
     /// @internal
-    /// - Reset errno.
-    /// - Convert the view to a long long.
-    /// @endinternal
-    auto LongLong(StringView view) noexcept -> SignedLL
-    {
-        ResetErrno();
-
-        return std::strtoll(view.data(), &this->end_, 0);
-    }
-
-    /// @brief           Parses a StringView as an unsigned long long
-    /// @param[in]       view
-    ///                  to parse. Must be pointing to a mutable buffer.
-    /// @return          The parsed number.
-    /// @context         ANY
-    /// @pre             -
-    /// @threadsafe      FALSE
-    /// @reentrant       FALSE
-    /// @internal
-    /// - If the view starts with a dash:
-    ///   - Skip the parsing.
+    /// - Strip the optional minus sign and the hexadecimal prefix.
+    /// - Convert the remaining digits to an unsigned magnitude with the explicit base.
+    /// - If the whole view was consumed and the signed value fits into Integer:
+    ///   - Return the value.
     /// - Otherwise:
-    ///   - Reset errno.
-    ///   - Convert the view to an unsigned long long.
+    ///   - Return an empty Optional.
     /// @endinternal
-    auto UnsignedLongLong(StringView view) noexcept -> UnsignedLL
+    template <typename Integer>
+    static auto ParseInteger(StringView view) noexcept -> Optional<Integer>
     {
-        UnsignedLL result{0};
-        // strtoull accepts negative values!!
+        using Magnitude = std::make_unsigned_t<Integer>;
+        constexpr std::int32_t kDecimalBase{10};
+        constexpr std::int32_t kHexadecimalBase{16};
+        constexpr std::size_t kHexadecimalPrefixLength{2U};
 
-        if (view[0] == '-')
+        const bool is_hexadecimal{HasHexadecimalPrefix(view)};
+        const bool is_negative{(!view.empty()) && (view.front() == '-')};
+        if (is_negative)
         {
-            // Set end_ so that it will be reported as 'parsed unsuccessfully'
-
-            this->end_ = const_cast<char*>(view.data());
+            view.remove_prefix(1U);
         }
-        else
+        if (is_hexadecimal)
         {
-            ResetErrno();
+            view.remove_prefix(kHexadecimalPrefixLength);
+        }
 
-            result = std::strtoull(view.data(), &this->end_, 0);
+        Magnitude magnitude{};
+        const char* const last{std::next(view.data(), static_cast<std::ptrdiff_t>(view.size()))};
+        const std::from_chars_result conversion{
+            std::from_chars(view.data(), last, magnitude, is_hexadecimal ? kHexadecimalBase : kDecimalBase)};
+
+        Optional<Integer> result{};
+        if ((conversion.ec == std::errc{}) && (conversion.ptr == last))
+        {
+            if (!is_negative)
+            {
+                if (magnitude <= static_cast<Magnitude>(std::numeric_limits<Integer>::max()))
+                {
+                    static_cast<void>(result.emplace(static_cast<Integer>(magnitude)));
+                }
+            }
+            else if constexpr (std::is_signed<Integer>::value)
+            {
+                const auto max_negative_magnitude{
+                    static_cast<Magnitude>(static_cast<Magnitude>(std::numeric_limits<Integer>::max()) + 1U)};
+                if (magnitude == Magnitude{0})
+                {
+                    static_cast<void>(result.emplace(Integer{0}));
+                }
+                else if (magnitude <= max_negative_magnitude)
+                {
+                    // Negate via magnitude - 1 so that the minimum value does not overflow.
+                    const auto predecessor{static_cast<Integer>(magnitude - 1U)};
+                    static_cast<void>(result.emplace(static_cast<Integer>(-predecessor - 1)));
+                }
+            }
         }
         return result;
     }
@@ -153,13 +182,10 @@ class NumberParser
     /// @threadsafe      FALSE
     /// @reentrant       FALSE
     /// @internal
-    /// - Reset errno.
     /// - Convert the view to a double.
     /// @endinternal
     auto Double(StringView view) noexcept -> double
     {
-        ResetErrno();
-
         return std::strtod(view.data(), &this->end_);
     }
 

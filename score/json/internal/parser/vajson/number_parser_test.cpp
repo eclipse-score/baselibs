@@ -33,6 +33,21 @@ TEST(UT__NumberParser, IsDigit)
     ASSERT_FALSE(internal::util::IsDigit(':'));
 }
 
+/// @brief           Tests if IsHexDigit works as expected.
+TEST(UT__NumberParser, IsHexDigit)
+{
+    ASSERT_TRUE(internal::util::IsHexDigit('0'));
+    ASSERT_TRUE(internal::util::IsHexDigit('9'));
+    ASSERT_TRUE(internal::util::IsHexDigit('a'));
+    ASSERT_TRUE(internal::util::IsHexDigit('f'));
+    ASSERT_TRUE(internal::util::IsHexDigit('A'));
+    ASSERT_TRUE(internal::util::IsHexDigit('F'));
+    ASSERT_FALSE(internal::util::IsHexDigit('g'));
+    ASSERT_FALSE(internal::util::IsHexDigit('G'));
+    ASSERT_FALSE(internal::util::IsHexDigit('x'));
+    ASSERT_FALSE(internal::util::IsHexDigit('\0'));
+}
+
 }  // namespace unit_test
 }  // namespace vajson
 }  // namespace json
