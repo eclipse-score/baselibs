@@ -3,8 +3,7 @@
 #
 # NOTE: clang-format 19 does NOT implement the "**" globstar (it collapses "**"
 # into a single "*"), and a single "*" matches exactly ONE path segment. A
-# trailing "*" only matches files that have no further sub-directories. So
-# "score/mw/*" ignores ONLY direct children of score/mw, not nested files.
+# trailing "*" only matches files that have no further sub-directories.
 # Because no single pattern matches an arbitrary depth, each folder is expanded
 # to one line per nesting level (sized to its current deepest file). If a folder
 # later gains deeper files, add another "/*" line.
@@ -15,11 +14,3 @@ score/language/futurecpp/*/*
 score/language/futurecpp/*/*/*
 score/language/futurecpp/*/*/*/*
 score/language/futurecpp/*/*/*/*/*
-
-score/language/safecpp/test/*
-
-score/mw/*
-score/mw/*/*
-score/mw/*/*/*
-score/mw/*/*/*/*
-score/mw/*/*/*/*/*

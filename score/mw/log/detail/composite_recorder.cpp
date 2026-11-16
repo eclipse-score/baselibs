@@ -12,9 +12,9 @@
  ********************************************************************************/
 #include "score/mw/log/detail/composite_recorder.h"
 
-#include "score/result/result.h"
 #include "score/mw/log/detail/error.h"
 #include "score/mw/log/detail/initialization_reporter.h"
+#include "score/result/result.h"
 
 #include "score/callback.hpp"
 
@@ -97,7 +97,7 @@ CompositeRecorder::CompositeRecorder(std::vector<std::unique_ptr<Recorder>> reco
 }
 
 score::cpp::optional<SlotHandle> CompositeRecorder::StartRecord(const std::string_view context_id,
-                                                         const LogLevel log_level) noexcept
+                                                                const LogLevel log_level) noexcept
 {
     SlotHandle composite_slot{};
 

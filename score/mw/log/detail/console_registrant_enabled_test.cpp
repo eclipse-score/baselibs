@@ -28,7 +28,7 @@ namespace
 TEST(ConsoleRegistrantTest, ConsoleBackendIsRegisteredAfterStaticInitialization)
 {
     RecordProperty("Description", "The console backend registrant shall be registered for LogMode::kConsole");
-    RecordProperty("TestType", "control-flow-analysis"); // data flow
+    RecordProperty("TestType", "control-flow-analysis");  // data flow
     RecordProperty("DerivationTechnique", "Analysis of functional dependencies");
 
     EXPECT_TRUE(IsBackendAvailable(LogMode::kConsole));

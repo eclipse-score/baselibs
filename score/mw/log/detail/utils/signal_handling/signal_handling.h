@@ -30,7 +30,8 @@ class SignalHandling
     /// \brief Unblocks the SIGTERM signal for the current thread.
     /// \param signal The signal interface to use for unblocking.
     /// \returns The result of the pthread_sigmask call, or an error if the operation failed.
-    static score::cpp::expected<std::int32_t, score::os::Error> PThreadUnblockSigTerm(score::os::Signal& signal) noexcept;
+    static score::cpp::expected<std::int32_t, score::os::Error> PThreadUnblockSigTerm(
+        score::os::Signal& signal) noexcept;
 
     /// \brief Executes a function with SIGTERM blocked for the current thread.
     /// \details This is a RAII-style helper that blocks SIGTERM before executing the provided function

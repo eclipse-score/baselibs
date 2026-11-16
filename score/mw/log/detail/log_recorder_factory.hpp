@@ -13,9 +13,9 @@
 #ifndef SCORE_MW_LOG_DETAIL_LOG_RECORDER_FACTORY_HPP
 #define SCORE_MW_LOG_DETAIL_LOG_RECORDER_FACTORY_HPP
 
-#include "score/os/fcntl.h"
 #include "score/mw/log/configuration/configuration.h"
 #include "score/mw/log/recorder.h"
+#include "score/os/fcntl.h"
 #include <score/memory.hpp>
 
 namespace score
@@ -30,7 +30,8 @@ template <typename DerivedRecorder>
 class LogRecorderFactory
 {
   public:
-    std::unique_ptr<Recorder> CreateLogRecorder(const Configuration& config, score::cpp::pmr::memory_resource* memory_resource)
+    std::unique_ptr<Recorder> CreateLogRecorder(const Configuration& config,
+                                                score::cpp::pmr::memory_resource* memory_resource)
     {
         return static_cast<DerivedRecorder*>(this)->CreateConcreteLogRecorder(config, memory_resource);
     }

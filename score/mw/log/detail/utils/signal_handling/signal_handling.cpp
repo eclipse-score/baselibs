@@ -16,7 +16,8 @@
 namespace score::mw::log::detail
 {
 
-score::cpp::expected<std::int32_t, score::os::Error> SignalHandling::PThreadBlockSigTerm(score::os::Signal& signal) noexcept
+score::cpp::expected<std::int32_t, score::os::Error> SignalHandling::PThreadBlockSigTerm(
+    score::os::Signal& signal) noexcept
 {
     sigset_t sig_set;
 
@@ -36,7 +37,8 @@ score::cpp::expected<std::int32_t, score::os::Error> SignalHandling::PThreadBloc
     return result;
 }
 
-score::cpp::expected<std::int32_t, score::os::Error> SignalHandling::PThreadUnblockSigTerm(score::os::Signal& signal) noexcept
+score::cpp::expected<std::int32_t, score::os::Error> SignalHandling::PThreadUnblockSigTerm(
+    score::os::Signal& signal) noexcept
 {
     sigset_t sig_set;
 

@@ -52,7 +52,8 @@ class ErrorDomain final : public score::result::ErrorDomain
     std::string_view MessageFor(const score::result::ErrorCode& code) const noexcept override;
 };
 
-score::result::Error MakeError(const score::mw::log::detail::Error code, const std::string_view user_message = "") noexcept;
+score::result::Error MakeError(const score::mw::log::detail::Error code,
+                               const std::string_view user_message = "") noexcept;
 
 }  // namespace detail
 }  // namespace log

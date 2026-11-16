@@ -13,8 +13,8 @@
 
 #include "score/mw/log/detail/text_recorder/text_message_builder.h"
 
-#include "score/os/utils/high_resolution_steady_clock.h"
 #include "score/mw/log/detail/text_recorder/text_format.h"
+#include "score/os/utils/high_resolution_steady_clock.h"
 
 #include <chrono>
 #include <iostream>
