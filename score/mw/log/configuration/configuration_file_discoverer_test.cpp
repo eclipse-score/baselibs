@@ -108,9 +108,12 @@ class ConfigurationFileDiscovererFixture : public ::testing::Test
 
     score::cpp::pmr::unique_ptr<os::Libgen> libgen_mock_pmr = os::Libgen::Default(memory_resource);
 
-    score::cpp::pmr::unique_ptr<os::UnistdMock> unistd_mock_pmr = score::cpp::pmr::make_unique<os::UnistdMock>(memory_resource);
-    score::cpp::pmr::unique_ptr<os::PathMock> path_mock_pmr = score::cpp::pmr::make_unique<os::PathMock>(memory_resource);
-    score::cpp::pmr::unique_ptr<os::StdlibMock> stdlib_mock_pmr = score::cpp::pmr::make_unique<os::StdlibMock>(memory_resource);
+    score::cpp::pmr::unique_ptr<os::UnistdMock> unistd_mock_pmr =
+        score::cpp::pmr::make_unique<os::UnistdMock>(memory_resource);
+    score::cpp::pmr::unique_ptr<os::PathMock> path_mock_pmr =
+        score::cpp::pmr::make_unique<os::PathMock>(memory_resource);
+    score::cpp::pmr::unique_ptr<os::StdlibMock> stdlib_mock_pmr =
+        score::cpp::pmr::make_unique<os::StdlibMock>(memory_resource);
 
     os::UnistdMock* unistd_mock = unistd_mock_pmr.get();
     os::PathMock* path_mock = path_mock_pmr.get();
@@ -133,7 +136,7 @@ TEST_F(ConfigurationFileDiscovererFixture, DiscovererShallFindGlobalConfiguratio
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Verifies that the discoverer shall find the global configuration file.");
     RecordProperty("TestingTechnique", "Requirements-based test");
-    RecordProperty("DerivationTechnique", "requirements-analysis"); // requirements
+    RecordProperty("DerivationTechnique", "requirements-analysis");  // requirements
 
     // When ...
     AddExistingFile(kGlobalConfigFile);
@@ -152,7 +155,7 @@ TEST_F(ConfigurationFileDiscovererFixture, DiscovererShallFindConfigurationFileI
         "Description",
         "Verifies that the discoverer shall find the application specific configuration file under <cwd>/etc.");
     RecordProperty("TestingTechnique", "Requirements-based test");
-    RecordProperty("DerivationTechnique", "requirements-analysis"); // requirements
+    RecordProperty("DerivationTechnique", "requirements-analysis");  // requirements
 
     // When ...
     AddExistingFile(kGlobalConfigFile);
@@ -173,7 +176,7 @@ TEST_F(ConfigurationFileDiscovererFixture, DiscovererShallFindConfigurationFileI
     RecordProperty("Description",
                    "Verifies that the discoverer shall find the application specific configuration file under <cwd>.");
     RecordProperty("TestingTechnique", "Requirements-based test");
-    RecordProperty("DerivationTechnique", "requirements-analysis"); // requirements
+    RecordProperty("DerivationTechnique", "requirements-analysis");  // requirements
 
     // When ...
     AddExistingFile(kGlobalConfigFile);
@@ -194,7 +197,7 @@ TEST_F(ConfigurationFileDiscovererFixture, DiscovererShallFindConfigurationFileI
         "Description",
         "Verifies that the discoverer shall find the application specific configuration file under the binary path.");
     RecordProperty("TestingTechnique", "Requirements-based test");
-    RecordProperty("DerivationTechnique", "requirements-analysis"); // requirements
+    RecordProperty("DerivationTechnique", "requirements-analysis");  // requirements
 
     // When ...
     AddExistingFile(kGlobalConfigFile);
@@ -217,7 +220,7 @@ TEST_F(ConfigurationFileDiscovererFixture, DiscovererShallFindConfigurationFileI
                    "Verifies that the discoverer shall find the application specific configuration file under the "
                    "environment variable path.");
     RecordProperty("TestingTechnique", "Requirements-based test");
-    RecordProperty("DerivationTechnique", "requirements-analysis"); // requirements
+    RecordProperty("DerivationTechnique", "requirements-analysis");  // requirements
 
     // When ...
     AddExistingFile(kGlobalConfigFile);
@@ -238,7 +241,7 @@ TEST_F(ConfigurationFileDiscovererFixture, DiscovererShallFindConfigurationFileI
                    "Verifies that the discoverer shall find the application specific configuration file under the "
                    "environment variable path. The <cwd>/etc. path should be ignored");
     RecordProperty("TestingTechnique", "Requirements-based test");
-    RecordProperty("DerivationTechnique", "requirements-analysis"); // requirements
+    RecordProperty("DerivationTechnique", "requirements-analysis");  // requirements
 
     // When ...
     AddExistingFile(kGlobalConfigFile);
@@ -260,7 +263,7 @@ TEST_F(ConfigurationFileDiscovererFixture, DiscovererShallFindConfigurationFileI
                    "Verifies that the discoverer shall find the application specific configuration file under the "
                    "environment variable path. The <cwd> path should be ignored");
     RecordProperty("TestingTechnique", "Requirements-based test");
-    RecordProperty("DerivationTechnique", "requirements-analysis"); // requirements
+    RecordProperty("DerivationTechnique", "requirements-analysis");  // requirements
 
     // When ...
     AddExistingFile(kGlobalConfigFile);
@@ -282,7 +285,7 @@ TEST_F(ConfigurationFileDiscovererFixture, DiscovererShallFindConfigurationFileI
                    "Verifies that the discoverer shall find the application specific configuration file under the "
                    "environment variable path. The binary path should be ignored");
     RecordProperty("TestingTechnique", "Requirements-based test");
-    RecordProperty("DerivationTechnique", "requirements-analysis"); // requirements
+    RecordProperty("DerivationTechnique", "requirements-analysis");  // requirements
 
     // When ...
     AddExistingFile(kGlobalConfigFile);
@@ -302,7 +305,7 @@ TEST_F(ConfigurationFileDiscovererFixture, DiscovererShallReturnEmptyIfNothingEx
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Verifies that the discoverer shall return an empty list if no config file exists.");
     RecordProperty("TestingTechnique", "Requirements-based test");
-    RecordProperty("DerivationTechnique", "requirements-analysis"); // requirements
+    RecordProperty("DerivationTechnique", "requirements-analysis");  // requirements
 
     // When no file exists then ...
     const auto result = discoverer.FindConfigurationFiles();
@@ -315,7 +318,7 @@ TEST_F(ConfigurationFileDiscovererFixture, DiscovererShallReturnEmptyIfExecPathF
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Verifies that the discoverer shall return an empty list if an error occurs.");
     RecordProperty("TestingTechnique", "Requirements-based test");
-    RecordProperty("DerivationTechnique", "requirements-analysis"); // requirements
+    RecordProperty("DerivationTechnique", "requirements-analysis");  // requirements
 
     // When...
     AddExistingFile(kLocalConfigFileInExecPath);

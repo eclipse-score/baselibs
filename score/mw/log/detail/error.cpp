@@ -93,7 +93,7 @@ constexpr score::mw::log::detail::ErrorDomain kMwLogErrorDomain;
 }
 
 score::result::Error score::mw::log::detail::MakeError(const score::mw::log::detail::Error code,
-                                                   const std::string_view user_message) noexcept
+                                                       const std::string_view user_message) noexcept
 {
     return {static_cast<score::result::ErrorCode>(code), kMwLogErrorDomain, user_message};
 }

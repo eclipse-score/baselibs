@@ -14,9 +14,9 @@
 #define SCORE_MW_LOG_DETAIL_WAIT_FREE_STACK_WAIT_FREE_STACK_H
 
 #include "score/callback.hpp"
+#include "score/concurrency/atomic_indirector.h"
 #include "score/optional.hpp"
 #include "score/span.hpp"
-#include "score/concurrency/atomic_indirector.h"
 
 #include <atomic>
 #include <utility>

@@ -62,7 +62,8 @@ void NonBlockingWriter::SetSpan(const score::cpp::span<const std::uint8_t>& buff
     buffer_ = buffer;
 }
 
-score::cpp::expected<NonBlockingWriter::Result, score::mw::log::detail::Error> NonBlockingWriter::FlushIntoFile() noexcept
+score::cpp::expected<NonBlockingWriter::Result, score::mw::log::detail::Error>
+NonBlockingWriter::FlushIntoFile() noexcept
 {
     const auto buffer_size = static_cast<uint64_t>(buffer_.size());
 

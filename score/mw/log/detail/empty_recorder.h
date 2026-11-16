@@ -28,7 +28,7 @@ class EmptyRecorder final : public Recorder
 {
   public:
     score::cpp::optional<SlotHandle> StartRecord(const std::string_view context_id,
-                                          const LogLevel log_level) noexcept override;
+                                                 const LogLevel log_level) noexcept override;
 
     void StopRecord(const SlotHandle& slot) noexcept override;
 

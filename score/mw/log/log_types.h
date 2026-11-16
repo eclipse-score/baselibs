@@ -105,7 +105,8 @@ class IsRange<
 {
 };
 
-/// @brief Determines whether type `RangeType` is a range of `ElementType` and not an score::cpp::span or array of such type.
+/// @brief Determines whether type `RangeType` is a range of `ElementType` and not an score::cpp::span or array of such
+/// type.
 template <typename RangeType, typename ElementType>
 constexpr bool IsNonSpanNonArrayRange() noexcept
 {
@@ -135,7 +136,8 @@ class LogString
     // NOLINTBEGIN(cppcoreguidelines-pro-type-member-init): false positive, this constructor delegates to another one
     // NOLINTNEXTLINE(google-explicit-constructor): intended here to allow implicit conversions from range of `CharType`
     constexpr LogString(RangeType&& range) noexcept(noexcept(std::data(range)) && noexcept(std::size(range)))
-        // NOLINTNEXTLINE(score-banned-function): using `std::data()` is valid here since used in conj. with `std::size()`
+        // NOLINTNEXTLINE(score-banned-function): using `std::data()` is valid here since used in conj. with
+        // `std::size()`
         : LogString(std::data(range), std::size(range))
     // NOLINTEND(cppcoreguidelines-pro-type-member-init)
     {
@@ -289,7 +291,8 @@ inline LogRawBuffer MakeLogRawBuffer(const score::cpp::span<T> values)
     static_assert(kIsEligible, "Only scalar types are allowed for dumping for now.");
 
     using SpanSizeType = typename score::cpp::span<T>::size_type;
-    SCORE_LANGUAGE_FUTURECPP_PRECONDITION_MESSAGE(values.size() >= static_cast<SpanSizeType>(0), "score::cpp::span with negative size refused.");
+    SCORE_LANGUAGE_FUTURECPP_PRECONDITION_MESSAGE(values.size() >= static_cast<SpanSizeType>(0),
+                                                  "score::cpp::span with negative size refused.");
 
     // ----- COMMON_ARGUMENTATION ----
     // We cast to a char to print the byte representation of the given span. Since we know that:
@@ -315,8 +318,8 @@ inline LogRawBuffer MakeLogRawBuffer(const score::cpp::span<T> values)
 template <typename T>
 inline LogRawBuffer MakeLogRawBuffer(const std::vector<T>& values) noexcept
 {
-    return MakeLogRawBuffer(
-        score::cpp::span<const T>(values.data(), static_cast<typename score::cpp::span<const T>::size_type>(values.size())));
+    return MakeLogRawBuffer(score::cpp::span<const T>(
+        values.data(), static_cast<typename score::cpp::span<const T>::size_type>(values.size())));
 }
 
 /// \brief Create a LogRawBuffer from an std::array consisting of scalars.
@@ -327,7 +330,8 @@ inline LogRawBuffer MakeLogRawBuffer(const std::vector<T>& values) noexcept
 template <typename T, std::size_t n>
 inline LogRawBuffer MakeLogRawBuffer(const std::array<T, n>& values) noexcept
 {
-    return MakeLogRawBuffer(score::cpp::span<const T>(values.data(), static_cast<typename score::cpp::span<const T>::size_type>(n)));
+    return MakeLogRawBuffer(
+        score::cpp::span<const T>(values.data(), static_cast<typename score::cpp::span<const T>::size_type>(n)));
 }
 
 }  // namespace log

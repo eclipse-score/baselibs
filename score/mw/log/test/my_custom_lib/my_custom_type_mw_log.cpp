@@ -20,7 +20,7 @@ namespace type
 {
 
 score::mw::log::LogStream& operator<<(score::mw::log::LogStream& log_stream,
-                                    const my::custom::type::MyCustomType& my_custom_type) noexcept
+                                      const my::custom::type::MyCustomType& my_custom_type) noexcept
 {
     log_stream << "my_custom_type: int_field : " << my_custom_type.int_field
                << " , string_field : " << my_custom_type.string_field;

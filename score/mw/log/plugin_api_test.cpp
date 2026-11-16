@@ -33,8 +33,8 @@ namespace
 TEST(MwLogPluginApiTest, AbiVersionMacrosAreDefined)
 {
     RecordProperty("Description", "MW_LOG_ABI_VERSION_MAJOR and MW_LOG_ABI_VERSION_MINOR shall be defined ");
-    RecordProperty("TestType", "requirements-based"); // requirements test
-    RecordProperty("DerivationTechnique", "requirements-analysis"); // requirements
+    RecordProperty("TestType", "requirements-based");                // requirements test
+    RecordProperty("DerivationTechnique", "requirements-analysis");  // requirements
     RecordProperty("ParentRequirement", "REQ-DD-2");
 
     // The macros must be usable in a constexpr context.
@@ -47,8 +47,8 @@ TEST(MwLogPluginApiTest, AbiVersionMacrosAreDefined)
 TEST(MwLogPluginApiTest, AbiVersionStructLayout)
 {
     RecordProperty("Description", "MwLogAbiVersion shall contain major and minor fields of uint16_t");
-    RecordProperty("TestType", "requirements-based"); // requirements test
-    RecordProperty("DerivationTechnique", "requirements-analysis"); // requirements
+    RecordProperty("TestType", "requirements-based");                // requirements test
+    RecordProperty("DerivationTechnique", "requirements-analysis");  // requirements
     RecordProperty("ParentRequirement", "REQ-DD-2");
 
     MwLogAbiVersion version{};
@@ -63,8 +63,8 @@ TEST(MwLogPluginApiTest, AbiVersionStructLayout)
 TEST(MwLogPluginApiTest, CompatibilityCheckExactMatch)
 {
     RecordProperty("Description", "A plugin with the same major and minor shall be compatible");
-    RecordProperty("TestType", "requirements-based"); // requirements test
-    RecordProperty("DerivationTechnique", "requirements-analysis"); // requirements
+    RecordProperty("TestType", "requirements-based");                // requirements test
+    RecordProperty("DerivationTechnique", "requirements-analysis");  // requirements
     RecordProperty("ParentRequirement", "REQ-DD-2");
 
     const MwLogAbiVersion plugin_version{MW_LOG_ABI_VERSION_MAJOR, MW_LOG_ABI_VERSION_MINOR};
@@ -74,8 +74,8 @@ TEST(MwLogPluginApiTest, CompatibilityCheckExactMatch)
 TEST(MwLogPluginApiTest, CompatibilityCheckLowerMinorIsCompatible)
 {
     RecordProperty("Description", "A plugin with same major but lower minor shall be compatible.");
-    RecordProperty("TestType", "requirements-based"); // requirements test
-    RecordProperty("DerivationTechnique", "requirements-analysis"); // requirements
+    RecordProperty("TestType", "requirements-based");                // requirements test
+    RecordProperty("DerivationTechnique", "requirements-analysis");  // requirements
     RecordProperty("ParentRequirement", "REQ-DD-2");
 
     const MwLogAbiVersion plugin_version{MW_LOG_ABI_VERSION_MAJOR, 0U};
@@ -85,8 +85,8 @@ TEST(MwLogPluginApiTest, CompatibilityCheckLowerMinorIsCompatible)
 TEST(MwLogPluginApiTest, CompatibilityCheckHigherMinorIsIncompatible)
 {
     RecordProperty("Description", "A plugin with same major but higher minor shall be incompatible.");
-    RecordProperty("TestType", "requirements-based"); // requirements test
-    RecordProperty("DerivationTechnique", "requirements-analysis"); // requirements
+    RecordProperty("TestType", "requirements-based");                // requirements test
+    RecordProperty("DerivationTechnique", "requirements-analysis");  // requirements
     RecordProperty("ParentRequirement", "REQ-DD-2");
 
     const MwLogAbiVersion plugin_version{MW_LOG_ABI_VERSION_MAJOR,
@@ -97,8 +97,8 @@ TEST(MwLogPluginApiTest, CompatibilityCheckHigherMinorIsIncompatible)
 TEST(MwLogPluginApiTest, CompatibilityCheckDifferentMajorIsIncompatible)
 {
     RecordProperty("Description", "A plugin with a different major version shall be incompatible.");
-    RecordProperty("TestType", "requirements-based"); // requirements test
-    RecordProperty("DerivationTechnique", "requirements-analysis"); // requirements
+    RecordProperty("TestType", "requirements-based");                // requirements test
+    RecordProperty("DerivationTechnique", "requirements-analysis");  // requirements
     RecordProperty("ParentRequirement", "REQ-DD-2");
 
     const MwLogAbiVersion plugin_version_higher{static_cast<uint16_t>(MW_LOG_ABI_VERSION_MAJOR + 1U),
@@ -116,8 +116,8 @@ TEST(MwLogPluginApiTest, CompatibilityCheckDifferentMajorIsIncompatible)
 TEST(MwLogPluginApiTest, CompatibilityCheckZeroMajorIsIncompatible)
 {
     RecordProperty("Description", "A plugin with major=0 shall be incompatible.");
-    RecordProperty("TestType", "requirements-based"); // requirements test
-    RecordProperty("DerivationTechnique", "requirements-analysis"); // requirements
+    RecordProperty("TestType", "requirements-based");                // requirements test
+    RecordProperty("DerivationTechnique", "requirements-analysis");  // requirements
     RecordProperty("ParentRequirement", "REQ-DD-2");
 
     const MwLogAbiVersion plugin_version{0U, MW_LOG_ABI_VERSION_MINOR};
@@ -129,8 +129,8 @@ TEST(MwLogPluginApiTest, MwLogVersionIsCallableAsFunctionPointer)
     RecordProperty("Description",
                    "MwLogVersion() shall be usable as a C function pointer type "
                    "compatible with dlsym() cast.");
-    RecordProperty("TestType", "requirements-based"); // requirements test
-    RecordProperty("DerivationTechnique", "requirements-analysis"); // requirements
+    RecordProperty("TestType", "requirements-based");                // requirements test
+    RecordProperty("DerivationTechnique", "requirements-analysis");  // requirements
     RecordProperty("ParentRequirement", "REQ-DD-1");
 
     using VersionFn = MwLogAbiVersion (*)();
@@ -143,8 +143,8 @@ TEST(MwLogPluginApiTest, MwLogRegisterBackendsIsCallableAsFunctionPointer)
     RecordProperty("Description",
                    "MwLogRegisterBackends() shall be usable as a C function pointer "
                    "type compatible with dlsym() casting (REQ-DD-1).");
-    RecordProperty("TestType", "requirements-based"); // requirements test
-    RecordProperty("DerivationTechnique", "requirements-analysis"); // requirements
+    RecordProperty("TestType", "requirements-based");                // requirements test
+    RecordProperty("DerivationTechnique", "requirements-analysis");  // requirements
     RecordProperty("ParentRequirement", "REQ-DD-1");
     using RegisterFn = void (*)();
     RegisterFn fn = &MwLogRegisterBackends;
@@ -154,8 +154,8 @@ TEST(MwLogPluginApiTest, MwLogRegisterBackendsIsCallableAsFunctionPointer)
 TEST(MwLogPluginApiTest, MwLogVersionReturnsAbiVersion)
 {
     RecordProperty("Description", "MwLogVersion() shall return {MW_LOG_ABI_VERSION_MAJOR, MW_LOG_ABI_VERSION_MINOR}.");
-    RecordProperty("TestType", "requirements-based"); // requirements test
-    RecordProperty("DerivationTechnique", "requirements-analysis"); // requirements
+    RecordProperty("TestType", "requirements-based");                // requirements test
+    RecordProperty("DerivationTechnique", "requirements-analysis");  // requirements
     RecordProperty("ParentRequirement", "REQ-DD-2");
 
     const MwLogAbiVersion version = MwLogVersion();
@@ -168,8 +168,8 @@ TEST(MwLogPluginApiTest, MwLogVersionViaFunctionPointerMatchesDirectCall)
     RecordProperty("Description",
                    "MwLogVersion() called via function pointer (simulating dlsym()) "
                    "shall return the same value as a direct call (REQ-DD-2).");
-    RecordProperty("TestType", "requirements-based"); // requirements test
-    RecordProperty("DerivationTechnique", "requirements-analysis"); // requirements
+    RecordProperty("TestType", "requirements-based");                // requirements test
+    RecordProperty("DerivationTechnique", "requirements-analysis");  // requirements
     RecordProperty("ParentRequirement", "REQ-DD-2");
 
     using VersionFn = MwLogAbiVersion (*)();
@@ -188,8 +188,8 @@ TEST(MwLogPluginApiTest, MwLogVersionResultIsCompatibleWithHost)
     RecordProperty("Description",
                    "MwLogVersion() from a correctly built plugin shall pass "
                    "MwLogIsVersionCompatible() (REQ-DD-2).");
-    RecordProperty("TestType", "requirements-based"); // requirements test
-    RecordProperty("DerivationTechnique", "requirements-analysis"); // requirements
+    RecordProperty("TestType", "requirements-based");                // requirements test
+    RecordProperty("DerivationTechnique", "requirements-analysis");  // requirements
     RecordProperty("ParentRequirement", "REQ-DD-2");
 
     const MwLogAbiVersion version = MwLogVersion();
@@ -199,8 +199,8 @@ TEST(MwLogPluginApiTest, MwLogVersionResultIsCompatibleWithHost)
 TEST(MwLogPluginApiTest, MwLogRegisterBackendsIsCallableWithoutCrash)
 {
     RecordProperty("Description", "MwLogRegisterBackends() shall be callable without an exception.");
-    RecordProperty("TestType", "requirements-based"); // requirements test
-    RecordProperty("DerivationTechnique", "requirements-analysis"); // requirements
+    RecordProperty("TestType", "requirements-based");                // requirements test
+    RecordProperty("DerivationTechnique", "requirements-analysis");  // requirements
     RecordProperty("ParentRequirement", "REQ-DD-1");
 
     // Must not crash or throw.

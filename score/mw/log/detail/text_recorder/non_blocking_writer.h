@@ -15,8 +15,8 @@
 
 // Be careful what you include here. Each additional header will be included in logging.h and thus exposed to the user.
 // We need to try to keep the includes low to reduce the compile footprint of using this library.
-#include "score/os/unistd.h"
 #include "score/mw/log/detail/error.h"
+#include "score/os/unistd.h"
 
 #include <score/span.hpp>
 #include <climits>
@@ -66,7 +66,7 @@ class NonBlockingWriter final
     uint64_t
         number_of_flushed_bytes_;  // last written byte location to be used to continue writing in other flush calls.
     score::cpp::span<const std::uint8_t> buffer_;  // the sent buffer to flush data from it to the file.
-    Result buffer_flushed_;                 // Internal flag used to raise it once the whole buffer is flushed.
+    Result buffer_flushed_;                        // Internal flag used to raise it once the whole buffer is flushed.
     std::size_t max_chunk_size_;
 };
 

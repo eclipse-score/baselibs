@@ -15,8 +15,9 @@
 #include "score/mw/log/detail/thread_local_guard.h"
 #include "score/mw/log/runtime.h"
 
-score::mw::log::LogStream score::mw::log::detail::LogStreamFactory::GetStream(const LogLevel log_level,
-                                                                          const std::string_view context_id) noexcept
+score::mw::log::LogStream score::mw::log::detail::LogStreamFactory::GetStream(
+    const LogLevel log_level,
+    const std::string_view context_id) noexcept
 {
     if (not ThreadLocalGuard::IsWithingLogging())
     {
