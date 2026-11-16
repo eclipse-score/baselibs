@@ -123,13 +123,15 @@ Safety Analysis of vajson
             :measure: Equivalent to FM-VaJson-NumberConversion.
 
         .. fm:: FM-VaJson-InvalidCharacters Input contains invalid characters.
-            :details: The input contains characters that are not valid, i.e. characters in the range 0x0 to 0x20
-                      (inclusive).
+            :details: The input contains characters that are not valid, i.e. unescaped characters in the range U+0000 to
+                      U+001F inside strings or keys.
             :effect:  Invalid data is deserialized and, thus, safety requirements are violated.
             :measure: Check for invalid characters in the input data during deserialization.
                       This is verified by the following test cases:
                       - UT__Parser__Invalid__Static
                       - UT__Parser__Invalid__Dynamic
+                      - UT__Parser__Invalid__Dynamic__UnescapedControlCharacterInString
+                      - UT__Parser__Invalid__Dynamic__UnescapedControlCharacterInKey
 
         .. fm:: FM-VaJson-InvalidEscapeSequence Input contains invalid escape sequences.
             :details: The input contains invalid escape sequences not specified in the JSON specification.
