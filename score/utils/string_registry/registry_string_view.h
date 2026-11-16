@@ -24,9 +24,9 @@ namespace score::utils::string_registry
 /// @class RegistryStringView
 ///
 /// @brief RegistryStringView is an unmodifiable view of a string held in StringRegistry.
-///        For performance reasons the comparison between instances of RegistryStringView is done
-///        using simple pointer equality check and a check against other String_views is done by
-///        character comparison.
+///        Equality compares the backing pointers and lengths of RegistryStringView instances.
+///        Relational operators compare string content.
+///        Use StringView() for content comparisons against std::string_view.
 ///        It is the programmer's responsibility to ensure that RegistryStringView does not
 ///        outlive the StringRegistry it is referring to.
 ///

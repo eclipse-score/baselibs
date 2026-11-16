@@ -42,7 +42,8 @@ class StringRegistry final
     ///
     /// @brief Insert a new StringView literal into the string registry.
     ///
-    /// @param[in]      new_string        String to be added to the registry.
+    /// @param[in]      new_string        View into immutable storage that outlives the registry; no copy is made.
+    ///                                  Use the untagged overload for storage with a shorter lifetime.
     /// @param[in]      (no name)         Used only to select StringView literal version of the
     /// method.
     ///
