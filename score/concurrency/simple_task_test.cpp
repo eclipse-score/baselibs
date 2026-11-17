@@ -51,6 +51,11 @@ TEST_F(SimpleTaskTest, ConstructionAndDestructionOnHeapWithBasePointer)
 
 TEST_F(SimpleTaskTest, ExecutesVoidCallback)
 {
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
+    RecordProperty("PartiallyVerifies", "comp_req__concurrency__simple_task");
+    RecordProperty("Description", "Check that a SimpleTask created from a void callback executes the callback.");
+
     // Given a manually created SimpleTask<> with a void callback
     bool executed{false};
     auto unit = SimpleTaskFactory::Make(score::cpp::pmr::get_default_resource(),
@@ -67,6 +72,12 @@ TEST_F(SimpleTaskTest, ExecutesVoidCallback)
 
 TEST_F(SimpleTaskTest, ExecutesCallbackWithParameter)
 {
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
+    RecordProperty("PartiallyVerifies", "comp_req__concurrency__simple_task");
+    RecordProperty("Description",
+                   "Check that a SimpleTask executes its callback with the bound argument when invoked.");
+
     // Given a manually created SimpleTask<> with an parameter
     std::int32_t observer{0};
     auto unit = SimpleTaskFactory::Make(
@@ -85,6 +96,12 @@ TEST_F(SimpleTaskTest, ExecutesCallbackWithParameter)
 
 TEST_F(SimpleTaskTest, ExecutesCallbackWithReturn)
 {
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
+    RecordProperty("PartiallyVerifies", "comp_req__concurrency__task_result");
+    RecordProperty("Description",
+                   "Check that the return value of an executed task is accessible through its TaskResult.");
+
     // Given a manually created SimpleTask<> with a return value
     auto unit = SimpleTaskFactory::MakeWithTaskResult(score::cpp::pmr::get_default_resource(),
                                                       [](const score::cpp::stop_token&) -> std::int32_t {
@@ -117,6 +134,13 @@ static_assert(sizeof(CustomTask) > 200, "The class is not big enough for these t
 
 TEST_F(SimpleTaskTest, MakerFunctionWithCustomTask)
 {
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
+    RecordProperty("PartiallyVerifies", "comp_req__concurrency__task_result");
+    RecordProperty("Description",
+                   "Check that the result of a callable object larger than the default callback storage is "
+                   "accessible through its TaskResult.");
+
     // Given a task created using the make_* function
     CustomTask custom_task{};
     auto unit = SimpleTaskFactory::MakeWithTaskResult(score::cpp::pmr::get_default_resource(), custom_task);

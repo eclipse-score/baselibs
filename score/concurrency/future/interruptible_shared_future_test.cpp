@@ -258,6 +258,12 @@ TYPED_TEST(InterruptibleSharedFutureTest, CopiedToFutureHasStateAfterCopyAssignm
 
 TYPED_TEST(InterruptibleSharedFutureTest, GetReturnsNoStateErrorForInterruptibleSharedFutureWithoutState)
 {
+    this->RecordProperty("TestType", "requirements-based");
+    this->RecordProperty("DerivationTechnique", "equivalence-classes");
+    this->RecordProperty("PartiallyVerifies", "comp_req__concurrency__error_handling");
+    this->RecordProperty("Description",
+                         "Check that Get() on a shared future without state returns the kNoState error code.");
+
     score::cpp::stop_token stop_token{};
     InterruptibleSharedFuture<TypeParam> future{};
     auto expected = future.Get(stop_token);
@@ -267,6 +273,13 @@ TYPED_TEST(InterruptibleSharedFutureTest, GetReturnsNoStateErrorForInterruptible
 
 TYPED_TEST(InterruptibleSharedFutureTest, GetReturnsBrokenPromiseErrorForInterruptibleSharedFutureWithBrokenPromise)
 {
+    this->RecordProperty("TestType", "requirements-based");
+    this->RecordProperty("DerivationTechnique", "equivalence-classes");
+    this->RecordProperty("PartiallyVerifies", "comp_req__concurrency__error_handling");
+    this->RecordProperty("Description",
+                         "Check that Get() on a shared future whose promise was destroyed unfulfilled returns the "
+                         "kPromiseBroken error code.");
+
     score::cpp::stop_token stop_token{};
     InterruptibleSharedFuture<TypeParam> future{};
     {
@@ -281,6 +294,14 @@ TYPED_TEST(InterruptibleSharedFutureTest, GetReturnsBrokenPromiseErrorForInterru
 
 TYPED_TEST(InterruptibleSharedFutureTest, GetReturnsStopRequestedErrorWhenStopRequestedAndNotReadyOrBroken)
 {
+    this->RecordProperty("TestType", "requirements-based");
+    this->RecordProperty("DerivationTechnique", "boundary-values");
+    this->RecordProperty("PartiallyVerifies",
+                         "comp_req__concurrency__operation_timeout, comp_req__concurrency__error_handling");
+    this->RecordProperty("Description",
+                         "Check that Get() on a not yet fulfilled shared future returns the kStopRequested error code "
+                         "if a stop was already requested.");
+
     score::cpp::stop_source stop_source{};
     stop_source.request_stop();
     auto expected = this->future_.Get(stop_source.get_token());
@@ -290,6 +311,13 @@ TYPED_TEST(InterruptibleSharedFutureTest, GetReturnsStopRequestedErrorWhenStopRe
 
 TYPED_TEST(InterruptibleSharedFutureTest, GetReturnsPromiseBrokenErrorWhenStopRequestedButPromiseBroken)
 {
+    this->RecordProperty("TestType", "requirements-based");
+    this->RecordProperty("DerivationTechnique", "boundary-values");
+    this->RecordProperty("PartiallyVerifies", "comp_req__concurrency__error_handling");
+    this->RecordProperty("Description",
+                         "Check that Get() on a shared future whose promise was destroyed unfulfilled returns the "
+                         "kPromiseBroken error code even if a stop was already requested.");
+
     score::cpp::stop_source stop_source{};
     stop_source.request_stop();
     InterruptibleSharedFuture<TypeParam> future{};
@@ -314,6 +342,12 @@ TYPED_TEST(InterruptibleSharedFutureTest, GetReturnsValueWhenStopRequestedButPro
 
 TYPED_TEST(InterruptibleSharedFutureTest, GetReturnsValueMultipleTimes)
 {
+    this->RecordProperty("TestType", "requirements-based");
+    this->RecordProperty("DerivationTechnique", "requirements-analysis");
+    this->RecordProperty("PartiallyVerifies", "comp_req__concurrency__task_result");
+    this->RecordProperty("Description",
+                         "Check that Get() on a shared future returns the same value on repeated calls.");
+
     score::cpp::stop_token stop_token{};
     InterruptibleSharedFutureTest<TypeParam>::SetPromise(this->promise_);
     auto expected_1 = this->future_.Get(stop_token);
@@ -341,6 +375,12 @@ TYPED_TEST(InterruptibleSharedFutureTest, MultipleSharedFuturesCanGetValue)
 
 TYPED_TEST(InterruptibleSharedFutureTest, GetReturnsOnlyAfterValueWasSet)
 {
+    this->RecordProperty("TestType", "requirements-based");
+    this->RecordProperty("DerivationTechnique", "requirements-analysis");
+    this->RecordProperty("PartiallyVerifies", "comp_req__concurrency__task_result");
+    this->RecordProperty("Description",
+                         "Check that Get() on a shared future returns the value of a fulfilled promise.");
+
     score::cpp::stop_token stop_token{};
 
     auto async_future = std::async([this, &stop_token]() noexcept {
@@ -355,6 +395,12 @@ TYPED_TEST(InterruptibleSharedFutureTest, GetReturnsOnlyAfterValueWasSet)
 
 TYPED_TEST(InterruptibleSharedFutureTest, GetReturnsErrorWhenSet)
 {
+    this->RecordProperty("TestType", "requirements-based");
+    this->RecordProperty("DerivationTechnique", "requirements-analysis");
+    this->RecordProperty("PartiallyVerifies", "comp_req__concurrency__error_handling");
+    this->RecordProperty("Description",
+                         "Check that Get() on a shared future returns the error code set on the promise.");
+
     this->promise_.SetError(Error::kFutureAlreadyRetrieved);
 
     score::cpp::stop_token stop_token{};

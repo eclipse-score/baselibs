@@ -29,6 +29,11 @@ using namespace std::chrono_literals;
 
 TEST(InterruptibleWait, wait_until_exit_requested_exits_on_stop_requsted)
 {
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
+    RecordProperty("PartiallyVerifies", "comp_req__concurrency__interruptible_wait");
+    RecordProperty("Description", "Check that wait_until_stop_requested() blocks until a stop is requested.");
+
     // Given stop_source
     std::promise<void> promise{};
     auto f = promise.get_future();
@@ -54,6 +59,11 @@ TEST(InterruptibleWait, wait_until_exit_requested_exits_on_stop_requsted)
 
 TEST(InterruptibleWait, wait_for_returns_true_on_stop_requsted)
 {
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
+    RecordProperty("PartiallyVerifies", "comp_req__concurrency__interruptible_wait");
+    RecordProperty("Description", "Check that wait_for() returns true early if a stop is requested during the wait.");
+
     // Given stop_source and timeout
     std::promise<void> promise{};
     auto f = promise.get_future();
@@ -83,6 +93,12 @@ TEST(InterruptibleWait, wait_for_returns_true_on_stop_requsted)
 
 TEST(InterruptibleWait, wait_for_returns_false_on_not_stop_requsted)
 {
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
+    RecordProperty("PartiallyVerifies", "comp_req__concurrency__interruptible_wait");
+    RecordProperty("Description",
+                   "Check that wait_for() returns false after the timeout elapsed without a stop request.");
+
     // Given stop_source and timeout
     std::promise<void> promise{};
     auto f = promise.get_future();
@@ -108,6 +124,11 @@ TEST(InterruptibleWait, wait_for_returns_false_on_not_stop_requsted)
 
 TEST(InterruptibleWait, wait_until_returns_true_on_stop_requsted)
 {
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
+    RecordProperty("PartiallyVerifies", "comp_req__concurrency__interruptible_wait");
+    RecordProperty("Description", "Check that wait_until() returns true early if a stop is requested during the wait.");
+
     // Given stop_source and time_point
     std::promise<void> promise{};
     auto f = promise.get_future();
@@ -139,6 +160,12 @@ TEST(InterruptibleWait, wait_until_returns_true_on_stop_requsted)
 
 TEST(InterruptibleWait, wait_until_returns_false_on_not_stop_requsted)
 {
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
+    RecordProperty("PartiallyVerifies", "comp_req__concurrency__interruptible_wait");
+    RecordProperty("Description",
+                   "Check that wait_until() returns false after the time point was reached without a stop request.");
+
     // Given stop_source and time_point
     std::promise<void> promise{};
     auto f = promise.get_future();

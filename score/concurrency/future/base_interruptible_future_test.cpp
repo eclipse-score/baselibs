@@ -312,6 +312,11 @@ TYPED_TEST(BaseInterruptibleFutureTest, FutureIsValidWhenSharedStateExistsButPro
 
 TYPED_TEST(BaseInterruptibleFutureTest, WaitReturnsOnlyAfterValueWasSet)
 {
+    this->RecordProperty("TestType", "requirements-based");
+    this->RecordProperty("DerivationTechnique", "requirements-analysis");
+    this->RecordProperty("PartiallyVerifies", "comp_req__concurrency__task_result");
+    this->RecordProperty("Description", "Check that Wait() reports success for a fulfilled promise.");
+
     score::cpp::stop_token stop_token{};
 
     auto async_future = std::async([this, &stop_token]() noexcept {
@@ -326,6 +331,11 @@ TYPED_TEST(BaseInterruptibleFutureTest, WaitReturnsOnlyAfterValueWasSet)
 
 TYPED_TEST(BaseInterruptibleFutureTest, WaitReturnsImmediatelyWhenNoState)
 {
+    this->RecordProperty("TestType", "requirements-based");
+    this->RecordProperty("DerivationTechnique", "equivalence-classes");
+    this->RecordProperty("PartiallyVerifies", "comp_req__concurrency__error_handling");
+    this->RecordProperty("Description", "Check that Wait() on a future without state returns the kNoState error code.");
+
     score::cpp::stop_token stop_token{};
     BaseInterruptibleFuture<TypeParam> future{};
 
@@ -349,6 +359,14 @@ TYPED_TEST(BaseInterruptibleFutureTest, WaitReturnsImmediatelyWhenPromiseAlready
 
 TYPED_TEST(BaseInterruptibleFutureTest, WaitForReturnsTimeoutErrorWhenValueWasNotSet)
 {
+    this->RecordProperty("TestType", "requirements-based");
+    this->RecordProperty("DerivationTechnique", "requirements-analysis");
+    this->RecordProperty("PartiallyVerifies",
+                         "comp_req__concurrency__operation_timeout, comp_req__concurrency__error_handling");
+    this->RecordProperty("Description",
+                         "Check that WaitFor() returns the kTimeout error code if the value is not set within the "
+                         "timeout.");
+
     score::cpp::stop_token stop_token{};
 
     auto async_future = std::async([this, &stop_token]() noexcept {
@@ -362,6 +380,12 @@ TYPED_TEST(BaseInterruptibleFutureTest, WaitForReturnsTimeoutErrorWhenValueWasNo
 
 TYPED_TEST(BaseInterruptibleFutureTest, WaitForReturnsImmediatelyWhenNoState)
 {
+    this->RecordProperty("TestType", "requirements-based");
+    this->RecordProperty("DerivationTechnique", "equivalence-classes");
+    this->RecordProperty("PartiallyVerifies", "comp_req__concurrency__error_handling");
+    this->RecordProperty("Description",
+                         "Check that WaitFor() on a future without state returns the kNoState error code.");
+
     score::cpp::stop_token stop_token{};
     BaseInterruptibleFuture<TypeParam> future{};
 
@@ -385,6 +409,12 @@ TYPED_TEST(BaseInterruptibleFutureTest, WaitForReturnsImmediatelyWhenPromiseAlre
 
 TYPED_TEST(BaseInterruptibleFutureTest, WaitForReturnsWhenValueIsSet)
 {
+    this->RecordProperty("TestType", "requirements-based");
+    this->RecordProperty("DerivationTechnique", "requirements-analysis");
+    this->RecordProperty("PartiallyVerifies", "comp_req__concurrency__task_result");
+    this->RecordProperty("Description",
+                         "Check that WaitFor() returns the result once the value is set within the timeout.");
+
     score::cpp::stop_token stop_token{};
 
     auto async_future = std::async([this, &stop_token]() noexcept {
@@ -398,6 +428,14 @@ TYPED_TEST(BaseInterruptibleFutureTest, WaitForReturnsWhenValueIsSet)
 
 TYPED_TEST(BaseInterruptibleFutureTest, WaitUntilReturnsTimeoutErrorWhenValueWasNotSet)
 {
+    this->RecordProperty("TestType", "requirements-based");
+    this->RecordProperty("DerivationTechnique", "requirements-analysis");
+    this->RecordProperty("PartiallyVerifies",
+                         "comp_req__concurrency__operation_timeout, comp_req__concurrency__error_handling");
+    this->RecordProperty("Description",
+                         "Check that WaitUntil() returns the kTimeout error code if the value is not set before the "
+                         "time point.");
+
     score::cpp::stop_token stop_token{};
 
     auto async_future = std::async([this, &stop_token]() noexcept {
@@ -411,6 +449,12 @@ TYPED_TEST(BaseInterruptibleFutureTest, WaitUntilReturnsTimeoutErrorWhenValueWas
 
 TYPED_TEST(BaseInterruptibleFutureTest, WaitUntilReturnsImmediatelyWhenNoState)
 {
+    this->RecordProperty("TestType", "requirements-based");
+    this->RecordProperty("DerivationTechnique", "equivalence-classes");
+    this->RecordProperty("PartiallyVerifies", "comp_req__concurrency__error_handling");
+    this->RecordProperty("Description",
+                         "Check that WaitUntil() on a future without state returns the kNoState error code.");
+
     score::cpp::stop_token stop_token{};
     BaseInterruptibleFuture<TypeParam> future{};
 
@@ -556,6 +600,13 @@ TYPED_TEST(BaseInterruptibleFutureTest, MultipleScopedContinuationsExecutedWhenS
 
 TYPED_TEST(BaseInterruptibleFutureTest, ScopedContinuationWithoutStateExecutesWithError)
 {
+    this->RecordProperty("TestType", "requirements-based");
+    this->RecordProperty("DerivationTechnique", "equivalence-classes");
+    this->RecordProperty("PartiallyVerifies", "comp_req__concurrency__error_handling");
+    this->RecordProperty("Description",
+                         "Check that Then() on a future without state returns the kNoState error code and invokes "
+                         "the continuation with the same error.");
+
     std::promise<void> promise{};
     BaseInterruptibleFuture<TypeParam> future_without_state{};
 

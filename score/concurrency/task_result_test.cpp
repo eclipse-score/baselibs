@@ -33,6 +33,11 @@ class TaskResultTest : public ::testing::Test
 
 TEST_F(TaskResultTest, CanWaitForVoidReturn)
 {
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
+    RecordProperty("PartiallyVerifies", "comp_req__concurrency__task_result");
+    RecordProperty("Description", "Check that the result of an executed void task becomes available through Get().");
+
     // Given a task that is executed
     bool executed{false};
     auto task = SimpleTaskFactory::MakeWithTaskResult(score::cpp::pmr::get_default_resource(),
@@ -50,6 +55,11 @@ TEST_F(TaskResultTest, CanWaitForVoidReturn)
 
 TEST_F(TaskResultTest, CanRetrieveReturnType)
 {
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
+    RecordProperty("PartiallyVerifies", "comp_req__concurrency__task_result");
+    RecordProperty("Description", "Check that Get() returns the value produced by an executed task.");
+
     // Given a task that is executed
     auto task = SimpleTaskFactory::MakeWithTaskResult(score::cpp::pmr::get_default_resource(),
                                                       [](const score::cpp::stop_token&) {
@@ -66,6 +76,11 @@ TEST_F(TaskResultTest, CanRetrieveReturnType)
 
 TEST_F(TaskResultTest, CanAbortTask)
 {
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
+    RecordProperty("PartiallyVerifies", "comp_req__concurrency__task_result, comp_req__concurrency__task_cancellation");
+    RecordProperty("Description", "Check that Abort() requests a stop on the stop source of the task.");
+
     // Given a task that is executed
     auto task = SimpleTaskFactory::MakeWithTaskResult(score::cpp::pmr::get_default_resource(),
                                                       [](const score::cpp::stop_token&) {});
@@ -80,6 +95,11 @@ TEST_F(TaskResultTest, CanAbortTask)
 
 TEST_F(TaskResultTest, ReportsAbortedState)
 {
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
+    RecordProperty("PartiallyVerifies", "comp_req__concurrency__task_result");
+    RecordProperty("Description", "Check that Aborted() is false before and true after Abort() was requested.");
+
     // Given a task that is executed and _not_ yet aborted
     auto task = SimpleTaskFactory::MakeWithTaskResult(score::cpp::pmr::get_default_resource(),
                                                       [](const score::cpp::stop_token&) {});

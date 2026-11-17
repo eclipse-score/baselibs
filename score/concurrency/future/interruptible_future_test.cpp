@@ -233,6 +233,14 @@ TYPED_TEST(InterruptibleFutureTest, CanShareFuture)
 
 TYPED_TEST(InterruptibleFutureTest, GetReturnsErrorWhenStopRequested)
 {
+    this->RecordProperty("TestType", "requirements-based");
+    this->RecordProperty("DerivationTechnique", "boundary-values");
+    this->RecordProperty("PartiallyVerifies",
+                         "comp_req__concurrency__operation_timeout, comp_req__concurrency__error_handling");
+    this->RecordProperty("Description",
+                         "Check that Get() on a not yet fulfilled future returns the kStopRequested error code if a "
+                         "stop was already requested.");
+
     score::cpp::stop_source stop_source{};
     auto stop_token = stop_source.get_token();
     stop_source.request_stop();

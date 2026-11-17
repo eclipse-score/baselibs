@@ -113,6 +113,12 @@ TEST_F(PeriodicTaskTest, ConstructionAndDestructionOnHeapWithBasePointer)
 
 TEST_F(PeriodicTaskTest, ExecutesCallbackReturningVoid)
 {
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
+    RecordProperty("PartiallyVerifies", "comp_req__concurrency__periodic_task");
+    RecordProperty("Description",
+                   "Check that a timed PeriodicTask with a void callback invokes it at the first execution time.");
+
     // Given a PeriodicTask that returns void
     auto unit = WithTimedTaskedReturningVoid();
 
@@ -127,6 +133,13 @@ TEST_F(PeriodicTaskTest, ExecutesCallbackReturningVoid)
 
 TEST_F(PeriodicTaskTest, ExecutesCallbackReturningVoidChangesNextExecutionTimepoint)
 {
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
+    RecordProperty("PartiallyVerifies", "comp_req__concurrency__periodic_task");
+    RecordProperty("Description",
+                   "Check that a timed PeriodicTask with a void callback moves its next execution point by one "
+                   "interval after execution.");
+
     // Given a PeriodicTask that returns void
     auto unit = WithTimedTaskedReturningVoid();
 
@@ -140,6 +153,13 @@ TEST_F(PeriodicTaskTest, ExecutesCallbackReturningVoidChangesNextExecutionTimepo
 
 TEST_F(PeriodicTaskTest, ExecutesCallbackReturningNonVoidChangesNextExecutionTimepoint)
 {
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
+    RecordProperty("PartiallyVerifies", "comp_req__concurrency__periodic_task");
+    RecordProperty("Description",
+                   "Check that a timed PeriodicTask with a non-void callback moves its next execution point by one "
+                   "interval after execution.");
+
     // Given a PeriodicTask that returns void
     auto unit = WithTimedTaskedReturningNonVoid();
 
@@ -153,6 +173,13 @@ TEST_F(PeriodicTaskTest, ExecutesCallbackReturningNonVoidChangesNextExecutionTim
 
 TEST_F(PeriodicTaskTest, ExecutesCallbackReturningNonVoid)
 {
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
+    RecordProperty("PartiallyVerifies", "comp_req__concurrency__periodic_task");
+    RecordProperty("Description",
+                   "Check that a timed PeriodicTask with a non-void callback invokes it at the first execution "
+                   "time.");
+
     // Given a PeriodicTask that returns not void
     auto unit = WithTimedTaskedReturningNonVoid();
 
@@ -167,6 +194,12 @@ TEST_F(PeriodicTaskTest, ExecutesCallbackReturningNonVoid)
 
 TEST_F(PeriodicTaskTest, DoesNotReturnNextExectuionPointWhenStopped)
 {
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
+    RecordProperty("PartiallyVerifies", "comp_req__concurrency__periodic_task");
+    RecordProperty("Description",
+                   "Check that a timed PeriodicTask reports no next execution point after its stop was requested.");
+
     // Given a PeriodicTask that returns void, which was requested to stop
     auto unit = WithTimedTaskedReturningVoid();
     unit->GetStopSource().request_stop();
@@ -180,6 +213,12 @@ TEST_F(PeriodicTaskTest, DoesNotReturnNextExectuionPointWhenStopped)
 
 TEST_F(PeriodicTaskTest, StopingTaskSetsPromise)
 {
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
+    RecordProperty("PartiallyVerifies", "comp_req__concurrency__task_result");
+    RecordProperty("Description",
+                   "Check that the result of a stopped timed PeriodicTask becomes available after it was invoked.");
+
     // Given a PeriodicTask that returns void, which was requested to stop
     auto task_pair = WithTimedTaskedReturningVoidResult();
     auto unit = std::move(task_pair.second);
@@ -196,6 +235,13 @@ TEST_F(PeriodicTaskTest, StopingTaskSetsPromise)
 
 TEST_F(PeriodicTaskTest, ExecutesCallbackWithCorrectAttributes)
 {
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
+    RecordProperty("PartiallyVerifies", "comp_req__concurrency__periodic_task");
+    RecordProperty("Description",
+                   "Check that a timed PeriodicTask invokes its callback with the configured first execution time "
+                   "point.");
+
     auto unit = PeriodicTaskFactory::Make<score::concurrency::testing::SteadyClock>(
         score::cpp::pmr::get_default_resource(),
         first_execution_,
@@ -214,6 +260,11 @@ TEST_F(PeriodicTaskTest, ExecutesCallbackWithCorrectAttributes)
 
 TEST_F(PeriodicTaskTest, ExecutesCallbackWithParameter)
 {
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
+    RecordProperty("PartiallyVerifies", "comp_req__concurrency__periodic_task");
+    RecordProperty("Description", "Check that a timed PeriodicTask invokes its callback with the bound argument.");
+
     std::int32_t observer{0};
     auto unit = PeriodicTaskFactory::Make<score::concurrency::testing::SteadyClock>(
         score::cpp::pmr::get_default_resource(),
@@ -238,6 +289,13 @@ TEST_F(PeriodicTaskTest, ExecutesCallbackWithParameter)
 
 TEST_F(PeriodicTaskTest, MakeWithTaskResultLeadsToAssociatedTaskAndTaskResult)
 {
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
+    RecordProperty("PartiallyVerifies", "comp_req__concurrency__task_result");
+    RecordProperty("Description",
+                   "Check that a timed PeriodicTask created with a task result provides a valid result that "
+                   "completes after the task ended.");
+
     // Given a task created using the make_* function
     auto unit = PeriodicTaskFactory::MakeWithTaskResult<score::concurrency::testing::SteadyClock>(
         score::cpp::pmr::get_default_resource(),
@@ -272,6 +330,13 @@ TEST_F(PeriodicTaskTest, WillTerminateWhenCalculationOfTimePointForNextExecution
 
 TEST_F(PeriodicTaskTest, MakeWithTaskResultCapturesAllArguments)
 {
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
+    RecordProperty("PartiallyVerifies", "comp_req__concurrency__periodic_task");
+    RecordProperty("Description",
+                   "Check that a timed PeriodicTask created with a task result invokes its callback with all bound "
+                   "arguments.");
+
     int arg1 = 42;
     double arg2 = 3.14;
 
