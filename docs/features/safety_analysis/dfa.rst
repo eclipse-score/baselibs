@@ -273,6 +273,7 @@ For all identified applicable failure initiators, the DFA is performed in the fo
    :id: feat_saf_dfa__baselibs__blocked_execution
    :failure_id: UI_01_06
    :failure_effect: Using application is blocked from execution and thus cannot fulfill its safety function
+   :mitigated_by: aou_req__platform__flow_monitoring[version==1]
    :mitigation_issue: https://github.com/eclipse-score/score/issues/2816
    :sufficient: no
    :status: valid
