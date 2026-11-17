@@ -267,6 +267,17 @@ deb(
     visibility = ["//visibility:public"],
 )
 
+download_archive = use_repo_rule("@download_utils//download/archive:defs.bzl", "download_archive")
+
+# Test corpus for score/json, pinned to the last upstream commit (2024-11-22).
+download_archive(
+    name = "json_test_suite",
+    build = "//third_party/json_test_suite:json_test_suite.BUILD",
+    integrity = "sha256-Mqsvs3zCZnnb2RZNu3BTvO8QE0ZD1TywzvRd52gNzcw=",
+    strip_prefix = "JSONTestSuite-1ef36fa01286573e846ac449e8683f8833c5b26a",
+    urls = ["https://github.com/nst/JSONTestSuite/archive/1ef36fa01286573e846ac449e8683f8833c5b26a.tar.gz"],
+)
+
 bazel_dep(name = "flatbuffers", version = "25.12.19.bcr.1")
 bazel_dep(name = "bazel_skylib", version = "1.9.0")
 

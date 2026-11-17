@@ -54,3 +54,13 @@ The license text can be found in licenses/llvm-libcxx.txt.
 //===----------------------------------------------------------------------===//
 
 [1] https://github.com/llvm/llvm-project/tree/main/libcxx
+
+## nst/JSONTestSuite
+
+The tests of score/json use the parsing test corpus of nst/JSONTestSuite [2].
+The corpus is downloaded at build time and is not part of this repository.
+
+nst/JSONTestSuite is provided under the MIT License, Copyright (c) 2016 Nicolas Seriot.
+The license text is part of the downloaded archive.
+
+[2] https://github.com/nst/JSONTestSuite

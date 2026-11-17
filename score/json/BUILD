@@ -245,6 +245,17 @@ cc_gtest_unit_test(
     ],
 )
 
+cc_gtest_unit_test(
+    name = "json_test_suite_test",
+    srcs = ["json_test_suite_test.cpp"],
+    data = ["@json_test_suite//:test_parsing"],
+    env = {"JSON_TEST_SUITE_FILES": "$(rlocationpaths @json_test_suite//:test_parsing)"},
+    features = COMPILER_WARNING_FEATURES,
+    # The QNX test runner copies only main-repo runfiles into the guest, not the external corpus.
+    target_compatible_with = ["@platforms//os:linux"],
+    deps = [":json"],
+)
+
 cc_test(
     name = "json_serializer_test",
     srcs = [
