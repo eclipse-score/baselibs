@@ -36,6 +36,12 @@ TEST(UT__NumberParser, IsDigit)
 /// @brief           Tests if IsHexDigit works as expected.
 TEST(UT__NumberParser, IsHexDigit)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__vajson__hex_integers");
+    RecordProperty("Description",
+                   "Check that decimal digits and uppercase and lowercase hexadecimal letters are accepted as "
+                   "hexadecimal digits, while other characters are rejected.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "boundary-values");
     ASSERT_TRUE(internal::util::IsHexDigit('0'));
     ASSERT_TRUE(internal::util::IsHexDigit('9'));
     ASSERT_TRUE(internal::util::IsHexDigit('a'));
