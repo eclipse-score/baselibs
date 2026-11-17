@@ -28,7 +28,11 @@ rust_static_library(
 cc_binary(
     name = "log_cpp_init",
     srcs = ["src/main.cpp"],
-    linkopts = ["-lpthread"],
+    # QNX provides pthreads in libc (no libpthread); Rust std needs libsocket.
+    linkopts = select({
+        "@platforms//os:qnx": ["-lsocket"],
+        "//conditions:default": ["-lpthread"],
+    }),
     visibility = ["//visibility:public"],
     deps = [
         ":example_lib",
