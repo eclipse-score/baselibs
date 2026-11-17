@@ -15,10 +15,10 @@
 
 #include <algorithm>
 #include <cstdint>
-#include <functional>
 #include <limits>
 
 #include <score/assert.hpp>
+#include <score/math.hpp>
 #include <cmath>
 
 namespace score
@@ -52,7 +52,7 @@ constexpr bool IsLosslessCast(const In value) noexcept
     else if constexpr (std::is_same_v<Out, bool>)
     {
         // To bool: only 0 and 1.
-        return std::equal_to<In>{}(value, In{0}) || std::equal_to<In>{}(value, In{1});
+        return score::cpp::equals_bitexact(value, In{0}) || score::cpp::equals_bitexact(value, In{1});
     }
     else if constexpr (std::is_integral_v<In> && std::is_integral_v<Out>)
     {
@@ -89,7 +89,7 @@ constexpr bool IsLosslessCast(const In value) noexcept
             std::min(kMaxExactInteger<In>, static_cast<std::uint64_t>(std::numeric_limits<Out>::max())));
         // The range check makes the cast below defined and also rejects NaN.
         return (value >= kMin) && (value <= kMax) &&
-               std::equal_to<In>{}(static_cast<In>(static_cast<Out>(value)), value);
+               score::cpp::equals_bitexact(static_cast<In>(static_cast<Out>(value)), value);
     }
     else
     {
@@ -103,7 +103,15 @@ score::Result<Out> TryLosslessCast(const In value)
 {
     if (IsLosslessCast<Out>(value))
     {
-        return static_cast<Out>(value);
+        if constexpr (std::is_same_v<Out, bool> && std::is_floating_point_v<In>)
+        {
+            // static_cast<bool> would compare implicitly with 0, which triggers -Wfloat-equal.
+            return !score::cpp::equals_bitexact(value, In{0});
+        }
+        else
+        {
+            return static_cast<Out>(value);
+        }
     }
     return score::MakeUnexpected(Error::kWrongType);
 }
