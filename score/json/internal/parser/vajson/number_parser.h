@@ -68,11 +68,14 @@ inline auto IsHexDigit(const char chr) noexcept -> bool
 /// @return          True if the number starts with an optional minus sign followed by "0x" or "0X".
 inline auto HasHexadecimalPrefix(StringView view) noexcept -> bool
 {
+    constexpr StringView kLowerCasePrefix{"0x"};
+    constexpr StringView kUpperCasePrefix{"0X"};
     if ((!view.empty()) && (view.front() == '-'))
     {
         view.remove_prefix(1U);
     }
-    return (view.size() >= 2U) && (view[0] == '0') && ((view[1] == 'x') || (view[1] == 'X'));
+    const StringView prefix{view.substr(0U, kLowerCasePrefix.size())};
+    return (prefix == kLowerCasePrefix) || (prefix == kUpperCasePrefix);
 }
 
 /// @brief           A parser for JSON numbers
@@ -140,9 +143,10 @@ class NumberParser
         }
 
         Magnitude magnitude{};
-        const char* const last{std::next(view.data(), static_cast<std::ptrdiff_t>(view.size()))};
+        const char* const first{view.data()};
+        const char* const last{std::next(first, static_cast<std::ptrdiff_t>(view.size()))};
         const std::from_chars_result conversion{
-            std::from_chars(view.data(), last, magnitude, is_hexadecimal ? kHexadecimalBase : kDecimalBase)};
+            std::from_chars(first, last, magnitude, is_hexadecimal ? kHexadecimalBase : kDecimalBase)};
 
         Optional<Integer> result{};
         if ((conversion.ec == std::errc{}) && (conversion.ptr == last))
@@ -154,7 +158,7 @@ class NumberParser
                     static_cast<void>(result.emplace(static_cast<Integer>(magnitude)));
                 }
             }
-            else if constexpr (std::is_signed<Integer>::value)
+            else if constexpr (std::is_signed_v<Integer>)
             {
                 const auto max_negative_magnitude{
                     static_cast<Magnitude>(static_cast<Magnitude>(std::numeric_limits<Integer>::max()) + 1U)};
