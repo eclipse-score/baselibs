@@ -840,7 +840,7 @@ TEST(VerifyTest, VerifyOffset64FamilyFailsWhenAbsentOrOutOfBounds)
     RecordProperty("Description",
                    "VerifyOffset64Required fails for an absent field, and both VerifyOffset64 and "
                    "VerifyOffset64Required fail when a present 64-bit-offset field resolves outside the buffer");
-    RecordProperty("TestType", "interface-test");
+    RecordProperty("TestType", "fault-injection");
     RecordProperty("DerivationTechnique", "boundary-values");
 
     FlatBufferBuilder64 fbb(kInitialBufferCapacity);
@@ -930,41 +930,44 @@ TEST(VerifyTest, VerifyFieldAndVerifyFieldRequiredFailWhenAlignmentCannotBeSatis
     EXPECT_FALSE(table->VerifyFieldRequired<int32_t>(verifier, kScalarFieldSlot, unsatisfied_alignment));
 }
 
-TEST(VerifyTest, VerifyOffsetFamilyFailWhenTargetIsOutOfBounds)
+TEST(VerifyTest, VerifyOffsetAndStringHelpersRejectCorruption)
 {
     RecordProperty("PartiallyVerifies", "comp_req__flatbuffers__verification");
     RecordProperty("Description",
-                   "VerifyOffset, VerifyOffsetRequired and VerifyStringWithDefault fail when a present field's "
-                   "offset resolves outside the buffer");
-    RecordProperty("TestType", "interface-test");
-    RecordProperty("DerivationTechnique", "boundary-values");
+                   "Offset helpers reject an out-of-buffer offset, and the string helper rejects an excessive length");
+    RecordProperty("TestType", "fault-injection");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
 
     FlatBufferBuilder64 fbb(kInitialBufferCapacity);
     auto* table = BuildFullTable(fbb);
-
-    // The string field stays present but its offset now resolves far outside the buffer.
+    auto* string_value = table->GetPointer<String*>(kStringFieldSlot);
+    ASSERT_NE(string_value, nullptr);
     ASSERT_TRUE(WriteRawOffset(*table, kStringFieldSlot, static_cast<uoffset_t>(kOutOfBoundsOffset)));
 
     Verifier verifier(fbb.GetBufferPointer(), fbb.GetSize());
     EXPECT_FALSE(table->VerifyOffset(verifier, kStringFieldSlot));
     EXPECT_FALSE(table->VerifyOffsetRequired(verifier, kStringFieldSlot));
+    ASSERT_TRUE(table->SetPointer(kStringFieldSlot, reinterpret_cast<const uint8_t*>(string_value)));
+    WriteScalar(reinterpret_cast<uint8_t*>(string_value), static_cast<uoffset_t>(kOutOfBoundsOffset));
     EXPECT_FALSE(table->VerifyStringWithDefault(verifier, kStringFieldSlot));
 }
 
-TEST(VerifyTest, VerifyVectorWithDefaultFamilyFailsWhenTargetIsOutOfBounds)
+TEST(VerifyTest, VerifyVectorWithDefaultFamilyFailsWhenLengthExceedsBuffer)
 {
     RecordProperty("PartiallyVerifies", "comp_req__flatbuffers__verification");
     RecordProperty("Description",
-                   "VerifyVectorWithDefault and VerifyVector64WithDefault fail when a present vector field's "
-                   "offset resolves outside the buffer");
-    RecordProperty("TestType", "interface-test");
-    RecordProperty("DerivationTechnique", "boundary-values");
+                   "VerifyVectorWithDefault and VerifyVector64WithDefault reject lengths exceeding the remaining buffer");
+    RecordProperty("TestType", "fault-injection");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
 
     FlatBufferBuilder64 fbb(kInitialBufferCapacity);
     auto* table = BuildFullTable(fbb);
-
-    ASSERT_TRUE(WriteRawOffset(*table, kVectorFieldSlot, static_cast<uoffset_t>(kOutOfBoundsOffset)));
-    ASSERT_TRUE(WriteRawOffset(*table, kVector64FieldSlot, static_cast<uoffset64_t>(kOutOfBoundsOffset)));
+    auto* vec = table->GetMutableVectorPointerOrEmpty<int32_t>(kVectorFieldSlot);
+    auto* vec64 = table->GetMutableVectorPointer64OrEmpty<int32_t, uoffset64_t>(kVector64FieldSlot);
+    ASSERT_NE(vec, nullptr);
+    ASSERT_NE(vec64, nullptr);
+    WriteScalar(reinterpret_cast<uint8_t*>(vec), static_cast<uoffset_t>(kOutOfBoundsOffset));
+    WriteScalar(reinterpret_cast<uint8_t*>(vec64), static_cast<uoffset64_t>(kOutOfBoundsOffset));
 
     Verifier verifier(fbb.GetBufferPointer(), fbb.GetSize());
     EXPECT_FALSE(table->VerifyVectorWithDefault<int32_t>(verifier, kVectorFieldSlot));
