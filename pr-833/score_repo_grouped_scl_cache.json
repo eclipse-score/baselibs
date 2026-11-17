@@ -4756,7 +4756,7 @@
             {
               "name": "JsonTest__ReadWriteEmptyMemberName",
               "file": "score/json/json_test.cpp",
-              "line": 69,
+              "line": 71,
               "need": "comp_req__json__serialization",
               "verify_type": "partially",
               "result": "passed",
@@ -4765,7 +4765,7 @@
             {
               "name": "JsonTest__ReadWriteEscapedCharacters",
               "file": "score/json/json_test.cpp",
-              "line": 125,
+              "line": 139,
               "need": "comp_req__json__serialization",
               "verify_type": "partially",
               "result": "passed",
@@ -4836,7 +4836,7 @@
             {
               "name": "JsonTest__ReadWriteEmptyMemberName",
               "file": "score/json/json_test.cpp",
-              "line": 69,
+              "line": 71,
               "need": "comp_req__json__deserialization",
               "verify_type": "partially",
               "result": "passed",
@@ -4845,7 +4845,7 @@
             {
               "name": "JsonTest__ReadsUnicodeEscapeSequences",
               "file": "score/json/json_test.cpp",
-              "line": 93,
+              "line": 95,
               "need": "comp_req__json__deserialization",
               "verify_type": "partially",
               "result": "passed",
@@ -4854,7 +4854,16 @@
             {
               "name": "JsonTest__ReadsNonAsciiUnicodeEscapeSequences",
               "file": "score/json/json_test.cpp",
-              "line": 109,
+              "line": 111,
+              "need": "comp_req__json__deserialization",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "JsonTest__RejectsUnescapedControlCharacters",
+              "file": "score/json/json_test.cpp",
+              "line": 127,
               "need": "comp_req__json__deserialization",
               "verify_type": "partially",
               "result": "passed",
@@ -4863,7 +4872,7 @@
             {
               "name": "JsonTest__ReadWriteEscapedCharacters",
               "file": "score/json/json_test.cpp",
-              "line": 125,
+              "line": 139,
               "need": "comp_req__json__deserialization",
               "verify_type": "partially",
               "result": "passed",
@@ -5516,7 +5525,7 @@
             {
               "name": "UT__Parser__Invalid__Dynamic__TruncatedUnicodeEscape",
               "file": "score/json/internal/parser/vajson/structure_parser_invalid_test.cpp",
-              "line": 217,
+              "line": 219,
               "need": "comp_req__vajson__validation",
               "verify_type": "partially",
               "result": "passed",
@@ -5525,7 +5534,25 @@
             {
               "name": "UT__Parser__Invalid__Dynamic__NonHexadecimalUnicodeEscape",
               "file": "score/json/internal/parser/vajson/structure_parser_invalid_test.cpp",
-              "line": 227,
+              "line": 229,
+              "need": "comp_req__vajson__validation",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "UT__Parser__Invalid__Dynamic__UnescapedControlCharacterInString",
+              "file": "score/json/internal/parser/vajson/structure_parser_invalid_test.cpp",
+              "line": 284,
+              "need": "comp_req__vajson__validation",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "UT__Parser__Invalid__Dynamic__UnescapedControlCharacterInKey",
+              "file": "score/json/internal/parser/vajson/structure_parser_invalid_test.cpp",
+              "line": 300,
               "need": "comp_req__vajson__validation",
               "verify_type": "partially",
               "result": "passed",
@@ -5542,7 +5569,7 @@
             {
               "name": "UT__Parser__Invalid__Dynamic__TruncatedUnicodeEscape",
               "file": "score/json/internal/parser/vajson/structure_parser_invalid_test.cpp",
-              "line": 217,
+              "line": 219,
               "need": "comp_req__vajson__unicode",
               "verify_type": "partially",
               "result": "passed",
@@ -5551,7 +5578,7 @@
             {
               "name": "UT__Parser__Invalid__Dynamic__NonHexadecimalUnicodeEscape",
               "file": "score/json/internal/parser/vajson/structure_parser_invalid_test.cpp",
-              "line": 227,
+              "line": 229,
               "need": "comp_req__vajson__unicode",
               "verify_type": "partially",
               "result": "passed",
@@ -5560,7 +5587,7 @@
             {
               "name": "UT__Parser__Invalid__Dynamic__LoneHighSurrogate",
               "file": "score/json/internal/parser/vajson/structure_parser_invalid_test.cpp",
-              "line": 237,
+              "line": 239,
               "need": "comp_req__vajson__unicode",
               "verify_type": "partially",
               "result": "passed",
@@ -5569,7 +5596,7 @@
             {
               "name": "UT__Parser__Invalid__Dynamic__HighSurrogateFollowedByNonSurrogate",
               "file": "score/json/internal/parser/vajson/structure_parser_invalid_test.cpp",
-              "line": 247,
+              "line": 249,
               "need": "comp_req__vajson__unicode",
               "verify_type": "partially",
               "result": "passed",
@@ -5578,7 +5605,7 @@
             {
               "name": "UT__Parser__Invalid__Dynamic__HighSurrogateFollowedByOtherEscape",
               "file": "score/json/internal/parser/vajson/structure_parser_invalid_test.cpp",
-              "line": 257,
+              "line": 259,
               "need": "comp_req__vajson__unicode",
               "verify_type": "partially",
               "result": "passed",
@@ -5587,7 +5614,7 @@
             {
               "name": "UT__Parser__Invalid__Dynamic__LoneLowSurrogate",
               "file": "score/json/internal/parser/vajson/structure_parser_invalid_test.cpp",
-              "line": 267,
+              "line": 269,
               "need": "comp_req__vajson__unicode",
               "verify_type": "partially",
               "result": "passed",
