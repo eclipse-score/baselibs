@@ -563,6 +563,57 @@ TEST_F(AbortableBlockingReaderTest, ReadReturnsOnceDataBecomesAvailable)
     read_future.wait();
 }
 
+TEST_F(AbortableBlockingReaderTest, ReadPollsAgainIfPollTimesOut)
+{
+    RecordProperty("ParentRequirement", "SCR-46010294");
+    RecordProperty("ASIL", "B");
+    RecordProperty("Description", "AbortableBlockingReaderTest Read Polls Again If Poll Times Out");
+    RecordProperty("TestingTechnique", "Interface test");
+    RecordProperty("DerivationTechnique", "equivalence-classes");  // equivalence classes
+
+    EXPECT_CALL(*syspoll_mock_, poll(::testing::_, ::testing::_, ::testing::_))
+        .WillOnce(::testing::Return(score::cpp::expected<std::int32_t, Error>{0}))
+        .WillOnce(::testing::Invoke(poll_));
+
+    AbortableBlockingReader reader{fcntl_mock_, syspoll_mock_, unistd_mock_};
+    ASSERT_TRUE(reader.IsValid());
+
+    constexpr std::array<std::uint8_t, 2> write_buffer{'1', '3'};
+    internal::UnistdImpl{}.write(writing_file_descriptor_1_, write_buffer.data(), write_buffer.size());
+
+    std::array<std::uint8_t, 10> buffer{};
+    const auto result = reader.Read(file_descriptor_1_, buffer);
+    ASSERT_TRUE(result.has_value());
+    EXPECT_THAT(result.value(), ::testing::ElementsAreArray(write_buffer));
+}
+
+TEST_F(AbortableBlockingReaderTest, ReadAlsoWaitsForNormalDataToBecomeReadable)
+{
+    RecordProperty("ParentRequirement", "SCR-46010294");
+    RecordProperty("ASIL", "B");
+    RecordProperty("Description", "AbortableBlockingReaderTest Read Also Waits For Normal Data To Become Readable");
+    RecordProperty("TestingTechnique", "Interface test");
+    RecordProperty("DerivationTechnique", "equivalence-classes");  // equivalence classes
+
+    std::int32_t requested_events{0};
+    EXPECT_CALL(*syspoll_mock_, poll(::testing::_, ::testing::_, ::testing::_))
+        .WillOnce([&requested_events](auto fds, auto nfds, auto timeout) {
+            requested_events = fds[1].events;
+            return poll_(fds, nfds, timeout);
+        });
+
+    AbortableBlockingReader reader{fcntl_mock_, syspoll_mock_, unistd_mock_};
+    ASSERT_TRUE(reader.IsValid());
+
+    constexpr std::array<std::uint8_t, 2> write_buffer{'1', '3'};
+    internal::UnistdImpl{}.write(writing_file_descriptor_1_, write_buffer.data(), write_buffer.size());
+
+    std::array<std::uint8_t, 10> buffer{};
+    ASSERT_TRUE(reader.Read(file_descriptor_1_, buffer).has_value());
+    EXPECT_NE(static_cast<std::uint32_t>(requested_events) & static_cast<std::uint32_t>(POLLIN), 0U);
+    EXPECT_NE(static_cast<std::uint32_t>(requested_events) & static_cast<std::uint32_t>(POLLRDNORM), 0U);
+}
+
 TEST_F(AbortableBlockingReaderTest, ReadReturnsErrorIfSelectFails)
 {
     RecordProperty("ParentRequirement", "SCR-46010294");

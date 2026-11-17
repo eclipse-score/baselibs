@@ -250,7 +250,12 @@ score::cpp::expected_blank<Error> AbortableBlockingReader::WaitForData(
     const NonBlockingFileDescriptor& file_descriptor) noexcept
 {
     std::array<struct pollfd, 2> fds{};
-    constexpr std::int8_t kNoTimeout{-1};
+#ifdef __QNXNTO__
+    // QNX 8 may fail to wake up a blocked poll (Ticket-221150), so poll with a finite timeout and retry.
+    constexpr std::int32_t kPollTimeoutMs{50};
+#else
+    constexpr std::int32_t kPollTimeoutMs{-1};
+#endif
 
     fds[0].fd = stop_read_file_descriptor_;
     // Suppress "AUTOSAR C++14 M5-0-21" rule findings. This rule declares: "Bitwise operators shall only be
@@ -260,16 +265,22 @@ score::cpp::expected_blank<Error> AbortableBlockingReader::WaitForData(
     fds[0].events = POLLIN;
 
     fds[1].fd = file_descriptor.GetUnderlying();
+    // QNX 8 reports some readable file descriptors (e.g. inotify) only as POLLRDNORM.
     // Rationale: see comment above
     // coverity[autosar_cpp14_m5_0_21_violation]
-    fds[1].events = POLLIN;
+    fds[1].events = POLLIN | POLLRDNORM;
 
-    // coverity[autosar_cpp14_m5_0_6_violation]
-    const auto poll_result = syspoll_->poll(fds.data(), fds.size(), kNoTimeout);
-
-    if (!poll_result.has_value())
+    std::int32_t ready_count{0};
+    while (ready_count == 0)
     {
-        return score::cpp::make_unexpected(poll_result.error());
+        // coverity[autosar_cpp14_m5_0_6_violation]
+        const auto poll_result = syspoll_->poll(fds.data(), fds.size(), kPollTimeoutMs);
+
+        if (!poll_result.has_value())
+        {
+            return score::cpp::make_unexpected(poll_result.error());
+        }
+        ready_count = poll_result.value();
     }
 
     // Check return event flag for stop_read_file_descriptor_
