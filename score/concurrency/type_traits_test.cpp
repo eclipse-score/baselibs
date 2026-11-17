@@ -71,6 +71,23 @@ class TryLockableArchetype : public test::BasicLockableArchetype
     }
 };
 
+class TryLockableIncorrectTryLockReturn : public test::BasicLockableArchetype
+{
+  public:
+    struct TryLockReturn
+    {
+        explicit operator bool() const
+        {
+            return true;
+        }
+    };
+
+    TryLockReturn try_lock()
+    {
+        return {};
+    }
+};
+
 class TryLockWithoutBasicLocking
 {
   public:
@@ -129,12 +146,22 @@ TEST(TypeTraitsTest, LockWithOwnsLockCompileTimeChecks)
 
 TEST(TypeTraitsTest, IsTryLockableCompileTimeChecks)
 {
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
+    RecordProperty("PartiallyVerifies", "comp_req__concurrency__synchronized_try_lock");
+    RecordProperty("Description",
+                   "Check that try-lockable detection accepts a basic lockable with a bool-convertible try_lock "
+                   "result and rejects types that do not meet those conditions.");
+
     EXPECT_TRUE((is_try_lockable_v<TryLockableArchetype>))
         << "a basic lockable with try_lock should satisfy is_try_lockable";
     EXPECT_FALSE((is_try_lockable_v<test::BasicLockableArchetype>))
         << "a basic lockable without try_lock should not satisfy is_try_lockable";
     EXPECT_FALSE((is_try_lockable_v<TryLockWithoutBasicLocking>))
         << "a type without lock and unlock should not satisfy is_try_lockable";
+    EXPECT_FALSE((is_try_lockable_v<TryLockableIncorrectTryLockReturn>))
+        << "a basic lockable with a try_lock result not implicitly convertible to bool should not satisfy "
+           "is_try_lockable";
 
     EXPECT_TRUE((is_try_lockable_v<std::mutex>)) << "std::mutex should be try_lockable";
     EXPECT_TRUE((is_try_lockable_v<std::recursive_mutex>)) << "std::recursive_mutex should be try_lockable";
