@@ -112,7 +112,7 @@
       },
       "files": {
         "measured": 15,
-        "total": 20
+        "total": 25
       },
       "lines": {
         "percent": 97,
@@ -161,7 +161,7 @@
       },
       "lines": {
         "percent": 72,
-        "total": 1235
+        "total": 1239
       },
       "primary_need_id": "comp__baselibs_result"
     },
