@@ -120,4 +120,3 @@ Error reporting
 
 Upon detection of an error, the parser returns from Parse() with an ara::core::Result<void> and one of the errors
 defined in score::json::vajson::JsonErrc.
-Also, the position in the stream where the error has occurred is reported.

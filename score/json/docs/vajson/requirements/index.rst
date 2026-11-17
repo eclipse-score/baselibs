@@ -30,18 +30,19 @@ VaJson implements the following generic JSON module requirements:
 
 In addition, the following VaJson-specific requirements apply:
 
-.. comp_req:: JSON Validation
+.. comp_req:: Rejection of malformed JSON
    :id: comp_req__vajson__validation
    :reqtype: Functional
    :security: YES
    :safety: ASIL_B
    :derived_from: feat_req__baselibs__json_library[version==2]
    :status: valid
-   :version: 1
+   :version: 2
    :satisfied_by: comp__baselibs_vajson[version==1]
 
-   VaJson checks the well-formedness of JSON data.
-   Errors shall include the reason and location in the JSON document for malformed JSON.
+   VaJson shall reject malformed JSON data with an error that identifies the data as invalid JSON.
+
+   Note: JSON data is malformed if it does not conform to RFC 8259 extended by trailing commas and hexadecimal integers.
 
 .. comp_req:: JSON Deserialization RFC extension trailing commas
    :id: comp_req__vajson__trailing_commas
