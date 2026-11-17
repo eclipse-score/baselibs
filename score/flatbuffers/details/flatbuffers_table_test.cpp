@@ -955,8 +955,9 @@ TEST(VerifyTest, VerifyOffsetAndStringHelpersRejectCorruption)
 TEST(VerifyTest, VerifyVectorWithDefaultFamilyFailsWhenLengthExceedsBuffer)
 {
     RecordProperty("PartiallyVerifies", "comp_req__flatbuffers__verification");
-    RecordProperty("Description",
-                   "VerifyVectorWithDefault and VerifyVector64WithDefault reject lengths exceeding the remaining buffer");
+    RecordProperty(
+        "Description",
+        "VerifyVectorWithDefault and VerifyVector64WithDefault reject lengths exceeding the remaining buffer");
     RecordProperty("TestType", "fault-injection");
     RecordProperty("DerivationTechnique", "equivalence-classes");
 
