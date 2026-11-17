@@ -320,7 +320,7 @@ TYPED_TEST(BaseInterruptibleFutureTest, WaitReturnsOnlyAfterValueWasSet)
 
     BaseInterruptibleFutureTest<TypeParam>::SetPromise(this->promise_);
 
-    auto expected = std::move(async_future.get());
+    auto expected{async_future.get()};
     EXPECT_TRUE(expected.has_value());
 }
 
@@ -355,7 +355,7 @@ TYPED_TEST(BaseInterruptibleFutureTest, WaitForReturnsTimeoutErrorWhenValueWasNo
         return this->future_->WaitFor(stop_token, TIMEOUT);
     });
 
-    auto expected = std::move(async_future.get());
+    auto expected{async_future.get()};
     ASSERT_FALSE(expected.has_value());
     EXPECT_EQ(expected.error(), Error::kTimeout);
 }
@@ -392,7 +392,7 @@ TYPED_TEST(BaseInterruptibleFutureTest, WaitForReturnsWhenValueIsSet)
     });
     BaseInterruptibleFutureTest<TypeParam>::SetPromise(this->promise_);
 
-    auto expected = std::move(async_future.get());
+    auto expected{async_future.get()};
     EXPECT_TRUE(expected.has_value());
 }
 
@@ -404,7 +404,7 @@ TYPED_TEST(BaseInterruptibleFutureTest, WaitUntilReturnsTimeoutErrorWhenValueWas
         return this->future_->WaitUntil(stop_token, std::chrono::steady_clock::now() + TIMEOUT);
     });
 
-    auto expected = std::move(async_future.get());
+    auto expected{async_future.get()};
     ASSERT_FALSE(expected.has_value());
     EXPECT_EQ(expected.error(), Error::kTimeout);
 }
