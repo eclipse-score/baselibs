@@ -74,10 +74,12 @@ Interfaces
 
 .. logic_arc_int:: Fixed-Capacity Vector
    :id: logic_arc_int__b_r__fixvec
+   :included_by: feat__baselibs
    :security: YES
    :safety: ASIL_B
    :status: valid
    :version: 1
+   :fulfils: feat_req__baselibs__containers_library[version==2]
 
 .. logic_arc_int_op:: Push
    :id: logic_arc_int_op__cont__fixvec_push
@@ -122,10 +124,12 @@ Interfaces
 
 .. logic_arc_int:: Inline-Storage Vector
    :id: logic_arc_int__b_r__inlinevec
+   :included_by: feat__baselibs
    :security: YES
    :safety: ASIL_B
    :status: valid
    :version: 1
+   :fulfils: feat_req__baselibs__containers_library[version==2]
 
 .. logic_arc_int_op:: Push
    :id: logic_arc_int_op__cont__inlinevec_push
@@ -170,10 +174,12 @@ Interfaces
 
 .. logic_arc_int:: Fixed-Capacity Queue
    :id: logic_arc_int__b_r__fixqueue
+   :included_by: feat__baselibs
    :security: YES
    :safety: ASIL_B
    :status: valid
    :version: 1
+   :fulfils: feat_req__baselibs__containers_library[version==2]
 
 .. logic_arc_int_op:: Push Front
    :id: logic_arc_int_op__cont__fixqueue_pushfront
@@ -226,10 +232,12 @@ Interfaces
 
 .. logic_arc_int:: Inline-Storage Queue
    :id: logic_arc_int__b_r__inlqueue
+   :included_by: feat__baselibs
    :security: YES
    :safety: ASIL_B
    :status: valid
    :version: 1
+   :fulfils: feat_req__baselibs__containers_library[version==2]
 
 .. logic_arc_int_op:: Push Front
    :id: logic_arc_int_op__cont__inlqueue_pushfront
