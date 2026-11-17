@@ -5343,6 +5343,15 @@
               "verify_type": "partially",
               "result": "passed",
               "result_text": ""
+            },
+            {
+              "name": "UT__NumberParser__IsHexDigit",
+              "file": "score/json/internal/parser/vajson/number_parser_test.cpp",
+              "line": 37,
+              "need": "comp_req__vajson__hex_integers",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
             }
           ]
         }
