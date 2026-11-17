@@ -2391,7 +2391,7 @@
               "result_text": ""
             },
             {
-              "name": "VerifyTest__VerifyOffsetFamilyFailWhenTargetIsOutOfBounds",
+              "name": "VerifyTest__VerifyOffsetAndStringHelpersRejectCorruption",
               "file": "score/flatbuffers/details/flatbuffers_table_test.cpp",
               "line": 933,
               "need": "comp_req__flatbuffers__verification",
@@ -2400,9 +2400,9 @@
               "result_text": ""
             },
             {
-              "name": "VerifyTest__VerifyVectorWithDefaultFamilyFailsWhenTargetIsOutOfBounds",
+              "name": "VerifyTest__VerifyVectorWithDefaultFamilyFailsWhenLengthExceedsBuffer",
               "file": "score/flatbuffers/details/flatbuffers_table_test.cpp",
-              "line": 954,
+              "line": 955,
               "need": "comp_req__flatbuffers__verification",
               "verify_type": "partially",
               "result": "passed",
@@ -5257,6 +5257,15 @@
               "result_text": ""
             },
             {
+              "name": "JsonTest__ReadWriteEscapedCharacters",
+              "file": "score/json/json_test.cpp",
+              "line": 125,
+              "need": "comp_req__json__serialization",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
               "name": "SerializerTest__PrettyPrintsNestedAny",
               "file": "score/json/internal/writer/serializer_test.cpp",
               "line": 326,
@@ -5322,6 +5331,33 @@
               "name": "JsonTest__ReadWriteEmptyMemberName",
               "file": "score/json/json_test.cpp",
               "line": 69,
+              "need": "comp_req__json__deserialization",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "JsonTest__ReadsUnicodeEscapeSequences",
+              "file": "score/json/json_test.cpp",
+              "line": 93,
+              "need": "comp_req__json__deserialization",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "JsonTest__ReadsNonAsciiUnicodeEscapeSequences",
+              "file": "score/json/json_test.cpp",
+              "line": 109,
+              "need": "comp_req__json__deserialization",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "JsonTest__ReadWriteEscapedCharacters",
+              "file": "score/json/json_test.cpp",
+              "line": 125,
               "need": "comp_req__json__deserialization",
               "verify_type": "partially",
               "result": "passed",
@@ -5871,6 +5907,130 @@
               "file": "score/json/json_parser_test.cpp",
               "line": 492,
               "need": "comp_req__json__duplicate_member_names",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            }
+          ]
+        }
+      },
+      {
+        "need": "comp_req__vajson__unicode",
+        "links": {
+          "CodeLinks": [],
+          "TestLinks": [
+            {
+              "name": "UT__Parser__Invalid__Dynamic__TruncatedUnicodeEscape",
+              "file": "score/json/internal/parser/vajson/structure_parser_invalid_test.cpp",
+              "line": 217,
+              "need": "comp_req__vajson__unicode",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "UT__Parser__Invalid__Dynamic__NonHexadecimalUnicodeEscape",
+              "file": "score/json/internal/parser/vajson/structure_parser_invalid_test.cpp",
+              "line": 227,
+              "need": "comp_req__vajson__unicode",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "UT__Parser__Invalid__Dynamic__LoneHighSurrogate",
+              "file": "score/json/internal/parser/vajson/structure_parser_invalid_test.cpp",
+              "line": 237,
+              "need": "comp_req__vajson__unicode",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "UT__Parser__Invalid__Dynamic__HighSurrogateFollowedByNonSurrogate",
+              "file": "score/json/internal/parser/vajson/structure_parser_invalid_test.cpp",
+              "line": 247,
+              "need": "comp_req__vajson__unicode",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "UT__Parser__Invalid__Dynamic__HighSurrogateFollowedByOtherEscape",
+              "file": "score/json/internal/parser/vajson/structure_parser_invalid_test.cpp",
+              "line": 257,
+              "need": "comp_req__vajson__unicode",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "UT__Parser__Invalid__Dynamic__LoneLowSurrogate",
+              "file": "score/json/internal/parser/vajson/structure_parser_invalid_test.cpp",
+              "line": 267,
+              "need": "comp_req__vajson__unicode",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "UT__Parser__String__Dynamic__TwoCharacterEscapes",
+              "file": "score/json/internal/parser/vajson/structure_parser_string_test.cpp",
+              "line": 117,
+              "need": "comp_req__vajson__unicode",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "UT__Parser__String__Dynamic__UnicodeEscape",
+              "file": "score/json/internal/parser/vajson/structure_parser_string_test.cpp",
+              "line": 130,
+              "need": "comp_req__vajson__unicode",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "UT__Parser__String__Dynamic__UnicodeEscapeInContext",
+              "file": "score/json/internal/parser/vajson/structure_parser_string_test.cpp",
+              "line": 159,
+              "need": "comp_req__vajson__unicode",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "UT__Parser__String__Dynamic__UnicodeEscapeInKey",
+              "file": "score/json/internal/parser/vajson/structure_parser_string_test.cpp",
+              "line": 220,
+              "need": "comp_req__vajson__unicode",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            }
+          ]
+        }
+      },
+      {
+        "need": "comp_req__vajson__validation",
+        "links": {
+          "CodeLinks": [],
+          "TestLinks": [
+            {
+              "name": "UT__Parser__Invalid__Dynamic__TruncatedUnicodeEscape",
+              "file": "score/json/internal/parser/vajson/structure_parser_invalid_test.cpp",
+              "line": 217,
+              "need": "comp_req__vajson__validation",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "UT__Parser__Invalid__Dynamic__NonHexadecimalUnicodeEscape",
+              "file": "score/json/internal/parser/vajson/structure_parser_invalid_test.cpp",
+              "line": 227,
+              "need": "comp_req__vajson__validation",
               "verify_type": "partially",
               "result": "passed",
               "result_text": ""
@@ -11170,6 +11330,211 @@
               "file": "score/utils/base64_test.cpp",
               "line": 99,
               "need": "comp_req__utils__base64_decoding",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            }
+          ]
+        }
+      },
+      {
+        "need": "comp_req__utils__registry_string_view",
+        "links": {
+          "CodeLinks": [],
+          "TestLinks": [
+            {
+              "name": "RegistryStringViewTest__Iterator",
+              "file": "score/utils/string_registry/registry_string_view_tests.cpp",
+              "line": 26,
+              "need": "comp_req__utils__registry_string_view",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "RegistryStringViewTest__ConsistentHash",
+              "file": "score/utils/string_registry/registry_string_view_tests.cpp",
+              "line": 58,
+              "need": "comp_req__utils__registry_string_view",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "RegistryStringViewTest__DifferentRegistryStringViewDifferentHashes",
+              "file": "score/utils/string_registry/registry_string_view_tests.cpp",
+              "line": 78,
+              "need": "comp_req__utils__registry_string_view",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "RegistryStringViewTest__StreamOutput",
+              "file": "score/utils/string_registry/registry_string_view_tests.cpp",
+              "line": 101,
+              "need": "comp_req__utils__registry_string_view",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "RegistryStringViewTest__GlobalCompareOperator",
+              "file": "score/utils/string_registry/registry_string_view_tests.cpp",
+              "line": 120,
+              "need": "comp_req__utils__registry_string_view",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "RegistryStringViewTest__StringLength",
+              "file": "score/utils/string_registry/registry_string_view_tests.cpp",
+              "line": 162,
+              "need": "comp_req__utils__registry_string_view",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "RegistryStringViewTest__StringEmpty",
+              "file": "score/utils/string_registry/registry_string_view_tests.cpp",
+              "line": 180,
+              "need": "comp_req__utils__registry_string_view",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "RegistryStringViewTest__Data",
+              "file": "score/utils/string_registry/registry_string_view_tests.cpp",
+              "line": 198,
+              "need": "comp_req__utils__registry_string_view",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "RegistryStringViewTest__MoveConstructor",
+              "file": "score/utils/string_registry/registry_string_view_tests.cpp",
+              "line": 214,
+              "need": "comp_req__utils__registry_string_view",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "RegistryStringViewTest__MoveAssignmentOperator",
+              "file": "score/utils/string_registry/registry_string_view_tests.cpp",
+              "line": 236,
+              "need": "comp_req__utils__registry_string_view",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "RegistryStringViewTest__CopyConstructor",
+              "file": "score/utils/string_registry/registry_string_view_tests.cpp",
+              "line": 255,
+              "need": "comp_req__utils__registry_string_view",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "RegistryStringViewTest__CopyAssignmentOperator",
+              "file": "score/utils/string_registry/registry_string_view_tests.cpp",
+              "line": 272,
+              "need": "comp_req__utils__registry_string_view",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            }
+          ]
+        }
+      },
+      {
+        "need": "comp_req__utils__string_registry",
+        "links": {
+          "CodeLinks": [],
+          "TestLinks": [
+            {
+              "name": "StringRegistryTest__InsertMultipleStrings",
+              "file": "score/utils/string_registry/string_registry_tests.cpp",
+              "line": 24,
+              "need": "comp_req__utils__string_registry",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "StringRegistryTest__InsertMultipleStringViews",
+              "file": "score/utils/string_registry/string_registry_tests.cpp",
+              "line": 49,
+              "need": "comp_req__utils__string_registry",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "StringRegistryTest__InsertMultipleStringViewLiterals",
+              "file": "score/utils/string_registry/string_registry_tests.cpp",
+              "line": 81,
+              "need": "comp_req__utils__string_registry",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "StringRegistryTest__EqualStringsFromSeparateAllocationsArePointerIdentical",
+              "file": "score/utils/string_registry/string_registry_tests.cpp",
+              "line": 115,
+              "need": "comp_req__utils__string_registry",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "StringRegistryTest__StringViewThenStringOverloadYieldPointerIdenticalViews",
+              "file": "score/utils/string_registry/string_registry_tests.cpp",
+              "line": 138,
+              "need": "comp_req__utils__string_registry",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "StringRegistryTest__LiteralThenStringOverloadYieldPointerIdenticalViews",
+              "file": "score/utils/string_registry/string_registry_tests.cpp",
+              "line": 161,
+              "need": "comp_req__utils__string_registry",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "StringRegistryTest__ViewIdentityIsStableAfterRegistryGrowth",
+              "file": "score/utils/string_registry/string_registry_tests.cpp",
+              "line": 185,
+              "need": "comp_req__utils__string_registry",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "StringRegistryTest__SlicedLiteralAndFullStringAreDistinct",
+              "file": "score/utils/string_registry/string_registry_tests.cpp",
+              "line": 213,
+              "need": "comp_req__utils__string_registry",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "StringRegistryTest__EmbeddedNulsAreDistinct",
+              "file": "score/utils/string_registry/string_registry_tests.cpp",
+              "line": 234,
+              "need": "comp_req__utils__string_registry",
               "verify_type": "partially",
               "result": "passed",
               "result_text": ""
