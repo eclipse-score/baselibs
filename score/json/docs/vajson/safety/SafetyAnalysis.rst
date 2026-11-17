@@ -103,10 +103,22 @@ Safety Analysis of vajson
 
         .. fm:: FM-VaJson-HexIntegers: Hexadecimal integers are treated as invalid JSON.
             :effect:  Valid JSON as demanded by the CREQ is rejected as invalid and, thus, safety requirements are violated.
-            :measure: Add support for deserialization of hexadecimal integers.
+            :measure: Accept hexadecimal integers explicitly and convert them with base 16.
                       This is verified by the following test cases:
-                      - UT__Parser__Number__Static
-                      - UT__Parser__Number__Dynamic
+                      - JsonParserVajsonTest__CanParseObjectHexadecimalNumber
+                      - Number__ConvertsHexadecimalIntegersWithinTheTargetRange
+
+        .. fm:: FM-VaJson-NumberGrammar: Number literals outside the accepted number grammar are accepted.
+            :details: The standard conversion routines accept forms outside the grammar, e.g. hexadecimal floating-point
+                      numbers, leading zeros, or a fraction without digits.
+            :effect:  Invalid input is deserialized and, thus, safety requirements are violated.
+            :measure: Check every number against the accepted number grammar before conversion.
+                      Convert integers only with an explicit base.
+                      This is verified by the following test cases:
+                      - Number__RejectsNumbersOutsideTheGrammar
+                      - Number__HexadecimalIntegersDoNotConvertToFloatingPoint
+                      - ParserTest__EmitsErrorWhenParsingNumberOutsideTheGrammar
+                      - ParserTest__EmitsErrorWhenParsingHexadecimalNumberExceeding64Bits
 
         .. fm:: FM-VaJson-NumberConversion: Number conversion changes value.
             :details: Number conversion from textual JSON representation to a numerical value changes the value.
@@ -114,8 +126,10 @@ Safety Analysis of vajson
                       requirements are violated.
             :measure: Use only well-known standard library functions for number conversion.
                       This is verified by the following test cases:
-                      - UT__Parser__Number__Static
-                      - UT__Parser__Number__Dynamic
+                      - Number__Uint64
+                      - Number__Int64
+                      - Number__Double
+                      - Number__ConvertsHexadecimalIntegersWithinTheTargetRange
 
         .. fm:: FM-VaJson-NumberLength: JSON numbers can consist of an unlimited number of characters.
             :details: The numerical value of a sufficiently long JSON number cannot be represented by any standard C++ type.

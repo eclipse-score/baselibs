@@ -15,6 +15,7 @@
     - [Declarative parsing of JSON data](#declarative-parsing-of-json-data)
   - [Design](#design)
   - [Constraints](#constraints)
+    - [Number grammar](#number-grammar)
   - [Requirements](#requirements)
   - [Assumptions of Use](#assumptions-of-use)
   - [Deprecated `base_library` flag](#deprecated-base_library-flag)
@@ -395,7 +396,28 @@ since they would require high amount of work. Please be aware and note:
 
 - No support for duplicate member names in an object (parsing fails)
 - No support for online schema validation (we expect that this is done offline)
-- Only support for JSON Standard [RFC-8259](https://datatracker.ietf.org/doc/html/rfc8259)
+- Only support for JSON Standard [RFC-8259](https://datatracker.ietf.org/doc/html/rfc8259), plus the number extension described in [Number grammar](#number-grammar)
+
+### Number grammar
+
+The parser accepts the number grammar of [RFC 8259, section 6](https://datatracker.ietf.org/doc/html/rfc8259#section-6), extended by hexadecimal integers:
+
+```text
+number  = [ "-" ] ( hex-int / ( int [ frac ] [ exp ] ) )
+hex-int = "0" ( "x" / "X" ) 1*HEXDIG      ; extension, not part of RFC 8259
+int     = "0" / ( digit1-9 *DIGIT )
+frac    = "." 1*DIGIT
+exp     = ( "e" / "E" ) [ "-" / "+" ] 1*DIGIT
+```
+
+Any other number literal is rejected with a parse error, e.g. `01`, `+1`, `.5`, `1.`, `1.e5`, `1e`, `0x`, `0x1p3`, `0x1.8`.
+
+Hexadecimal numbers such as `0xdd` or `-0X10` are integers only.
+Their value must fit into `std::int64_t` or `std::uint64_t`, otherwise parsing fails.
+Hex digits may be lowercase or uppercase.
+
+The writer always emits decimal numbers, so hexadecimal notation is not preserved when a parsed document is written back.
+Use decimal numbers for documents that must be interoperable with other RFC 8259 parsers.
 
 ## Requirements
 

@@ -16,8 +16,6 @@
 #ifndef SCORE_JSON_INTERNAL_PARSER_VAJSON_JSON_NUMBER_H
 #define SCORE_JSON_INTERNAL_PARSER_VAJSON_JSON_NUMBER_H
 
-#include <algorithm>
-#include <cerrno>
 #include <cmath>
 #include <cstdint>
 #include <limits>
@@ -47,14 +45,14 @@ class JsonNumber final
     ///                  to parse.
     /// @return          A Result containing the number or the error that occurred.
     /// @error           score::json::vajson::JsonErrc::kInvalidJson
-    ///                  if the number contains invalid characters
+    ///                  if the number does not match the accepted number grammar
     /// @context         ANY
     /// @pre             All whitespace must have been stripped.
     /// @threadsafe      FALSE
     /// @reentrant       FALSE
     /// @synchronous     TRUE
     /// @internal
-    /// - If the input is not empty and a valid JSON number:
+    /// - If the input is not empty and matches the accepted number grammar:
     ///   - Return the number.
     /// - Otherwise:
     ///   - Return an error.
@@ -72,7 +70,7 @@ class JsonNumber final
                 return num.Validate();
             },
             MakeError(static_cast<ErrorCode>(JsonErrc::kInvalidJson),
-                      "JsonNumber::New: Number contains invalid characters."));
+                      "JsonNumber::New: Number does not match the accepted number grammar."));
     };
 
     /// @brief           Tries to convert the number to a type
@@ -137,55 +135,26 @@ class JsonNumber final
         return opt;
     }
 
-    /// @brief            Tries to convert the number to a signed integer
-    /// @tparam          Integer Type of signed integer to convert to.
-    /// @return          The Optional containing the signed integer if the conversion was successful, or empty.
-    /// @context         ANY
-    /// @pre             -
-    /// @threadsafe      FALSE
-    /// @reentrant       FALSE
-    /// @internal
-    /// - Convert the number to a signed number.
-    /// - If the conversion was successful:
-    ///   - Return a Result containing the number.
-    /// - Otherwise:
-    ///   - Return an error.
-    /// @endinternal
-    template <typename Integer,
-              std::enable_if_t<internal::IsInt<Integer>::value && std::is_signed<Integer>::value>* = nullptr>
-    auto As() const noexcept -> Optional<Integer>
-    {
-        internal::util::NumberParser parser{};
-        const internal::SignedLL result{parser.LongLong(this->view_)};
-
-        return this->ExtractIfIntegerSuccessful<Integer>(result, parser.End());
-    }
-
-    /// @brief           Tries to convert the number to an unsigned integer
+    /// @brief           Tries to convert the number to an integer
     /// @tparam          Integer
-    ///                  Type of unsigned integer to convert to.
-    /// @return          The Optional containing the unsigned integer if the conversion was successful, or empty.
+    ///                  Type of integer to convert to.
+    /// @return          The Optional containing the integer if the conversion was successful, or empty.
     /// @context         ANY
     /// @pre             -
     /// @threadsafe      FALSE
     /// @reentrant       FALSE
     /// @synchronous     TRUE
     /// @internal
-    /// - Convert the number to an unsigned number.
+    /// - Convert the decimal or hexadecimal integer to the integer type.
     /// - If the conversion was successful:
     ///   - Return a Result containing the number.
     /// - Otherwise:
     ///   - Return an error.
     /// @endinternal
-    template <typename Integer,
-              std::enable_if_t<internal::IsInt<Integer>::value && (!std::is_signed<Integer>::value)>* = nullptr>
-
+    template <typename Integer, std::enable_if_t<internal::IsInt<Integer>::value>* = nullptr>
     auto As() const noexcept -> Optional<Integer>
     {
-        internal::util::NumberParser parser{};
-        const internal::UnsignedLL result{parser.UnsignedLongLong(this->view_)};
-
-        return this->ExtractIfIntegerSuccessful<Integer>(result, parser.End());
+        return internal::util::NumberParser::ParseInteger<Integer>(this->view_);
     }
 
     /// @brief           Tries to convert the number to a floating point type
@@ -198,6 +167,8 @@ class JsonNumber final
     /// @reentrant       FALSE
     /// @synchronous     TRUE
     /// @internal
+    /// - If the number is a hexadecimal integer:
+    ///   - Return an error, since hexadecimal numbers are integers only.
     /// - Convert the number to the desired floating point type.
     /// - If the conversion was successful:
     ///   - Return a Result containing the number.
@@ -207,10 +178,14 @@ class JsonNumber final
     template <typename Float, std::enable_if_t<std::is_floating_point<Float>::value>* = nullptr>
     auto As() const noexcept -> Optional<Float>
     {
-        internal::util::NumberParser parser{};
-        const double conversion_result{parser.Double(this->view_)};
-
-        return this->ExtractIfFloatingSuccessful<Float>(conversion_result, parser.End());
+        Optional<Float> result{};
+        if (!internal::util::HasHexadecimalPrefix(this->view_))
+        {
+            internal::util::NumberParser parser{};
+            const double conversion_result{parser.Double(this->view_)};
+            result = this->ExtractIfFloatingSuccessful<Float>(conversion_result, parser.End());
+        }
+        return result;
     }
 
     /// @brief           Converts the number to a JsonNumber
@@ -310,21 +285,14 @@ class JsonNumber final
     /// @brief           Checks if the parsed token format is valid
     /// @param[in]       end
     ///                  The end-pointer that is used to verify the parse.
-    /// @return          True if parsing consumed the whole token and does not end with '.'.
+    /// @return          True if parsing consumed the whole token.
     /// @context         ANY
     /// @pre             -
     /// @threadsafe      FALSE
     /// @reentrant       FALSE
     auto ParseFormatSuccessful(const char* end) const noexcept -> bool
     {
-        // std::strtod uncomplainingly parses input that ends with a period, although that is invalid JSON!
-
-        return ((end == this->view_.cend()) && (this->view_.back() != '.'));
-    }
-
-    auto ParseIntegerSuccessful(const char* end) const noexcept -> bool
-    {
-        return ((errno != ERANGE) && this->ParseFormatSuccessful(end));
+        return end == this->view_.cend();
     }
 
     template <typename Float>
@@ -333,39 +301,6 @@ class JsonNumber final
         // Some libc implementations set ERANGE for near-limit finite values; accept those when representable.
         return (this->ParseFormatSuccessful(end) && std::isfinite(conversion_result) &&
                 JsonNumber::Cast<Float>(conversion_result).has_value());
-    }
-
-    /// @brief           Converts the parsed integer to target type when parsing was successful
-    /// @tparam          TargetType
-    ///                  Type to convert to.
-    /// @tparam          SourceType
-    ///                  Type to convert from.
-    /// @param[in]       num
-    ///                  The source value.
-    /// @param[in]       end
-    ///                  The end iterator of the buffer.
-    /// @return          The Optional containing the number if the conversion was successful, or empty.
-    /// @context         ANY
-    /// @pre             -
-    /// @threadsafe      FALSE
-    /// @reentrant       FALSE
-    /// @internal
-    /// - If the number has been successfully parsed and casted to the target type:
-    ///   - Return an Optional containing the number.
-    /// - Otherwise:
-    ///   - Return an empty Optional.
-    /// @endinternal
-    template <typename TargetType, typename SourceType>
-    auto ExtractIfIntegerSuccessful(SourceType num, const char* end) const noexcept -> Optional<TargetType>
-    {
-        Optional<TargetType> opt{};
-
-        if (this->ParseIntegerSuccessful(end))
-        {
-            opt = JsonNumber::Cast<TargetType>(num);
-        }
-
-        return opt;
     }
 
     template <typename TargetType>
@@ -381,44 +316,80 @@ class JsonNumber final
         return opt;
     }
 
-    /// @brief           Validates the contained number
-    /// @return          True if the number is valid, otherwise false.
+    /// @brief           Validates the contained number against the accepted number grammar
+    /// @details         The grammar is the RFC 8259 number grammar extended by hexadecimal integers:
+    ///                  number  = [ "-" ] ( hex-int / ( int [ frac ] [ exp ] ) )
+    ///                  hex-int = "0" ( "x" / "X" ) 1*HEXDIG
+    ///                  int     = "0" / ( digit1-9 *DIGIT )
+    ///                  frac    = "." 1*DIGIT
+    ///                  exp     = ( "e" / "E" ) [ "-" / "+" ] 1*DIGIT
+    /// @return          True if the whole number matches the grammar, otherwise false.
     /// @context         ANY
     /// @pre             -
     /// @threadsafe      FALSE
     /// @reentrant       FALSE
     /// @internal
-    /// - If the number has multiple digits:
-    ///   - Check that if it has a leading zero, it is a valid hex or float number.
+    /// - Skip an optional minus sign.
+    /// - If a hexadecimal prefix follows, skip it and require a non-empty sequence of hexadecimal digits.
     /// - Otherwise:
-    ///   - Check that it is a valid digit.
+    ///   - Skip either a single zero or a non-empty sequence of digits starting with 1-9.
+    ///   - If a decimal point follows, skip it and require a non-empty sequence of digits.
+    ///   - If an exponent marker follows, skip it and an optional sign, and require a non-empty sequence of digits.
+    /// - Return whether all parts are well-formed and the whole number has been consumed.
     /// @endinternal
     auto Validate() const noexcept -> bool
     {
-        const std::size_t size{this->view_.size()};
+        StringView rest{this->view_};
 
-        const std::size_t first_digit_pos{(this->view_[0] == '-') ? std::size_t{1} : std::size_t{0}};
+        const auto skip_one_of = [&rest](const StringView chars) noexcept -> bool {
+            const bool matches{(!rest.empty()) && (chars.find(rest.front()) != StringView::npos)};
+            if (matches)
+            {
+                rest.remove_prefix(1U);
+            }
+            return matches;
+        };
+        const auto skip_digits = [&rest](const auto is_digit) noexcept -> bool {
+            const std::size_t size_before{rest.size()};
+            while ((!rest.empty()) && is_digit(rest.front()))
+            {
+                rest.remove_prefix(1U);
+            }
+            return rest.size() < size_before;
+        };
 
-        const bool is_multiple_digits{size > (first_digit_pos + 1)};
+        static_cast<void>(skip_one_of("-"));
+
         bool is_valid{false};
-        if (is_multiple_digits)
+        bool is_hexadecimal{false};
+        // A leading zero must stand alone or start a hexadecimal prefix; otherwise the integer part starts with 1-9.
+        if (skip_one_of("0"))
         {
-            constexpr static StringView kValidLetters{".eExX"};
-
-            // If it has a leading '0' character, it must be followed by a valid letter character in order to be a valid
-            // hex or float number.
-
-            is_valid =
-                (this->view_[first_digit_pos] != '0') ||
-                std::any_of(kValidLetters.cbegin(), kValidLetters.cend(), [this, first_digit_pos](char ch) noexcept {
-                    return this->view_[first_digit_pos + 1] == ch;
-                });
+            is_hexadecimal = skip_one_of("xX");
+            is_valid = true;
         }
         else
         {
-            is_valid = (size == (first_digit_pos + 1)) && internal::util::IsDigit(this->view_[first_digit_pos]);
+            is_valid = skip_digits(internal::util::IsDigit);
         }
-        return is_valid;
+
+        if (is_hexadecimal)
+        {
+            is_valid = skip_digits(internal::util::IsHexDigit);
+        }
+        else
+        {
+            if (skip_one_of("."))
+            {
+                is_valid = skip_digits(internal::util::IsDigit) && is_valid;
+            }
+            if (skip_one_of("eE"))
+            {
+                static_cast<void>(skip_one_of("+-"));
+                is_valid = skip_digits(internal::util::IsDigit) && is_valid;
+            }
+        }
+        return is_valid && rest.empty();
     }
 
     /// @brief           Stored view onto the buffer

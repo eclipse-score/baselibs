@@ -441,6 +441,39 @@ TEST_F(ParserTest, EmitsErrorWhenParsingTooLargeNumber)
     EXPECT_EQ(root.error(), score::json::Error::kParsingError);
 }
 
+TEST_F(ParserTest, EmitsErrorWhenParsingNumberOutsideTheGrammar)
+{
+    RecordProperty("PartiallyVerifies", "comp_req__vajson__number_grammar");
+    RecordProperty("Description",
+                   "Check that numbers matching neither the RFC 8259 number grammar nor the hexadecimal integer "
+                   "extension are rejected as malformed.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
+
+    for (const std::string number : {"01", "-.5", "1.e5", "0x", "0x1p3", "0x1.8"})
+    {
+        const score::Result<Any> root{JsonParser{}.FromBuffer(R"({ "number": )" + number + " }")};
+
+        ASSERT_FALSE(root.has_value()) << number;
+        EXPECT_EQ(root.error(), score::json::Error::kParsingError) << number;
+    }
+}
+
+TEST_F(ParserTest, EmitsErrorWhenParsingHexadecimalNumberExceeding64Bits)
+{
+    RecordProperty("PartiallyVerifies", "comp_req__vajson__hex_integers");
+    RecordProperty("Description",
+                   "Check that a hexadecimal integer exceeding the 64-bit range is rejected as malformed instead of "
+                   "being converted to a floating-point number.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "boundary-values");
+
+    const score::Result<Any> root{JsonParser{}.FromBuffer(R"({ "number": 0x10000000000000000 })")};
+
+    ASSERT_FALSE(root.has_value());
+    EXPECT_EQ(root.error(), score::json::Error::kParsingError);
+}
+
 TEST_F(ParserTest, FromFileFail)
 {
     RecordProperty("PartiallyVerifies", "comp_req__json__deserialization");
@@ -580,15 +613,12 @@ TEST_F(ParserTest, CanParseEmptyMemberName)
 
 TEST(JsonParserVajsonTest, CanParseObjectHexadecimalNumber)
 {
-    // vaJson accepts hexadecimal number syntax as a lenient extension beyond the RFC 8259 well-formedness
-    // that comp_req__json__deserialization mandates, so this documents the parser's actual behavior rather than
-    // normative text.
-    RecordProperty("PartiallyVerifies", "comp_req__json__deserialization");
+    RecordProperty("PartiallyVerifies", "comp_req__vajson__hex_integers");
     RecordProperty("Description",
-                   "Check that parsing a hexadecimal number, an accepted extension beyond RFC-8259, returns "
-                   "the correct value.");
+                   "Check that parsing positive and negative hexadecimal integers, an extension beyond RFC 8259, "
+                   "returns the correct values.");
     RecordProperty("TestType", "requirements-based");
-    RecordProperty("DerivationTechnique", "design-analysis");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
 
     std::string buffer_json_hex{R"(
         {
@@ -606,6 +636,7 @@ TEST(JsonParserVajsonTest, CanParseObjectHexadecimalNumber)
           "float": 2.3,
           "double": 1.79769e+308,
           "hex" : 0xdd,
+          "negative_hex" : -0X10,
           "object": {
             "a": "b",
             "c": "d"
@@ -626,6 +657,7 @@ TEST(JsonParserVajsonTest, CanParseObjectHexadecimalNumber)
 
     // Then the correct value is returned
     EXPECT_EQ(value, 0xdd);
+    EXPECT_EQ(GetValueOfObject<std::int64_t>(root.value(), "negative_hex"), -0x10);
 }
 
 TEST(JsonParserVajsonTest, CanParseTwoByteBuffer)
