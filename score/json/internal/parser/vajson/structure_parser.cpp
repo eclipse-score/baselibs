@@ -21,6 +21,7 @@
 #include <cstddef>
 #include <cstdint>
 #include <cstring>
+#include <iterator>
 #include <string>
 #include <string_view>
 
@@ -77,6 +78,17 @@ constexpr std::uint32_t kSurrogateLast{0xDFFFU};
 constexpr std::uint32_t kSurrogateWidth{10U};
 /// @brief           Error message for a high surrogate that is not completed by a low surrogate
 constexpr StringView kMissingLowSurrogate{"Unicode escape: High surrogate is not followed by a low surrogate!"sv};
+/// @brief           First character that RFC 8259, section 7 allows to appear unescaped in a JSON string
+constexpr std::char_traits<char>::int_type kFirstUnescapedCharacter{0x20};
+
+/// @brief           Checks whether a character is a control character that must be escaped in a JSON string
+/// @param[in]       character
+///                  The character to check.
+/// @return          True if the character is in the range U+0000 to U+001F.
+auto IsControlCharacter(const char character) noexcept -> bool
+{
+    return std::char_traits<char>::to_int_type(character) < kFirstUnescapedCharacter;
+}
 
 /// @brief           Converts a hexadecimal digit into its numerical value
 /// @param[in]       digit
@@ -324,6 +336,7 @@ auto StructureParser::ParseUnescapedString(CStringView string) noexcept -> Parse
 
 /// @internal
 /// - Read the string until either an escape sequence or a string termination occurs.
+///   Return an error if the read characters contain an unescaped control character.
 /// - While all operations are successful & an escape sequence is encountered
 ///  - Unescape the character sequence
 ///  - And read the string until either an escape sequence or a string termination occurs.
@@ -335,11 +348,18 @@ auto StructureParser::ReadJsonString() noexcept -> Result<CStringView>
     String& buffer{this->GetJsonDocument().GetClearedStringBuffer()};
 
     const auto reader{[this, &buffer]() noexcept {
-        return this->json_ops_.ReadUntil(R"("\)"sv,
+        const auto unescaped_begin{static_cast<String::difference_type>(buffer.size())};
+        Result<OptChar> result{this->json_ops_.ReadUntil(R"("\)"sv,
 
-                                         [&buffer](StringView buf) noexcept {
-                                             static_cast<void>(buffer.append(buf.begin(), buf.end()));
-                                         });
+                                                         [&buffer](StringView buf) noexcept {
+                                                             static_cast<void>(buffer.append(buf.begin(), buf.end()));
+                                                         })};
+        if (std::any_of(std::next(buffer.cbegin(), unescaped_begin), buffer.cend(), IsControlCharacter))
+        {
+            result = MakeErrorResult<OptChar>(JsonErrc::kInvalidJson,
+                                              "ReadJsonString: Unescaped control character in string!");
+        }
+        return result;
     }};
 
     Result<OptChar> ret_val{reader()};

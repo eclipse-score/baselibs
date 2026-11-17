@@ -14,6 +14,8 @@
 #include "score/json/json_parser.h"
 #include "score/json/json_writer.h"
 
+#include <string_view>
+
 TEST(JsonTest, ReadWrite)
 {
     RecordProperty("Verifies", "SCR-5310867");
@@ -120,6 +122,18 @@ TEST(JsonTest, ReadsNonAsciiUnicodeEscapeSequences)
 
     EXPECT_EQ(read_object.at("umlaut").As<std::string>().value().get(), std::string{"\xC3\xA4"});
     EXPECT_EQ(read_object.at("emoji").As<std::string>().value().get(), std::string{"\xF0\x9F\x98\x80"});
+}
+
+TEST(JsonTest, RejectsUnescapedControlCharacters)
+{
+    RecordProperty("PartiallyVerifies", "comp_req__json__deserialization");
+    RecordProperty("Description",
+                   "Check that documents with an unescaped newline or null character inside a string are rejected.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
+
+    EXPECT_FALSE(score::json::JsonParser{}.FromBuffer(std::string_view{"{\"value\":\"a\nb\"}"}).has_value());
+    EXPECT_FALSE(score::json::JsonParser{}.FromBuffer(std::string_view{"{\"value\":\"a\0b\"}", 15U}).has_value());
 }
 
 TEST(JsonTest, ReadWriteEscapedCharacters)
