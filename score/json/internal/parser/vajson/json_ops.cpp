@@ -20,6 +20,7 @@
 #include <utility>
 #include <vector>
 
+#include "score/assert.hpp"
 #include "score/json/internal/parser/vajson/json_data.h"
 namespace score
 {
@@ -61,7 +62,7 @@ auto JsonOps::TryTake() noexcept -> Result<char>
 {
     std::istream& stream{this->GetStream()};
     std::int64_t c{stream.get()};
-    Result<char> result{MakeErrorResult<char>(JsonErrc::kStreamFailure, "JsonOps::TryTake: EOF.")};
+    Result<char> result{score::MakeUnexpected(JsonErrc::kStreamFailure, "JsonOps::TryTake: EOF.")};
 
     if (c != std::char_traits<char>::eof())
     {
@@ -108,7 +109,7 @@ auto JsonOps::CheckString(const std::string_view string, const std::string_view 
     -> score::Result<void>
 {
     return ReadString(string).and_then([&error_msg](bool val) noexcept {
-        score::Result<void> result{MakeErrorResult<void>(JsonErrc::kInvalidJson, error_msg)};
+        score::Result<void> result{score::MakeUnexpected(JsonErrc::kInvalidJson, error_msg)};
         if (val)
         {
             result.emplace();
@@ -126,7 +127,8 @@ auto JsonOps::CheckString(const std::string_view string, const std::string_view 
 /// @endinternal
 auto JsonOps::ReadString(const std::string_view string) noexcept -> Result<bool>
 {
-    AssertCondition(!string.empty(), "JsonOps::ReadString: Cannot check for empty string");
+    SCORE_LANGUAGE_FUTURECPP_PRECONDITION_PRD_MESSAGE(!string.empty(),
+                                                      "JsonOps::ReadString: Cannot check for empty string");
 
     const std::size_t total_size{string.size()};
     bool is_same{true};
@@ -299,7 +301,7 @@ auto JsonOps::RewindIf(const bool condition, const std::size_t num) noexcept -> 
 
         if (stream.fail())
         {
-            result = MakeErrorResult<void>(JsonErrc::kStreamFailure, "JsonOps::RewindIf: Could not seek back.");
+            result = score::MakeUnexpected(JsonErrc::kStreamFailure, "JsonOps::RewindIf: Could not seek back.");
         }
     }
 

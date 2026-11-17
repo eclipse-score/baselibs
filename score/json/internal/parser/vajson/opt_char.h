@@ -16,7 +16,7 @@
 #ifndef SCORE_JSON_INTERNAL_PARSER_VAJSON_OPT_CHAR_H
 #define SCORE_JSON_INTERNAL_PARSER_VAJSON_OPT_CHAR_H
 
-#include "score/json/internal/parser/vajson/json_error_domain.h"
+#include "score/assert.hpp"
 
 #include <cstdint>
 #include <string>
@@ -68,7 +68,8 @@ class OptChar
     /// @threadsafe      TRUE, for different this pointer
     auto Value() const& noexcept -> char
     {
-        AssertCondition(this->char_ != -1, "OptChar::Value: OptChar does not hold a value.");
+        SCORE_LANGUAGE_FUTURECPP_PRECONDITION_PRD_MESSAGE(this->char_ != -1,
+                                                          "OptChar::Value: OptChar does not hold a value.");
         return std::char_traits<char>::to_char_type(static_cast<std::int32_t>(this->char_));
     }
 

@@ -20,8 +20,8 @@
 
 #include "gtest/gtest.h"
 #include "score/json/internal/parser/vajson/json_error_domain.h"
+#include "score/json/internal/parser/vajson/json_ops.h"
 #include "score/json/internal/parser/vajson/types.h"
-#include "score/span.hpp"
 
 namespace score
 {
@@ -54,29 +54,6 @@ TEST(UT__JsonOps__JsonData, ConstructFromStringView)
     ASSERT_TRUE(result.has_value());
 }
 
-/// Test that JsonData can open a CStringView character buffer.
-///
-/// @trace           score::json::vajson::JsonData::FromBuffer
-TEST(UT__JsonOps__JsonData, ConstructFromCStringView)
-{
-    const CStringView view{"doesntmatter"};
-
-    const Result<JsonData> result{JsonData::FromBuffer(view)};
-
-    ASSERT_TRUE(result.has_value());
-}
-
-/// Test that JsonData can open a span of characters.
-TEST(UT__JsonOps__JsonData, ConstructFromSpan)
-{
-    const std::string data{"doesntmatter"};
-    const score::cpp::span<const char> view{data.data(), data.size()};
-
-    const Result<JsonData> result{JsonData::FromBuffer(view)};
-
-    ASSERT_TRUE(result.has_value());
-}
-
 /// Test that JsonData returns a JsonErrc if the file cannot be opened.
 TEST(UT__JsonOps__JsonData, ConstructFromNonExistingFile)
 {
@@ -86,28 +63,28 @@ TEST(UT__JsonOps__JsonData, ConstructFromNonExistingFile)
     ASSERT_EQ(result.error(), JsonErrc::kStreamFailure);
 }
 
-/// Test that a document with an UTF-8 BOM can be parsed.
+/// Test that a UTF-8 BOM is skipped.
 ///
-/// - Create a document that contains a UTF-8 BOM.
-/// - Parse the document.
-/// - Assert that the UTF-8 BOM is recognized.
-TEST(UT__JsonOps__JsonData, ReadsUtf8Bom)
+/// - Create a document that contains a UTF-8 BOM followed by a character.
+/// - Assert that the first character read is the one following the BOM.
+TEST(UT__JsonOps__JsonData, SkipsUtf8Bom)
 {
     // The UTF-8 BOM.
-    const std::string data{'\xEF', '\xBB', '\xBF'};
+    const std::string data{'\xEF', '\xBB', '\xBF', 'x'};
 
     Result<JsonData> result{JsonData::FromBuffer(std::string_view{data})};
     ASSERT_TRUE(result.has_value());
 
     JsonData doc{std::move(result.value())};
-    ASSERT_EQ(doc.GetEncoding(), EncodingType::kUtf8);
+    internal::JsonOps ops{doc};
+    ASSERT_EQ(ops.TryTake(), 'x');
 }
 
-/// Test that the parser correctly handles a document without a UTF-8 BOM.
+/// Test that a document without a UTF-8 BOM is read from its beginning.
 ///
-/// - Create a document without a BOM.
-/// - Assert that encoding is kNone.
-TEST(UT__JsonOps__JsonData, FailsOnUnknownBom)
+/// - Create a document that starts with a BOM other than UTF-8.
+/// - Assert that the first character read is the first byte of the document.
+TEST(UT__JsonOps__JsonData, KeepsUnknownBom)
 {
     // The UTF-16 BE BOM (not UTF-8, should not be recognized).
     const std::string data{'\xFE', '\xFF'};
@@ -116,7 +93,8 @@ TEST(UT__JsonOps__JsonData, FailsOnUnknownBom)
     ASSERT_TRUE(result.has_value());
 
     JsonData doc{std::move(result.value())};
-    ASSERT_EQ(doc.GetEncoding(), EncodingType::kNone);
+    internal::JsonOps ops{doc};
+    ASSERT_EQ(ops.TryTake(), '\xFE');
 }
 
 /// Test that JsonData returns the underlying DepthCounter.

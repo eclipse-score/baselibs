@@ -190,19 +190,18 @@ StructureParser::StructureParser(JsonData& doc) noexcept : json_ops_{doc} {}
 auto StructureParser::Parse() noexcept -> Result<void>
 {
     // Skip all whitespace to so that we will detect empty documents immediately.
-
-    ParserResult result{MakeResult(this->json_ops_.SkipWhitespace(),
-                                   MakeError(JsonErrc::kInvalidJson, "StructureParser::Parse: Document is empty."))
-                            .transform([](void) noexcept {
-                                return ParserState::kRunning;
-                            })};
+    ParserResult result{ParserState::kRunning};
+    if (!this->json_ops_.SkipWhitespace())
+    {
+        result = score::MakeUnexpected(JsonErrc::kInvalidJson, "StructureParser::Parse: Document is empty.");
+    }
 
     // Run parser
     while (result == ParserState::kRunning)
     {
         result = this->ParseValue();
     }
-    return Drop(result);
+    return result.transform([](ParserState) noexcept {});
 }
 
 auto StructureParser::GetState() noexcept -> DepthCounter&
@@ -356,8 +355,8 @@ auto StructureParser::ReadJsonString() noexcept -> Result<CStringView>
                                                          })};
         if (std::any_of(std::next(buffer.cbegin(), unescaped_begin), buffer.cend(), IsControlCharacter))
         {
-            result = MakeErrorResult<OptChar>(JsonErrc::kInvalidJson,
-                                              "ReadJsonString: Unescaped control character in string!");
+            result =
+                score::MakeUnexpected(JsonErrc::kInvalidJson, "ReadJsonString: Unescaped control character in string!");
         }
         return result;
     }};
@@ -390,14 +389,16 @@ auto StructureParser::ReadJsonString() noexcept -> Result<CStringView>
                       });
     }
 
-    return Filter(
-               ret_val,
-               [](const OptChar opt) noexcept {
-                   return opt.HasValue();
-               },
-               MakeError(JsonErrc::kInvalidJson, "ReadJsonString: Runaway string."))
+    return ret_val
+        .and_then([](const OptChar opt) noexcept {
+            Result<OptChar> result{score::MakeUnexpected(JsonErrc::kInvalidJson, "ReadJsonString: Runaway string.")};
+            if (opt.HasValue())
+            {
+                static_cast<void>(result.emplace(opt));
+            }
+            return result;
+        })
         // Take the " character
-
         .transform([this](OptChar) noexcept {
             static_cast<void>(this->json_ops_.Move());
             return this->GetJsonDocument().GetCurrentString();
@@ -453,8 +454,8 @@ auto StructureParser::UnescapeCodePoint() noexcept -> Result<std::uint32_t>
         }
         else if (IsLowSurrogate(code_unit))
         {
-            ret_val = MakeErrorResult<std::uint32_t>(
-                JsonErrc::kInvalidJson, "Unicode escape: Low surrogate is not preceded by a high surrogate!");
+            ret_val = score::MakeUnexpected(JsonErrc::kInvalidJson,
+                                            "Unicode escape: Low surrogate is not preceded by a high surrogate!");
         }
         else
         {
@@ -471,14 +472,14 @@ auto StructureParser::UnescapeCodePoint() noexcept -> Result<std::uint32_t>
 /// @endinternal
 auto StructureParser::ReadLowSurrogate() noexcept -> Result<std::uint32_t>
 {
-    Result<std::uint32_t> ret_val{MakeErrorResult<std::uint32_t>(JsonErrc::kInvalidJson, kMissingLowSurrogate)};
+    Result<std::uint32_t> ret_val{score::MakeUnexpected(JsonErrc::kInvalidJson, kMissingLowSurrogate)};
 
     if (this->json_ops_.Skip('\\') && this->json_ops_.Skip('u'))
     {
         ret_val = this->ReadCodeUnit();
         if (ret_val.has_value() && (!IsLowSurrogate(ret_val.value())))
         {
-            ret_val = MakeErrorResult<std::uint32_t>(JsonErrc::kInvalidJson, kMissingLowSurrogate);
+            ret_val = score::MakeUnexpected(JsonErrc::kInvalidJson, kMissingLowSurrogate);
         }
     }
 
@@ -494,14 +495,14 @@ auto StructureParser::ReadCodeUnit() noexcept -> Result<std::uint32_t>
     std::uint32_t code_unit{0U};
     bool valid{true};
     Result<std::uint32_t> ret_val{
-        MakeErrorResult<std::uint32_t>(JsonErrc::kInvalidJson, "Unicode escape: Expected a hexadecimal digit!")};
+        score::MakeUnexpected(JsonErrc::kInvalidJson, "Unicode escape: Expected a hexadecimal digit!")};
 
     for (std::size_t index{0U}; (index < kHexDigitsPerEscape) && valid; ++index)
     {
         const Result<char> taken{this->json_ops_.TryTake()};
         if (!taken.has_value())
         {
-            ret_val = MakeErrorResult<std::uint32_t>(
+            ret_val = score::MakeUnexpected(
                 JsonErrc::kInvalidJson, "Unicode escape: Unexpected end of input while reading hexadecimal digits!");
             valid = false;
         }
@@ -557,7 +558,7 @@ auto StructureParser::UnescapeChar(const char escaped) noexcept -> Result<char>
             break;
         default:
 
-            ret_val = MakeErrorResult<char>(JsonErrc::kInvalidJson, "Unknown escape sequence!");
+            ret_val = score::MakeUnexpected(JsonErrc::kInvalidJson, "Unknown escape sequence!");
             break;
     }
     return ret_val;
@@ -629,11 +630,12 @@ auto StructureParser::ParseEndArray() noexcept -> ParserResult
 /// @endinternal
 auto StructureParser::ParseComma() noexcept -> ParserResult
 {
-    return MakeResult(this->GetState().AddComma(),
-                      {JsonErrc::kInvalidJson, "StructureParser::ParseComma: Unexpected comma."})
-        .transform([](void) noexcept {
-            return ParserState::kRunning;
-        });
+    ParserResult result{ParserState::kRunning};
+    if (!this->GetState().AddComma())
+    {
+        result = score::MakeUnexpected(JsonErrc::kInvalidJson, "StructureParser::ParseComma: Unexpected comma.");
+    }
+    return result;
 }
 
 /// @internal
@@ -706,7 +708,7 @@ auto StructureParser::ParseValue() noexcept -> ParserResult
                 break;
             default:
 
-                result = MakeErrorResult<ParserState>(JsonErrc::kInvalidJson, "ParseValue: Got unknown JSON token.");
+                result = score::MakeUnexpected(JsonErrc::kInvalidJson, "ParseValue: Got unknown JSON token.");
                 break;
         }
     }

@@ -66,7 +66,7 @@ class ErrorStringParser final : public StructureParserStub
   private:
     auto OnString(CStringView) noexcept -> ParserResult override
     {
-        return MakeErrorResult<ParserState>(JsonErrc::kUserValidationFailed, "OnString called.");
+        return score::MakeUnexpected(JsonErrc::kInvalidJson, "OnString called.");
     }
 };
 
@@ -109,7 +109,7 @@ TEST(UT__Parser__String, Dynamic__ParseUnescapedString__Error)
 
     const auto parser_result{parser.Parse()};
     ASSERT_FALSE(parser_result.has_value());
-    ASSERT_EQ(parser_result.error(), JsonErrc::kUserValidationFailed);
+    ASSERT_EQ(parser_result.error(), JsonErrc::kInvalidJson);
     ASSERT_EQ(parser_result.error().UserMessage(), std::string_view{"OnString called."});
 }
 

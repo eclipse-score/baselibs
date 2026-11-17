@@ -67,7 +67,7 @@ class ErrorBoolParser final : public StructureParserStub
   private:
     auto OnBool(bool) noexcept -> ParserResult override
     {
-        return MakeErrorResult<ParserState>(JsonErrc::kUserValidationFailed, "OnBool called.");
+        return score::MakeUnexpected(JsonErrc::kInvalidJson, "OnBool called.");
     }
 };
 
@@ -171,7 +171,7 @@ TEST(UT__Parser__Bool, Dynamic__ParseFalse__Error)
 
     const auto parser_result{parser.Parse()};
     ASSERT_FALSE(parser_result.has_value());
-    ASSERT_EQ(parser_result.error(), JsonErrc::kUserValidationFailed);
+    ASSERT_EQ(parser_result.error(), JsonErrc::kInvalidJson);
     ASSERT_EQ(parser_result.error().UserMessage(), std::string_view{"OnBool called."});
 }
 
@@ -185,7 +185,7 @@ TEST(UT__Parser__Bool, Dynamic__ParseTrue__Error)
 
     const auto parser_result{parser.Parse()};
     ASSERT_FALSE(parser_result.has_value());
-    ASSERT_EQ(parser_result.error(), JsonErrc::kUserValidationFailed);
+    ASSERT_EQ(parser_result.error(), JsonErrc::kInvalidJson);
     ASSERT_EQ(parser_result.error().UserMessage(), std::string_view{"OnBool called."});
 }
 

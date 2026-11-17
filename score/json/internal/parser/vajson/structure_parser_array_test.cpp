@@ -55,7 +55,7 @@ class DynamicArrayParser final : public StructureParserStub
         this->end_ += 1;
         if (this->balance_ == 0)
         {
-            return MakeErrorResult<ParserState>(JsonErrc::kUserValidationFailed, "EndArray called too often");
+            return score::MakeUnexpected(JsonErrc::kInvalidJson, "EndArray called too often");
         }
         this->balance_ -= 1;
         return ParserResult{ParserState::kRunning};
@@ -77,8 +77,7 @@ class LimitedEndArrayParser final : public StructureParserStub
     {
         if (number_of_elems >= 2)
         {
-            return MakeErrorResult<ParserState>(JsonErrc::kUserValidationFailed,
-                                                "OnEndArray called with array size >=2.");
+            return score::MakeUnexpected(JsonErrc::kInvalidJson, "OnEndArray called with array size >=2.");
         }
         return ParserResult{ParserState::kRunning};
     }
@@ -95,7 +94,7 @@ class LimitedStartArrayParser final : public StructureParserStub
         static std::uint8_t call_cnt{0};
         if (call_cnt > 0)
         {
-            return MakeErrorResult<ParserState>(JsonErrc::kUserValidationFailed, "OnStartArray called a second time.");
+            return score::MakeUnexpected(JsonErrc::kInvalidJson, "OnStartArray called a second time.");
         }
         call_cnt++;
         return ParserResult{ParserState::kRunning};
@@ -158,7 +157,7 @@ TEST(UT__Parser__Array__Error, Dynamic__OnEndArray)
 
     const auto parser_result{parser.Parse()};
     ASSERT_FALSE(parser_result.has_value());
-    ASSERT_EQ(parser_result.error(), JsonErrc::kUserValidationFailed);
+    ASSERT_EQ(parser_result.error(), JsonErrc::kInvalidJson);
     ASSERT_EQ(parser_result.error().UserMessage(), std::string_view{"OnEndArray called with array size >=2."});
 }
 
@@ -172,7 +171,7 @@ TEST(UT__Parser__Array__Error, Dynamic__OnStartArray)
 
     const auto parser_result{parser.Parse()};
     ASSERT_FALSE(parser_result.has_value());
-    ASSERT_EQ(parser_result.error(), JsonErrc::kUserValidationFailed);
+    ASSERT_EQ(parser_result.error(), JsonErrc::kInvalidJson);
     ASSERT_EQ(parser_result.error().UserMessage(), std::string_view{"OnStartArray called a second time."});
 }
 

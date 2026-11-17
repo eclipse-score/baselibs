@@ -56,9 +56,6 @@ UTF-8 encoded, and a UTF-16 surrogate pair is combined into the single code poin
 present directly in the input are passed through without transcoding, so the user must provide input in the expected
 encoding and handle any application-specific encoding needs.
 
-The method ``score::json::vajson::JsonData::GetEncoding()`` returns the detected encoding if the input stream contains a byte
-order mark (BOM).
-
 
 Data Items
 ----------
@@ -100,15 +97,10 @@ A Number of the input stream is reported to the applications event handler by ca
 The parameter of the function (score::json::vajson::JsonNumber) contains the number and can provide it in different formats
 to the application:
 
-* boolean
 * unsigned int (any unsigned integer smaller or equal to unsigned long long int)
 * signed int (any signed integer smaller or equal to long long int)
 * float
 * double
-* score::json::vajson::JsonNumber (for further processing by the application)
-
-The application can also try to convert the number to a user defined format by calling
-score::json::vajson::JsonNumber::Convert.
 
 
 Error reporting

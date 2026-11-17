@@ -55,7 +55,7 @@ class DynamicObjectParser final : public StructureParserStub
         this->end_ += 1;
         if (this->balance_ == 0)
         {
-            return MakeErrorResult<ParserState>(JsonErrc::kUserValidationFailed, "EndObject called too often");
+            return score::MakeUnexpected(JsonErrc::kInvalidJson, "EndObject called too often");
         }
         this->balance_ -= 1;
         return ParserResult{ParserState::kRunning};
@@ -75,7 +75,7 @@ class EndObjectParser final : public StructureParserStub
 
     auto OnEndObject(std::size_t) noexcept -> ParserResult override
     {
-        return MakeErrorResult<ParserState>(JsonErrc::kUserValidationFailed, "OnEndObject called.");
+        return score::MakeUnexpected(JsonErrc::kInvalidJson, "OnEndObject called.");
     }
 };
 
@@ -87,7 +87,7 @@ class StartObjectParser final : public StructureParserStub
   private:
     auto OnStartObject() noexcept -> ParserResult override
     {
-        return MakeErrorResult<ParserState>(JsonErrc::kUserValidationFailed, "OnStartObject called.");
+        return score::MakeUnexpected(JsonErrc::kInvalidJson, "OnStartObject called.");
     }
 
     auto OnEndObject(std::size_t) noexcept -> ParserResult override
@@ -147,7 +147,7 @@ TEST(UT__Parser__Object__Error, Dynamic__OnEndObject)
 
     const auto parser_result{parser.Parse()};
     ASSERT_FALSE(parser_result.has_value());
-    ASSERT_EQ(parser_result.error(), JsonErrc::kUserValidationFailed);
+    ASSERT_EQ(parser_result.error(), JsonErrc::kInvalidJson);
     ASSERT_EQ(parser_result.error().UserMessage(), std::string_view{"OnEndObject called."});
 }
 
@@ -161,7 +161,7 @@ TEST(UT__Parser__Object__Error, Dynamic__OnStartObject)
 
     const auto parser_result{parser.Parse()};
     ASSERT_FALSE(parser_result.has_value());
-    ASSERT_EQ(parser_result.error(), JsonErrc::kUserValidationFailed);
+    ASSERT_EQ(parser_result.error(), JsonErrc::kInvalidJson);
     ASSERT_EQ(parser_result.error().UserMessage(), std::string_view{"OnStartObject called."});
 }
 

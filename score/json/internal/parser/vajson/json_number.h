@@ -19,9 +19,7 @@
 #include <cmath>
 #include <cstdint>
 #include <limits>
-#include <string>
 #include <type_traits>
-#include <utility>
 
 #include "score/result/result.h"
 
@@ -59,80 +57,22 @@ class JsonNumber final
     /// @endinternal
     static auto New(StringView view) noexcept -> Result<JsonNumber>
     {
-        return Filter(
-            Filter(
-                Result<JsonNumber>{JsonNumber{view}},
-                [](const JsonNumber& num) noexcept {
-                    return !num.view_.empty();
-                },
-                MakeError(static_cast<ErrorCode>(JsonErrc::kInvalidJson), "JsonNumber::New: View must not be empty.")),
-            [](const JsonNumber& num) noexcept {
-                return num.Validate();
-            },
-            MakeError(static_cast<ErrorCode>(JsonErrc::kInvalidJson),
-                      "JsonNumber::New: Number does not match the accepted number grammar."));
-    };
-
-    /// @brief           Tries to convert the number to a type
-    /// @tparam          T
-    ///                  Type to convert to.
-    /// @return          The Result containing the converted number if the conversion was successful, or an error.
-    /// @error           score::json::vajson::JsonErrc::kInvalidJson
-    ///                  Could not convert number
-    /// @context         ANY
-    /// @pre             -
-    /// @threadsafe      FALSE
-    /// @reentrant       FALSE
-    /// @synchronous     TRUE
-    /// @internal
-    /// - Convert the number to type T.
-    /// - If the conversion was successful:
-    ///   - Return a Result containing the number.
-    /// - Otherwise:
-    ///   - Return an error.
-    /// @endinternal
-    template <typename T>
-    auto TryAs() const noexcept -> Result<T>
-    {
-        return MakeResult(this->As<T>(), {JsonErrc::kInvalidJson, "Could not convert number."});
-    }
-
-    /// @brief           Tries to convert the number to a bool
-    /// @details         Maps "1" to true and "0" to false.
-    /// @return          The Optional containing the bool if the conversion was successful, or empty.
-    /// @context         ANY
-    /// @pre             -
-    /// @threadsafe      FALSE
-    /// @reentrant       FALSE
-    /// @synchronous     TRUE
-    /// @internal
-    /// - If the number is a single '1' or '0' character:
-    ///   - Convert to true or false respectively.
-    ///   - Return a Result containing the bool.
-    /// - Otherwise:
-    ///   - Return an error.
-    /// @endinternal
-    template <typename Bool, std::enable_if_t<std::is_same<Bool, bool>::value>* = nullptr>
-    auto As() const noexcept -> Optional<bool>
-    {
-        Optional<bool> opt{};
-        if (this->GetNumberOfChars() == 1)
+        const JsonNumber number{view};
+        Result<JsonNumber> result{number};
+        if (view.empty())
         {
-
-            switch (std::char_traits<char>::to_int_type(this->view_[0]))
-            {
-                case std::char_traits<char>::to_int_type('1'):
-                    static_cast<void>(opt.emplace(true));
-                    break;
-                case std::char_traits<char>::to_int_type('0'):
-                    static_cast<void>(opt.emplace(false));
-                    break;
-                default:
-                    // in case something different from 0 or 1 is included, there will be no conversion.
-                    break;
-            }
+            result = score::MakeUnexpected(JsonErrc::kInvalidJson, "JsonNumber::New: View must not be empty.");
         }
-        return opt;
+        else if (!number.Validate())
+        {
+            result = score::MakeUnexpected(JsonErrc::kInvalidJson,
+                                           "JsonNumber::New: Number does not match the accepted number grammar.");
+        }
+        else
+        {
+            // The number is valid and already stored in the result.
+        }
+        return result;
     }
 
     /// @brief           Tries to convert the number to an integer
@@ -188,44 +128,6 @@ class JsonNumber final
         return result;
     }
 
-    /// @brief           Converts the number to a JsonNumber
-    /// @return          The Optional containing the JsonNumber.
-    /// @context         ANY
-    /// @pre             -
-    /// @threadsafe      FALSE
-    /// @reentrant       FALSE
-    /// @internal
-    /// - Return the number as a Number type.
-    /// @endinternal
-    template <typename Num, std::enable_if_t<std::is_same<JsonNumber, Num>::value>* = nullptr>
-    auto As() const noexcept -> Optional<Num>
-    {
-        return Optional<Num>{JsonNumber(this->view_)};
-    }
-
-    /// @brief           Converts the number using a user defined parser
-    /// @details         Parser function must take the string representation of the number as std::string_view and
-    ///                  return the desired number type.
-    /// @tparam          Fn
-    ///                  Type of function parser.
-    /// @param[in]       parser
-    ///                  function to convert the string view into a number.
-    /// @return          The parsed number.
-    /// @context         ANY
-    /// @pre             Parser does not throw exceptions.
-    /// @threadsafe      FALSE
-    /// @reentrant       FALSE
-    /// @synchronous     TRUE
-    /// @internal
-    /// - Convert the number using the given function.
-    /// @endinternal
-    template <typename Fn>
-    auto Convert(Fn&& parser) const noexcept -> decltype(parser(std::declval<StringView>()))
-    {
-
-        return std::forward<Fn>(parser)(this->view_);
-    }
-
   private:
     /// @brief           Constructs a Number from a StringView
     /// @param[in]       view
@@ -235,16 +137,6 @@ class JsonNumber final
     /// @threadsafe      FALSE
     /// @reentrant       FALSE
     explicit constexpr JsonNumber(StringView view) noexcept : view_{view} {}
-
-    /// @brief           Gets the number of characters
-    /// @return          The number of characters.
-    /// @context         ANY
-    /// @pre             -
-    /// @threadsafe      TRUE, for different this pointer
-    auto GetNumberOfChars() const noexcept -> std::size_t
-    {
-        return this->view_.size();
-    }
 
     /// @brief           Casts the passed number to a smaller number type if still valid
     /// @tparam          TargetType
