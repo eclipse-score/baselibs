@@ -71,7 +71,7 @@ A component can optional also consist of lower level components to further struc
    :status: valid
    :version: 1
    :belongs_to: comp__log
-   :fulfils: comp_req__log__compat_languages
+   :fulfils: comp_req__log__compat_languages, comp_req__log__avoid_locks, comp_req__log__avoid_signal_processing, comp_req__log__cross_locking, comp_req__log__file_descriptor_flags, comp_req__log__index_size_checking, comp_req__log__local_allocation_strategy, comp_req__log__memory_bound_checking, comp_req__log__shm_file_permissions
 
    .. needarch::
       :scale: 50

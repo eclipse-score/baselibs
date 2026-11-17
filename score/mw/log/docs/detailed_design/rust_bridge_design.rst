@@ -52,7 +52,7 @@ Static Diagrams for Unit Interactions
    :security: NO
    :safety: ASIL_B
    :status: valid
-   :fulfils: comp_req__log__compat_languages[version==1], comp_req__log__cfg_custom_types[version==1]
+   :fulfils: comp_req__log__compat_languages[version==1], comp_req__log__cfg_custom_types[version==1], comp_req__log__avoid_locks[version==1], comp_req__log__cross_locking[version==1]
    :belongs_to: comp__log[version==1]
 
    .. uml:: _assets/class_diagram.puml
@@ -66,7 +66,7 @@ Dynamic Diagrams for Unit Interactions
    :security: NO
    :safety: ASIL_B
    :status: valid
-   :fulfils: comp_req__log__compat_languages[version==1], comp_req__log__cfg_custom_types[version==1]
+   :fulfils: comp_req__log__compat_languages[version==1], comp_req__log__cfg_custom_types[version==1], comp_req__log__avoid_locks[version==1], comp_req__log__cross_locking[version==1]
    :belongs_to: comp__log[version==1]
 
    .. uml:: _assets/log_op.puml
@@ -77,7 +77,7 @@ Dynamic Diagrams for Unit Interactions
    :security: NO
    :safety: ASIL_B
    :status: valid
-   :fulfils: comp_req__log__compat_languages[version==1]
+   :fulfils: comp_req__log__compat_languages[version==1], comp_req__log__avoid_locks[version==1], comp_req__log__cross_locking[version==1]
    :belongs_to: comp__log[version==1]
 
    .. uml:: _assets/log_to_level.puml
