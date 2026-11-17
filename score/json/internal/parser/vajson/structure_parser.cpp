@@ -225,7 +225,7 @@ auto StructureParser::GetJsonDocument() noexcept -> JsonData&
 auto StructureParser::ParseNull() noexcept -> ParserResult
 {
 
-    return (this->json_ops_.CheckString("ull"sv, "StructureParser::ParseNull: Expected 'null'\0"))
+    return (this->json_ops_.CheckString("ull"sv, "StructureParser::ParseNull: Expected 'null'"sv))
         .and_then([this](void) noexcept {
             return this->GetState().AddValue();
         })
@@ -244,7 +244,7 @@ auto StructureParser::ParseNull() noexcept -> ParserResult
 auto StructureParser::ParseTrue() noexcept -> ParserResult
 {
 
-    return (this->json_ops_.CheckString("rue"sv, "StructureParser::ParseTrue: Expected 'true'\0"sv))
+    return (this->json_ops_.CheckString("rue"sv, "StructureParser::ParseTrue: Expected 'true'"sv))
         .and_then([this](void) noexcept {
             return this->GetState().AddValue();
         })
@@ -262,7 +262,7 @@ auto StructureParser::ParseTrue() noexcept -> ParserResult
 auto StructureParser::ParseFalse() noexcept -> ParserResult
 {
 
-    return (this->json_ops_.CheckString("alse"sv, "StructureParser::ParseFalse: Expected 'false'\0"sv))
+    return (this->json_ops_.CheckString("alse"sv, "StructureParser::ParseFalse: Expected 'false'"sv))
         .and_then([this](void) noexcept {
             return this->GetState().AddValue();
         })
