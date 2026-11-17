@@ -118,6 +118,30 @@ class TimedLockableUntilArchetype : public test::BasicLockableArchetype
     }
 };
 
+class TimedLockableConvertibleReturn : public test::BasicLockableArchetype
+{
+  public:
+    struct LockResult
+    {
+        explicit operator bool() const
+        {
+            return true;
+        }
+    };
+
+    template <typename Rep, typename Period>
+    LockResult try_lock_for(const std::chrono::duration<Rep, Period>&)
+    {
+        return {};
+    }
+
+    template <typename Clock, typename Duration>
+    LockResult try_lock_until(const std::chrono::time_point<Clock, Duration>&)
+    {
+        return {};
+    }
+};
+
 class TimedLockWithoutBasicLocking
 {
   public:
@@ -208,10 +232,18 @@ TEST(TypeTraitsTest, IsTryLockableCompileTimeChecks)
 
 TEST(TypeTraitsTest, IsTimedLockableForCompileTimeChecks)
 {
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
+    RecordProperty("PartiallyVerifies", "comp_req__concurrency__synchronized_lock_for");
+    RecordProperty("Description",
+                   "Check that timed-lock detection accepts a basic lockable whose try_lock_for result can be "
+                   "explicitly converted to bool.");
+
     using FractionalDuration = std::chrono::duration<double, std::ratio<1, 3>>;
 
     EXPECT_TRUE((is_timed_lockable_for_v<TimedLockableArchetype>));
     EXPECT_TRUE((is_timed_lockable_for_v<TimedLockableArchetype, FractionalDuration>));
+    EXPECT_TRUE((is_timed_lockable_for_v<TimedLockableConvertibleReturn>));
     EXPECT_FALSE((is_timed_lockable_for_v<test::BasicLockableArchetype>));
     EXPECT_FALSE((is_timed_lockable_for_v<TimedLockWithoutBasicLocking>));
 
@@ -225,10 +257,18 @@ TEST(TypeTraitsTest, IsTimedLockableForCompileTimeChecks)
 
 TEST(TypeTraitsTest, IsTimedLockableUntilCompileTimeChecks)
 {
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
+    RecordProperty("PartiallyVerifies", "comp_req__concurrency__synchronized_lock_until");
+    RecordProperty("Description",
+                   "Check that deadline-lock detection accepts a basic lockable whose try_lock_until result can be "
+                   "explicitly converted to bool.");
+
     using TimePoint = std::chrono::time_point<std::chrono::steady_clock>;
 
     EXPECT_TRUE((is_timed_lockable_until_v<TimedLockableUntilArchetype>));
     EXPECT_TRUE((is_timed_lockable_until_v<TimedLockableUntilArchetype, TimePoint>));
+    EXPECT_TRUE((is_timed_lockable_until_v<TimedLockableConvertibleReturn>));
     EXPECT_FALSE((is_timed_lockable_until_v<test::BasicLockableArchetype>));
     EXPECT_FALSE((is_timed_lockable_until_v<TimedLockWithoutBasicLocking>));
 

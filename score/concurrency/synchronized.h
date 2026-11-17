@@ -252,7 +252,7 @@ class Synchronized
                                           std::is_same_v<LockableType, Lockable>>>
     [[nodiscard]] pointer try_lock_for(const std::chrono::duration<Rep, Period>& timeout)
     {
-        if (const bool is_locked = mut.try_lock_for(timeout); is_locked)
+        if (const bool is_locked = static_cast<bool>(mut.try_lock_for(timeout)); is_locked)
         {
             return pointer{&obj, std::unique_lock<Lockable>{mut, std::adopt_lock}};
         }
@@ -278,7 +278,7 @@ class Synchronized
                                           std::is_same_v<LockableType, Lockable>>>
     [[nodiscard]] const_pointer try_lock_for(const std::chrono::duration<Rep, Period>& timeout) const
     {
-        if (const bool is_locked = mut.try_lock_for(timeout); is_locked)
+        if (const bool is_locked = static_cast<bool>(mut.try_lock_for(timeout)); is_locked)
         {
             return const_pointer{&obj, std::unique_lock<Lockable>{mut, std::adopt_lock}};
         }
@@ -303,7 +303,7 @@ class Synchronized
                                           std::is_same_v<LockableType, Lockable>>>
     [[nodiscard]] pointer try_lock_until(const std::chrono::time_point<Clock, Duration>& timeout_time)
     {
-        if (const bool is_locked = mut.try_lock_until(timeout_time); is_locked)
+        if (const bool is_locked = static_cast<bool>(mut.try_lock_until(timeout_time)); is_locked)
         {
             return pointer{&obj, std::unique_lock<Lockable>{mut, std::adopt_lock}};
         }
@@ -328,7 +328,7 @@ class Synchronized
                                           std::is_same_v<LockableType, Lockable>>>
     [[nodiscard]] const_pointer try_lock_until(const std::chrono::time_point<Clock, Duration>& timeout_time) const
     {
-        if (const bool is_locked = mut.try_lock_until(timeout_time); is_locked)
+        if (const bool is_locked = static_cast<bool>(mut.try_lock_until(timeout_time)); is_locked)
         {
             return const_pointer{&obj, std::unique_lock<Lockable>{mut, std::adopt_lock}};
         }

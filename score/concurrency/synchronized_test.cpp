@@ -326,7 +326,7 @@ TEST(SynchronizedTest, TryLockForSupportsMutableConstAndTimedLockables)
 {
     RecordProperty("TestType", "requirements-based");
     RecordProperty("DerivationTechnique", "requirements-analysis");
-    RecordProperty("FullyVerifies", "comp_req__concurrency__synchronized_try_lock_for");
+    RecordProperty("FullyVerifies", "comp_req__concurrency__synchronized_lock_for");
     RecordProperty("Description",
                    "Check that try_lock_for grants mutable and const access when acquired, times out under "
                    "contention, and is available only for Lockable types that support timed acquisition.");
@@ -384,7 +384,7 @@ TEST(SynchronizedTest, TryLockUntilSupportsMutableConstAndTimedLockables)
 {
     RecordProperty("TestType", "requirements-based");
     RecordProperty("DerivationTechnique", "requirements-analysis");
-    RecordProperty("FullyVerifies", "comp_req__concurrency__synchronized_try_lock_until");
+    RecordProperty("FullyVerifies", "comp_req__concurrency__synchronized_lock_until");
     RecordProperty("Description",
                    "Check that try_lock_until grants mutable and const access when acquired, times out under "
                    "contention, and is available only for Lockable types that support deadline acquisition.");
