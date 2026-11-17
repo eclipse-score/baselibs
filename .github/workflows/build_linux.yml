@@ -39,6 +39,13 @@ jobs:
             bazel-build-target: "//..."
             bazel-test-target: >-
               //...
+          - name: score-linux-x86_64-gcc15
+            artifact-name: x86_64-linux-gcc15
+            bazel-config: score-linux-x86_64-gcc15
+            working-directory: "."
+            bazel-build-target: "//..."
+            bazel-test-target: >-
+              //...
           - name: score-linux-aarch64
             artifact-name: aarch64-linux
             bazel-config: score-linux-aarch64

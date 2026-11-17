@@ -64,6 +64,22 @@ gcc.toolchain(
     use_default_package = True,
     version = "12.2.0",
 )
+gcc.toolchain(
+    name = "score_gcc_x86_64_toolchain_gcc15",
+    extra_known_features = WARNING_FEATURES + GCC_SANITIZER_FEATURES,
+    target_cpu = "x86_64",
+    target_os = "linux",
+    use_default_package = True,
+    version = "15.3.0",
+)
+gcc.toolchain(
+    name = "score_gcc_aarch64_toolchain_gcc15",
+    extra_known_features = WARNING_FEATURES + GCC_SANITIZER_FEATURES,
+    target_cpu = "aarch64",
+    target_os = "linux",
+    use_default_package = True,
+    version = "15.3.0",
+)
 
 # QNX C++ toolchains.
 gcc.toolchain(
@@ -105,7 +121,9 @@ use_repo(
     "qnx_sdp_8_0_4_pkg",
     "qnx_sdp_8_0_5_pkg",
     "score_gcc_aarch64_toolchain",
+    "score_gcc_aarch64_toolchain_gcc15",
     "score_gcc_x86_64_toolchain",
+    "score_gcc_x86_64_toolchain_gcc15",
     "score_qcc_aarch64_toolchain",
     "score_qcc_aarch64_toolchain_805",
     "score_qcc_x86_64_toolchain",

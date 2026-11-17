@@ -67,6 +67,14 @@ test:score-qnx-aarch64 --test_timeout=300
 test:score-qnx-aarch64 --run_under=@score_qnx_unit_tests//src:run_under_qnx
 test:score-qnx-aarch64 --test_lang_filters=cc,rust
 
+# GCC 15 target configurations retain the GCC 12 host toolchain.
+build:score-linux-x86_64-gcc15 --config=score-linux-x86_64
+build:score-linux-x86_64-gcc15 --platforms=@score_bazel_platforms//:x86_64-linux-gcc_15.3.0-posix
+build:score-linux-x86_64-gcc15 --extra_toolchains=@score_gcc_x86_64_toolchain_gcc15//:x86_64-linux-gcc_15.3.0
+build:score-linux-aarch64-gcc15 --config=score-linux-aarch64
+build:score-linux-aarch64-gcc15 --platforms=@score_bazel_platforms//:aarch64-linux-gcc_15.3.0-posix
+build:score-linux-aarch64-gcc15 --extra_toolchains=@score_gcc_aarch64_toolchain_gcc15//:aarch64-linux-gcc_15.3.0
+
 # Same as the QNX configs above, but with the QNX SDP 8.0.5 from a private GitHub release.
 # Fetching the SDP requires a GitHub token with read access to eclipse-score/qnx_sdp_pkg (GH_TOKEN or ~/.netrc).
 # The toolchains registered last via --extra_toolchains have the highest priority and override the inherited ones.
