@@ -322926,7 +322926,7 @@
   {
     "name": "LogStreamFixture__CanLogInt16",
     "file": "score/mw/log/log_stream_test.cpp",
-    "line": "324",
+    "line": "325",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -322940,7 +322940,7 @@
   {
     "name": "LogStreamFixture__CanLogUint32",
     "file": "score/mw/log/log_stream_test.cpp",
-    "line": "341",
+    "line": "342",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -322954,7 +322954,7 @@
   {
     "name": "LogStreamFixture__CanLogInt32",
     "file": "score/mw/log/log_stream_test.cpp",
-    "line": "358",
+    "line": "359",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -322968,7 +322968,7 @@
   {
     "name": "LogStreamFixture__CanLogUint64",
     "file": "score/mw/log/log_stream_test.cpp",
-    "line": "375",
+    "line": "376",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -322982,7 +322982,7 @@
   {
     "name": "LogStreamFixture__CanLogInt64",
     "file": "score/mw/log/log_stream_test.cpp",
-    "line": "392",
+    "line": "393",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -322996,7 +322996,7 @@
   {
     "name": "LogStreamFixture__CanLogFloat",
     "file": "score/mw/log/log_stream_test.cpp",
-    "line": "409",
+    "line": "410",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -323010,7 +323010,7 @@
   {
     "name": "LogStreamFixture__CanLogDouble",
     "file": "score/mw/log/log_stream_test.cpp",
-    "line": "426",
+    "line": "427",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -323024,7 +323024,7 @@
   {
     "name": "LogStreamFixture__CanLogAmpStringView",
     "file": "score/mw/log/log_stream_test.cpp",
-    "line": "443",
+    "line": "444",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -323038,7 +323038,7 @@
   {
     "name": "LogStreamFixture__CanLogStdStringView",
     "file": "score/mw/log/log_stream_test.cpp",
-    "line": "460",
+    "line": "461",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -323052,7 +323052,7 @@
   {
     "name": "LogStreamFixture__WhenTryToLogEmptyAmpStringViewShallNotLog",
     "file": "score/mw/log/log_stream_test.cpp",
-    "line": "477",
+    "line": "478",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -323066,7 +323066,7 @@
   {
     "name": "LogStreamFixture__WhenTryToLogEmptyStdStringViewShallNotLog",
     "file": "score/mw/log/log_stream_test.cpp",
-    "line": "494",
+    "line": "495",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -323080,7 +323080,7 @@
   {
     "name": "LogStreamFixture__CanLogConstStringReference",
     "file": "score/mw/log/log_stream_test.cpp",
-    "line": "511",
+    "line": "512",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -323094,7 +323094,7 @@
   {
     "name": "LogStreamFixture__CanLogStdArrayOfChar",
     "file": "score/mw/log/log_stream_test.cpp",
-    "line": "528",
+    "line": "529",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -323108,7 +323108,7 @@
   {
     "name": "LogStreamFixture__CanLogCharArrayLiteral",
     "file": "score/mw/log/log_stream_test.cpp",
-    "line": "545",
+    "line": "546",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -323122,7 +323122,7 @@
   {
     "name": "LogStreamFixture__CanLogPtrToNonConstChar",
     "file": "score/mw/log/log_stream_test.cpp",
-    "line": "560",
+    "line": "561",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -323136,7 +323136,7 @@
   {
     "name": "LogStreamFixture__CanLogStringView",
     "file": "score/mw/log/log_stream_test.cpp",
-    "line": "577",
+    "line": "578",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -323150,7 +323150,7 @@
   {
     "name": "LogStreamFixture__WhenTryToLogEmptyStringViewShallNotLog",
     "file": "score/mw/log/log_stream_test.cpp",
-    "line": "594",
+    "line": "595",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -323164,7 +323164,7 @@
   {
     "name": "LogStreamFixture__LogStreamMoveConstructorShallDetachMovedFromInstance",
     "file": "score/mw/log/log_stream_test.cpp",
-    "line": "611",
+    "line": "612",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -323178,7 +323178,7 @@
   {
     "name": "LogStreamFixture__CanLogHex8",
     "file": "score/mw/log/log_stream_test.cpp",
-    "line": "633",
+    "line": "634",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -323192,7 +323192,7 @@
   {
     "name": "LogStreamFixture__CanLogHex16",
     "file": "score/mw/log/log_stream_test.cpp",
-    "line": "651",
+    "line": "652",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -323206,7 +323206,7 @@
   {
     "name": "LogStreamFixture__CanLogHex32",
     "file": "score/mw/log/log_stream_test.cpp",
-    "line": "669",
+    "line": "670",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -323220,7 +323220,7 @@
   {
     "name": "LogStreamFixture__CanLogHex64",
     "file": "score/mw/log/log_stream_test.cpp",
-    "line": "687",
+    "line": "688",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -323234,7 +323234,7 @@
   {
     "name": "LogStreamFixture__CanLogBin8",
     "file": "score/mw/log/log_stream_test.cpp",
-    "line": "705",
+    "line": "706",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -323248,7 +323248,7 @@
   {
     "name": "LogStreamFixture__CanLogBin16",
     "file": "score/mw/log/log_stream_test.cpp",
-    "line": "723",
+    "line": "724",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -323262,7 +323262,7 @@
   {
     "name": "LogStreamFixture__CanLogBin32",
     "file": "score/mw/log/log_stream_test.cpp",
-    "line": "741",
+    "line": "742",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -323276,7 +323276,7 @@
   {
     "name": "LogStreamFixture__CanLogBin64",
     "file": "score/mw/log/log_stream_test.cpp",
-    "line": "758",
+    "line": "759",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -323290,7 +323290,7 @@
   {
     "name": "LogStreamFixture__CanLogRawBuffer",
     "file": "score/mw/log/log_stream_test.cpp",
-    "line": "775",
+    "line": "776",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -323304,7 +323304,7 @@
   {
     "name": "LogStreamFixture__WhenTryToLogEmptyRawBufferShallNotLog",
     "file": "score/mw/log/log_stream_test.cpp",
-    "line": "794",
+    "line": "795",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -323318,7 +323318,7 @@
   {
     "name": "LogStreamFixture__CanLogACustomType",
     "file": "score/mw/log/log_stream_test.cpp",
-    "line": "812",
+    "line": "813",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -323332,7 +323332,7 @@
   {
     "name": "LogStreamFixture__CanLogAnEnumClassWithUnderlyingType",
     "file": "score/mw/log/log_stream_test.cpp",
-    "line": "954",
+    "line": "955",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -323346,7 +323346,7 @@
   {
     "name": "LogStreamFixture__CanLogAnEnumClassWithoutUnderlyingType",
     "file": "score/mw/log/log_stream_test.cpp",
-    "line": "968",
+    "line": "969",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -323360,7 +323360,7 @@
   {
     "name": "LogStreamFixture__UsesFallbackRecorderWithinOtherRecorder",
     "file": "score/mw/log/log_stream_test.cpp",
-    "line": "983",
+    "line": "984",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -323374,7 +323374,7 @@
   {
     "name": "LogStreamFlush__WhenFlushingLogStreamAfterLogUint8ShallBeAbleToLogBoolAgain",
     "file": "score/mw/log/log_stream_test.cpp",
-    "line": "840",
+    "line": "841",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -323388,7 +323388,7 @@
   {
     "name": "LogStreamFlush__AvoidFormattingCallsWhenSlotIsNotAvailable",
     "file": "score/mw/log/log_stream_test.cpp",
-    "line": "877",
+    "line": "878",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -323402,7 +323402,7 @@
   {
     "name": "LogStreamFlush__WhenEmptyAppIdStringProvidedExpectDefaultOneReturned",
     "file": "score/mw/log/log_stream_test.cpp",
-    "line": "914",
+    "line": "915",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -325530,7 +325530,7 @@
   {
     "name": "CompositeRecorderFixture__LogInvocationShallBeForwardedToAllAvailableRecorders",
     "file": "score/mw/log/detail/composite_recorder_test.cpp",
-    "line": "207",
+    "line": "208",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -325544,7 +325544,7 @@
   {
     "name": "CompositeRecorderFixture__LogSlog2MessageAvailableRecorders",
     "file": "score/mw/log/detail/composite_recorder_test.cpp",
-    "line": "278",
+    "line": "279",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -325558,7 +325558,7 @@
   {
     "name": "CompositeRecorderFixture__LogShallBeEnabledIfAtLeastOneRecorderIsEnabled",
     "file": "score/mw/log/detail/composite_recorder_test.cpp",
-    "line": "305",
+    "line": "306",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -325572,7 +325572,7 @@
   {
     "name": "CompositeRecorderFixture__LogShallBeDisabledIfAllRecorderAreDisabled",
     "file": "score/mw/log/detail/composite_recorder_test.cpp",
-    "line": "326",
+    "line": "327",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -327784,7 +327784,7 @@
   {
     "name": "SignalHandlingTest__PThreadBlockSigTerm_PthreadSigMaskFails_ReturnsError",
     "file": "score/mw/log/detail/utils/signal_handling/signal_handling_test.cpp",
-    "line": "74",
+    "line": "75",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -327798,7 +327798,7 @@
   {
     "name": "SignalHandlingTest__PThreadBlockSigTerm_AllSucceed_ReturnsSuccess",
     "file": "score/mw/log/detail/utils/signal_handling/signal_handling_test.cpp",
-    "line": "87",
+    "line": "90",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -327812,7 +327812,7 @@
   {
     "name": "SignalHandlingTest__PThreadUnblockSigTerm_SigEmptySetFails_ReturnsError",
     "file": "score/mw/log/detail/utils/signal_handling/signal_handling_test.cpp",
-    "line": "111",
+    "line": "116",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -327826,7 +327826,7 @@
   {
     "name": "SignalHandlingTest__PThreadUnblockSigTerm_SigAddSetFails_ReturnsError",
     "file": "score/mw/log/detail/utils/signal_handling/signal_handling_test.cpp",
-    "line": "123",
+    "line": "128",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -327840,7 +327840,7 @@
   {
     "name": "SignalHandlingTest__PThreadUnblockSigTerm_PthreadSigMaskFails_ReturnsError",
     "file": "score/mw/log/detail/utils/signal_handling/signal_handling_test.cpp",
-    "line": "136",
+    "line": "142",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -327854,7 +327854,7 @@
   {
     "name": "SignalHandlingTest__PThreadUnblockSigTerm_AllSucceed_ReturnsSuccess",
     "file": "score/mw/log/detail/utils/signal_handling/signal_handling_test.cpp",
-    "line": "149",
+    "line": "157",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -327868,7 +327868,7 @@
   {
     "name": "ConfigurationFileDiscovererFixture__DiscovererShallFindGlobalConfigurationFile",
     "file": "score/mw/log/configuration/configuration_file_discoverer_test.cpp",
-    "line": "130",
+    "line": "133",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -327882,7 +327882,7 @@
   {
     "name": "ConfigurationFileDiscovererFixture__DiscovererShallFindConfigurationFileInCwdEtc",
     "file": "score/mw/log/configuration/configuration_file_discoverer_test.cpp",
-    "line": "147",
+    "line": "150",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -327896,7 +327896,7 @@
   {
     "name": "ConfigurationFileDiscovererFixture__DiscovererShallFindConfigurationFileInCwd",
     "file": "score/mw/log/configuration/configuration_file_discoverer_test.cpp",
-    "line": "169",
+    "line": "172",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -327910,7 +327910,7 @@
   {
     "name": "ConfigurationFileDiscovererFixture__DiscovererShallFindConfigurationFileInExecPath",
     "file": "score/mw/log/configuration/configuration_file_discoverer_test.cpp",
-    "line": "189",
+    "line": "192",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -327924,7 +327924,7 @@
   {
     "name": "ConfigurationFileDiscovererFixture__DiscovererShallFindConfigurationFileInEnvPath",
     "file": "score/mw/log/configuration/configuration_file_discoverer_test.cpp",
-    "line": "212",
+    "line": "215",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -327938,7 +327938,7 @@
   {
     "name": "ConfigurationFileDiscovererFixture__DiscovererShallFindConfigurationFileInEnvPathOverrideCwdEtc",
     "file": "score/mw/log/configuration/configuration_file_discoverer_test.cpp",
-    "line": "233",
+    "line": "236",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -327952,7 +327952,7 @@
   {
     "name": "ConfigurationFileDiscovererFixture__DiscovererShallFindConfigurationFileInEnvPathOverrideCwd",
     "file": "score/mw/log/configuration/configuration_file_discoverer_test.cpp",
-    "line": "255",
+    "line": "258",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -327966,7 +327966,7 @@
   {
     "name": "ConfigurationFileDiscovererFixture__DiscovererShallFindConfigurationFileInEnvPathOverrideExecPath",
     "file": "score/mw/log/configuration/configuration_file_discoverer_test.cpp",
-    "line": "277",
+    "line": "280",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -327980,7 +327980,7 @@
   {
     "name": "ConfigurationFileDiscovererFixture__DiscovererShallReturnEmptyIfNothingExists",
     "file": "score/mw/log/configuration/configuration_file_discoverer_test.cpp",
-    "line": "299",
+    "line": "302",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -327994,7 +327994,7 @@
   {
     "name": "ConfigurationFileDiscovererFixture__DiscovererShallReturnEmptyIfExecPathFails",
     "file": "score/mw/log/configuration/configuration_file_discoverer_test.cpp",
-    "line": "312",
+    "line": "315",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
