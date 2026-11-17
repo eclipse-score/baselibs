@@ -71,7 +71,9 @@ pub struct Placeholder<'a> {
 impl<'a> Placeholder<'a> {
     /// Create the placeholder to be represented using `ScoreDebug`.
     pub const fn new<T: ScoreDebug>(value: &'a T, spec: FormatSpec) -> Self {
-        let value = NonNull::from_ref(value).cast();
+        // `NonNull::from_ref` needs Rust 1.89; build the pointer by hand to support older toolchains.
+        // SAFETY: a reference is never null.
+        let value = unsafe { NonNull::new_unchecked(core::ptr::from_ref(value).cast_mut()) }.cast();
         let formatter = |v: NonNull<()>, f: Writer, spec: &FormatSpec| {
             // SAFETY: borrow checker will ensure that value won't be mutated for as long as the returned `Self` instance is alive.
             let typed = unsafe { v.cast::<T>().as_ref() };
