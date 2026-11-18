@@ -28,6 +28,9 @@ enum class Error : score::result::ErrorCode
     kKeyNotFound,
     kParsingError,
     kInvalidFilePath,
+    kIoError,
+    kOutOfRange,
+    kInvalidValue,
 };
 
 class ErrorDomain final : public score::result::ErrorDomain
