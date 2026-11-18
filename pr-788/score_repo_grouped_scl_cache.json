@@ -51,6 +51,32 @@
         }
       },
       {
+        "need": "comp_req__concurrency__synchronized_try_lock",
+        "links": {
+          "CodeLinks": [],
+          "TestLinks": [
+            {
+              "name": "TypeTraitsTest__IsTryLockableCompileTimeChecks",
+              "file": "score/concurrency/type_traits_test.cpp",
+              "line": 147,
+              "need": "comp_req__concurrency__synchronized_try_lock",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "SynchronizedTest__TryLockSupportsMutableConstAndUnavailableLockables",
+              "file": "score/concurrency/synchronized_test.cpp",
+              "line": 248,
+              "need": "comp_req__concurrency__synchronized_try_lock",
+              "verify_type": "fully",
+              "result": "passed",
+              "result_text": ""
+            }
+          ]
+        }
+      },
+      {
         "need": "comp_req__trace__configurable_implementation",
         "links": {
           "CodeLinks": [],
@@ -4736,7 +4762,7 @@
           "CodeLinks": [],
           "TestLinks": [
             {
-              "name": "JsonWriterDefaultFormattingTest__PrettyPrintsWhenFormattingIsOmitted",
+              "name": "JsonWriterSyncedFileTest__SerializationFailureKeepsTargetUnchanged",
               "file": "score/json/json_writer_test.cpp",
               "line": 255,
               "need": "comp_req__json__serialization",
@@ -4745,9 +4771,36 @@
               "result_text": ""
             },
             {
+              "name": "JsonWriterDefaultFormattingTest__PrettyPrintsWhenFormattingIsOmitted",
+              "file": "score/json/json_writer_test.cpp",
+              "line": 280,
+              "need": "comp_req__json__serialization",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
               "name": "JsonTest__NestedTreeAtMaximumDepthSurvivesRoundTrip",
               "file": "score/json/json_test.cpp",
-              "line": 20,
+              "line": 21,
+              "need": "comp_req__json__serialization",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "JsonTest__ReadWriteEmptyMemberName",
+              "file": "score/json/json_test.cpp",
+              "line": 108,
+              "need": "comp_req__json__serialization",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "JsonTest__ReadWriteEscapedCharacters",
+              "file": "score/json/json_test.cpp",
+              "line": 176,
               "need": "comp_req__json__serialization",
               "verify_type": "partially",
               "result": "passed",
@@ -4818,7 +4871,7 @@
             {
               "name": "JsonTest__NestedTreeAtMaximumDepthSurvivesRoundTrip",
               "file": "score/json/json_test.cpp",
-              "line": 20,
+              "line": 21,
               "need": "comp_req__json__nesting_depth_inclusive",
               "verify_type": "partially",
               "result": "passed",
@@ -4829,75 +4882,6 @@
               "file": "score/json/json_parser_test.cpp",
               "line": 94,
               "need": "comp_req__json__nesting_depth_inclusive",
-              "verify_type": "partially",
-              "result": "passed",
-              "result_text": ""
-            }
-          ]
-        }
-      },
-      {
-        "need": "comp_req__json__nesting_depth",
-        "links": {
-          "CodeLinks": [],
-          "TestLinks": [
-            {
-              "name": "JsonParserTest__EnforcesMaximumNestingDepth",
-              "file": "score/json/json_parser_test.cpp",
-              "line": 94,
-              "need": "comp_req__json__nesting_depth",
-              "verify_type": "partially",
-              "result": "passed",
-              "result_text": ""
-            },
-            {
-              "name": "JsonParserTest__RejectsDeepInputWithoutRetainingState",
-              "file": "score/json/json_parser_test.cpp",
-              "line": 153,
-              "need": "comp_req__json__nesting_depth",
-              "verify_type": "partially",
-              "result": "passed",
-              "result_text": ""
-            }
-          ]
-        }
-      },
-      {
-        "need": "comp_req__json__nesting_depth_counting",
-        "links": {
-          "CodeLinks": [],
-          "TestLinks": [
-            {
-              "name": "JsonParserTest__CountsOnlyOpenContainers",
-              "file": "score/json/json_parser_test.cpp",
-              "line": 117,
-              "need": "comp_req__json__nesting_depth_counting",
-              "verify_type": "partially",
-              "result": "passed",
-              "result_text": ""
-            }
-          ]
-        }
-      },
-      {
-        "need": "comp_req__json__nesting_depth_independence",
-        "links": {
-          "CodeLinks": [],
-          "TestLinks": [
-            {
-              "name": "JsonParserTest__ReusesNestingBudgetAfterErrors",
-              "file": "score/json/json_parser_test.cpp",
-              "line": 131,
-              "need": "comp_req__json__nesting_depth_independence",
-              "verify_type": "partially",
-              "result": "passed",
-              "result_text": ""
-            },
-            {
-              "name": "JsonParserTest__RejectsDeepInputWithoutRetainingState",
-              "file": "score/json/json_parser_test.cpp",
-              "line": 153,
-              "need": "comp_req__json__nesting_depth_independence",
               "verify_type": "partially",
               "result": "passed",
               "result_text": ""
@@ -4910,6 +4894,51 @@
         "links": {
           "CodeLinks": [],
           "TestLinks": [
+            {
+              "name": "JsonTest__ReadWriteEmptyMemberName",
+              "file": "score/json/json_test.cpp",
+              "line": 108,
+              "need": "comp_req__json__deserialization",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "JsonTest__ReadsUnicodeEscapeSequences",
+              "file": "score/json/json_test.cpp",
+              "line": 132,
+              "need": "comp_req__json__deserialization",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "JsonTest__ReadsNonAsciiUnicodeEscapeSequences",
+              "file": "score/json/json_test.cpp",
+              "line": 148,
+              "need": "comp_req__json__deserialization",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "JsonTest__RejectsUnescapedControlCharacters",
+              "file": "score/json/json_test.cpp",
+              "line": 164,
+              "need": "comp_req__json__deserialization",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "JsonTest__ReadWriteEscapedCharacters",
+              "file": "score/json/json_test.cpp",
+              "line": 176,
+              "need": "comp_req__json__deserialization",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
             {
               "name": "JsonParserTest__ReusesNestingBudgetAfterErrors",
               "file": "score/json/json_parser_test.cpp",
@@ -5021,7 +5050,7 @@
             {
               "name": "ParserTest__FromFileFail",
               "file": "score/json/json_parser_test.cpp",
-              "line": 583,
+              "line": 616,
               "need": "comp_req__json__deserialization",
               "verify_type": "partially",
               "result": "passed",
@@ -5030,16 +5059,16 @@
             {
               "name": "ParserTest__ParsingFromFileWorks",
               "file": "score/json/json_parser_test.cpp",
-              "line": 595,
+              "line": 628,
               "need": "comp_req__json__deserialization",
               "verify_type": "partially",
               "result": "passed",
               "result_text": ""
             },
             {
-              "name": "JsonParserVajsonTest__CanParseObjectHexadecimalNumber",
+              "name": "ParserTest__CanParseEmptyMemberName",
               "file": "score/json/json_parser_test.cpp",
-              "line": 699,
+              "line": 733,
               "need": "comp_req__json__deserialization",
               "verify_type": "partially",
               "result": "passed",
@@ -5048,7 +5077,7 @@
             {
               "name": "JsonParserVajsonTest__CanParseTwoByteBuffer",
               "file": "score/json/json_parser_test.cpp",
-              "line": 749,
+              "line": 802,
               "need": "comp_req__json__deserialization",
               "verify_type": "partially",
               "result": "passed",
@@ -5057,7 +5086,7 @@
             {
               "name": "JsonParserVajsonTest__CanParseBufferWithUtf8Bom",
               "file": "score/json/json_parser_test.cpp",
-              "line": 768,
+              "line": 821,
               "need": "comp_req__json__deserialization",
               "verify_type": "partially",
               "result": "passed",
@@ -5066,7 +5095,7 @@
             {
               "name": "NumberTest__WhenParsingABoolStoredInAJsonThenParsingIsSuccessfulAndCorrectValueIsReturned",
               "file": "score/json/json_parser_test.cpp",
-              "line": 840,
+              "line": 893,
               "need": "comp_req__json__deserialization",
               "verify_type": "partially",
               "result": "passed",
@@ -5075,7 +5104,7 @@
             {
               "name": "NumberTest__WhenParsingAUint8StoredInAJsonThenParsingIsSuccessfulAndCorrectValueIsReturned",
               "file": "score/json/json_parser_test.cpp",
-              "line": 862,
+              "line": 915,
               "need": "comp_req__json__deserialization",
               "verify_type": "partially",
               "result": "passed",
@@ -5084,7 +5113,7 @@
             {
               "name": "NumberTest__WhenParsingAUint16StoredInAJsonThenParsingIsSuccessfulAndCorrectValueIsReturned",
               "file": "score/json/json_parser_test.cpp",
-              "line": 885,
+              "line": 938,
               "need": "comp_req__json__deserialization",
               "verify_type": "partially",
               "result": "passed",
@@ -5093,7 +5122,7 @@
             {
               "name": "NumberTest__WhenParsingAUint32StoredInAJsonThenParsingIsSuccessfulAndCorrectValueIsReturned",
               "file": "score/json/json_parser_test.cpp",
-              "line": 908,
+              "line": 961,
               "need": "comp_req__json__deserialization",
               "verify_type": "partially",
               "result": "passed",
@@ -5102,7 +5131,7 @@
             {
               "name": "NumberTest__WhenParsingAUint64StoredInAJsonThenParsingIsSuccessfulAndCorrectValueIsReturned",
               "file": "score/json/json_parser_test.cpp",
-              "line": 931,
+              "line": 984,
               "need": "comp_req__json__deserialization",
               "verify_type": "partially",
               "result": "passed",
@@ -5111,7 +5140,7 @@
             {
               "name": "NumberTest__WhenParsingAInt8StoredInAJsonThenParsingIsSuccessfulAndCorrectValueIsReturned",
               "file": "score/json/json_parser_test.cpp",
-              "line": 954,
+              "line": 1007,
               "need": "comp_req__json__deserialization",
               "verify_type": "partially",
               "result": "passed",
@@ -5120,7 +5149,7 @@
             {
               "name": "NumberTest__WhenParsingAInt16StoredInAJsonThenParsingIsSuccessfulAndCorrectValueIsReturned",
               "file": "score/json/json_parser_test.cpp",
-              "line": 977,
+              "line": 1030,
               "need": "comp_req__json__deserialization",
               "verify_type": "partially",
               "result": "passed",
@@ -5129,7 +5158,7 @@
             {
               "name": "NumberTest__WhenParsingAInt32StoredInAJsonThenParsingIsSuccessfulAndCorrectValueIsReturned",
               "file": "score/json/json_parser_test.cpp",
-              "line": 1000,
+              "line": 1053,
               "need": "comp_req__json__deserialization",
               "verify_type": "partially",
               "result": "passed",
@@ -5138,7 +5167,7 @@
             {
               "name": "NumberTest__WhenParsingAInt64StoredInAJsonThenParsingIsSuccessfulAndCorrectValueIsReturned",
               "file": "score/json/json_parser_test.cpp",
-              "line": 1023,
+              "line": 1076,
               "need": "comp_req__json__deserialization",
               "verify_type": "partially",
               "result": "passed",
@@ -5147,7 +5176,7 @@
             {
               "name": "NumberTest__WhenParsingAFloatStoredInAJsonThenParsingIsSuccessfulAndCorrectValueIsReturned",
               "file": "score/json/json_parser_test.cpp",
-              "line": 1045,
+              "line": 1098,
               "need": "comp_req__json__deserialization",
               "verify_type": "partially",
               "result": "passed",
@@ -5156,16 +5185,7 @@
             {
               "name": "NumberTest__WhenParsingADoubleStoredInAJsonThenParsingIsSuccessfulAndCorrectValueIsReturned",
               "file": "score/json/json_parser_test.cpp",
-              "line": 1068,
-              "need": "comp_req__json__deserialization",
-              "verify_type": "partially",
-              "result": "passed",
-              "result_text": ""
-            },
-            {
-              "name": "Number__Bool",
-              "file": "score/json/internal/parser/vajson/json_number_test.cpp",
-              "line": 620,
+              "line": 1121,
               "need": "comp_req__json__deserialization",
               "verify_type": "partially",
               "result": "passed",
@@ -5174,7 +5194,7 @@
             {
               "name": "Number__Uint8",
               "file": "score/json/internal/parser/vajson/json_number_test.cpp",
-              "line": 631,
+              "line": 530,
               "need": "comp_req__json__deserialization",
               "verify_type": "partially",
               "result": "passed",
@@ -5183,7 +5203,7 @@
             {
               "name": "Number__Uint16",
               "file": "score/json/internal/parser/vajson/json_number_test.cpp",
-              "line": 642,
+              "line": 541,
               "need": "comp_req__json__deserialization",
               "verify_type": "partially",
               "result": "passed",
@@ -5192,7 +5212,7 @@
             {
               "name": "Number__Uint32",
               "file": "score/json/internal/parser/vajson/json_number_test.cpp",
-              "line": 653,
+              "line": 552,
               "need": "comp_req__json__deserialization",
               "verify_type": "partially",
               "result": "passed",
@@ -5201,7 +5221,7 @@
             {
               "name": "Number__Uint64",
               "file": "score/json/internal/parser/vajson/json_number_test.cpp",
-              "line": 664,
+              "line": 563,
               "need": "comp_req__json__deserialization",
               "verify_type": "partially",
               "result": "passed",
@@ -5210,7 +5230,7 @@
             {
               "name": "Number__Int8",
               "file": "score/json/internal/parser/vajson/json_number_test.cpp",
-              "line": 675,
+              "line": 574,
               "need": "comp_req__json__deserialization",
               "verify_type": "partially",
               "result": "passed",
@@ -5219,7 +5239,7 @@
             {
               "name": "Number__Int16",
               "file": "score/json/internal/parser/vajson/json_number_test.cpp",
-              "line": 686,
+              "line": 585,
               "need": "comp_req__json__deserialization",
               "verify_type": "partially",
               "result": "passed",
@@ -5228,7 +5248,7 @@
             {
               "name": "Number__Int32",
               "file": "score/json/internal/parser/vajson/json_number_test.cpp",
-              "line": 697,
+              "line": 596,
               "need": "comp_req__json__deserialization",
               "verify_type": "partially",
               "result": "passed",
@@ -5237,7 +5257,7 @@
             {
               "name": "Number__Int64",
               "file": "score/json/internal/parser/vajson/json_number_test.cpp",
-              "line": 708,
+              "line": 607,
               "need": "comp_req__json__deserialization",
               "verify_type": "partially",
               "result": "passed",
@@ -5246,7 +5266,7 @@
             {
               "name": "Number__Float",
               "file": "score/json/internal/parser/vajson/json_number_test.cpp",
-              "line": 719,
+              "line": 618,
               "need": "comp_req__json__deserialization",
               "verify_type": "partially",
               "result": "passed",
@@ -5255,7 +5275,7 @@
             {
               "name": "Number__Double",
               "file": "score/json/internal/parser/vajson/json_number_test.cpp",
-              "line": 730,
+              "line": 629,
               "need": "comp_req__json__deserialization",
               "verify_type": "partially",
               "result": "passed",
@@ -5264,7 +5284,7 @@
             {
               "name": "Number__WithDecimalPointWithoutFractionalPartCannotBeParsedAsInteger",
               "file": "score/json/internal/parser/vajson/json_number_test.cpp",
-              "line": 741,
+              "line": 640,
               "need": "comp_req__json__deserialization",
               "verify_type": "partially",
               "result": "passed",
@@ -5273,7 +5293,7 @@
             {
               "name": "Number__WithExponentialNotationWithoutFractionalPartCannotBeParsedAsInteger",
               "file": "score/json/internal/parser/vajson/json_number_test.cpp",
-              "line": 753,
+              "line": 652,
               "need": "comp_req__json__deserialization",
               "verify_type": "partially",
               "result": "passed",
@@ -5282,7 +5302,7 @@
             {
               "name": "Number__FloatingPointWithoutDecimalPoint",
               "file": "score/json/internal/parser/vajson/json_number_test.cpp",
-              "line": 766,
+              "line": 665,
               "need": "comp_req__json__deserialization",
               "verify_type": "partially",
               "result": "passed",
@@ -5291,7 +5311,7 @@
             {
               "name": "Number__NearDoubleLimitsIsParsable",
               "file": "score/json/internal/parser/vajson/json_number_test.cpp",
-              "line": 778,
+              "line": 677,
               "need": "comp_req__json__deserialization",
               "verify_type": "partially",
               "result": "passed",
@@ -5300,8 +5320,86 @@
             {
               "name": "Number__FloatingPointOverflowIsRejected",
               "file": "score/json/internal/parser/vajson/json_number_test.cpp",
-              "line": 789,
+              "line": 688,
               "need": "comp_req__json__deserialization",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "Number__AcceptsNumbersMatchingTheGrammar",
+              "file": "score/json/internal/parser/vajson/json_number_test.cpp",
+              "line": 699,
+              "need": "comp_req__json__deserialization",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            }
+          ]
+        }
+      },
+      {
+        "need": "comp_req__json__nesting_depth",
+        "links": {
+          "CodeLinks": [],
+          "TestLinks": [
+            {
+              "name": "JsonParserTest__EnforcesMaximumNestingDepth",
+              "file": "score/json/json_parser_test.cpp",
+              "line": 94,
+              "need": "comp_req__json__nesting_depth",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "JsonParserTest__RejectsDeepInputWithoutRetainingState",
+              "file": "score/json/json_parser_test.cpp",
+              "line": 153,
+              "need": "comp_req__json__nesting_depth",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            }
+          ]
+        }
+      },
+      {
+        "need": "comp_req__json__nesting_depth_counting",
+        "links": {
+          "CodeLinks": [],
+          "TestLinks": [
+            {
+              "name": "JsonParserTest__CountsOnlyOpenContainers",
+              "file": "score/json/json_parser_test.cpp",
+              "line": 117,
+              "need": "comp_req__json__nesting_depth_counting",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            }
+          ]
+        }
+      },
+      {
+        "need": "comp_req__json__nesting_depth_independence",
+        "links": {
+          "CodeLinks": [],
+          "TestLinks": [
+            {
+              "name": "JsonParserTest__ReusesNestingBudgetAfterErrors",
+              "file": "score/json/json_parser_test.cpp",
+              "line": 131,
+              "need": "comp_req__json__nesting_depth_independence",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "JsonParserTest__RejectsDeepInputWithoutRetainingState",
+              "file": "score/json/json_parser_test.cpp",
+              "line": 153,
+              "need": "comp_req__json__nesting_depth_independence",
               "verify_type": "partially",
               "result": "passed",
               "result_text": ""
@@ -5344,6 +5442,94 @@
         }
       },
       {
+        "need": "comp_req__vajson__number_grammar",
+        "links": {
+          "CodeLinks": [],
+          "TestLinks": [
+            {
+              "name": "ParserTest__EmitsErrorWhenParsingNumberOutsideTheGrammar",
+              "file": "score/json/json_parser_test.cpp",
+              "line": 583,
+              "need": "comp_req__vajson__number_grammar",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "Number__RejectsNumbersOutsideTheGrammar",
+              "file": "score/json/internal/parser/vajson/json_number_test.cpp",
+              "line": 726,
+              "need": "comp_req__vajson__number_grammar",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            }
+          ]
+        }
+      },
+      {
+        "need": "comp_req__vajson__hex_integers",
+        "links": {
+          "CodeLinks": [],
+          "TestLinks": [
+            {
+              "name": "ParserTest__EmitsErrorWhenParsingHexadecimalNumberExceeding64Bits",
+              "file": "score/json/json_parser_test.cpp",
+              "line": 601,
+              "need": "comp_req__vajson__hex_integers",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "JsonParserVajsonTest__CanParseObjectHexadecimalNumber",
+              "file": "score/json/json_parser_test.cpp",
+              "line": 753,
+              "need": "comp_req__vajson__hex_integers",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "Number__AcceptsNumbersMatchingTheGrammar",
+              "file": "score/json/internal/parser/vajson/json_number_test.cpp",
+              "line": 699,
+              "need": "comp_req__vajson__hex_integers",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "Number__ConvertsHexadecimalIntegersWithinTheTargetRange",
+              "file": "score/json/internal/parser/vajson/json_number_test.cpp",
+              "line": 745,
+              "need": "comp_req__vajson__hex_integers",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "Number__HexadecimalIntegersDoNotConvertToFloatingPoint",
+              "file": "score/json/internal/parser/vajson/json_number_test.cpp",
+              "line": 769,
+              "need": "comp_req__vajson__hex_integers",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "UT__NumberParser__IsHexDigit",
+              "file": "score/json/internal/parser/vajson/number_parser_test.cpp",
+              "line": 37,
+              "need": "comp_req__vajson__hex_integers",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            }
+          ]
+        }
+      },
+      {
         "need": "comp_req__json__duplicate_member_names",
         "links": {
           "CodeLinks": [],
@@ -5351,7 +5537,7 @@
             {
               "name": "ParserTest__EmitsErrorWhenParsingObjectWithDuplicateEscapedMemberName",
               "file": "score/json/json_parser_test.cpp",
-              "line": 665,
+              "line": 699,
               "need": "comp_req__json__duplicate_member_names",
               "verify_type": "partially",
               "result": "passed",
@@ -5360,7 +5546,7 @@
             {
               "name": "ParserTest__CanParseSameMemberNameInDifferentObjects",
               "file": "score/json/json_parser_test.cpp",
-              "line": 680,
+              "line": 714,
               "need": "comp_req__json__duplicate_member_names",
               "verify_type": "partially",
               "result": "passed",
@@ -5369,7 +5555,7 @@
             {
               "name": "ParserTest/DuplicateMemberNameTest__EmitsErrorWhenParsingObjectWithDuplicateMemberName/Null",
               "file": "score/json/json_parser_test.cpp",
-              "line": 631,
+              "line": 664,
               "need": "comp_req__json__duplicate_member_names",
               "verify_type": "partially",
               "result": "passed",
@@ -5378,7 +5564,7 @@
             {
               "name": "ParserTest/DuplicateMemberNameTest__EmitsErrorWhenParsingObjectWithDuplicateMemberName/Bool",
               "file": "score/json/json_parser_test.cpp",
-              "line": 631,
+              "line": 664,
               "need": "comp_req__json__duplicate_member_names",
               "verify_type": "partially",
               "result": "passed",
@@ -5387,7 +5573,7 @@
             {
               "name": "ParserTest/DuplicateMemberNameTest__EmitsErrorWhenParsingObjectWithDuplicateMemberName/Number",
               "file": "score/json/json_parser_test.cpp",
-              "line": 631,
+              "line": 664,
               "need": "comp_req__json__duplicate_member_names",
               "verify_type": "partially",
               "result": "passed",
@@ -5396,7 +5582,7 @@
             {
               "name": "ParserTest/DuplicateMemberNameTest__EmitsErrorWhenParsingObjectWithDuplicateMemberName/String",
               "file": "score/json/json_parser_test.cpp",
-              "line": 631,
+              "line": 664,
               "need": "comp_req__json__duplicate_member_names",
               "verify_type": "partially",
               "result": "passed",
@@ -5405,7 +5591,7 @@
             {
               "name": "ParserTest/DuplicateMemberNameTest__EmitsErrorWhenParsingObjectWithDuplicateMemberName/Object",
               "file": "score/json/json_parser_test.cpp",
-              "line": 631,
+              "line": 664,
               "need": "comp_req__json__duplicate_member_names",
               "verify_type": "partially",
               "result": "passed",
@@ -5414,7 +5600,7 @@
             {
               "name": "ParserTest/DuplicateMemberNameTest__EmitsErrorWhenParsingObjectWithDuplicateMemberName/List",
               "file": "score/json/json_parser_test.cpp",
-              "line": 631,
+              "line": 664,
               "need": "comp_req__json__duplicate_member_names",
               "verify_type": "partially",
               "result": "passed",
@@ -5423,7 +5609,7 @@
             {
               "name": "ParserTest/DuplicateMemberNameTest__EmitsErrorWhenParsingObjectWithDuplicateMemberName/ScalarThenObject",
               "file": "score/json/json_parser_test.cpp",
-              "line": 631,
+              "line": 664,
               "need": "comp_req__json__duplicate_member_names",
               "verify_type": "partially",
               "result": "passed",
@@ -5432,7 +5618,7 @@
             {
               "name": "ParserTest/DuplicateMemberNameTest__EmitsErrorWhenParsingObjectWithDuplicateMemberName/ScalarThenList",
               "file": "score/json/json_parser_test.cpp",
-              "line": 631,
+              "line": 664,
               "need": "comp_req__json__duplicate_member_names",
               "verify_type": "partially",
               "result": "passed",
@@ -5441,7 +5627,7 @@
             {
               "name": "ParserTest/DuplicateMemberNameTest__EmitsErrorWhenParsingObjectWithDuplicateMemberName/ObjectThenScalar",
               "file": "score/json/json_parser_test.cpp",
-              "line": 631,
+              "line": 664,
               "need": "comp_req__json__duplicate_member_names",
               "verify_type": "partially",
               "result": "passed",
@@ -5450,7 +5636,7 @@
             {
               "name": "ParserTest/DuplicateMemberNameTest__EmitsErrorWhenParsingObjectWithDuplicateMemberName/ListThenObject",
               "file": "score/json/json_parser_test.cpp",
-              "line": 631,
+              "line": 664,
               "need": "comp_req__json__duplicate_member_names",
               "verify_type": "partially",
               "result": "passed",
@@ -5459,7 +5645,16 @@
             {
               "name": "ParserTest/DuplicateMemberNameTest__EmitsErrorWhenParsingObjectWithDuplicateMemberName/NotAdjacent",
               "file": "score/json/json_parser_test.cpp",
-              "line": 631,
+              "line": 664,
+              "need": "comp_req__json__duplicate_member_names",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "ParserTest/DuplicateMemberNameTest__EmitsErrorWhenParsingObjectWithDuplicateMemberName/EmptyName",
+              "file": "score/json/json_parser_test.cpp",
+              "line": 664,
               "need": "comp_req__json__duplicate_member_names",
               "verify_type": "partially",
               "result": "passed",
@@ -5468,7 +5663,7 @@
             {
               "name": "ParserTest/DuplicateMemberNameTest__EmitsErrorWhenParsingObjectWithDuplicateMemberName/InNestedObject",
               "file": "score/json/json_parser_test.cpp",
-              "line": 631,
+              "line": 664,
               "need": "comp_req__json__duplicate_member_names",
               "verify_type": "partially",
               "result": "passed",
@@ -5477,8 +5672,247 @@
             {
               "name": "ParserTest/DuplicateMemberNameTest__EmitsErrorWhenParsingObjectWithDuplicateMemberName/InObjectInList",
               "file": "score/json/json_parser_test.cpp",
-              "line": 631,
+              "line": 664,
               "need": "comp_req__json__duplicate_member_names",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            }
+          ]
+        }
+      },
+      {
+        "need": "comp_req__vajson__validation",
+        "links": {
+          "CodeLinks": [],
+          "TestLinks": [
+            {
+              "name": "UT__Parser__Bool__Dynamic__MalformedLiteralMessage",
+              "file": "score/json/internal/parser/vajson/structure_parser_bool_test.cpp",
+              "line": 140,
+              "need": "comp_req__vajson__validation",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "UT__Parser__Invalid__Dynamic__TruncatedUnicodeEscape",
+              "file": "score/json/internal/parser/vajson/structure_parser_invalid_test.cpp",
+              "line": 219,
+              "need": "comp_req__vajson__validation",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "UT__Parser__Invalid__Dynamic__NonHexadecimalUnicodeEscape",
+              "file": "score/json/internal/parser/vajson/structure_parser_invalid_test.cpp",
+              "line": 229,
+              "need": "comp_req__vajson__validation",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "UT__Parser__Invalid__Dynamic__UnescapedControlCharacterInString",
+              "file": "score/json/internal/parser/vajson/structure_parser_invalid_test.cpp",
+              "line": 284,
+              "need": "comp_req__vajson__validation",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "UT__Parser__Invalid__Dynamic__UnescapedControlCharacterInKey",
+              "file": "score/json/internal/parser/vajson/structure_parser_invalid_test.cpp",
+              "line": 300,
+              "need": "comp_req__vajson__validation",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            }
+          ]
+        }
+      },
+      {
+        "need": "comp_req__vajson__unicode",
+        "links": {
+          "CodeLinks": [],
+          "TestLinks": [
+            {
+              "name": "UT__Parser__Invalid__Dynamic__TruncatedUnicodeEscape",
+              "file": "score/json/internal/parser/vajson/structure_parser_invalid_test.cpp",
+              "line": 219,
+              "need": "comp_req__vajson__unicode",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "UT__Parser__Invalid__Dynamic__NonHexadecimalUnicodeEscape",
+              "file": "score/json/internal/parser/vajson/structure_parser_invalid_test.cpp",
+              "line": 229,
+              "need": "comp_req__vajson__unicode",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "UT__Parser__Invalid__Dynamic__LoneHighSurrogate",
+              "file": "score/json/internal/parser/vajson/structure_parser_invalid_test.cpp",
+              "line": 239,
+              "need": "comp_req__vajson__unicode",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "UT__Parser__Invalid__Dynamic__HighSurrogateFollowedByNonSurrogate",
+              "file": "score/json/internal/parser/vajson/structure_parser_invalid_test.cpp",
+              "line": 249,
+              "need": "comp_req__vajson__unicode",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "UT__Parser__Invalid__Dynamic__HighSurrogateFollowedByOtherEscape",
+              "file": "score/json/internal/parser/vajson/structure_parser_invalid_test.cpp",
+              "line": 259,
+              "need": "comp_req__vajson__unicode",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "UT__Parser__Invalid__Dynamic__LoneLowSurrogate",
+              "file": "score/json/internal/parser/vajson/structure_parser_invalid_test.cpp",
+              "line": 269,
+              "need": "comp_req__vajson__unicode",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "UT__Parser__String__Dynamic__TwoCharacterEscapes",
+              "file": "score/json/internal/parser/vajson/structure_parser_string_test.cpp",
+              "line": 117,
+              "need": "comp_req__vajson__unicode",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "UT__Parser__String__Dynamic__UnicodeEscape",
+              "file": "score/json/internal/parser/vajson/structure_parser_string_test.cpp",
+              "line": 130,
+              "need": "comp_req__vajson__unicode",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "UT__Parser__String__Dynamic__UnicodeEscapeInContext",
+              "file": "score/json/internal/parser/vajson/structure_parser_string_test.cpp",
+              "line": 159,
+              "need": "comp_req__vajson__unicode",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "UT__Parser__String__Dynamic__UnicodeEscapeInKey",
+              "file": "score/json/internal/parser/vajson/structure_parser_string_test.cpp",
+              "line": 220,
+              "need": "comp_req__vajson__unicode",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            }
+          ]
+        }
+      },
+      {
+        "need": "comp_req__filesystem__file_io",
+        "links": {
+          "CodeLinks": [],
+          "TestLinks": [
+            {
+              "name": "FileBufTest__DiscardClosesFile",
+              "file": "score/filesystem/filestream/file_buf_test.cpp",
+              "line": 116,
+              "need": "comp_req__filesystem__file_io",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "AtomicFileBufTest__DiscardRemovesTemporaryFileWithoutRename",
+              "file": "score/filesystem/filestream/file_buf_test.cpp",
+              "line": 129,
+              "need": "comp_req__filesystem__file_io",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "AtomicFileBufTest__DiscardReportsCloseFailure",
+              "file": "score/filesystem/filestream/file_buf_test.cpp",
+              "line": 147,
+              "need": "comp_req__filesystem__file_io",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "AtomicFileBufTest__DiscardOnClosedFileDoesNothing",
+              "file": "score/filesystem/filestream/file_buf_test.cpp",
+              "line": 165,
+              "need": "comp_req__filesystem__file_io",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "FileFactoryFailedAtomicUpdateTest__CloseKeepsTargetUnchanged",
+              "file": "score/filesystem/filestream/file_factory_test.cpp",
+              "line": 242,
+              "need": "comp_req__filesystem__file_io",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "FileFactoryFailedAtomicUpdateTest__DestructionKeepsTargetUnchanged",
+              "file": "score/filesystem/filestream/file_factory_test.cpp",
+              "line": 264,
+              "need": "comp_req__filesystem__file_io",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            }
+          ]
+        }
+      },
+      {
+        "need": "comp_req__filesystem__mock_fake",
+        "links": {
+          "CodeLinks": [],
+          "TestLinks": [
+            {
+              "name": "FileFactoryFakeTest__AtomicUpdateOfFailedStreamKeepsContent",
+              "file": "score/filesystem/filestream/file_factory_fake_test.cpp",
+              "line": 53,
+              "need": "comp_req__filesystem__mock_fake",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "FileFactoryFakeTest__AtomicUpdateKeepsContentOfStreamFailingAfterClose",
+              "file": "score/filesystem/filestream/file_factory_fake_test.cpp",
+              "line": 75,
+              "need": "comp_req__filesystem__mock_fake",
               "verify_type": "partially",
               "result": "passed",
               "result_text": ""
@@ -10690,6 +11124,211 @@
               "file": "score/utils/base64_test.cpp",
               "line": 99,
               "need": "comp_req__utils__base64_decoding",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            }
+          ]
+        }
+      },
+      {
+        "need": "comp_req__utils__registry_string_view",
+        "links": {
+          "CodeLinks": [],
+          "TestLinks": [
+            {
+              "name": "RegistryStringViewTest__Iterator",
+              "file": "score/utils/string_registry/registry_string_view_tests.cpp",
+              "line": 26,
+              "need": "comp_req__utils__registry_string_view",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "RegistryStringViewTest__ConsistentHash",
+              "file": "score/utils/string_registry/registry_string_view_tests.cpp",
+              "line": 58,
+              "need": "comp_req__utils__registry_string_view",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "RegistryStringViewTest__DifferentRegistryStringViewDifferentHashes",
+              "file": "score/utils/string_registry/registry_string_view_tests.cpp",
+              "line": 78,
+              "need": "comp_req__utils__registry_string_view",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "RegistryStringViewTest__StreamOutput",
+              "file": "score/utils/string_registry/registry_string_view_tests.cpp",
+              "line": 101,
+              "need": "comp_req__utils__registry_string_view",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "RegistryStringViewTest__GlobalCompareOperator",
+              "file": "score/utils/string_registry/registry_string_view_tests.cpp",
+              "line": 120,
+              "need": "comp_req__utils__registry_string_view",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "RegistryStringViewTest__StringLength",
+              "file": "score/utils/string_registry/registry_string_view_tests.cpp",
+              "line": 162,
+              "need": "comp_req__utils__registry_string_view",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "RegistryStringViewTest__StringEmpty",
+              "file": "score/utils/string_registry/registry_string_view_tests.cpp",
+              "line": 180,
+              "need": "comp_req__utils__registry_string_view",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "RegistryStringViewTest__Data",
+              "file": "score/utils/string_registry/registry_string_view_tests.cpp",
+              "line": 198,
+              "need": "comp_req__utils__registry_string_view",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "RegistryStringViewTest__MoveConstructor",
+              "file": "score/utils/string_registry/registry_string_view_tests.cpp",
+              "line": 214,
+              "need": "comp_req__utils__registry_string_view",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "RegistryStringViewTest__MoveAssignmentOperator",
+              "file": "score/utils/string_registry/registry_string_view_tests.cpp",
+              "line": 236,
+              "need": "comp_req__utils__registry_string_view",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "RegistryStringViewTest__CopyConstructor",
+              "file": "score/utils/string_registry/registry_string_view_tests.cpp",
+              "line": 255,
+              "need": "comp_req__utils__registry_string_view",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "RegistryStringViewTest__CopyAssignmentOperator",
+              "file": "score/utils/string_registry/registry_string_view_tests.cpp",
+              "line": 272,
+              "need": "comp_req__utils__registry_string_view",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            }
+          ]
+        }
+      },
+      {
+        "need": "comp_req__utils__string_registry",
+        "links": {
+          "CodeLinks": [],
+          "TestLinks": [
+            {
+              "name": "StringRegistryTest__InsertMultipleStrings",
+              "file": "score/utils/string_registry/string_registry_tests.cpp",
+              "line": 24,
+              "need": "comp_req__utils__string_registry",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "StringRegistryTest__InsertMultipleStringViews",
+              "file": "score/utils/string_registry/string_registry_tests.cpp",
+              "line": 49,
+              "need": "comp_req__utils__string_registry",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "StringRegistryTest__InsertMultipleStringViewLiterals",
+              "file": "score/utils/string_registry/string_registry_tests.cpp",
+              "line": 81,
+              "need": "comp_req__utils__string_registry",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "StringRegistryTest__EqualStringsFromSeparateAllocationsArePointerIdentical",
+              "file": "score/utils/string_registry/string_registry_tests.cpp",
+              "line": 115,
+              "need": "comp_req__utils__string_registry",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "StringRegistryTest__StringViewThenStringOverloadYieldPointerIdenticalViews",
+              "file": "score/utils/string_registry/string_registry_tests.cpp",
+              "line": 138,
+              "need": "comp_req__utils__string_registry",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "StringRegistryTest__LiteralThenStringOverloadYieldPointerIdenticalViews",
+              "file": "score/utils/string_registry/string_registry_tests.cpp",
+              "line": 161,
+              "need": "comp_req__utils__string_registry",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "StringRegistryTest__ViewIdentityIsStableAfterRegistryGrowth",
+              "file": "score/utils/string_registry/string_registry_tests.cpp",
+              "line": 185,
+              "need": "comp_req__utils__string_registry",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "StringRegistryTest__SlicedLiteralAndFullStringAreDistinct",
+              "file": "score/utils/string_registry/string_registry_tests.cpp",
+              "line": 213,
+              "need": "comp_req__utils__string_registry",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "StringRegistryTest__EmbeddedNulsAreDistinct",
+              "file": "score/utils/string_registry/string_registry_tests.cpp",
+              "line": 234,
+              "need": "comp_req__utils__string_registry",
               "verify_type": "partially",
               "result": "passed",
               "result_text": ""

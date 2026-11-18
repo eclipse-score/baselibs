@@ -510,7 +510,51 @@
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <div class="need_container docutils container" id="SNCB-1b1d321a">
+  
+<style>
+.score-testcase-result {
+  font-weight: bold;
+}
+.score-testcase-result--passed {
+  color: #146c2e;
+}
+.score-testcase-result--failed {
+  color: #b42318;
+}
+.score-testcase-result--skipped {
+  color: #8a5300;
+}
+.score-testcase-result--disabled {
+  color: #5f6368;
+}
+html[data-theme="dark"] .score-testcase-result--passed {
+  color: #7ee787;
+}
+html[data-theme="dark"] .score-testcase-result--failed {
+  color: #ff7b72;
+}
+html[data-theme="dark"] .score-testcase-result--skipped {
+  color: #d29922;
+}
+html[data-theme="dark"] .score-testcase-result--disabled {
+  color: #c4cad2;
+}
+@media (prefers-color-scheme: dark) {
+  html:not([data-theme="light"]) .score-testcase-result--passed {
+    color: #7ee787;
+  }
+  html:not([data-theme="light"]) .score-testcase-result--failed {
+    color: #ff7b72;
+  }
+  html:not([data-theme="light"]) .score-testcase-result--skipped {
+    color: #d29922;
+  }
+  html:not([data-theme="light"]) .score-testcase-result--disabled {
+    color: #c4cad2;
+  }
+}
+</style>
+<div class="need_container docutils container" id="SNCB-9c1dfc72">
 <div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_document table" id="doc__vajson_requirements">
 <tbody>
 <tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
@@ -561,11 +605,11 @@
 <li><p><a class="reference internal" href="../../requirements/index.html#comp_req__json__user_format" title="comp_req__json__user_format"><em class="xref need">Return data in user format (comp_req__json__user_format)</em></a></p></li>
 </ul>
 <p>In addition, the following VaJson-specific requirements apply:</p>
-<div class="need_container docutils container" id="SNCB-ed0723c4">
+<div class="need_container docutils container" id="SNCB-6743dd1c">
 <div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_comp_req table" id="comp_req__vajson__validation">
 <tbody>
 <tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
-<div class="line"><span><span class="needs_title"><span class="needs_data">JSON Validation</span></span></span></div>
+<div class="line"><span><span class="needs_title"><span class="needs_data">Rejection of malformed JSON</span></span></span></div>
 </div>
 </td>
 <td class="head_center" colspan="2"><div class="needs_head line-block">
@@ -581,7 +625,8 @@
 </tr>
 <tr class="meta row-even"><td class="meta" colspan="3"><div class="needs_meta_left line-block">
 <div class="line"><span><span><div class="line"><span class="needs_reqtype"><span class="needs_label">reqtype: </span><span class="needs_data">Functional</span></span></div>
-<div class="line"><span class="needs_version"><span class="needs_label">version: </span>1</span></div>
+<div class="line"><span class="needs_testlink"><span class="needs_label">testlink: </span><span class="needs_data"><a class="reference external" href="https://github.com/eclipse-score/baselibs/blob/96ab2b14927b59a3bf5fc3e54501bce9fd5c7ef1/score/json/internal/parser/vajson/structure_parser_bool_test.cpp#L140">UT__Parser__Bool__Dynamic__MalformedLiteralMessage<span class="score-testcase-result score-testcase-result--passed"> (passed)</span></a><em>; </em><a class="reference external" href="https://github.com/eclipse-score/baselibs/blob/96ab2b14927b59a3bf5fc3e54501bce9fd5c7ef1/score/json/internal/parser/vajson/structure_parser_invalid_test.cpp#L219">UT__Parser__Invalid__Dynamic__TruncatedUnicodeEscape<span class="score-testcase-result score-testcase-result--passed"> (passed)</span></a><em>; </em><a class="reference external" href="https://github.com/eclipse-score/baselibs/blob/96ab2b14927b59a3bf5fc3e54501bce9fd5c7ef1/score/json/internal/parser/vajson/structure_parser_invalid_test.cpp#L229">UT__Parser__Invalid__Dynamic__NonHexadecimalUnicodeEscape<span class="score-testcase-result score-testcase-result--passed"> (passed)</span></a><em>; </em><a class="reference external" href="https://github.com/eclipse-score/baselibs/blob/96ab2b14927b59a3bf5fc3e54501bce9fd5c7ef1/score/json/internal/parser/vajson/structure_parser_invalid_test.cpp#L284">UT__Parser__Invalid__Dynamic__UnescapedControlCharacterInString<span class="score-testcase-result score-testcase-result--passed"> (passed)</span></a><em>; </em><a class="reference external" href="https://github.com/eclipse-score/baselibs/blob/96ab2b14927b59a3bf5fc3e54501bce9fd5c7ef1/score/json/internal/parser/vajson/structure_parser_invalid_test.cpp#L300">UT__Parser__Invalid__Dynamic__UnescapedControlCharacterInKey<span class="score-testcase-result score-testcase-result--passed"> (passed)</span></a></span></span></div>
+<div class="line"><span class="needs_version"><span class="needs_label">version: </span>2</span></div>
 </span></span></div>
 <div class="line"><span><div class="line">derived from: <span class="derived_from"><span><a class="external_link reference external" href="https://eclipse-score.github.io/score/main/features/baselibs/requirements/index.html#feat_req__baselibs__json_library">feat_req__baselibs__json_library</a></span></span></div>
 <div class="line">satisfied by: <span class="satisfied_by"><span><a class="reference internal" href="../architecture/index.html#comp__baselibs_vajson" title="comp_req__vajson__validation">comp__baselibs_vajson</a></span></span></div>
@@ -590,8 +635,9 @@
 </td>
 <td class="meta" colspan="3"></td>
 </tr>
-<tr class="content row-odd"><td class="content" colspan="6"><p>VaJson checks the well-formedness of JSON data.
-Errors shall include the reason and location in the JSON document for malformed JSON.</p></td>
+<tr class="content row-odd"><td class="content" colspan="6"><p>VaJson shall reject malformed JSON data with an error that identifies the data as invalid JSON.</p>
+<p>Note: JSON data is malformed if it does not conform to RFC 8259 extended by trailing commas and hexadecimal integers.</p>
+</td>
 </tr>
 <tr class="footer row-even"><td class="footer_left" colspan="2"><div class="needs_footer_left line-block">
 <div class="line"><span><span class="needs-id"><a class="reference internal" href="#comp_req__vajson__validation" title="comp_req__vajson__validation">comp_req__vajson__validation</a></span></span></div>
@@ -607,7 +653,7 @@ Errors shall include the reason and location in the JSON document for malformed 
 </table>
 </div>
 </div>
-<div class="need_container docutils container" id="SNCB-685371eb">
+<div class="need_container docutils container" id="SNCB-54a52da0">
 <div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_comp_req table" id="comp_req__vajson__trailing_commas">
 <tbody>
 <tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
@@ -653,7 +699,7 @@ This behavior extends RFC 8259.</p></td>
 </table>
 </div>
 </div>
-<div class="need_container docutils container" id="SNCB-9694d56b">
+<div class="need_container docutils container" id="SNCB-70c5d458">
 <div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_comp_req table" id="comp_req__vajson__hex_integers">
 <tbody>
 <tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
@@ -673,7 +719,8 @@ This behavior extends RFC 8259.</p></td>
 </tr>
 <tr class="meta row-even"><td class="meta" colspan="3"><div class="needs_meta_left line-block">
 <div class="line"><span><span><div class="line"><span class="needs_reqtype"><span class="needs_label">reqtype: </span><span class="needs_data">Functional</span></span></div>
-<div class="line"><span class="needs_version"><span class="needs_label">version: </span>1</span></div>
+<div class="line"><span class="needs_testlink"><span class="needs_label">testlink: </span><span class="needs_data"><a class="reference external" href="https://github.com/eclipse-score/baselibs/blob/96ab2b14927b59a3bf5fc3e54501bce9fd5c7ef1/score/json/json_parser_test.cpp#L601">ParserTest__EmitsErrorWhenParsingHexadecimalNumberExceeding64Bits<span class="score-testcase-result score-testcase-result--passed"> (passed)</span></a><em>; </em><a class="reference external" href="https://github.com/eclipse-score/baselibs/blob/96ab2b14927b59a3bf5fc3e54501bce9fd5c7ef1/score/json/json_parser_test.cpp#L753">JsonParserVajsonTest__CanParseObjectHexadecimalNumber<span class="score-testcase-result score-testcase-result--passed"> (passed)</span></a><em>; </em><a class="reference external" href="https://github.com/eclipse-score/baselibs/blob/96ab2b14927b59a3bf5fc3e54501bce9fd5c7ef1/score/json/internal/parser/vajson/json_number_test.cpp#L699">Number__AcceptsNumbersMatchingTheGrammar<span class="score-testcase-result score-testcase-result--passed"> (passed)</span></a><em>; </em><a class="reference external" href="https://github.com/eclipse-score/baselibs/blob/96ab2b14927b59a3bf5fc3e54501bce9fd5c7ef1/score/json/internal/parser/vajson/json_number_test.cpp#L745">Number__ConvertsHexadecimalIntegersWithinTheTargetRange<span class="score-testcase-result score-testcase-result--passed"> (passed)</span></a><em>; </em><a class="reference external" href="https://github.com/eclipse-score/baselibs/blob/96ab2b14927b59a3bf5fc3e54501bce9fd5c7ef1/score/json/internal/parser/vajson/json_number_test.cpp#L769">Number__HexadecimalIntegersDoNotConvertToFloatingPoint<span class="score-testcase-result score-testcase-result--passed"> (passed)</span></a><em>; </em><a class="reference external" href="https://github.com/eclipse-score/baselibs/blob/96ab2b14927b59a3bf5fc3e54501bce9fd5c7ef1/score/json/internal/parser/vajson/number_parser_test.cpp#L37">UT__NumberParser__IsHexDigit<span class="score-testcase-result score-testcase-result--passed"> (passed)</span></a></span></span></div>
+<div class="line"><span class="needs_version"><span class="needs_label">version: </span>2</span></div>
 </span></span></div>
 <div class="line"><span><div class="line">derived from: <span class="derived_from"><span><a class="external_link reference external" href="https://eclipse-score.github.io/score/main/features/baselibs/requirements/index.html#feat_req__baselibs__json_library">feat_req__baselibs__json_library</a></span></span></div>
 <div class="line">satisfied by: <span class="satisfied_by"><span><a class="reference internal" href="../architecture/index.html#comp__baselibs_vajson" title="comp_req__vajson__hex_integers">comp__baselibs_vajson</a></span></span></div>
@@ -682,7 +729,8 @@ This behavior extends RFC 8259.</p></td>
 </td>
 <td class="meta" colspan="3"></td>
 </tr>
-<tr class="content row-odd"><td class="content" colspan="6"><p>VaJson shall accept hexadecimal integers.
+<tr class="content row-odd"><td class="content" colspan="6"><p>VaJson shall accept a number of the form <code class="docutils literal notranslate"><span class="pre">[</span> <span class="pre">&quot;-&quot;</span> <span class="pre">]</span> <span class="pre">&quot;0&quot;</span> <span class="pre">(</span> <span class="pre">&quot;x&quot;</span> <span class="pre">/</span> <span class="pre">&quot;X&quot;</span> <span class="pre">)</span> <span class="pre">1*HEXDIG</span></code> (ABNF) as a hexadecimal integer
+if its value is representable as a 64-bit signed or unsigned integer.
 This behavior extends RFC 8259.</p></td>
 </tr>
 <tr class="footer row-even"><td class="footer_left" colspan="2"><div class="needs_footer_left line-block">
@@ -699,7 +747,54 @@ This behavior extends RFC 8259.</p></td>
 </table>
 </div>
 </div>
-<div class="need_container docutils container" id="SNCB-afcba762">
+<div class="need_container docutils container" id="SNCB-922e8efb">
+<div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_comp_req table" id="comp_req__vajson__number_grammar">
+<tbody>
+<tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
+<div class="line"><span><span class="needs_title"><span class="needs_data">JSON Deserialization number grammar</span></span></span></div>
+</div>
+</td>
+<td class="head_center" colspan="2"><div class="needs_head line-block">
+<div class="line"><span><span class="needs_status"><span class="needs_label">status: </span><span class="needs_data">valid</span></span></span></div>
+<div class="line"><span><span class="needs_security"><span class="needs_label">security: </span><span class="needs_data">YES</span></span></span></div>
+<div class="line"><span><span class="needs_safety"><span class="needs_label">safety: </span><span class="needs_data">ASIL_B</span></span></span></div>
+</div>
+</td>
+<td class="head_right" colspan="2"><div class="needs_head_right line-block">
+<div class="line"><span><span class="needs needs_collapse" id="target__show__meta"><span class="needs collapsed"><svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-down-circle"><circle cx="12" cy="12" r="10"></circle><polyline points="8 12 12 16 16 12"></polyline><line x1="12" y1="8" x2="12" y2="16"></line></svg></span><span class="needs visible collapse_is_hidden"><svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-right-circle"><circle cx="12" cy="12" r="10"></circle><polyline points="12 16 16 12 12 8"></polyline><line x1="8" y1="12" x2="16" y2="12"></line></svg></span></span></span></div>
+</div>
+</td>
+</tr>
+<tr class="meta row-even"><td class="meta" colspan="3"><div class="needs_meta_left line-block">
+<div class="line"><span><span><div class="line"><span class="needs_reqtype"><span class="needs_label">reqtype: </span><span class="needs_data">Functional</span></span></div>
+<div class="line"><span class="needs_testlink"><span class="needs_label">testlink: </span><span class="needs_data"><a class="reference external" href="https://github.com/eclipse-score/baselibs/blob/96ab2b14927b59a3bf5fc3e54501bce9fd5c7ef1/score/json/json_parser_test.cpp#L583">ParserTest__EmitsErrorWhenParsingNumberOutsideTheGrammar<span class="score-testcase-result score-testcase-result--passed"> (passed)</span></a><em>; </em><a class="reference external" href="https://github.com/eclipse-score/baselibs/blob/96ab2b14927b59a3bf5fc3e54501bce9fd5c7ef1/score/json/internal/parser/vajson/json_number_test.cpp#L726">Number__RejectsNumbersOutsideTheGrammar<span class="score-testcase-result score-testcase-result--passed"> (passed)</span></a></span></span></div>
+<div class="line"><span class="needs_version"><span class="needs_label">version: </span>1</span></div>
+</span></span></div>
+<div class="line"><span><div class="line">derived from: <span class="derived_from"><span><a class="external_link reference external" href="https://eclipse-score.github.io/score/main/features/baselibs/requirements/index.html#feat_req__baselibs__json_library">feat_req__baselibs__json_library</a></span></span></div>
+<div class="line">satisfied by: <span class="satisfied_by"><span><a class="reference internal" href="../architecture/index.html#comp__baselibs_vajson" title="comp_req__vajson__number_grammar">comp__baselibs_vajson</a></span></span></div>
+</span></div>
+</div>
+</td>
+<td class="meta" colspan="3"></td>
+</tr>
+<tr class="content row-odd"><td class="content" colspan="6"><p>VaJson shall reject a number that matches neither the RFC 8259 number grammar nor the hexadecimal integer extension
+as malformed JSON.</p></td>
+</tr>
+<tr class="footer row-even"><td class="footer_left" colspan="2"><div class="needs_footer_left line-block">
+<div class="line"><span><span class="needs-id"><a class="reference internal" href="#comp_req__vajson__number_grammar" title="comp_req__vajson__number_grammar">comp_req__vajson__number_grammar</a></span></span></div>
+</div>
+</td>
+<td class="footer" colspan="2"><div class="needs_footer line-block">
+<div class="line"><span><span class="needs_type_name"><span class="needs_data">Component Requirement</span></span></span></div>
+</div>
+</td>
+<td class="footer_right" colspan="2"></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="need_container docutils container" id="SNCB-4292e95c">
 <div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_comp_req table" id="comp_req__vajson__unicode">
 <tbody>
 <tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
@@ -719,7 +814,8 @@ This behavior extends RFC 8259.</p></td>
 </tr>
 <tr class="meta row-even"><td class="meta" colspan="3"><div class="needs_meta_left line-block">
 <div class="line"><span><span><div class="line"><span class="needs_reqtype"><span class="needs_label">reqtype: </span><span class="needs_data">Functional</span></span></div>
-<div class="line"><span class="needs_version"><span class="needs_label">version: </span>1</span></div>
+<div class="line"><span class="needs_testlink"><span class="needs_label">testlink: </span><span class="needs_data"><a class="reference external" href="https://github.com/eclipse-score/baselibs/blob/96ab2b14927b59a3bf5fc3e54501bce9fd5c7ef1/score/json/internal/parser/vajson/structure_parser_invalid_test.cpp#L219">UT__Parser__Invalid__Dynamic__TruncatedUnicodeEscape<span class="score-testcase-result score-testcase-result--passed"> (passed)</span></a><em>; </em><a class="reference external" href="https://github.com/eclipse-score/baselibs/blob/96ab2b14927b59a3bf5fc3e54501bce9fd5c7ef1/score/json/internal/parser/vajson/structure_parser_invalid_test.cpp#L229">UT__Parser__Invalid__Dynamic__NonHexadecimalUnicodeEscape<span class="score-testcase-result score-testcase-result--passed"> (passed)</span></a><em>; </em><a class="reference external" href="https://github.com/eclipse-score/baselibs/blob/96ab2b14927b59a3bf5fc3e54501bce9fd5c7ef1/score/json/internal/parser/vajson/structure_parser_invalid_test.cpp#L239">UT__Parser__Invalid__Dynamic__LoneHighSurrogate<span class="score-testcase-result score-testcase-result--passed"> (passed)</span></a><em>; </em><a class="reference external" href="https://github.com/eclipse-score/baselibs/blob/96ab2b14927b59a3bf5fc3e54501bce9fd5c7ef1/score/json/internal/parser/vajson/structure_parser_invalid_test.cpp#L249">UT__Parser__Invalid__Dynamic__HighSurrogateFollowedByNonSurrogate<span class="score-testcase-result score-testcase-result--passed"> (passed)</span></a><em>; </em><a class="reference external" href="https://github.com/eclipse-score/baselibs/blob/96ab2b14927b59a3bf5fc3e54501bce9fd5c7ef1/score/json/internal/parser/vajson/structure_parser_invalid_test.cpp#L259">UT__Parser__Invalid__Dynamic__HighSurrogateFollowedByOtherEscape<span class="score-testcase-result score-testcase-result--passed"> (passed)</span></a><em>; </em><a class="reference external" href="https://github.com/eclipse-score/baselibs/blob/96ab2b14927b59a3bf5fc3e54501bce9fd5c7ef1/score/json/internal/parser/vajson/structure_parser_invalid_test.cpp#L269">UT__Parser__Invalid__Dynamic__LoneLowSurrogate<span class="score-testcase-result score-testcase-result--passed"> (passed)</span></a><em>; </em><a class="reference external" href="https://github.com/eclipse-score/baselibs/blob/96ab2b14927b59a3bf5fc3e54501bce9fd5c7ef1/score/json/internal/parser/vajson/structure_parser_string_test.cpp#L117">UT__Parser__String__Dynamic__TwoCharacterEscapes<span class="score-testcase-result score-testcase-result--passed"> (passed)</span></a><em>; </em><a class="reference external" href="https://github.com/eclipse-score/baselibs/blob/96ab2b14927b59a3bf5fc3e54501bce9fd5c7ef1/score/json/internal/parser/vajson/structure_parser_string_test.cpp#L130">UT__Parser__String__Dynamic__UnicodeEscape<span class="score-testcase-result score-testcase-result--passed"> (passed)</span></a><em>; </em><a class="reference external" href="https://github.com/eclipse-score/baselibs/blob/96ab2b14927b59a3bf5fc3e54501bce9fd5c7ef1/score/json/internal/parser/vajson/structure_parser_string_test.cpp#L159">UT__Parser__String__Dynamic__UnicodeEscapeInContext<span class="score-testcase-result score-testcase-result--passed"> (passed)</span></a><em>; </em><a class="reference external" href="https://github.com/eclipse-score/baselibs/blob/96ab2b14927b59a3bf5fc3e54501bce9fd5c7ef1/score/json/internal/parser/vajson/structure_parser_string_test.cpp#L220">UT__Parser__String__Dynamic__UnicodeEscapeInKey<span class="score-testcase-result score-testcase-result--passed"> (passed)</span></a></span></span></div>
+<div class="line"><span class="needs_version"><span class="needs_label">version: </span>2</span></div>
 </span></span></div>
 <div class="line"><span><div class="line">derived from: <span class="derived_from"><span><a class="external_link reference external" href="https://eclipse-score.github.io/score/main/features/baselibs/requirements/index.html#feat_req__baselibs__json_library">feat_req__baselibs__json_library</a></span></span></div>
 <div class="line">satisfied by: <span class="satisfied_by"><span><a class="reference internal" href="../architecture/index.html#comp__baselibs_vajson" title="comp_req__vajson__unicode">comp__baselibs_vajson</a></span></span></div>
@@ -728,7 +824,7 @@ This behavior extends RFC 8259.</p></td>
 </td>
 <td class="meta" colspan="3"></td>
 </tr>
-<tr class="content row-odd"><td class="content" colspan="6"><p>VaJson shall encode and decode UTF-8 encoded strings.</p></td>
+<tr class="content row-odd"><td class="content" colspan="6"><p>VaJson shall encode and decode UTF-8 encoded strings, including the escape sequences defined by RFC 8259.</p></td>
 </tr>
 <tr class="footer row-even"><td class="footer_left" colspan="2"><div class="needs_footer_left line-block">
 <div class="line"><span><span class="needs-id"><a class="reference internal" href="#comp_req__vajson__unicode" title="comp_req__vajson__unicode">comp_req__vajson__unicode</a></span></span></div>
@@ -747,7 +843,7 @@ This behavior extends RFC 8259.</p></td>
 </section>
 <section id="safety-impact">
 <h1>Safety Impact<a class="headerlink" href="#safety-impact" title="Link to this heading">#</a></h1>
-<div class="need_container docutils container" id="SNCB-b2351ffe">
+<div class="need_container docutils container" id="SNCB-9b02eab5">
 <div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_comp_req table" id="comp_req__vajson__asil">
 <tbody>
 <tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
