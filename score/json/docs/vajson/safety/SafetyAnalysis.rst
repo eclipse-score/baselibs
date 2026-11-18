@@ -103,10 +103,22 @@ Safety Analysis of vajson
 
         .. fm:: FM-VaJson-HexIntegers: Hexadecimal integers are treated as invalid JSON.
             :effect:  Valid JSON as demanded by the CREQ is rejected as invalid and, thus, safety requirements are violated.
-            :measure: Add support for deserialization of hexadecimal integers.
+            :measure: Accept hexadecimal integers explicitly and convert them with base 16.
                       This is verified by the following test cases:
-                      - UT__Parser__Number__Static
-                      - UT__Parser__Number__Dynamic
+                      - JsonParserVajsonTest__CanParseObjectHexadecimalNumber
+                      - Number__ConvertsHexadecimalIntegersWithinTheTargetRange
+
+        .. fm:: FM-VaJson-NumberGrammar: Number literals outside the accepted number grammar are accepted.
+            :details: The standard conversion routines accept forms outside the grammar, e.g. hexadecimal floating-point
+                      numbers, leading zeros, or a fraction without digits.
+            :effect:  Invalid input is deserialized and, thus, safety requirements are violated.
+            :measure: Check every number against the accepted number grammar before conversion.
+                      Convert integers only with an explicit base.
+                      This is verified by the following test cases:
+                      - Number__RejectsNumbersOutsideTheGrammar
+                      - Number__HexadecimalIntegersDoNotConvertToFloatingPoint
+                      - ParserTest__EmitsErrorWhenParsingNumberOutsideTheGrammar
+                      - ParserTest__EmitsErrorWhenParsingHexadecimalNumberExceeding64Bits
 
         .. fm:: FM-VaJson-NumberConversion: Number conversion changes value.
             :details: Number conversion from textual JSON representation to a numerical value changes the value.
@@ -114,8 +126,10 @@ Safety Analysis of vajson
                       requirements are violated.
             :measure: Use only well-known standard library functions for number conversion.
                       This is verified by the following test cases:
-                      - UT__Parser__Number__Static
-                      - UT__Parser__Number__Dynamic
+                      - Number__Uint64
+                      - Number__Int64
+                      - Number__Double
+                      - Number__ConvertsHexadecimalIntegersWithinTheTargetRange
 
         .. fm:: FM-VaJson-NumberLength: JSON numbers can consist of an unlimited number of characters.
             :details: The numerical value of a sufficiently long JSON number cannot be represented by any standard C++ type.
@@ -123,13 +137,15 @@ Safety Analysis of vajson
             :measure: Equivalent to FM-VaJson-NumberConversion.
 
         .. fm:: FM-VaJson-InvalidCharacters Input contains invalid characters.
-            :details: The input contains characters that are not valid, i.e. characters in the range 0x0 to 0x20
-                      (inclusive).
+            :details: The input contains characters that are not valid, i.e. unescaped characters in the range U+0000 to
+                      U+001F inside strings or keys.
             :effect:  Invalid data is deserialized and, thus, safety requirements are violated.
             :measure: Check for invalid characters in the input data during deserialization.
                       This is verified by the following test cases:
                       - UT__Parser__Invalid__Static
                       - UT__Parser__Invalid__Dynamic
+                      - UT__Parser__Invalid__Dynamic__UnescapedControlCharacterInString
+                      - UT__Parser__Invalid__Dynamic__UnescapedControlCharacterInKey
 
         .. fm:: FM-VaJson-InvalidEscapeSequence Input contains invalid escape sequences.
             :details: The input contains invalid escape sequences not specified in the JSON specification.
@@ -187,8 +203,22 @@ Safety Analysis of vajson
         .. fm:: FM-VaJson-UnicodeStrings Unicode strings are misinterpreted.
             :details: Unicode code points, e.g. control characters, could be misinterpreted when parsed.
             :effect:  User receives incorrect data and, thus, safety requirements are violated.
-            :measure: VaJson passes strings to the user as-is by design, no transformation or interpretation takes place.
-                      Thus, no misinterpretation can happen and behaviour is not safety relevant.
+            :measure: VaJson decodes the two character escape sequences and the \uXXXX escape sequences into UTF-8,
+                      combining a UTF-16 surrogate pair into the single code point it denotes, and passes all other
+                      string content through unchanged.
+                      Escape sequences that are malformed or that contain an unpaired surrogate are rejected as
+                      invalid JSON, so they cannot reach the user misinterpreted.
+                      Correct behaviour is verified by the following test cases:
+                      - UT__Parser__String__Dynamic__TwoCharacterEscapes
+                      - UT__Parser__String__Dynamic__UnicodeEscape
+                      - UT__Parser__String__Dynamic__UnicodeEscapeInContext
+                      - UT__Parser__String__Dynamic__UnicodeEscapeInKey
+                      - UT__Parser__Invalid__Dynamic__TruncatedUnicodeEscape
+                      - UT__Parser__Invalid__Dynamic__NonHexadecimalUnicodeEscape
+                      - UT__Parser__Invalid__Dynamic__LoneHighSurrogate
+                      - UT__Parser__Invalid__Dynamic__HighSurrogateFollowedByNonSurrogate
+                      - UT__Parser__Invalid__Dynamic__HighSurrogateFollowedByOtherEscape
+                      - UT__Parser__Invalid__Dynamic__LoneLowSurrogate
 
         .. fm:: FM-VaJson-ByteOrderMark Byte order marks can appear inside strings.
             :details: VaJson cannot report the presence of a byte order mark inside of a string.

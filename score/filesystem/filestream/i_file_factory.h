@@ -55,6 +55,7 @@ class IFileFactory : public os::ObjectSeam<IFileFactory>
     /// the data during the write phase. Once the returned object goes out of scope or is closed, the temporary file's
     /// contents get synced to disc and the file gets renamed to the target file name. This way, you will always
     /// either see the previous content (if any), or the newly written complete data.
+    /// If the stream is in a failed state at that point, the temporary file is removed and the target stays unchanged.
     ///
     /// @param path Path to the file that is going to be updated.
     /// @param mode The open mode for the file. Currently, only writing and truncating are supported.

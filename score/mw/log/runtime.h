@@ -13,9 +13,9 @@
 #ifndef SCORE_MW_LOG_RUNTIME_H
 #define SCORE_MW_LOG_RUNTIME_H
 
-#include "score/utils/meyer_singleton/meyer_singleton.h"
 #include "score/mw/log/logger_container.h"
 #include "score/mw/log/recorder.h"
+#include "score/utils/meyer_singleton/meyer_singleton.h"
 
 #include <score/memory.hpp>
 
@@ -72,8 +72,9 @@ class Runtime final
     ///
     /// Be advised that it is the responsibility of the user of this API, to ensure that the set recorder is alive as
     /// long as any other functionality might invoke logging statements!
-    static void SetRecorder(Recorder* const recorder,
-                            score::cpp::pmr::memory_resource* memory_resource = score::cpp::pmr::get_default_resource()) noexcept;
+    static void SetRecorder(
+        Recorder* const recorder,
+        score::cpp::pmr::memory_resource* memory_resource = score::cpp::pmr::get_default_resource()) noexcept;
 
     static Recorder& GetFallbackRecorder() noexcept;
 
@@ -82,8 +83,9 @@ class Runtime final
   private:
     explicit Runtime(Recorder* const recorder, score::cpp::pmr::memory_resource* memory_resource) noexcept;
 
-    static Runtime& Instance(Recorder* const recorder,
-                             score::cpp::pmr::memory_resource* memory_resource = score::cpp::pmr::get_default_resource()) noexcept;
+    static Runtime& Instance(
+        Recorder* const recorder,
+        score::cpp::pmr::memory_resource* memory_resource = score::cpp::pmr::get_default_resource()) noexcept;
     LoggerContainer logger_container_instance_{};
 
     Recorder* recorder_instance_ = nullptr;

@@ -92,6 +92,7 @@ cc_test(
         ":fake",
         ":filestream",
         "@googletest//:gtest_main",
+        "@score_baselibs//score/filesystem:standard_filesystem",
         "@score_baselibs//score/filesystem/factory",
         "@score_baselibs//score/filesystem/file_utils:file_test_utils",
         "@score_baselibs//score/os/mocklib:fcntl_mock",

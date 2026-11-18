@@ -16,9 +16,11 @@
     - [Declarative parsing of JSON data](#declarative-parsing-of-json-data)
   - [Design](#design)
   - [Constraints](#constraints)
+    - [Number grammar](#number-grammar)
   - [Requirements](#requirements)
   - [Assumptions of Use](#assumptions-of-use)
   - [Deprecated `base_library` flag](#deprecated-base_library-flag)
+  - [Deprecated `internal/model` headers](#deprecated-internalmodel-headers)
 
 This JSON library is designed as an abstraction layer over the underlying JSON implementation. At the moment it
 uses vaJson from Vector for parsing, which is ASIL D certified. Serialization is built on the vaJson writer.
@@ -37,6 +39,10 @@ This library offers the Bazel target `//score/json`, which is ASIL B certified. 
 Vector, the only parser this library supports.
 
 Additionally, there is [another](#declarative-parsing-of-json-data) Bazel target, `//score/json:json_serializer`, which is **not** ASIL B certified.
+
+Public targets expose the JSON API and data model, while parser and writer implementation dependencies remain private.
+Neither the parser nor the writer implementation depends on the other.
+The `mock` target uses only the parser and writer interfaces.
 
 ### Loading a JSON document from a file
 
@@ -218,7 +224,7 @@ Specially when dealing with nested objects, the boilerplate code resulting from
 the successive searches and conversions can get in the way of readability.
 
 Thus an optional layer of syntax-sugar is provided by `score::json::GetAttribute`
-(declared in `score/json/internal/model/object.h`, which is pulled in by
+(declared in `score/json/object.h`, which is pulled in by
 `score/json/json_parser.h`), that aims to avoid the repetitive code.
 
 #### Calling convention: pass the object by `std::cref`
@@ -311,7 +317,7 @@ Result<std::uint64_t> GetTimeoutMs(const json::Object& config, const std::uint64
 The same pattern works for optional nested objects, where `kKeyNotFound` means
 "section not configured" and `kWrongType` means "section is malformed".
 
-See the [unit tests](./internal/model/object_test.cpp) for details.
+See the [unit tests](./object_test.cpp) for details.
 
 ### Declarative parsing of JSON data
 
@@ -407,9 +413,29 @@ We have a couple of constraints with this library. We avoid implementing these
 since they would require high amount of work. Please be aware and note:
 
 - No support for duplicate member names in an object (parsing fails)
-- No support for empty keys
 - No support for online schema validation (we expect that this is done offline)
-- Only support for JSON Standard [RFC-8259](https://datatracker.ietf.org/doc/html/rfc8259)
+- Only support for JSON Standard [RFC-8259](https://datatracker.ietf.org/doc/html/rfc8259), plus the number extension described in [Number grammar](#number-grammar)
+
+### Number grammar
+
+The parser accepts the number grammar of [RFC 8259, section 6](https://datatracker.ietf.org/doc/html/rfc8259#section-6), extended by hexadecimal integers:
+
+```text
+number  = [ "-" ] ( hex-int / ( int [ frac ] [ exp ] ) )
+hex-int = "0" ( "x" / "X" ) 1*HEXDIG      ; extension, not part of RFC 8259
+int     = "0" / ( digit1-9 *DIGIT )
+frac    = "." 1*DIGIT
+exp     = ( "e" / "E" ) [ "-" / "+" ] 1*DIGIT
+```
+
+Any other number literal is rejected with a parse error, e.g. `01`, `+1`, `.5`, `1.`, `1.e5`, `1e`, `0x`, `0x1p3`, `0x1.8`.
+
+Hexadecimal numbers such as `0xdd` or `-0X10` are integers only.
+Their value must fit into `std::int64_t` or `std::uint64_t`, otherwise parsing fails.
+Hex digits may be lowercase or uppercase.
+
+The writer always emits decimal numbers, so hexadecimal notation is not preserved when a parsed document is written back.
+Use decimal numbers for documents that must be interoperable with other RFC 8259 parsers.
 
 ## Requirements
 
@@ -453,3 +479,9 @@ The `base_library` flag (and its `nlohmann` value) no longer has any effect: vaJ
 The flag is kept, as a deprecated no-op, only so that consumers who still pass it on the command line or in their
 `.bazelrc` don't hit a hard build failure. Remove it from your build configuration; it will be deleted in a future
 release.
+
+## Deprecated `internal/model` headers
+
+The headers in `score/json/internal/model/` are deprecated and only forward to the data model headers `score/json/any.h`, `score/json/error.h`, `score/json/null.h`, `score/json/number.h`, and `score/json/object.h`.
+They are kept so that existing includes keep compiling; including one of them emits a deprecation warning.
+Include the headers from `score/json/` instead; the deprecated headers will be deleted in a future breaking release.

@@ -145,8 +145,6 @@ JsonData
         class JsonData {
           + {static} auto FromFile(StringView path) -> Result<JsonData>
           + {static} auto FromBuffer(StringView buffer) -> Result<JsonData>
-          + {static} auto FromBuffer(ara::core::Span<char const> buffer) -> Result<JsonData>
-          + auto GetEncoding() noexcept -> EncodingType&
         }
 
         class DepthCounter {}
@@ -172,9 +170,7 @@ Util
         package "json" {
           package "vajson" {
             enum JsonErrc {
-              kNotInitialized
               kInvalidJson,
-              kUserValidationFailed,
               kStreamFailure
             }
 
@@ -184,17 +180,8 @@ Util
 
             class JsonNumber {
               + {static} auto New(StringView view) -> Result<JsonNumber>
-              + auto TryAs<T>() const -> ara::core::Result<T>
-              + auto As()<bool> const -> Optional<bool>
               + auto As()<vac::language::byte> const -> Optional<vac::language::byte>
               + auto As()<T> const -> Optional<T>
-              + auto As()<JsonNumber> const -> Optional<JsonNumber>
-              + auto Convert<Fn>(Fn&& parser) const -> decltype(parser(std::declval<StringView>()))
-            }
-
-            enum EncodingType {
-              kNone
-              kUtf8
             }
 
           package Reader {

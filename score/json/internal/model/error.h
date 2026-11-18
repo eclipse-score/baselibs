@@ -1,5 +1,5 @@
 /********************************************************************************
- * Copyright (c) 2025 Contributors to the Eclipse Foundation
+ * Copyright (c) 2026 Contributors to the Eclipse Foundation
  *
  * See the NOTICE file(s) distributed with this work for additional
  * information regarding copyright ownership.
@@ -11,32 +11,21 @@
  * SPDX-License-Identifier: Apache-2.0
  ********************************************************************************/
 
-#ifndef SCORE_LIB_JSON_INTERNAL_MODEL_ERROR_H
-#define SCORE_LIB_JSON_INTERNAL_MODEL_ERROR_H
+#ifndef SCORE_JSON_INTERNAL_MODEL_ERROR_H
+#define SCORE_JSON_INTERNAL_MODEL_ERROR_H
 
-#include "score/result/error.h"
+// Deprecated: include "score/json/error.h" instead.
+// This forwarding header will be removed in a future breaking release.
+#include "score/json/error.h"
 
-namespace score
+namespace score::json::detail
 {
-namespace json
-{
 
-enum class Error : score::result::ErrorCode
-{
-    kUnknownError,
-    kWrongType,
-    kKeyNotFound,
-    kParsingError,
-    kInvalidFilePath,
-};
+// Referencing the deprecated alias emits a warning in every translation unit that includes this header.
+using DeprecatedInternalModelErrorHeader
+    [[deprecated("score/json/internal/model/error.h is deprecated, include score/json/error.h instead")]] = int;
+static_assert(sizeof(DeprecatedInternalModelErrorHeader) > 0, "");
 
-class ErrorDomain final : public score::result::ErrorDomain
-{
-    std::string_view MessageFor(const score::result::ErrorCode& code) const noexcept override;
-};
+}  // namespace score::json::detail
 
-score::result::Error MakeError(const score::json::Error code, const std::string_view user_message = "") noexcept;
-
-}  // namespace json
-}  // namespace score
-#endif  // SCORE_LIB_JSON_INTERNAL_MODEL_ERROR_H
+#endif  // SCORE_JSON_INTERNAL_MODEL_ERROR_H

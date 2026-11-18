@@ -111,28 +111,6 @@ class JsonData final
     /// @synchronous     -
     static auto FromBuffer(std::string_view buffer) noexcept -> Result<JsonData>;
 
-    /// @brief           Initializes a JSON data object from a buffer
-    /// @param[in]       buffer
-    ///                  The buffer containing the JSON value.
-    /// @return          A constructed JSON data object.
-    /// @context         ANY
-    /// @pre             -
-    /// @threadsafe      FALSE
-    /// @reentrant       FALSE
-    /// @synchronous     -
-    static auto FromBuffer(score::safecpp::zstring_view buffer) noexcept -> Result<JsonData>;
-
-    /// @brief           Initializes a JSON data object from a buffer
-    /// @param[in]       buffer
-    ///                  The buffer containing the JSON value.
-    /// @return          A constructed JSON data object.
-    /// @context         ANY
-    /// @pre             -
-    /// @threadsafe      FALSE
-    /// @reentrant       FALSE
-    /// @synchronous     -
-    static auto FromBuffer(score::cpp::span<const char> buffer) noexcept -> Result<JsonData>;
-
     /// @brief           Returns the JSON structure state
     /// @return          The current state.
     /// @context         ANY
@@ -175,19 +153,6 @@ class JsonData final
         return this->current_buffer_;
     }
 
-    /// @brief           Returns the detected encoding type
-    /// @return          The encoding type.
-    /// @context         ANY
-    /// @pre             -
-    /// @threadsafe      TRUE, for different this pointer
-    /// @reentrant       TRUE, for different this pointer
-    /// @synchronous     -
-    /// @trace           DSGN-JSON-Reader-Encoding
-    auto GetEncoding() & noexcept -> EncodingType&
-    {
-        return this->encoding_;
-    }
-
   private:
     /// @brief           Class JsonOps must have access to the InputStream but no other classes
     friend class internal::JsonOps;  // VECTOR SL AutosarC++17_10-A11.3.1: MD_JSON_AutosarC++17_10-A11.3.1_json_ops
@@ -202,7 +167,7 @@ class JsonData final
         return this->stream_.get();
     }
 
-    /// @brief           Inspects the document's BOM
+    /// @brief           Skips a UTF-8 byte order mark at the beginning of the document
     /// @context         ANY
     /// @pre             The read pointer must be at the beginning of the document.
     /// @threadsafe      FALSE
@@ -217,8 +182,6 @@ class JsonData final
     internal::DepthCounter depth_counter_{};
     /// @brief           Current buffer
     String current_buffer_{};
-    /// @brief           Flag to indicate if the document has a UTF-8 BOM
-    EncodingType encoding_{EncodingType::kNone};
 };
 
 }  // namespace vajson

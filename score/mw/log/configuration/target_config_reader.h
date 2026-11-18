@@ -13,10 +13,10 @@
 #ifndef SCORE_MW_LOG_CONFIGURATION_TARGET_CONFIG_READER_H
 #define SCORE_MW_LOG_CONFIGURATION_TARGET_CONFIG_READER_H
 
-#include "score/os/unistd.h"
-#include "score/os/utils/path_impl.h"
 #include "score/mw/log/configuration/configuration_file_discoverer.h"
 #include "score/mw/log/configuration/itarget_config_reader.h"
+#include "score/os/unistd.h"
+#include "score/os/utils/path_impl.h"
 
 namespace score
 {

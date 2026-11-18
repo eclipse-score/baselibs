@@ -15,13 +15,13 @@
 
 // Be careful what you include here. Each additional header will be included in logging.h and thus exposed to the user.
 // We need to try to keep the includes low to reduce the compile footprint of using this library.
-#include "score/result/error.h"
 #include "score/mw/log/detail/logging_identifier.h"
 #include "score/mw/log/log_common.h"
 #include "score/mw/log/log_level.h"
 #include "score/mw/log/log_types.h"
 #include "score/mw/log/recorder.h"
 #include "score/mw/log/slot_handle.h"
+#include "score/result/error.h"
 
 #include "score/optional.hpp"
 #include <string_view>

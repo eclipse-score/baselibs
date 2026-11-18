@@ -114,7 +114,7 @@ class GetElementAsImpl
 
 template <typename T>
 score::Result<std::reference_wrapper<const T>> GetElementAsRef(const score::json::Object& obj,
-                                                             const std::string_view key) noexcept
+                                                               const std::string_view key) noexcept
 {
     return GetElementAs<std::reference_wrapper<const T>, T>(obj, key);
 }
@@ -127,8 +127,8 @@ template <typename T>
 // std::terminate() will not  implicitly be called from GetElementAndThen as it declared as noexcept.
 // coverity[autosar_cpp14_a15_5_3_violation]
 score::Result<void> GetElementAndThen(const score::json::Object& obj,
-                                    const std::string_view key,
-                                    GetElementCallback<T> update) noexcept
+                                      const std::string_view key,
+                                      GetElementCallback<T> update) noexcept
 {
     const auto parser_result = GetElementAs<T>(obj, key);
     if (parser_result.has_value() == false)
@@ -303,8 +303,8 @@ score::Result<void> ParseLogLevelConsole(const score::json::Object& root, Config
 // std::terminate() will not  implicitly be called from ParseContextLogLevel as it declared as noexcept
 // coverity[autosar_cpp14_a15_5_3_violation]
 score::Result<void> ParseContextLogLevel(const score::json::Object& root,
-                                       Configuration& config,
-                                       const std::string& path_for_reporting) noexcept
+                                         Configuration& config,
+                                         const std::string& path_for_reporting) noexcept
 {
     const auto context_config = GetElementAsRef<score::json::List>(root, kContextConfigsKey);
     if (context_config.has_value() == false)
@@ -429,7 +429,9 @@ score::Result<void> ParseDynamicDatarouterIdentifiers(const score::json::Object&
     // clang-format on
 }
 
-void ParseConfigurationElements(const score::json::Object& root, const std::string& path, Configuration& config) noexcept
+void ParseConfigurationElements(const score::json::Object& root,
+                                const std::string& path,
+                                Configuration& config) noexcept
 {
     ReportOnError(ParseEcuId(root, config), path);
     ReportOnError(ParseAppId(root, config), path);

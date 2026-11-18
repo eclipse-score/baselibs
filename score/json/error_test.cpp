@@ -10,7 +10,7 @@
  *
  * SPDX-License-Identifier: Apache-2.0
  ********************************************************************************/
-#include "score/json/internal/model/error.h"
+#include "score/json/error.h"
 
 #include "gmock/gmock.h"
 #include "gtest/gtest.h"

@@ -66,10 +66,11 @@ class AnyTreeBuilder final : private score::json::vajson::internal::StructurePar
             return &(current_node_list_ref.emplace_back(std::forward<T>(value)));
         }
 
-        if (last_key_.empty())  // LCOV_EXCL_BR_LINE (see comment below)
+        if (!last_key_.has_value())  // LCOV_EXCL_BR_LINE (see comment below)
         {
-            // This case never happens as the underlying parser aborts before trying to store a value without
-            // a key. Nonetheless, we handle this gracefully should the underlying implementation change.
+            // This case can't happen: the underlying parser reports each object member's name via OnKey()
+            // before its value and fails on a value without a name.
+            // Nonetheless, we handle this gracefully should the underlying implementation change.
             return MakeUnexpected(Error::kParsingError); /* LCOV_EXCL_LINE */
         }
 
@@ -84,8 +85,9 @@ class AnyTreeBuilder final : private score::json::vajson::internal::StructurePar
         // False positive, all values passed as rvalue.
         // coverity[autosar_cpp14_a18_9_2_violation : FALSE]
         auto it{node_object->get().emplace(std::piecewise_construct_t(std::piecewise_construct),
-                                           std::forward_as_tuple(std::string{last_key_}),
+                                           std::forward_as_tuple(std::move(*last_key_)),
                                            std::forward_as_tuple(std::forward<T>(value)))};
+        last_key_.reset();
         if (!it.second)
         {
             return MakeUnexpected(Error::kParsingError);
@@ -133,14 +135,13 @@ class AnyTreeBuilder final : private score::json::vajson::internal::StructurePar
         static_cast<void>(((try_convert(value.As<NumberType>())) || ...));
         if ((!number.has_value()) || (!Store(*number).has_value()))
         {
-            return score::json::vajson::MakeErrorResult<score::json::vajson::ParserState>(
-                score::json::vajson::JsonErrc::kInvalidJson);
+            return score::MakeUnexpected(score::json::vajson::JsonErrc::kInvalidJson);
         }
         return score::json::vajson::ParserState::kRunning;
     }
 
-    /// @brief Stores the most recently parsed object key.
-    std::string last_key_{};
+    /// @brief Stores the name of the object member whose value is parsed next; unset when no name is pending.
+    std::optional<std::string> last_key_{};
     /// @brief Tracks the hierarchy of containers currently being parsed.
     std::stack<Any*> hierarchy_{};
     /// @brief Stores the root of the parsed JSON tree.
@@ -167,8 +168,7 @@ auto AnyTreeBuilder::OnNull() noexcept -> score::json::vajson::ParserResult
     auto result{Store(Null{})};
     if (!result.has_value())
     {
-        return score::json::vajson::MakeErrorResult<score::json::vajson::ParserState>(
-            score::json::vajson::JsonErrc::kInvalidJson);
+        return score::MakeUnexpected(score::json::vajson::JsonErrc::kInvalidJson);
     }
     return score::json::vajson::ParserState::kRunning;
 }
@@ -178,8 +178,7 @@ auto AnyTreeBuilder::OnBool(bool value) noexcept -> score::json::vajson::ParserR
     auto result{Store(value)};
     if (!result.has_value())
     {
-        return score::json::vajson::MakeErrorResult<score::json::vajson::ParserState>(
-            score::json::vajson::JsonErrc::kInvalidJson);
+        return score::MakeUnexpected(score::json::vajson::JsonErrc::kInvalidJson);
     }
     return score::json::vajson::ParserState::kRunning;
 }
@@ -199,8 +198,7 @@ auto AnyTreeBuilder::OnString(score::json::vajson::CStringView value) noexcept -
     auto result{Store(std::string(value))};
     if (!result.has_value())
     {
-        return score::json::vajson::MakeErrorResult<score::json::vajson::ParserState>(
-            score::json::vajson::JsonErrc::kInvalidJson);
+        return score::MakeUnexpected(score::json::vajson::JsonErrc::kInvalidJson);
     }
     return score::json::vajson::ParserState::kRunning;
 }
@@ -220,15 +218,13 @@ auto AnyTreeBuilder::StartContainer(T&& value) noexcept -> score::json::vajson::
 {
     if (hierarchy_.size() >= kMaxNestingDepth)
     {
-        return score::json::vajson::MakeErrorResult<score::json::vajson::ParserState>(
-            score::json::vajson::JsonErrc::kInvalidJson);
+        return score::MakeUnexpected(score::json::vajson::JsonErrc::kInvalidJson);
     }
 
     auto result{Store(std::forward<T>(value))};
     if (!result.has_value())
     {
-        return score::json::vajson::MakeErrorResult<score::json::vajson::ParserState>(
-            score::json::vajson::JsonErrc::kInvalidJson);
+        return score::MakeUnexpected(score::json::vajson::JsonErrc::kInvalidJson);
     }
 
     // Justification for autosar_cpp14_a18_9_2: Using std::move or std::forward on a raw pointer does not provide

@@ -14,9 +14,9 @@
 #ifndef SCORE_JSON_JSON_PARSER_H
 #define SCORE_JSON_JSON_PARSER_H
 
+#include "score/json/any.h"
+#include "score/json/error.h"
 #include "score/json/i_json_parser.h"
-#include "score/json/internal/model/any.h"
-#include "score/json/internal/model/error.h"
 #include "score/result/result.h"
 
 #include <string_view>

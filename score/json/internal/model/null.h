@@ -1,5 +1,5 @@
 /********************************************************************************
- * Copyright (c) 2025 Contributors to the Eclipse Foundation
+ * Copyright (c) 2026 Contributors to the Eclipse Foundation
  *
  * See the NOTICE file(s) distributed with this work for additional
  * information regarding copyright ownership.
@@ -11,28 +11,21 @@
  * SPDX-License-Identifier: Apache-2.0
  ********************************************************************************/
 
-#ifndef SCORE_LIB_JSON_INTERNAL_MODEL_NULL_H
-#define SCORE_LIB_JSON_INTERNAL_MODEL_NULL_H
+#ifndef SCORE_JSON_INTERNAL_MODEL_NULL_H
+#define SCORE_JSON_INTERNAL_MODEL_NULL_H
 
-namespace score
+// Deprecated: include "score/json/null.h" instead.
+// This forwarding header will be removed in a future breaking release.
+#include "score/json/null.h"
+
+namespace score::json::detail
 {
-namespace json
-{
 
-class Null
-{
-  public:
-    Null() = default;
-    Null(const Null&) = default;
-    Null(Null&&) = default;
-    Null& operator=(const Null&) = default;
-    Null& operator=(Null&&) noexcept = default;
-    ~Null() = default;
-};
+// Referencing the deprecated alias emits a warning in every translation unit that includes this header.
+using DeprecatedInternalModelNullHeader
+    [[deprecated("score/json/internal/model/null.h is deprecated, include score/json/null.h instead")]] = int;
+static_assert(sizeof(DeprecatedInternalModelNullHeader) > 0, "");
 
-bool operator==(const Null&, const Null&) noexcept;
+}  // namespace score::json::detail
 
-}  // namespace json
-}  // namespace score
-
-#endif  // SCORE_LIB_JSON_INTERNAL_MODEL_NULL_H
+#endif  // SCORE_JSON_INTERNAL_MODEL_NULL_H

@@ -15,6 +15,8 @@
 
 #include "score/json/internal/parser/vajson/structure_parser.h"
 
+#include <string>
+
 #include "gtest/gtest.h"
 #include "score/json/internal/parser/vajson/json_data.h"
 #include "score/json/internal/parser/vajson/json_error_domain.h"
@@ -214,14 +216,95 @@ TEST(UT__Parser__Invalid, Dynamic__MultipleValues)
     AssertInvalid(R"(2 3 4)");
 }
 
-TEST(UT__Parser__Invalid, Dynamic__UnicodeEscape)
+TEST(UT__Parser__Invalid, Dynamic__TruncatedUnicodeEscape)
 {
-    AssertInvalid(R"("test\u1234")");
+    RecordProperty("PartiallyVerifies", "comp_req__vajson__unicode, comp_req__vajson__validation");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
+    RecordProperty("Description", "Check that an incomplete Unicode escape at end of input is rejected.");
+
+    AssertInvalid(R"("test\u12)");
+}
+
+TEST(UT__Parser__Invalid, Dynamic__NonHexadecimalUnicodeEscape)
+{
+    RecordProperty("PartiallyVerifies", "comp_req__vajson__unicode, comp_req__vajson__validation");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
+    RecordProperty("Description", "Check that a Unicode escape with a non-hexadecimal digit is rejected.");
+
+    AssertInvalid(R"("test\u12g4")");
+}
+
+TEST(UT__Parser__Invalid, Dynamic__LoneHighSurrogate)
+{
+    RecordProperty("PartiallyVerifies", "comp_req__vajson__unicode");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
+    RecordProperty("Description", "Check that a high surrogate without a following low surrogate is rejected.");
+
+    AssertInvalid(R"("test\ud83d")");
+}
+
+TEST(UT__Parser__Invalid, Dynamic__HighSurrogateFollowedByNonSurrogate)
+{
+    RecordProperty("PartiallyVerifies", "comp_req__vajson__unicode");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
+    RecordProperty("Description", "Check that a high surrogate followed by a non-surrogate escape is rejected.");
+
+    AssertInvalid(R"("test\ud83d\u0041")");
+}
+
+TEST(UT__Parser__Invalid, Dynamic__HighSurrogateFollowedByOtherEscape)
+{
+    RecordProperty("PartiallyVerifies", "comp_req__vajson__unicode");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
+    RecordProperty("Description", "Check that a high surrogate followed by an escape other than \\u is rejected.");
+
+    AssertInvalid(R"("test\ud83d\n")");
+}
+
+TEST(UT__Parser__Invalid, Dynamic__LoneLowSurrogate)
+{
+    RecordProperty("PartiallyVerifies", "comp_req__vajson__unicode");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
+    RecordProperty("Description", "Check that a low surrogate without a preceding high surrogate is rejected.");
+
+    AssertInvalid(R"("test\ude00")");
 }
 
 TEST(UT__Parser__Invalid, Dynamic__UnknownEscape)
 {
     AssertInvalid(R"("test\{1234\}")");
+}
+
+TEST(UT__Parser__Invalid, Dynamic__UnescapedControlCharacterInString)
+{
+    RecordProperty("PartiallyVerifies", "comp_req__vajson__validation");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "boundary-values");
+    RecordProperty("Description",
+                   "Check that a string value containing any unescaped character from U+0000 to U+001F is rejected.");
+
+    for (char control_character{'\x00'}; control_character < '\x20'; ++control_character)
+    {
+        SCOPED_TRACE(static_cast<int>(control_character));
+        const std::string json{std::string{R"(["a)"} + control_character + R"(b"])"};
+        AssertInvalid(json);
+    }
+}
+
+TEST(UT__Parser__Invalid, Dynamic__UnescapedControlCharacterInKey)
+{
+    RecordProperty("PartiallyVerifies", "comp_req__vajson__validation");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
+    RecordProperty("Description", "Check that an object key containing an unescaped tab character is rejected.");
+
+    AssertInvalid("{\"a\tb\":1}");
 }
 
 TEST(UT__Parser__Invalid, Dynamic__OnlyWhitespace)

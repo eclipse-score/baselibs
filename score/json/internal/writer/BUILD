@@ -28,7 +28,7 @@ cc_library(
     visibility = ["@score_baselibs//score/json:__pkg__"],
     deps = [
         "@score_baselibs//score/json:formatting",
-        "@score_baselibs//score/json/internal/model",
+        "@score_baselibs//score/json:model",
         "@score_baselibs//score/result",
     ],
 )

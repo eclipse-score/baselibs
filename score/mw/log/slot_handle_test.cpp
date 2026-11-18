@@ -43,7 +43,7 @@ TEST(SlotHandle, SlotHandleShallDefaultInitializeToZero)
     RecordProperty("Description", "Check the default initialization of SlotHandle instance.");
     RecordProperty("TestType", "interface-test");
     RecordProperty("Verifies", "::score::mw::log::SlotHandle");
-    RecordProperty("DerivationTechnique", "equivalence-classes"); // equivalence classes
+    RecordProperty("DerivationTechnique", "equivalence-classes");  // equivalence classes
 
     SlotHandle handle{};
     EXPECT_EQ(handle.GetSelectedRecorder(), SlotHandle::RecorderIdentifier{0});
@@ -57,7 +57,7 @@ TEST(SlotHandle, GetSlotOfSelectedRecorderShallReturnCorrectSlot)
     RecordProperty("Description", "Check Set/Get slot method.");
     RecordProperty("TestType", "interface-test");
     RecordProperty("Verifies", "::score::mw::log::SlotHandle");
-    RecordProperty("DerivationTechnique", "equivalence-classes"); // equivalence classes
+    RecordProperty("DerivationTechnique", "equivalence-classes");  // equivalence classes
 
     SlotHandle handle{};
     handle.SetSlot(kSlotValue, kRecorderValue);
@@ -71,7 +71,7 @@ TEST(SlotHandle, GetSlotShallReturnCorrectValue)
     RecordProperty("Description", "Check getting the slot whose Set via constructor.");
     RecordProperty("TestType", "interface-test");
     RecordProperty("Verifies", "::score::mw::log::SlotHandle");
-    RecordProperty("DerivationTechnique", "equivalence-classes"); // equivalence classes
+    RecordProperty("DerivationTechnique", "equivalence-classes");  // equivalence classes
 
     SlotHandle handle{kSlotValue};
     EXPECT_EQ(handle.GetSlot(SlotHandle::RecorderIdentifier{0}), kSlotValue);
@@ -84,7 +84,7 @@ TEST(SlotHandle, GetSlotShallReturnZeroOnIncorrectValue)
                    "Check the in-ability of getting the slot in case of invalid recorder identifier value.");
     RecordProperty("TestType", "interface-test");
     RecordProperty("Verifies", "::score::mw::log::SlotHandle");
-    RecordProperty("DerivationTechnique", "equivalence-classes"); // equivalence classes
+    RecordProperty("DerivationTechnique", "equivalence-classes");  // equivalence classes
 
     SlotHandle handle{kSlotValue};
     EXPECT_EQ(handle.GetSlot(kInvalidRecorder), 0);
@@ -97,7 +97,7 @@ TEST(SlotHandle, GetSlotShallReturnZeroOnIncorrectValueCornerCase)
                    "Check the in-ability of getting the slot in case of invalid recorder identifier value.");
     RecordProperty("TestType", "interface-test");
     RecordProperty("Verifies", "::score::mw::log::SlotHandle");
-    RecordProperty("DerivationTechnique", "equivalence-classes"); // equivalence classes
+    RecordProperty("DerivationTechnique", "equivalence-classes");  // equivalence classes
 
     SlotHandle handle{kSlotValue};
     EXPECT_EQ(handle.GetSlot(kInvalidRecorderBoundary), 0);
@@ -109,7 +109,7 @@ TEST(SlotHandle, SetSlotShallSetCorrectValue)
     RecordProperty("Description", "Check the ability of seting slot properly.");
     RecordProperty("TestType", "interface-test");
     RecordProperty("Verifies", "::score::mw::log::SlotHandle");
-    RecordProperty("DerivationTechnique", "equivalence-classes"); // equivalence classes
+    RecordProperty("DerivationTechnique", "equivalence-classes");  // equivalence classes
 
     SlotHandle handle{kSlotValue};
     handle.SetSlot(kSlotValue, kRecorderValue);
@@ -122,7 +122,7 @@ TEST(SlotHandle, SetSlotShallDiscardInvalidRecorderCornerCase)
     RecordProperty("Description", "Verify the in-ability of setting invalid recorder identifier value.");
     RecordProperty("TestType", "interface-test");
     RecordProperty("Verifies", "::score::mw::log::SlotHandle");
-    RecordProperty("DerivationTechnique", "equivalence-classes"); // equivalence classes
+    RecordProperty("DerivationTechnique", "equivalence-classes");  // equivalence classes
 
     SlotHandle handle{};
     handle.SetSlot(kSlotValue, kInvalidRecorderBoundary);
@@ -135,7 +135,7 @@ TEST(SlotHandle, SetSlotShallDiscardInvalidRecorder)
     RecordProperty("Description", "Verify the in-ability of setting invalid recorder identifier value.");
     RecordProperty("TestType", "interface-test");
     RecordProperty("Verifies", "::score::mw::log::SlotHandle");
-    RecordProperty("DerivationTechnique", "equivalence-classes"); // equivalence classes
+    RecordProperty("DerivationTechnique", "equivalence-classes");  // equivalence classes
 
     SlotHandle handle{};
     handle.SetSlot(kSlotValue, kInvalidRecorder);
@@ -148,7 +148,7 @@ TEST(SlotHandle, SetSelectedRecorderShallReturnCorrectValue)
     RecordProperty("Description", "Verify the ability of setting selected recorder.");
     RecordProperty("TestType", "interface-test");
     RecordProperty("Verifies", "::score::mw::log::SlotHandle");
-    RecordProperty("DerivationTechnique", "equivalence-classes"); // equivalence classes
+    RecordProperty("DerivationTechnique", "equivalence-classes");  // equivalence classes
 
     SlotHandle handle{};
     handle.SetSelectedRecorder(kRecorderValue);
@@ -161,7 +161,7 @@ TEST(SlotHandle, SetSelectedRecorderShallIgnoreInvalidValue)
     RecordProperty("Description", "Verify the ability of SetSelectedRecorder to ignore invalid recorder.");
     RecordProperty("TestType", "interface-test");
     RecordProperty("Verifies", "::score::mw::log::SlotHandle");
-    RecordProperty("DerivationTechnique", "equivalence-classes"); // equivalence classes
+    RecordProperty("DerivationTechnique", "equivalence-classes");  // equivalence classes
 
     SlotHandle handle{};
     handle.SetSelectedRecorder(kRecorderValue);
@@ -175,7 +175,7 @@ TEST(SlotHandle, SetSelectedRecorderShallIgnoreInvalidValueCornerCase)
     RecordProperty("Description", "Verify the ability of SetSelectedRecorder to ignore invalid recorder.");
     RecordProperty("TestType", "interface-test");
     RecordProperty("Verifies", "::score::mw::log::SlotHandle");
-    RecordProperty("DerivationTechnique", "equivalence-classes"); // equivalence classes
+    RecordProperty("DerivationTechnique", "equivalence-classes");  // equivalence classes
 
     SlotHandle handle{};
     handle.SetSelectedRecorder(kRecorderValue);
@@ -189,7 +189,7 @@ TEST(SlotHandle, GetSlotAvailableShallReturnTrueOnAssigned)
     RecordProperty("Description", "Verify the ability of checking the availability of specific slot.");
     RecordProperty("TestType", "interface-test");
     RecordProperty("Verifies", "::score::mw::log::SlotHandle");
-    RecordProperty("DerivationTechnique", "equivalence-classes"); // equivalence classes
+    RecordProperty("DerivationTechnique", "equivalence-classes");  // equivalence classes
 
     SlotHandle handle{kSlotValue};
     EXPECT_EQ(handle.IsRecorderActive(SlotHandle::RecorderIdentifier{}), true);
@@ -201,7 +201,7 @@ TEST(SlotHandle, GetSlotAvailableShallReturnFalseOnInvalidRecorder)
     RecordProperty("Description", "Verify the ability of checking the availability of specific slot.");
     RecordProperty("TestType", "interface-test");
     RecordProperty("Verifies", "::score::mw::log::SlotHandle");
-    RecordProperty("DerivationTechnique", "equivalence-classes"); // equivalence classes
+    RecordProperty("DerivationTechnique", "equivalence-classes");  // equivalence classes
 
     SlotHandle handle{};
     EXPECT_EQ(handle.IsRecorderActive(kInvalidRecorder), false);
@@ -213,7 +213,7 @@ TEST(SlotHandle, GetSlotAvailableShallReturnFalseOnInvalidRecorderCornerCase)
     RecordProperty("Description", "Verify the ability of checking the availability of specific slot.");
     RecordProperty("TestType", "interface-test");
     RecordProperty("Verifies", "::score::mw::log::SlotHandle");
-    RecordProperty("DerivationTechnique", "equivalence-classes"); // equivalence classes
+    RecordProperty("DerivationTechnique", "equivalence-classes");  // equivalence classes
 
     SlotHandle handle{};
     EXPECT_EQ(handle.IsRecorderActive(kInvalidRecorderBoundary), false);
@@ -225,7 +225,7 @@ TEST(SlotHandle, ShallBeEqualIffSelectedRecorderAndSlotsAreEqual)
     RecordProperty("Description", "Check the equality of SlotHandle instances.");
     RecordProperty("TestType", "interface-test");
     RecordProperty("Verifies", "::score::mw::log::SlotHandle");
-    RecordProperty("DerivationTechnique", "equivalence-classes"); // equivalence classes
+    RecordProperty("DerivationTechnique", "equivalence-classes");  // equivalence classes
 
     SlotHandle rhs{};
     SlotHandle lhs{};
@@ -247,7 +247,7 @@ TEST(SlotHandle, ShallBeUnequalIfSelectedRecorderUnequal)
     RecordProperty("Description", "Check the inequality of SlotHandle instances.");
     RecordProperty("TestType", "interface-test");
     RecordProperty("Verifies", "::score::mw::log::SlotHandle");
-    RecordProperty("DerivationTechnique", "equivalence-classes"); // equivalence classes
+    RecordProperty("DerivationTechnique", "equivalence-classes");  // equivalence classes
 
     SlotHandle rhs{};
     SlotHandle lhs{};
@@ -263,7 +263,7 @@ TEST(SlotHandle, ShallBeUnequalIfAnySlotUnequal)
     RecordProperty("Description", "Check the inequality of SlotHandle instances.");
     RecordProperty("TestType", "interface-test");
     RecordProperty("Verifies", "::score::mw::log::SlotHandle");
-    RecordProperty("DerivationTechnique", "equivalence-classes"); // equivalence classes
+    RecordProperty("DerivationTechnique", "equivalence-classes");  // equivalence classes
 
     SlotHandle rhs{};
     SlotHandle lhs{};
@@ -279,7 +279,7 @@ TEST(SlotHandle, ShallBeUnequalIfAnySlotUnequalAssigned)
     RecordProperty("Description", "Check the inequality of SlotHandle instances.");
     RecordProperty("TestType", "interface-test");
     RecordProperty("Verifies", "::score::mw::log::SlotHandle");
-    RecordProperty("DerivationTechnique", "equivalence-classes"); // equivalence classes
+    RecordProperty("DerivationTechnique", "equivalence-classes");  // equivalence classes
 
     SlotHandle rhs{};
     SlotHandle lhs{};

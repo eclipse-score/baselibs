@@ -14,8 +14,8 @@
 #ifndef SCORE_JSON_INTERNAL_WRITER_SERIALIZER_H
 #define SCORE_JSON_INTERNAL_WRITER_SERIALIZER_H
 
+#include "score/json/any.h"
 #include "score/json/formatting.h"
-#include "score/json/internal/model/any.h"
 #include "score/result/result.h"
 
 #include <ostream>

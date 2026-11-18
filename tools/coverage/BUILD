@@ -45,9 +45,8 @@ SCOPE_DEPS_COMMON = [
     "//score/hash/code/core/factory:factory_mock",
     "//score/hash/code/core/factory/impl:factory_headers",
     "//score/hash/code/crc:mocks",
-    # Parser/writer-facing interface: not reachable from the impl libs
-    # directly; has a coverage grant.
-    "//score/json:interface",
+    # Keep both the parser and writer in scope.
+    "//score/json",
     "//score/json:json_serializer",
     "//score/language/safecpp/aborts_upon_exception:abortsuponexception",
     "//score/language/safecpp/safe_atomics:try_atomic_add",
@@ -113,6 +112,8 @@ SCOPE_DEPS_COMMON = [
     "//score/static_reflection_with_serialization/visitor/examples/ostream:visitor_examples",
     "//score/string_manipulation/arguments",
     "//score/utils:base64",
+    "//score/utils/string_registry:registry_string_view",
+    "//score/utils/string_registry:string_registry",
 ]
 
 # Roots that exist on one platform only. A root incompatible with the scope's
@@ -208,7 +209,7 @@ score_coverage_reporter(
     testonly = True,
     backend = "gcov",
     coverage_scope = ":coverage_scope_qnx",
-    gcov = "@score_qcc_x86_64_toolchain_pkg//:gcov",
+    gcov = "@qnx_sdp_8_0_4_pkg//:gcov_x86_64",
     # Manual: depends on the QNX SDP package, which a wildcard build on a
     # Linux host without QNX credentials must not try to fetch.
     tags = ["manual"],
@@ -219,6 +220,6 @@ score_coverage_reporter(
     testonly = True,
     backend = "gcov",
     coverage_scope = ":coverage_scope_qnx",
-    gcov = "@score_qcc_x86_64_toolchain_805_pkg//:gcov",
+    gcov = "@qnx_sdp_8_0_5_pkg//:gcov_x86_64",
     tags = ["manual"],
 )

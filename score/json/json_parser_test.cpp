@@ -580,6 +580,39 @@ TEST_F(ParserTest, EmitsErrorWhenParsingTooLargeNumber)
     EXPECT_EQ(root.error(), score::json::Error::kParsingError);
 }
 
+TEST_F(ParserTest, EmitsErrorWhenParsingNumberOutsideTheGrammar)
+{
+    RecordProperty("PartiallyVerifies", "comp_req__vajson__number_grammar");
+    RecordProperty("Description",
+                   "Check that numbers matching neither the RFC 8259 number grammar nor the hexadecimal integer "
+                   "extension are rejected as malformed.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
+
+    for (const std::string number : {"01", "-.5", "1.e5", "0x", "0x1p3", "0x1.8"})
+    {
+        const score::Result<Any> root{JsonParser{}.FromBuffer(R"({ "number": )" + number + " }")};
+
+        ASSERT_FALSE(root.has_value()) << number;
+        EXPECT_EQ(root.error(), score::json::Error::kParsingError) << number;
+    }
+}
+
+TEST_F(ParserTest, EmitsErrorWhenParsingHexadecimalNumberExceeding64Bits)
+{
+    RecordProperty("PartiallyVerifies", "comp_req__vajson__hex_integers");
+    RecordProperty("Description",
+                   "Check that a hexadecimal integer exceeding the 64-bit range is rejected as malformed instead of "
+                   "being converted to a floating-point number.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "boundary-values");
+
+    const score::Result<Any> root{JsonParser{}.FromBuffer(R"({ "number": 0x10000000000000000 })")};
+
+    ASSERT_FALSE(root.has_value());
+    EXPECT_EQ(root.error(), score::json::Error::kParsingError);
+}
+
 TEST_F(ParserTest, FromFileFail)
 {
     RecordProperty("PartiallyVerifies", "comp_req__json__deserialization");
@@ -656,6 +689,7 @@ INSTANTIATE_TEST_SUITE_P(ParserTest,
                                          DuplicateMemberNameParam{"ObjectThenScalar", R"({"a": {"b": 1}, "a": 1})"},
                                          DuplicateMemberNameParam{"ListThenObject", R"({"a": [1], "a": {"b": 1}})"},
                                          DuplicateMemberNameParam{"NotAdjacent", R"({"a": 1, "b": 2, "a": 3})"},
+                                         DuplicateMemberNameParam{"EmptyName", R"({"": 1, "": 2})"},
                                          DuplicateMemberNameParam{"InNestedObject", R"({"o": {"a": 1, "a": 2}})"},
                                          DuplicateMemberNameParam{"InObjectInList", R"([{"a": 1, "a": 2}])"}),
                          [](const testing::TestParamInfo<DuplicateMemberNameParam>& param_info) {
@@ -696,17 +730,34 @@ TEST_F(ParserTest, CanParseSameMemberNameInDifferentObjects)
     EXPECT_EQ(GetValueOfObject<std::uint64_t>(root.value(), "A"), 4U);
 }
 
-TEST(JsonParserVajsonTest, CanParseObjectHexadecimalNumber)
+TEST_F(ParserTest, CanParseEmptyMemberName)
 {
-    // vaJson accepts hexadecimal number syntax as a lenient extension beyond the RFC 8259 well-formedness
-    // that comp_req__json__deserialization mandates, so this documents the parser's actual behavior rather than
-    // normative text.
     RecordProperty("PartiallyVerifies", "comp_req__json__deserialization");
     RecordProperty("Description",
-                   "Check that parsing a hexadecimal number, an accepted extension beyond RFC-8259, returns "
-                   "the correct value.");
+                   "Check that empty member names are accepted at top level, in nested objects, in objects inside a "
+                   "list and with a container value, cf. RFC 8259 section 4.");
     RecordProperty("TestType", "requirements-based");
-    RecordProperty("DerivationTechnique", "design-analysis");
+    RecordProperty("DerivationTechnique", "boundary-values");
+
+    const auto root{JsonParser{}.FromBuffer(R"({"": 1, "o": {"": "x"}, "l": [{"": null}], "c": {"": [true]}})")};
+
+    ASSERT_TRUE(root.has_value());
+    EXPECT_EQ(GetValueOfObject<std::uint64_t>(root.value(), ""), 1U);
+    EXPECT_EQ(GetValueOfObject<Object>(root.value(), "o").at("").As<std::string>().value().get(), "x");
+    const auto& list{GetValueOfObject<List>(root.value(), "l")};
+    EXPECT_EQ(list.at(0).As<Object>().value().get().at("").As<Null>().value().get(), Null{});
+    const auto& container{GetValueOfObject<Object>(root.value(), "c").at("").As<List>().value().get()};
+    EXPECT_EQ(container.at(0).As<bool>().value(), true);
+}
+
+TEST(JsonParserVajsonTest, CanParseObjectHexadecimalNumber)
+{
+    RecordProperty("PartiallyVerifies", "comp_req__vajson__hex_integers");
+    RecordProperty("Description",
+                   "Check that parsing positive and negative hexadecimal integers, an extension beyond RFC 8259, "
+                   "returns the correct values.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
 
     std::string buffer_json_hex{R"(
         {
@@ -724,6 +775,7 @@ TEST(JsonParserVajsonTest, CanParseObjectHexadecimalNumber)
           "float": 2.3,
           "double": 1.79769e+308,
           "hex" : 0xdd,
+          "negative_hex" : -0X10,
           "object": {
             "a": "b",
             "c": "d"
@@ -744,6 +796,7 @@ TEST(JsonParserVajsonTest, CanParseObjectHexadecimalNumber)
 
     // Then the correct value is returned
     EXPECT_EQ(value, 0xdd);
+    EXPECT_EQ(GetValueOfObject<std::int64_t>(root.value(), "negative_hex"), -0x10);
 }
 
 TEST(JsonParserVajsonTest, CanParseTwoByteBuffer)

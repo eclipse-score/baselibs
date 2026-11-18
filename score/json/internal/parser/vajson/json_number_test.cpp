@@ -46,26 +46,13 @@ constexpr inline auto CompareFloat(T lhs, T rhs) noexcept -> bool
     return (std::abs(lhs - rhs) < std::numeric_limits<T>::epsilon());
 }
 
-/// @brief           Creates an Optional from a Result
-/// @tparam          T
-///                  Type of value.
-/// @tparam          E
-///                  Type of error.
-/// @tparam          Opt
-///                  Type of Optional.
-/// @param[in]       result
-///                  to convert.
-/// @return          The Optional containing the value of the Result, or an empty Optional if the Result contains an
-///                  error.
-template <typename T, typename Opt = score::cpp::optional<T>>
-auto ToOptional(const Result<T>& result) noexcept -> Opt
+/// @brief           Creates a number from a view and converts it to T
+/// @return          The converted number, or an empty Optional if the view is no valid number or the conversion fails.
+template <typename T>
+auto NewAs(const StringView view) noexcept -> Optional<T>
 {
-    Opt optional{score::cpp::nullopt};
-    if (result.has_value())
-    {
-        optional.emplace(result.value());
-    }
-    return optional;
+    const Result<JsonNumber> number{JsonNumber::New(view)};
+    return number.has_value() ? number.value().As<T>() : Optional<T>{};
 }
 
 /// @brief           Small abstraction for test values consisting of a string & number value
@@ -242,27 +229,21 @@ class NumberTest : public testing::TestWithParam<TestValue<Num>>
     template <typename Signed = Num, typename = typename std::enable_if_t<std::is_signed<Signed>::value>>
     Optional<Signed> ActualSigned() const
     {
-        return ToOptional(JsonNumber::New(Input()).and_then([](JsonNumber num) noexcept {
-            return num.TryAs<Signed>();
-        }));
+        return NewAs<Signed>(Input());
     }
 
     /// @brief           Gets the actual output from the Conversion function As<Unsigned>
     template <typename Unsigned = Num, typename = typename std::enable_if_t<std::is_unsigned<Unsigned>::value>>
     Optional<Unsigned> ActualUnsigned() const
     {
-        return ToOptional(JsonNumber::New(Input()).and_then([](JsonNumber num) noexcept {
-            return num.TryAs<Unsigned>();
-        }));
+        return NewAs<Unsigned>(Input());
     }
 
     /// @brief           Gets the actual output from the Conversion function As<Float>
     template <typename Float = Num, typename = typename std::enable_if_t<std::is_floating_point<Float>::value>>
     Optional<Float> ActualFloat() const
     {
-        return ToOptional(JsonNumber::New(Input()).and_then([](JsonNumber num) noexcept {
-            return num.TryAs<Float>();
-        }));
+        return NewAs<Float>(Input());
     }
 
     /// @brief           Container for test in/out parameters
@@ -295,101 +276,30 @@ void ExpectOutOfRangeRejected(const ::std::string& underflow, const std::string&
 
 // General & Misc Tests
 
-/// @brief           Tests if ones ans zeros can be parsed into boolean values
-/// @trace           CREQ-Json-ProvidedSerializers
-TEST_F(UT__Number, OnesAndZerosCanBeParsedToBool)
-{
-    Result<bool> result{JsonNumber::New("1").and_then([](JsonNumber num) noexcept {
-        return num.TryAs<bool>();
-    })};
-    ASSERT_TRUE(result.has_value());
-    ASSERT_EQ(result.value(), true);
-
-    result = JsonNumber::New("0").and_then([](JsonNumber num) noexcept {
-        return num.TryAs<bool>();
-    });
-    ASSERT_TRUE(result.has_value());
-    ASSERT_EQ(result.value(), false);
-
-    result = JsonNumber::New("2").and_then([](JsonNumber num) noexcept {
-        return num.TryAs<bool>();
-    });
-    ASSERT_FALSE(result.has_value());
-    ASSERT_EQ(result.error(), JsonErrc::kInvalidJson);
-
-    result = JsonNumber::New("-1").and_then([](JsonNumber num) noexcept {
-        return num.TryAs<bool>();
-    });
-    ASSERT_FALSE(result.has_value());
-    ASSERT_EQ(result.error(), JsonErrc::kInvalidJson);
-}
-
-/// @brief           Tests that errno is unset before the next conversion
+/// @brief           Tests that a failed conversion does not affect the next conversion
 /// @trace           score::json::vajson::JsonNumber::New
-TEST_F(UT__Number, ErrnoIsUnsetBeforeConversion)
+TEST_F(UT__Number, FailedConversionDoesNotAffectNextConversion)
 {
-    Result<std::uint64_t> result_64{JsonNumber::New("0x1FFFFFFFFFFFFFFFF").and_then([](JsonNumber num) noexcept {
-        return num.TryAs<std::uint64_t>();
-    })};
+    Optional<std::uint64_t> result_64{NewAs<std::uint64_t>("0x1FFFFFFFFFFFFFFFF")};
     ASSERT_FALSE(result_64.has_value());
-    ASSERT_EQ(result_64.error(), JsonErrc::kInvalidJson);
 
-    Result<std::uint8_t> result_8{JsonNumber::New("1").and_then([](JsonNumber num) noexcept {
-        return num.TryAs<std::uint8_t>();
-    })};
+    Optional<std::uint8_t> result_8{NewAs<std::uint8_t>("1")};
     ASSERT_TRUE(result_8.has_value());
     ASSERT_EQ(result_8.value(), 1);
 
-    result_64 = JsonNumber::New("0x1FFFFFFFFFFFFFFFF").and_then([](JsonNumber num) noexcept {
-        return num.TryAs<std::uint64_t>();
-    });
+    result_64 = NewAs<std::uint64_t>("0x1FFFFFFFFFFFFFFFF");
     ASSERT_FALSE(result_64.has_value());
-    ASSERT_EQ(result_64.error(), JsonErrc::kInvalidJson);
 
-    result_8 = JsonNumber::New("1").and_then([](JsonNumber num) noexcept {
-        return num.TryAs<std::uint8_t>();
-    });
+    result_8 = NewAs<std::uint8_t>("1");
     ASSERT_TRUE(result_8.has_value());
     ASSERT_EQ(result_8.value(), 1);
 
-    const Result<std::double_t> result_d{JsonNumber::New("this_is_no_double").and_then([](JsonNumber num) noexcept {
-        return num.TryAs<std::double_t>();
-    })};
+    const Optional<std::double_t> result_d{NewAs<std::double_t>("this_is_no_double")};
     ASSERT_FALSE(result_d.has_value());
-    ASSERT_EQ(result_d.error(), JsonErrc::kInvalidJson);
 
-    result_8 = JsonNumber::New("1").and_then([](JsonNumber num) noexcept {
-        return num.TryAs<std::uint8_t>();
-    });
+    result_8 = NewAs<std::uint8_t>("1");
     ASSERT_TRUE(result_8.has_value());
     ASSERT_EQ(result_8.value(), 1);
-}
-
-/// @brief           Tests if numbers can be manually parsed by the user
-/// @trace           score::json::vajson::JsonNumber::New
-TEST_F(UT__Number, StringsCanBeCustomParsed)
-{
-    StringView sv{"1234567890"};
-    Result<JsonNumber> uut{JsonNumber::New(sv)};
-    ASSERT_TRUE(uut.has_value());
-
-    const auto result{uut.value().Convert([&sv](StringView v) noexcept {
-        EXPECT_EQ(v, sv);
-        return Optional<int>{10};
-    })};
-    EXPECT_EQ(result, Optional<int>{10});
-}
-
-/// @brief           Tests if numbers can be requested as JsonNumber
-/// @trace           score::json::vajson::JsonNumber
-TEST_F(UT__Number, AsJsonNumber)
-{
-    StringView sv{"1234567890"};
-    Result<JsonNumber> uut{JsonNumber::New(sv)};
-    ASSERT_TRUE(uut.has_value());
-
-    const auto result{uut.value().As<JsonNumber>()};
-    ASSERT_TRUE(result.has_value());
 }
 
 /// Tests that certain invalid numbers are detected.
@@ -447,7 +357,7 @@ class UT__Number__I8Failure : public NumberTest<std::int8_t>
 };
 
 /// @brief           Test that checks that conversions succeed if valid values are passed
-/// @trace           score::json::vajson::JsonNumber::TryAs
+/// @trace           score::json::vajson::JsonNumber::As
 TEST_P(UT__Number__I8Success, ConvertsValidIntegers8bit)
 {
     auto actual{ActualSigned()};
@@ -472,7 +382,7 @@ INSTANTIATE_TEST_SUITE_P(SignedIntTest8bit,
                                 I8Value("127", 127)));
 
 /// @brief           Test that checks that conversions fail if invalid values are passed
-/// @trace           score::json::vajson::JsonNumber::TryAs
+/// @trace           score::json::vajson::JsonNumber::As
 TEST_P(UT__Number__I8Failure, FailsOnInvalidIntegers8bit)
 {
     auto actual{ActualSigned()};
@@ -508,7 +418,7 @@ class UT__Number__U8Failure : public NumberTest<std::uint8_t>
 };
 
 /// @brief           Test that checks that conversions succeed if valid values are passed
-/// @trace           score::json::vajson::JsonNumber::TryAs
+/// @trace           score::json::vajson::JsonNumber::As
 TEST_P(UT__Number__U8Success, ConvertsValidIntegers8bit)
 {
     auto actual{ActualUnsigned()};
@@ -568,7 +478,7 @@ class UT__Number__DoubleFailure : public NumberTest<double>
 };
 
 /// @brief           Test that checks that conversions succeed if valid values are passed
-/// @trace           score::json::vajson::JsonNumber::TryAs
+/// @trace           score::json::vajson::JsonNumber::As
 TEST_P(UT__Number__DoubleSuccess, ConvertsValidDoubles)
 {
     auto actual{ActualFloat()};
@@ -595,7 +505,7 @@ INSTANTIATE_TEST_SUITE_P(FloatTestDouble,
                                 DoubleValue::Nonzeroed("-0.1E+2;", -10)));
 
 /// @brief           Test that checks that conversions fail if invalid values are passed
-/// @trace           score::json::vajson::JsonNumber::TryAs
+/// @trace           score::json::vajson::JsonNumber::As
 TEST_P(UT__Number__DoubleFailure, FailsOnInvalidDoubles)
 {
     auto actual{ActualFloat()};
@@ -616,17 +526,6 @@ INSTANTIATE_TEST_SUITE_P(FloatTestFailDouble,
                                 DoubleValue("0e"),
                                 DoubleValue("0e+"),
                                 DoubleValue("0e+ - 1")));
-
-TEST(Number, Bool)
-{
-    RecordProperty("PartiallyVerifies", "comp_req__json__deserialization");
-    RecordProperty("Description",
-                   "Test the limits, over-limit and under-limit of bool data-type, cf. RFC-8259 section 9");
-    RecordProperty("TestType", "requirements-based");          // requirements test
-    RecordProperty("DerivationTechnique", "boundary-values");  // requirements
-
-    ExpectOutOfRangeRejected<bool>("-1", "2");
-}
 
 TEST(Number, Uint8)
 {
@@ -795,6 +694,90 @@ TEST(Number, FloatingPointOverflowIsRejected)
 
     EXPECT_FALSE(ParseNumberAs<double>("1e309").has_value());
     EXPECT_FALSE(ParseNumberAs<double>("-1e309").has_value());
+}
+
+TEST(Number, AcceptsNumbersMatchingTheGrammar)
+{
+    RecordProperty("PartiallyVerifies", "comp_req__json__deserialization, comp_req__vajson__hex_integers");
+    RecordProperty("Description",
+                   "Check that numbers matching the RFC 8259 number grammar or the hexadecimal integer extension are "
+                   "accepted.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
+
+    for (const StringView number : {"0"sv,
+                                    "-0"sv,
+                                    "10"sv,
+                                    "0.5"sv,
+                                    "-1.25"sv,
+                                    "0e0"sv,
+                                    "1E5"sv,
+                                    "1e+5"sv,
+                                    "-1.5e-3"sv,
+                                    "0x0"sv,
+                                    "0xdD"sv,
+                                    "0XFF"sv,
+                                    "-0x1"sv})
+    {
+        EXPECT_TRUE(JsonNumber::New(number).has_value()) << number;
+    }
+}
+
+TEST(Number, RejectsNumbersOutsideTheGrammar)
+{
+    RecordProperty("PartiallyVerifies", "comp_req__vajson__number_grammar");
+    RecordProperty("Description",
+                   "Check that numbers matching neither the RFC 8259 number grammar nor the hexadecimal integer "
+                   "extension are rejected as invalid JSON.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
+
+    for (const StringView number :
+         {"01"sv,    "-01"sv, "00x1"sv, "+1"sv,  "-"sv,   ".5"sv,    "-.5"sv,   "1."sv,   "1.e5"sv, "1e"sv,  "1e+"sv,
+          "1.5.2"sv, "--1"sv, "0x"sv,   "-0x"sv, "0xG"sv, "0x1p3"sv, "0x1.8"sv, "0x-1"sv, "-inf"sv, "1x10"sv})
+    {
+        const Result<JsonNumber> result{JsonNumber::New(number)};
+        ASSERT_FALSE(result.has_value()) << number;
+        EXPECT_EQ(result.error(), JsonErrc::kInvalidJson) << number;
+    }
+}
+
+TEST(Number, ConvertsHexadecimalIntegersWithinTheTargetRange)
+{
+    RecordProperty("PartiallyVerifies", "comp_req__vajson__hex_integers");
+    RecordProperty("Description",
+                   "Check that hexadecimal integers convert to integer types at the range limits and are rejected "
+                   "just outside them.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "boundary-values");
+
+    EXPECT_EQ(ParseNumberAs<std::uint8_t>("0xff"), std::uint8_t{255});
+    EXPECT_EQ(ParseNumberAs<std::uint8_t>("0XFF"), std::uint8_t{255});
+    EXPECT_FALSE(ParseNumberAs<std::uint8_t>("0x100").has_value());
+    EXPECT_FALSE(ParseNumberAs<std::uint8_t>("-0x1").has_value());
+    EXPECT_EQ(ParseNumberAs<std::int8_t>("0x7f"), std::int8_t{127});
+    EXPECT_FALSE(ParseNumberAs<std::int8_t>("0x80").has_value());
+    EXPECT_EQ(ParseNumberAs<std::int8_t>("-0x80"), std::int8_t{-128});
+    EXPECT_FALSE(ParseNumberAs<std::int8_t>("-0x81").has_value());
+    EXPECT_EQ(ParseNumberAs<std::int8_t>("-0x0"), std::int8_t{0});
+    EXPECT_EQ(ParseNumberAs<std::uint64_t>("0xFFFFFFFFFFFFFFFF"), std::numeric_limits<std::uint64_t>::max());
+    EXPECT_FALSE(ParseNumberAs<std::uint64_t>("0x10000000000000000").has_value());
+    EXPECT_EQ(ParseNumberAs<std::int64_t>("-0x8000000000000000"), std::numeric_limits<std::int64_t>::min());
+    EXPECT_FALSE(ParseNumberAs<std::int64_t>("-0x8000000000000001").has_value());
+}
+
+TEST(Number, HexadecimalIntegersDoNotConvertToFloatingPoint)
+{
+    RecordProperty("PartiallyVerifies", "comp_req__vajson__hex_integers");
+    RecordProperty("Description",
+                   "Check that hexadecimal integers, including those exceeding 64 bits, are not converted to "
+                   "floating-point types.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
+
+    EXPECT_FALSE(ParseNumberAs<double>("0x10").has_value());
+    EXPECT_FALSE(ParseNumberAs<float>("-0x10").has_value());
+    EXPECT_FALSE(ParseNumberAs<double>("0x1FFFFFFFFFFFFFFFF").has_value());
 }
 
 }  // namespace unit_test

@@ -28,8 +28,9 @@ EmptyRecorderFactory::EmptyRecorderFactory(score::cpp::pmr::unique_ptr<score::os
     std::ignore = fcntl_instance;
 }
 
-std::unique_ptr<Recorder> EmptyRecorderFactory::CreateConcreteLogRecorder(const Configuration& config,
-                                                                          score::cpp::pmr::memory_resource* memory_resource)
+std::unique_ptr<Recorder> EmptyRecorderFactory::CreateConcreteLogRecorder(
+    const Configuration& config,
+    score::cpp::pmr::memory_resource* memory_resource)
 {
     std::ignore = config;
     std::ignore = memory_resource;

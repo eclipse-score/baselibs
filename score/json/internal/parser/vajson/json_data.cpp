@@ -66,7 +66,7 @@ auto JsonData::FromFile(const std::string_view path) noexcept -> Result<JsonData
     score::filesystem::Path file_path{std::string(path.data(), path.size())};
 
     auto file_result{factory.Open(file_path, std::ios::in | std::ios::binary)};
-    auto result{MakeErrorResult<JsonData>(JsonErrc::kStreamFailure, "Could not open file")};
+    Result<JsonData> result{score::MakeUnexpected(JsonErrc::kStreamFailure, "Could not open file")};
     if (file_result.has_value())
     {
         // Read the whole file into an owned buffer once, then parse it through the same in-memory istringstream
@@ -78,14 +78,14 @@ auto JsonData::FromFile(const std::string_view path) noexcept -> Result<JsonData
         file.seekg(0, std::ios::beg);
         if (file.fail() || (size < 0))
         {
-            return MakeErrorResult<JsonData>(JsonErrc::kStreamFailure, "Could not read file");
+            return score::MakeUnexpected(JsonErrc::kStreamFailure, "Could not read file");
         }
         std::string content(static_cast<std::size_t>(size), '\0');
         // Read through the unformatted input layer so an I/O error sets badbit and a short read is detectable
         static_cast<void>(file.read(content.data(), size));
         if (file.bad() || (file.gcount() != size))
         {
-            return MakeErrorResult<JsonData>(JsonErrc::kStreamFailure, "Could not read file");
+            return score::MakeUnexpected(JsonErrc::kStreamFailure, "Could not read file");
         }
         std::unique_ptr<std::istream> stream{std::make_unique<std::istringstream>(std::move(content))};
         result.emplace(JsonData{std::move(stream)});
@@ -100,32 +100,12 @@ auto JsonData::FromFile(const std::string_view path) noexcept -> Result<JsonData
 /// @endinternal
 auto JsonData::FromBuffer(const std::string_view buffer) noexcept -> Result<JsonData>
 {
-    return JsonData::FromBuffer(score::cpp::span<const char>{buffer.data(), buffer.size()});
-}
-
-/// @internal
-/// - Create the input stream from a buffer.
-/// - Create & return the JsonData object.
-/// @endinternal
-auto JsonData::FromBuffer(const score::safecpp::zstring_view buffer) noexcept -> Result<JsonData>
-{
-    return JsonData::FromBuffer(score::cpp::span<const char>{buffer.data(), buffer.size()});
-}
-
-/// @internal
-/// - Create the input stream from a buffer.
-/// - Create & return the JsonData object.
-/// @endinternal
-auto JsonData::FromBuffer(const score::cpp::span<const char> buffer) noexcept -> Result<JsonData>
-{
-    // Create istringstream from the buffer
-    std::unique_ptr<std::istream> iss{std::make_unique<std::istringstream>(std::string(buffer.data(), buffer.size()))};
+    std::unique_ptr<std::istream> iss{std::make_unique<std::istringstream>(std::string{buffer})};
     return Result<JsonData>{JsonData{std::move(iss)}};
 }
 
 /// @internal
 /// - If the first three bytes of the document are the UTF-8 BOM:
-///   - Set the encoding type.
 ///   - Move the stream buffer past the BOM.
 /// - If the stream is too short for a BOM check:
 ///   - Ensure the stream state is cleared and position is restored.
@@ -137,17 +117,10 @@ void JsonData::ParseBom() noexcept
 
     internal::JsonOps ops{*this};
 
+    // ReadString consumes the BOM if present and rewinds otherwise.
     const Result<bool> result{ops.ReadString(view)};
 
-    if (result.has_value())
-    {
-        if (result.value() == true)
-        {
-            // It worked, so it was a utf-8 BOM.
-            encoding_ = EncodingType::kUtf8;
-        }
-    }
-    else
+    if (!result.has_value())
     {
         // ReadString failed (e.g., stream shorter than BOM).
         // Ensure stream is in a usable state for subsequent parsing.

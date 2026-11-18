@@ -50,6 +50,50 @@ TEST(FileFactoryFakeTest, FailedToOpenStringStream)
     EXPECT_EQ(static_cast<ErrorCode>(*file_result.error()), ErrorCode::kCouldNotOpenFileStream);
 }
 
+TEST(FileFactoryFakeTest, AtomicUpdateOfFailedStreamKeepsContent)
+{
+    RecordProperty("PartiallyVerifies", "comp_req__filesystem__mock_fake");
+    RecordProperty("Description",
+                   "Check that the fake keeps the previous content when an atomic update stream has failed.");
+    RecordProperty("TestType", "interface-test");
+    RecordProperty("DerivationTechnique", "error-guessing");
+
+    SimpleStringStreamCollection collection{};
+    FileFactoryFake unit{collection};
+    unit.Get("/tmp/some_file").str("Foo");
+    {
+        auto file_result = unit.AtomicUpdate(
+            "/tmp/some_file", std::ios_base::out | std::ios_base::trunc, kUseTargetFileUID | kUseTargetFileGID);
+        ASSERT_TRUE(file_result.has_value());
+        *file_result.value() << "Bar";
+        file_result.value()->setstate(std::ios_base::failbit);
+    }
+
+    EXPECT_EQ(unit.Get("/tmp/some_file").str(), "Foo");
+}
+
+TEST(FileFactoryFakeTest, AtomicUpdateKeepsContentOfStreamFailingAfterClose)
+{
+    RecordProperty("PartiallyVerifies", "comp_req__filesystem__mock_fake");
+    RecordProperty("Description",
+                   "Check that the fake keeps the content committed by Close() when the stream fails afterwards.");
+    RecordProperty("TestType", "interface-test");
+    RecordProperty("DerivationTechnique", "error-guessing");
+
+    SimpleStringStreamCollection collection{};
+    FileFactoryFake unit{collection};
+    {
+        auto file_result = unit.AtomicUpdate(
+            "/tmp/some_file", std::ios_base::out | std::ios_base::trunc, kUseTargetFileUID | kUseTargetFileGID);
+        ASSERT_TRUE(file_result.has_value());
+        *file_result.value() << "Bar";
+        ASSERT_TRUE(file_result.value()->Close().has_value());
+        file_result.value()->setstate(std::ios_base::failbit);
+    }
+
+    EXPECT_EQ(unit.Get("/tmp/some_file").str(), "Bar");
+}
+
 }  // namespace
 }  // namespace filesystem
 }  // namespace score

@@ -41,7 +41,26 @@ class FakeFileBuf : public details::StdioFileBuf, std::stringbuf
     }
     ~FakeFileBuf() override
     {
-        sstream_.get().str(str());
+        if (open_)
+        {
+            sstream_.get().str(str());
+        }
+    }
+
+    Result<void> Close() override
+    {
+        if (open_)
+        {
+            open_ = false;
+            sstream_.get().str(str());
+        }
+        return {};
+    }
+
+    Result<void> Discard() override
+    {
+        open_ = false;
+        return {};
     }
 
   protected:
@@ -98,6 +117,7 @@ class FakeFileBuf : public details::StdioFileBuf, std::stringbuf
 
   private:
     std::reference_wrapper<std::stringstream> sstream_;
+    bool open_{true};
 };
 
 }  // namespace

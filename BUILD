@@ -28,6 +28,10 @@ exports_files(
 docs(
     bundles = [
         {
+            "bundle": "//score/analysis/tracing/generic_trace_library:docs",
+            "mount_at": "baselibs/components/generic_trace_library",
+        },
+        {
             "bundle": "//score/bitmanipulation:docs",
             "mount_at": "baselibs/components/bitmanipulation",
         },

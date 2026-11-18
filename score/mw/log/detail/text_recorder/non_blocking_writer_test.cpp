@@ -60,12 +60,12 @@ TEST_F(NonBlockingWriterTestFixture, NonBlockingWriterWhenFlushingTwiceMaxChunkS
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "NonBlockingWrite can flush 2 max chunks size.");
     RecordProperty("TestingTechnique", "Requirements-based test");
-    RecordProperty("DerivationTechnique", "requirements-analysis"); // requirements
+    RecordProperty("DerivationTechnique", "requirements-analysis");  // requirements
 
     std::array<uint8_t, 2 * kMaxChunkSize> payload{};
 
-    const score::cpp::span<const std::uint8_t> buffer{payload.data(),
-                                               static_cast<score::cpp::span<const std::uint8_t>::size_type>(payload.size())};
+    const score::cpp::span<const std::uint8_t> buffer{
+        payload.data(), static_cast<score::cpp::span<const std::uint8_t>::size_type>(payload.size())};
 
     writer_->SetSpan(buffer);
 
@@ -86,7 +86,7 @@ TEST_F(NonBlockingWriterTestFixture,
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "NonBlockingWrite can flush 2 different spans with different sizes.");
     RecordProperty("TestingTechnique", "Requirements-based test");
-    RecordProperty("DerivationTechnique", "requirements-analysis"); // requirements
+    RecordProperty("DerivationTechnique", "requirements-analysis");  // requirements
 
     std::array<uint8_t, (2 * kMaxChunkSize) + 3> first_payload{};
 
@@ -126,11 +126,11 @@ TEST_F(NonBlockingWriterTestFixture, NonBlockingWriterShallReturnFalseWhenWriteS
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "NonBlockingWrite cannot flush if the system call write fails with error EBADF.");
     RecordProperty("TestingTechnique", "Requirements-based test");
-    RecordProperty("DerivationTechnique", "requirements-analysis"); // requirements
+    RecordProperty("DerivationTechnique", "requirements-analysis");  // requirements
 
     std::array<uint8_t, kMaxChunkSize> payload{};
-    score::cpp::span<const std::uint8_t> buffer{payload.data(),
-                                         static_cast<score::cpp::span<const std::uint8_t>::size_type>(payload.size())};
+    score::cpp::span<const std::uint8_t> buffer{
+        payload.data(), static_cast<score::cpp::span<const std::uint8_t>::size_type>(payload.size())};
 
     writer_->SetSpan(buffer);
 
@@ -150,11 +150,11 @@ TEST_F(NonBlockingWriterTestFixture,
         "Description",
         "NonBlockingWrite can flush 2 max chunk sizes when flushing span with correct indexes to system call write");
     RecordProperty("TestingTechnique", "Requirements-based test");
-    RecordProperty("DerivationTechnique", "requirements-analysis"); // requirements
+    RecordProperty("DerivationTechnique", "requirements-analysis");  // requirements
 
     std::array<uint8_t, 2 * kMaxChunkSize> payload{};
-    score::cpp::span<const std::uint8_t> buffer{payload.data(),
-                                         static_cast<score::cpp::span<const std::uint8_t>::size_type>(payload.size())};
+    score::cpp::span<const std::uint8_t> buffer{
+        payload.data(), static_cast<score::cpp::span<const std::uint8_t>::size_type>(payload.size())};
 
     writer_->SetSpan(buffer);
 
@@ -177,12 +177,12 @@ TEST_F(NonBlockingWriterTestFixture,
                    "NonBlockingWrite can flush 1 k max chunk size on two different times even if the write returns "
                    "half of max chunk size");
     RecordProperty("TestingTechnique", "Requirements-based test");
-    RecordProperty("DerivationTechnique", "requirements-analysis"); // requirements
+    RecordProperty("DerivationTechnique", "requirements-analysis");  // requirements
 
     std::array<uint8_t, kMaxChunkSize> payload{};
 
-    const score::cpp::span<const std::uint8_t> buffer{payload.data(),
-                                               static_cast<score::cpp::span<const std::uint8_t>::size_type>(payload.size())};
+    const score::cpp::span<const std::uint8_t> buffer{
+        payload.data(), static_cast<score::cpp::span<const std::uint8_t>::size_type>(payload.size())};
 
     writer_->SetSpan(buffer);
 

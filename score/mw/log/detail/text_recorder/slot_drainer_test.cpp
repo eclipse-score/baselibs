@@ -12,9 +12,9 @@
  ********************************************************************************/
 #include "score/mw/log/detail/text_recorder/slot_drainer.h"
 
-#include "score/os/mocklib/unistdmock.h"
 #include "score/mw/log/detail/error.h"
 #include "score/mw/log/detail/text_recorder/mock/message_builder_mock.h"
+#include "score/os/mocklib/unistdmock.h"
 
 #include "gtest/gtest.h"
 
@@ -77,7 +77,7 @@ TEST_F(SlotDrainerFixture, TestOneWriteFileFailurePath)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Writes will fail with IO error in case of failure path.");
     RecordProperty("TestType", "interface-test");
-    RecordProperty("DerivationTechnique", "equivalence-classes"); // equivalence classes
+    RecordProperty("DerivationTechnique", "equivalence-classes");  // equivalence classes
 
     //  Given write file error
     SlotDrainer unit(
@@ -85,8 +85,8 @@ TEST_F(SlotDrainerFixture, TestOneWriteFileFailurePath)
 
     EXPECT_CALL(*raw_message_builder_mock_, GetNextSpan)
         .WillOnce(Return(OptionalSpan{}))  //  first unitialized
-        .WillOnce(
-            Return(score::cpp::span<const std::uint8_t>(data_table_, sizeof(data_table_))));  //  actual data to be written
+        .WillOnce(Return(
+            score::cpp::span<const std::uint8_t>(data_table_, sizeof(data_table_))));  //  actual data to be written
 
     EXPECT_CALL(*raw_message_builder_mock_, SetNextMessage(_)).Times(Exactly(1));
 
@@ -106,7 +106,7 @@ TEST_F(SlotDrainerFixture, IncompleteWriteFileShouldMakeFlushSpansReturnWouldBlo
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "If write not completed, the Flush API would wait till flushing is complete.");
     RecordProperty("TestType", "interface-test");
-    RecordProperty("DerivationTechnique", "equivalence-classes"); // equivalence classes
+    RecordProperty("DerivationTechnique", "equivalence-classes");  // equivalence classes
 
     //  Given write file error
     SlotDrainer unit(
@@ -114,8 +114,8 @@ TEST_F(SlotDrainerFixture, IncompleteWriteFileShouldMakeFlushSpansReturnWouldBlo
 
     EXPECT_CALL(*raw_message_builder_mock_, GetNextSpan)
         .WillOnce(Return(OptionalSpan{}))  //  first unitialized
-        .WillOnce(
-            Return(score::cpp::span<const std::uint8_t>(data_table_, sizeof(data_table_))));  //  actual data to be written
+        .WillOnce(Return(
+            score::cpp::span<const std::uint8_t>(data_table_, sizeof(data_table_))));  //  actual data to be written
 
     EXPECT_CALL(*raw_message_builder_mock_, SetNextMessage(_)).Times(Exactly(1));
 
@@ -140,7 +140,7 @@ TEST_F(SlotDrainerFixture, TestOneSlotOneSpan)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Writes shall succeed in case of proper arguments.");
     RecordProperty("TestType", "interface-test");
-    RecordProperty("DerivationTechnique", "equivalence-classes"); // equivalence classes
+    RecordProperty("DerivationTechnique", "equivalence-classes");  // equivalence classes
 
     //  Given one slot flushed
     SlotDrainer unit(
@@ -149,8 +149,8 @@ TEST_F(SlotDrainerFixture, TestOneSlotOneSpan)
     //  Expect sequence of calls to check if any spans from possible previous slots are remaining:
     EXPECT_CALL(*raw_message_builder_mock_, GetNextSpan)
         .WillOnce(Return(OptionalSpan{}))  //  first unitialized
-        .WillOnce(
-            Return(score::cpp::span<const std::uint8_t>(data_table_, sizeof(data_table_))))  //  actual data to be written
+        .WillOnce(Return(
+            score::cpp::span<const std::uint8_t>(data_table_, sizeof(data_table_))))  //  actual data to be written
         .WillOnce(Return(OptionalSpan{}))                                             //  spans depleted in a slot
         .WillOnce(Return(OptionalSpan{}));                                            //  spans depleted in a slot
 
@@ -175,7 +175,7 @@ TEST_F(SlotDrainerFixture, TestTooManySlotsForSingleCallShallNotBeAbleToFlushAll
     RecordProperty("Description",
                    "Fails to flush all slots in case of exceeding the limit of slots to be processed per one call.");
     RecordProperty("TestType", "interface-test");
-    RecordProperty("DerivationTechnique", "equivalence-classes"); // equivalence classes
+    RecordProperty("DerivationTechnique", "equivalence-classes");  // equivalence classes
 
     constexpr std::size_t kLimitNumberOfSlotsProcessedInOneCall = 2UL;
     constexpr std::size_t kNumberOfSlotsQueued = 3UL;

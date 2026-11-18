@@ -15,7 +15,7 @@
 #define SCORE_JSON_I_JSON_WRITER_H
 
 #include "score/filesystem/filestream/i_file_factory.h"
-#include "score/json/internal/model/any.h"
+#include "score/json/any.h"
 #include "score/result/result.h"
 
 #include <memory>

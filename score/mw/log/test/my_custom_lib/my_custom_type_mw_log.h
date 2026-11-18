@@ -24,7 +24,7 @@ namespace type
 {
 
 score::mw::log::LogStream& operator<<(score::mw::log::LogStream& log_stream,
-                                    const my::custom::type::MyCustomType& my_custom_type) noexcept;
+                                      const my::custom::type::MyCustomType& my_custom_type) noexcept;
 
 }  // namespace type
 }  // namespace custom

@@ -12,7 +12,10 @@
  ********************************************************************************/
 #include "score/filesystem/filestream/file_stream.h"
 
+#include "score/filesystem/error.h"
+
 #include <score/assert.hpp>
+#include <score/utility.hpp>
 
 score::Result<void> score::filesystem::FileStream::Close()
 {
@@ -23,6 +26,11 @@ score::Result<void> score::filesystem::FileStream::Close()
         SCORE_LANGUAGE_FUTURECPP_ASSERT_PRD_MESSAGE(
             stdio_filebuf != nullptr,
             "FileStream must not be used with a streambuf that's not derived from StdioFileBuf");
+        if (fail())
+        {
+            score::cpp::ignore = stdio_filebuf->Discard();
+            return MakeUnexpected(ErrorCode::kCloseFailed, "Stream is in a failed state");
+        }
         return stdio_filebuf->Close();
     }
     else

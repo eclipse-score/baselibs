@@ -21,7 +21,6 @@
 
 #include "score/language/safecpp/string_view/zstring_view.h"
 #include "score/optional.hpp"
-#include "score/span.hpp"
 
 namespace score
 {
@@ -43,18 +42,8 @@ using StringView = std::string_view;
 /// @brief           Unqualified access to String
 using String = std::string;
 
-/// @brief           Unqualified access to binary data
-using Bytes = score::cpp::span<const char>;
-
 /// @brief           Short form for creating a StringView
 using std::literals::string_view_literals::operator""sv;
-
-/// @brief           The encoding of the document
-enum class EncodingType : std::uint8_t
-{
-    kNone,
-    kUtf8,
-};
 
 }  // namespace vajson
 }  // namespace json

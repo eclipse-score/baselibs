@@ -78,7 +78,7 @@ TextRecorder::TextRecorder(const detail::Configuration& config,
 }
 
 score::cpp::optional<SlotHandle> TextRecorder::StartRecord(const std::string_view context_id,
-                                                    const LogLevel log_level) noexcept
+                                                           const LogLevel log_level) noexcept
 {
     if (IsLogEnabled(log_level, context_id) == false)
     {

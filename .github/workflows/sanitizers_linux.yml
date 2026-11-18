@@ -25,17 +25,11 @@ on:
   workflow_call:
 jobs:
   linux-sanitizers:
-    runs-on: ubuntu-24.04
-    steps:
-      - uses: eclipse-score/more-disk-space@6a3b48901846bf7f8cc985925157d71a8973e61f # v1
-        with:
-          level: 4
-      - name: Checkout Repository
-        uses: actions/checkout@v6
-      - name: Setup Bazel Cache
-        uses: eclipse-score/cicd-actions/setup-bazel-cache@659dcbed63f6b7fbde88c7850125ea0a0a92f939
-        with:
-          unique-cache-name: ${{ github.workflow }}-${{ github.job }}
-      - name: Bazel Test with Sanitizers
-        run: |
-          bazel test --config score-linux-x86_64 --config=asan_ubsan_lsan --build_tests_only -- //score/...
+    uses: eclipse-score/cicd-workflows/.github/workflows/bazel.yml@d241348e8670bf5b8902d67ff3ac77e7f60f9ec7 # main (2026-11-11)
+    with:
+      test-targets: //score/...
+      bazel-configs: score-linux-x86_64 asan_ubsan_lsan
+      # Build and run the selected tests without building unrelated targets.
+      test-args: --build_tests_only
+      cache-key: ${{ github.workflow }}-linux-sanitizers
+      disk-cleanup-level: 4

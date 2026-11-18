@@ -61,7 +61,7 @@ class Recorder
     ///
     /// \post A call to Log() with respective SlotHandle is possible.
     virtual score::cpp::optional<SlotHandle> StartRecord(const std::string_view context_id,
-                                                  const LogLevel log_level) noexcept = 0;
+                                                         const LogLevel log_level) noexcept = 0;
 
     /// \brief Indicate that a message has finished and free slot for next write
     ///

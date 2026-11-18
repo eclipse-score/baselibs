@@ -67,7 +67,7 @@ class ErrorBoolParser final : public StructureParserStub
   private:
     auto OnBool(bool) noexcept -> ParserResult override
     {
-        return MakeErrorResult<ParserState>(JsonErrc::kUserValidationFailed, "OnBool called.");
+        return score::MakeUnexpected(JsonErrc::kInvalidJson, "OnBool called.");
     }
 };
 
@@ -137,6 +137,30 @@ TEST(UT__Parser__Bool, Dynamic__ParseFalse__WrongFormat)
     ASSERT_EQ(parse_result.error(), JsonErrc::kInvalidJson);
 }
 
+TEST(UT__Parser__Bool, Dynamic__MalformedLiteralMessage)
+{
+    RecordProperty("PartiallyVerifies", "comp_req__vajson__validation");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
+    RecordProperty("Description",
+                   "Check that malformed 'true' and 'false' literals are rejected with the exact reason message.");
+
+    const auto parse{[](const std::string_view input) {
+        auto result{JsonData::FromBuffer(input)};
+        EXPECT_TRUE(result.has_value());
+        JsonData data{std::move(result).value()};
+        return DynamicBoolParser{data}.Parse();
+    }};
+
+    const auto true_result{parse("trux")};
+    ASSERT_FALSE(true_result.has_value());
+    EXPECT_EQ(true_result.error().UserMessage(), std::string_view{"StructureParser::ParseTrue: Expected 'true'"});
+
+    const auto false_result{parse("falsx")};
+    ASSERT_FALSE(false_result.has_value());
+    EXPECT_EQ(false_result.error().UserMessage(), std::string_view{"StructureParser::ParseFalse: Expected 'false'"});
+}
+
 /// Tests that when the overridden OnBool method returns an error, that error is propagated.
 /// @trace           score::json::vajson::internal::StructureParser::ParseFalse
 TEST(UT__Parser__Bool, Dynamic__ParseFalse__Error)
@@ -147,7 +171,7 @@ TEST(UT__Parser__Bool, Dynamic__ParseFalse__Error)
 
     const auto parser_result{parser.Parse()};
     ASSERT_FALSE(parser_result.has_value());
-    ASSERT_EQ(parser_result.error(), JsonErrc::kUserValidationFailed);
+    ASSERT_EQ(parser_result.error(), JsonErrc::kInvalidJson);
     ASSERT_EQ(parser_result.error().UserMessage(), std::string_view{"OnBool called."});
 }
 
@@ -161,7 +185,7 @@ TEST(UT__Parser__Bool, Dynamic__ParseTrue__Error)
 
     const auto parser_result{parser.Parse()};
     ASSERT_FALSE(parser_result.has_value());
-    ASSERT_EQ(parser_result.error(), JsonErrc::kUserValidationFailed);
+    ASSERT_EQ(parser_result.error(), JsonErrc::kInvalidJson);
     ASSERT_EQ(parser_result.error().UserMessage(), std::string_view{"OnBool called."});
 }
 

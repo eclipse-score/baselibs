@@ -13,8 +13,8 @@
 #ifndef SCORE_MW_LOG_CONFIGURATION_ITARGET_CONFIG_READER_H
 #define SCORE_MW_LOG_CONFIGURATION_ITARGET_CONFIG_READER_H
 
-#include "score/result/result.h"
 #include "score/mw/log/configuration/configuration.h"
+#include "score/result/result.h"
 
 namespace score
 {

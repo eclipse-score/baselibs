@@ -13,6 +13,7 @@
 #include "score/filesystem/filestream/file_factory.h"
 #include "score/filesystem/factory/filesystem_factory.h"
 #include "score/filesystem/file_utils/file_test_utils.h"
+#include "score/filesystem/iterator/directory_iterator.h"
 #include "score/os/mocklib/fcntl_mock.h"
 #include "score/os/mocklib/stat_mock.h"
 #include "score/os/mocklib/unistdmock.h"
@@ -23,8 +24,12 @@
 
 #include <ftw.h>
 
+#include <cstddef>
 #include <cstdio>
 #include <iostream>
+#include <iterator>
+#include <string>
+#include <string_view>
 
 namespace score::filesystem
 {
@@ -194,6 +199,86 @@ TEST_F(FileFactoryTest, OldContentVisibleBeforeAtomicObjectGetsDeleted)
     file = *std::move(file_result);
     (*file) >> text;
     EXPECT_EQ(text, "Narf");
+}
+
+class FileFactoryFailedAtomicUpdateTest : public FileFactoryTest
+{
+  protected:
+    void SetUp() override
+    {
+        ASSERT_TRUE(filesystem_.standard->CreateDirectory(directory_).has_value());
+        auto file = unit_.Open(target_, std::ios::out | std::ios::trunc);
+        ASSERT_TRUE(file.has_value());
+        (**file) << kOldContent;
+    }
+
+    void TearDown() override
+    {
+        EXPECT_TRUE(filesystem_.standard->RemoveAll(directory_).has_value());
+    }
+
+    std::string ReadTarget()
+    {
+        auto file = unit_.Open(target_, std::ios::in);
+        std::string text;
+        if (file.has_value())
+        {
+            (**file) >> text;
+        }
+        return text;
+    }
+
+    std::ptrdiff_t CountDirectoryEntries() const
+    {
+        return std::distance(DirectoryIterator{directory_}, DirectoryIterator{});
+    }
+
+    static constexpr std::string_view kOldContent{"Test"};
+    Filesystem filesystem_{FilesystemFactory{}.CreateInstance()};
+    Path directory_{test_tmpdir_ / "failed_atomic_update"};
+    Path target_{directory_ / "target"};
+};
+
+TEST_F(FileFactoryFailedAtomicUpdateTest, CloseKeepsTargetUnchanged)
+{
+    RecordProperty("PartiallyVerifies", "comp_req__filesystem__file_io");
+    RecordProperty("Description",
+                   "Check that closing an atomic update whose stream has failed returns an error, keeps the target "
+                   "unchanged and removes the temporary file.");
+    RecordProperty("TestType", "interface-test");
+    RecordProperty("DerivationTechnique", "error-guessing");
+
+    auto update = unit_.AtomicUpdate(target_, std::ios::out | std::ios::trunc);
+    ASSERT_TRUE(update.has_value());
+    (**update) << "Narf";
+    (*update)->setstate(std::ios::failbit);
+
+    auto result = (*update)->Close();
+
+    ASSERT_FALSE(result.has_value());
+    EXPECT_EQ(result.error(), filesystem::ErrorCode::kCloseFailed);
+    EXPECT_EQ(ReadTarget(), kOldContent);
+    EXPECT_EQ(CountDirectoryEntries(), 1);
+}
+
+TEST_F(FileFactoryFailedAtomicUpdateTest, DestructionKeepsTargetUnchanged)
+{
+    RecordProperty("PartiallyVerifies", "comp_req__filesystem__file_io");
+    RecordProperty("Description",
+                   "Check that destroying an atomic update whose stream has failed keeps the target unchanged and "
+                   "removes the temporary file.");
+    RecordProperty("TestType", "interface-test");
+    RecordProperty("DerivationTechnique", "error-guessing");
+
+    auto update = unit_.AtomicUpdate(target_, std::ios::out | std::ios::trunc);
+    ASSERT_TRUE(update.has_value());
+    (**update) << "Narf";
+    (*update)->setstate(std::ios::badbit);
+
+    update->reset();
+
+    EXPECT_EQ(ReadTarget(), kOldContent);
+    EXPECT_EQ(CountDirectoryEntries(), 1);
 }
 
 TEST_F(FileFactoryTest, ErrorOnFailingAtomicUpdate)

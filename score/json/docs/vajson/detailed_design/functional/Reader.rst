@@ -49,11 +49,12 @@ Encoding
     :safety: ASIL_D
     :trace: CREQ-Json-Unicode
 
-Since all JSON characters are ASCII compliant and the score::json::vajson::internal::StructureParser just passes the data
-from the input stream to the event handler the user must handle the encoding.
-
-The method ``score::json::vajson::JsonData::GetEncoding()`` returns the detected encoding if the input stream contains a byte
-order mark (BOM).
+JSON syntax is ASCII-based, but JSON strings can contain UTF-8 encoded characters. The
+score::json::vajson::internal::StructureParser decodes JSON string escapes, including the two-character escapes and
+the ``\uXXXX`` escapes, before reporting strings and keys to the event handler. An escaped code point is reported
+UTF-8 encoded, and a UTF-16 surrogate pair is combined into the single code point it denotes. UTF-8 bytes
+present directly in the input are passed through without transcoding, so the user must provide input in the expected
+encoding and handle any application-specific encoding needs.
 
 
 Data Items
@@ -96,15 +97,10 @@ A Number of the input stream is reported to the applications event handler by ca
 The parameter of the function (score::json::vajson::JsonNumber) contains the number and can provide it in different formats
 to the application:
 
-* boolean
 * unsigned int (any unsigned integer smaller or equal to unsigned long long int)
 * signed int (any signed integer smaller or equal to long long int)
 * float
 * double
-* score::json::vajson::JsonNumber (for further processing by the application)
-
-The application can also try to convert the number to a user defined format by calling
-score::json::vajson::JsonNumber::Convert.
 
 
 Error reporting
@@ -116,4 +112,3 @@ Error reporting
 
 Upon detection of an error, the parser returns from Parse() with an ara::core::Result<void> and one of the errors
 defined in score::json::vajson::JsonErrc.
-Also, the position in the stream where the error has occurred is reported.

@@ -22,8 +22,9 @@ namespace log
 {
 namespace detail
 {
-std::unique_ptr<Recorder> ConsoleRecorderFactory::CreateConcreteLogRecorder(const Configuration& config,
-                                                                            score::cpp::pmr::memory_resource* memory_resource)
+std::unique_ptr<Recorder> ConsoleRecorderFactory::CreateConcreteLogRecorder(
+    const Configuration& config,
+    score::cpp::pmr::memory_resource* memory_resource)
 {
     auto backend = CreateConsoleLoggingBackend(config, memory_resource);
     constexpr bool kCheckLogLevelForConsole = true;

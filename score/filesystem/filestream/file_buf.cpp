@@ -35,6 +35,12 @@ Result<void> StdioFileBuf::Close()
     return {};
 }
 
+Result<void> StdioFileBuf::Discard()
+{
+    // Writes to a plain file are not staged, so there is nothing to roll back.
+    return Close();
+}
+
 AtomicFileBuf::AtomicFileBuf(int fd, std::ios::openmode mode, Path from_path, Path to_path)
     : StdioFileBuf{fd, mode}, from_path_{std::move(from_path)}, to_path_{std::move(to_path)}
 {
@@ -86,6 +92,24 @@ Result<void> AtomicFileBuf::Close()
     }
 
     cleanup.Release();
+    return {};
+}
+
+Result<void> AtomicFileBuf::Discard()
+{
+    if (!is_open())
+    {
+        return {};
+    }
+
+    const bool closed{close() != nullptr};
+    score::cpp::ignore = os::Unistd::instance().unlink(from_path_.CStr());
+
+    if (!closed)
+    {
+        return MakeUnexpected(ErrorCode::kCloseFailed, "Unable to close file descriptor file buffer");
+    }
+
     return {};
 }
 
