@@ -15,8 +15,20 @@
 
 #include <fcntl.h>
 #include <gtest/gtest.h>
+#include <pthread.h>
 #include <limits.h>
 #include <time.h>
+#include <cerrno>
+#include <csignal>
+#include <thread>
+
+namespace
+{
+bool SemAcquiredOrInvalid(const score::cpp::expected<score::cpp::blank, score::os::Error> result)
+{
+    return result.has_value() || result.error().GetOsDependentErrorCode() == EINVAL;
+}
+}  // namespace
 
 namespace score
 {
@@ -43,8 +55,7 @@ class SemaphoreTestFixture : public ::testing::Test
 // Positive test for sem_open()
 TEST_F(SemaphoreTestFixture, SuccessSemOpen)
 {
-    RecordProperty("Verifies", "SCR-46010294");
-    RecordProperty("ASIL", "B");
+    RecordProperty("PartiallyVerifies", "comp_req__osal__asil_b_operation_delegation");
     RecordProperty("Description", "SemaphoreTestFixture Success Sem Open");
     RecordProperty("TestType", "interface-test");
     RecordProperty("DerivationTechnique", "equivalence-classes");  // equivalence classes
@@ -66,8 +77,8 @@ TEST_F(SemaphoreTestFixture, SuccessSemOpen)
 // Negative test for sem_open()
 TEST_F(SemaphoreTestFixture, FailureSemOpen)
 {
-    RecordProperty("Verifies", "SCR-46010294");
-    RecordProperty("ASIL", "B");
+    RecordProperty("PartiallyVerifies",
+                   "comp_req__osal__asil_b_operation_delegation, comp_req__osal__error_information");
     RecordProperty("Description", "SemaphoreTestFixture Failure Sem Open");
     RecordProperty("TestType", "interface-test");
     RecordProperty("DerivationTechnique", "equivalence-classes");  // equivalence classes
@@ -80,8 +91,7 @@ TEST_F(SemaphoreTestFixture, FailureSemOpen)
 
 TEST_F(SemaphoreTestFixture, FailureSemOpenWithoutCreateFlag)
 {
-    RecordProperty("Verifies", "SCR-46010294");
-    RecordProperty("ASIL", "B");
+    RecordProperty("PartiallyVerifies", "comp_req__osal__asil_b_operation_delegation");
     RecordProperty("Description", "SemaphoreTestFixture Failure Sem Open Without Create Flag");
     RecordProperty("TestType", "interface-test");
     RecordProperty("DerivationTechnique", "equivalence-classes");  // equivalence classes
@@ -94,8 +104,7 @@ TEST_F(SemaphoreTestFixture, FailureSemOpenWithoutCreateFlag)
 // Positive test for sem_getvalue()
 TEST_F(SemaphoreTestFixture, SuccessGetValue)
 {
-    RecordProperty("Verifies", "SCR-46010294");
-    RecordProperty("ASIL", "B");
+    RecordProperty("PartiallyVerifies", "comp_req__osal__asil_b_operation_delegation");
     RecordProperty("Description", "SemaphoreTestFixture Success Get Value");
     RecordProperty("TestType", "interface-test");
     RecordProperty("DerivationTechnique", "equivalence-classes");  // equivalence classes
@@ -115,8 +124,8 @@ TEST_F(SemaphoreTestFixture, SuccessGetValue)
 // Negative test for sem_post()
 TEST_F(SemaphoreTestFixture, FailureSemPost)
 {
-    RecordProperty("Verifies", "SCR-46010294");
-    RecordProperty("ASIL", "B");
+    RecordProperty("PartiallyVerifies",
+                   "comp_req__osal__asil_b_operation_delegation, comp_req__osal__error_information");
     RecordProperty("Description", "SemaphoreTestFixture Failure Sem Post");
     RecordProperty("TestType", "interface-test");
     RecordProperty("DerivationTechnique", "equivalence-classes");  // equivalence classes
@@ -136,8 +145,7 @@ TEST_F(SemaphoreTestFixture, FailureSemPost)
 // Positive test for sem_timedwait()
 TEST_F(SemaphoreTestFixture, SuccessTimedWait)
 {
-    RecordProperty("Verifies", "SCR-46010294");
-    RecordProperty("ASIL", "B");
+    RecordProperty("PartiallyVerifies", "comp_req__osal__asil_b_operation_delegation");
     RecordProperty("Description", "SemaphoreTestFixture Success Timed Wait");
     RecordProperty("TestType", "interface-test");
     RecordProperty("DerivationTechnique", "equivalence-classes");  // equivalence classes
@@ -155,8 +163,7 @@ TEST_F(SemaphoreTestFixture, SuccessTimedWait)
 // Testing all modes in for Loop
 TEST_F(SemaphoreTestFixture, SuccessSemOpenAllModes)
 {
-    RecordProperty("Verifies", "SCR-46010294");
-    RecordProperty("ASIL", "B");
+    RecordProperty("PartiallyVerifies", "comp_req__osal__asil_b_operation_delegation");
     RecordProperty("Description", "SemaphoreTestFixture Success Sem Open All Modes");
     RecordProperty("TestType", "interface-test");
     RecordProperty("DerivationTechnique", "equivalence-classes");  // equivalence classes
@@ -184,8 +191,7 @@ TEST_F(SemaphoreTestFixture, SuccessSemOpenAllModes)
 // Positive test for sem_wait()
 TEST_F(SemaphoreTestFixture, SuccessSemWait)
 {
-    RecordProperty("Verifies", "SCR-46010294");
-    RecordProperty("ASIL", "B");
+    RecordProperty("PartiallyVerifies", "comp_req__osal__asil_b_operation_delegation");
     RecordProperty("Description", "SemaphoreTestFixture Success Sem Wait");
     RecordProperty("TestType", "interface-test");
     RecordProperty("DerivationTechnique", "equivalence-classes");  // equivalence classes
@@ -206,11 +212,58 @@ TEST_F(SemaphoreTestFixture, SuccessSemWait)
     unit_.sem_close(sem);
 }
 
+TEST_F(SemaphoreTestFixture, SuccessSemTryWait)
+{
+    RecordProperty("PartiallyVerifies", "comp_req__osal__asil_b_operation_delegation");
+    RecordProperty("Description", "SemaphoreTestFixture Success Sem Trywait");
+    RecordProperty("TestType", "interface-test");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
+
+    const auto sem = ::sem_open(m_name_.c_str(), O_CREAT, S_IRUSR, value_);
+    ASSERT_NE(sem, SEM_FAILED);
+
+    int sem_value{};
+    ASSERT_EQ(::sem_getvalue(sem, &sem_value), 0);
+    ASSERT_EQ(sem_value, value_);
+
+    auto wait_result = unit_.sem_trywait(sem);
+    ASSERT_TRUE(wait_result.has_value());
+
+    ASSERT_EQ(::sem_getvalue(sem, &sem_value), 0);
+    ASSERT_EQ(sem_value, value_ - 1);
+
+    unit_.sem_close(sem);
+}
+
+TEST_F(SemaphoreTestFixture, FailureSemTryWait)
+{
+    RecordProperty("PartiallyVerifies",
+                   "comp_req__osal__asil_b_operation_delegation, comp_req__osal__error_information");
+    RecordProperty("Description", "SemaphoreTestFixture Failure Sem Trywait");
+    RecordProperty("TestType", "interface-test");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
+
+    const auto sem = ::sem_open(m_name_.c_str(), O_CREAT, S_IRUSR, 0);
+    ASSERT_NE(sem, SEM_FAILED);
+
+    int sem_value{};
+    ASSERT_EQ(::sem_getvalue(sem, &sem_value), 0);
+    ASSERT_EQ(sem_value, 0);
+
+    auto try_wait_result = unit_.sem_trywait(sem);
+    ASSERT_FALSE(try_wait_result.has_value());
+    EXPECT_EQ(try_wait_result.error().GetOsDependentErrorCode(), EAGAIN);
+
+    ASSERT_EQ(::sem_getvalue(sem, &sem_value), 0);
+    ASSERT_EQ(sem_value, 0);
+
+    unit_.sem_close(sem);
+}
+
 // Positive test for sem_post()
 TEST_F(SemaphoreTestFixture, SuccessSemPost)
 {
-    RecordProperty("Verifies", "SCR-46010294");
-    RecordProperty("ASIL", "B");
+    RecordProperty("PartiallyVerifies", "comp_req__osal__asil_b_operation_delegation");
     RecordProperty("Description", "SemaphoreTestFixture Success Sem Post");
     RecordProperty("TestType", "interface-test");
     RecordProperty("DerivationTechnique", "equivalence-classes");  // equivalence classes
@@ -231,11 +284,111 @@ TEST_F(SemaphoreTestFixture, SuccessSemPost)
     unit_.sem_close(sem);
 }
 
+// Timeout test for EINTR with resume sem_waittimeout()
+TEST_F(SemaphoreTestFixture, TimeoutWaitTimeout)
+{
+    RecordProperty("PartiallyVerifies",
+                   "comp_req__osal__asil_b_operation_delegation, comp_req__osal__error_information");
+    RecordProperty("Description", "SemaphoreTestFixture Failure Wait Timeout");
+    RecordProperty("TestType", "interface-test");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
+
+    // Semaphore starts at 0 and nobody posts to it, so sem_waittimeout() must block and
+    // return ETIMEDOUT once the deadline passes. Deadline is 10 ms from now on CLOCK_MONOTONIC.
+    const auto ret = unit_.sem_open(m_name_.c_str(), Semaphore::OpenFlag::kCreate, Semaphore::ModeFlag::kReadUser, 0U);
+    ASSERT_TRUE(ret.has_value());
+    ASSERT_TRUE(ret.value() != nullptr);
+    const auto tp1 = std::chrono::steady_clock::now();
+    struct sigaction act, old;
+    act.sa_flags = 0;
+    act.sa_handler = [](int signal) {
+        (void)signal;
+    };
+    auto sigret = sigaction(SIGUSR1, &act, &old);
+    ASSERT_EQ(sigret, 0);
+
+    // create a thread sending signal to parent
+    std::thread s(
+        [](pthread_t parentId) {
+            std::this_thread::sleep_for(std::chrono::milliseconds(100));
+            sigset_t set;
+            sigemptyset(&set);
+            sigaddset(&set, SIGUSR1);
+            pthread_sigmask(SIG_BLOCK, &set, nullptr);
+            pthread_kill(parentId, SIGUSR1);
+            pthread_sigmask(SIG_UNBLOCK, &set, nullptr);
+        },
+        pthread_self());
+
+    const auto wait = unit_.sem_waittimeout(ret.value(), std::chrono::milliseconds(500), true);
+    const auto tp2 = std::chrono::steady_clock::now();
+    s.join();
+    // restore the previous setting
+    sigret = sigaction(SIGUSR1, &old, nullptr);
+    ASSERT_EQ(sigret, 0);
+
+    ASSERT_FALSE(wait.has_value());
+    EXPECT_EQ(wait.error().GetOsDependentErrorCode(), ETIMEDOUT);
+    // compare timestamps
+    ASSERT_GE(tp2 - tp1, std::chrono::milliseconds(500));
+    unit_.sem_close(ret.value());
+}
+
+// Timeout test for EINTR sem_waittimeout()
+TEST_F(SemaphoreTestFixture, TimeoutWaitTimeoutEINTR)
+{
+    RecordProperty("PartiallyVerifies",
+                   "comp_req__osal__asil_b_operation_delegation, comp_req__osal__error_information");
+    RecordProperty("Description", "SemaphoreTestFixture Failure Wait Timeout");
+    RecordProperty("TestType", "interface-test");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
+
+    // Semaphore starts at 0 and nobody posts to it, so sem_waittimeout() must block and
+    // return ETIMEDOUT once the deadline passes. Deadline is 10 ms from now on CLOCK_MONOTONIC.
+    const auto ret = unit_.sem_open(m_name_.c_str(), Semaphore::OpenFlag::kCreate, Semaphore::ModeFlag::kReadUser, 0U);
+    ASSERT_TRUE(ret.has_value());
+    ASSERT_TRUE(ret.value() != nullptr);
+    const auto tp1 = std::chrono::steady_clock::now();
+    struct sigaction act, old;
+    act.sa_flags = 0;
+    act.sa_handler = [](int signal) {
+        (void)signal;
+    };
+    auto sigret = sigaction(SIGUSR1, &act, &old);
+    ASSERT_EQ(sigret, 0);
+
+    // create a thread sending signal to parent
+    std::thread s(
+        [](pthread_t parentId) {
+            std::this_thread::sleep_for(std::chrono::milliseconds(100));
+            sigset_t set;
+            sigemptyset(&set);
+            sigaddset(&set, SIGUSR1);
+            pthread_sigmask(SIG_BLOCK, &set, nullptr);
+            pthread_kill(parentId, SIGUSR1);
+            pthread_sigmask(SIG_UNBLOCK, &set, nullptr);
+        },
+        pthread_self());
+
+    const auto wait = unit_.sem_waittimeout(ret.value(), std::chrono::milliseconds(500), false);
+    const auto tp2 = std::chrono::steady_clock::now();
+    s.join();
+    // restore the previous setting
+    sigret = sigaction(SIGUSR1, &old, nullptr);
+    ASSERT_EQ(sigret, 0);
+
+    ASSERT_FALSE(wait.has_value());
+    EXPECT_EQ(wait.error().GetOsDependentErrorCode(), EINTR);
+    // compare timestamps
+    ASSERT_LE(tp2 - tp1, std::chrono::milliseconds(300));
+    unit_.sem_close(ret.value());
+}
+
 // Positive Negative for sem_timedwait()
 TEST_F(SemaphoreTestFixture, SuccessTimedWaitFailure)
 {
-    RecordProperty("Verifies", "SCR-46010294");
-    RecordProperty("ASIL", "B");
+    RecordProperty("PartiallyVerifies",
+                   "comp_req__osal__asil_b_operation_delegation, comp_req__osal__error_information");
     RecordProperty("Description", "SemaphoreTestFixture Success Timed Wait Failure");
     RecordProperty("TestType", "interface-test");
     RecordProperty("DerivationTechnique", "equivalence-classes");  // equivalence classes
@@ -244,14 +397,15 @@ TEST_F(SemaphoreTestFixture, SuccessTimedWaitFailure)
     const auto sem = ::sem_open(m_name_.c_str(), O_CREAT, S_IRUSR, value_);
     ASSERT_NE(sem, SEM_FAILED);
     ASSERT_TRUE(sem != nullptr);
-    ASSERT_FALSE(unit_.sem_timedwait(sem, &abs_time).has_value());
+    const auto ret = unit_.sem_timedwait(sem, &abs_time);
+    ASSERT_PRED1(SemAcquiredOrInvalid, ret);
     unit_.sem_close(sem);
 }
 
 // Positive test for sem_timedwait_monotonic()
 TEST_F(SemaphoreTestFixture, SuccessTimedWaitMonotonic)
 {
-    RecordProperty("Verifies", "SCR-46010294");
+    RecordProperty("PartiallyVerifies", "comp_req__osal__asil_b_operation_delegation");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "SemaphoreTestFixture Success Timed Wait Monotonic");
     RecordProperty("TestType", "interface-test");
@@ -284,14 +438,16 @@ TEST_F(SemaphoreTestFixture, FailureTimedWaitMonotonic)
     const auto sem = ::sem_open(m_name_.c_str(), O_CREAT, S_IRUSR, value_);
     ASSERT_NE(sem, SEM_FAILED);
     ASSERT_TRUE(sem != nullptr);
-    ASSERT_FALSE(unit_.sem_timedwait_monotonic(sem, &abs_time).has_value());
+    const auto ret = unit_.sem_timedwait_monotonic(sem, &abs_time);
+    ASSERT_PRED1(SemAcquiredOrInvalid, ret);
     unit_.sem_close(sem);
 }
 
 // Timeout test for sem_timedwait_monotonic()
 TEST_F(SemaphoreTestFixture, TimeoutTimedWaitMonotonic)
 {
-    RecordProperty("Verifies", "SCR-46010294");
+    RecordProperty("PartiallyVerifies",
+                   "comp_req__osal__asil_b_operation_delegation, comp_req__osal__error_information");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "SemaphoreTestFixture Timeout Timed Wait Monotonic");
     RecordProperty("TestType", "interface-test");
@@ -314,15 +470,128 @@ TEST_F(SemaphoreTestFixture, TimeoutTimedWaitMonotonic)
     unit_.sem_close(ret.value());
 }
 
+// Positive test for chrono wrapper of sem_timedwait()
+TEST_F(SemaphoreTestFixture, SuccessTimedWaitChrono)
+{
+    RecordProperty("PartiallyVerifies", "comp_req__osal__asil_b_operation_delegation");
+    RecordProperty("ASIL", "B");
+    RecordProperty("Description", "SemaphoreTestFixture Success Timed Wait");
+    RecordProperty("TestType", "interface-test");
+    RecordProperty("DerivationTechnique", "equivalence-classes");  // equivalence classes
+
+    const auto tp = std::chrono::time_point_cast<std::chrono::nanoseconds>(std::chrono::system_clock::now() +
+                                                                           std::chrono::seconds{5});
+    const auto ret =
+        unit_.sem_open(m_name_.c_str(), Semaphore::OpenFlag::kCreate, Semaphore::ModeFlag::kReadUser, value_);
+    ASSERT_TRUE(ret.has_value());
+    ASSERT_TRUE(ret.value() != nullptr);
+    ASSERT_TRUE(unit_.sem_timedwait(ret.value(), tp, true).has_value());
+    unit_.sem_close(ret.value());
+}
+
+// Positive Negative for chrono wrapper of sem_timedwait()
+TEST_F(SemaphoreTestFixture, SuccessTimedWaitFailureChrono)
+{
+    RecordProperty("PartiallyVerifies",
+                   "comp_req__osal__asil_b_operation_delegation, comp_req__osal__error_information");
+    RecordProperty("ASIL", "B");
+    RecordProperty("Description", "SemaphoreTestFixture Success Timed Wait Failure");
+    RecordProperty("TestType", "interface-test");
+    RecordProperty("DerivationTechnique", "equivalence-classes");  // equivalence classes
+
+    const std::chrono::time_point<std::chrono::system_clock, std::chrono::nanoseconds> abs_time{
+        std::chrono::nanoseconds{-1}};
+    const auto sem = ::sem_open(m_name_.c_str(), O_CREAT, S_IRUSR, value_);
+    ASSERT_NE(sem, SEM_FAILED);
+    ASSERT_TRUE(sem != nullptr);
+    const auto ret = unit_.sem_timedwait(sem, abs_time, true);
+    ASSERT_PRED1(SemAcquiredOrInvalid, ret);
+    unit_.sem_close(sem);
+}
+
+// Positive test for chrono wrapper of sem_timedwait_monotonic()
+TEST_F(SemaphoreTestFixture, SuccessTimedWaitMonotonicChrono)
+{
+    RecordProperty("PartiallyVerifies", "comp_req__osal__asil_b_operation_delegation");
+    RecordProperty("Description", "SemaphoreTestFixture Success Timed Wait Monotonic");
+    RecordProperty("TestType", "interface-test");
+    RecordProperty("DerivationTechnique", "equivalence-classes");  // equivalence classes
+
+    // The timeout is expressed against CLOCK_MONOTONIC. Since the semaphore is created with value 1 it can be
+    // decremented immediately, so the call returns success without ever blocking until the (future) deadline.
+    const auto tp = std::chrono::time_point_cast<std::chrono::nanoseconds>(std::chrono::steady_clock::now() +
+                                                                           std::chrono::seconds{5});
+    const auto ret =
+        unit_.sem_open(m_name_.c_str(), Semaphore::OpenFlag::kCreate, Semaphore::ModeFlag::kReadUser, value_);
+    ASSERT_TRUE(ret.has_value());
+    ASSERT_TRUE(ret.value() != nullptr);
+    ASSERT_TRUE(unit_.sem_timedwait_monotonic(ret.value(), tp, true).has_value());
+    unit_.sem_close(ret.value());
+}
+
+// Timeout test for chrono wrapper of sem_timedwait_monotonic()
+TEST_F(SemaphoreTestFixture, TimeoutTimedWaitMonotonicChrono)
+{
+    RecordProperty("PartiallyVerifies",
+                   "comp_req__osal__asil_b_operation_delegation, comp_req__osal__error_information");
+    RecordProperty("Description", "SemaphoreTestFixture Timeout Timed Wait Monotonic");
+    RecordProperty("TestType", "interface-test");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
+
+    // Semaphore starts at 0 and nobody posts to it, so sem_timedwait_monotonic() must block and
+    // return ETIMEDOUT once the deadline passes. Deadline is 10 ms from now on CLOCK_MONOTONIC.
+    const auto tp = std::chrono::time_point_cast<std::chrono::nanoseconds>(std::chrono::steady_clock::now() +
+                                                                           std::chrono::milliseconds{5});
+    const auto ret = unit_.sem_open(m_name_.c_str(), Semaphore::OpenFlag::kCreate, Semaphore::ModeFlag::kReadUser, 0U);
+    ASSERT_TRUE(ret.has_value());
+    ASSERT_TRUE(ret.value() != nullptr);
+    ASSERT_FALSE(unit_.sem_timedwait_monotonic(ret.value(), tp, true).has_value());
+    unit_.sem_close(ret.value());
+}
+
+// Negative test for chrono wrapper of sem_timedwait_monotonic()
+TEST_F(SemaphoreTestFixture, FailureTimedWaitMonotonicChrono)
+{
+    RecordProperty("PartiallyVerifies",
+                   "comp_req__osal__asil_b_operation_delegation, comp_req__osal__error_information");
+    RecordProperty("Description", "SemaphoreTestFixture Failure Timed Wait Monotonic");
+    RecordProperty("TestType", "interface-test");
+    RecordProperty("DerivationTechnique", "equivalence-classes");  // equivalence classes
+
+    // An invalid nanoseconds field is rejected with EINVAL before the semaphore can be decremented.
+    const std::chrono::time_point<std::chrono::steady_clock, std::chrono::nanoseconds> abs_time{
+        std::chrono::nanoseconds{-1}};
+    const auto sem = ::sem_open(m_name_.c_str(), O_CREAT, S_IRUSR, value_);
+    ASSERT_NE(sem, SEM_FAILED);
+    ASSERT_TRUE(sem != nullptr);
+    const auto ret = unit_.sem_timedwait_monotonic(sem, abs_time, true);
+    ASSERT_PRED1(SemAcquiredOrInvalid, ret);
+    unit_.sem_close(sem);
+}
+
 TEST(Semaphore, get_instance)
 {
-    RecordProperty("Verifies", "SCR-46010294");
-    RecordProperty("ASIL", "B");
+    RecordProperty("PartiallyVerifies", "comp_req__osal__asil_b_operation_delegation");
     RecordProperty("Description", "Semaphore get_instance");
     RecordProperty("TestType", "interface-test");
     RecordProperty("DerivationTechnique", "equivalence-classes");  // equivalence classes
 
     EXPECT_NO_FATAL_FAILURE(Semaphore::instance());
+}
+
+// Positive test for sem_open()
+TEST_F(SemaphoreTestFixture, SuccessSemDestroy)
+{
+    RecordProperty("PartiallyVerifies", "comp_req__osal__asil_b_operation_delegation");
+    RecordProperty("Description", "SemaphoreTestFixture Destroy");
+    RecordProperty("TestType", "interface-test");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
+
+    sem_t sem;
+    auto ret = unit_.sem_init(&sem, 0, value_);
+    ASSERT_TRUE(ret.has_value());
+    ret = unit_.sem_destroy(&sem);
+    ASSERT_TRUE(ret.has_value());
 }
 
 }  // namespace test

@@ -21,6 +21,7 @@
 
 #include <semaphore.h>
 #include <unistd.h>
+#include <chrono>
 
 namespace score
 {
@@ -60,6 +61,8 @@ class Semaphore : public ObjectSeam<Semaphore>
                                                          const std::uint32_t value) const noexcept = 0;
     virtual score::cpp::expected<sem_t*, Error> sem_open(const char* const pathname,
                                                          const OpenFlag oflag) const noexcept = 0;
+    virtual score::cpp::expected_blank<Error> sem_destroy(sem_t* const sem) const noexcept = 0;
+    virtual score::cpp::expected_blank<Error> sem_trywait(sem_t* const sem) const noexcept = 0;
     virtual score::cpp::expected_blank<Error> sem_wait(sem_t* const sem) const noexcept = 0;
     virtual score::cpp::expected_blank<Error> sem_post(sem_t* const sem) const noexcept = 0;
     virtual score::cpp::expected_blank<Error> sem_close(sem_t* const sem) const noexcept = 0;
@@ -69,6 +72,17 @@ class Semaphore : public ObjectSeam<Semaphore>
     virtual score::cpp::expected_blank<Error> sem_timedwait_monotonic(
         sem_t* const sem,
         const struct timespec* const abs_time) const noexcept = 0;
+    virtual score::cpp::expected_blank<Error> sem_waittimeout(sem_t* const sem,
+                                                              const std::chrono::nanoseconds timeout,
+                                                              const bool resume_on_eintr) const noexcept = 0;
+    virtual score::cpp::expected_blank<Error> sem_timedwait(
+        sem_t* const sem,
+        const std::chrono::time_point<std::chrono::system_clock, std::chrono::nanoseconds> tp,
+        const bool resume_on_eintr) const noexcept = 0;
+    virtual score::cpp::expected_blank<Error> sem_timedwait_monotonic(
+        sem_t* const sem,
+        const std::chrono::time_point<std::chrono::steady_clock, std::chrono::nanoseconds> tp,
+        const bool resume_on_eintr) const noexcept = 0;
     virtual score::cpp::expected_blank<Error> sem_getvalue(sem_t* const sem,
                                                            std::int32_t* const sval) const noexcept = 0;
 
