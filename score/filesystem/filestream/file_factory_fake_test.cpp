@@ -16,6 +16,8 @@
 
 #include <gtest/gtest.h>
 
+#include <string>
+
 namespace score
 {
 namespace filesystem
@@ -92,6 +94,41 @@ TEST(FileFactoryFakeTest, AtomicUpdateKeepsContentOfStreamFailingAfterClose)
     }
 
     EXPECT_EQ(unit.Get("/tmp/some_file").str(), "Bar");
+}
+
+TEST(FileFactoryFakeTest, OpenRegularFileReadsStringStream)
+{
+    RecordProperty("PartiallyVerifies", "comp_req__filesystem__mock_fake");
+    RecordProperty("Description", "Check that the fake opens a stream of the collection as a regular file.");
+    RecordProperty("TestType", "interface-test");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
+
+    SimpleStringStreamCollection collection{};
+    FileFactoryFake unit{collection};
+    *unit.Open("/tmp/some_file", std::ios_base::out).value() << "Foo";
+
+    auto file_result = unit.OpenRegularFile("/tmp/some_file", std::ios_base::in);
+
+    ASSERT_TRUE(file_result.has_value());
+    std::string content{};
+    *file_result.value() >> content;
+    EXPECT_EQ(content, "Foo");
+}
+
+TEST(FileFactoryFakeTest, OpenRegularFileFailsToOpenStringStream)
+{
+    RecordProperty("PartiallyVerifies", "comp_req__filesystem__mock_fake");
+    RecordProperty("Description", "Check that the fake returns an error when the stream cannot be opened.");
+    RecordProperty("TestType", "interface-test");
+    RecordProperty("DerivationTechnique", "error-guessing");
+
+    BadStringStreamCollection bad_collection{};  // LCOV_EXCL_LINE
+    FileFactoryFake unit{bad_collection};
+
+    const auto file_result = unit.OpenRegularFile("/tmp/some_file", std::ios_base::in);
+
+    ASSERT_FALSE(file_result.has_value());
+    EXPECT_EQ(static_cast<ErrorCode>(*file_result.error()), ErrorCode::kCouldNotOpenFileStream);
 }
 
 }  // namespace

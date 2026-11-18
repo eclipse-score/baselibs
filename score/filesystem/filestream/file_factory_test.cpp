@@ -23,9 +23,11 @@
 #include <gtest/gtest.h>
 
 #include <ftw.h>
+#include <sys/stat.h>
 
 #include <cstddef>
 #include <cstdio>
+#include <fstream>
 #include <iostream>
 #include <iterator>
 #include <string>
@@ -476,6 +478,201 @@ TEST(FileFactoryHelpersTest, ComposeTempFilenameUsesAllParameters)
 {
     const auto result = details::ComposeTempFilename("foo", 42, 32);
     EXPECT_EQ(result, ".foo-000042-00000032");
+}
+
+constexpr auto kRegularFileOpenRequirement{"comp_req__filesystem__regular_file_open"};
+
+Path CreateRegularFile(const Path& directory, const std::string& content)
+{
+    const Path path{directory / "regular_file"};
+    std::ofstream file{path.Native()};
+    file << content;
+    return path;
+}
+
+TEST_F(FileFactoryTest, OpenRegularFileReadsRegularFile)
+{
+    RecordProperty("PartiallyVerifies", kRegularFileOpenRequirement);
+    RecordProperty("Description", "Check that a regular file is opened for reading and its content can be read.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
+    const Path path{CreateRegularFile(test_tmpdir_, "Foo")};
+
+    auto file = unit_.OpenRegularFile(path, std::ios::in);
+
+    ASSERT_TRUE(file.has_value());
+    const std::string content{std::istreambuf_iterator<char>{*file.value()}, std::istreambuf_iterator<char>{}};
+    EXPECT_EQ(content, "Foo");
+    std::remove(path.CStr());
+}
+
+TEST_F(FileFactoryTest, OpenRegularFileCreatesAndWritesRegularFile)
+{
+    RecordProperty("PartiallyVerifies", kRegularFileOpenRequirement);
+    RecordProperty("Description", "Check that a new regular file is created and written when opened for writing.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
+    const Path path{test_tmpdir_ / "new_file"};
+    std::remove(path.CStr());
+
+    auto file = unit_.OpenRegularFile(path, std::ios::out | std::ios::trunc);
+    ASSERT_TRUE(file.has_value());
+    *file.value() << "Foo";
+    file.value().reset();
+
+    std::ifstream written{path.Native()};
+    const std::string content{std::istreambuf_iterator<char>{written}, std::istreambuf_iterator<char>{}};
+    EXPECT_EQ(content, "Foo");
+    std::remove(path.CStr());
+}
+
+TEST_F(FileFactoryTest, OpenRegularFileRejectsFifoForReadingWithoutBlocking)
+{
+    RecordProperty("PartiallyVerifies", kRegularFileOpenRequirement);
+    RecordProperty("Description", "Check that opening a FIFO without a writer for reading is rejected.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
+    const Path path{test_tmpdir_ / "fifo"};
+    std::remove(path.CStr());
+    ASSERT_EQ(::mkfifo(path.CStr(), S_IRUSR | S_IWUSR), 0);
+
+    const auto file = unit_.OpenRegularFile(path, std::ios::in);
+    std::remove(path.CStr());
+
+    ASSERT_FALSE(file.has_value());
+    EXPECT_EQ(file.error(), ErrorCode::kNotARegularFile);
+}
+
+TEST_F(FileFactoryTest, OpenRegularFileRejectsFifoForWritingWithoutBlocking)
+{
+    RecordProperty("PartiallyVerifies", kRegularFileOpenRequirement);
+    RecordProperty("Description", "Check that opening a FIFO without a reader for writing is rejected.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
+    const Path path{test_tmpdir_ / "fifo"};
+    std::remove(path.CStr());
+    ASSERT_EQ(::mkfifo(path.CStr(), S_IRUSR | S_IWUSR), 0);
+
+    const auto file = unit_.OpenRegularFile(path, std::ios::out);
+    std::remove(path.CStr());
+
+    ASSERT_FALSE(file.has_value());
+    EXPECT_EQ(file.error(), ErrorCode::kNotARegularFile);
+}
+
+TEST_F(FileFactoryTest, OpenRegularFileRejectsDirectory)
+{
+    RecordProperty("PartiallyVerifies", kRegularFileOpenRequirement);
+    RecordProperty("Description", "Check that a directory is rejected.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
+
+    const auto file = unit_.OpenRegularFile(test_tmpdir_, std::ios::in);
+
+    ASSERT_FALSE(file.has_value());
+    EXPECT_EQ(file.error(), ErrorCode::kNotARegularFile);
+}
+
+TEST_F(FileFactoryTest, OpenRegularFileFailsForMissingFile)
+{
+    RecordProperty("PartiallyVerifies", kRegularFileOpenRequirement);
+    RecordProperty("Description", "Check that opening a missing file for reading fails.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "error-guessing");
+
+    const auto file = unit_.OpenRegularFile(test_tmpdir_ / "missing_file", std::ios::in);
+
+    ASSERT_FALSE(file.has_value());
+    EXPECT_EQ(file.error(), ErrorCode::kCouldNotOpenFileStream);
+}
+
+TEST_F(FileFactoryTestWithStatMock, OpenRegularFileClosesFileWhenStatusIsUnavailable)
+{
+    RecordProperty("PartiallyVerifies", kRegularFileOpenRequirement);
+    RecordProperty("Description", "Check that the file is closed and an error returned when fstat fails.");
+    RecordProperty("TestType", "fault-injection");
+    RecordProperty("DerivationTechnique", "error-guessing");
+    const Path path{CreateRegularFile(test_tmpdir_, "Foo")};
+    EXPECT_CALL(*stat_, fstat(_, _))
+        .WillOnce(Return(score::cpp::make_unexpected(score::os::Error::createUnspecifiedError())));
+    EXPECT_CALL(*unistd_, close(_)).WillOnce(Return(score::cpp::expected_blank<os::Error>{}));
+
+    const auto file = unit_.OpenRegularFile(path, std::ios::in);
+    std::remove(path.CStr());
+
+    ASSERT_FALSE(file.has_value());
+    EXPECT_EQ(file.error(), ErrorCode::kCouldNotRetrieveStatus);
+}
+
+class OpenRegularFileWithFcntlMock : public FileFactoryTestWithFcntlMock
+{
+  protected:
+    void SetUp() override
+    {
+        path_ = CreateRegularFile(test_tmpdir_, "Foo");
+        // NOLINTNEXTLINE(score-banned-function): The mocked open returns a real descriptor.
+        file_descriptor_ = ::open(path_.CStr(), O_RDONLY);
+        ASSERT_GE(file_descriptor_, 0);
+        EXPECT_CALL(*fcntl_, open(_, os::Fcntl::Open::kReadOnly | os::Fcntl::Open::kNonBlocking, _))
+            .WillOnce(Return(file_descriptor_));
+    }
+
+    void TearDown() override
+    {
+        std::remove(path_.CStr());
+    }
+
+    Path path_{};
+    std::int32_t file_descriptor_{-1};
+};
+
+TEST_F(OpenRegularFileWithFcntlMock, RestoresBlockingIo)
+{
+    RecordProperty("PartiallyVerifies", kRegularFileOpenRequirement);
+    RecordProperty("Description", "Check that the non-blocking flag is cleared after the file type check.");
+    RecordProperty("TestType", "interface-test");
+    RecordProperty("DerivationTechnique", "design-analysis");
+    EXPECT_CALL(*fcntl_, fcntl(file_descriptor_, os::Fcntl::Command::kFileGetStatusFlags))
+        .WillOnce(Return(score::cpp::expected<os::Fcntl::Open, os::Error>{os::Fcntl::Open::kReadOnly |
+                                                                          os::Fcntl::Open::kNonBlocking}));
+    EXPECT_CALL(*fcntl_, fcntl(file_descriptor_, os::Fcntl::Command::kFileSetStatusFlags, os::Fcntl::Open::kReadOnly))
+        .WillOnce(Return(score::cpp::expected_blank<os::Error>{}));
+
+    const auto file = unit_.OpenRegularFile(path_, std::ios::in);
+
+    EXPECT_TRUE(file.has_value());
+}
+
+TEST_F(OpenRegularFileWithFcntlMock, FailsWhenStatusFlagsCannotBeRead)
+{
+    RecordProperty("PartiallyVerifies", kRegularFileOpenRequirement);
+    RecordProperty("Description", "Check that an error is returned when the file status flags cannot be read.");
+    RecordProperty("TestType", "fault-injection");
+    RecordProperty("DerivationTechnique", "error-guessing");
+    EXPECT_CALL(*fcntl_, fcntl(file_descriptor_, os::Fcntl::Command::kFileGetStatusFlags))
+        .WillOnce(Return(score::cpp::make_unexpected(score::os::Error::createUnspecifiedError())));
+
+    const auto file = unit_.OpenRegularFile(path_, std::ios::in);
+
+    ASSERT_FALSE(file.has_value());
+    EXPECT_EQ(file.error(), ErrorCode::kCouldNotOpenFileStream);
+}
+
+TEST_F(OpenRegularFileWithFcntlMock, FailsWhenBlockingIoCannotBeRestored)
+{
+    RecordProperty("PartiallyVerifies", kRegularFileOpenRequirement);
+    RecordProperty("Description", "Check that an error is returned when the non-blocking flag cannot be cleared.");
+    RecordProperty("TestType", "fault-injection");
+    RecordProperty("DerivationTechnique", "error-guessing");
+    EXPECT_CALL(*fcntl_, fcntl(file_descriptor_, os::Fcntl::Command::kFileGetStatusFlags))
+        .WillOnce(Return(score::cpp::expected<os::Fcntl::Open, os::Error>{os::Fcntl::Open::kReadOnly}));
+    EXPECT_CALL(*fcntl_, fcntl(file_descriptor_, os::Fcntl::Command::kFileSetStatusFlags, _))
+        .WillOnce(Return(score::cpp::make_unexpected(score::os::Error::createUnspecifiedError())));
+
+    const auto file = unit_.OpenRegularFile(path_, std::ios::in);
+
+    ASSERT_FALSE(file.has_value());
+    EXPECT_EQ(file.error(), ErrorCode::kCouldNotOpenFileStream);
 }
 
 }  // namespace

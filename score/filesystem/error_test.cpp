@@ -67,6 +67,7 @@ TEST_F(FilesystemErrorTest, AllMessages)
     ASSERT_TRUE(ErrorMessageContains(ErrorCode::kCouldNotRenameFile, "Could not rename file"));
     ASSERT_TRUE(ErrorMessageContains(ErrorCode::kCloseFailed, "Close failed"));
     ASSERT_TRUE(ErrorMessageContains(ErrorCode::kNotImplemented, "Not implemented"));
+    ASSERT_TRUE(ErrorMessageContains(ErrorCode::kNotARegularFile, "Not a regular file"));
 }
 
 TEST_F(FilesystemErrorTest, UserMessage)

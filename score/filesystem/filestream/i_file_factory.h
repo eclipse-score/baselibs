@@ -48,6 +48,15 @@ class IFileFactory : public os::ObjectSeam<IFileFactory>
     /// @brief Opens a respective file stream under the provided path
     virtual score::Result<std::unique_ptr<std::iostream>> Open(const Path&, const std::ios_base::openmode mode) = 0;
 
+    /// @brief Opens a regular file like Open, without blocking on special files such as FIFOs.
+    /// @details The file type is checked on the opened file, so replacing the path cannot bypass the check.
+    /// @param path Path to the file.
+    /// @param mode The open mode, as for Open.
+    /// @return On success, a file stream, ErrorCode::kNotARegularFile if the path does not refer to a regular file,
+    ///     another error otherwise.
+    virtual score::Result<std::unique_ptr<std::iostream>> OpenRegularFile(const Path& path,
+                                                                          const std::ios_base::openmode mode) = 0;
+
     /// Open a (possibly existing) file for atomic updating its contents, creating it if it does not exist.
     ///
     /// If the file already exists, its contents get replaced by the new data when the returned object goes out of

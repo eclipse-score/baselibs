@@ -44,6 +44,9 @@ class FileFactory final : public IFileFactory
 
     Result<std::unique_ptr<std::iostream>> Open(const Path&, const std::ios_base::openmode mode) override;
 
+    Result<std::unique_ptr<std::iostream>> OpenRegularFile(const Path& path,
+                                                           const std::ios_base::openmode mode) override;
+
     // as intended, we don't enforce users to specify ownership flags unless needed
     // defaults for override and base function are the same thus static binding is safe
     // NOLINTNEXTLINE(google-default-arguments) : see above
