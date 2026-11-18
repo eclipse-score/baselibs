@@ -3395,7 +3395,7 @@
     "@@score_bazel_cpp_toolchains+//extensions:gcc.bzl%gcc": {
       "general": {
         "bzlTransitiveDigest": "1uoPeLCLNfwipcI4cVe0B+KMMoZfwjZ3QFQzLpztFnE=",
-        "usagesDigest": "ilxGQxExNoEr7zm41aZtOpqCn6X7hFsh/82/T5lNDU0=",
+        "usagesDigest": "+FH2gGBNXpMlY6V99rYlPUC9ttmlt4V7w5giS6UCTRw=",
         "recordedInputs": [
           "REPO_MAPPING:,score_cpp_policies score_cpp_policies+",
           "REPO_MAPPING:bazel_tools,rules_cc rules_cc+",
@@ -3435,6 +3435,42 @@
               "patch_tool": "",
               "patches": [],
               "sha256": "7279b1adb50361b21f5266b001980b6febb35fa8d83170901196b9edae3f06d9",
+              "strip_prefix": "aarch64-unknown-linux-gnu",
+              "type": ""
+            }
+          },
+          "score_gcc_x86_64_toolchain_gcc15_pkg": {
+            "repoRuleId": "@@bazel_tools//tools/build_defs/repo:http.bzl%http_archive",
+            "attributes": {
+              "urls": [
+                "https://github.com/eclipse-score/toolchains_gcc_packages/releases/download/v0.0.5/x86_64-unknown-linux-gnu_gcc15.tar.gz"
+              ],
+              "build_file": "@@score_bazel_cpp_toolchains+//packages/linux/x86_64/gcc/15.3.0:gcc.BUILD",
+              "files": {},
+              "patch_args": [],
+              "patch_cmds": [],
+              "patch_strip": 0,
+              "patch_tool": "",
+              "patches": [],
+              "sha256": "c65e21725d4d9993bab0b4ef2aed7065a4bf1b0f232a068d778eb670f80daa60",
+              "strip_prefix": "x86_64-unknown-linux-gnu",
+              "type": ""
+            }
+          },
+          "score_gcc_aarch64_toolchain_gcc15_pkg": {
+            "repoRuleId": "@@bazel_tools//tools/build_defs/repo:http.bzl%http_archive",
+            "attributes": {
+              "urls": [
+                "https://github.com/eclipse-score/toolchains_gcc_packages/releases/download/v0.0.5/aarch64-unknown-linux-gnu_gcc15.tar.gz"
+              ],
+              "build_file": "@@score_bazel_cpp_toolchains+//packages/linux/aarch64/gcc/15.3.0:gcc.BUILD",
+              "files": {},
+              "patch_args": [],
+              "patch_cmds": [],
+              "patch_strip": 0,
+              "patch_tool": "",
+              "patches": [],
+              "sha256": "ff9fe6caed22f15a1dd87a93bff5cfa1536b5dddcff3364827f97ebc01a494a1",
               "strip_prefix": "aarch64-unknown-linux-gnu",
               "type": ""
             }
@@ -3545,6 +3581,82 @@
               "tc_system_toolchain": false,
               "tc_runtime_ecosystem": "",
               "gcc_version": "12.2.0",
+              "cc_toolchain_config": "@@score_bazel_cpp_toolchains+//templates:cc_toolchain_config.bzl.template",
+              "use_base_constraints_only": false
+            }
+          },
+          "score_gcc_x86_64_toolchain_gcc15": {
+            "repoRuleId": "@@score_bazel_cpp_toolchains+//rules:gcc.bzl%gcc_toolchain",
+            "attributes": {
+              "extra_compile_flags": [],
+              "extra_c_compile_flags": [],
+              "extra_cxx_compile_flags": [],
+              "extra_known_features": [
+                "@@score_cpp_policies+//warnings/gcc/features:minimal_warnings",
+                "@@score_cpp_policies+//warnings/gcc/features:strict_warnings",
+                "@@score_cpp_policies+//warnings/gcc/features:all_wall_warnings",
+                "@@score_cpp_policies+//warnings/gcc/features:warnings_as_errors",
+                "@@score_cpp_policies+//sanitizers/features:debug_symbols",
+                "@@score_cpp_policies+//sanitizers/features:asan",
+                "@@score_cpp_policies+//sanitizers/features:ubsan_base",
+                "@@score_cpp_policies+//sanitizers/features:lsan",
+                "@@score_cpp_policies+//sanitizers/features:tsan",
+                "@@score_cpp_policies+//sanitizers/features:ubsan_gcc"
+              ],
+              "extra_enabled_features": [],
+              "extra_link_flags": [],
+              "license_info_variable": "",
+              "license_info_value": "",
+              "license_path": "/opt/score_qnx/license/licenses",
+              "sdk_version": "",
+              "sdp_version": "",
+              "tc_compiler_library_search_paths": [],
+              "tc_cpu": "x86_64",
+              "tc_identifier": "gcc_15.3.0",
+              "tc_os": "linux",
+              "tc_pkg_repo": "score_gcc_x86_64_toolchain_gcc15_pkg",
+              "tc_tool_suffix": "",
+              "tc_system_toolchain": false,
+              "tc_runtime_ecosystem": "",
+              "gcc_version": "15.3.0",
+              "cc_toolchain_config": "@@score_bazel_cpp_toolchains+//templates:cc_toolchain_config.bzl.template",
+              "use_base_constraints_only": false
+            }
+          },
+          "score_gcc_aarch64_toolchain_gcc15": {
+            "repoRuleId": "@@score_bazel_cpp_toolchains+//rules:gcc.bzl%gcc_toolchain",
+            "attributes": {
+              "extra_compile_flags": [],
+              "extra_c_compile_flags": [],
+              "extra_cxx_compile_flags": [],
+              "extra_known_features": [
+                "@@score_cpp_policies+//warnings/gcc/features:minimal_warnings",
+                "@@score_cpp_policies+//warnings/gcc/features:strict_warnings",
+                "@@score_cpp_policies+//warnings/gcc/features:all_wall_warnings",
+                "@@score_cpp_policies+//warnings/gcc/features:warnings_as_errors",
+                "@@score_cpp_policies+//sanitizers/features:debug_symbols",
+                "@@score_cpp_policies+//sanitizers/features:asan",
+                "@@score_cpp_policies+//sanitizers/features:ubsan_base",
+                "@@score_cpp_policies+//sanitizers/features:lsan",
+                "@@score_cpp_policies+//sanitizers/features:tsan",
+                "@@score_cpp_policies+//sanitizers/features:ubsan_gcc"
+              ],
+              "extra_enabled_features": [],
+              "extra_link_flags": [],
+              "license_info_variable": "",
+              "license_info_value": "",
+              "license_path": "/opt/score_qnx/license/licenses",
+              "sdk_version": "",
+              "sdp_version": "",
+              "tc_compiler_library_search_paths": [],
+              "tc_cpu": "aarch64",
+              "tc_identifier": "gcc_15.3.0",
+              "tc_os": "linux",
+              "tc_pkg_repo": "score_gcc_aarch64_toolchain_gcc15_pkg",
+              "tc_tool_suffix": "",
+              "tc_system_toolchain": false,
+              "tc_runtime_ecosystem": "",
+              "gcc_version": "15.3.0",
               "cc_toolchain_config": "@@score_bazel_cpp_toolchains+//templates:cc_toolchain_config.bzl.template",
               "use_base_constraints_only": false
             }

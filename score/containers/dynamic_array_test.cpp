@@ -17,6 +17,7 @@
 
 #include "score/containers/test/fake_memory_resource.h"
 #include "score/containers/test/fancy_pointer_allocator.h"
+#include "score/quality/compiler_warnings/warnings.h"
 
 #include <score/assert_support.hpp>
 
@@ -335,7 +336,10 @@ TYPED_TEST(DynamicArrayTestFixture, SelfMoveAssign)
                                               GetAllocator<TrivialType, TypeParam>(this->memory_resource_)};
 
     // when doing a self-move-assign
+    DISABLE_WARNING_PUSH
+    DISABLE_WARNING_SELF_MOVE
     unit = std::move(unit);
+    DISABLE_WARNING_POP
 
     // expect, that the unit afterward still has the same size
     EXPECT_EQ(unit.size(), kNonEmptyArraySize);

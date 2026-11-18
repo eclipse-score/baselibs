@@ -15,17 +15,15 @@
 
 OpenSSL is a C library that uses GNU extensions and patterns that trigger
 warnings under strict compilation settings. This transition adjusts the
-active toolchain features rather than injecting raw compiler flags, making
-it portable across all integrated toolchains:
+active toolchain features and C compiler options:
 
   - Enables  "gnu11"            so the toolchain applies the GNU C11 dialect
                                  required by OpenSSL's GNU extensions.
   - Disables "minimal_warnings", "strict_warnings", "warnings_as_errors"
                                  so OpenSSL's legitimate warning patterns do
                                  not cause build failures.
-
-Each toolchain translates these feature names into its own concrete flags,
-keeping this transition platform-agnostic.
+  - Defines "_DEFAULT_SOURCE"   to restore libc declarations hidden by the
+                                 toolchain's "_XOPEN_SOURCE" definition.
 
 The transition is applied only to the non-QNX case (see BUILD), since QNX
 uses a separately maintained OpenSSL target.
@@ -45,13 +43,20 @@ def _openssl_transition_impl(settings, attr):
             updated.append(f)
     updated.append("gnu11")
     return {
+        "//command_line_option:conlyopt": list(settings["//command_line_option:conlyopt"]) + ["-D_DEFAULT_SOURCE"],
         "//command_line_option:features": updated,
     }
 
 _openssl_transition = transition(
     implementation = _openssl_transition_impl,
-    inputs = ["//command_line_option:features"],
-    outputs = ["//command_line_option:features"],
+    inputs = [
+        "//command_line_option:conlyopt",
+        "//command_line_option:features",
+    ],
+    outputs = [
+        "//command_line_option:conlyopt",
+        "//command_line_option:features",
+    ],
 )
 
 def _openssl_library_impl(ctx):

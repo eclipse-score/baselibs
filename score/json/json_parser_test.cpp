@@ -147,13 +147,13 @@ TEST(JsonParserTest, FromFileParseError)
 }
 
 template <typename T, std::enable_if_t<!std::is_arithmetic<T>::value, bool> = true>
-const T& GetValueOfObject(const score::json::Any& any, const std::string& key)
+const T& GetValueOfObject(const score::json::Any& any, const std::string_view key)
 {
     return any.As<score::json::Object>().value().get().at(key).As<T>().value().get();
 }
 
 template <typename T, std::enable_if_t<std::is_arithmetic<T>::value, bool> = true>
-T GetValueOfObject(const score::json::Any& any, const std::string& key)
+T GetValueOfObject(const score::json::Any& any, const std::string_view key)
 {
     return any.As<score::json::Object>().value().get().at(key).As<T>().value();
 }
@@ -359,9 +359,9 @@ TEST_F(ParserTest, CanParseObjectInObjectAndIterateOverKeys)
     auto root{JsonParser{}.FromBuffer(buffer)};
 
     // When iterating over the unknown keys
-    const auto& storage_list{root.value().As<Object>().value().get()["storage_list"]};
+    const auto& storage_list{GetValueOfObject<Object>(root.value(), "storage_list")};
     std::vector<std::string> collected_paths{};
-    for (const auto& element : storage_list.As<Object>().value().get())
+    for (const auto& element : storage_list)
     {
         collected_paths.push_back(element.second.As<Object>().value().get().at("path").As<std::string>().value().get());
     }
@@ -607,7 +607,9 @@ TEST_F(ParserTest, CanParseEmptyMemberName)
     EXPECT_EQ(GetValueOfObject<Object>(root.value(), "o").at("").As<std::string>().value().get(), "x");
     const auto& list{GetValueOfObject<List>(root.value(), "l")};
     EXPECT_EQ(list.at(0).As<Object>().value().get().at("").As<Null>().value().get(), Null{});
-    const auto& container{GetValueOfObject<Object>(root.value(), "c").at("").As<List>().value().get()};
+    const auto container_result{GetValueOfObject<Object>(root.value(), "c").at("").As<List>()};
+    ASSERT_TRUE(container_result.has_value());
+    const auto& container{container_result.value().get()};
     EXPECT_EQ(container.at(0).As<bool>().value(), true);
 }
 

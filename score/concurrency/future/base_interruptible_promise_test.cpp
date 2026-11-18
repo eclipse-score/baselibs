@@ -13,6 +13,7 @@
 #include "score/concurrency/future/base_interruptible_promise.h"
 #include "score/concurrency/future/interruptible_future.h"
 #include "score/concurrency/future/test_types.h"
+#include "score/quality/compiler_warnings/warnings.h"
 
 #include "score/expected.hpp"
 #include "score/stop_token.hpp"
@@ -179,7 +180,10 @@ TYPED_TEST(BaseInterruptiblePromiseTest, MoveAssignmentAlsoMovesFutureRetrievalS
 TYPED_TEST(BaseInterruptiblePromiseTest, MoveAssignmentToSelf)
 {
     BaseInterruptiblePromise<TypeParam> moved_to_promise{};
+    DISABLE_WARNING_PUSH
+    DISABLE_WARNING_SELF_MOVE
     moved_to_promise = std::move(moved_to_promise);
+    DISABLE_WARNING_POP
     ASSERT_TRUE(moved_to_promise.GetInterruptibleFuture().has_value());
 }
 

@@ -43,6 +43,7 @@ cc_unit_test(
         "@score_baselibs//score/containers/test:fancy_pointer_allocator",
         "@score_baselibs//score/language/futurecpp:futurecpp_test_support",
         "@score_baselibs//score/mw/log:backend_stub_testutil",
+        "@score_baselibs//score/quality/compiler_warnings",
     ],
 )
 
