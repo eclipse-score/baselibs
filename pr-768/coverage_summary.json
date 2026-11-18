@@ -18,7 +18,7 @@
     {
       "branches": {
         "percent": 95,
-        "total": 270
+        "total": 274
       },
       "files": {
         "measured": 43,
@@ -26,7 +26,7 @@
       },
       "lines": {
         "percent": 99,
-        "total": 1912
+        "total": 1923
       },
       "primary_need_id": "comp__baselibs_concurrency"
     },
@@ -63,7 +63,7 @@
     {
       "branches": {
         "percent": 97,
-        "total": 666
+        "total": 672
       },
       "files": {
         "measured": 23,
@@ -71,7 +71,7 @@
       },
       "lines": {
         "percent": 99,
-        "total": 2015
+        "total": 2036
       },
       "primary_need_id": "comp__baselibs_filesystem"
     },
@@ -112,11 +112,11 @@
       },
       "files": {
         "measured": 15,
-        "total": 20
+        "total": 25
       },
       "lines": {
         "percent": 97,
-        "total": 715
+        "total": 710
       },
       "primary_need_id": "comp__baselibs_json"
     },
@@ -161,7 +161,7 @@
       },
       "lines": {
         "percent": 72,
-        "total": 1235
+        "total": 1243
       },
       "primary_need_id": "comp__baselibs_result"
     },
