@@ -24,6 +24,13 @@ bazel_dep(name = "score_bazel_platforms", version = "1.1.0")
 
 bazel_dep(name = "score_bazel_cpp_toolchains", version = "1.1.0-rc1", dev_dependency = True)
 
+# TEMPORARY: test https://github.com/eclipse-score/bazel_cpp_toolchains/pull/187 on CI.
+git_override(
+    module_name = "score_bazel_cpp_toolchains",
+    commit = "2da4b3e01e7405a638022778beefbc298449a6e7",
+    remote = "https://github.com/eclipse-score/bazel_cpp_toolchains.git",
+)
+
 gcc = use_extension("@score_bazel_cpp_toolchains//extensions:gcc.bzl", "gcc", dev_dependency = True)
 gcc.toolchain(
     name = "score_gcc_x86_64_toolchain",

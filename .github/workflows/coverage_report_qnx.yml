@@ -21,7 +21,7 @@
 # pushes to main and the merge queue run without approval.
 name: Code coverage (QNX, gcov on target)
 on:
-  pull_request_target:
+  pull_request: # TEMPORARY: was pull_request_target
     types: [opened, reopened, synchronize]
   push:
     branches:
@@ -34,12 +34,12 @@ permissions:
   pull-requests: read
 concurrency:
   group: coverage-qnx-${{ github.event.pull_request.number || github.run_id }}
-  cancel-in-progress: ${{ github.event_name == 'pull_request_target' }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
 jobs:
   approval:
     name: Approval (fork PRs only)
     if: >-
-      github.event_name == 'pull_request_target' &&
+      github.event_name == 'pull_request' &&
       github.event.pull_request.head.repo.full_name != github.event.pull_request.base.repo.full_name
     environment: workflow-approval
     runs-on: ubuntu-24.04
