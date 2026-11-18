@@ -299,12 +299,12 @@ TEST_F(SemaphoreTestFixture, TimeoutWaitTimeout)
     ASSERT_TRUE(ret.has_value());
     ASSERT_TRUE(ret.value() != nullptr);
     const auto tp1 = std::chrono::steady_clock::now();
-    struct sigaction act;
+    struct sigaction act, old;
     act.sa_flags = 0;
     act.sa_handler = [](int signal) {
         (void)signal;
     };
-    const auto sigret = sigaction(SIGUSR1, &act, nullptr);
+    auto sigret = sigaction(SIGUSR1, &act, &old);
     ASSERT_EQ(sigret, 0);
 
     // create a thread sending signal to parent
@@ -323,6 +323,9 @@ TEST_F(SemaphoreTestFixture, TimeoutWaitTimeout)
     const auto wait = unit_.sem_waittimeout(ret.value(), std::chrono::milliseconds(500), true);
     const auto tp2 = std::chrono::steady_clock::now();
     s.join();
+    // restore the previous setting
+    sigret = sigaction(SIGUSR1, &old, nullptr);
+    ASSERT_EQ(sigret, 0);
 
     ASSERT_FALSE(wait.has_value());
     EXPECT_EQ(wait.error().GetOsDependentErrorCode(), ETIMEDOUT);
@@ -346,12 +349,12 @@ TEST_F(SemaphoreTestFixture, TimeoutWaitTimeoutEINTR)
     ASSERT_TRUE(ret.has_value());
     ASSERT_TRUE(ret.value() != nullptr);
     const auto tp1 = std::chrono::steady_clock::now();
-    struct sigaction act;
+    struct sigaction act, old;
     act.sa_flags = 0;
     act.sa_handler = [](int signal) {
         (void)signal;
     };
-    const auto sigret = sigaction(SIGUSR1, &act, nullptr);
+    auto sigret = sigaction(SIGUSR1, &act, &old);
     ASSERT_EQ(sigret, 0);
 
     // create a thread sending signal to parent
@@ -370,6 +373,9 @@ TEST_F(SemaphoreTestFixture, TimeoutWaitTimeoutEINTR)
     const auto wait = unit_.sem_waittimeout(ret.value(), std::chrono::milliseconds(500), false);
     const auto tp2 = std::chrono::steady_clock::now();
     s.join();
+    // restore the previous setting
+    sigret = sigaction(SIGUSR1, &old, nullptr);
+    ASSERT_EQ(sigret, 0);
 
     ASSERT_FALSE(wait.has_value());
     EXPECT_EQ(wait.error().GetOsDependentErrorCode(), EINTR);
