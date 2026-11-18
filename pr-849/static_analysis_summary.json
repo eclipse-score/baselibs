@@ -1,0 +1,744 @@
+{
+  "static_analysis_summaries": [
+    {
+      "files": {
+        "total": 4,
+        "with_findings": 2
+      },
+      "findings": {
+        "critical": 0,
+        "high": 0,
+        "low": 11,
+        "medium": 1
+      },
+      "primary_need_id": "comp__baselibs_bit_manipulation",
+      "suppressed": 0,
+      "top_rules": [
+        {
+          "classification": "low",
+          "count": 6,
+          "rule": "modernize-type-traits",
+          "tool": "ClangTidy"
+        },
+        {
+          "classification": "low",
+          "count": 2,
+          "rule": "modernize-use-nodiscard",
+          "tool": "ClangTidy"
+        },
+        {
+          "classification": "low",
+          "count": 2,
+          "rule": "readability-simplify-boolean-expr",
+          "tool": "ClangTidy"
+        },
+        {
+          "classification": "medium",
+          "count": 1,
+          "rule": "cppcoreguidelines-avoid-magic-numbers",
+          "tool": "ClangTidy"
+        },
+        {
+          "classification": "low",
+          "count": 1,
+          "rule": "modernize-concat-nested-namespaces",
+          "tool": "ClangTidy"
+        }
+      ]
+    },
+    {
+      "files": {
+        "total": 71,
+        "with_findings": 37
+      },
+      "findings": {
+        "critical": 0,
+        "high": 2,
+        "low": 122,
+        "medium": 40
+      },
+      "primary_need_id": "comp__baselibs_concurrency",
+      "suppressed": 0,
+      "top_rules": [
+        {
+          "classification": "low",
+          "count": 32,
+          "rule": "modernize-concat-nested-namespaces",
+          "tool": "ClangTidy"
+        },
+        {
+          "classification": "low",
+          "count": 25,
+          "rule": "modernize-use-nodiscard",
+          "tool": "ClangTidy"
+        },
+        {
+          "classification": "low",
+          "count": 23,
+          "rule": "modernize-type-traits",
+          "tool": "ClangTidy"
+        },
+        {
+          "classification": "low",
+          "count": 14,
+          "rule": "modernize-use-scoped-lock",
+          "tool": "ClangTidy"
+        },
+        {
+          "classification": "low",
+          "count": 13,
+          "rule": "readability-simplify-boolean-expr",
+          "tool": "ClangTidy"
+        },
+        {
+          "classification": "medium",
+          "count": 12,
+          "rule": "misc-const-correctness",
+          "tool": "ClangTidy"
+        },
+        {
+          "classification": "medium",
+          "count": 11,
+          "rule": "cppcoreguidelines-rvalue-reference-param-not-moved",
+          "tool": "ClangTidy"
+        },
+        {
+          "classification": "low",
+          "count": 7,
+          "rule": "readability-uppercase-literal-suffix",
+          "tool": "ClangTidy"
+        },
+        {
+          "classification": "medium",
+          "count": 5,
+          "rule": "cppcoreguidelines-use-default-member-init",
+          "tool": "ClangTidy"
+        },
+        {
+          "classification": "medium",
+          "count": 4,
+          "rule": "misc-non-private-member-variables-in-classes",
+          "tool": "ClangTidy"
+        }
+      ]
+    },
+    {
+      "files": {
+        "total": 6,
+        "with_findings": 3
+      },
+      "findings": {
+        "critical": 0,
+        "high": 0,
+        "low": 15,
+        "medium": 6
+      },
+      "primary_need_id": "comp__baselibs_containers",
+      "suppressed": 0,
+      "top_rules": [
+        {
+          "classification": "low",
+          "count": 8,
+          "rule": "modernize-use-nodiscard",
+          "tool": "ClangTidy"
+        },
+        {
+          "classification": "low",
+          "count": 3,
+          "rule": "readability-avoid-unconditional-preprocessor-if",
+          "tool": "ClangTidy"
+        },
+        {
+          "classification": "medium",
+          "count": 2,
+          "rule": "cppcoreguidelines-use-default-member-init",
+          "tool": "ClangTidy"
+        },
+        {
+          "classification": "low",
+          "count": 2,
+          "rule": "modernize-use-equals-delete",
+          "tool": "ClangTidy"
+        },
+        {
+          "classification": "medium",
+          "count": 2,
+          "rule": "performance-move-const-arg",
+          "tool": "ClangTidy"
+        },
+        {
+          "classification": "medium",
+          "count": 1,
+          "rule": "cppcoreguidelines-noexcept-swap",
+          "tool": "ClangTidy"
+        },
+        {
+          "classification": "medium",
+          "count": 1,
+          "rule": "misc-misplaced-const",
+          "tool": "ClangTidy"
+        },
+        {
+          "classification": "low",
+          "count": 1,
+          "rule": "modernize-concat-nested-namespaces",
+          "tool": "ClangTidy"
+        },
+        {
+          "classification": "low",
+          "count": 1,
+          "rule": "readability-redundant-inline-specifier",
+          "tool": "ClangTidy"
+        }
+      ]
+    },
+    {
+      "files": {
+        "total": 19,
+        "with_findings": 0
+      },
+      "findings": {
+        "critical": 0,
+        "high": 0,
+        "low": 0,
+        "medium": 0
+      },
+      "primary_need_id": "comp__baselibs_containers_rust",
+      "suppressed": 0,
+      "top_rules": []
+    },
+    {
+      "files": {
+        "total": 36,
+        "with_findings": 32
+      },
+      "findings": {
+        "critical": 0,
+        "high": 28,
+        "low": 168,
+        "medium": 23
+      },
+      "primary_need_id": "comp__baselibs_filesystem",
+      "suppressed": 0,
+      "top_rules": [
+        {
+          "classification": "low",
+          "count": 109,
+          "rule": "modernize-use-nodiscard",
+          "tool": "ClangTidy"
+        },
+        {
+          "classification": "low",
+          "count": 27,
+          "rule": "modernize-concat-nested-namespaces",
+          "tool": "ClangTidy"
+        },
+        {
+          "classification": "high",
+          "count": 22,
+          "rule": "bugprone-exception-escape",
+          "tool": "ClangTidy"
+        },
+        {
+          "classification": "low",
+          "count": 9,
+          "rule": "readability-else-after-return",
+          "tool": "ClangTidy"
+        },
+        {
+          "classification": "medium",
+          "count": 5,
+          "rule": "misc-const-correctness",
+          "tool": "ClangTidy"
+        },
+        {
+          "classification": "high",
+          "count": 4,
+          "rule": "bugprone-easily-swappable-parameters",
+          "tool": "ClangTidy"
+        },
+        {
+          "classification": "medium",
+          "count": 4,
+          "rule": "cppcoreguidelines-noexcept-move-operations",
+          "tool": "ClangTidy"
+        },
+        {
+          "classification": "low",
+          "count": 4,
+          "rule": "readability-redundant-smartptr-get",
+          "tool": "ClangTidy"
+        },
+        {
+          "classification": "medium",
+          "count": 3,
+          "rule": "performance-move-const-arg",
+          "tool": "ClangTidy"
+        },
+        {
+          "classification": "high",
+          "count": 2,
+          "rule": "bugprone-unchecked-optional-access",
+          "tool": "ClangTidy"
+        }
+      ]
+    },
+    {
+      "files": {
+        "total": 30,
+        "with_findings": 0
+      },
+      "findings": {
+        "critical": 0,
+        "high": 0,
+        "low": 0,
+        "medium": 0
+      },
+      "primary_need_id": "comp__baselibs_flatbuffers",
+      "suppressed": 0,
+      "top_rules": []
+    },
+    {
+      "files": {
+        "total": 28,
+        "with_findings": 26
+      },
+      "findings": {
+        "critical": 0,
+        "high": 9,
+        "low": 64,
+        "medium": 86
+      },
+      "primary_need_id": "comp__baselibs_hash",
+      "suppressed": 0,
+      "top_rules": [
+        {
+          "classification": "medium",
+          "count": 43,
+          "rule": "cppcoreguidelines-avoid-magic-numbers",
+          "tool": "ClangTidy"
+        },
+        {
+          "classification": "medium",
+          "count": 32,
+          "rule": "cppcoreguidelines-pro-bounds-avoid-unchecked-container-access",
+          "tool": "ClangTidy"
+        },
+        {
+          "classification": "low",
+          "count": 26,
+          "rule": "modernize-concat-nested-namespaces",
+          "tool": "ClangTidy"
+        },
+        {
+          "classification": "low",
+          "count": 25,
+          "rule": "modernize-use-nodiscard",
+          "tool": "ClangTidy"
+        },
+        {
+          "classification": "medium",
+          "count": 8,
+          "rule": "cppcoreguidelines-use-default-member-init",
+          "tool": "ClangTidy"
+        },
+        {
+          "classification": "low",
+          "count": 7,
+          "rule": "readability-simplify-boolean-expr",
+          "tool": "ClangTidy"
+        },
+        {
+          "classification": "high",
+          "count": 5,
+          "rule": "bugprone-exception-escape",
+          "tool": "ClangTidy"
+        },
+        {
+          "classification": "high",
+          "count": 4,
+          "rule": "bugprone-implicit-widening-of-multiplication-result",
+          "tool": "ClangTidy"
+        },
+        {
+          "classification": "medium",
+          "count": 2,
+          "rule": "cppcoreguidelines-avoid-const-or-ref-data-members",
+          "tool": "ClangTidy"
+        },
+        {
+          "classification": "low",
+          "count": 2,
+          "rule": "modernize-type-traits",
+          "tool": "ClangTidy"
+        }
+      ]
+    },
+    {
+      "files": {
+        "total": 25,
+        "with_findings": 16
+      },
+      "findings": {
+        "critical": 0,
+        "high": 16,
+        "low": 83,
+        "medium": 6
+      },
+      "primary_need_id": "comp__baselibs_json",
+      "suppressed": 0,
+      "top_rules": [
+        {
+          "classification": "low",
+          "count": 36,
+          "rule": "modernize-type-traits",
+          "tool": "ClangTidy"
+        },
+        {
+          "classification": "low",
+          "count": 25,
+          "rule": "modernize-use-nodiscard",
+          "tool": "ClangTidy"
+        },
+        {
+          "classification": "high",
+          "count": 15,
+          "rule": "bugprone-exception-escape",
+          "tool": "ClangTidy"
+        },
+        {
+          "classification": "low",
+          "count": 14,
+          "rule": "modernize-concat-nested-namespaces",
+          "tool": "ClangTidy"
+        },
+        {
+          "classification": "low",
+          "count": 7,
+          "rule": "readability-else-after-return",
+          "tool": "ClangTidy"
+        },
+        {
+          "classification": "medium",
+          "count": 3,
+          "rule": "misc-no-recursion",
+          "tool": "ClangTidy"
+        },
+        {
+          "classification": "high",
+          "count": 1,
+          "rule": "bugprone-branch-clone",
+          "tool": "ClangTidy"
+        },
+        {
+          "classification": "medium",
+          "count": 1,
+          "rule": "misc-override-with-different-visibility",
+          "tool": "ClangTidy"
+        },
+        {
+          "classification": "medium",
+          "count": 1,
+          "rule": "misc-use-internal-linkage",
+          "tool": "ClangTidy"
+        },
+        {
+          "classification": "medium",
+          "count": 1,
+          "rule": "performance-avoid-endl",
+          "tool": "ClangTidy"
+        }
+      ]
+    },
+    {
+      "files": {
+        "total": 5,
+        "with_findings": 3
+      },
+      "findings": {
+        "critical": 0,
+        "high": 0,
+        "low": 3,
+        "medium": 26
+      },
+      "primary_need_id": "comp__baselibs_memory",
+      "suppressed": 0,
+      "top_rules": [
+        {
+          "classification": "medium",
+          "count": 26,
+          "rule": "cppcoreguidelines-avoid-magic-numbers",
+          "tool": "ClangTidy"
+        },
+        {
+          "classification": "low",
+          "count": 2,
+          "rule": "modernize-use-nodiscard",
+          "tool": "ClangTidy"
+        },
+        {
+          "classification": "low",
+          "count": 1,
+          "rule": "readability-else-after-return",
+          "tool": "ClangTidy"
+        }
+      ]
+    },
+    {
+      "files": {
+        "total": 0,
+        "with_findings": 0
+      },
+      "findings": {
+        "critical": 0,
+        "high": 0,
+        "low": 0,
+        "medium": 0
+      },
+      "primary_need_id": "comp__baselibs_os",
+      "suppressed": 0,
+      "top_rules": []
+    },
+    {
+      "files": {
+        "total": 15,
+        "with_findings": 6
+      },
+      "findings": {
+        "critical": 0,
+        "high": 6,
+        "low": 61,
+        "medium": 6
+      },
+      "primary_need_id": "comp__baselibs_result",
+      "suppressed": 0,
+      "top_rules": [
+        {
+          "classification": "low",
+          "count": 39,
+          "rule": "readability-else-after-return",
+          "tool": "ClangTidy"
+        },
+        {
+          "classification": "low",
+          "count": 16,
+          "rule": "modernize-type-traits",
+          "tool": "ClangTidy"
+        },
+        {
+          "classification": "high",
+          "count": 5,
+          "rule": "bugprone-exception-escape",
+          "tool": "ClangTidy"
+        },
+        {
+          "classification": "medium",
+          "count": 5,
+          "rule": "cppcoreguidelines-rvalue-reference-param-not-moved",
+          "tool": "ClangTidy"
+        },
+        {
+          "classification": "low",
+          "count": 3,
+          "rule": "modernize-concat-nested-namespaces",
+          "tool": "ClangTidy"
+        },
+        {
+          "classification": "low",
+          "count": 3,
+          "rule": "modernize-use-nodiscard",
+          "tool": "ClangTidy"
+        },
+        {
+          "classification": "high",
+          "count": 1,
+          "rule": "bugprone-std-namespace-modification",
+          "tool": "ClangTidy"
+        },
+        {
+          "classification": "medium",
+          "count": 1,
+          "rule": "cppcoreguidelines-noexcept-swap",
+          "tool": "ClangTidy"
+        }
+      ]
+    },
+    {
+      "files": {
+        "total": 69,
+        "with_findings": 21
+      },
+      "findings": {
+        "critical": 0,
+        "high": 3,
+        "low": 185,
+        "medium": 15
+      },
+      "primary_need_id": "comp__baselibs_safecpp",
+      "suppressed": 0,
+      "top_rules": [
+        {
+          "classification": "low",
+          "count": 157,
+          "rule": "modernize-type-traits",
+          "tool": "ClangTidy"
+        },
+        {
+          "classification": "low",
+          "count": 7,
+          "rule": "readability-else-after-return",
+          "tool": "ClangTidy"
+        },
+        {
+          "classification": "medium",
+          "count": 6,
+          "rule": "cppcoreguidelines-rvalue-reference-param-not-moved",
+          "tool": "ClangTidy"
+        },
+        {
+          "classification": "low",
+          "count": 5,
+          "rule": "modernize-use-nodiscard",
+          "tool": "ClangTidy"
+        },
+        {
+          "classification": "low",
+          "count": 4,
+          "rule": "readability-redundant-parentheses",
+          "tool": "ClangTidy"
+        },
+        {
+          "classification": "high",
+          "count": 3,
+          "rule": "bugprone-std-namespace-modification",
+          "tool": "ClangTidy"
+        },
+        {
+          "classification": "medium",
+          "count": 3,
+          "rule": "cppcoreguidelines-missing-std-forward",
+          "tool": "ClangTidy"
+        },
+        {
+          "classification": "medium",
+          "count": 3,
+          "rule": "misc-const-correctness",
+          "tool": "ClangTidy"
+        },
+        {
+          "classification": "low",
+          "count": 3,
+          "rule": "readability-simplify-boolean-expr",
+          "tool": "ClangTidy"
+        },
+        {
+          "classification": "medium",
+          "count": 2,
+          "rule": "cppcoreguidelines-owning-memory",
+          "tool": "ClangTidy"
+        }
+      ]
+    },
+    {
+      "files": {
+        "total": 7,
+        "with_findings": 0
+      },
+      "findings": {
+        "critical": 0,
+        "high": 0,
+        "low": 0,
+        "medium": 0
+      },
+      "primary_need_id": "comp__baselibs_static_reflection",
+      "suppressed": 0,
+      "top_rules": []
+    },
+    {
+      "files": {
+        "total": 5,
+        "with_findings": 3
+      },
+      "findings": {
+        "critical": 0,
+        "high": 1,
+        "low": 2,
+        "medium": 35
+      },
+      "primary_need_id": "comp__baselibs_utils",
+      "suppressed": 0,
+      "top_rules": [
+        {
+          "classification": "medium",
+          "count": 23,
+          "rule": "cppcoreguidelines-pro-bounds-avoid-unchecked-container-access",
+          "tool": "ClangTidy"
+        },
+        {
+          "classification": "medium",
+          "count": 11,
+          "rule": "cppcoreguidelines-avoid-magic-numbers",
+          "tool": "ClangTidy"
+        },
+        {
+          "classification": "high",
+          "count": 1,
+          "rule": "bugprone-easily-swappable-parameters",
+          "tool": "ClangTidy"
+        },
+        {
+          "classification": "medium",
+          "count": 1,
+          "rule": "cppcoreguidelines-missing-std-forward",
+          "tool": "ClangTidy"
+        },
+        {
+          "classification": "low",
+          "count": 1,
+          "rule": "modernize-concat-nested-namespaces",
+          "tool": "ClangTidy"
+        },
+        {
+          "classification": "low",
+          "count": 1,
+          "rule": "readability-math-missing-parentheses",
+          "tool": "ClangTidy"
+        }
+      ]
+    },
+    {
+      "files": {
+        "total": 0,
+        "with_findings": 0
+      },
+      "findings": {
+        "critical": 0,
+        "high": 0,
+        "low": 0,
+        "medium": 0
+      },
+      "primary_need_id": "comp__log",
+      "suppressed": 0,
+      "top_rules": []
+    }
+  ],
+  "tools": [
+    {
+      "name": "ClangTidy",
+      "results": 3104,
+      "version": null
+    },
+    {
+      "name": "ruff",
+      "results": 0,
+      "version": null
+    },
+    {
+      "name": "clippy",
+      "results": 0,
+      "version": null
+    }
+  ],
+  "unassigned": 2081,
+  "version": 1
+}
