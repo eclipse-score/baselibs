@@ -330528,7 +330528,7 @@
   {
     "name": "SemaphoreTestFixture__TimeoutWaitTimeoutEINTR",
     "file": "score/os/test/semaphore_test.cpp",
-    "line": "335",
+    "line": "338",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -330542,7 +330542,7 @@
   {
     "name": "SemaphoreTestFixture__SuccessTimedWaitFailure",
     "file": "score/os/test/semaphore_test.cpp",
-    "line": "382",
+    "line": "388",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -330556,7 +330556,7 @@
   {
     "name": "SemaphoreTestFixture__SuccessTimedWaitMonotonic",
     "file": "score/os/test/semaphore_test.cpp",
-    "line": "400",
+    "line": "406",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -330570,7 +330570,7 @@
   {
     "name": "SemaphoreTestFixture__FailureTimedWaitMonotonic",
     "file": "score/os/test/semaphore_test.cpp",
-    "line": "422",
+    "line": "428",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -330584,7 +330584,7 @@
   {
     "name": "SemaphoreTestFixture__TimeoutTimedWaitMonotonic",
     "file": "score/os/test/semaphore_test.cpp",
-    "line": "441",
+    "line": "447",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -330598,7 +330598,7 @@
   {
     "name": "SemaphoreTestFixture__SuccessTimedWaitChrono",
     "file": "score/os/test/semaphore_test.cpp",
-    "line": "468",
+    "line": "474",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -330612,7 +330612,7 @@
   {
     "name": "SemaphoreTestFixture__SuccessTimedWaitFailureChrono",
     "file": "score/os/test/semaphore_test.cpp",
-    "line": "487",
+    "line": "493",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -330626,7 +330626,7 @@
   {
     "name": "SemaphoreTestFixture__SuccessTimedWaitMonotonicChrono",
     "file": "score/os/test/semaphore_test.cpp",
-    "line": "507",
+    "line": "513",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -330640,7 +330640,7 @@
   {
     "name": "SemaphoreTestFixture__TimeoutTimedWaitMonotonicChrono",
     "file": "score/os/test/semaphore_test.cpp",
-    "line": "527",
+    "line": "533",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -330654,7 +330654,7 @@
   {
     "name": "SemaphoreTestFixture__FailureTimedWaitMonotonicChrono",
     "file": "score/os/test/semaphore_test.cpp",
-    "line": "547",
+    "line": "553",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -330668,7 +330668,7 @@
   {
     "name": "SemaphoreTestFixture__SuccessSemDestroy",
     "file": "score/os/test/semaphore_test.cpp",
-    "line": "577",
+    "line": "583",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -330682,7 +330682,7 @@
   {
     "name": "Semaphore__get_instance",
     "file": "score/os/test/semaphore_test.cpp",
-    "line": "566",
+    "line": "572",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",

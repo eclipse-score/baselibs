@@ -6282,7 +6282,7 @@
             {
               "name": "SemaphoreTestFixture__TimeoutWaitTimeoutEINTR",
               "file": "score/os/test/semaphore_test.cpp",
-              "line": 335,
+              "line": 338,
               "need": "comp_req__osal__asil_b_operation_delegation",
               "verify_type": "partially",
               "result": "passed",
@@ -6291,7 +6291,7 @@
             {
               "name": "SemaphoreTestFixture__SuccessTimedWaitFailure",
               "file": "score/os/test/semaphore_test.cpp",
-              "line": 382,
+              "line": 388,
               "need": "comp_req__osal__asil_b_operation_delegation",
               "verify_type": "partially",
               "result": "passed",
@@ -6300,7 +6300,7 @@
             {
               "name": "SemaphoreTestFixture__SuccessTimedWaitMonotonic",
               "file": "score/os/test/semaphore_test.cpp",
-              "line": 400,
+              "line": 406,
               "need": "comp_req__osal__asil_b_operation_delegation",
               "verify_type": "partially",
               "result": "passed",
@@ -6309,7 +6309,7 @@
             {
               "name": "SemaphoreTestFixture__TimeoutTimedWaitMonotonic",
               "file": "score/os/test/semaphore_test.cpp",
-              "line": 441,
+              "line": 447,
               "need": "comp_req__osal__asil_b_operation_delegation",
               "verify_type": "partially",
               "result": "passed",
@@ -6318,7 +6318,7 @@
             {
               "name": "SemaphoreTestFixture__SuccessTimedWaitChrono",
               "file": "score/os/test/semaphore_test.cpp",
-              "line": 468,
+              "line": 474,
               "need": "comp_req__osal__asil_b_operation_delegation",
               "verify_type": "partially",
               "result": "passed",
@@ -6327,7 +6327,7 @@
             {
               "name": "SemaphoreTestFixture__SuccessTimedWaitFailureChrono",
               "file": "score/os/test/semaphore_test.cpp",
-              "line": 487,
+              "line": 493,
               "need": "comp_req__osal__asil_b_operation_delegation",
               "verify_type": "partially",
               "result": "passed",
@@ -6336,7 +6336,7 @@
             {
               "name": "SemaphoreTestFixture__SuccessTimedWaitMonotonicChrono",
               "file": "score/os/test/semaphore_test.cpp",
-              "line": 507,
+              "line": 513,
               "need": "comp_req__osal__asil_b_operation_delegation",
               "verify_type": "partially",
               "result": "passed",
@@ -6345,7 +6345,7 @@
             {
               "name": "SemaphoreTestFixture__TimeoutTimedWaitMonotonicChrono",
               "file": "score/os/test/semaphore_test.cpp",
-              "line": 527,
+              "line": 533,
               "need": "comp_req__osal__asil_b_operation_delegation",
               "verify_type": "partially",
               "result": "passed",
@@ -6354,7 +6354,7 @@
             {
               "name": "SemaphoreTestFixture__FailureTimedWaitMonotonicChrono",
               "file": "score/os/test/semaphore_test.cpp",
-              "line": 547,
+              "line": 553,
               "need": "comp_req__osal__asil_b_operation_delegation",
               "verify_type": "partially",
               "result": "passed",
@@ -6363,7 +6363,7 @@
             {
               "name": "SemaphoreTestFixture__SuccessSemDestroy",
               "file": "score/os/test/semaphore_test.cpp",
-              "line": 577,
+              "line": 583,
               "need": "comp_req__osal__asil_b_operation_delegation",
               "verify_type": "partially",
               "result": "passed",
@@ -6372,7 +6372,7 @@
             {
               "name": "Semaphore__get_instance",
               "file": "score/os/test/semaphore_test.cpp",
-              "line": 566,
+              "line": 572,
               "need": "comp_req__osal__asil_b_operation_delegation",
               "verify_type": "partially",
               "result": "passed",
@@ -6488,7 +6488,7 @@
             {
               "name": "SemaphoreTestFixture__TimeoutWaitTimeoutEINTR",
               "file": "score/os/test/semaphore_test.cpp",
-              "line": 335,
+              "line": 338,
               "need": "comp_req__osal__error_information",
               "verify_type": "partially",
               "result": "passed",
@@ -6497,7 +6497,7 @@
             {
               "name": "SemaphoreTestFixture__SuccessTimedWaitFailure",
               "file": "score/os/test/semaphore_test.cpp",
-              "line": 382,
+              "line": 388,
               "need": "comp_req__osal__error_information",
               "verify_type": "partially",
               "result": "passed",
@@ -6506,7 +6506,7 @@
             {
               "name": "SemaphoreTestFixture__TimeoutTimedWaitMonotonic",
               "file": "score/os/test/semaphore_test.cpp",
-              "line": 441,
+              "line": 447,
               "need": "comp_req__osal__error_information",
               "verify_type": "partially",
               "result": "passed",
@@ -6515,7 +6515,7 @@
             {
               "name": "SemaphoreTestFixture__SuccessTimedWaitFailureChrono",
               "file": "score/os/test/semaphore_test.cpp",
-              "line": 487,
+              "line": 493,
               "need": "comp_req__osal__error_information",
               "verify_type": "partially",
               "result": "passed",
@@ -6524,7 +6524,7 @@
             {
               "name": "SemaphoreTestFixture__TimeoutTimedWaitMonotonicChrono",
               "file": "score/os/test/semaphore_test.cpp",
-              "line": 527,
+              "line": 533,
               "need": "comp_req__osal__error_information",
               "verify_type": "partially",
               "result": "passed",
@@ -6533,7 +6533,7 @@
             {
               "name": "SemaphoreTestFixture__FailureTimedWaitMonotonicChrono",
               "file": "score/os/test/semaphore_test.cpp",
-              "line": 547,
+              "line": 553,
               "need": "comp_req__osal__error_information",
               "verify_type": "partially",
               "result": "passed",
