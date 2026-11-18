@@ -9,9 +9,7 @@ package "score" {
   package "json" {
   package "vajson" {
     enum JsonErrc {
-      kNotInitialized
       kInvalidJson,
-      kUserValidationFailed,
       kStreamFailure
     }
 
@@ -19,11 +17,6 @@ package "score" {
     class NumberParser {}
 
     class JsonNumber {}
-
-    enum EncodingType {
-      kNone
-      kUtf8
-    }
 
     package Reader {
     }

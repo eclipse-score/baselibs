@@ -57,7 +57,7 @@ class ErrorNullParser final : public StructureParserStub
   private:
     auto OnNull() noexcept -> ParserResult override
     {
-        return MakeErrorResult<ParserState>(JsonErrc::kUserValidationFailed, "OnNull called.");
+        return score::MakeUnexpected(JsonErrc::kInvalidJson, "OnNull called.");
     }
 };
 
@@ -120,7 +120,7 @@ TEST(UT__Parser__Null, Dynamic__OnNull__Error)
 
     const auto parser_result{parser.Parse()};
     ASSERT_FALSE(parser_result.has_value());
-    ASSERT_EQ(parser_result.error(), JsonErrc::kUserValidationFailed);
+    ASSERT_EQ(parser_result.error(), JsonErrc::kInvalidJson);
     ASSERT_EQ(parser_result.error().UserMessage(), std::string_view{"OnNull called."});
 }
 

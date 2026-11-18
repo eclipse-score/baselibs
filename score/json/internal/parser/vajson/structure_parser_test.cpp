@@ -96,7 +96,7 @@ class FailingParser final : public internal::StructureParser
         if (this->count_ >= this->num_accepted_)
         {
             ++this->count_;
-            return MakeErrorResult<ParserState>(JsonErrc::kUserValidationFailed);
+            return score::MakeUnexpected(JsonErrc::kInvalidJson, "Callback failed.");
         }
         ++this->count_;
         return ParserResult{ParserState::kRunning};
@@ -125,7 +125,8 @@ TEST(UT__Parser, Static__CallbackError)
         FailingParser parser{data, idx};
         const auto parse_result{parser.Parse()};
         ASSERT_FALSE(parse_result.has_value());
-        ASSERT_EQ(parse_result.error(), JsonErrc::kUserValidationFailed);
+        ASSERT_EQ(parse_result.error(), JsonErrc::kInvalidJson);
+        ASSERT_EQ(parse_result.error().UserMessage(), std::string_view{"Callback failed."});
         EXPECT_EQ(parser.GetCount(), idx + 1U);
     }
 

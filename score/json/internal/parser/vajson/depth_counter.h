@@ -39,22 +39,19 @@ namespace internal
 class DepthCounter final
 {
   public:
-    /// @brief           CTOR
-    /// @details         Cannot be defaulted because then it gets deleted by the compiler.
+    /// @brief           Default constructor
     /// @context         ANY
     /// @pre             -
     /// @threadsafe      FALSE
     /// @reentrant       FALSE
-    DepthCounter() noexcept {}
+    DepthCounter() noexcept = default;
 
     /// @brief           Move constructor
-    /// @param[in]       that
-    ///                  The other DepthCounter to move from.
     /// @context         ANY
     /// @pre             -
     /// @threadsafe      FALSE
     /// @reentrant       FALSE
-    DepthCounter(DepthCounter&& that) noexcept : stack_{std::move(that.stack_)}, counter_{std::move(that.counter_)} {}
+    DepthCounter(DepthCounter&&) noexcept = default;
 
     /// @brief           Deleted copy constructor
     DepthCounter(const DepthCounter&) = delete;
@@ -98,18 +95,17 @@ class DepthCounter final
         ParserResult result{ParserState::kFinished};
         if (!is_finished_ && IsEmpty())
         {
-            result = MakeErrorResult<ParserState>(score::json::vajson::JsonErrc::kInvalidJson,
-                                                  "DepthCounter::CheckEndOfFile: Empty document.");
+            result = score::MakeUnexpected(JsonErrc::kInvalidJson, "DepthCounter::CheckEndOfFile: Empty document.");
         }
         else if (!is_finished_ && !IsEmpty() && stack_.top() == '[')
         {
-            result = MakeErrorResult<ParserState>(score::json::vajson::JsonErrc::kInvalidJson,
-                                                  "DepthCounter::CheckEndOfFile: Expected closing brackets.");
+            result = score::MakeUnexpected(JsonErrc::kInvalidJson,
+                                           "DepthCounter::CheckEndOfFile: Expected closing brackets.");
         }
         else if (!is_finished_ && !IsEmpty() && stack_.top() != '[')
         {
-            result = MakeErrorResult<ParserState>(score::json::vajson::JsonErrc::kInvalidJson,
-                                                  "DepthCounter::CheckEndOfFile: Expected closing braces.");
+            result =
+                score::MakeUnexpected(JsonErrc::kInvalidJson, "DepthCounter::CheckEndOfFile: Expected closing braces.");
         }
         else
         {
@@ -166,12 +162,12 @@ class DepthCounter final
         {
 
             result =
-                MakeErrorResult<void>(JsonErrc::kInvalidJson, "DepthCounter::AddKey: Multiple top level elements.");
+                score::MakeUnexpected(JsonErrc::kInvalidJson, "DepthCounter::AddKey: Multiple top level elements.");
         }
         else if (this->comma_expected_)
         {
 
-            result = MakeErrorResult<void>(JsonErrc::kInvalidJson, "DepthCounter::AddKey: Missing comma.");
+            result = score::MakeUnexpected(JsonErrc::kInvalidJson, "DepthCounter::AddKey: Missing comma.");
         }
         else if (this->CheckLastElement('{'))
         {
@@ -181,7 +177,7 @@ class DepthCounter final
         else
         {
 
-            result = MakeErrorResult<void>(JsonErrc::kInvalidJson, "DepthCounter::AddKey: Expected a value.");
+            result = score::MakeUnexpected(JsonErrc::kInvalidJson, "DepthCounter::AddKey: Expected a value.");
         }
         return result;
     }
@@ -215,12 +211,12 @@ class DepthCounter final
         if (this->is_finished_)
         {
             result =
-                MakeErrorResult<void>(JsonErrc::kInvalidJson, "DepthCounter::AddValue: Multiple top level elements.");
+                score::MakeUnexpected(JsonErrc::kInvalidJson, "DepthCounter::AddValue: Multiple top level elements.");
         }
         else if (this->comma_expected_)
         {
 
-            result = MakeErrorResult<void>(JsonErrc::kInvalidJson, "DepthCounter::AddValue: Missing comma.");
+            result = score::MakeUnexpected(JsonErrc::kInvalidJson, "DepthCounter::AddValue: Missing comma.");
         }
         else if (!this->IsEmpty())
         {
@@ -243,7 +239,7 @@ class DepthCounter final
                     break;
                 default:
 
-                    result = MakeErrorResult<void>(JsonErrc::kInvalidJson, "DepthCounter::AddValue: Expected a key.");
+                    result = score::MakeUnexpected(JsonErrc::kInvalidJson, "DepthCounter::AddValue: Expected a key.");
                     break;
             }
         }
@@ -272,14 +268,14 @@ class DepthCounter final
     /// @endinternal
     auto PopObject() noexcept -> Result<std::size_t>
     {
-        const bool expected_key{this->CheckLastElement('{')};
-        return MakeResult(expected_key,
-                          MakeError(static_cast<score::json::vajson::ErrorCode>(JsonErrc::kInvalidJson),
-                                    "DepthCounter::PopObject: Not in an object."))
-            .transform([this](void) noexcept {
-                this->comma_expected_ = true;
-                return Pop();
-            });
+        Result<std::size_t> result{
+            score::MakeUnexpected(JsonErrc::kInvalidJson, "DepthCounter::PopObject: Not in an object.")};
+        if (this->CheckLastElement('{'))
+        {
+            this->comma_expected_ = true;
+            static_cast<void>(result.emplace(this->Pop()));
+        }
+        return result;
     }
 
     /// @brief           Pops an Array from the stack
@@ -298,14 +294,14 @@ class DepthCounter final
     /// @endinternal
     auto PopArray() noexcept -> Result<std::size_t>
     {
-        const bool expected_key{this->CheckLastElement('[')};
-        return MakeResult(expected_key,
-                          MakeError(static_cast<ErrorCode>(JsonErrc::kInvalidJson),
-                                    "DepthCounter::PopArray: Not in an array."))
-            .transform([this](void) noexcept {
-                this->comma_expected_ = true;
-                return this->Pop();
-            });
+        Result<std::size_t> result{
+            score::MakeUnexpected(JsonErrc::kInvalidJson, "DepthCounter::PopArray: Not in an array.")};
+        if (this->CheckLastElement('['))
+        {
+            this->comma_expected_ = true;
+            static_cast<void>(result.emplace(this->Pop()));
+        }
+        return result;
     }
 
     /// @brief           Adds a comma
@@ -407,17 +403,17 @@ class DepthCounter final
         {
 
             result =
-                MakeErrorResult<void>(JsonErrc::kInvalidJson, "DepthCounter::AddElement: Multiple top level elements.");
+                score::MakeUnexpected(JsonErrc::kInvalidJson, "DepthCounter::AddElement: Multiple top level elements.");
         }
         else if (this->CheckLastElement('{'))
         {
 
-            result = MakeErrorResult<void>(JsonErrc::kInvalidJson, "DepthCounter::AddElement: Expected a key.");
+            result = score::MakeUnexpected(JsonErrc::kInvalidJson, "DepthCounter::AddElement: Expected a key.");
         }
         else if (this->comma_expected_)
         {
 
-            result = MakeErrorResult<void>(JsonErrc::kInvalidJson, "DepthCounter::AddElement: Missing comma.");
+            result = score::MakeUnexpected(JsonErrc::kInvalidJson, "DepthCounter::AddElement: Missing comma.");
         }
         else
         {

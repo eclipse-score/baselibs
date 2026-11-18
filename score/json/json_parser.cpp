@@ -130,8 +130,7 @@ class AnyTreeBuilder final : private score::json::vajson::internal::StructurePar
         static_cast<void>(((try_convert(value.As<NumberType>())) || ...));
         if ((!number.has_value()) || (!Store(*number).has_value()))
         {
-            return score::json::vajson::MakeErrorResult<score::json::vajson::ParserState>(
-                score::json::vajson::JsonErrc::kInvalidJson);
+            return score::MakeUnexpected(score::json::vajson::JsonErrc::kInvalidJson);
         }
         return score::json::vajson::ParserState::kRunning;
     }
@@ -164,8 +163,7 @@ auto AnyTreeBuilder::OnNull() noexcept -> score::json::vajson::ParserResult
     auto result{Store(Null{})};
     if (!result.has_value())
     {
-        return score::json::vajson::MakeErrorResult<score::json::vajson::ParserState>(
-            score::json::vajson::JsonErrc::kInvalidJson);
+        return score::MakeUnexpected(score::json::vajson::JsonErrc::kInvalidJson);
     }
     return score::json::vajson::ParserState::kRunning;
 }
@@ -175,8 +173,7 @@ auto AnyTreeBuilder::OnBool(bool value) noexcept -> score::json::vajson::ParserR
     auto result{Store(value)};
     if (!result.has_value())
     {
-        return score::json::vajson::MakeErrorResult<score::json::vajson::ParserState>(
-            score::json::vajson::JsonErrc::kInvalidJson);
+        return score::MakeUnexpected(score::json::vajson::JsonErrc::kInvalidJson);
     }
     return score::json::vajson::ParserState::kRunning;
 }
@@ -196,8 +193,7 @@ auto AnyTreeBuilder::OnString(score::json::vajson::CStringView value) noexcept -
     auto result{Store(std::string(value))};
     if (!result.has_value())
     {
-        return score::json::vajson::MakeErrorResult<score::json::vajson::ParserState>(
-            score::json::vajson::JsonErrc::kInvalidJson);
+        return score::MakeUnexpected(score::json::vajson::JsonErrc::kInvalidJson);
     }
     return score::json::vajson::ParserState::kRunning;
 }
@@ -218,8 +214,7 @@ auto AnyTreeBuilder::StartContainer(T&& value) noexcept -> score::json::vajson::
     auto result{Store(std::forward<T>(value))};
     if (!result.has_value())
     {
-        return score::json::vajson::MakeErrorResult<score::json::vajson::ParserState>(
-            score::json::vajson::JsonErrc::kInvalidJson);
+        return score::MakeUnexpected(score::json::vajson::JsonErrc::kInvalidJson);
     }
 
     // Justification for autosar_cpp14_a18_9_2: Using std::move or std::forward on a raw pointer does not provide
