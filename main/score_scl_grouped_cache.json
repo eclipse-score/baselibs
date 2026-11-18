@@ -5267,7 +5267,7 @@
         {
           "name": "EmptyDynamicArrayOfNonTrivialElementTypeMemoryTest__TestNeverFailsButMemcheckDoesIfEmptyArrayIsNotCleanedUpCorrectly",
           "file": "score/containers/dynamic_array_test.cpp",
-          "line": 804,
+          "line": 808,
           "need": "comp_req__containers__deterministic_behavior",
           "verify_type": "partially",
           "result": "passed",
@@ -5279,7 +5279,7 @@
         {
           "name": "EmptyDynamicArrayOfTrivialElementTypeMemoryTest__TestNeverFailsButMemcheckDoesIfEmptyArrayIsNotCleanedUpCorrectly",
           "file": "score/containers/dynamic_array_test.cpp",
-          "line": 820,
+          "line": 824,
           "need": "comp_req__containers__deterministic_behavior",
           "verify_type": "partially",
           "result": "passed",
@@ -5463,7 +5463,7 @@
         {
           "name": "DynamicArrayTestFixture/0__CanConstructWithTrivialType",
           "file": "score/containers/dynamic_array_test.cpp",
-          "line": 60,
+          "line": 61,
           "need": "comp_req__containers__dynamic_array",
           "verify_type": "partially",
           "result": "passed",
@@ -5475,7 +5475,7 @@
         {
           "name": "DynamicArrayTestFixture/0__ConstructTrivialEmpty",
           "file": "score/containers/dynamic_array_test.cpp",
-          "line": 80,
+          "line": 81,
           "need": "comp_req__containers__dynamic_array",
           "verify_type": "partially",
           "result": "passed",
@@ -5487,7 +5487,7 @@
         {
           "name": "DynamicArrayTestFixture/0__ConstructNonTrivial",
           "file": "score/containers/dynamic_array_test.cpp",
-          "line": 91,
+          "line": 92,
           "need": "comp_req__containers__dynamic_array",
           "verify_type": "partially",
           "result": "passed",
@@ -5499,7 +5499,7 @@
         {
           "name": "DynamicArrayTestFixture/0__CopyConstructTrivial",
           "file": "score/containers/dynamic_array_test.cpp",
-          "line": 112,
+          "line": 113,
           "need": "comp_req__containers__dynamic_array",
           "verify_type": "partially",
           "result": "passed",
@@ -5511,7 +5511,7 @@
         {
           "name": "DynamicArrayTestFixture/0__CopyConstructNonTrivial",
           "file": "score/containers/dynamic_array_test.cpp",
-          "line": 139,
+          "line": 140,
           "need": "comp_req__containers__dynamic_array",
           "verify_type": "partially",
           "result": "passed",
@@ -5523,7 +5523,7 @@
         {
           "name": "DynamicArrayTestFixture/0__ConstructNonTrivialWithDefaultValue",
           "file": "score/containers/dynamic_array_test.cpp",
-          "line": 167,
+          "line": 168,
           "need": "comp_req__containers__dynamic_array",
           "verify_type": "partially",
           "result": "passed",
@@ -5535,7 +5535,7 @@
         {
           "name": "DynamicArrayTestFixture/0__MoveConstructTrivial",
           "file": "score/containers/dynamic_array_test.cpp",
-          "line": 190,
+          "line": 191,
           "need": "comp_req__containers__dynamic_array",
           "verify_type": "partially",
           "result": "passed",
@@ -5547,7 +5547,7 @@
         {
           "name": "DynamicArrayTestFixture/0__MoveConstructNonTrivial",
           "file": "score/containers/dynamic_array_test.cpp",
-          "line": 216,
+          "line": 217,
           "need": "comp_req__containers__dynamic_array",
           "verify_type": "partially",
           "result": "passed",
@@ -5559,7 +5559,7 @@
         {
           "name": "DynamicArrayTestFixture/0__MoveAssignTrivial",
           "file": "score/containers/dynamic_array_test.cpp",
-          "line": 251,
+          "line": 252,
           "need": "comp_req__containers__dynamic_array",
           "verify_type": "partially",
           "result": "passed",
@@ -5571,7 +5571,7 @@
         {
           "name": "DynamicArrayTestFixture/0__MoveAssignNonTrivial",
           "file": "score/containers/dynamic_array_test.cpp",
-          "line": 283,
+          "line": 284,
           "need": "comp_req__containers__dynamic_array",
           "verify_type": "partially",
           "result": "passed",
@@ -5583,7 +5583,7 @@
         {
           "name": "DynamicArrayTestFixture/0__SelfMoveAssign",
           "file": "score/containers/dynamic_array_test.cpp",
-          "line": 325,
+          "line": 326,
           "need": "comp_req__containers__dynamic_array",
           "verify_type": "partially",
           "result": "passed",
@@ -5595,7 +5595,7 @@
         {
           "name": "DynamicArrayTestFixture/0__CanSetValueOfArrayElements",
           "file": "score/containers/dynamic_array_test.cpp",
-          "line": 350,
+          "line": 354,
           "need": "comp_req__containers__dynamic_array",
           "verify_type": "partially",
           "result": "passed",
@@ -5607,7 +5607,7 @@
         {
           "name": "DynamicArrayTestFixture/0__CanConstructWithNonMoveableOrCopyableElements",
           "file": "score/containers/dynamic_array_test.cpp",
-          "line": 372,
+          "line": 376,
           "need": "comp_req__containers__dynamic_array",
           "verify_type": "partially",
           "result": "passed",
@@ -5619,7 +5619,7 @@
         {
           "name": "DynamicArrayTestFixture/0__DestructorOfNonTrivialTypesCalled",
           "file": "score/containers/dynamic_array_test.cpp",
-          "line": 388,
+          "line": 392,
           "need": "comp_req__containers__dynamic_array",
           "verify_type": "partially",
           "result": "passed",
@@ -5631,7 +5631,7 @@
         {
           "name": "DynamicArrayTestFixture/0__CanConstructWithTriviallyConstructableDestructibleElements",
           "file": "score/containers/dynamic_array_test.cpp",
-          "line": 407,
+          "line": 411,
           "need": "comp_req__containers__dynamic_array",
           "verify_type": "partially",
           "result": "passed",
@@ -5643,7 +5643,7 @@
         {
           "name": "DynamicArrayTestFixture/0__ConstructingDynamicArrayWithTrivialTypeWithTooManyElementsTerminates",
           "file": "score/containers/dynamic_array_test.cpp",
-          "line": 431,
+          "line": 435,
           "need": "comp_req__containers__dynamic_array",
           "verify_type": "partially",
           "result": "passed",
@@ -5655,7 +5655,7 @@
         {
           "name": "DynamicArrayTestFixture/0__AccessingConstRefArrayOutOfBoundsTerminates",
           "file": "score/containers/dynamic_array_test.cpp",
-          "line": 463,
+          "line": 467,
           "need": "comp_req__containers__dynamic_array",
           "verify_type": "partially",
           "result": "passed",
@@ -5667,7 +5667,7 @@
         {
           "name": "DynamicArrayTestFixture/0__IteratingTrivialType",
           "file": "score/containers/dynamic_array_test.cpp",
-          "line": 482,
+          "line": 486,
           "need": "comp_req__containers__dynamic_array",
           "verify_type": "partially",
           "result": "passed",
@@ -5679,7 +5679,7 @@
         {
           "name": "DynamicArrayTestFixture/0__IteratingNonTrivialType",
           "file": "score/containers/dynamic_array_test.cpp",
-          "line": 506,
+          "line": 510,
           "need": "comp_req__containers__dynamic_array",
           "verify_type": "partially",
           "result": "passed",
@@ -5691,7 +5691,7 @@
         {
           "name": "DynamicArrayTestFixture/0__ConstIteratingNonTrivialType",
           "file": "score/containers/dynamic_array_test.cpp",
-          "line": 536,
+          "line": 540,
           "need": "comp_req__containers__dynamic_array",
           "verify_type": "partially",
           "result": "passed",
@@ -5703,7 +5703,7 @@
         {
           "name": "DynamicArrayTestFixture/0__ConstIteratingNonTrivialTypeVariation",
           "file": "score/containers/dynamic_array_test.cpp",
-          "line": 556,
+          "line": 560,
           "need": "comp_req__containers__dynamic_array",
           "verify_type": "partially",
           "result": "passed",
@@ -5715,7 +5715,7 @@
         {
           "name": "DynamicArrayTestFixture/0__BracketOperatorAllowsSettingDataAtIndex",
           "file": "score/containers/dynamic_array_test.cpp",
-          "line": 578,
+          "line": 582,
           "need": "comp_req__containers__dynamic_array",
           "verify_type": "partially",
           "result": "passed",
@@ -5727,7 +5727,7 @@
         {
           "name": "DynamicArrayTestFixture/0__BracketOperatorAllowsGettingDataAtIndex",
           "file": "score/containers/dynamic_array_test.cpp",
-          "line": 597,
+          "line": 601,
           "need": "comp_req__containers__dynamic_array",
           "verify_type": "partially",
           "result": "passed",
@@ -5739,7 +5739,7 @@
         {
           "name": "DynamicArrayTestFixture/0__ConstBracketOperatorAllowsGettingDataAtIndex",
           "file": "score/containers/dynamic_array_test.cpp",
-          "line": 616,
+          "line": 620,
           "need": "comp_req__containers__dynamic_array",
           "verify_type": "partially",
           "result": "passed",
@@ -5751,7 +5751,7 @@
         {
           "name": "DynamicArrayTestFixture/0__DataShouldReturnPointerToFirstElement",
           "file": "score/containers/dynamic_array_test.cpp",
-          "line": 638,
+          "line": 642,
           "need": "comp_req__containers__dynamic_array",
           "verify_type": "partially",
           "result": "passed",
@@ -5763,7 +5763,7 @@
         {
           "name": "DynamicArrayTestFixture/0__ConstDataShouldReturnPointerToFirstElement",
           "file": "score/containers/dynamic_array_test.cpp",
-          "line": 649,
+          "line": 653,
           "need": "comp_req__containers__dynamic_array",
           "verify_type": "partially",
           "result": "passed",
@@ -5775,7 +5775,7 @@
         {
           "name": "DynamicArrayTestFixture/0__BeginIsEqualToEndWhenArrayIsEmpty",
           "file": "score/containers/dynamic_array_test.cpp",
-          "line": 660,
+          "line": 664,
           "need": "comp_req__containers__dynamic_array",
           "verify_type": "partially",
           "result": "passed",
@@ -5787,7 +5787,7 @@
         {
           "name": "DynamicArrayTestFixture/0__CBeginIsEqualToCEndWhenArrayIsEmpty",
           "file": "score/containers/dynamic_array_test.cpp",
-          "line": 677,
+          "line": 681,
           "need": "comp_req__containers__dynamic_array",
           "verify_type": "partially",
           "result": "passed",
@@ -5799,7 +5799,7 @@
         {
           "name": "DynamicArrayTestFixture/0__DataReturnsNullptrWhenArrayIsEmpty",
           "file": "score/containers/dynamic_array_test.cpp",
-          "line": 694,
+          "line": 698,
           "need": "comp_req__containers__dynamic_array",
           "verify_type": "partially",
           "result": "passed",
@@ -5811,7 +5811,7 @@
         {
           "name": "DynamicArrayTestFixture/0__SizeReturnsZeroWhenArrayIsEmpty",
           "file": "score/containers/dynamic_array_test.cpp",
-          "line": 711,
+          "line": 715,
           "need": "comp_req__containers__dynamic_array",
           "verify_type": "partially",
           "result": "passed",
@@ -5823,7 +5823,7 @@
         {
           "name": "DynamicArrayTestFixture/0__SizeReturnsZeroWhenArrayIsEmptyWithValue",
           "file": "score/containers/dynamic_array_test.cpp",
-          "line": 728,
+          "line": 732,
           "need": "comp_req__containers__dynamic_array",
           "verify_type": "partially",
           "result": "passed",
@@ -5835,7 +5835,7 @@
         {
           "name": "DynamicArrayTestFixture/0__AccessingElementWithAtWhenArrayIsEmptyTerminates",
           "file": "score/containers/dynamic_array_test.cpp",
-          "line": 749,
+          "line": 753,
           "need": "comp_req__containers__dynamic_array",
           "verify_type": "partially",
           "result": "passed",
@@ -5847,7 +5847,7 @@
         {
           "name": "DynamicArrayTestFixture/0__AccessingElementWithIndexOperatorWhenArrayIsEmptyTerminates",
           "file": "score/containers/dynamic_array_test.cpp",
-          "line": 766,
+          "line": 770,
           "need": "comp_req__containers__dynamic_array",
           "verify_type": "partially",
           "result": "passed",
@@ -5859,7 +5859,7 @@
         {
           "name": "DynamicArrayTestFixture/0__IteratingOverEmptyArrayIteratesZeroTimes",
           "file": "score/containers/dynamic_array_test.cpp",
-          "line": 783,
+          "line": 787,
           "need": "comp_req__containers__dynamic_array",
           "verify_type": "partially",
           "result": "passed",
@@ -5871,7 +5871,7 @@
         {
           "name": "DynamicArrayTestFixture/1__CanConstructWithTrivialType",
           "file": "score/containers/dynamic_array_test.cpp",
-          "line": 60,
+          "line": 61,
           "need": "comp_req__containers__dynamic_array",
           "verify_type": "partially",
           "result": "passed",
@@ -5883,7 +5883,7 @@
         {
           "name": "DynamicArrayTestFixture/1__ConstructTrivialEmpty",
           "file": "score/containers/dynamic_array_test.cpp",
-          "line": 80,
+          "line": 81,
           "need": "comp_req__containers__dynamic_array",
           "verify_type": "partially",
           "result": "passed",
@@ -5895,7 +5895,7 @@
         {
           "name": "DynamicArrayTestFixture/1__ConstructNonTrivial",
           "file": "score/containers/dynamic_array_test.cpp",
-          "line": 91,
+          "line": 92,
           "need": "comp_req__containers__dynamic_array",
           "verify_type": "partially",
           "result": "passed",
@@ -5907,7 +5907,7 @@
         {
           "name": "DynamicArrayTestFixture/1__CopyConstructTrivial",
           "file": "score/containers/dynamic_array_test.cpp",
-          "line": 112,
+          "line": 113,
           "need": "comp_req__containers__dynamic_array",
           "verify_type": "partially",
           "result": "passed",
@@ -5919,7 +5919,7 @@
         {
           "name": "DynamicArrayTestFixture/1__CopyConstructNonTrivial",
           "file": "score/containers/dynamic_array_test.cpp",
-          "line": 139,
+          "line": 140,
           "need": "comp_req__containers__dynamic_array",
           "verify_type": "partially",
           "result": "passed",
@@ -5931,7 +5931,7 @@
         {
           "name": "DynamicArrayTestFixture/1__ConstructNonTrivialWithDefaultValue",
           "file": "score/containers/dynamic_array_test.cpp",
-          "line": 167,
+          "line": 168,
           "need": "comp_req__containers__dynamic_array",
           "verify_type": "partially",
           "result": "passed",
@@ -5943,7 +5943,7 @@
         {
           "name": "DynamicArrayTestFixture/1__MoveConstructTrivial",
           "file": "score/containers/dynamic_array_test.cpp",
-          "line": 190,
+          "line": 191,
           "need": "comp_req__containers__dynamic_array",
           "verify_type": "partially",
           "result": "passed",
@@ -5955,7 +5955,7 @@
         {
           "name": "DynamicArrayTestFixture/1__MoveConstructNonTrivial",
           "file": "score/containers/dynamic_array_test.cpp",
-          "line": 216,
+          "line": 217,
           "need": "comp_req__containers__dynamic_array",
           "verify_type": "partially",
           "result": "passed",
@@ -5967,7 +5967,7 @@
         {
           "name": "DynamicArrayTestFixture/1__MoveAssignTrivial",
           "file": "score/containers/dynamic_array_test.cpp",
-          "line": 251,
+          "line": 252,
           "need": "comp_req__containers__dynamic_array",
           "verify_type": "partially",
           "result": "passed",
@@ -5979,7 +5979,7 @@
         {
           "name": "DynamicArrayTestFixture/1__MoveAssignNonTrivial",
           "file": "score/containers/dynamic_array_test.cpp",
-          "line": 283,
+          "line": 284,
           "need": "comp_req__containers__dynamic_array",
           "verify_type": "partially",
           "result": "passed",
@@ -5991,7 +5991,7 @@
         {
           "name": "DynamicArrayTestFixture/1__SelfMoveAssign",
           "file": "score/containers/dynamic_array_test.cpp",
-          "line": 325,
+          "line": 326,
           "need": "comp_req__containers__dynamic_array",
           "verify_type": "partially",
           "result": "passed",
@@ -6003,7 +6003,7 @@
         {
           "name": "DynamicArrayTestFixture/1__CanSetValueOfArrayElements",
           "file": "score/containers/dynamic_array_test.cpp",
-          "line": 350,
+          "line": 354,
           "need": "comp_req__containers__dynamic_array",
           "verify_type": "partially",
           "result": "passed",
@@ -6015,7 +6015,7 @@
         {
           "name": "DynamicArrayTestFixture/1__CanConstructWithNonMoveableOrCopyableElements",
           "file": "score/containers/dynamic_array_test.cpp",
-          "line": 372,
+          "line": 376,
           "need": "comp_req__containers__dynamic_array",
           "verify_type": "partially",
           "result": "passed",
@@ -6027,7 +6027,7 @@
         {
           "name": "DynamicArrayTestFixture/1__DestructorOfNonTrivialTypesCalled",
           "file": "score/containers/dynamic_array_test.cpp",
-          "line": 388,
+          "line": 392,
           "need": "comp_req__containers__dynamic_array",
           "verify_type": "partially",
           "result": "passed",
@@ -6039,7 +6039,7 @@
         {
           "name": "DynamicArrayTestFixture/1__CanConstructWithTriviallyConstructableDestructibleElements",
           "file": "score/containers/dynamic_array_test.cpp",
-          "line": 407,
+          "line": 411,
           "need": "comp_req__containers__dynamic_array",
           "verify_type": "partially",
           "result": "passed",
@@ -6051,7 +6051,7 @@
         {
           "name": "DynamicArrayTestFixture/1__ConstructingDynamicArrayWithTrivialTypeWithTooManyElementsTerminates",
           "file": "score/containers/dynamic_array_test.cpp",
-          "line": 431,
+          "line": 435,
           "need": "comp_req__containers__dynamic_array",
           "verify_type": "partially",
           "result": "passed",
@@ -6063,7 +6063,7 @@
         {
           "name": "DynamicArrayTestFixture/1__AccessingConstRefArrayOutOfBoundsTerminates",
           "file": "score/containers/dynamic_array_test.cpp",
-          "line": 463,
+          "line": 467,
           "need": "comp_req__containers__dynamic_array",
           "verify_type": "partially",
           "result": "passed",
@@ -6075,7 +6075,7 @@
         {
           "name": "DynamicArrayTestFixture/1__IteratingTrivialType",
           "file": "score/containers/dynamic_array_test.cpp",
-          "line": 482,
+          "line": 486,
           "need": "comp_req__containers__dynamic_array",
           "verify_type": "partially",
           "result": "passed",
@@ -6087,7 +6087,7 @@
         {
           "name": "DynamicArrayTestFixture/1__IteratingNonTrivialType",
           "file": "score/containers/dynamic_array_test.cpp",
-          "line": 506,
+          "line": 510,
           "need": "comp_req__containers__dynamic_array",
           "verify_type": "partially",
           "result": "passed",
@@ -6099,7 +6099,7 @@
         {
           "name": "DynamicArrayTestFixture/1__ConstIteratingNonTrivialType",
           "file": "score/containers/dynamic_array_test.cpp",
-          "line": 536,
+          "line": 540,
           "need": "comp_req__containers__dynamic_array",
           "verify_type": "partially",
           "result": "passed",
@@ -6111,7 +6111,7 @@
         {
           "name": "DynamicArrayTestFixture/1__ConstIteratingNonTrivialTypeVariation",
           "file": "score/containers/dynamic_array_test.cpp",
-          "line": 556,
+          "line": 560,
           "need": "comp_req__containers__dynamic_array",
           "verify_type": "partially",
           "result": "passed",
@@ -6123,7 +6123,7 @@
         {
           "name": "DynamicArrayTestFixture/1__BracketOperatorAllowsSettingDataAtIndex",
           "file": "score/containers/dynamic_array_test.cpp",
-          "line": 578,
+          "line": 582,
           "need": "comp_req__containers__dynamic_array",
           "verify_type": "partially",
           "result": "passed",
@@ -6135,7 +6135,7 @@
         {
           "name": "DynamicArrayTestFixture/1__BracketOperatorAllowsGettingDataAtIndex",
           "file": "score/containers/dynamic_array_test.cpp",
-          "line": 597,
+          "line": 601,
           "need": "comp_req__containers__dynamic_array",
           "verify_type": "partially",
           "result": "passed",
@@ -6147,7 +6147,7 @@
         {
           "name": "DynamicArrayTestFixture/1__ConstBracketOperatorAllowsGettingDataAtIndex",
           "file": "score/containers/dynamic_array_test.cpp",
-          "line": 616,
+          "line": 620,
           "need": "comp_req__containers__dynamic_array",
           "verify_type": "partially",
           "result": "passed",
@@ -6159,7 +6159,7 @@
         {
           "name": "DynamicArrayTestFixture/1__DataShouldReturnPointerToFirstElement",
           "file": "score/containers/dynamic_array_test.cpp",
-          "line": 638,
+          "line": 642,
           "need": "comp_req__containers__dynamic_array",
           "verify_type": "partially",
           "result": "passed",
@@ -6171,7 +6171,7 @@
         {
           "name": "DynamicArrayTestFixture/1__ConstDataShouldReturnPointerToFirstElement",
           "file": "score/containers/dynamic_array_test.cpp",
-          "line": 649,
+          "line": 653,
           "need": "comp_req__containers__dynamic_array",
           "verify_type": "partially",
           "result": "passed",
@@ -6183,7 +6183,7 @@
         {
           "name": "DynamicArrayTestFixture/1__BeginIsEqualToEndWhenArrayIsEmpty",
           "file": "score/containers/dynamic_array_test.cpp",
-          "line": 660,
+          "line": 664,
           "need": "comp_req__containers__dynamic_array",
           "verify_type": "partially",
           "result": "passed",
@@ -6195,7 +6195,7 @@
         {
           "name": "DynamicArrayTestFixture/1__CBeginIsEqualToCEndWhenArrayIsEmpty",
           "file": "score/containers/dynamic_array_test.cpp",
-          "line": 677,
+          "line": 681,
           "need": "comp_req__containers__dynamic_array",
           "verify_type": "partially",
           "result": "passed",
@@ -6207,7 +6207,7 @@
         {
           "name": "DynamicArrayTestFixture/1__DataReturnsNullptrWhenArrayIsEmpty",
           "file": "score/containers/dynamic_array_test.cpp",
-          "line": 694,
+          "line": 698,
           "need": "comp_req__containers__dynamic_array",
           "verify_type": "partially",
           "result": "passed",
@@ -6219,7 +6219,7 @@
         {
           "name": "DynamicArrayTestFixture/1__SizeReturnsZeroWhenArrayIsEmpty",
           "file": "score/containers/dynamic_array_test.cpp",
-          "line": 711,
+          "line": 715,
           "need": "comp_req__containers__dynamic_array",
           "verify_type": "partially",
           "result": "passed",
@@ -6231,7 +6231,7 @@
         {
           "name": "DynamicArrayTestFixture/1__SizeReturnsZeroWhenArrayIsEmptyWithValue",
           "file": "score/containers/dynamic_array_test.cpp",
-          "line": 728,
+          "line": 732,
           "need": "comp_req__containers__dynamic_array",
           "verify_type": "partially",
           "result": "passed",
@@ -6243,7 +6243,7 @@
         {
           "name": "DynamicArrayTestFixture/1__AccessingElementWithAtWhenArrayIsEmptyTerminates",
           "file": "score/containers/dynamic_array_test.cpp",
-          "line": 749,
+          "line": 753,
           "need": "comp_req__containers__dynamic_array",
           "verify_type": "partially",
           "result": "passed",
@@ -6255,7 +6255,7 @@
         {
           "name": "DynamicArrayTestFixture/1__AccessingElementWithIndexOperatorWhenArrayIsEmptyTerminates",
           "file": "score/containers/dynamic_array_test.cpp",
-          "line": 766,
+          "line": 770,
           "need": "comp_req__containers__dynamic_array",
           "verify_type": "partially",
           "result": "passed",
@@ -6267,7 +6267,7 @@
         {
           "name": "DynamicArrayTestFixture/1__IteratingOverEmptyArrayIteratesZeroTimes",
           "file": "score/containers/dynamic_array_test.cpp",
-          "line": 783,
+          "line": 787,
           "need": "comp_req__containers__dynamic_array",
           "verify_type": "partially",
           "result": "passed",
@@ -6279,7 +6279,7 @@
         {
           "name": "DynamicArrayCopyConstructorMemoryTest__CopyConstructorWithZeroSizeArrayDoesNotLeakMemory",
           "file": "score/containers/dynamic_array_test.cpp",
-          "line": 838,
+          "line": 842,
           "need": "comp_req__containers__dynamic_array",
           "verify_type": "partially",
           "result": "passed",
@@ -6291,7 +6291,7 @@
         {
           "name": "DynamicArrayCopyConstructorMemoryTest__CopyConstructorWithNonTrivialZeroSizeArrayDoesNotLeakMemory",
           "file": "score/containers/dynamic_array_test.cpp",
-          "line": 864,
+          "line": 868,
           "need": "comp_req__containers__dynamic_array",
           "verify_type": "partially",
           "result": "passed",
@@ -6347,7 +6347,7 @@
         {
           "name": "JsonTest__ReadWriteEscapedCharacters",
           "file": "score/json/json_test.cpp",
-          "line": 139,
+          "line": 143,
           "need": "comp_req__json__serialization",
           "verify_type": "partially",
           "result": "passed",
@@ -6463,7 +6463,7 @@
         {
           "name": "JsonTest__ReadsNonAsciiUnicodeEscapeSequences",
           "file": "score/json/json_test.cpp",
-          "line": 111,
+          "line": 113,
           "need": "comp_req__json__deserialization",
           "verify_type": "partially",
           "result": "passed",
@@ -6475,7 +6475,7 @@
         {
           "name": "JsonTest__RejectsUnescapedControlCharacters",
           "file": "score/json/json_test.cpp",
-          "line": 127,
+          "line": 131,
           "need": "comp_req__json__deserialization",
           "verify_type": "partially",
           "result": "passed",
@@ -6487,7 +6487,7 @@
         {
           "name": "JsonTest__ReadWriteEscapedCharacters",
           "file": "score/json/json_test.cpp",
-          "line": 139,
+          "line": 143,
           "need": "comp_req__json__deserialization",
           "verify_type": "partially",
           "result": "passed",
@@ -6667,7 +6667,7 @@
         {
           "name": "JsonParserVajsonTest__CanParseTwoByteBuffer",
           "file": "score/json/json_parser_test.cpp",
-          "line": 663,
+          "line": 665,
           "need": "comp_req__json__deserialization",
           "verify_type": "partially",
           "result": "passed",
@@ -6679,7 +6679,7 @@
         {
           "name": "JsonParserVajsonTest__CanParseBufferWithUtf8Bom",
           "file": "score/json/json_parser_test.cpp",
-          "line": 682,
+          "line": 684,
           "need": "comp_req__json__deserialization",
           "verify_type": "partially",
           "result": "passed",
@@ -6691,7 +6691,7 @@
         {
           "name": "NumberTest__WhenParsingABoolStoredInAJsonThenParsingIsSuccessfulAndCorrectValueIsReturned",
           "file": "score/json/json_parser_test.cpp",
-          "line": 754,
+          "line": 756,
           "need": "comp_req__json__deserialization",
           "verify_type": "partially",
           "result": "passed",
@@ -6703,7 +6703,7 @@
         {
           "name": "NumberTest__WhenParsingAUint8StoredInAJsonThenParsingIsSuccessfulAndCorrectValueIsReturned",
           "file": "score/json/json_parser_test.cpp",
-          "line": 776,
+          "line": 778,
           "need": "comp_req__json__deserialization",
           "verify_type": "partially",
           "result": "passed",
@@ -6715,7 +6715,7 @@
         {
           "name": "NumberTest__WhenParsingAUint16StoredInAJsonThenParsingIsSuccessfulAndCorrectValueIsReturned",
           "file": "score/json/json_parser_test.cpp",
-          "line": 799,
+          "line": 801,
           "need": "comp_req__json__deserialization",
           "verify_type": "partially",
           "result": "passed",
@@ -6727,7 +6727,7 @@
         {
           "name": "NumberTest__WhenParsingAUint32StoredInAJsonThenParsingIsSuccessfulAndCorrectValueIsReturned",
           "file": "score/json/json_parser_test.cpp",
-          "line": 822,
+          "line": 824,
           "need": "comp_req__json__deserialization",
           "verify_type": "partially",
           "result": "passed",
@@ -6739,7 +6739,7 @@
         {
           "name": "NumberTest__WhenParsingAUint64StoredInAJsonThenParsingIsSuccessfulAndCorrectValueIsReturned",
           "file": "score/json/json_parser_test.cpp",
-          "line": 845,
+          "line": 847,
           "need": "comp_req__json__deserialization",
           "verify_type": "partially",
           "result": "passed",
@@ -6751,7 +6751,7 @@
         {
           "name": "NumberTest__WhenParsingAInt8StoredInAJsonThenParsingIsSuccessfulAndCorrectValueIsReturned",
           "file": "score/json/json_parser_test.cpp",
-          "line": 868,
+          "line": 870,
           "need": "comp_req__json__deserialization",
           "verify_type": "partially",
           "result": "passed",
@@ -6763,7 +6763,7 @@
         {
           "name": "NumberTest__WhenParsingAInt16StoredInAJsonThenParsingIsSuccessfulAndCorrectValueIsReturned",
           "file": "score/json/json_parser_test.cpp",
-          "line": 891,
+          "line": 893,
           "need": "comp_req__json__deserialization",
           "verify_type": "partially",
           "result": "passed",
@@ -6775,7 +6775,7 @@
         {
           "name": "NumberTest__WhenParsingAInt32StoredInAJsonThenParsingIsSuccessfulAndCorrectValueIsReturned",
           "file": "score/json/json_parser_test.cpp",
-          "line": 914,
+          "line": 916,
           "need": "comp_req__json__deserialization",
           "verify_type": "partially",
           "result": "passed",
@@ -6787,7 +6787,7 @@
         {
           "name": "NumberTest__WhenParsingAInt64StoredInAJsonThenParsingIsSuccessfulAndCorrectValueIsReturned",
           "file": "score/json/json_parser_test.cpp",
-          "line": 937,
+          "line": 939,
           "need": "comp_req__json__deserialization",
           "verify_type": "partially",
           "result": "passed",
@@ -6799,7 +6799,7 @@
         {
           "name": "NumberTest__WhenParsingAFloatStoredInAJsonThenParsingIsSuccessfulAndCorrectValueIsReturned",
           "file": "score/json/json_parser_test.cpp",
-          "line": 959,
+          "line": 961,
           "need": "comp_req__json__deserialization",
           "verify_type": "partially",
           "result": "passed",
@@ -6811,7 +6811,7 @@
         {
           "name": "NumberTest__WhenParsingADoubleStoredInAJsonThenParsingIsSuccessfulAndCorrectValueIsReturned",
           "file": "score/json/json_parser_test.cpp",
-          "line": 982,
+          "line": 984,
           "need": "comp_req__json__deserialization",
           "verify_type": "partially",
           "result": "passed",
@@ -7067,7 +7067,7 @@
         {
           "name": "JsonParserVajsonTest__CanParseObjectHexadecimalNumber",
           "file": "score/json/json_parser_test.cpp",
-          "line": 614,
+          "line": 616,
           "need": "comp_req__vajson__hex_integers",
           "verify_type": "partially",
           "result": "passed",
