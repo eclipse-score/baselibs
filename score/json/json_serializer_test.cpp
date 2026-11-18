@@ -459,6 +459,32 @@ TEST(JsonSerializerTest, FailToDeserializeWrongNumberType)
     EXPECT_EQ(unit.error(), Error::kWrongType);
 }
 
+TEST(JsonSerializerTest, FailToDeserializeNumberOutOfRange)
+{
+    RecordProperty("PartiallyVerifies", "comp_req__json__out_of_range_error");
+    RecordProperty("Description",
+                   "Check that deserializing a number into a field whose type cannot hold it returns an out-of-range "
+                   "error that names the field.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "boundary-values");
+
+    auto source = R"({
+"integer_val": 4294967296,
+"string_val": "Blah",
+"nested_val": {
+    "nested_int": 43,
+    "nested_bool": true,
+    "nested_array": [44, 45]
+    }
+} )"_json;
+
+    auto unit{FromJsonAny<TypeToSerialize>(std::move(source))};
+
+    ASSERT_FALSE(unit.has_value());
+    EXPECT_EQ(unit.error(), Error::kOutOfRange);
+    EXPECT_EQ(unit.error().UserMessage(), "integer_val");
+}
+
 TEST(JsonSerializerTest, FailToDeserializeANonBooleanTypeToBool)
 {
     RecordProperty("TestType", "control-flow-analysis");  // data flow

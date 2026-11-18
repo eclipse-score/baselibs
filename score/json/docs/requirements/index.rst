@@ -149,6 +149,19 @@ User friendly API for information exchange
 
    Note: This includes checking if the stored value exceeds the range of the expected type.
 
+.. comp_req:: Out-of-range error
+   :id: comp_req__json__out_of_range_error
+   :reqtype: Functional
+   :security: YES
+   :safety: ASIL_B
+   :derived_from: feat_req__baselibs__json_library[version==2]
+   :status: valid
+   :version: 1
+   :satisfied_by: comp__baselibs_json_wrapper[version==1]
+
+   When a user requests a number as a type whose range does not include the number, the public API shall report an
+   out-of-range error.
+
 Full testability for the user facing API
 ========================================
 

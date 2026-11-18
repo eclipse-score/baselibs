@@ -159,8 +159,9 @@ for (const auto& element : my_array_result.value().get())
 - Floating point: `float`, `double`
 
 An element can be converted into the requested type if it can be represented
-identically in that type without loss of information. Otherwise an `kWrongType`
-error will be returned, e.g. in case of a precision loss. To access the value
+identically in that type without loss of information. If the value lies outside
+the range of the requested type, a `kOutOfRange` error is returned. Otherwise a
+`kWrongType` error is returned, e.g. in case of a precision loss. To access the value
 you can use the `As<ArithmeticType>()` method on instances of `score::json::Any`
 and `score::json::Number`:
 
@@ -311,6 +312,7 @@ Where available, the user message of the error names the reason.
 | `kParsingError` | The input is not valid JSON, or it holds data the data model cannot represent, e.g. duplicate member names. |
 | `kIoError`      | A JSON file cannot be opened, read, written, or committed. |
 | `kWrongType`    | A value is requested as a type it does not have or cannot be converted to without loss. |
+| `kOutOfRange`   | A number is requested as a type whose range does not include it. |
 | `kKeyNotFound`  | An object has no member with the requested name. |
 | `kInvalidValue` | A value has the expected type, but its content is not accepted, e.g. NaN or infinity cannot be written as JSON. |
 

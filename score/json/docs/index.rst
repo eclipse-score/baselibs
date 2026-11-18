@@ -105,6 +105,7 @@ This includes error handling, which shall follow one of the error handling conce
 * :need:`comp_req__json__lang_idioms`
 * :need:`comp_req__json__lang_infra`
 * :need:`comp_req__json__type_compatibility`
+* :need:`comp_req__json__out_of_range_error`
 
 Full testability for the public API
 ----------------------------------------

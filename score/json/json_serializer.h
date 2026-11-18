@@ -335,7 +335,9 @@ class JsonSerializer<N, std::enable_if_t<std::is_arithmetic_v<N> && !std::is_sam
             }
             else
             {
-                return MakeUnexpected(Error::kWrongType, "Number not convertible to expected arithmetic type");
+                // Keeps the error code, which tells a value out of range from a lossy conversion.
+                return MakeUnexpected<N>(
+                    val.error().WithUserMessage("Number not convertible to expected arithmetic type"));
             }
         }
         else
