@@ -30,7 +30,7 @@ default-members = [
     "score/result/rust",
     "score/language/rust/memres",
 ]
-# Include tests and examples as a member for IDE support and Bazel builds.
+# Include tests as a member for IDE support and Bazel builds.
 members = [
     "score/containers_rust",
     "score/sync",
@@ -47,8 +47,6 @@ members = [
     "score/language/rust/libcpp_derive",
     "score/language/rust/stop_token",
     "score/result/rust",
-    "examples/log_builtin",
-    "examples/log_custom",
 ]
 
 [workspace.package]

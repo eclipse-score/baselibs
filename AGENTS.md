@@ -11,7 +11,7 @@ score/          # C++ AND Rust libraries side by side (concurrency, containers, 
                 # json, memory, network, os, result, allocator, pal, sync, thread, testing_macros, log_rust, etc.)
                 # Most components have a docs/ subfolder with requirements, architecture, detailed design, and safety analysis.
 src/            # Deprecated Bazel alias stubs. No real sources here.
-examples/       # Integration and usage examples (C++ and Rust)
+examples/       # Integration module with usage examples (C++ and Rust), a separate Bazel workspace
 third_party/    # External dependency BUILD files (acl, openssl, libcap2, etc.)
 docs/           # Feature-level and module-level Sphinx docs.
 .github/        # CI workflows, CODEOWNERS, tools

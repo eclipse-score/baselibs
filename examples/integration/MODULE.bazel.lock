@@ -513,6 +513,7 @@
     "https://bcr.bazel.build/modules/rules_robolectric/4.14.1.2/MODULE.bazel": "d44fec647d0aeb67b9f3b980cf68ba634976f3ae7ccd6c07d790b59b87a4f251",
     "https://bcr.bazel.build/modules/rules_robolectric/4.14.1.2/source.json": "37c10335f2361c337c5c1f34ed36d2da70534c23088062b33a8bdaab68aa9dea",
     "https://bcr.bazel.build/modules/rules_rust/0.51.0/MODULE.bazel": "2b6d1617ac8503bfdcc0e4520c20539d4bba3a691100bee01afe193ceb0310f9",
+    "https://bcr.bazel.build/modules/rules_rust/0.56.0/MODULE.bazel": "3295b00757db397122092322fe1e920be7f5c9fbfb8619138977e820f2cbbbae",
     "https://bcr.bazel.build/modules/rules_rust/0.61.0/MODULE.bazel": "0318a95777b9114c8740f34b60d6d68f9cfef61e2f4b52424ca626213d33787b",
     "https://bcr.bazel.build/modules/rules_rust/0.65.0/MODULE.bazel": "1b53caef82fd1c89a2fb15cfa3a15a8e98fe12f4904806b409f5a0183e73f547",
     "https://bcr.bazel.build/modules/rules_rust/0.67.0/MODULE.bazel": "87c3816c4321352dcfd9e9e26b58e84efc5b21351ae3ef8fb5d0d57bde7237f5",
@@ -1004,6 +1005,7 @@
     "https://raw.githubusercontent.com/eclipse-score/bazel_registry/main/modules/rules_python_gazelle_plugin/1.5.1/MODULE.bazel": "not found",
     "https://raw.githubusercontent.com/eclipse-score/bazel_registry/main/modules/rules_robolectric/4.14.1.2/MODULE.bazel": "not found",
     "https://raw.githubusercontent.com/eclipse-score/bazel_registry/main/modules/rules_rust/0.51.0/MODULE.bazel": "not found",
+    "https://raw.githubusercontent.com/eclipse-score/bazel_registry/main/modules/rules_rust/0.56.0/MODULE.bazel": "not found",
     "https://raw.githubusercontent.com/eclipse-score/bazel_registry/main/modules/rules_rust/0.61.0/MODULE.bazel": "not found",
     "https://raw.githubusercontent.com/eclipse-score/bazel_registry/main/modules/rules_rust/0.65.0/MODULE.bazel": "not found",
     "https://raw.githubusercontent.com/eclipse-score/bazel_registry/main/modules/rules_rust/0.67.0/MODULE.bazel": "not found",
@@ -1024,6 +1026,7 @@
     "https://raw.githubusercontent.com/eclipse-score/bazel_registry/main/modules/rules_swift/3.1.2/MODULE.bazel": "not found",
     "https://raw.githubusercontent.com/eclipse-score/bazel_registry/main/modules/score_bazel_cpp_toolchains/1.1.0-rc1/MODULE.bazel": "79b34efdd8651033da3d5330d2c9588b8bff412ac468de4e78ebcdc827138002",
     "https://raw.githubusercontent.com/eclipse-score/bazel_registry/main/modules/score_bazel_cpp_toolchains/1.1.0-rc1/source.json": "973de32d0eb054c62590206129b84ce580dda2b51108285ba8810dcea022d2ee",
+    "https://raw.githubusercontent.com/eclipse-score/bazel_registry/main/modules/score_bazel_platforms/0.0.3/MODULE.bazel": "14c96e378c08705a46abe0799d6236fe3095c342c34f83f8d1b3f6046ce00651",
     "https://raw.githubusercontent.com/eclipse-score/bazel_registry/main/modules/score_bazel_platforms/0.1.1/MODULE.bazel": "236e5bdff6f2d6de6f96cc4f5f4b1bf2cd6137547ce279668a2dd4c54cd4236c",
     "https://raw.githubusercontent.com/eclipse-score/bazel_registry/main/modules/score_bazel_platforms/1.1.0/MODULE.bazel": "e5c656abcad121a89cbabad3550bb20167a6865de219ef6e1c68ca30567e1c32",
     "https://raw.githubusercontent.com/eclipse-score/bazel_registry/main/modules/score_bazel_platforms/1.3.0/MODULE.bazel": "09ef65a5ad9d87031d176d928b8f87057e227da7cfbf8ab3d8f08f2605eac48b",
@@ -1080,6 +1083,8 @@
     "https://raw.githubusercontent.com/eclipse-score/bazel_registry/main/modules/score_rust_policies/0.0.5/MODULE.bazel": "7de02547bdf121d3dedf5141b97f0fd9a545bd255ff5c7b699056b35816ffad9",
     "https://raw.githubusercontent.com/eclipse-score/bazel_registry/main/modules/score_rust_policies/0.0.5/source.json": "22c8bf0a5cbf7c7b06f774f3f66498e0bc14346a8b2208f7427a8fbb78a42547",
     "https://raw.githubusercontent.com/eclipse-score/bazel_registry/main/modules/score_starpls_lsp/0.1.0/MODULE.bazel": "b2f8c4c8d8e851706255ff9002b448bff6e040b8f0c6adedbde2a09375aa16cc",
+    "https://raw.githubusercontent.com/eclipse-score/bazel_registry/main/modules/score_toolchains_rust/0.10.0/MODULE.bazel": "535296e6cdef55a506c580ca2ce541aa9ddefb354de1a24ab2bd4addc939282b",
+    "https://raw.githubusercontent.com/eclipse-score/bazel_registry/main/modules/score_toolchains_rust/0.10.0/source.json": "8bda773be264da16d2a82a03ebb737421dd4a35855f1e9a5d03d9722d84c1df5",
     "https://raw.githubusercontent.com/eclipse-score/bazel_registry/main/modules/score_tooling/1.0.2/MODULE.bazel": "e70f396375b9d612b4f41ebceff7f18f68ab423b14625c138a354cc01bc62a10",
     "https://raw.githubusercontent.com/eclipse-score/bazel_registry/main/modules/score_tooling/1.1.2/MODULE.bazel": "56d08309931cfad67c2b6691207bb5f761a3946830d620c630d2436630e6b499",
     "https://raw.githubusercontent.com/eclipse-score/bazel_registry/main/modules/score_tooling/1.3.1/MODULE.bazel": "4ce18de0fdfb447ba750b98febb24e12471862cbbd5d08f5f683f27886767367",
@@ -9102,6 +9107,168 @@
               "tc_pkg_repo": "'@@score_bazel_cpp_toolchains++gcc+qnx_sdp_8_0_5_pkg'",
               "sdp_version": "8.0.0",
               "tc_type": "ifs"
+            }
+          }
+        }
+      }
+    },
+    "@@score_toolchains_rust+//extensions:ferrocene_toolchain_ext.bzl%ferrocene_toolchain_ext": {
+      "general": {
+        "bzlTransitiveDigest": "9k8SLwP4ec9xXjFivq0Kn0FradTQhcEA+j/WsLxfVPM=",
+        "usagesDigest": "ANsCxJ1KIL4fXiEiWcWT5l5bMcnUM7xjtLQrHfOO6G4=",
+        "recordedInputs": [],
+        "generatedRepoSpecs": {
+          "ferrocene_x86_64_unknown_linux_gnu": {
+            "repoRuleId": "@@score_toolchains_rust+//extensions:ferrocene_toolchain_ext.bzl%ferrocene_toolchain_repo",
+            "attributes": {
+              "url": "https://github.com/eclipse-score/ferrocene_toolchain_builder/releases/download/1.3.1/ferrocene-779fbed05ae9e9fe2a04137929d99cc9b3d516fd-x86_64-unknown-linux-gnu.tar.gz",
+              "sha256": "6fd7c7053a80463b2bfd24202de02e16959b18ed185c55b738148e9caac42eff",
+              "strip_prefix": "",
+              "toolchain_name": "rust_ferrocene",
+              "target_triple": "x86_64-unknown-linux-gnu",
+              "exec_triple": "x86_64-unknown-linux-gnu",
+              "staticlib_ext": ".a",
+              "dylib_ext": ".so",
+              "binary_ext": "",
+              "default_edition": "2021",
+              "stdlib_linkflags": [],
+              "extra_rustc_flags": [
+                "-Clink-arg=-Wl,--no-as-needed",
+                "-Clink-arg=-lstdc++",
+                "-Clink-arg=-lm",
+                "-Clink-arg=-lc"
+              ],
+              "extra_exec_rustc_flags": [],
+              "env": {},
+              "exec_compatible_with": [
+                "@platforms//cpu:x86_64",
+                "@platforms//os:linux"
+              ],
+              "target_compatible_with": [
+                "@platforms//cpu:x86_64",
+                "@platforms//os:linux"
+              ],
+              "coverage_tools_url": "https://github.com/eclipse-score/ferrocene_toolchain_builder/releases/download/1.3.1/coverage-tools-779fbed05ae9e9fe2a04137929d99cc9b3d516fd-x86_64-unknown-linux-gnu.tar.gz",
+              "coverage_tools_sha256": "9cf5d76b2e505bf2a8b2b47c60f191ac1273f87851ed387e53080b8e5d14dedf",
+              "coverage_tools_strip_prefix": "779fbed05ae9e9fe2a04137929d99cc9b3d516fd/x86_64-unknown-linux-gnu",
+              "miri_sysroot_url": "https://github.com/eclipse-score/ferrocene_toolchain_builder/releases/download/1.3.1/miri-sysroot-779fbed05ae9e9fe2a04137929d99cc9b3d516fd-x86_64-unknown-linux-gnu.tar.gz",
+              "miri_sysroot_sha256": "143260fe3873249160d57b370717005828e129d3b6782448a32d8cc578384fe0",
+              "miri_sysroot_strip_prefix": "x86_64-unknown-linux-gnu"
+            }
+          },
+          "ferrocene_aarch64_unknown_linux_gnu": {
+            "repoRuleId": "@@score_toolchains_rust+//extensions:ferrocene_toolchain_ext.bzl%ferrocene_toolchain_repo",
+            "attributes": {
+              "url": "https://github.com/eclipse-score/ferrocene_toolchain_builder/releases/download/1.3.1/ferrocene-779fbed05ae9e9fe2a04137929d99cc9b3d516fd-aarch64-unknown-linux-gnu.tar.gz",
+              "sha256": "06ee88a935083068325b69028e9d4e9adc696542cea9b4322642a55dafcae552",
+              "strip_prefix": "",
+              "toolchain_name": "rust_ferrocene",
+              "target_triple": "aarch64-unknown-linux-gnu",
+              "exec_triple": "x86_64-unknown-linux-gnu",
+              "staticlib_ext": ".a",
+              "dylib_ext": ".so",
+              "binary_ext": "",
+              "default_edition": "2021",
+              "stdlib_linkflags": [],
+              "extra_rustc_flags": [
+                "-Clink-arg=-Wl,--no-as-needed",
+                "-Clink-arg=-lstdc++",
+                "-Clink-arg=-lm",
+                "-Clink-arg=-lc",
+                "-Clink-arg=-lgcc"
+              ],
+              "extra_exec_rustc_flags": [],
+              "env": {},
+              "exec_compatible_with": [
+                "@platforms//cpu:x86_64",
+                "@platforms//os:linux"
+              ],
+              "target_compatible_with": [
+                "@platforms//cpu:aarch64",
+                "@platforms//os:linux"
+              ],
+              "coverage_tools_url": "https://github.com/eclipse-score/ferrocene_toolchain_builder/releases/download/1.3.1/coverage-tools-779fbed05ae9e9fe2a04137929d99cc9b3d516fd-x86_64-unknown-linux-gnu.tar.gz",
+              "coverage_tools_sha256": "9cf5d76b2e505bf2a8b2b47c60f191ac1273f87851ed387e53080b8e5d14dedf",
+              "coverage_tools_strip_prefix": "779fbed05ae9e9fe2a04137929d99cc9b3d516fd/x86_64-unknown-linux-gnu",
+              "miri_sysroot_url": "https://github.com/eclipse-score/ferrocene_toolchain_builder/releases/download/1.3.1/miri-sysroot-779fbed05ae9e9fe2a04137929d99cc9b3d516fd-aarch64-unknown-linux-gnu.tar.gz",
+              "miri_sysroot_sha256": "4059e74c79147b942eb595c14a5f998ebdb1063764ea756b4f32c21bf5903a16",
+              "miri_sysroot_strip_prefix": "aarch64-unknown-linux-gnu"
+            }
+          },
+          "ferrocene_x86_64_pc_nto_qnx800": {
+            "repoRuleId": "@@score_toolchains_rust+//extensions:ferrocene_toolchain_ext.bzl%ferrocene_toolchain_repo",
+            "attributes": {
+              "url": "https://github.com/eclipse-score/ferrocene_toolchain_builder/releases/download/1.3.1/ferrocene-779fbed05ae9e9fe2a04137929d99cc9b3d516fd-x86_64-pc-nto-qnx800.tar.gz",
+              "sha256": "655ad0d212baf63f4dd03065735ca55cddadc86cf6bd005aeb19689e348a0023",
+              "strip_prefix": "",
+              "toolchain_name": "rust_ferrocene",
+              "target_triple": "x86_64-pc-nto-qnx800",
+              "exec_triple": "x86_64-unknown-linux-gnu",
+              "staticlib_ext": ".a",
+              "dylib_ext": ".so",
+              "binary_ext": "",
+              "default_edition": "2021",
+              "stdlib_linkflags": [],
+              "extra_rustc_flags": [
+                "-Clink-arg=-Wl,--no-as-needed",
+                "-Clink-arg=-lc++",
+                "-Clink-arg=-lm",
+                "-Clink-arg=-lc"
+              ],
+              "extra_exec_rustc_flags": [],
+              "env": {},
+              "exec_compatible_with": [
+                "@platforms//cpu:x86_64",
+                "@platforms//os:linux"
+              ],
+              "target_compatible_with": [
+                "@platforms//cpu:x86_64",
+                "@platforms//os:qnx"
+              ],
+              "coverage_tools_url": "https://github.com/eclipse-score/ferrocene_toolchain_builder/releases/download/1.3.1/coverage-tools-779fbed05ae9e9fe2a04137929d99cc9b3d516fd-x86_64-unknown-linux-gnu.tar.gz",
+              "coverage_tools_sha256": "9cf5d76b2e505bf2a8b2b47c60f191ac1273f87851ed387e53080b8e5d14dedf",
+              "coverage_tools_strip_prefix": "779fbed05ae9e9fe2a04137929d99cc9b3d516fd/x86_64-unknown-linux-gnu",
+              "miri_sysroot_url": "https://github.com/eclipse-score/ferrocene_toolchain_builder/releases/download/1.3.1/miri-sysroot-779fbed05ae9e9fe2a04137929d99cc9b3d516fd-x86_64-pc-nto-qnx800.tar.gz",
+              "miri_sysroot_sha256": "9684ea089c883a0739f402165fc6aa374a69641e763957c314688779e8124931",
+              "miri_sysroot_strip_prefix": "x86_64-pc-nto-qnx800"
+            }
+          },
+          "ferrocene_aarch64_unknown_nto_qnx800": {
+            "repoRuleId": "@@score_toolchains_rust+//extensions:ferrocene_toolchain_ext.bzl%ferrocene_toolchain_repo",
+            "attributes": {
+              "url": "https://github.com/eclipse-score/ferrocene_toolchain_builder/releases/download/1.3.1/ferrocene-779fbed05ae9e9fe2a04137929d99cc9b3d516fd-aarch64-unknown-nto-qnx800.tar.gz",
+              "sha256": "a8e80da21c6abebfb31063f3815cd3a4bbb5a1466855a12043d7c243ef152715",
+              "strip_prefix": "",
+              "toolchain_name": "rust_ferrocene",
+              "target_triple": "aarch64-unknown-nto-qnx800",
+              "exec_triple": "x86_64-unknown-linux-gnu",
+              "staticlib_ext": ".a",
+              "dylib_ext": ".so",
+              "binary_ext": "",
+              "default_edition": "2021",
+              "stdlib_linkflags": [],
+              "extra_rustc_flags": [
+                "-Clink-arg=-Wl,--no-as-needed",
+                "-Clink-arg=-lc++",
+                "-Clink-arg=-lm",
+                "-Clink-arg=-lc"
+              ],
+              "extra_exec_rustc_flags": [],
+              "env": {},
+              "exec_compatible_with": [
+                "@platforms//cpu:x86_64",
+                "@platforms//os:linux"
+              ],
+              "target_compatible_with": [
+                "@platforms//cpu:aarch64",
+                "@platforms//os:qnx"
+              ],
+              "coverage_tools_url": "https://github.com/eclipse-score/ferrocene_toolchain_builder/releases/download/1.3.1/coverage-tools-779fbed05ae9e9fe2a04137929d99cc9b3d516fd-x86_64-unknown-linux-gnu.tar.gz",
+              "coverage_tools_sha256": "9cf5d76b2e505bf2a8b2b47c60f191ac1273f87851ed387e53080b8e5d14dedf",
+              "coverage_tools_strip_prefix": "779fbed05ae9e9fe2a04137929d99cc9b3d516fd/x86_64-unknown-linux-gnu",
+              "miri_sysroot_url": "https://github.com/eclipse-score/ferrocene_toolchain_builder/releases/download/1.3.1/miri-sysroot-779fbed05ae9e9fe2a04137929d99cc9b3d516fd-aarch64-unknown-nto-qnx800.tar.gz",
+              "miri_sysroot_sha256": "3077170b7384d6bcf2cf8f53db8b670d48fc7e2237285b4fd799c64e7412bdff",
+              "miri_sysroot_strip_prefix": "aarch64-unknown-nto-qnx800"
             }
           }
         }

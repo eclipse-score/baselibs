@@ -20,18 +20,22 @@ rust_static_library(
     edition = "2021",
     visibility = ["//visibility:private"],
     deps = [
-        "//score/log_rust/score_log",
-        "//score/log_rust/stdout_logger",
+        "@score_baselibs//score/log_rust/score_log",
+        "@score_baselibs//score/log_rust/stdout_logger",
     ],
 )
 
 cc_binary(
     name = "log_cpp_init",
     srcs = ["src/main.cpp"],
-    linkopts = ["-lpthread"],
+    # QNX provides pthreads in libc (no libpthread); Rust std needs libsocket.
+    linkopts = select({
+        "@platforms//os:qnx": ["-lsocket"],
+        "//conditions:default": ["-lpthread"],
+    }),
     visibility = ["//visibility:public"],
     deps = [
         ":example_lib",
-        "//score/log_rust/stdout_logger_cpp_init",
+        "@score_baselibs//score/log_rust/stdout_logger_cpp_init",
     ],
 )
