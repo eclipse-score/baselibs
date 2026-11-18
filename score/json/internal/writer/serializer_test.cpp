@@ -236,60 +236,63 @@ TEST(SerializerTest, SerializesNumbersInTheirStoredArithmeticType)
 // RFC 8259, section 6 has no representation for infinity or NaN, hence they cannot be serialized.
 TEST(SerializerTest, RejectsInfiniteDouble)
 {
-    RecordProperty("Verifies", "SCR-5310867");
-    RecordProperty("ASIL", "B");
+    RecordProperty("PartiallyVerifies", "comp_req__json__serialization");
     RecordProperty(
         "Description",
         "failure in serializing positive infinity, which has no JSON representation, cf. RFC-8259 section 6");
-    RecordProperty("TestType", "requirements-based");  // requirements test
+    RecordProperty("TestType", "requirements-based");
     RecordProperty("DerivationTechnique", "error-guessing");
 
     Object object{};
     object["number"] = Any{std::numeric_limits<double>::infinity()};
-    EXPECT_FALSE(SerializeToBuffer(object, Formatting::kPrettyPrint).has_value());
+    const auto result{SerializeToBuffer(object, Formatting::kPrettyPrint)};
+    ASSERT_FALSE(result.has_value());
+    EXPECT_EQ(result.error(), Error::kInvalidValue);
 }
 TEST(SerializerTest, RejectsNegativeInfiniteFloat)
 {
-    RecordProperty("Verifies", "SCR-5310867");
-    RecordProperty("ASIL", "B");
+    RecordProperty("PartiallyVerifies", "comp_req__json__serialization");
     RecordProperty(
         "Description",
         "failure in serializing negative infinity, which has no JSON representation, cf. RFC-8259 section 6");
-    RecordProperty("TestType", "requirements-based");  // requirements test
+    RecordProperty("TestType", "requirements-based");
     RecordProperty("DerivationTechnique", "error-guessing");
 
     Object object{};
     object["number"] = Any{-std::numeric_limits<float>::infinity()};
-    EXPECT_FALSE(SerializeToBuffer(object, Formatting::kPrettyPrint).has_value());
+    const auto result{SerializeToBuffer(object, Formatting::kPrettyPrint)};
+    ASSERT_FALSE(result.has_value());
+    EXPECT_EQ(result.error(), Error::kInvalidValue);
 }
 TEST(SerializerTest, RejectsNotANumber)
 {
-    RecordProperty("Verifies", "SCR-5310867");
-    RecordProperty("ASIL", "B");
+    RecordProperty("PartiallyVerifies", "comp_req__json__serialization");
     RecordProperty("Description",
                    "failure in serializing NaN, which has no JSON representation, cf. RFC-8259 section 6");
-    RecordProperty("TestType", "requirements-based");  // requirements test
+    RecordProperty("TestType", "requirements-based");
     RecordProperty("DerivationTechnique", "error-guessing");
 
     List list{};
     list.emplace_back(Any{std::numeric_limits<double>::quiet_NaN()});
-    EXPECT_FALSE(SerializeToBuffer(list, Formatting::kPrettyPrint).has_value());
+    const auto result{SerializeToBuffer(list, Formatting::kPrettyPrint)};
+    ASSERT_FALSE(result.has_value());
+    EXPECT_EQ(result.error(), Error::kInvalidValue);
 }
 TEST(SerializerTest, RejectsNotANumberOnStream)
 {
-    RecordProperty("Verifies", "SCR-5310867");
-    RecordProperty("ASIL", "B");
+    RecordProperty("PartiallyVerifies", "comp_req__json__serialization");
     RecordProperty(
         "Description",
         "failure in serializing NaN to a stream without writing the non-representable number, cf. RFC-8259 section 6");
-    RecordProperty("TestType", "requirements-based");  // requirements test
+    RecordProperty("TestType", "requirements-based");
     RecordProperty("DerivationTechnique", "error-guessing");
 
     Object object{};
     object["number"] = Any{std::numeric_limits<double>::quiet_NaN()};
     std::ostringstream out_stream{};
     const auto result{SerializeToStream(out_stream, object, Formatting::kPrettyPrint)};
-    EXPECT_FALSE(result.has_value());
+    ASSERT_FALSE(result.has_value());
+    EXPECT_EQ(result.error(), Error::kInvalidValue);
     // The non-representable number itself must not have been written.
     EXPECT_EQ(out_stream.str().find("nan"), std::string::npos);
 }

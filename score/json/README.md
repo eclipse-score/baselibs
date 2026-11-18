@@ -301,6 +301,21 @@ The same pattern works for optional nested objects, where `kKeyNotFound` means
 
 See the [unit tests](./object_test.cpp) for details.
 
+### Error codes
+
+Every failure is reported as a `score::json::Error`.
+Where available, the user message of the error names the reason.
+
+| Error code      | Reported when |
+|-----------------|---------------|
+| `kParsingError` | The input is not valid JSON, or it holds data the data model cannot represent, e.g. duplicate member names. |
+| `kIoError`      | A JSON file cannot be opened, read, written, or committed. |
+| `kWrongType`    | A value is requested as a type it does not have or cannot be converted to without loss. |
+| `kKeyNotFound`  | An object has no member with the requested name. |
+| `kInvalidValue` | A value has the expected type, but its content is not accepted, e.g. NaN or infinity cannot be written as JSON. |
+
+`kInvalidFilePath` and `kUnknownError` are not reported by this library.
+
 ### Declarative parsing of JSON data
 
 An alternative to navigating the tree of json objects is to declare C++ structs

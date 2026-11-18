@@ -92,6 +92,18 @@ General Requirements
 
    The JSON-Library shall report the reason of a parsing error together with the parsing error.
 
+.. comp_req:: I/O error
+   :id: comp_req__json__io_error
+   :reqtype: Functional
+   :security: YES
+   :safety: ASIL_B
+   :derived_from: feat_req__baselibs__json_library[version==2]
+   :status: valid
+   :version: 1
+   :satisfied_by: comp__baselibs_json_wrapper[version==1]
+
+   The JSON-Library shall report a failure to read or write a JSON file as an I/O error.
+
 User friendly API for information exchange
 ==========================================
 

@@ -169,11 +169,19 @@ score::Result<void> SerializeToStreamInternal(std::ostream& out_stream, const T&
         WriteValue(writer, json_data);
     }
 
+    // Transfers buffered output, so that a failure to write it is detected below.
+    static_cast<void>(out_stream.flush());
+
     // A default constructed Result<void> already carries the success state.
     score::Result<void> result{};
-    if (out_stream.fail())
+    // A failed write sets badbit, while a non-representable number only sets failbit, see WriteNumber().
+    if (out_stream.bad())
     {
-        result = score::MakeUnexpected(Error::kUnknownError, "JSON writer failed to write to stream");
+        result = score::MakeUnexpected(Error::kIoError, "JSON writer failed to write to stream");
+    }
+    else if (out_stream.fail())
+    {
+        result = score::MakeUnexpected(Error::kInvalidValue, "Number has no JSON representation");
     }
 
     return result;
