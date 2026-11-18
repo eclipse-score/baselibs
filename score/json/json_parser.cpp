@@ -66,7 +66,7 @@ class AnyTreeBuilder final : private score::json::vajson::internal::StructurePar
             // This case can't happen: the underlying parser reports each object member's name via OnKey()
             // before its value and fails on a value without a name.
             // Nonetheless, we handle this gracefully should the underlying implementation change.
-            return MakeUnexpected(Error::kParsingError); /* LCOV_EXCL_LINE */
+            return MakeUnexpected(Error::kParsingError, "Object member without a name."); /* LCOV_EXCL_LINE */
         }
 
         auto node_object{current_node->As<score::json::Object>()};
@@ -75,7 +75,7 @@ class AnyTreeBuilder final : private score::json::vajson::internal::StructurePar
             // This case can't happen: hierarchy_ only holds the List or Object values newly inserted by
             // StartContainer(), since Store() never returns an existing node for a duplicate key.
             // List is handled in the branch above, so the node can only be an Object.
-            return MakeUnexpected(Error::kParsingError); /* LCOV_EXCL_LINE */
+            return MakeUnexpected(Error::kParsingError, "Parent node is not a container."); /* LCOV_EXCL_LINE */
         }
         // False positive, all values passed as rvalue.
         // coverity[autosar_cpp14_a18_9_2_violation : FALSE]
@@ -85,9 +85,20 @@ class AnyTreeBuilder final : private score::json::vajson::internal::StructurePar
         last_key_.reset();
         if (!it.second)
         {
-            return MakeUnexpected(Error::kParsingError);
+            return MakeUnexpected(Error::kParsingError, "Duplicate object member name.");
         }
         return &((*(it.first)).second);
+    }
+
+    /// @brief Converts the result of Store() into a parser result that keeps the failure reason.
+    static auto ToParserResult(const score::Result<score::json::Any*>& result) noexcept
+        -> score::json::vajson::ParserResult
+    {
+        if (!result.has_value())
+        {
+            return score::MakeUnexpected(score::json::vajson::JsonErrc::kInvalidJson, result.error().UserMessage());
+        }
+        return score::json::vajson::ParserState::kRunning;
     }
 
     auto OnNull() noexcept -> score::json::vajson::ParserResult override;
@@ -128,11 +139,12 @@ class AnyTreeBuilder final : private score::json::vajson::internal::StructurePar
         // (try_convert(value.As<float>())) || (try_convert(value.As<double>())) ) )
         // coverity[autosar_cpp14_a5_2_6_violation]
         static_cast<void>(((try_convert(value.As<NumberType>())) || ...));
-        if ((!number.has_value()) || (!Store(*number).has_value()))
+        if (!number.has_value())
         {
-            return score::MakeUnexpected(score::json::vajson::JsonErrc::kInvalidJson);
+            return score::MakeUnexpected(score::json::vajson::JsonErrc::kInvalidJson,
+                                         "Number is outside the range of all supported number types.");
         }
-        return score::json::vajson::ParserState::kRunning;
+        return ToParserResult(Store(*number));
     }
 
     /// @brief Stores the name of the object member whose value is parsed next; unset when no name is pending.
@@ -153,29 +165,19 @@ auto AnyTreeBuilder::GetData() noexcept -> score::Result<score::json::Any>
     }
     else
     {
-        result = MakeUnexpected(Error::kParsingError);
+        result = MakeUnexpected(Error::kParsingError, parse_result.error().UserMessage());
     }
     return result;
 }
 
 auto AnyTreeBuilder::OnNull() noexcept -> score::json::vajson::ParserResult
 {
-    auto result{Store(Null{})};
-    if (!result.has_value())
-    {
-        return score::MakeUnexpected(score::json::vajson::JsonErrc::kInvalidJson);
-    }
-    return score::json::vajson::ParserState::kRunning;
+    return ToParserResult(Store(Null{}));
 }
 
 auto AnyTreeBuilder::OnBool(bool value) noexcept -> score::json::vajson::ParserResult
 {
-    auto result{Store(value)};
-    if (!result.has_value())
-    {
-        return score::MakeUnexpected(score::json::vajson::JsonErrc::kInvalidJson);
-    }
-    return score::json::vajson::ParserState::kRunning;
+    return ToParserResult(Store(value));
 }
 
 auto AnyTreeBuilder::OnNumber(score::json::vajson::JsonNumber value) noexcept -> score::json::vajson::ParserResult
@@ -190,12 +192,7 @@ auto AnyTreeBuilder::OnNumber(score::json::vajson::JsonNumber value) noexcept ->
 
 auto AnyTreeBuilder::OnString(score::json::vajson::CStringView value) noexcept -> score::json::vajson::ParserResult
 {
-    auto result{Store(std::string(value))};
-    if (!result.has_value())
-    {
-        return score::MakeUnexpected(score::json::vajson::JsonErrc::kInvalidJson);
-    }
-    return score::json::vajson::ParserState::kRunning;
+    return ToParserResult(Store(std::string(value)));
 }
 
 auto AnyTreeBuilder::OnKey(score::json::vajson::CStringView key) noexcept -> score::json::vajson::ParserResult
@@ -214,7 +211,7 @@ auto AnyTreeBuilder::StartContainer(T&& value) noexcept -> score::json::vajson::
     auto result{Store(std::forward<T>(value))};
     if (!result.has_value())
     {
-        return score::MakeUnexpected(score::json::vajson::JsonErrc::kInvalidJson);
+        return ToParserResult(result);
     }
 
     // Justification for autosar_cpp14_a18_9_2: Using std::move or std::forward on a raw pointer does not provide
@@ -264,16 +261,16 @@ auto AnyTreeBuilder::OnEndArray(std::size_t) noexcept -> score::json::vajson::Pa
 // NOLINTNEXTLINE(bugprone-exception-escape) an exception terminates, as required by the safety concept
 auto JsonParser::FromFile(const std::string_view file_path) const noexcept -> score::Result<Any>
 {
-    score::Result<Any> result{MakeUnexpected(Error::kParsingError)};
+    score::Result<Any> result{};
     // NOLINTNEXTLINE(score-banned-function) Tolerated because JsonParser::FromFile is also on the banned function list
     auto json_data{score::json::vajson::JsonData::FromFile(file_path)};
     if (json_data.has_value())
     {
-        score::Result<Any> json_object{AnyTreeBuilder{json_data.value()}.GetData()};
-        if (json_object.has_value())
-        {
-            result = std::move(*json_object);
-        }
+        result = AnyTreeBuilder{json_data.value()}.GetData();
+    }
+    else
+    {
+        result = MakeUnexpected(Error::kParsingError, json_data.error().UserMessage());
     }
     return result;
 }
@@ -288,11 +285,7 @@ auto JsonParser::FromBuffer(const std::string_view buffer) const noexcept -> sco
     // (else branch can't be hit due to internal implementation of JsonData::FromBuffer function that accepts all kind
     // of strings.)
     {
-        auto json_object{AnyTreeBuilder{json_data.value()}.GetData()};
-        if (json_object.has_value())
-        {
-            result = std::move(*json_object);
-        }
+        result = AnyTreeBuilder{json_data.value()}.GetData();
     }
     return result;
 }
@@ -307,7 +300,7 @@ auto operator""_json(const char* const data, const size_t size) -> Any
     {
         // False positive, no function call.
         //  coverity[autosar_cpp14_m8_4_4_violation : FALSE]
-        std::cerr << "JSON could not be parsed!" << std::endl;
+        std::cerr << "JSON could not be parsed: " << result.error() << '\n';
         std::terminate();
     }
     return std::move(result).value();

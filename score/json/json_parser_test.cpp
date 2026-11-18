@@ -12,6 +12,7 @@
  ********************************************************************************/
 #include "score/json/json_parser.h"
 
+#include <gmock/gmock.h>
 #include <gtest/gtest.h>
 
 #include <algorithm>
@@ -97,6 +98,17 @@ TEST(JsonParserTest, ViaErrorLiteral)
     RecordProperty("Priority", "3");
 
     EXPECT_EXIT(R"({"something"})"_json, ::testing::KilledBySignal(SIGABRT), "");
+}
+
+TEST(JsonParserTest, ViaErrorLiteralPrintsReason)
+{
+    RecordProperty("PartiallyVerifies", "comp_req__json__parsing_error_reason");
+    RecordProperty("Description",
+                   "Check that the _json operator prints the reason of the parsing error before aborting.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
+
+    EXPECT_EXIT(R"({"a": 1 "b": 2})"_json, ::testing::KilledBySignal(SIGABRT), "Missing comma");
 }
 
 TEST(JsonParserTest, FromFileSuceess)
@@ -485,6 +497,67 @@ TEST_F(ParserTest, FromFileFail)
 
     EXPECT_FALSE(foo.has_value());
 }
+
+TEST_F(ParserTest, FromFileReportsReasonWhenFileCannotBeOpened)
+{
+    RecordProperty("PartiallyVerifies", "comp_req__json__parsing_error_reason");
+    RecordProperty("Description",
+                   "Check that parsing from a non-existent file path returns a parsing error whose user message "
+                   "names the reason.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "error-guessing");
+
+    const auto root{JsonParser{}.FromFile("non_existent.json")};
+
+    ASSERT_FALSE(root.has_value());
+    EXPECT_EQ(root.error(), score::json::Error::kParsingError);
+    EXPECT_THAT(root.error().UserMessage(), ::testing::HasSubstr("Could not open file"));
+}
+
+struct ParsingErrorReasonParam
+{
+    std::string_view name;
+    std::string_view json;
+    std::string_view reason;
+};
+
+// Found by gtest via ADL to print GetParam() in failure messages.
+void PrintTo(const ParsingErrorReasonParam& param, std::ostream* os)
+{
+    *os << param.json;
+}
+
+class ParsingErrorReasonTest : public testing::TestWithParam<ParsingErrorReasonParam>
+{
+};
+
+TEST_P(ParsingErrorReasonTest, ReportsReasonWithParsingError)
+{
+    RecordProperty("PartiallyVerifies", "comp_req__json__parsing_error_reason");
+    RecordProperty("Description",
+                   "Check that rejecting a JSON buffer returns a parsing error whose user message names the reason, "
+                   "for malformed JSON and for well-formed JSON the data model cannot hold.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
+
+    const auto root{JsonParser{}.FromBuffer(GetParam().json)};
+
+    ASSERT_FALSE(root.has_value());
+    EXPECT_EQ(root.error(), score::json::Error::kParsingError);
+    EXPECT_THAT(root.error().UserMessage(), ::testing::HasSubstr(GetParam().reason));
+}
+
+INSTANTIATE_TEST_SUITE_P(
+    ParserTest,
+    ParsingErrorReasonTest,
+    testing::Values(
+        ParsingErrorReasonParam{"EmptyDocument", "", "Document is empty"},
+        ParsingErrorReasonParam{"MissingComma", R"({"a": 1 "b": 2})", "Missing comma"},
+        ParsingErrorReasonParam{"DuplicateMemberName", R"({"a": 1, "a": 2})", "Duplicate object member name"},
+        ParsingErrorReasonParam{"NumberOutOfRange", R"({"a": 1e+500})", "Number is outside the range"}),
+    [](const testing::TestParamInfo<ParsingErrorReasonParam>& param_info) {
+        return std::string{param_info.param.name};
+    });
 
 TEST_F(ParserTest, ParsingFromFileWorks)
 {
