@@ -14,6 +14,28 @@
 
 #include <fcntl.h>
 #include <sys/stat.h>
+#include <cerrno>
+#include <chrono>
+
+namespace
+{
+template <typename T>
+void timepoint_to_timespec(const std::chrono::time_point<T, std::chrono::nanoseconds> tp, struct timespec* abs_time)
+{
+    if (abs_time)
+    {
+        abs_time->tv_sec = std::chrono::duration_cast<std::chrono::seconds>(tp.time_since_epoch()).count();
+        abs_time->tv_nsec = std::chrono::duration_cast<std::chrono::nanoseconds>(tp.time_since_epoch()).count() %
+                            std::chrono::nanoseconds::period::den;
+    }
+}
+template void timepoint_to_timespec<std::chrono::steady_clock>(
+    const std::chrono::time_point<std::chrono::steady_clock, std::chrono::nanoseconds> tp,
+    struct timespec* abs_time);
+template void timepoint_to_timespec<std::chrono::system_clock>(
+    const std::chrono::time_point<std::chrono::system_clock, std::chrono::nanoseconds> tp,
+    struct timespec* abs_time);
+}  // namespace
 
 namespace score
 {
@@ -148,6 +170,7 @@ score::cpp::expected_blank<Error> SemaphoreImpl::sem_waittimeout(sem_t* const se
     const auto tp = std::chrono::time_point_cast<std::chrono::nanoseconds>(std::chrono::steady_clock::now() + timeout);
     return sem_timedwait_monotonic(sem, tp, resume_on_eintr);
 }
+
 score::cpp::expected_blank<Error> SemaphoreImpl::sem_timedwait(
     sem_t* const sem,
     const std::chrono::time_point<std::chrono::system_clock, std::chrono::nanoseconds> tp,
@@ -155,10 +178,8 @@ score::cpp::expected_blank<Error> SemaphoreImpl::sem_timedwait(
 {
     // convert time_point to timespec
     struct timespec abs_time{};
-    abs_time.tv_sec = std::chrono::duration_cast<std::chrono::seconds>(tp.time_since_epoch()).count();
-    abs_time.tv_nsec = std::chrono::duration_cast<std::chrono::nanoseconds>(tp.time_since_epoch()).count() %
-                       std::chrono::nanoseconds::period::den;
-    while (true)
+    timepoint_to_timespec(tp, &abs_time);
+    while (tp > std::chrono::system_clock::now())
     {
         const auto ret = sem_timedwait(sem, &abs_time);
         if (ret.has_value() || !resume_on_eintr || ret.error().GetOsDependentErrorCode() != EINTR)
@@ -166,7 +187,10 @@ score::cpp::expected_blank<Error> SemaphoreImpl::sem_timedwait(
             return ret;
         }
     }
-    return {};
+    // this point can be reached if tp was invalid or if it was already passed
+    // both cases have different error codes, so let sem_timedwait decide on
+    // the return value
+    return sem_timedwait(sem, &abs_time);
 }
 score::cpp::expected_blank<Error> SemaphoreImpl::sem_timedwait_monotonic(
     sem_t* const sem,
@@ -175,10 +199,8 @@ score::cpp::expected_blank<Error> SemaphoreImpl::sem_timedwait_monotonic(
 {
     // convert time_point to timespec
     struct timespec abs_time{};
-    abs_time.tv_sec = std::chrono::duration_cast<std::chrono::seconds>(tp.time_since_epoch()).count();
-    abs_time.tv_nsec = std::chrono::duration_cast<std::chrono::nanoseconds>(tp.time_since_epoch()).count() %
-                       std::chrono::nanoseconds::period::den;
-    while (true)
+    timepoint_to_timespec(tp, &abs_time);
+    while (tp > std::chrono::steady_clock::now())
     {
         const auto ret = sem_timedwait_monotonic(sem, &abs_time);
         if (ret.has_value() || !resume_on_eintr || ret.error().GetOsDependentErrorCode() != EINTR)
@@ -186,6 +208,10 @@ score::cpp::expected_blank<Error> SemaphoreImpl::sem_timedwait_monotonic(
             return ret;
         }
     }
+    // this point can be reached if tp was invalid or if it was already passed
+    // both cases have different error codes, so let sem_timedwait_monotonic
+    // decide on the return value
+    return sem_timedwait_monotonic(sem, &abs_time);
 }
 // SemaphoreImpl::sem_timedwait_monotonic() is platform-specific and lives in
 // semaphore_impl_linux.cpp / semaphore_impl_qnx.cpp (selected in BUILD).

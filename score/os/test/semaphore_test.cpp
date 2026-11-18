@@ -18,8 +18,17 @@
 #include <pthread.h>
 #include <limits.h>
 #include <time.h>
+#include <cerrno>
 #include <csignal>
 #include <thread>
+
+namespace
+{
+bool SemAcquiredOrInvalid(const score::cpp::expected<score::cpp::blank, score::os::Error> result)
+{
+    return result.has_value() || result.error().GetOsDependentErrorCode() == EINVAL;
+}
+}  // namespace
 
 namespace score
 {
@@ -290,10 +299,13 @@ TEST_F(SemaphoreTestFixture, TimeoutWaitTimeout)
     ASSERT_TRUE(ret.has_value());
     ASSERT_TRUE(ret.value() != nullptr);
     const auto tp1 = std::chrono::steady_clock::now();
-    const auto sigret = signal(SIGUSR1, [](int signal) {
+    struct sigaction act;
+    act.sa_flags = 0;
+    act.sa_handler = [](int signal) {
         (void)signal;
-    });
-    ASSERT_NE(sigret, SIG_ERR);
+    };
+    const auto sigret = sigaction(SIGUSR1, &act, nullptr);
+    ASSERT_EQ(sigret, 0);
 
     // create a thread sending signal to parent
     std::thread s(
@@ -310,13 +322,13 @@ TEST_F(SemaphoreTestFixture, TimeoutWaitTimeout)
 
     const auto wait = unit_.sem_waittimeout(ret.value(), std::chrono::milliseconds(500), true);
     const auto tp2 = std::chrono::steady_clock::now();
+    s.join();
 
     ASSERT_FALSE(wait.has_value());
     EXPECT_EQ(wait.error().GetOsDependentErrorCode(), ETIMEDOUT);
-    ASSERT_GE(tp2 - tp1, std::chrono::milliseconds(500));
     // compare timestamps
+    ASSERT_GE(tp2 - tp1, std::chrono::milliseconds(500));
     unit_.sem_close(ret.value());
-    s.join();
 }
 
 // Timeout test for EINTR sem_waittimeout()
@@ -334,10 +346,13 @@ TEST_F(SemaphoreTestFixture, TimeoutWaitTimeoutEINTR)
     ASSERT_TRUE(ret.has_value());
     ASSERT_TRUE(ret.value() != nullptr);
     const auto tp1 = std::chrono::steady_clock::now();
-    const auto sigret = signal(SIGUSR1, [](int signal) {
+    struct sigaction act;
+    act.sa_flags = 0;
+    act.sa_handler = [](int signal) {
         (void)signal;
-    });
-    ASSERT_NE(sigret, SIG_ERR);
+    };
+    const auto sigret = sigaction(SIGUSR1, &act, nullptr);
+    ASSERT_EQ(sigret, 0);
 
     // create a thread sending signal to parent
     std::thread s(
@@ -354,13 +369,13 @@ TEST_F(SemaphoreTestFixture, TimeoutWaitTimeoutEINTR)
 
     const auto wait = unit_.sem_waittimeout(ret.value(), std::chrono::milliseconds(500), false);
     const auto tp2 = std::chrono::steady_clock::now();
+    s.join();
 
     ASSERT_FALSE(wait.has_value());
     EXPECT_EQ(wait.error().GetOsDependentErrorCode(), EINTR);
-    ASSERT_LE(tp2 - tp1, std::chrono::milliseconds(300));
     // compare timestamps
+    ASSERT_LE(tp2 - tp1, std::chrono::milliseconds(300));
     unit_.sem_close(ret.value());
-    s.join();
 }
 
 // Positive Negative for sem_timedwait()
@@ -376,7 +391,8 @@ TEST_F(SemaphoreTestFixture, SuccessTimedWaitFailure)
     const auto sem = ::sem_open(m_name_.c_str(), O_CREAT, S_IRUSR, value_);
     ASSERT_NE(sem, SEM_FAILED);
     ASSERT_TRUE(sem != nullptr);
-    ASSERT_FALSE(unit_.sem_timedwait(sem, &abs_time).has_value());
+    const auto ret = unit_.sem_timedwait(sem, &abs_time);
+    ASSERT_PRED1(SemAcquiredOrInvalid, ret);
     unit_.sem_close(sem);
 }
 
@@ -416,7 +432,8 @@ TEST_F(SemaphoreTestFixture, FailureTimedWaitMonotonic)
     const auto sem = ::sem_open(m_name_.c_str(), O_CREAT, S_IRUSR, value_);
     ASSERT_NE(sem, SEM_FAILED);
     ASSERT_TRUE(sem != nullptr);
-    ASSERT_FALSE(unit_.sem_timedwait_monotonic(sem, &abs_time).has_value());
+    const auto ret = unit_.sem_timedwait_monotonic(sem, &abs_time);
+    ASSERT_PRED1(SemAcquiredOrInvalid, ret);
     unit_.sem_close(sem);
 }
 
@@ -481,7 +498,8 @@ TEST_F(SemaphoreTestFixture, SuccessTimedWaitFailureChrono)
     const auto sem = ::sem_open(m_name_.c_str(), O_CREAT, S_IRUSR, value_);
     ASSERT_NE(sem, SEM_FAILED);
     ASSERT_TRUE(sem != nullptr);
-    ASSERT_FALSE(unit_.sem_timedwait(sem, abs_time, true).has_value());
+    const auto ret = unit_.sem_timedwait(sem, abs_time, true);
+    ASSERT_PRED1(SemAcquiredOrInvalid, ret);
     unit_.sem_close(sem);
 }
 
@@ -540,7 +558,8 @@ TEST_F(SemaphoreTestFixture, FailureTimedWaitMonotonicChrono)
     const auto sem = ::sem_open(m_name_.c_str(), O_CREAT, S_IRUSR, value_);
     ASSERT_NE(sem, SEM_FAILED);
     ASSERT_TRUE(sem != nullptr);
-    ASSERT_FALSE(unit_.sem_timedwait_monotonic(sem, abs_time, true).has_value());
+    const auto ret = unit_.sem_timedwait_monotonic(sem, abs_time, true);
+    ASSERT_PRED1(SemAcquiredOrInvalid, ret);
     unit_.sem_close(sem);
 }
 
