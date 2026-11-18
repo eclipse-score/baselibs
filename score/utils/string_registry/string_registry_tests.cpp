@@ -27,8 +27,8 @@ TEST(StringRegistryTest, InsertMultipleStrings)
     RecordProperty("TestType", "requirements-based");
     RecordProperty("DerivationTechnique", "equivalence-classes");
     RecordProperty("Description",
-                   "Check that inserting the same std::string twice returns false on the second insert and the same "
-                   "backing storage.");
+                   "Check that inserting the same std::string twice reports a new entry only on the first insert "
+                   "and returns the registered content both times.");
 
     StringRegistry registry;
 
@@ -84,8 +84,8 @@ TEST(StringRegistryTest, InsertMultipleStringViewLiterals)
     RecordProperty("TestType", "requirements-based");
     RecordProperty("DerivationTechnique", "equivalence-classes");
     RecordProperty("Description",
-                   "Check that LiteralTag insertions of equal string_views deduplicate to a single entry without heap "
-                   "allocation.");
+                   "Check that LiteralTag insertions of equal string_views report a new entry only on the first "
+                   "insert and return the registered content each time.");
 
     StringRegistry registry;
     const std::string_view string_view("TestStringLiteral");
