@@ -14,10 +14,12 @@
 
 #include <gtest/gtest.h>
 
+#include <unistd.h>
+
 #include <algorithm>
 #include <cmath>
 #include <cstdint>
-#include <cstdio>
+#include <cstdlib>
 #include <fstream>
 #include <iostream>
 #include <limits>
@@ -35,6 +37,19 @@ namespace
 {
 
 constexpr std::string_view kJsonInput{R"({ "num": 1, "string": "foo" })"};
+
+std::string MakeTempFilePath()
+{
+    const char* test_tmpdir = std::getenv("TEST_TMPDIR");
+    std::string file_path{test_tmpdir != nullptr ? test_tmpdir : "/tmp"};
+    file_path += "/json_parser_test-XXXXXX";
+
+    const int fd = ::mkstemp(file_path.data());
+    EXPECT_NE(fd, -1);
+    ::close(fd);
+
+    return file_path;
+}
 
 void VerifyJson(const score::json::Any& parsed_json)
 {
@@ -108,7 +123,7 @@ TEST(JsonParserTest, FromFileSuceess)
     RecordProperty("DerivationTechnique", "equivalence-classes");  // boundary values
     RecordProperty("Priority", "3");
 
-    const std::string file_path{std::tmpnam(nullptr)};
+    const std::string file_path{MakeTempFilePath()};
     std::ofstream file{file_path};
     if (file.is_open())
     {
@@ -131,7 +146,7 @@ TEST(JsonParserTest, FromFileParseError)
     RecordProperty("DerivationTechnique", "error-guessing");
     RecordProperty("Priority", "3");
 
-    const std::string file_path{std::tmpnam(nullptr)};
+    const std::string file_path{MakeTempFilePath()};
     std::ofstream file{file_path};
     if (file.is_open())
     {

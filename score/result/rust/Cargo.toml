@@ -35,5 +35,8 @@ libcxx_layout = []
 libc = "0.2"
 libcpp.workspace = true
 
+[build-dependencies]
+cc = "1"
+
 [lints]
 workspace = true
