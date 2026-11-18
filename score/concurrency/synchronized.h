@@ -49,6 +49,10 @@ namespace score::concurrency
  *     - Acquires mut via std::unique_lock.
  *     - Returns a pointer (or a const_pointer for const Synchronized)
  *       with the lock held which is released when the returned pointer goes out of scope.
+ * - try_lock() (when Lockable supports try_lock()):
+ *     - Attempts to acquire mut without blocking.
+ *     - Returns a pointer (or a const_pointer for const Synchronized) that compares equal to nullptr if acquisition
+ *       fails.
  * - WithLock(Func&& f):
  *     - Acquires the lock.
  *     - Invokes the callable f(pointer) or f(const_pointer) with the lock held.
@@ -188,6 +192,36 @@ class Synchronized
     [[nodiscard]] const_pointer lock() const
     {
         return const_pointer{&obj, std::unique_lock{mut}};
+    }
+
+    /**
+     * @brief Attempts to lock the internal Lockable without blocking.
+     * @return An RAII pointer that holds the lock and provides mutable access to the synchronized object, or a null
+     *         pointer if the lock could not be acquired.
+     * @remarks This function is available only when Lockable supports try_lock(). The returned pointer must not
+     *          outlive the Synchronized object.
+     */
+    template <typename LockableType = Lockable,
+              typename = std::enable_if_t<is_try_lockable_v<LockableType> && std::is_same_v<LockableType, Lockable>>>
+    [[nodiscard]] pointer try_lock()
+    {
+        std::unique_lock lock{mut, std::try_to_lock};
+        return pointer{lock.owns_lock() ? &obj : nullptr, std::move(lock)};
+    }
+
+    /**
+     * @brief Attempts to lock the internal Lockable without blocking.
+     * @return An RAII const_pointer that holds the lock and provides const access to the synchronized object, or a null
+     *         pointer if the lock could not be acquired.
+     * @remarks This function is available only when Lockable supports try_lock(). The returned pointer must not
+     *          outlive the Synchronized object.
+     */
+    template <typename LockableType = Lockable,
+              typename = std::enable_if_t<is_try_lockable_v<LockableType> && std::is_same_v<LockableType, Lockable>>>
+    [[nodiscard]] const_pointer try_lock() const
+    {
+        std::unique_lock lock{mut, std::try_to_lock};
+        return const_pointer{lock.owns_lock() ? &obj : nullptr, std::move(lock)};
     }
 
     /**
