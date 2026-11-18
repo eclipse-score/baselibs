@@ -23,6 +23,11 @@ CI uses the parallel `x86_64-qnx-sdp_8.0.5` and `aarch64-qnx-sdp_8.0.5` configs,
 Fetching SDP 8.0.5 requires a GitHub token with read access to `eclipse-score/qnx_sdp_pkg` (`GH_TOKEN` or `~/.netrc`).
 The parallel configs are temporary and will be collapsed when SDP 8.0.5 becomes the default.
 
+### Rust Toolchain
+
+The Rust examples (`log_builtin`, `log_custom`, `log_cpp_init`) use the Ferrocene toolchain from `score_toolchains_rust`.
+It is selected per target platform in `.bazelrc`, next to the C++ toolchain.
+
 ## Modifying the Example
 
 To add additional base libraries features to test:

@@ -11,16 +11,13 @@
 # SPDX-License-Identifier: Apache-2.0
 # *******************************************************************************
 
-[package]
-name = "log_custom"
-version.workspace = true
-authors.workspace = true
-readme.workspace = true
-edition.workspace = true
-license-file.workspace = true
+load("@rules_rust//rust:defs.bzl", "rust_binary")
 
-[dependencies]
-score_log.workspace = true
-
-[lints]
-workspace = true
+rust_binary(
+    name = "log_builtin",
+    srcs = glob(["src/**/*.rs"]),
+    deps = [
+        "@score_baselibs//score/log_rust/score_log",
+        "@score_baselibs//score/log_rust/stdout_logger",
+    ],
+)

@@ -200,21 +200,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "log_builtin"
-version = "0.0.1"
-dependencies = [
- "score_log",
- "stdout_logger",
-]
-
-[[package]]
-name = "log_custom"
-version = "0.0.1"
-dependencies = [
- "score_log",
-]
-
-[[package]]
 name = "memres"
 version = "0.0.1"
 
