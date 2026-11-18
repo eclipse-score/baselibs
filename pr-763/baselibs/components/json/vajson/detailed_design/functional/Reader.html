@@ -542,10 +542,12 @@ The JSON data must be provided to the parser as
 </section>
 <section id="encoding">
 <h2>Encoding<a class="headerlink" href="#encoding" title="Link to this heading">#</a></h2>
-<p>Since all JSON characters are ASCII compliant and the score::json::vajson::internal::StructureParser just passes the data
-from the input stream to the event handler the user must handle the encoding.</p>
-<p>The method <code class="docutils literal notranslate"><span class="pre">score::json::vajson::JsonData::GetEncoding()</span></code> returns the detected encoding if the input stream contains a byte
-order mark (BOM).</p>
+<p>JSON syntax is ASCII-based, but JSON strings can contain UTF-8 encoded characters. The
+score::json::vajson::internal::StructureParser decodes JSON string escapes, including the two-character escapes and
+the <code class="docutils literal notranslate"><span class="pre">\uXXXX</span></code> escapes, before reporting strings and keys to the event handler. An escaped code point is reported
+UTF-8 encoded, and a UTF-16 surrogate pair is combined into the single code point it denotes. UTF-8 bytes
+present directly in the input are passed through without transcoding, so the user must provide input in the expected
+encoding and handle any application-specific encoding needs.</p>
 </section>
 <section id="data-items">
 <h2>Data Items<a class="headerlink" href="#data-items" title="Link to this heading">#</a></h2>
@@ -575,21 +577,16 @@ that are instantiated by themselves depending on the last event.</p>
 The parameter of the function (score::json::vajson::JsonNumber) contains the number and can provide it in different formats
 to the application:</p>
 <ul class="simple">
-<li><p>boolean</p></li>
 <li><p>unsigned int (any unsigned integer smaller or equal to unsigned long long int)</p></li>
 <li><p>signed int (any signed integer smaller or equal to long long int)</p></li>
 <li><p>float</p></li>
 <li><p>double</p></li>
-<li><p>score::json::vajson::JsonNumber (for further processing by the application)</p></li>
 </ul>
-<p>The application can also try to convert the number to a user defined format by calling
-score::json::vajson::JsonNumber::Convert.</p>
 </section>
 <section id="error-reporting">
 <h2>Error reporting<a class="headerlink" href="#error-reporting" title="Link to this heading">#</a></h2>
 <p>Upon detection of an error, the parser returns from Parse() with an ara::core::Result&lt;void&gt; and one of the errors
-defined in score::json::vajson::JsonErrc.
-Also, the position in the stream where the error has occurred is reported.</p>
+defined in score::json::vajson::JsonErrc.</p>
 </section>
 </section>
 
