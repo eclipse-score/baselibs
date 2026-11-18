@@ -393,6 +393,10 @@ the field type into an `std::optional` to indicate that deserialization should
 not fail if the field is missing. If there is no data for that field, its value
 will be `std::nullopt`.
 
+If deserialization fails, the error code tells the cause, e.g. `kKeyNotFound`, `kWrongType` or `kOutOfRange`.
+The user message of the error names the innermost field that failed, also inside nested structs, vectors and optionals.
+For example, deserializing `{"width": 10, "height": -1, "unit": "px"}` into `Size` returns `kOutOfRange` with the user message `height`.
+
 Currently, the following data types can be serialized to and from JSON:
 
 * std::string

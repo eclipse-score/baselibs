@@ -21,7 +21,10 @@
 #include <charconv>
 #include <cstdint>
 #include <iomanip>
+#include <optional>
+#include <ostream>
 #include <string>
+#include <string_view>
 #include <vector>
 
 namespace completely::different
@@ -88,6 +91,38 @@ struct VisitableTypeWithCustomSerialization
 };
 
 SCORE_STRUCT_VISITABLE(VisitableTypeWithCustomSerialization, integer_val, string_val)
+
+/// Visitable struct that is deserialized by an explicit JsonSerializer specialization instead of field by field.
+struct VisitableTypeWithExplicitSerializer
+{
+    std::uint32_t integer_val{};
+};
+
+SCORE_STRUCT_VISITABLE(VisitableTypeWithExplicitSerializer, integer_val)
+
+}  // namespace score::json::test
+
+namespace score::json
+{
+
+template <>
+class JsonSerializer<test::VisitableTypeWithExplicitSerializer>
+{
+  public:
+    [[nodiscard]] static Result<test::VisitableTypeWithExplicitSerializer> FromAny(const Any& any)
+    {
+        if (const auto value = any.As<std::uint32_t>(); value.has_value())
+        {
+            return test::VisitableTypeWithExplicitSerializer{*value};
+        }
+        return MakeUnexpected(Error::kInvalidValue, "Invalid format");
+    }
+};
+
+}  // namespace score::json
+
+namespace score::json::test
+{
 
 namespace
 {
@@ -799,36 +834,98 @@ TEST(JsonSerializerTest, MissingMandatoryFieldErrorContainsFieldName)
     EXPECT_EQ(unit.error().UserMessage(), "integer_val");
 }
 
-TEST(JsonSerializerTest, NestedTypeMismatchErrorContainsOutermostFieldName)
+struct TypeWithNestedContainers
 {
-    RecordProperty("TestType", "control-flow-analysis");  // data flow
-    RecordProperty("Verifies", "::score::json::FromJsonAny");
-    RecordProperty("Description",
-                   "Verify that a type-mismatch inside a nested struct is reported under the parent field name, "
-                   "because each deserialization level re-stamps the error with its own field key");
-    RecordProperty("ASIL", "QM");
-    RecordProperty("Priority", "3");
-    RecordProperty("DerivationTechnique", "error-guessing");
+    NestedType nested_val{};
+    std::vector<NestedType> nested_list{};
+    std::optional<NestedType> nested_optional{};
+    VisitableTypeWithExplicitSerializer explicit_val{};
+};
 
-    // Given a JSON where nested_val.nested_bool holds a string instead of a bool
-    auto source = R"({
-"integer_val": 42,
-"string_val": "ok",
-"nested_val": {
-    "nested_int": 43,
-    "nested_bool": "not-a-bool",
-    "nested_array": [44, 45]
-    }
-} )"_json;
+SCORE_STRUCT_VISITABLE(TypeWithNestedContainers, nested_val, nested_list, nested_optional, explicit_val)
 
-    // When deserializing into the struct
-    auto unit{FromJsonAny<TypeToSerialize>(std::move(source))};
+struct FailingFieldParam
+{
+    std::string_view name;
+    std::string_view json;
+    Error error;
+    std::string_view field;
+};
 
-    // Then the error code is WrongType and the UserMessage names the parent struct field, not the inner field
-    ASSERT_FALSE(unit.has_value());
-    EXPECT_EQ(unit.error(), Error::kWrongType);
-    EXPECT_EQ(unit.error().UserMessage(), "nested_val");
+// Found by gtest via ADL to print GetParam() in failure messages.
+void PrintTo(const FailingFieldParam& param, std::ostream* os)
+{
+    *os << param.json;
 }
+
+class FailingFieldTest : public testing::TestWithParam<FailingFieldParam>
+{
+};
+
+TEST_P(FailingFieldTest, ErrorNamesInnermostFailingField)
+{
+    RecordProperty("FullyVerifies", "comp_req__json__deserialization_error_field");
+    RecordProperty("Description",
+                   "Check that a failing deserialization into nested structs, also inside vectors and optionals, "
+                   "keeps the error code of the failure and names the innermost failing field.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
+
+    auto source{JsonParser{}.FromBuffer(GetParam().json)};
+    ASSERT_TRUE(source.has_value());
+
+    const auto unit{FromJsonAny<TypeWithNestedContainers>(std::move(source).value())};
+
+    ASSERT_FALSE(unit.has_value());
+    EXPECT_EQ(unit.error(), GetParam().error);
+    EXPECT_EQ(unit.error().UserMessage(), GetParam().field);
+}
+
+INSTANTIATE_TEST_SUITE_P(
+    JsonSerializerTest,
+    FailingFieldTest,
+    testing::Values(
+        FailingFieldParam{"NestedFieldOfWrongType",
+                          R"({"nested_val": {"nested_int": 1, "nested_bool": "x", "nested_array": []}})",
+                          Error::kWrongType,
+                          "nested_bool"},
+        FailingFieldParam{"NestedValueNotAnObject", R"({"nested_val": 1})", Error::kWrongType, "nested_val"},
+        FailingFieldParam{"MissingFieldInListEntry",
+                          R"({"nested_val": {"nested_int": 1, "nested_bool": true, "nested_array": []},
+                              "nested_list": [{"nested_bool": true, "nested_array": []}]})",
+                          Error::kKeyNotFound,
+                          "nested_int"},
+        FailingFieldParam{"ListValueNotAList",
+                          R"({"nested_val": {"nested_int": 1, "nested_bool": true, "nested_array": []},
+                              "nested_list": {}})",
+                          Error::kWrongType,
+                          "nested_list"},
+        FailingFieldParam{"ListEntryNotAnObject",
+                          R"({"nested_val": {"nested_int": 1, "nested_bool": true, "nested_array": []},
+                              "nested_list": [1]})",
+                          Error::kWrongType,
+                          "nested_list"},
+        FailingFieldParam{"NumberOutOfRangeInOptional",
+                          R"({"nested_val": {"nested_int": 1, "nested_bool": true, "nested_array": []},
+                              "nested_list": [],
+                              "nested_optional": {"nested_int": 1, "nested_bool": true, "nested_array": [2, 256]}})",
+                          Error::kOutOfRange,
+                          "nested_array"},
+        FailingFieldParam{"OptionalValueNotAnObject",
+                          R"({"nested_val": {"nested_int": 1, "nested_bool": true, "nested_array": []},
+                              "nested_list": [],
+                              "nested_optional": "x"})",
+                          Error::kWrongType,
+                          "nested_optional"},
+        FailingFieldParam{"ExplicitSerializerError",
+                          R"({"nested_val": {"nested_int": 1, "nested_bool": true, "nested_array": []},
+                              "nested_list": [],
+                              "explicit_val": "x"})",
+                          Error::kInvalidValue,
+                          "explicit_val"}),
+    [](const testing::TestParamInfo<FailingFieldParam>& param_info) {
+        return std::string{param_info.param.name};
+    });
 
 }  // namespace
 }  // namespace score::json::test

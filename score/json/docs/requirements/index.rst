@@ -104,6 +104,19 @@ General Requirements
 
    The JSON-Library shall report a failure to read or write a JSON file as an I/O error.
 
+.. comp_req:: Failing field of a deserialization error
+   :id: comp_req__json__deserialization_error_field
+   :reqtype: Functional
+   :security: YES
+   :safety: ASIL_B
+   :derived_from: feat_req__baselibs__json_library[version==2]
+   :status: valid
+   :version: 1
+   :satisfied_by: comp__baselibs_json_wrapper[version==1]
+
+   When converting JSON data into a user type fails, the JSON-Library shall report the name of the innermost field
+   that failed together with the error.
+
 User friendly API for information exchange
 ==========================================
 
