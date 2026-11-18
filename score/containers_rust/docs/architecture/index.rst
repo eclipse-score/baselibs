@@ -78,6 +78,7 @@ Interfaces
    :safety: ASIL_B
    :status: valid
    :version: 1
+   :included_by: feat__baselibs[version==1]
 
 .. logic_arc_int_op:: Push
    :id: logic_arc_int_op__cont__fixvec_push
@@ -126,6 +127,7 @@ Interfaces
    :safety: ASIL_B
    :status: valid
    :version: 1
+   :included_by: feat__baselibs[version==1]
 
 .. logic_arc_int_op:: Push
    :id: logic_arc_int_op__cont__inlinevec_push
@@ -174,6 +176,7 @@ Interfaces
    :safety: ASIL_B
    :status: valid
    :version: 1
+   :included_by: feat__baselibs[version==1]
 
 .. logic_arc_int_op:: Push Front
    :id: logic_arc_int_op__cont__fixqueue_pushfront
@@ -230,6 +233,7 @@ Interfaces
    :safety: ASIL_B
    :status: valid
    :version: 1
+   :included_by: feat__baselibs[version==1]
 
 .. logic_arc_int_op:: Push Front
    :id: logic_arc_int_op__cont__inlqueue_pushfront
