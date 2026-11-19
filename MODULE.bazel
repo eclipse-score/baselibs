@@ -192,7 +192,7 @@ bazel_dep(name = "score_docs_as_code", version = "9.0.0")
 # POC: static analysis section in the module verification report (docs-as-code main + SARIF summary).
 git_override(
     module_name = "score_docs_as_code",
-    commit = "85305a80bbccfaf6967f599d1939a9c476624963",
+    commit = "78cf22f72203bc5b4ab9f8b3dcbe1145912fa05c",
     remote = "https://github.com/eclipse-score/docs-as-code.git",
 )
 
