@@ -475,7 +475,7 @@
                   
   <section id="dfa-dependent-failure-analysis">
 <h1>DFA (Dependent Failure Analysis)<a class="headerlink" href="#dfa-dependent-failure-analysis" title="Link to this heading">#</a></h1>
-<div class="need_container docutils container" id="SNCB-ec7413b6">
+<div class="need_container docutils container" id="SNCB-fd5ae5a9">
 <div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_document table" id="doc__baselibs_dfa">
 <tbody>
 <tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
@@ -776,7 +776,7 @@ following tables. For all applicable failure initiators, the DFA has to be perfo
 <section id="dfa">
 <h1>DFA<a class="headerlink" href="#dfa" title="Link to this heading">#</a></h1>
 <p>For all identified applicable failure initiators, the DFA is performed in the following section.</p>
-<div class="need_container docutils container" id="SNCB-193d90a7">
+<div class="need_container docutils container" id="SNCB-29b489f3">
 <div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_feat_saf_dfa table" id="feat_saf_dfa__baselibs__memory_access">
 <tbody>
 <tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
@@ -797,18 +797,21 @@ following tables. For all applicable failure initiators, the DFA has to be perfo
 <tr class="meta row-even"><td class="meta" colspan="3"><div class="needs_meta_left line-block">
 <div class="line"><span><span><div class="line"><span class="needs_failure_effect"><span class="needs_label">failure_effect: </span><span class="needs_data">memory of using component may be corrupted leading to safety requirement violation</span></span></div>
 <div class="line"><span class="needs_failure_id"><span class="needs_label">failure_id: </span><span class="needs_data">UI_01_02</span></span></div>
-<div class="line"><span class="needs_mitigation_issue"><span class="needs_label">mitigation_issue: </span><span class="needs_data"><a class="reference external" href="https://github.com/eclipse-score/score/issues/2816">score#2816</a></span></span></div>
-<div class="line"><span class="needs_sufficient"><span class="needs_label">sufficient: </span><span class="needs_data">no</span></span></div>
-<div class="line"><span class="needs_version"><span class="needs_label">version: </span>2</span></div>
+<div class="line"><span class="needs_sufficient"><span class="needs_label">sufficient: </span><span class="needs_data">yes</span></span></div>
+<div class="line"><span class="needs_version"><span class="needs_label">version: </span>3</span></div>
 </span></span></div>
-<div class="line"><span><div class="line">violates: <span class="violates"><span><a class="reference internal" href="../architecture/index.html#feat_arc_sta__baselibs__static_view_arch" title="feat_saf_dfa__baselibs__memory_access">feat_arc_sta__baselibs__static_view_arch</a></span></span></div>
+<div class="line"><span><div class="line">mitigated_by: <span class="mitigated_by"><span><a class="external_link reference external" href="https://eclipse-score.github.io/score/main/requirements/platform_assumptions/index.html#aou_req__platform__no_mixed_asil">aou_req__platform__no_mixed_asil</a>, <a class="external_link reference external" href="https://eclipse-score.github.io/score/main/requirements/platform_assumptions/index.html#aou_req__platform__process_isolation">aou_req__platform__process_isolation</a></span></span></div>
+<div class="line">violates: <span class="violates"><span><a class="reference internal" href="../architecture/index.html#feat_arc_sta__baselibs__static_view_arch" title="feat_saf_dfa__baselibs__memory_access">feat_arc_sta__baselibs__static_view_arch</a></span></span></div>
 </span></div>
 </div>
 </td>
 <td class="meta" colspan="3"></td>
 </tr>
-<tr class="content row-odd"><td class="content" colspan="6"><p>All the baselibs components have to be developed to ASIL_B standard to maintain Freedom From Interference,
-out of bounds access should be detected by unit testing/sanitizers.</p></td>
+<tr class="content row-odd"><td class="content" colspan="6"><p>Baselibs libraries are linked into the using application and execute in its POSIX process and memory space.
+POSIX processes do not isolate memory errors within a process.
+Therefore, the using application and all libraries it links shall implement the highest ASIL of their assigned requirements, as required by the platform AoU on mixed ASIL.
+This also covers QM libraries of baselibs, which must not be used in an ASIL process unless they are raised to that ASIL.
+Memory of other processes is protected by the operating system, as required by the platform AoU on process isolation linked above.</p></td>
 </tr>
 <tr class="footer row-even"><td class="footer_left" colspan="2"><div class="needs_footer_left line-block">
 <div class="line"><span><span class="needs-id"><a class="reference internal" href="#feat_saf_dfa__baselibs__memory_access" title="feat_saf_dfa__baselibs__memory_access">feat_saf_dfa__baselibs__memory_access</a></span></span></div>
@@ -824,7 +827,7 @@ out of bounds access should be detected by unit testing/sanitizers.</p></td>
 </table>
 </div>
 </div>
-<div class="need_container docutils container" id="SNCB-26cbecdb">
+<div class="need_container docutils container" id="SNCB-975c9d59">
 <div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_feat_saf_dfa table" id="feat_saf_dfa__baselibs__locked_ressource">
 <tbody>
 <tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
@@ -872,7 +875,7 @@ This failure is covered by the platform flow-monitoring AoU linked above.</p></t
 </table>
 </div>
 </div>
-<div class="need_container docutils container" id="SNCB-e4bc3a2f">
+<div class="need_container docutils container" id="SNCB-7c263acd">
 <div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_feat_saf_dfa table" id="feat_saf_dfa__baselibs__conc_file_access">
 <tbody>
 <tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
@@ -919,7 +922,7 @@ This failure is covered by the platform flow-monitoring AoU linked above.</p></t
 </table>
 </div>
 </div>
-<div class="need_container docutils container" id="SNCB-efad693a">
+<div class="need_container docutils container" id="SNCB-a8b3ad63">
 <div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_feat_saf_dfa table" id="feat_saf_dfa__baselibs__conc_memory_access">
 <tbody>
 <tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
@@ -966,7 +969,7 @@ This failure is covered by the platform flow-monitoring AoU linked above.</p></t
 </table>
 </div>
 </div>
-<div class="need_container docutils container" id="SNCB-08f46064">
+<div class="need_container docutils container" id="SNCB-9913be9f">
 <div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_feat_saf_dfa table" id="feat_saf_dfa__baselibs__blocked_execution">
 <tbody>
 <tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
@@ -987,18 +990,20 @@ This failure is covered by the platform flow-monitoring AoU linked above.</p></t
 <tr class="meta row-even"><td class="meta" colspan="3"><div class="needs_meta_left line-block">
 <div class="line"><span><span><div class="line"><span class="needs_failure_effect"><span class="needs_label">failure_effect: </span><span class="needs_data">Using application is blocked from execution and thus cannot fulfill its safety function</span></span></div>
 <div class="line"><span class="needs_failure_id"><span class="needs_label">failure_id: </span><span class="needs_data">UI_01_06</span></span></div>
-<div class="line"><span class="needs_mitigation_issue"><span class="needs_label">mitigation_issue: </span><span class="needs_data"><a class="reference external" href="https://github.com/eclipse-score/score/issues/2816">score#2816</a></span></span></div>
-<div class="line"><span class="needs_sufficient"><span class="needs_label">sufficient: </span><span class="needs_data">no</span></span></div>
-<div class="line"><span class="needs_version"><span class="needs_label">version: </span>2</span></div>
+<div class="line"><span class="needs_sufficient"><span class="needs_label">sufficient: </span><span class="needs_data">yes</span></span></div>
+<div class="line"><span class="needs_version"><span class="needs_label">version: </span>3</span></div>
 </span></span></div>
-<div class="line"><span><div class="line">violates: <span class="violates"><span><a class="reference internal" href="../architecture/index.html#feat_arc_sta__baselibs__static_view_arch" title="feat_saf_dfa__baselibs__blocked_execution">feat_arc_sta__baselibs__static_view_arch</a></span></span></div>
+<div class="line"><span><div class="line">mitigated_by: <span class="mitigated_by"><span><a class="external_link reference external" href="https://eclipse-score.github.io/score/main/requirements/platform_assumptions/index.html#aou_req__platform__flow_monitoring">aou_req__platform__flow_monitoring</a></span></span></div>
+<div class="line">violates: <span class="violates"><span><a class="reference internal" href="../architecture/index.html#feat_arc_sta__baselibs__static_view_arch" title="feat_saf_dfa__baselibs__blocked_execution">feat_arc_sta__baselibs__static_view_arch</a></span></span></div>
 </span></div>
 </div>
 </td>
 <td class="meta" colspan="3"></td>
 </tr>
-<tr class="content row-odd"><td class="content" colspan="6"><p>All the baselibs components have to be developed to ASIL_B standard to maintain Freedom From Interference,
-all blocks should be detected by unit testing.</p></td>
+<tr class="content row-odd"><td class="content" colspan="6"><p>Baselibs functions execute in the thread of the calling application.
+An intended blocking call, such as a wait or a file access, or a faulty non-terminating call stalls the caller.
+The concurrency library provides abortable and time-limited waits to limit this risk.
+Remaining blocking is covered by the platform flow-monitoring AoU, as for deadlocks and CPU starvation.</p></td>
 </tr>
 <tr class="footer row-even"><td class="footer_left" colspan="2"><div class="needs_footer_left line-block">
 <div class="line"><span><span class="needs-id"><a class="reference internal" href="#feat_saf_dfa__baselibs__blocked_execution" title="feat_saf_dfa__baselibs__blocked_execution">feat_saf_dfa__baselibs__blocked_execution</a></span></span></div>
@@ -1014,7 +1019,7 @@ all blocks should be detected by unit testing.</p></td>
 </table>
 </div>
 </div>
-<div class="need_container docutils container" id="SNCB-003fc0fc">
+<div class="need_container docutils container" id="SNCB-a134dc16">
 <div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_feat_saf_dfa table" id="feat_saf_dfa__baselibs__cpu_starvation">
 <tbody>
 <tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
