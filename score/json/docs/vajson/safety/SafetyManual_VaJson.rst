@@ -61,17 +61,6 @@ Safety Manual VaJson
     Additional Verification Measures
     ================================
 
-    .. SMI:: SMI-JSON-PRIVATE-InitializeJSONWithIoIntegrityStream
-
-       **The user of the embedded software shall ensure that IoIntegrityStream is used when initializing vaJson from an input stream where safety requirements are assumed.**
-
-       This SMI is stated as PRIVATE and thus it is applicable only to direct users of vaJson.
-
-       During initialization of vaJson, a user-initialized input filestream can be passed. The Technical Reference uses std::fstream::in as an example.
-       If safety requirements are to be assumed, the user shall verify that the integrirty of the provided filestream is ensured.
-
-       Verification can be performed e.g. by review.
-
     .. SMI:: SMI-JSON-InitializeJSONWithBuffer
 
        **The user of the embedded software shall ensure the integrity of the character buffer used to initialize vaJson where safety requirements are assumed.**
