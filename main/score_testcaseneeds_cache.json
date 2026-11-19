@@ -272160,6 +272160,20 @@
     "FullyVerifies": null
   },
   {
+    "name": "score/language/rust/stop_token/test-2925003327/stop_token_consumer_test",
+    "file": null,
+    "line": null,
+    "result": "passed",
+    "repo_name": null,
+    "hash": null,
+    "url": null,
+    "TestType": null,
+    "DerivationTechnique": null,
+    "result_text": "",
+    "PartiallyVerifies": null,
+    "FullyVerifies": null
+  },
+  {
     "name": "score/language/rust/libcpp/test-168492697/libcpp_test",
     "file": null,
     "line": null,
