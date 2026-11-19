@@ -729,12 +729,12 @@
       "version": null
     },
     {
-      "name": "ruff",
+      "name": "clippy",
       "results": 0,
       "version": null
     },
     {
-      "name": "clippy",
+      "name": "ruff",
       "results": 0,
       "version": null
     }
