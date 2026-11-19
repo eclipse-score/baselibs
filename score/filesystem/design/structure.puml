@@ -107,6 +107,7 @@ class "os::ObjectSeam" as ObjectSeam1 #yellow
 interface "filesystem::IFileFactory" as IFileFactory {
   + Open(Path, std::ios_base::openmode = ios_base::in|ios_base::out):
   Result<std::unique_ptr<std::iostream>>
+  + OpenRegularFile(Path, openmode): Result<unique_ptr<iostream>>
   + AtomicUpdate(Path, openmode, flags): Result<unique_ptr<FileStream>>
   --
 }
@@ -114,6 +115,7 @@ interface "filesystem::IFileFactory" as IFileFactory {
 class "filesystem::FileFactory" as FileFactory{
   Note: A small wrapper around std::filestream
   + Open(Path, openmode): Result<unique_ptr<iostream>>
+  + OpenRegularFile(Path, openmode): Result<unique_ptr<iostream>>
   + AtomicUpdate(Path, openmode, flags): Result<unique_ptr<FileStream>>
 }
 

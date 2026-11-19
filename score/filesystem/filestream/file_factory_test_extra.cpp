@@ -22,6 +22,7 @@
 #include <ftw.h>
 
 #include <cstdio>
+#include <fstream>
 #include <iostream>
 
 namespace score
@@ -116,6 +117,25 @@ TEST_F(FileFactoryTestExtra, AtomicUpdateCleansUpWhenCreateFileStreamFails)
     Path test_filename = test_tmpdir_ / kTestFileName;
 
     auto result = unit_.AtomicUpdate(test_filename, std::ios_base::out);
+    ASSERT_FALSE(result.has_value());
+    EXPECT_EQ(result.error(), filesystem::ErrorCode::kCouldNotOpenFileStream);
+}
+
+TEST_F(FileFactoryTestExtra, OpenRegularFileClosesFileWhenCreateFileStreamFails)
+{
+    RecordProperty("PartiallyVerifies", "comp_req__filesystem__regular_file_open");
+    RecordProperty("Description", "Check that the file is closed and an error returned when the stream fails.");
+    RecordProperty("TestType", "fault-injection");
+    RecordProperty("DerivationTechnique", "error-guessing");
+    // In the STDIO_FILEBUF_BASE_TESTING environment, is_open() returns false by default.
+    const Path test_filename = test_tmpdir_ / "regular_file";
+    std::ofstream{test_filename.Native()} << "Foo";
+    os::MockGuard<os::UnistdMock> unistd;
+    EXPECT_CALL(*unistd, close(_)).WillOnce(Return(score::cpp::expected_blank<os::Error>{}));
+
+    const auto result = unit_.OpenRegularFile(test_filename, std::ios::in);
+    std::remove(test_filename.CStr());
+
     ASSERT_FALSE(result.has_value());
     EXPECT_EQ(result.error(), filesystem::ErrorCode::kCouldNotOpenFileStream);
 }

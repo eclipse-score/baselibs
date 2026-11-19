@@ -56,6 +56,7 @@ enum class ErrorCode : score::result::ErrorCode
     kCloseFailed,
     kNotImplemented,
     kWritePermissionDenied,
+    kNotARegularFile,
 };
 
 score::result::Error MakeError(const ErrorCode code, const std::string_view user_message = "") noexcept;

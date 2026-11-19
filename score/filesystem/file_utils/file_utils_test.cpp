@@ -591,7 +591,7 @@ class FileUtilsTest_FileContentsAreIdentical : public ::testing::Test
             *file << content;
             return file;
         };
-        EXPECT_CALL(*filefactory_mock_, Open(Eq(path), _)).WillOnce(Invoke(ss));
+        EXPECT_CALL(*filefactory_mock_, OpenRegularFile(Eq(path), _)).WillOnce(Invoke(ss));
     }
 
     void ExpectBadFileOpen(const Path& path)
@@ -601,20 +601,20 @@ class FileUtilsTest_FileContentsAreIdentical : public ::testing::Test
             bad_ss_uptr->setstate(std::ios_base::badbit);
             return bad_ss_uptr;
         };
-        EXPECT_CALL(*filefactory_mock_, Open(Eq(path), _)).WillOnce(Invoke(bad_ss));
+        EXPECT_CALL(*filefactory_mock_, OpenRegularFile(Eq(path), _)).WillOnce(Invoke(bad_ss));
     }
 
     void ExpectFileOpenNullPtr(const Path& path)
     {
         std::unique_ptr<std::iostream> null_ptr{};
-        EXPECT_CALL(*filefactory_mock_, Open(Eq(path), _)).WillOnce(Return(ByMove(std::move(null_ptr))));
+        EXPECT_CALL(*filefactory_mock_, OpenRegularFile(Eq(path), _)).WillOnce(Return(ByMove(std::move(null_ptr))));
     }
 
     void ExpectFileOpenError(const Path& path)
     {
         score::Result<std::unique_ptr<std::iostream>> file_error =
             MakeUnexpected(filesystem::ErrorCode::kCouldNotOpenFileStream);
-        EXPECT_CALL(*filefactory_mock_, Open(Eq(path), _)).WillOnce(Return(ByMove(std::move(file_error))));
+        EXPECT_CALL(*filefactory_mock_, OpenRegularFile(Eq(path), _)).WillOnce(Return(ByMove(std::move(file_error))));
     }
 };
 

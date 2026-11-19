@@ -126,6 +126,8 @@ FileFactoryFake::FileFactoryFake(IStringStreamCollection& collection) : FileFact
 {
     using ::testing::_;
     ON_CALL(*this, Open(_, _)).WillByDefault(::testing::Invoke(this, &FileFactoryFake::FakeOpen));
+    // The fake has no special files, so every path in the collection is a regular file.
+    ON_CALL(*this, OpenRegularFile(_, _)).WillByDefault(::testing::Invoke(this, &FileFactoryFake::FakeOpen));
     // coverity[autosar_cpp14_a0_1_2_violation] False positive
     ON_CALL(*this, AtomicUpdate(_, _, _)).WillByDefault(::testing::Invoke(this, &FileFactoryFake::FakeAtomicUpdate));
 }

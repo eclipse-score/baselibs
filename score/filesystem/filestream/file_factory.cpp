@@ -18,10 +18,12 @@
 #include "score/os/fcntl.h"
 #include "score/os/stdio.h"
 #include "score/os/unistd.h"
+#include "score/scope_exit/scope_exit.h"
 
 #include <score/assert.hpp>
 #include <score/utility.hpp>
 
+#include <cerrno>
 #include <chrono>
 #include <iomanip>
 #include <sstream>
@@ -248,6 +250,67 @@ Result<std::unique_ptr<std::iostream>> FileFactory::Open(const Path& path, const
     return details::OpenFileHandle(path, mode, kDefaultMode).and_then([mode](int file_handle) {
         return details::CreateFileStream<details::StdioFileBuf>(file_handle, mode);
     });
+}
+
+Result<std::unique_ptr<std::iostream>> FileFactory::OpenRegularFile(const Path& path,
+                                                                    const std::ios_base::openmode mode)
+{
+    // Without O_NONBLOCK, opening a FIFO waits for the other end.
+    auto flags = IosOpenModeToOpenFlags(mode);
+    flags |= OpenFlags::kNonBlocking;
+    // NOLINTNEXTLINE(score-banned-function): We need to use the POSIX open call to obtain a file descriptor.
+    const auto file_handle = os::Fcntl::instance().open(path.CStr(), flags, kDefaultMode);
+    if (!file_handle.has_value())
+    {
+        // A non-blocking write-only open fails with ENXIO for a FIFO without a reader.
+        if (file_handle.error().GetOsDependentErrorCode() == ENXIO)
+        {
+            return MakeUnexpected(ErrorCode::kNotARegularFile);
+        }
+        return MakeUnexpected(ErrorCode::kCouldNotOpenFileStream);
+    }
+    const std::int32_t fd = file_handle.value();
+    score::utils::ScopeExit close_on_error{[fd]() {
+        score::cpp::ignore = os::Unistd::instance().close(fd);
+    }};
+
+    os::StatBuffer status{};
+    if (!os::Stat::instance().fstat(fd, status).has_value())
+    {
+        return MakeUnexpected(ErrorCode::kCouldNotRetrieveStatus);
+    }
+    // NOLINTBEGIN(hicpp-signed-bitwise): macro does not affect the sign of the result.
+    // Rationale: S_IFMT and S_IFREG are defined by the platform and can't be modified by user, see GetIdentityMetadata.
+    // coverity[autosar_cpp14_m5_0_21_violation]
+    // coverity[autosar_cpp14_m2_13_3_violation]
+    // coverity[autosar_cpp14_m5_0_4_violation]
+    if ((status.st_mode & S_IFMT) != S_IFREG)
+    // NOLINTEND(hicpp-signed-bitwise): macro does not affect the sign of the result.
+    {
+        return MakeUnexpected(ErrorCode::kNotARegularFile);
+    }
+
+    // POSIX leaves the effect of O_NONBLOCK on regular files unspecified, so restore blocking I/O.
+    const auto status_flags = os::Fcntl::instance().fcntl(fd, os::Fcntl::Command::kFileGetStatusFlags);
+    if (!status_flags.has_value())
+    {
+        return MakeUnexpected(ErrorCode::kCouldNotOpenFileStream);
+    }
+    auto blocking_flags = status_flags.value();
+    blocking_flags &= ~OpenFlags::kNonBlocking;
+    if (!os::Fcntl::instance().fcntl(fd, os::Fcntl::Command::kFileSetStatusFlags, blocking_flags).has_value())
+    {
+        return MakeUnexpected(ErrorCode::kCouldNotOpenFileStream);
+    }
+
+    auto file_stream = details::CreateFileStream<details::StdioFileBuf>(fd, mode);
+    if (!file_stream.has_value())
+    {
+        return MakeUnexpected(ErrorCode::kCouldNotOpenFileStream);
+    }
+    // The stream now owns and closes the descriptor.
+    close_on_error.Release();
+    return std::unique_ptr<std::iostream>{std::move(file_stream).value()};
 }
 
 // as intended, we don't enforce users to specify ownership flags unless needed
