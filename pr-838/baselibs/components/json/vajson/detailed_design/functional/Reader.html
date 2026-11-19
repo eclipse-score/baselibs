@@ -531,13 +531,12 @@
 JSON parser.
 The JSON data must be provided to the parser as
 * a path to a file
-* a character buffer
-* a stream, e.g. a file or string stream.</p>
+* a character buffer.</p>
 <p>The JSON document size and the number of concurrently parsed documents is not restricted by vaJson.</p>
 <section id="sequences">
 <h3>Sequences<a class="headerlink" href="#sequences" title="Link to this heading">#</a></h3>
 <p class="plantuml">
-<object data="../../../../../../_images/plantuml-06d46db47759245dbf1ff5d15daff74ac65590da.svg" type="image/svg+xml" style="width:1388px;height:1746px;background:#FFFFFF;"></object></p>
+<object data="../../../../../../_images/plantuml-06d46db47759245dbf1ff5d15daff74ac65590da.svg" type="image/svg+xml" style="width:1245px;height:1277px;background:#FFFFFF;"></object></p>
 </section>
 </section>
 <section id="encoding">
@@ -548,8 +547,6 @@ the <code class="docutils literal notranslate"><span class="pre">\uXXXX</span></
 UTF-8 encoded, and a UTF-16 surrogate pair is combined into the single code point it denotes. UTF-8 bytes
 present directly in the input are passed through without transcoding, so the user must provide input in the expected
 encoding and handle any application-specific encoding needs.</p>
-<p>The method <code class="docutils literal notranslate"><span class="pre">score::json::vajson::JsonData::GetEncoding()</span></code> returns the detected encoding if the input stream contains a byte
-order mark (BOM).</p>
 </section>
 <section id="data-items">
 <h2>Data Items<a class="headerlink" href="#data-items" title="Link to this heading">#</a></h2>
@@ -575,19 +572,15 @@ that are instantiated by themselves depending on the last event.</p>
 </section>
 <section id="number-formatting">
 <h2>Number formatting<a class="headerlink" href="#number-formatting" title="Link to this heading">#</a></h2>
-<p>A Number of the input stream is reported to the applications event handler by calling OnNumber().
+<p>A number in the document is reported to the applications event handler by calling OnNumber().
 The parameter of the function (score::json::vajson::JsonNumber) contains the number and can provide it in different formats
 to the application:</p>
 <ul class="simple">
-<li><p>boolean</p></li>
 <li><p>unsigned int (any unsigned integer smaller or equal to unsigned long long int)</p></li>
 <li><p>signed int (any signed integer smaller or equal to long long int)</p></li>
 <li><p>float</p></li>
 <li><p>double</p></li>
-<li><p>score::json::vajson::JsonNumber (for further processing by the application)</p></li>
 </ul>
-<p>The application can also try to convert the number to a user defined format by calling
-score::json::vajson::JsonNumber::Convert.</p>
 </section>
 <section id="error-reporting">
 <h2>Error reporting<a class="headerlink" href="#error-reporting" title="Link to this heading">#</a></h2>
