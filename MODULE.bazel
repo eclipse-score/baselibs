@@ -187,8 +187,16 @@ bazel_dep(name = "cxx.rs", version = "1.0.186")
 
 ## Custom Module Loading
 
-bazel_dep(name = "score_docs_as_code", version = "8.6.0")
-bazel_dep(name = "score_process_description", version = "2.2.2")
+bazel_dep(name = "score_docs_as_code", version = "9.0.0")
+
+# POC: static analysis section in the module verification report (docs-as-code main + SARIF summary).
+git_override(
+    module_name = "score_docs_as_code",
+    commit = "a6fa63b8c21f326f19f57e8d631810ca7df635b0",
+    remote = "https://github.com/eclipse-score/docs-as-code.git",
+)
+
+bazel_dep(name = "score_process_description", version = "2.2.5")
 
 bazel_dep(name = "score_tooling", version = "3.0.2", dev_dependency = True)
 
@@ -198,7 +206,8 @@ bazel_dep(name = "score_tooling", version = "3.0.2", dev_dependency = True)
 # tested through futurecpp_internal, files without coverage data listed).
 bazel_dep(name = "score_coverage", version = "0.4.2", dev_dependency = True)
 
-bazel_dep(name = "score_platform", version = "0.7.4")
+# docs-as-code 9 needs the platform's needs_json_file target.
+bazel_dep(name = "score_platform", version = "0.7.6")
 
 ## Configure the python toolchain
 
