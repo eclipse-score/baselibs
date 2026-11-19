@@ -75,6 +75,19 @@ Functional Requirements
 
    The Filesystem library shall provide functionality for reading from and writing to files, including buffered I/O operations.
 
+.. comp_req:: Regular File Opening
+   :id: comp_req__filesystem__regular_file_open
+   :reqtype: Functional
+   :security: YES
+   :safety: ASIL_B
+   :derived_from: feat_req__baselibs__filesystem_library[version==2]
+   :status: valid
+   :version: 1
+   :satisfied_by: comp__baselibs_filesystem[version==1]
+
+   The Filesystem library shall provide opening a file that returns an error without blocking when the file is not
+   a regular file.
+
 .. comp_req:: Fully testable public API
    :id: comp_req__filesystem__full_testability
    :reqtype: Non-Functional

@@ -24,7 +24,7 @@ TEST(Base64Test, EncodeEmptyString)
     ::testing::Test::RecordProperty("TestType", "requirements-based");
     ::testing::Test::RecordProperty("DerivationTechnique", "boundary-values");
     ::testing::Test::RecordProperty("PartiallyVerifies", "comp_req__utils__base64_encoding");
-    ::testing::Test::RecordProperty("Description", "This test ensures that a input string is correctly encoded.");
+    ::testing::Test::RecordProperty("Description", "Check that encoding an empty buffer yields an empty string.");
     std::vector<std::uint8_t> input = {};
     std::string expected_output = "";
     EXPECT_EQ(EncodeBase64(input), expected_output);
@@ -35,7 +35,9 @@ TEST(Base64Test, EncodeSingleByte)
     ::testing::Test::RecordProperty("TestType", "requirements-based");
     ::testing::Test::RecordProperty("DerivationTechnique", "boundary-values");
     ::testing::Test::RecordProperty("PartiallyVerifies", "comp_req__utils__base64_encoding");
-    ::testing::Test::RecordProperty("Description", "This test ensures that a input string is correctly encoded.");
+    ::testing::Test::RecordProperty("Description",
+                                    "Check that encoding a single byte yields the Base64 text with two padding "
+                                    "characters.");
     std::vector<std::uint8_t> input = {'A'};
     std::string expected_output = "QQ==";
     EXPECT_EQ(EncodeBase64(input), expected_output);
@@ -46,7 +48,9 @@ TEST(Base64Test, EncodeTwoBytes)
     ::testing::Test::RecordProperty("TestType", "requirements-based");
     ::testing::Test::RecordProperty("DerivationTechnique", "boundary-values");
     ::testing::Test::RecordProperty("PartiallyVerifies", "comp_req__utils__base64_encoding");
-    ::testing::Test::RecordProperty("Description", "This test ensures that a input string is correctly encoded.");
+    ::testing::Test::RecordProperty("Description",
+                                    "Check that encoding two bytes yields the Base64 text with one padding "
+                                    "character.");
     std::vector<std::uint8_t> input = {'A', 'B'};
     std::string expected_output = "QUI=";
     EXPECT_EQ(EncodeBase64(input), expected_output);
@@ -57,7 +61,8 @@ TEST(Base64Test, EncodeMultipleBytes)
     ::testing::Test::RecordProperty("TestType", "requirements-based");
     ::testing::Test::RecordProperty("DerivationTechnique", "equivalence-classes");
     ::testing::Test::RecordProperty("PartiallyVerifies", "comp_req__utils__base64_encoding");
-    ::testing::Test::RecordProperty("Description", "This test ensures that a input string is correctly encoded.");
+    ::testing::Test::RecordProperty("Description",
+                                    "Check that encoding an 11-byte buffer yields the expected Base64 text.");
     std::vector<std::uint8_t> input = {'S', 'y', 's', 'f', 'c', 'n', 'U', 't', 'i', 'l', 's'};
     std::string expected_output = "U3lzZmNuVXRpbHM=";
     EXPECT_EQ(EncodeBase64(input), expected_output);
@@ -68,7 +73,7 @@ TEST(Base64Test, DecodeEmptyString)
     ::testing::Test::RecordProperty("TestType", "requirements-based");
     ::testing::Test::RecordProperty("DerivationTechnique", "boundary-values");
     ::testing::Test::RecordProperty("PartiallyVerifies", "comp_req__utils__base64_decoding");
-    ::testing::Test::RecordProperty("Description", "This test ensures that a input is correctly decoded.");
+    ::testing::Test::RecordProperty("Description", "Check that decoding an empty string yields an empty buffer.");
     std::string input = "";
     std::vector<std::uint8_t> expected_output = {};
     EXPECT_EQ(DecodeBase64(input), expected_output);
@@ -79,7 +84,9 @@ TEST(Base64Test, DecodeSingleByte)
     ::testing::Test::RecordProperty("TestType", "requirements-based");
     ::testing::Test::RecordProperty("DerivationTechnique", "boundary-values");
     ::testing::Test::RecordProperty("PartiallyVerifies", "comp_req__utils__base64_decoding");
-    ::testing::Test::RecordProperty("Description", "This test ensures that a input is correctly decoded.");
+    ::testing::Test::RecordProperty("Description",
+                                    "Check that decoding Base64 text with two padding characters yields a single "
+                                    "byte.");
     std::string input = "QQ==";
     std::vector<std::uint8_t> expected_output = {'A'};
     EXPECT_EQ(DecodeBase64(input), expected_output);
@@ -90,7 +97,8 @@ TEST(Base64Test, DecodeTwoBytes)
     ::testing::Test::RecordProperty("TestType", "requirements-based");
     ::testing::Test::RecordProperty("DerivationTechnique", "boundary-values");
     ::testing::Test::RecordProperty("PartiallyVerifies", "comp_req__utils__base64_decoding");
-    ::testing::Test::RecordProperty("Description", "This test ensures that a input is correctly decoded.");
+    ::testing::Test::RecordProperty("Description",
+                                    "Check that decoding Base64 text with one padding character yields two bytes.");
     std::string input = "QUI=";
     std::vector<std::uint8_t> expected_output = {'A', 'B'};
     EXPECT_EQ(DecodeBase64(input), expected_output);
@@ -101,7 +109,9 @@ TEST(Base64Test, DecodeMultipleBytes)
     ::testing::Test::RecordProperty("TestType", "requirements-based");
     ::testing::Test::RecordProperty("DerivationTechnique", "equivalence-classes");
     ::testing::Test::RecordProperty("PartiallyVerifies", "comp_req__utils__base64_decoding");
-    ::testing::Test::RecordProperty("Description", "This test ensures that a input is correctly decoded.");
+    ::testing::Test::RecordProperty("Description",
+                                    "Check that decoding the Base64 text of a 1000-byte buffer restores the "
+                                    "original buffer.");
     std::vector<std::uint8_t> input(1000, 'A');
     std::string encoded_input = EncodeBase64(input);
     auto result = DecodeBase64(encoded_input);

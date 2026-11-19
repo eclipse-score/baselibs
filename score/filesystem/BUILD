@@ -184,6 +184,7 @@ cc_test(
         ":standard_filesystem",
         ":standard_filesystem_fake",
         "@googletest//:gtest_main",
+        "@score_baselibs//score/filesystem/file_utils:file_test_utils",
         "@score_baselibs//score/os/mocklib:dirent_mock",
         "@score_baselibs//score/os/mocklib:stat_mock",
         "@score_baselibs//score/os/mocklib:stdio_mock",

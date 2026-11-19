@@ -13,7 +13,7 @@
 /// @file
 /// @brief  A SAX-Style JSON parser.
 ///
-/// @details  Parses JSON text from a stream and sends events synchronously to the derived class.
+/// @details  Parses JSON text from memory and sends events synchronously to the derived class.
 
 #ifndef SCORE_JSON_INTERNAL_PARSER_VAJSON_STRUCTURE_PARSER_H
 #define SCORE_JSON_INTERNAL_PARSER_VAJSON_STRUCTURE_PARSER_H

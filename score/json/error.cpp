@@ -36,6 +36,15 @@ std::string_view score::json::ErrorDomain::MessageFor(const score::result::Error
         case score::cpp::to_underlying(Error::kInvalidFilePath):
             result = "The JSON file path is incorrect.";
             break;
+        case score::cpp::to_underlying(Error::kIoError):
+            result = "An I/O error occurred while reading or writing JSON data.";
+            break;
+        case score::cpp::to_underlying(Error::kOutOfRange):
+            result = "The number is outside the range of the requested type.";
+            break;
+        case score::cpp::to_underlying(Error::kInvalidValue):
+            result = "The JSON value has the expected type, but its content is not accepted.";
+            break;
         case score::cpp::to_underlying(Error::kUnknownError):
             result = "Unknown Error";
             break;

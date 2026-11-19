@@ -45,8 +45,8 @@ namespace
 // coverity[autosar_cpp14_a15_5_3_violation : FALSE]
 score::Result<void> CopyFileInternal(const Path& source, const Path& destination) noexcept
 {
-    auto source_file = IFileFactory::instance().Open(source, std::ios::binary | ::std::ios::in);
-    auto destination_file = IFileFactory::instance().Open(destination, std::ios::binary | ::std::ios::out);
+    auto source_file = IFileFactory::instance().OpenRegularFile(source, std::ios::binary | ::std::ios::in);
+    auto destination_file = IFileFactory::instance().OpenRegularFile(destination, std::ios::binary | ::std::ios::out);
 
     if (!source_file.has_value())
     {

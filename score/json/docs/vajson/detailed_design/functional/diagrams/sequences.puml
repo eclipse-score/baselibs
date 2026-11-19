@@ -1,20 +1,8 @@
 @startuml
 activate Application
-Application --> Stream : open()
-
-activate Stream
-Stream --> Application
-deactivate Stream
-
-Application --> JsonData : JsonData(Stream&)
+Application --> JsonData : FromBuffer(StringView)
 
 activate JsonData
-JsonData --> InputStream : InputStream(Stream&)
-
-activate InputStream
-InputStream --> JsonData
-deactivate InputStream
-
 JsonData --> JsonData : ParseBom()
 activate JsonData #LightGrey
 
@@ -27,19 +15,6 @@ deactivate JsonOps
 JsonData --> JsonOps : ReadString()
 
 activate JsonOps
-JsonOps --> JsonOps : Read()
-
-activate JsonOps #LightGrey
-JsonOps --> InputStream : Read()
-
-activate InputStream
-InputStream --> JsonOps
-deactivate InputStream
-
-deactivate JsonOps
-
-JsonOps --> JsonOps : SplitStringView()
-JsonOps --> JsonOps : RewindIf()
 JsonOps --> JsonData
 deactivate JsonOps
 
@@ -74,15 +49,6 @@ activate StructureParser
 StructureParser --> JsonOps : SkipWhitespace()
 
 activate JsonOps
-JsonOps --> JsonOps : SkipUntil()
-activate JsonOps #LightGrey
-JsonOps --> InputStream : Find()
-
-activate InputStream
-InputStream --> JsonOps
-deactivate InputStream
-deactivate JsonOps
-
 JsonOps --> StructureParser
 deactivate JsonOps
 
@@ -93,15 +59,6 @@ activate StructureParser #LightGrey
 StructureParser --> JsonOps : SkipWhitespace()
 
 activate JsonOps
-JsonOps --> JsonOps : SkipUntil()
-activate JsonOps #LightGrey
-JsonOps --> InputStream : Find()
-
-activate InputStream
-InputStream --> JsonOps
-deactivate InputStream
-deactivate JsonOps
-
 JsonOps --> StructureParser
 deactivate JsonOps
 
@@ -114,12 +71,6 @@ StructureParser --> JsonOps : Take()
 activate JsonOps
 
 JsonOps --> JsonOps : TryTake()
-activate JsonOps #LightGrey
-JsonOps --> InputStream : Get()
-activate InputStream
-InputStream --> JsonOps
-deactivate InputStream
-deactivate JsonOps
 
 JsonOps --> StructureParser
 deactivate JsonOps

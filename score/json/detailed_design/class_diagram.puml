@@ -203,6 +203,9 @@ enum score::json::Error {
   kKeyNotFound
   kParsingError
   kInvalidFilePath
+  kIoError
+  kOutOfRange
+  kInvalidValue
 }
 
 
