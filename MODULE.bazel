@@ -188,7 +188,15 @@ bazel_dep(name = "cxx.rs", version = "1.0.186")
 ## Custom Module Loading
 
 bazel_dep(name = "score_docs_as_code", version = "8.6.0")
-bazel_dep(name = "score_process_description", version = "2.2.2")
+
+# Unreleased: needs eclipse-score/docs-as-code#1065 (draft status for safety analyses).
+git_override(
+    module_name = "score_docs_as_code",
+    commit = "638e517febfb82c6338a40490eca3f09b34a5ad1",
+    remote = "https://github.com/eclipse-score/docs-as-code.git",
+)
+
+bazel_dep(name = "score_process_description", version = "2.2.5")
 
 bazel_dep(name = "score_tooling", version = "3.0.2", dev_dependency = True)
 
