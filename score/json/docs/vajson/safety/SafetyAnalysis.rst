@@ -84,11 +84,9 @@ Safety Analysis of vajson
         .. fm:: FM-VaJson-CorruptedInput Input byte stream is corrupted.
             :details: Not all corruption can be detected by a well-formedness check.
             :effect:  Invalid data is deserialized and, thus, safety requirements are violated.
-            :measure: User must provide uncorrupted input stream, e.g., via protected IoIntegrityStream.
-                      See SMI-JSON-PRIVATE-InitializeJSONWithIoIntegrityStream.
-                      User must provide uncorrupted input character buffer.
+            :measure: User must provide uncorrupted input character buffer.
                       See SMI-JSON-InitializeJSONWithBuffer.
-                      User must not use the file API, since IoIntegrityStream is *not* used there.
+                      User must not use the file API, since the file integrity is not protected.
 
         .. fm:: FM-VaJson-InvalidInput Input is grammatically or syntactically invalid.
             :effect:  Invalid input is deserialized and, thus, safety requirements are violated.

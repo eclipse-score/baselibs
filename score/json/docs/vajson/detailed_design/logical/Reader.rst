@@ -134,9 +134,6 @@ JsonData
     hide empty members
 
     package "score" {
-      package stream {
-        class InputStream {}
-      }
       package "json" {
         class JsonOps {
           + JsonOps(JsonData& json_data)
@@ -153,7 +150,6 @@ JsonData
 
     JsonOps --> JsonData
 
-    JsonData --> InputStream
     JsonData --> DepthCounter
 
     @enduml

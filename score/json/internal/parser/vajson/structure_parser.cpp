@@ -13,7 +13,7 @@
 /// @file
 /// @brief  A SAX-Style JSON parser.
 ///
-/// @details  Parses JSON text from a stream and sends events synchronously to the derived class.
+/// @details  Parses JSON text from memory and sends events synchronously to the derived class.
 
 #include "score/json/internal/parser/vajson/structure_parser.h"
 
@@ -640,9 +640,9 @@ auto StructureParser::ParseComma() noexcept -> ParserResult
 
 /// @internal
 /// - Skip all whitespace characters.
-/// - If the stream has ended and the ItemStack is empty:
+/// - If the document has ended and the ItemStack is empty:
 ///   - Return kFinished.
-/// - If there are still new elements in the stream:
+/// - If there are still characters in the document:
 ///   - Parse the next character.
 ///   - Determine the expected type to follow based on the parsed character.
 ///   - Call the specialized parser method for this type.

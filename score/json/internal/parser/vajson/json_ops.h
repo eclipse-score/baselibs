@@ -13,7 +13,7 @@
 /// @file
 /// @brief  Collection of all operations on a JsonData object.
 ///
-/// @details  Provides operations for stream based input data.
+/// @details  Provides operations for in-memory input data.
 
 #ifndef SCORE_JSON_INTERNAL_PARSER_VAJSON_JSON_OPS_H
 #define SCORE_JSON_INTERNAL_PARSER_VAJSON_JSON_OPS_H
@@ -23,10 +23,8 @@
 #include "score/json/internal/parser/vajson/opt_char.h"
 #include "score/json/internal/parser/vajson/reader_config.h"
 #include "score/json/internal/parser/vajson/reader_fwd.h"
-#include <cstdint>
 #include <functional>
-#include <istream>
-#include <string>
+#include <string_view>
 
 namespace score
 {
@@ -85,9 +83,9 @@ class JsonOps final
     auto Take() noexcept -> char;
 
     /// @brief           Tries to take the character at the current position and moves the cursor to the next character
-    /// @return          The character if inside stream bounds, or the error.
-    /// @error           score::json::vajson::JsonErrc::kInvalidJson,
-    ///                  if the stream has ended
+    /// @return          The character if inside the document, or the error.
+    /// @error           score::json::vajson::JsonErrc::kInvalidJson
+    ///                  if the document has ended
     /// @context         ANY
     /// @pre             -
     /// @threadsafe      FALSE
@@ -127,17 +125,15 @@ class JsonOps final
     /// @reentrant       FALSE
     auto CheckString(std::string_view string, std::string_view error_msg) noexcept -> Result<void>;
 
-    /// @brief           Returns if the next characters are equal to the passed string
+    /// @brief           Moves the cursor past the passed string if the next characters are equal to it
     /// @param[in]       string
     ///                  that is expected.
-    /// @return          True if the string was found else false.
-    /// @error           score::json::vajson::JsonErrc::kInvalidJson,
-    ///                  if any error occurred.
+    /// @return          True if the string was found and the cursor has been moved past it, otherwise false.
     /// @context         ANY
-    /// @pre             -
+    /// @pre             string is not empty.
     /// @threadsafe      FALSE
     /// @reentrant       FALSE
-    auto ReadString(std::string_view string) noexcept -> Result<bool>;
+    auto ReadString(std::string_view string) noexcept -> bool;
 
     /// @brief           Skips all valid whitespace characters
     /// @details         Valid JSON whitespace characters are space, newline, carriage return, and tab.
@@ -147,20 +143,6 @@ class JsonOps final
     /// @threadsafe      FALSE
     /// @reentrant       FALSE
     auto SkipWhitespace() noexcept -> bool;
-
-    /// @brief           Reads num_to_read characters and executes the action for each span of characters
-    /// @param[in]       num_to_read
-    ///                  The number of characters to read.
-    /// @param[in]       callback
-    ///                  Callback to call per view.
-    /// @return          The number of characters read.
-    /// @context         ANY
-    /// @pre             callback does not throw exceptions.
-    /// @threadsafe      FALSE
-    /// @reentrant       FALSE
-    auto Read(std::uint64_t num_to_read,
-              const score::cpp::move_only_function<void(std::string_view), 40>& callback) noexcept
-        -> Result<std::uint64_t>;
 
     /// @brief            Reads characters as long as the delimiter is not found and executes the action for each span
     /// of characters @param[in]       delimiter                  to decide if the character should be skipped.
@@ -181,24 +163,12 @@ class JsonOps final
     auto GetJsonDocument() & noexcept -> JsonData&;
 
   private:
-    /// @brief           Rewind the position of the document if a condition is fulfilled
-    /// @param[in]       condition
-    ///                  The condition to check before seeking.
-    /// @param[in]       num
-    ///                  The number of bytes to rewind.
-    /// @return          nothing or the error occurred.
-    /// @context         ANY
-    /// @pre             -
-    /// @threadsafe      FALSE
-    /// @reentrant       FALSE
-    auto RewindIf(bool condition, std::size_t num) noexcept -> Result<void>;
-
-    /// @brief           Get direct access to the input stream
-    /// @return          Reference to the input stream.
+    /// @brief           Get direct access to the unread input
+    /// @return          Reference to the unread input.
     /// @context         ANY
     /// @pre             -
     /// @threadsafe      TRUE, for different this pointer
-    auto GetStream() & noexcept -> std::istream&;
+    auto GetInput() & noexcept -> std::string_view&;
 
     /// @brief           JsonData to operate on
     std::reference_wrapper<JsonData> data_;

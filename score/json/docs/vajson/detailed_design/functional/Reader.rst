@@ -28,8 +28,7 @@ Reading of JSON documents is done by the class score::json::vajson::internal::St
 JSON parser.
 The JSON data must be provided to the parser as
 * a path to a file
-* a character buffer
-* a stream, e.g. a file or string stream.
+* a character buffer.
 
 The JSON document size and the number of concurrently parsed documents is not restricted by vaJson.
 
@@ -93,7 +92,7 @@ Number formatting
     :safety: ASIL_D
     :trace: CREQ-Json-Deserialization
 
-A Number of the input stream is reported to the applications event handler by calling OnNumber().
+A number in the document is reported to the applications event handler by calling OnNumber().
 The parameter of the function (score::json::vajson::JsonNumber) contains the number and can provide it in different formats
 to the application:
 

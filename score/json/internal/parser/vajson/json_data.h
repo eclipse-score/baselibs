@@ -23,8 +23,7 @@
 #include "score/json/internal/parser/vajson/reader_config.h"
 #include "score/json/internal/parser/vajson/reader_fwd.h"
 #include "score/json/internal/parser/vajson/types.h"
-#include <functional>
-#include <memory>
+#include <vector>
 
 namespace score
 {
@@ -34,28 +33,19 @@ namespace vajson
 {
 
 /// @brief           A JSON data representation
-/// @details         Handles the state of the data, such as the current position in the file and nesting of JSON tree.
+/// @details         Handles the data state, such as the current position in the document and nesting of JSON tree.
 /// @trace           DSGN-JSON-Reader-Deserialization
 class JsonData final
 {
   public:
-    /// @brief           Initializes a JSON data object using a constructed reader
-    /// @param[in]       input_stream
-    ///                  to operate on.
+    /// @brief           Initializes a JSON data object that reads from a borrowed document
+    /// @param[in]       document
+    ///                  The JSON document. It is not copied and must outlive the JSON data object.
     /// @context         ANY
-    /// @pre             input_stream has to be open.
+    /// @pre             -
     /// @threadsafe      FALSE
     /// @reentrant       FALSE
-    explicit JsonData(std::istream& input_stream) noexcept;
-
-    /// @brief           Initializes a JSON data object using a constructed reader
-    /// @param[in]       input_stream
-    ///                  to operate on.
-    /// @context         ANY
-    /// @pre             input_stream has to be open.
-    /// @threadsafe      FALSE
-    /// @reentrant       FALSE
-    explicit JsonData(std::unique_ptr<std::istream> input_stream) noexcept;
+    explicit JsonData(StringView document) noexcept;
 
     /// @brief           Move constructor
     /// @param[in]       other
@@ -88,11 +78,12 @@ class JsonData final
     ~JsonData() noexcept = default;
 
     /// @brief           Initializes a JSON data object from a file
+    /// @details         The whole file is read into memory owned by the JSON data object.
     /// @param[in]       path
     ///                  The path to the JSON file.
     /// @return          A constructed JSON data object.
     /// @error           score::json::vajson::JsonErrc::kStreamFailure
-    ///                  if the file could not be opened.
+    ///                  if the file could not be opened or read.
     /// @context         ANY
     /// @pre             -
     /// @threadsafe      FALSE
@@ -102,7 +93,7 @@ class JsonData final
 
     /// @brief           Initializes a JSON data object from a buffer
     /// @param[in]       buffer
-    ///                  The buffer containing the JSON value.
+    ///                  The buffer containing the JSON value. It is not copied and must outlive the JSON data object.
     /// @return          A constructed JSON data object.
     /// @context         ANY
     /// @pre             -
@@ -154,30 +145,40 @@ class JsonData final
     }
 
   private:
-    /// @brief           Class JsonOps must have access to the InputStream but no other classes
+    /// @brief           Class JsonOps must have access to the unread input but no other classes
     friend class internal::JsonOps;  // VECTOR SL AutosarC++17_10-A11.3.1: MD_JSON_AutosarC++17_10-A11.3.1_json_ops
 
-    /// @brief           Returns the stream
-    /// @return          The stream.
+    /// @brief           Initializes a JSON data object that owns its document
+    /// @param[in]       document
+    ///                  The JSON document.
+    /// @context         ANY
+    /// @pre             -
+    /// @threadsafe      FALSE
+    /// @reentrant       FALSE
+    explicit JsonData(std::vector<char> document) noexcept;
+
+    /// @brief           Returns the unread part of the document
+    /// @return          The unread part of the document, consuming characters removes them from its front.
     /// @context         ANY
     /// @pre             -
     /// @threadsafe      TRUE, for different this pointer
-    auto GetStream() noexcept -> std::istream&
+    auto GetInput() & noexcept -> StringView&
     {
-        return this->stream_.get();
+        return this->input_;
     }
 
     /// @brief           Skips a UTF-8 byte order mark at the beginning of the document
     /// @context         ANY
-    /// @pre             The read pointer must be at the beginning of the document.
+    /// @pre             The input must be at the beginning of the document.
     /// @threadsafe      FALSE
     /// @reentrant       FALSE
     void ParseBom() noexcept;
 
-    /// @brief           Stream buffer
-    std::reference_wrapper<std::istream> stream_;
-    /// @brief           The potentially owned stream
-    std::unique_ptr<std::istream> owned_stream_{nullptr};
+    /// @brief           The owned document, empty if the document is borrowed
+    /// @details         A vector keeps its data pointer on move, unlike a string with small string optimization.
+    std::vector<char> owned_document_{};
+    /// @brief           The unread part of the document
+    StringView input_{};
     /// @brief           JSON structure state
     internal::DepthCounter depth_counter_{};
     /// @brief           Current buffer

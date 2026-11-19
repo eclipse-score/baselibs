@@ -15,7 +15,9 @@
 
 #include "score/json/internal/parser/vajson/structure_parser.h"
 
+#include <initializer_list>
 #include <string>
+#include <string_view>
 
 #include "gtest/gtest.h"
 #include "score/json/internal/parser/vajson/json_data.h"
@@ -117,6 +119,22 @@ TEST(UT__Parser__Invalid, Dynamic__UnknownType13_fxyze)
 TEST(UT__Parser__Invalid, Dynamic__UnknownType14_f456e)
 {
     AssertInvalid("f456e");
+}
+
+TEST(UT__Parser__Invalid, Dynamic__TruncatedInput)
+{
+    RecordProperty("PartiallyVerifies", "comp_req__vajson__validation");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "boundary-values");
+    RecordProperty("Description",
+                   "Check that documents ending inside a literal or right after an escape character are rejected as "
+                   "invalid JSON.");
+
+    for (const std::string_view json : {"n", "nul", "tru", "fals", R"([true, fals)", R"({"a": nul)", R"("abc\)"})
+    {
+        SCOPED_TRACE(json);
+        AssertInvalid(json);
+    }
 }
 
 // ---- Invalid JSON sequences ------------------------------------------------

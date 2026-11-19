@@ -15,10 +15,9 @@
 
 #include "score/json/internal/parser/vajson/json_ops.h"
 #include <algorithm>
-#include <cstdint>
+#include <cstddef>
 #include <string>
-#include <utility>
-#include <vector>
+#include <string_view>
 
 #include "score/assert.hpp"
 #include "score/json/internal/parser/vajson/json_data.h"
@@ -30,26 +29,6 @@ namespace vajson
 {
 namespace internal
 {
-namespace
-{
-
-/// @brief            Split a StringView into two at the specified pivot point
-/// @details         The pivot element will be contained in the second view.
-/// @param[in]       view                  The StringView to split
-/// @param[in]       pivot                  The index on which to split.
-/// @return          A pair of string views.
-///
-/// @context         ANY
-/// @pre             -
-/// @threadsafe      TRUE
-/// @reentrant       TRUE
-inline auto SplitStringView(const std::string_view view, const std::size_t pivot) noexcept
-    -> std::pair<std::string_view, std::string_view>
-{
-    return {view.substr(0, pivot), view.substr(pivot)};
-}
-
-}  // namespace
 
 JsonOps::JsonOps(JsonData& json_data) noexcept : data_(json_data) {}
 
@@ -60,13 +39,14 @@ auto JsonOps::Take() noexcept -> char
 
 auto JsonOps::TryTake() noexcept -> Result<char>
 {
-    std::istream& stream{this->GetStream()};
-    std::int64_t c{stream.get()};
-    Result<char> result{score::MakeUnexpected(JsonErrc::kStreamFailure, "JsonOps::TryTake: EOF.")};
+    std::string_view& input{this->GetInput()};
+    Result<char> result{
+        score::MakeUnexpected(JsonErrc::kInvalidJson, "JsonOps::TryTake: Unexpected end of the document.")};
 
-    if (c != std::char_traits<char>::eof())
+    if (!input.empty())
     {
-        result = Result<char>{std::char_traits<char>::to_char_type(static_cast<std::int32_t>(c))};
+        result = Result<char>{input.front()};
+        input.remove_prefix(1U);
     }
 
     return result;
@@ -74,29 +54,29 @@ auto JsonOps::TryTake() noexcept -> Result<char>
 
 auto JsonOps::Move() noexcept -> bool
 {
-    std::istream& stream{this->GetStream()};
-    stream.seekg(1, std::ios::cur);
-    return !stream.fail();
+    std::string_view& input{this->GetInput()};
+    const bool result{!input.empty()};
+    if (result)
+    {
+        input.remove_prefix(1U);
+    }
+    return result;
 }
 
 /// @internal
-/// - Peek at the next character
-/// - If it matches:
-///   -  call get() to consume it, return true.
+/// - If the next character matches:
+///   - Consume it, return true.
 /// - Otherwise:
 ///   - Return false.
 /// @endinternal
 auto JsonOps::Skip(const char character) noexcept -> bool
 {
-    std::istream& stream{this->GetStream()};
-    std::int64_t peek_val{stream.peek()};
-    bool result{false};
-    if (peek_val != std::char_traits<char>::eof() && peek_val == std::char_traits<char>::to_int_type(character))
+    std::string_view& input{this->GetInput()};
+    const bool result{(!input.empty()) && (input.front() == character)};
+    if (result)
     {
-        stream.get();
-        result = !stream.fail();
+        input.remove_prefix(1U);
     }
-
     return result;
 }
 
@@ -108,49 +88,32 @@ auto JsonOps::Skip(const char character) noexcept -> bool
 auto JsonOps::CheckString(const std::string_view string, const std::string_view error_msg) noexcept
     -> score::Result<void>
 {
-    return ReadString(string).and_then([&error_msg](bool val) noexcept {
-        score::Result<void> result{score::MakeUnexpected(JsonErrc::kInvalidJson, error_msg)};
-        if (val)
-        {
-            result.emplace();
-        }
-        return result;
-    });
+    score::Result<void> result{score::MakeUnexpected(JsonErrc::kInvalidJson, error_msg)};
+    if (this->ReadString(string))
+    {
+        result.emplace();
+    }
+    return result;
 }
 
 /// @internal
-/// - If the given string is not empty:
-///   - Compare every character of the string with the next characters.
-///   - If they match, return an empty Result.
+/// - If the next characters are equal to the given string:
+///   - Consume them, return true.
 /// - Otherwise:
-///   - Return an error.
+///   - Return false.
 /// @endinternal
-auto JsonOps::ReadString(const std::string_view string) noexcept -> Result<bool>
+auto JsonOps::ReadString(const std::string_view string) noexcept -> bool
 {
     SCORE_LANGUAGE_FUTURECPP_PRECONDITION_PRD_MESSAGE(!string.empty(),
                                                       "JsonOps::ReadString: Cannot check for empty string");
 
-    const std::size_t total_size{string.size()};
-    bool is_same{true};
-    std::string_view to_be_read{string};
-    return this
-        ->Read(total_size,
-               [&is_same, &to_be_read](std::string_view view) noexcept {
-                   std::string_view to_be_compared{};
-
-                   std::tie(to_be_compared, to_be_read) = SplitStringView(to_be_read, view.size());
-                   if (view != to_be_compared)
-                   {
-
-                       is_same = false;
-                   }
-               })
-        .and_then([this, &is_same, &total_size](std::size_t read_size) noexcept {
-            return this->RewindIf((!is_same) || (total_size != read_size), read_size);
-        })
-        .transform([&is_same](void) noexcept {
-            return is_same;
-        });
+    std::string_view& input{this->GetInput()};
+    const bool result{input.substr(0U, string.size()) == string};
+    if (result)
+    {
+        input.remove_prefix(string.size());
+    }
+    return result;
 }
 
 /// @internal
@@ -159,125 +122,34 @@ auto JsonOps::ReadString(const std::string_view string) noexcept -> Result<bool>
 auto JsonOps::SkipWhitespace() noexcept -> bool
 {
     constexpr static StringView kWhitespaceChars{" \n\r\t"sv};
-    std::istream& stream{this->GetStream()};
-    bool done{false};
-    bool result{false};
-
-    while (!done)
-    {
-        std::int64_t ch{stream.peek()};
-
-        if (ch == std::char_traits<char>::eof())
-        {
-            result = false;
-            done = true;
-        }
-        else
-        {
-            const char c{std::char_traits<char>::to_char_type(static_cast<std::int32_t>(ch))};
-
-            const bool is_whitespace =
-                std::any_of(kWhitespaceChars.cbegin(), kWhitespaceChars.cend(), [c](char wc) noexcept {
-                    return c == wc;
-                });
-
-            if (!is_whitespace)
-            {
-                result = true;
-                done = true;
-            }
-            else
-            {
-                stream.get();  // consume the whitespace character
-            }
-        }
-    }
-
-    return result;
+    std::string_view& input{this->GetInput()};
+    input.remove_prefix(std::min(input.find_first_not_of(kWhitespaceChars), input.size()));
+    return !input.empty();
 }
 
 /// @internal
-/// - As long as there are new elements in the stream and the number of bytes to read is not zero:
-///   - Trigger the given action on the returned span.
-/// - Otherwise:
-///   - Break.
-/// @endinternal
-auto JsonOps::Read(const std::uint64_t num_to_read,
-                   const score::cpp::move_only_function<void(std::string_view), 40>& callback) noexcept
-    -> Result<std::uint64_t>
-{
-    std::istream& stream{this->GetStream()};
-    std::vector<char> buffer(num_to_read);
-
-    stream.read(buffer.data(), static_cast<std::streamsize>(num_to_read));
-    std::uint64_t bytes_read{static_cast<std::uint64_t>(stream.gcount())};
-
-    if (bytes_read > 0)
-    {
-        std::string_view view{buffer.data(), bytes_read};
-        callback(view);
-    }
-
-    return Result<std::uint64_t>{bytes_read};
-}
-
-/// @internal
-/// - As long as there are new elements in the stream and the delimiter is not found:
-///   - Trigger the given action on the returned span.
-/// - Otherwise:
-///   - Break.
+/// - Consume all characters up to the first delimiter or the end of the document.
+/// - If characters have been consumed:
+///   - Trigger the given action on them.
+/// - Return the delimiter that was found, or EOF.
 /// @endinternal
 auto JsonOps::ReadUntil(const std::string_view delimiter,
                         const score::cpp::move_only_function<void(std::string_view)>& callback) noexcept
     -> Result<OptChar>
 {
-    std::istream& stream{this->GetStream()};
-    std::string buffer;
-    bool done{false};
-    Result<OptChar> result{OptChar{-1}};
-
-    while (!done)
+    std::string_view& input{this->GetInput()};
+    const std::size_t length{std::min(input.find_first_of(delimiter), input.size())};
+    if (length > 0U)
     {
-        const std::int64_t ch{stream.peek()};
-
-        if (ch == std::char_traits<char>::eof())
-        {
-            if (!buffer.empty())
-            {
-                std::string_view view{buffer.data(), buffer.size()};
-                callback(view);
-            }
-            result = Result<OptChar>{OptChar{-1}};
-            done = true;
-        }
-        else
-        {
-            const char character{std::char_traits<char>::to_char_type(static_cast<std::int32_t>(ch))};
-
-            // Check if this character matches any in the delimiter
-            const bool is_delimiter =
-                std::any_of(delimiter.cbegin(), delimiter.cend(), [character](char delim) noexcept {
-                    return character == delim;
-                });
-
-            if (is_delimiter)
-            {
-                if (!buffer.empty())
-                {
-                    const std::string_view view{buffer.data(), buffer.size()};
-                    callback(view);
-                }
-                result = Result<OptChar>{OptChar{ch}};
-                done = true;
-            }
-            else
-            {
-                buffer.push_back(character);
-                static_cast<void>(stream.get());  // consume the character
-            }
-        }
+        callback(input.substr(0U, length));
+        input.remove_prefix(length);
     }
 
+    Result<OptChar> result{OptChar{-1}};
+    if (!input.empty())
+    {
+        result = Result<OptChar>{OptChar{std::char_traits<char>::to_int_type(input.front())}};
+    }
     return result;
 }
 
@@ -287,31 +159,10 @@ auto JsonOps::GetJsonDocument() & noexcept -> JsonData&
     return this->data_.get();
 }
 
-/// @internal
-/// - If the condition holds
-///  - Seek back the number of bytes passed from the current position.
-/// @endinternal
-auto JsonOps::RewindIf(const bool condition, const std::size_t num) noexcept -> score::Result<void>
-{
-    score::Result<void> result{};
-    if (condition)
-    {
-        std::istream& stream{this->GetStream()};
-        stream.seekg(-1 * static_cast<std::int64_t>(num), std::ios::cur);
-
-        if (stream.fail())
-        {
-            result = score::MakeUnexpected(JsonErrc::kStreamFailure, "JsonOps::RewindIf: Could not seek back.");
-        }
-    }
-
-    return result;
-}
-
-auto JsonOps::GetStream() & noexcept -> std::istream&
+auto JsonOps::GetInput() & noexcept -> std::string_view&
 {
 
-    return this->GetJsonDocument().GetStream();
+    return this->GetJsonDocument().GetInput();
 }
 
 }  // namespace internal
