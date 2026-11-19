@@ -1231,6 +1231,294 @@
               "result_text": ""
             },
             {
+              "name": "BuildFullTableTest__WritesEveryFieldWithItsExpectedValue",
+              "file": "score/flatbuffers/details/flatbuffers_table_test.cpp",
+              "line": 178,
+              "need": "comp_req__flatbuffers__access",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "ScalarFieldTest__GetFieldReturnsStoredValue",
+              "file": "score/flatbuffers/details/flatbuffers_table_test.cpp",
+              "line": 232,
+              "need": "comp_req__flatbuffers__access",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "ScalarFieldTest__GetFieldReturnsDefaultWhenAbsent",
+              "file": "score/flatbuffers/details/flatbuffers_table_test.cpp",
+              "line": 244,
+              "need": "comp_req__flatbuffers__access",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "ScalarFieldTest__SkippedSlotInsideVtableIsTreatedAsAbsent",
+              "file": "score/flatbuffers/details/flatbuffers_table_test.cpp",
+              "line": 258,
+              "need": "comp_req__flatbuffers__access",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "ScalarFieldTest__SetFieldWithDefaultWhenAbsentReturnsWhetherValEqualsDefault",
+              "file": "score/flatbuffers/details/flatbuffers_table_test.cpp",
+              "line": 282,
+              "need": "comp_req__flatbuffers__access",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "ScalarFieldTest__SetFieldWithDefaultWhenPresentWritesAndReturnsTrue",
+              "file": "score/flatbuffers/details/flatbuffers_table_test.cpp",
+              "line": 297,
+              "need": "comp_req__flatbuffers__access",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "ScalarFieldTest__SetFieldWithoutDefaultWhenAbsentReturnsFalse",
+              "file": "score/flatbuffers/details/flatbuffers_table_test.cpp",
+              "line": 310,
+              "need": "comp_req__flatbuffers__access",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "ScalarFieldTest__SetFieldWithoutDefaultWhenPresentWritesAndReturnsTrue",
+              "file": "score/flatbuffers/details/flatbuffers_table_test.cpp",
+              "line": 322,
+              "need": "comp_req__flatbuffers__access",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "PointerFieldTest__GetPointerReturnsTargetWhenPresent",
+              "file": "score/flatbuffers/details/flatbuffers_table_test.cpp",
+              "line": 338,
+              "need": "comp_req__flatbuffers__access",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "PointerFieldTest__GetPointerReturnsNullWhenAbsent",
+              "file": "score/flatbuffers/details/flatbuffers_table_test.cpp",
+              "line": 358,
+              "need": "comp_req__flatbuffers__access",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "PointerFieldTest__GetAddressOfReturnsFieldAddressWhenPresent",
+              "file": "score/flatbuffers/details/flatbuffers_table_test.cpp",
+              "line": 373,
+              "need": "comp_req__flatbuffers__access",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "PointerFieldTest__GetAddressOfReturnsNullWhenAbsent",
+              "file": "score/flatbuffers/details/flatbuffers_table_test.cpp",
+              "line": 388,
+              "need": "comp_req__flatbuffers__access",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "PointerFieldTest__SetPointerWhenAbsentReturnsFalse",
+              "file": "score/flatbuffers/details/flatbuffers_table_test.cpp",
+              "line": 403,
+              "need": "comp_req__flatbuffers__access",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "PointerFieldTest__SetPointerWhenPresentRetargetsField",
+              "file": "score/flatbuffers/details/flatbuffers_table_test.cpp",
+              "line": 417,
+              "need": "comp_req__flatbuffers__access",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "Pointer64Test__GetPointer64ReturnsTargetWhenPresent",
+              "file": "score/flatbuffers/details/flatbuffers_table_test.cpp",
+              "line": 438,
+              "need": "comp_req__flatbuffers__access",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "Pointer64Test__GetPointer64ReturnsNullWhenAbsent",
+              "file": "score/flatbuffers/details/flatbuffers_table_test.cpp",
+              "line": 459,
+              "need": "comp_req__flatbuffers__access",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "VectorFieldTest__GetVectorPointerOrEmptyReturnsVectorWhenPresent",
+              "file": "score/flatbuffers/details/flatbuffers_table_test.cpp",
+              "line": 478,
+              "need": "comp_req__flatbuffers__access",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "VectorFieldTest__GetVectorPointerOrEmptyReturnsEmptyVectorWhenAbsent",
+              "file": "score/flatbuffers/details/flatbuffers_table_test.cpp",
+              "line": 494,
+              "need": "comp_req__flatbuffers__access",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "VectorFieldTest__GetMutableVectorPointerOrEmptyAllowsMutationWhenPresent",
+              "file": "score/flatbuffers/details/flatbuffers_table_test.cpp",
+              "line": 508,
+              "need": "comp_req__flatbuffers__access",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "VectorFieldTest__GetMutableVectorPointerOrEmptyReturnsEmptyVectorWhenAbsent",
+              "file": "score/flatbuffers/details/flatbuffers_table_test.cpp",
+              "line": 525,
+              "need": "comp_req__flatbuffers__access",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "VectorField64Test__GetVectorPointer64OrEmptyReturnsVectorWhenPresent",
+              "file": "score/flatbuffers/details/flatbuffers_table_test.cpp",
+              "line": 543,
+              "need": "comp_req__flatbuffers__access",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "VectorField64Test__GetVectorPointer64OrEmptyReturnsEmptyVectorWhenAbsent",
+              "file": "score/flatbuffers/details/flatbuffers_table_test.cpp",
+              "line": 558,
+              "need": "comp_req__flatbuffers__access",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "VectorField64Test__GetMutableVectorPointer64OrEmptyAllowsMutationWhenPresent",
+              "file": "score/flatbuffers/details/flatbuffers_table_test.cpp",
+              "line": 572,
+              "need": "comp_req__flatbuffers__access",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "VectorField64Test__GetMutableVectorPointer64OrEmptyReturnsEmptyVectorWhenAbsent",
+              "file": "score/flatbuffers/details/flatbuffers_table_test.cpp",
+              "line": 590,
+              "need": "comp_req__flatbuffers__access",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "StructFieldTest__GetStructReturnsInlineStructWhenPresent",
+              "file": "score/flatbuffers/details/flatbuffers_table_test.cpp",
+              "line": 608,
+              "need": "comp_req__flatbuffers__access",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "StructFieldTest__GetStructReturnsNullWhenAbsent",
+              "file": "score/flatbuffers/details/flatbuffers_table_test.cpp",
+              "line": 623,
+              "need": "comp_req__flatbuffers__access",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "OptionalFieldTest__GetOptionalGenericReturnsValueWhenPresent",
+              "file": "score/flatbuffers/details/flatbuffers_table_test.cpp",
+              "line": 638,
+              "need": "comp_req__flatbuffers__access",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "OptionalFieldTest__GetOptionalGenericReturnsEmptyWhenAbsent",
+              "file": "score/flatbuffers/details/flatbuffers_table_test.cpp",
+              "line": 652,
+              "need": "comp_req__flatbuffers__access",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "OptionalFieldTest__GetOptionalBoolSpecializationReturnsValueWhenPresent",
+              "file": "score/flatbuffers/details/flatbuffers_table_test.cpp",
+              "line": 665,
+              "need": "comp_req__flatbuffers__access",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "OptionalFieldTest__GetOptionalBoolSpecializationReturnsFalseWhenPresentAndZero",
+              "file": "score/flatbuffers/details/flatbuffers_table_test.cpp",
+              "line": 679,
+              "need": "comp_req__flatbuffers__access",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "OptionalFieldTest__GetOptionalBoolSpecializationReturnsEmptyWhenAbsent",
+              "file": "score/flatbuffers/details/flatbuffers_table_test.cpp",
+              "line": 703,
+              "need": "comp_req__flatbuffers__access",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "CheckFieldTest__ReturnsTrueWhenPresentAndFalseWhenAbsent",
+              "file": "score/flatbuffers/details/flatbuffers_table_test.cpp",
+              "line": 718,
+              "need": "comp_req__flatbuffers__access",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
               "name": "VectorGetTest__Scalars",
               "file": "score/flatbuffers/details/flatbuffers_vector_test.cpp",
               "line": 115,
@@ -1761,6 +2049,15 @@
               "result_text": ""
             },
             {
+              "name": "BuildFullTableTest__WritesEveryFieldWithItsExpectedValue",
+              "file": "score/flatbuffers/details/flatbuffers_table_test.cpp",
+              "line": 178,
+              "need": "comp_req__flatbuffers__serialization",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
               "name": "VectorGetTest__Scalars",
               "file": "score/flatbuffers/details/flatbuffers_vector_test.cpp",
               "line": 115,
@@ -1936,6 +2233,140 @@
               "file": "score/flatbuffers/details/flatbuffers_allocator_test.cpp",
               "line": 285,
               "need": "comp_req__flatbuffers__serialization",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            }
+          ]
+        }
+      },
+      {
+        "need": "comp_req__flatbuffers__verification",
+        "links": {
+          "CodeLinks": [],
+          "TestLinks": [
+            {
+              "name": "VerifyTest__VerifyTableStartSucceeds",
+              "file": "score/flatbuffers/details/flatbuffers_table_test.cpp",
+              "line": 734,
+              "need": "comp_req__flatbuffers__verification",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "VerifyTest__VerifyTableStartFailsForATruncatedBuffer",
+              "file": "score/flatbuffers/details/flatbuffers_table_test.cpp",
+              "line": 747,
+              "need": "comp_req__flatbuffers__verification",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "VerifyTest__VerifyFieldShortCircuitsWhenAbsentAndDelegatesWhenPresent",
+              "file": "score/flatbuffers/details/flatbuffers_table_test.cpp",
+              "line": 764,
+              "need": "comp_req__flatbuffers__verification",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "VerifyTest__VerifyFieldRequiredFailsWhenAbsentAndSucceedsWhenPresent",
+              "file": "score/flatbuffers/details/flatbuffers_table_test.cpp",
+              "line": 782,
+              "need": "comp_req__flatbuffers__verification",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "VerifyTest__VerifyOffsetShortCircuitsWhenAbsentAndDelegatesWhenPresent",
+              "file": "score/flatbuffers/details/flatbuffers_table_test.cpp",
+              "line": 797,
+              "need": "comp_req__flatbuffers__verification",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "VerifyTest__VerifyOffsetRequiredFailsWhenAbsentAndSucceedsWhenPresent",
+              "file": "score/flatbuffers/details/flatbuffers_table_test.cpp",
+              "line": 815,
+              "need": "comp_req__flatbuffers__verification",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "VerifyTest__VerifyOffset64AndRequiredSucceedForA64BitOffsetField",
+              "file": "score/flatbuffers/details/flatbuffers_table_test.cpp",
+              "line": 830,
+              "need": "comp_req__flatbuffers__verification",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "VerifyTest__VerifyOffset64FamilyFailsWhenAbsentOrOutOfBounds",
+              "file": "score/flatbuffers/details/flatbuffers_table_test.cpp",
+              "line": 846,
+              "need": "comp_req__flatbuffers__verification",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "VerifyTest__VerifyStringWithDefaultHandlesAbsentAndPresentFields",
+              "file": "score/flatbuffers/details/flatbuffers_table_test.cpp",
+              "line": 877,
+              "need": "comp_req__flatbuffers__verification",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "VerifyTest__VerifyVectorWithDefaultHandlesAbsentAndPresentFields",
+              "file": "score/flatbuffers/details/flatbuffers_table_test.cpp",
+              "line": 893,
+              "need": "comp_req__flatbuffers__verification",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "VerifyTest__VerifyVector64WithDefaultSucceedsForA64BitVectorField",
+              "file": "score/flatbuffers/details/flatbuffers_table_test.cpp",
+              "line": 909,
+              "need": "comp_req__flatbuffers__verification",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "VerifyTest__VerifyFieldAndVerifyFieldRequiredFailWhenAlignmentCannotBeSatisfied",
+              "file": "score/flatbuffers/details/flatbuffers_table_test.cpp",
+              "line": 924,
+              "need": "comp_req__flatbuffers__verification",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "VerifyTest__VerifyOffsetAndStringHelpersRejectCorruption",
+              "file": "score/flatbuffers/details/flatbuffers_table_test.cpp",
+              "line": 946,
+              "need": "comp_req__flatbuffers__verification",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "VerifyTest__VerifyVectorWithDefaultFamilyFailsWhenLengthExceedsBuffer",
+              "file": "score/flatbuffers/details/flatbuffers_table_test.cpp",
+              "line": 968,
+              "need": "comp_req__flatbuffers__verification",
               "verify_type": "partially",
               "result": "passed",
               "result_text": ""
@@ -8397,7 +8828,7 @@
             {
               "name": "JsonSerializerTest__FailToDeserializeNumberOutOfRange",
               "file": "score/json/json_serializer_test.cpp",
-              "line": 465,
+              "line": 497,
               "need": "comp_req__json__out_of_range_error",
               "verify_type": "partially",
               "result": "passed",
@@ -8423,7 +8854,7 @@
             {
               "name": "JsonSerializerTest/FailingFieldTest__ErrorNamesInnermostFailingField/NestedFieldOfWrongType",
               "file": "score/json/json_serializer_test.cpp",
-              "line": 832,
+              "line": 865,
               "need": "comp_req__json__deserialization_error_field",
               "verify_type": "fully",
               "result": "passed",
@@ -8432,7 +8863,7 @@
             {
               "name": "JsonSerializerTest/FailingFieldTest__ErrorNamesInnermostFailingField/NestedValueNotAnObject",
               "file": "score/json/json_serializer_test.cpp",
-              "line": 832,
+              "line": 865,
               "need": "comp_req__json__deserialization_error_field",
               "verify_type": "fully",
               "result": "passed",
@@ -8441,7 +8872,7 @@
             {
               "name": "JsonSerializerTest/FailingFieldTest__ErrorNamesInnermostFailingField/MissingFieldInListEntry",
               "file": "score/json/json_serializer_test.cpp",
-              "line": 832,
+              "line": 865,
               "need": "comp_req__json__deserialization_error_field",
               "verify_type": "fully",
               "result": "passed",
@@ -8450,7 +8881,7 @@
             {
               "name": "JsonSerializerTest/FailingFieldTest__ErrorNamesInnermostFailingField/ListValueNotAList",
               "file": "score/json/json_serializer_test.cpp",
-              "line": 832,
+              "line": 865,
               "need": "comp_req__json__deserialization_error_field",
               "verify_type": "fully",
               "result": "passed",
@@ -8459,7 +8890,7 @@
             {
               "name": "JsonSerializerTest/FailingFieldTest__ErrorNamesInnermostFailingField/ListEntryNotAnObject",
               "file": "score/json/json_serializer_test.cpp",
-              "line": 832,
+              "line": 865,
               "need": "comp_req__json__deserialization_error_field",
               "verify_type": "fully",
               "result": "passed",
@@ -8468,7 +8899,7 @@
             {
               "name": "JsonSerializerTest/FailingFieldTest__ErrorNamesInnermostFailingField/NumberOutOfRangeInOptional",
               "file": "score/json/json_serializer_test.cpp",
-              "line": 832,
+              "line": 865,
               "need": "comp_req__json__deserialization_error_field",
               "verify_type": "fully",
               "result": "passed",
@@ -8477,7 +8908,16 @@
             {
               "name": "JsonSerializerTest/FailingFieldTest__ErrorNamesInnermostFailingField/OptionalValueNotAnObject",
               "file": "score/json/json_serializer_test.cpp",
-              "line": 832,
+              "line": 865,
+              "need": "comp_req__json__deserialization_error_field",
+              "verify_type": "fully",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "JsonSerializerTest/FailingFieldTest__ErrorNamesInnermostFailingField/ExplicitSerializerError",
+              "file": "score/json/json_serializer_test.cpp",
+              "line": 865,
               "need": "comp_req__json__deserialization_error_field",
               "verify_type": "fully",
               "result": "passed",
@@ -14327,7 +14767,7 @@
             {
               "name": "Base64Test__EncodeTwoBytes",
               "file": "score/utils/base64_test.cpp",
-              "line": 44,
+              "line": 46,
               "need": "comp_req__utils__base64_encoding",
               "verify_type": "partially",
               "result": "passed",
@@ -14336,7 +14776,7 @@
             {
               "name": "Base64Test__EncodeMultipleBytes",
               "file": "score/utils/base64_test.cpp",
-              "line": 55,
+              "line": 59,
               "need": "comp_req__utils__base64_encoding",
               "verify_type": "partially",
               "result": "passed",
@@ -14353,7 +14793,7 @@
             {
               "name": "Base64Test__DecodeEmptyString",
               "file": "score/utils/base64_test.cpp",
-              "line": 66,
+              "line": 71,
               "need": "comp_req__utils__base64_decoding",
               "verify_type": "partially",
               "result": "passed",
@@ -14362,7 +14802,7 @@
             {
               "name": "Base64Test__DecodeSingleByte",
               "file": "score/utils/base64_test.cpp",
-              "line": 77,
+              "line": 82,
               "need": "comp_req__utils__base64_decoding",
               "verify_type": "partially",
               "result": "passed",
@@ -14371,7 +14811,7 @@
             {
               "name": "Base64Test__DecodeTwoBytes",
               "file": "score/utils/base64_test.cpp",
-              "line": 88,
+              "line": 95,
               "need": "comp_req__utils__base64_decoding",
               "verify_type": "partially",
               "result": "passed",
@@ -14380,8 +14820,115 @@
             {
               "name": "Base64Test__DecodeMultipleBytes",
               "file": "score/utils/base64_test.cpp",
-              "line": 99,
+              "line": 107,
               "need": "comp_req__utils__base64_decoding",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            }
+          ]
+        }
+      },
+      {
+        "need": "comp_req__utils__threadsafe_singleton",
+        "links": {
+          "CodeLinks": [],
+          "TestLinks": [
+            {
+              "name": "MeyerSingletonGetInstanceFixture__CallingWillInitializeObjectWithProvidedArguments",
+              "file": "score/utils/meyer_singleton/meyer_singleton_test.cpp",
+              "line": 123,
+              "need": "comp_req__utils__threadsafe_singleton",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "MeyerSingletonGetInstanceFixture__CallingTwiceWillInitializeObjectOnce",
+              "file": "score/utils/meyer_singleton/meyer_singleton_test.cpp",
+              "line": 165,
+              "need": "comp_req__utils__threadsafe_singleton",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "MeyerSingletonGetInstanceFixture__CallingWhileOtherThreadIsCallingGetInstanceReturnsValidObject",
+              "file": "score/utils/meyer_singleton/meyer_singleton_test.cpp",
+              "line": 257,
+              "need": "comp_req__utils__threadsafe_singleton",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "MeyerSingletonGetInstanceFixture__CallingAfterCallingGetInstanceWithCallableTerminates",
+              "file": "score/utils/meyer_singleton/meyer_singleton_test.cpp",
+              "line": 334,
+              "need": "comp_req__utils__threadsafe_singleton",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "MeyerSingletonGetInstanceFixture__CallingWhileOtherThreadIsCallingGetInstanceWithCallableTerminates",
+              "file": "score/utils/meyer_singleton/meyer_singleton_test.cpp",
+              "line": 355,
+              "need": "comp_req__utils__threadsafe_singleton",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "MeyerSingletonGetInstanceWithCallableFixture__CallingWillInitializeObjectWithProvidedArguments",
+              "file": "score/utils/meyer_singleton/meyer_singleton_test.cpp",
+              "line": 143,
+              "need": "comp_req__utils__threadsafe_singleton",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "MeyerSingletonGetInstanceWithCallableFixture__CallingTwiceWillInitializeObjectOnce",
+              "file": "score/utils/meyer_singleton/meyer_singleton_test.cpp",
+              "line": 192,
+              "need": "comp_req__utils__threadsafe_singleton",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "MeyerSingletonGetInstanceWithCallableFixture__CallingTwiceWillCallInitializationCallableOnce",
+              "file": "score/utils/meyer_singleton/meyer_singleton_test.cpp",
+              "line": 226,
+              "need": "comp_req__utils__threadsafe_singleton",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "MeyerSingletonGetInstanceWithCallableFixture__CallingWhileOtherThreadIsCallingGetInstanceWithCallableReturnsValidObject",
+              "file": "score/utils/meyer_singleton/meyer_singleton_test.cpp",
+              "line": 293,
+              "need": "comp_req__utils__threadsafe_singleton",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "MeyerSingletonGetInstanceWithCallableFixture__CallingAfterCallingGetInstanceTerminates",
+              "file": "score/utils/meyer_singleton/meyer_singleton_test.cpp",
+              "line": 388,
+              "need": "comp_req__utils__threadsafe_singleton",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "MeyerSingletonGetInstanceWithCallableFixture__CallingWhileOtherThreadIsCallingGetInstanceTerminates",
+              "file": "score/utils/meyer_singleton/meyer_singleton_test.cpp",
+              "line": 409,
+              "need": "comp_req__utils__threadsafe_singleton",
               "verify_type": "partially",
               "result": "passed",
               "result_text": ""

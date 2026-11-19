@@ -77,16 +77,16 @@
     },
     {
       "branches": {
-        "percent": 74,
-        "total": 316
+        "percent": 80,
+        "total": 360
       },
       "files": {
         "measured": 25,
         "total": 30
       },
       "lines": {
-        "percent": 81,
-        "total": 1351
+        "percent": 87,
+        "total": 1425
       },
       "primary_need_id": "comp__baselibs_flatbuffers"
     },
@@ -108,7 +108,7 @@
     {
       "branches": {
         "percent": 89,
-        "total": 178
+        "total": 182
       },
       "files": {
         "measured": 15,
@@ -116,7 +116,7 @@
       },
       "lines": {
         "percent": 97,
-        "total": 748
+        "total": 757
       },
       "primary_need_id": "comp__baselibs_json"
     },
