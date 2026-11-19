@@ -310298,7 +310298,7 @@
   {
     "name": "JsonParserTest__FromBuffer",
     "file": "score/json/json_parser_test.cpp",
-    "line": "59",
+    "line": "60",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -310312,7 +310312,7 @@
   {
     "name": "JsonParserTest__ViaLiteral",
     "file": "score/json/json_parser_test.cpp",
-    "line": "74",
+    "line": "75",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -310326,7 +310326,7 @@
   {
     "name": "JsonParserTest__ViaErrorLiteral",
     "file": "score/json/json_parser_test.cpp",
-    "line": "90",
+    "line": "91",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -310338,9 +310338,23 @@
     "FullyVerifies": null
   },
   {
+    "name": "JsonParserTest__ViaErrorLiteralPrintsReason",
+    "file": "score/json/json_parser_test.cpp",
+    "line": "103",
+    "result": "passed",
+    "repo_name": "local_repo",
+    "hash": "",
+    "url": "",
+    "TestType": "requirements-based",
+    "DerivationTechnique": "requirements-analysis",
+    "result_text": "",
+    "PartiallyVerifies": "comp_req__json__parsing_error_reason",
+    "FullyVerifies": null
+  },
+  {
     "name": "JsonParserTest__FromFileSuceess",
     "file": "score/json/json_parser_test.cpp",
-    "line": "102",
+    "line": "114",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -310354,7 +310368,7 @@
   {
     "name": "JsonParserTest__FromFileParseError",
     "file": "score/json/json_parser_test.cpp",
-    "line": "125",
+    "line": "137",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -310368,7 +310382,7 @@
   {
     "name": "ParserTest__CanParseObjectBool",
     "file": "score/json/json_parser_test.cpp",
-    "line": "201",
+    "line": "213",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -310382,7 +310396,7 @@
   {
     "name": "ParserTest__CanParseObjectString",
     "file": "score/json/json_parser_test.cpp",
-    "line": "218",
+    "line": "230",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -310396,7 +310410,7 @@
   {
     "name": "ParserTest__CanParseObjectNull",
     "file": "score/json/json_parser_test.cpp",
-    "line": "235",
+    "line": "247",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -310410,7 +310424,7 @@
   {
     "name": "ParserTest__CanParseObjectNumber",
     "file": "score/json/json_parser_test.cpp",
-    "line": "252",
+    "line": "264",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -310424,7 +310438,7 @@
   {
     "name": "ParserTest__CanParseObjectFloatingPointNumber",
     "file": "score/json/json_parser_test.cpp",
-    "line": "269",
+    "line": "281",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -310438,7 +310452,7 @@
   {
     "name": "ParserTest__CanParseObjectInObject",
     "file": "score/json/json_parser_test.cpp",
-    "line": "290",
+    "line": "302",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -310452,7 +310466,7 @@
   {
     "name": "ParserTest__CanParseListInObject",
     "file": "score/json/json_parser_test.cpp",
-    "line": "307",
+    "line": "319",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -310466,7 +310480,7 @@
   {
     "name": "ParserTest__CanParseObjectInObjectAndIterateOverKeys",
     "file": "score/json/json_parser_test.cpp",
-    "line": "326",
+    "line": "338",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -310480,7 +310494,7 @@
   {
     "name": "ParserTest__EmitsErrorWhenParsingObjectWithValueButNoKey",
     "file": "score/json/json_parser_test.cpp",
-    "line": "375",
+    "line": "387",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -310494,7 +310508,7 @@
   {
     "name": "ParserTest__EmitsErrorWhenParsingObjectWithBinaryValue",
     "file": "score/json/json_parser_test.cpp",
-    "line": "395",
+    "line": "407",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -310508,7 +310522,7 @@
   {
     "name": "ParserTest__EmitsErrorWhenParsingTooLargeNumber",
     "file": "score/json/json_parser_test.cpp",
-    "line": "427",
+    "line": "439",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -310522,7 +310536,7 @@
   {
     "name": "ParserTest__EmitsErrorWhenParsingNumberOutsideTheGrammar",
     "file": "score/json/json_parser_test.cpp",
-    "line": "444",
+    "line": "456",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -310536,7 +310550,7 @@
   {
     "name": "ParserTest__EmitsErrorWhenParsingHexadecimalNumberExceeding64Bits",
     "file": "score/json/json_parser_test.cpp",
-    "line": "462",
+    "line": "474",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -310550,7 +310564,7 @@
   {
     "name": "ParserTest__FromFileFail",
     "file": "score/json/json_parser_test.cpp",
-    "line": "477",
+    "line": "489",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -310562,9 +310576,23 @@
     "FullyVerifies": null
   },
   {
+    "name": "ParserTest__FromFileReportsReasonWhenFileCannotBeOpened",
+    "file": "score/json/json_parser_test.cpp",
+    "line": "501",
+    "result": "passed",
+    "repo_name": "local_repo",
+    "hash": "",
+    "url": "",
+    "TestType": "requirements-based",
+    "DerivationTechnique": "error-guessing",
+    "result_text": "",
+    "PartiallyVerifies": "comp_req__json__parsing_error_reason",
+    "FullyVerifies": null
+  },
+  {
     "name": "ParserTest__ParsingFromFileWorks",
     "file": "score/json/json_parser_test.cpp",
-    "line": "489",
+    "line": "562",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -310578,7 +310606,7 @@
   {
     "name": "ParserTest__EmitsErrorWhenParsingObjectWithDuplicateEscapedMemberName",
     "file": "score/json/json_parser_test.cpp",
-    "line": "560",
+    "line": "633",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -310592,7 +310620,7 @@
   {
     "name": "ParserTest__CanParseSameMemberNameInDifferentObjects",
     "file": "score/json/json_parser_test.cpp",
-    "line": "575",
+    "line": "648",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -310606,7 +310634,7 @@
   {
     "name": "ParserTest__CanParseEmptyMemberName",
     "file": "score/json/json_parser_test.cpp",
-    "line": "594",
+    "line": "667",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -310620,7 +310648,7 @@
   {
     "name": "JsonParserVajsonTest__CanParseObjectHexadecimalNumber",
     "file": "score/json/json_parser_test.cpp",
-    "line": "616",
+    "line": "689",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -310634,7 +310662,7 @@
   {
     "name": "JsonParserVajsonTest__CanParseTwoByteBuffer",
     "file": "score/json/json_parser_test.cpp",
-    "line": "665",
+    "line": "738",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -310648,7 +310676,7 @@
   {
     "name": "JsonParserVajsonTest__CanParseBufferWithUtf8Bom",
     "file": "score/json/json_parser_test.cpp",
-    "line": "684",
+    "line": "757",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -310662,7 +310690,7 @@
   {
     "name": "NumberTest__WhenParsingABoolStoredInAJsonThenParsingIsSuccessfulAndCorrectValueIsReturned",
     "file": "score/json/json_parser_test.cpp",
-    "line": "756",
+    "line": "829",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -310676,7 +310704,7 @@
   {
     "name": "NumberTest__WhenParsingAUint8StoredInAJsonThenParsingIsSuccessfulAndCorrectValueIsReturned",
     "file": "score/json/json_parser_test.cpp",
-    "line": "778",
+    "line": "851",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -310690,7 +310718,7 @@
   {
     "name": "NumberTest__WhenParsingAUint16StoredInAJsonThenParsingIsSuccessfulAndCorrectValueIsReturned",
     "file": "score/json/json_parser_test.cpp",
-    "line": "801",
+    "line": "874",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -310704,7 +310732,7 @@
   {
     "name": "NumberTest__WhenParsingAUint32StoredInAJsonThenParsingIsSuccessfulAndCorrectValueIsReturned",
     "file": "score/json/json_parser_test.cpp",
-    "line": "824",
+    "line": "897",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -310718,7 +310746,7 @@
   {
     "name": "NumberTest__WhenParsingAUint64StoredInAJsonThenParsingIsSuccessfulAndCorrectValueIsReturned",
     "file": "score/json/json_parser_test.cpp",
-    "line": "847",
+    "line": "920",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -310732,7 +310760,7 @@
   {
     "name": "NumberTest__WhenParsingAInt8StoredInAJsonThenParsingIsSuccessfulAndCorrectValueIsReturned",
     "file": "score/json/json_parser_test.cpp",
-    "line": "870",
+    "line": "943",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -310746,7 +310774,7 @@
   {
     "name": "NumberTest__WhenParsingAInt16StoredInAJsonThenParsingIsSuccessfulAndCorrectValueIsReturned",
     "file": "score/json/json_parser_test.cpp",
-    "line": "893",
+    "line": "966",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -310760,7 +310788,7 @@
   {
     "name": "NumberTest__WhenParsingAInt32StoredInAJsonThenParsingIsSuccessfulAndCorrectValueIsReturned",
     "file": "score/json/json_parser_test.cpp",
-    "line": "916",
+    "line": "989",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -310774,7 +310802,7 @@
   {
     "name": "NumberTest__WhenParsingAInt64StoredInAJsonThenParsingIsSuccessfulAndCorrectValueIsReturned",
     "file": "score/json/json_parser_test.cpp",
-    "line": "939",
+    "line": "1012",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -310788,7 +310816,7 @@
   {
     "name": "NumberTest__WhenParsingAFloatStoredInAJsonThenParsingIsSuccessfulAndCorrectValueIsReturned",
     "file": "score/json/json_parser_test.cpp",
-    "line": "961",
+    "line": "1034",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -310802,7 +310830,7 @@
   {
     "name": "NumberTest__WhenParsingADoubleStoredInAJsonThenParsingIsSuccessfulAndCorrectValueIsReturned",
     "file": "score/json/json_parser_test.cpp",
-    "line": "984",
+    "line": "1057",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -310814,9 +310842,65 @@
     "FullyVerifies": null
   },
   {
+    "name": "ParserTest/ParsingErrorReasonTest__ReportsReasonWithParsingError/EmptyDocument",
+    "file": "score/json/json_parser_test.cpp",
+    "line": "534",
+    "result": "passed",
+    "repo_name": "local_repo",
+    "hash": "",
+    "url": "",
+    "TestType": "requirements-based",
+    "DerivationTechnique": "equivalence-classes",
+    "result_text": "",
+    "PartiallyVerifies": "comp_req__json__parsing_error_reason",
+    "FullyVerifies": null
+  },
+  {
+    "name": "ParserTest/ParsingErrorReasonTest__ReportsReasonWithParsingError/MissingComma",
+    "file": "score/json/json_parser_test.cpp",
+    "line": "534",
+    "result": "passed",
+    "repo_name": "local_repo",
+    "hash": "",
+    "url": "",
+    "TestType": "requirements-based",
+    "DerivationTechnique": "equivalence-classes",
+    "result_text": "",
+    "PartiallyVerifies": "comp_req__json__parsing_error_reason",
+    "FullyVerifies": null
+  },
+  {
+    "name": "ParserTest/ParsingErrorReasonTest__ReportsReasonWithParsingError/DuplicateMemberName",
+    "file": "score/json/json_parser_test.cpp",
+    "line": "534",
+    "result": "passed",
+    "repo_name": "local_repo",
+    "hash": "",
+    "url": "",
+    "TestType": "requirements-based",
+    "DerivationTechnique": "equivalence-classes",
+    "result_text": "",
+    "PartiallyVerifies": "comp_req__json__parsing_error_reason",
+    "FullyVerifies": null
+  },
+  {
+    "name": "ParserTest/ParsingErrorReasonTest__ReportsReasonWithParsingError/NumberOutOfRange",
+    "file": "score/json/json_parser_test.cpp",
+    "line": "534",
+    "result": "passed",
+    "repo_name": "local_repo",
+    "hash": "",
+    "url": "",
+    "TestType": "requirements-based",
+    "DerivationTechnique": "equivalence-classes",
+    "result_text": "",
+    "PartiallyVerifies": "comp_req__json__parsing_error_reason",
+    "FullyVerifies": null
+  },
+  {
     "name": "ParserTest/DuplicateMemberNameTest__EmitsErrorWhenParsingObjectWithDuplicateMemberName/Null",
     "file": "score/json/json_parser_test.cpp",
-    "line": "525",
+    "line": "598",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -310830,7 +310914,7 @@
   {
     "name": "ParserTest/DuplicateMemberNameTest__EmitsErrorWhenParsingObjectWithDuplicateMemberName/Bool",
     "file": "score/json/json_parser_test.cpp",
-    "line": "525",
+    "line": "598",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -310844,7 +310928,7 @@
   {
     "name": "ParserTest/DuplicateMemberNameTest__EmitsErrorWhenParsingObjectWithDuplicateMemberName/Number",
     "file": "score/json/json_parser_test.cpp",
-    "line": "525",
+    "line": "598",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -310858,7 +310942,7 @@
   {
     "name": "ParserTest/DuplicateMemberNameTest__EmitsErrorWhenParsingObjectWithDuplicateMemberName/String",
     "file": "score/json/json_parser_test.cpp",
-    "line": "525",
+    "line": "598",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -310872,7 +310956,7 @@
   {
     "name": "ParserTest/DuplicateMemberNameTest__EmitsErrorWhenParsingObjectWithDuplicateMemberName/Object",
     "file": "score/json/json_parser_test.cpp",
-    "line": "525",
+    "line": "598",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -310886,7 +310970,7 @@
   {
     "name": "ParserTest/DuplicateMemberNameTest__EmitsErrorWhenParsingObjectWithDuplicateMemberName/List",
     "file": "score/json/json_parser_test.cpp",
-    "line": "525",
+    "line": "598",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -310900,7 +310984,7 @@
   {
     "name": "ParserTest/DuplicateMemberNameTest__EmitsErrorWhenParsingObjectWithDuplicateMemberName/ScalarThenObject",
     "file": "score/json/json_parser_test.cpp",
-    "line": "525",
+    "line": "598",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -310914,7 +310998,7 @@
   {
     "name": "ParserTest/DuplicateMemberNameTest__EmitsErrorWhenParsingObjectWithDuplicateMemberName/ScalarThenList",
     "file": "score/json/json_parser_test.cpp",
-    "line": "525",
+    "line": "598",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -310928,7 +311012,7 @@
   {
     "name": "ParserTest/DuplicateMemberNameTest__EmitsErrorWhenParsingObjectWithDuplicateMemberName/ObjectThenScalar",
     "file": "score/json/json_parser_test.cpp",
-    "line": "525",
+    "line": "598",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -310942,7 +311026,7 @@
   {
     "name": "ParserTest/DuplicateMemberNameTest__EmitsErrorWhenParsingObjectWithDuplicateMemberName/ListThenObject",
     "file": "score/json/json_parser_test.cpp",
-    "line": "525",
+    "line": "598",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -310956,7 +311040,7 @@
   {
     "name": "ParserTest/DuplicateMemberNameTest__EmitsErrorWhenParsingObjectWithDuplicateMemberName/NotAdjacent",
     "file": "score/json/json_parser_test.cpp",
-    "line": "525",
+    "line": "598",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -310970,7 +311054,7 @@
   {
     "name": "ParserTest/DuplicateMemberNameTest__EmitsErrorWhenParsingObjectWithDuplicateMemberName/EmptyName",
     "file": "score/json/json_parser_test.cpp",
-    "line": "525",
+    "line": "598",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -310984,7 +311068,7 @@
   {
     "name": "ParserTest/DuplicateMemberNameTest__EmitsErrorWhenParsingObjectWithDuplicateMemberName/InNestedObject",
     "file": "score/json/json_parser_test.cpp",
-    "line": "525",
+    "line": "598",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -310998,7 +311082,7 @@
   {
     "name": "ParserTest/DuplicateMemberNameTest__EmitsErrorWhenParsingObjectWithDuplicateMemberName/InObjectInList",
     "file": "score/json/json_parser_test.cpp",
-    "line": "525",
+    "line": "598",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -317942,7 +318026,7 @@
   {
     "name": "UT__Parser__Invalid__Dynamic__EmptyDocument",
     "file": "score/json/internal/parser/vajson/structure_parser_invalid_test.cpp",
-    "line": "51",
+    "line": "53",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -317956,7 +318040,7 @@
   {
     "name": "UT__Parser__Invalid__Dynamic__NoData",
     "file": "score/json/internal/parser/vajson/structure_parser_invalid_test.cpp",
-    "line": "56",
+    "line": "58",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -317970,7 +318054,7 @@
   {
     "name": "UT__Parser__Invalid__Dynamic__UnknownType3_truee",
     "file": "score/json/internal/parser/vajson/structure_parser_invalid_test.cpp",
-    "line": "63",
+    "line": "65",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -317984,7 +318068,7 @@
   {
     "name": "UT__Parser__Invalid__Dynamic__UnknownType4_falsee",
     "file": "score/json/internal/parser/vajson/structure_parser_invalid_test.cpp",
-    "line": "68",
+    "line": "70",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -317998,7 +318082,7 @@
   {
     "name": "UT__Parser__Invalid__Dynamic__UnknownType6_False",
     "file": "score/json/internal/parser/vajson/structure_parser_invalid_test.cpp",
-    "line": "75",
+    "line": "77",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -318012,7 +318096,7 @@
   {
     "name": "UT__Parser__Invalid__Dynamic__UnknownType7_True",
     "file": "score/json/internal/parser/vajson/structure_parser_invalid_test.cpp",
-    "line": "80",
+    "line": "82",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -318026,7 +318110,7 @@
   {
     "name": "UT__Parser__Invalid__Dynamic__UnknownType8_Null",
     "file": "score/json/internal/parser/vajson/structure_parser_invalid_test.cpp",
-    "line": "85",
+    "line": "87",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -318040,7 +318124,7 @@
   {
     "name": "UT__Parser__Invalid__Dynamic__UnknownType9_nxyl",
     "file": "score/json/internal/parser/vajson/structure_parser_invalid_test.cpp",
-    "line": "92",
+    "line": "94",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -318054,7 +318138,7 @@
   {
     "name": "UT__Parser__Invalid__Dynamic__UnknownType10_n00l",
     "file": "score/json/internal/parser/vajson/structure_parser_invalid_test.cpp",
-    "line": "97",
+    "line": "99",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -318068,7 +318152,7 @@
   {
     "name": "UT__Parser__Invalid__Dynamic__UnknownType11_txye",
     "file": "score/json/internal/parser/vajson/structure_parser_invalid_test.cpp",
-    "line": "102",
+    "line": "104",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -318082,7 +318166,7 @@
   {
     "name": "UT__Parser__Invalid__Dynamic__UnknownType12_t12e",
     "file": "score/json/internal/parser/vajson/structure_parser_invalid_test.cpp",
-    "line": "107",
+    "line": "109",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -318096,7 +318180,7 @@
   {
     "name": "UT__Parser__Invalid__Dynamic__UnknownType13_fxyze",
     "file": "score/json/internal/parser/vajson/structure_parser_invalid_test.cpp",
-    "line": "112",
+    "line": "114",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -318110,7 +318194,7 @@
   {
     "name": "UT__Parser__Invalid__Dynamic__UnknownType14_f456e",
     "file": "score/json/internal/parser/vajson/structure_parser_invalid_test.cpp",
-    "line": "117",
+    "line": "119",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -318122,9 +318206,23 @@
     "FullyVerifies": null
   },
   {
-    "name": "UT__Parser__Invalid__Dynamic__KeyWithoutValue",
+    "name": "UT__Parser__Invalid__Dynamic__TruncatedInput",
     "file": "score/json/internal/parser/vajson/structure_parser_invalid_test.cpp",
     "line": "124",
+    "result": "passed",
+    "repo_name": "local_repo",
+    "hash": "",
+    "url": "",
+    "TestType": "requirements-based",
+    "DerivationTechnique": "boundary-values",
+    "result_text": "",
+    "PartiallyVerifies": "comp_req__vajson__validation",
+    "FullyVerifies": null
+  },
+  {
+    "name": "UT__Parser__Invalid__Dynamic__KeyWithoutValue",
+    "file": "score/json/internal/parser/vajson/structure_parser_invalid_test.cpp",
+    "line": "142",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -318138,7 +318236,7 @@
   {
     "name": "UT__Parser__Invalid__Dynamic__ValueWithoutKey",
     "file": "score/json/internal/parser/vajson/structure_parser_invalid_test.cpp",
-    "line": "129",
+    "line": "147",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -318152,7 +318250,7 @@
   {
     "name": "UT__Parser__Invalid__Dynamic__EofAfterKey",
     "file": "score/json/internal/parser/vajson/structure_parser_invalid_test.cpp",
-    "line": "134",
+    "line": "152",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -318166,7 +318264,7 @@
   {
     "name": "UT__Parser__Invalid__Dynamic__UnexpectedObjectClose1",
     "file": "score/json/internal/parser/vajson/structure_parser_invalid_test.cpp",
-    "line": "139",
+    "line": "157",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -318180,7 +318278,7 @@
   {
     "name": "UT__Parser__Invalid__Dynamic__UnexpectedObjectClose2",
     "file": "score/json/internal/parser/vajson/structure_parser_invalid_test.cpp",
-    "line": "144",
+    "line": "162",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -318194,7 +318292,7 @@
   {
     "name": "UT__Parser__Invalid__Dynamic__UnexpectedArrayOpen",
     "file": "score/json/internal/parser/vajson/structure_parser_invalid_test.cpp",
-    "line": "149",
+    "line": "167",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -318208,7 +318306,7 @@
   {
     "name": "UT__Parser__Invalid__Dynamic__UnexpectedArrayClose",
     "file": "score/json/internal/parser/vajson/structure_parser_invalid_test.cpp",
-    "line": "154",
+    "line": "172",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -318222,7 +318320,7 @@
   {
     "name": "UT__Parser__Invalid__Dynamic__NonterminatingString1",
     "file": "score/json/internal/parser/vajson/structure_parser_invalid_test.cpp",
-    "line": "159",
+    "line": "177",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -318236,7 +318334,7 @@
   {
     "name": "UT__Parser__Invalid__Dynamic__NonterminatingString2",
     "file": "score/json/internal/parser/vajson/structure_parser_invalid_test.cpp",
-    "line": "164",
+    "line": "182",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -318250,7 +318348,7 @@
   {
     "name": "UT__Parser__Invalid__Dynamic__NonterminatingNumber1",
     "file": "score/json/internal/parser/vajson/structure_parser_invalid_test.cpp",
-    "line": "169",
+    "line": "187",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -318264,7 +318362,7 @@
   {
     "name": "UT__Parser__Invalid__Dynamic__NonterminatingNumber2",
     "file": "score/json/internal/parser/vajson/structure_parser_invalid_test.cpp",
-    "line": "174",
+    "line": "192",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -318278,7 +318376,7 @@
   {
     "name": "UT__Parser__Invalid__Dynamic__NonterminatingNumber3",
     "file": "score/json/internal/parser/vajson/structure_parser_invalid_test.cpp",
-    "line": "179",
+    "line": "197",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -318292,7 +318390,7 @@
   {
     "name": "UT__Parser__Invalid__Dynamic__NonterminatingNumber4",
     "file": "score/json/internal/parser/vajson/structure_parser_invalid_test.cpp",
-    "line": "184",
+    "line": "202",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -318306,7 +318404,7 @@
   {
     "name": "UT__Parser__Invalid__Dynamic__NonTerminatingObject",
     "file": "score/json/internal/parser/vajson/structure_parser_invalid_test.cpp",
-    "line": "189",
+    "line": "207",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -318320,7 +318418,7 @@
   {
     "name": "UT__Parser__Invalid__Dynamic__NonTerminatingArray",
     "file": "score/json/internal/parser/vajson/structure_parser_invalid_test.cpp",
-    "line": "194",
+    "line": "212",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -318334,7 +318432,7 @@
   {
     "name": "UT__Parser__Invalid__Dynamic__TopLevelKeys",
     "file": "score/json/internal/parser/vajson/structure_parser_invalid_test.cpp",
-    "line": "199",
+    "line": "217",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -318348,7 +318446,7 @@
   {
     "name": "UT__Parser__Invalid__Dynamic__MultipleTopLevelElements",
     "file": "score/json/internal/parser/vajson/structure_parser_invalid_test.cpp",
-    "line": "204",
+    "line": "222",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -318362,7 +318460,7 @@
   {
     "name": "UT__Parser__Invalid__Dynamic__MultipleTopLevelObjects",
     "file": "score/json/internal/parser/vajson/structure_parser_invalid_test.cpp",
-    "line": "209",
+    "line": "227",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -318376,7 +318474,7 @@
   {
     "name": "UT__Parser__Invalid__Dynamic__MultipleValues",
     "file": "score/json/internal/parser/vajson/structure_parser_invalid_test.cpp",
-    "line": "214",
+    "line": "232",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -318390,7 +318488,7 @@
   {
     "name": "UT__Parser__Invalid__Dynamic__TruncatedUnicodeEscape",
     "file": "score/json/internal/parser/vajson/structure_parser_invalid_test.cpp",
-    "line": "219",
+    "line": "237",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -318404,7 +318502,7 @@
   {
     "name": "UT__Parser__Invalid__Dynamic__NonHexadecimalUnicodeEscape",
     "file": "score/json/internal/parser/vajson/structure_parser_invalid_test.cpp",
-    "line": "229",
+    "line": "247",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -318418,7 +318516,7 @@
   {
     "name": "UT__Parser__Invalid__Dynamic__LoneHighSurrogate",
     "file": "score/json/internal/parser/vajson/structure_parser_invalid_test.cpp",
-    "line": "239",
+    "line": "257",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -318432,7 +318530,7 @@
   {
     "name": "UT__Parser__Invalid__Dynamic__HighSurrogateFollowedByNonSurrogate",
     "file": "score/json/internal/parser/vajson/structure_parser_invalid_test.cpp",
-    "line": "249",
+    "line": "267",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -318446,7 +318544,7 @@
   {
     "name": "UT__Parser__Invalid__Dynamic__HighSurrogateFollowedByOtherEscape",
     "file": "score/json/internal/parser/vajson/structure_parser_invalid_test.cpp",
-    "line": "259",
+    "line": "277",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -318460,7 +318558,7 @@
   {
     "name": "UT__Parser__Invalid__Dynamic__LoneLowSurrogate",
     "file": "score/json/internal/parser/vajson/structure_parser_invalid_test.cpp",
-    "line": "269",
+    "line": "287",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -318474,7 +318572,7 @@
   {
     "name": "UT__Parser__Invalid__Dynamic__UnknownEscape",
     "file": "score/json/internal/parser/vajson/structure_parser_invalid_test.cpp",
-    "line": "279",
+    "line": "297",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -318488,7 +318586,7 @@
   {
     "name": "UT__Parser__Invalid__Dynamic__UnescapedControlCharacterInString",
     "file": "score/json/internal/parser/vajson/structure_parser_invalid_test.cpp",
-    "line": "284",
+    "line": "302",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -318502,7 +318600,7 @@
   {
     "name": "UT__Parser__Invalid__Dynamic__UnescapedControlCharacterInKey",
     "file": "score/json/internal/parser/vajson/structure_parser_invalid_test.cpp",
-    "line": "300",
+    "line": "318",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -318516,7 +318614,7 @@
   {
     "name": "UT__Parser__Invalid__Dynamic__OnlyWhitespace",
     "file": "score/json/internal/parser/vajson/structure_parser_invalid_test.cpp",
-    "line": "310",
+    "line": "328",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -318530,7 +318628,7 @@
   {
     "name": "UT__Parser__Invalid__Dynamic__OnlyArrayClose",
     "file": "score/json/internal/parser/vajson/structure_parser_invalid_test.cpp",
-    "line": "315",
+    "line": "333",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -318544,7 +318642,7 @@
   {
     "name": "UT__Parser__Invalid__Dynamic__OnlyObjectClose",
     "file": "score/json/internal/parser/vajson/structure_parser_invalid_test.cpp",
-    "line": "320",
+    "line": "338",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -318558,7 +318656,7 @@
   {
     "name": "UT__Parser__Invalid__Dynamic__OctalNumber1",
     "file": "score/json/internal/parser/vajson/structure_parser_invalid_test.cpp",
-    "line": "325",
+    "line": "343",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -318572,7 +318670,7 @@
   {
     "name": "UT__Parser__Invalid__Dynamic__OctalNumber2",
     "file": "score/json/internal/parser/vajson/structure_parser_invalid_test.cpp",
-    "line": "330",
+    "line": "348",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -318586,7 +318684,7 @@
   {
     "name": "UT__Parser__Invalid__Dynamic__ObjectOpenInsteadOfKey",
     "file": "score/json/internal/parser/vajson/structure_parser_invalid_test.cpp",
-    "line": "335",
+    "line": "353",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -318600,7 +318698,7 @@
   {
     "name": "UT__Parser__Invalid__Dynamic__ArrayOpenInsteadOfKey",
     "file": "score/json/internal/parser/vajson/structure_parser_invalid_test.cpp",
-    "line": "340",
+    "line": "358",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -318614,7 +318712,7 @@
   {
     "name": "UT__Parser__Invalid__Dynamic__StringInsteadOfKey",
     "file": "score/json/internal/parser/vajson/structure_parser_invalid_test.cpp",
-    "line": "345",
+    "line": "363",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -318628,7 +318726,7 @@
   {
     "name": "UT__Parser__Invalid__Dynamic__ValueInsteadOfKey",
     "file": "score/json/internal/parser/vajson/structure_parser_invalid_test.cpp",
-    "line": "350",
+    "line": "368",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -318642,7 +318740,7 @@
   {
     "name": "UT__Parser__Invalid__Dynamic__NumberAndString",
     "file": "score/json/internal/parser/vajson/structure_parser_invalid_test.cpp",
-    "line": "355",
+    "line": "373",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -318656,7 +318754,7 @@
   {
     "name": "UT__Parser__Invalid__Dynamic__MissingCommaInObject",
     "file": "score/json/internal/parser/vajson/structure_parser_invalid_test.cpp",
-    "line": "360",
+    "line": "378",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -318670,7 +318768,7 @@
   {
     "name": "UT__Parser__Invalid__Dynamic__MissingCommaInArray",
     "file": "score/json/internal/parser/vajson/structure_parser_invalid_test.cpp",
-    "line": "365",
+    "line": "383",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -318684,7 +318782,7 @@
   {
     "name": "UT__Parser__Invalid__Dynamic__UnquotedKey",
     "file": "score/json/internal/parser/vajson/structure_parser_invalid_test.cpp",
-    "line": "370",
+    "line": "388",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -318698,7 +318796,7 @@
   {
     "name": "UT__Parser__Invalid__Dynamic__CommaAfterClose",
     "file": "score/json/internal/parser/vajson/structure_parser_invalid_test.cpp",
-    "line": "375",
+    "line": "393",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -318712,7 +318810,7 @@
   {
     "name": "UT__Parser__Invalid__Dynamic__ExtraArrayAfterClose",
     "file": "score/json/internal/parser/vajson/structure_parser_invalid_test.cpp",
-    "line": "380",
+    "line": "398",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -318726,7 +318824,7 @@
   {
     "name": "UT__Parser__Invalid__Dynamic__ExtraValueAfterClose",
     "file": "score/json/internal/parser/vajson/structure_parser_invalid_test.cpp",
-    "line": "385",
+    "line": "403",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -318740,7 +318838,7 @@
   {
     "name": "UT__Parser__Invalid__Dynamic__IllegalExpression",
     "file": "score/json/internal/parser/vajson/structure_parser_invalid_test.cpp",
-    "line": "390",
+    "line": "408",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -318754,7 +318852,7 @@
   {
     "name": "UT__Parser__Invalid__Dynamic__IllegalInvocation",
     "file": "score/json/internal/parser/vajson/structure_parser_invalid_test.cpp",
-    "line": "395",
+    "line": "413",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -318768,7 +318866,7 @@
   {
     "name": "UT__Parser__Invalid__Dynamic__IllegalEscape",
     "file": "score/json/internal/parser/vajson/structure_parser_invalid_test.cpp",
-    "line": "400",
+    "line": "418",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -318782,7 +318880,7 @@
   {
     "name": "UT__Parser__Invalid__Dynamic__Naked",
     "file": "score/json/internal/parser/vajson/structure_parser_invalid_test.cpp",
-    "line": "405",
+    "line": "423",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -318796,7 +318894,7 @@
   {
     "name": "UT__Parser__Invalid__Dynamic__IllegalEscapeNumber",
     "file": "score/json/internal/parser/vajson/structure_parser_invalid_test.cpp",
-    "line": "410",
+    "line": "428",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -318810,7 +318908,7 @@
   {
     "name": "UT__Parser__Invalid__Dynamic__MissingColon",
     "file": "score/json/internal/parser/vajson/structure_parser_invalid_test.cpp",
-    "line": "415",
+    "line": "433",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -318824,7 +318922,7 @@
   {
     "name": "UT__Parser__Invalid__Dynamic__DoubleColon",
     "file": "score/json/internal/parser/vajson/structure_parser_invalid_test.cpp",
-    "line": "420",
+    "line": "438",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -318838,7 +318936,7 @@
   {
     "name": "UT__Parser__Invalid__Dynamic__CommaInsteadOfColon",
     "file": "score/json/internal/parser/vajson/structure_parser_invalid_test.cpp",
-    "line": "425",
+    "line": "443",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -318852,7 +318950,7 @@
   {
     "name": "UT__Parser__Invalid__Dynamic__ColonInsteadOfComma",
     "file": "score/json/internal/parser/vajson/structure_parser_invalid_test.cpp",
-    "line": "430",
+    "line": "448",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -318866,7 +318964,7 @@
   {
     "name": "UT__Parser__Invalid__Dynamic__BadValue",
     "file": "score/json/internal/parser/vajson/structure_parser_invalid_test.cpp",
-    "line": "435",
+    "line": "453",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -318880,7 +318978,7 @@
   {
     "name": "UT__Parser__Invalid__Dynamic__SingleQuote",
     "file": "score/json/internal/parser/vajson/structure_parser_invalid_test.cpp",
-    "line": "440",
+    "line": "458",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -318894,7 +318992,7 @@
   {
     "name": "UT__Parser__Invalid__Dynamic__BackslashInString",
     "file": "score/json/internal/parser/vajson/structure_parser_invalid_test.cpp",
-    "line": "445",
+    "line": "463",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -318908,7 +319006,7 @@
   {
     "name": "UT__Parser__Invalid__Dynamic__BackslashLineBreak",
     "file": "score/json/internal/parser/vajson/structure_parser_invalid_test.cpp",
-    "line": "450",
+    "line": "468",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -318922,7 +319020,7 @@
   {
     "name": "UT__Parser__Invalid__Dynamic__CommaInsteadOfClosing",
     "file": "score/json/internal/parser/vajson/structure_parser_invalid_test.cpp",
-    "line": "455",
+    "line": "473",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -318936,7 +319034,7 @@
   {
     "name": "UT__Parser__Invalid__Dynamic__ArrayWithoutComma",
     "file": "score/json/internal/parser/vajson/structure_parser_invalid_test.cpp",
-    "line": "460",
+    "line": "478",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -318950,7 +319048,7 @@
   {
     "name": "UT__Parser__Invalid__Dynamic__TrailingValue",
     "file": "score/json/internal/parser/vajson/structure_parser_invalid_test.cpp",
-    "line": "465",
+    "line": "483",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -318964,7 +319062,7 @@
   {
     "name": "UT__Parser__Invalid__Dynamic__TrailingKey",
     "file": "score/json/internal/parser/vajson/structure_parser_invalid_test.cpp",
-    "line": "470",
+    "line": "488",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -320084,7 +320182,7 @@
   {
     "name": "FilesystemFixture__StatusFindsRegularFile",
     "file": "score/filesystem/details/standard_filesystem_test.cpp",
-    "line": "267",
+    "line": "278",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -320098,7 +320196,7 @@
   {
     "name": "FilesystemFixture__StatusFindsDirectory",
     "file": "score/filesystem/details/standard_filesystem_test.cpp",
-    "line": "272",
+    "line": "283",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -320112,7 +320210,7 @@
   {
     "name": "FilesystemFixture__StatusFindsBlockDevice",
     "file": "score/filesystem/details/standard_filesystem_test.cpp",
-    "line": "277",
+    "line": "288",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -320126,7 +320224,7 @@
   {
     "name": "FilesystemFixture__StatusFindsCharDevice",
     "file": "score/filesystem/details/standard_filesystem_test.cpp",
-    "line": "282",
+    "line": "293",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -320140,7 +320238,7 @@
   {
     "name": "FilesystemFixture__StatusFindsFifo",
     "file": "score/filesystem/details/standard_filesystem_test.cpp",
-    "line": "287",
+    "line": "298",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -320154,7 +320252,7 @@
   {
     "name": "FilesystemFixture__StatusFindsSocket",
     "file": "score/filesystem/details/standard_filesystem_test.cpp",
-    "line": "292",
+    "line": "303",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -320168,7 +320266,7 @@
   {
     "name": "FilesystemFixture__StatusFindsUnkownType",
     "file": "score/filesystem/details/standard_filesystem_test.cpp",
-    "line": "297",
+    "line": "308",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -320182,7 +320280,7 @@
   {
     "name": "FilesystemFixture__NoPermissionsForStat",
     "file": "score/filesystem/details/standard_filesystem_test.cpp",
-    "line": "302",
+    "line": "313",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -320196,7 +320294,7 @@
   {
     "name": "FilesystemFixture__FileNotFound",
     "file": "score/filesystem/details/standard_filesystem_test.cpp",
-    "line": "311",
+    "line": "322",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -320210,7 +320308,7 @@
   {
     "name": "FilesystemFixture__AnyOtherError",
     "file": "score/filesystem/details/standard_filesystem_test.cpp",
-    "line": "322",
+    "line": "333",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -320224,7 +320322,7 @@
   {
     "name": "FilesystemFixture__ExistsWhileFileExists",
     "file": "score/filesystem/details/standard_filesystem_test.cpp",
-    "line": "331",
+    "line": "342",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -320238,7 +320336,7 @@
   {
     "name": "FilesystemFixture__ExistsWithUnkownFileType",
     "file": "score/filesystem/details/standard_filesystem_test.cpp",
-    "line": "341",
+    "line": "352",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -320252,7 +320350,7 @@
   {
     "name": "FilesystemFixture__ExistsWhileFileDoesNotExists",
     "file": "score/filesystem/details/standard_filesystem_test.cpp",
-    "line": "351",
+    "line": "362",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -320266,7 +320364,7 @@
   {
     "name": "FilesystemFixture__ExistsWithOtherError",
     "file": "score/filesystem/details/standard_filesystem_test.cpp",
-    "line": "361",
+    "line": "372",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -320280,7 +320378,7 @@
   {
     "name": "FilesystemFixture__RetrieveLastTime",
     "file": "score/filesystem/details/standard_filesystem_test.cpp",
-    "line": "370",
+    "line": "381",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -320294,7 +320392,7 @@
   {
     "name": "FilesystemFixture__RetrieveLastTimeFailure",
     "file": "score/filesystem/details/standard_filesystem_test.cpp",
-    "line": "380",
+    "line": "391",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -320308,7 +320406,7 @@
   {
     "name": "FilesystemFixture__WeaklyCanonicalForExistedAbsolutePath",
     "file": "score/filesystem/details/standard_filesystem_test.cpp",
-    "line": "389",
+    "line": "400",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -320322,7 +320420,7 @@
   {
     "name": "FilesystemFixture__WeaklyCanonicalForNonExistedAbsolutePath",
     "file": "score/filesystem/details/standard_filesystem_test.cpp",
-    "line": "399",
+    "line": "410",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -320336,7 +320434,7 @@
   {
     "name": "FilesystemFixture__WeaklyCanonicalForPartlyNonExistedAbsolutePath",
     "file": "score/filesystem/details/standard_filesystem_test.cpp",
-    "line": "410",
+    "line": "421",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -320350,7 +320448,7 @@
   {
     "name": "FilesystemFixture__WeaklyCanonicalForRelativePath",
     "file": "score/filesystem/details/standard_filesystem_test.cpp",
-    "line": "422",
+    "line": "433",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -320364,7 +320462,7 @@
   {
     "name": "FilesystemFixture__WeaklyCanonicalForNonExistedRelativePath",
     "file": "score/filesystem/details/standard_filesystem_test.cpp",
-    "line": "433",
+    "line": "444",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -320378,7 +320476,7 @@
   {
     "name": "FilesystemFixture__WeaklyCanonicalForFailedCurrentPath",
     "file": "score/filesystem/details/standard_filesystem_test.cpp",
-    "line": "445",
+    "line": "456",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -320392,7 +320490,7 @@
   {
     "name": "FilesystemFixture__WeaklyCanonicalForEmptyPath",
     "file": "score/filesystem/details/standard_filesystem_test.cpp",
-    "line": "456",
+    "line": "467",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -320406,7 +320504,7 @@
   {
     "name": "FilesystemFixture__GetCurrentPath",
     "file": "score/filesystem/details/standard_filesystem_test.cpp",
-    "line": "464",
+    "line": "475",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -320420,7 +320518,7 @@
   {
     "name": "FilesystemFixture__SetCurrentPath",
     "file": "score/filesystem/details/standard_filesystem_test.cpp",
-    "line": "475",
+    "line": "486",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -320434,7 +320532,7 @@
   {
     "name": "FilesystemFixture__SetCurrentPathFailed",
     "file": "score/filesystem/details/standard_filesystem_test.cpp",
-    "line": "485",
+    "line": "496",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -320448,7 +320546,7 @@
   {
     "name": "FilesystemFixture__CreateDirectory",
     "file": "score/filesystem/details/standard_filesystem_test.cpp",
-    "line": "888",
+    "line": "948",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -320462,7 +320560,7 @@
   {
     "name": "FilesystemFixture__CreateDirectoryThatAlreadyExists",
     "file": "score/filesystem/details/standard_filesystem_test.cpp",
-    "line": "901",
+    "line": "961",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -320476,7 +320574,7 @@
   {
     "name": "FilesystemFixture__CreateDirectoryReturnsSuccessWhenPathAlreadyExistsAndIsADirectory",
     "file": "score/filesystem/details/standard_filesystem_test.cpp",
-    "line": "913",
+    "line": "973",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -320490,7 +320588,7 @@
   {
     "name": "FilesystemFixture__CreateDirectoryReturnsErrorWhenPathAlreadyExistsAndIsNotADirectory",
     "file": "score/filesystem/details/standard_filesystem_test.cpp",
-    "line": "929",
+    "line": "989",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -320504,7 +320602,7 @@
   {
     "name": "FilesystemFixture__CreateDirectoryReturnsErrorWhenMkdirAndStatFails",
     "file": "score/filesystem/details/standard_filesystem_test.cpp",
-    "line": "946",
+    "line": "1006",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -320518,7 +320616,7 @@
   {
     "name": "FilesystemFixture__CreateDirectoryReturnsErrorWhenPathAlreadyExistsAndIsDirectoryFails",
     "file": "score/filesystem/details/standard_filesystem_test.cpp",
-    "line": "962",
+    "line": "1022",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -320532,7 +320630,7 @@
   {
     "name": "FilesystemFixture__CreateDirectoryReturnsErrorWhenPathDoesNotExistAndUnderlyingCreateDirectoryFails",
     "file": "score/filesystem/details/standard_filesystem_test.cpp",
-    "line": "979",
+    "line": "1039",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -320546,7 +320644,7 @@
   {
     "name": "FilesystemFixture__CreateDirectoriesWithAllPathsExistent",
     "file": "score/filesystem/details/standard_filesystem_test.cpp",
-    "line": "993",
+    "line": "1053",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -320560,7 +320658,7 @@
   {
     "name": "FilesystemFixture__CreateDirectoriesWithEmptyPath",
     "file": "score/filesystem/details/standard_filesystem_test.cpp",
-    "line": "1006",
+    "line": "1066",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -320574,7 +320672,7 @@
   {
     "name": "FilesystemFixture__CreateMissingParentDirectoriesAbsolutePath",
     "file": "score/filesystem/details/standard_filesystem_test.cpp",
-    "line": "1016",
+    "line": "1076",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -320588,7 +320686,7 @@
   {
     "name": "FilesystemFixture__CreateMissingParentDirectoriesRelativePath",
     "file": "score/filesystem/details/standard_filesystem_test.cpp",
-    "line": "1031",
+    "line": "1091",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -320602,7 +320700,7 @@
   {
     "name": "FilesystemFixture__CreateParentDirectoriesWhileMkdirFailed",
     "file": "score/filesystem/details/standard_filesystem_test.cpp",
-    "line": "1046",
+    "line": "1106",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -320616,7 +320714,7 @@
   {
     "name": "FilesystemFixture__CreateDirectoriesWithSeparatorAtPathEnd",
     "file": "score/filesystem/details/standard_filesystem_test.cpp",
-    "line": "1060",
+    "line": "1120",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -320630,7 +320728,7 @@
   {
     "name": "FilesystemFixture__IsEmpty_StatusFailed",
     "file": "score/filesystem/details/standard_filesystem_test.cpp",
-    "line": "1712",
+    "line": "1772",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -320644,7 +320742,7 @@
   {
     "name": "FilesystemFixture__IsEmpty_OpendDirFailed",
     "file": "score/filesystem/details/standard_filesystem_test.cpp",
-    "line": "1721",
+    "line": "1781",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -320658,7 +320756,7 @@
   {
     "name": "FilesystemFixture__IsEmpty_NoDirNofile",
     "file": "score/filesystem/details/standard_filesystem_test.cpp",
-    "line": "1733",
+    "line": "1793",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -320672,7 +320770,7 @@
   {
     "name": "FilesystemFixture__AbsoluteForEmptyPath",
     "file": "score/filesystem/details/standard_filesystem_test.cpp",
-    "line": "1817",
+    "line": "1877",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -320686,7 +320784,7 @@
   {
     "name": "FilesystemFixture__AbsoluteForAbsolutePaths",
     "file": "score/filesystem/details/standard_filesystem_test.cpp",
-    "line": "1822",
+    "line": "1882",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -320700,7 +320798,7 @@
   {
     "name": "FilesystemFixture__AbsoluteForRelativePaths",
     "file": "score/filesystem/details/standard_filesystem_test.cpp",
-    "line": "1831",
+    "line": "1891",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -320714,7 +320812,7 @@
   {
     "name": "FilesystemFixture__AbsoluteForError",
     "file": "score/filesystem/details/standard_filesystem_test.cpp",
-    "line": "1843",
+    "line": "1903",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -320728,7 +320826,7 @@
   {
     "name": "FilesystemFixture__CanonicalForFailedGetCurrentPath",
     "file": "score/filesystem/details/standard_filesystem_test.cpp",
-    "line": "1875",
+    "line": "1935",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -320742,7 +320840,7 @@
   {
     "name": "FilesystemCopyFile__ErrorWhileAccessingFrom",
     "file": "score/filesystem/details/standard_filesystem_test.cpp",
-    "line": "498",
+    "line": "509",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -320756,7 +320854,7 @@
   {
     "name": "FilesystemCopyFile__TryingToCopyNotAFile",
     "file": "score/filesystem/details/standard_filesystem_test.cpp",
-    "line": "511",
+    "line": "522",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -320770,7 +320868,7 @@
   {
     "name": "FilesystemCopyFile__ErrorWhileAccessingTo",
     "file": "score/filesystem/details/standard_filesystem_test.cpp",
-    "line": "524",
+    "line": "535",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -320784,7 +320882,7 @@
   {
     "name": "FilesystemCopyFile__ModesOfSourceFileIsCopiedtoDestination",
     "file": "score/filesystem/details/standard_filesystem_test.cpp",
-    "line": "538",
+    "line": "549",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -320798,7 +320896,7 @@
   {
     "name": "FilesystemCopyFile__FileContentsAreEqual",
     "file": "score/filesystem/details/standard_filesystem_test.cpp",
-    "line": "552",
+    "line": "563",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -320812,7 +320910,7 @@
   {
     "name": "FilesystemCopyFile__CopyEmptyFile",
     "file": "score/filesystem/details/standard_filesystem_test.cpp",
-    "line": "566",
+    "line": "577",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -320826,7 +320924,7 @@
   {
     "name": "FilesystemCopyFile__FullDisk",
     "file": "score/filesystem/details/standard_filesystem_test.cpp",
-    "line": "580",
+    "line": "591",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -320840,7 +320938,7 @@
   {
     "name": "FilesystemCopyFile__SettingPermissionsFails",
     "file": "score/filesystem/details/standard_filesystem_test.cpp",
-    "line": "607",
+    "line": "618",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -320854,7 +320952,7 @@
   {
     "name": "FilesystemCopyFile__OpeningInputStreamFails",
     "file": "score/filesystem/details/standard_filesystem_test.cpp",
-    "line": "628",
+    "line": "639",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -320868,7 +320966,7 @@
   {
     "name": "FilesystemCopyFile__OpeningOutputStreamFails",
     "file": "score/filesystem/details/standard_filesystem_test.cpp",
-    "line": "644",
+    "line": "655",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -320882,7 +320980,7 @@
   {
     "name": "FilesystemCopyFile__DestExistsAndNotFile",
     "file": "score/filesystem/details/standard_filesystem_test.cpp",
-    "line": "661",
+    "line": "672",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -320896,7 +320994,7 @@
   {
     "name": "FilesystemCopyFile__DestExistsAndNoOptions",
     "file": "score/filesystem/details/standard_filesystem_test.cpp",
-    "line": "676",
+    "line": "687",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -320910,7 +321008,7 @@
   {
     "name": "FilesystemCopyFile__DestExistsAndSkipsExisting",
     "file": "score/filesystem/details/standard_filesystem_test.cpp",
-    "line": "691",
+    "line": "702",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -320924,7 +321022,7 @@
   {
     "name": "FilesystemCopyFile__DestExistsAndOverwrite",
     "file": "score/filesystem/details/standard_filesystem_test.cpp",
-    "line": "705",
+    "line": "716",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -320938,7 +321036,7 @@
   {
     "name": "FilesystemCopyFile__DestExistsAndUpdateExisting",
     "file": "score/filesystem/details/standard_filesystem_test.cpp",
-    "line": "721",
+    "line": "732",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -320952,7 +321050,7 @@
   {
     "name": "FilesystemCopyFile__UpdateExistingFailedOnFirstLastWriteTime",
     "file": "score/filesystem/details/standard_filesystem_test.cpp",
-    "line": "738",
+    "line": "749",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -320966,7 +321064,7 @@
   {
     "name": "FilesystemCopyFile__UpdateExistingFailedOnSecondLastWriteTime",
     "file": "score/filesystem/details/standard_filesystem_test.cpp",
-    "line": "761",
+    "line": "772",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -320980,7 +321078,7 @@
   {
     "name": "FilesystemCopyFile__DestExistsAndUpdateExistingNotNecessary",
     "file": "score/filesystem/details/standard_filesystem_test.cpp",
-    "line": "782",
+    "line": "793",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -320994,7 +321092,7 @@
   {
     "name": "FilesystemCopyFile__SimulateRaceConditionOnSourceFile",
     "file": "score/filesystem/details/standard_filesystem_test.cpp",
-    "line": "797",
+    "line": "808",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -321006,9 +321104,37 @@
     "FullyVerifies": null
   },
   {
+    "name": "FilesystemCopyFile__SourceReplacedByFifoAfterStatusCheckIsRejectedWithoutBlocking",
+    "file": "score/filesystem/details/standard_filesystem_test.cpp",
+    "line": "835",
+    "result": "passed",
+    "repo_name": "local_repo",
+    "hash": "",
+    "url": "",
+    "TestType": "requirements-based",
+    "DerivationTechnique": "error-guessing",
+    "result_text": "",
+    "PartiallyVerifies": "comp_req__filesystem__api_abstraction",
+    "FullyVerifies": null
+  },
+  {
+    "name": "FilesystemCopyFile__DestinationReplacedByFifoAfterStatusCheckIsRejectedWithoutBlocking",
+    "file": "score/filesystem/details/standard_filesystem_test.cpp",
+    "line": "859",
+    "result": "passed",
+    "repo_name": "local_repo",
+    "hash": "",
+    "url": "",
+    "TestType": "requirements-based",
+    "DerivationTechnique": "error-guessing",
+    "result_text": "",
+    "PartiallyVerifies": "comp_req__filesystem__api_abstraction",
+    "FullyVerifies": null
+  },
+  {
     "name": "FilesystemCopyFile__BadSrcFile",
     "file": "score/filesystem/details/standard_filesystem_test.cpp",
-    "line": "824",
+    "line": "884",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -321022,7 +321148,7 @@
   {
     "name": "FilesystemCopyFile__BadDestFile",
     "file": "score/filesystem/details/standard_filesystem_test.cpp",
-    "line": "849",
+    "line": "909",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -321036,7 +321162,7 @@
   {
     "name": "FilesystemCopyFile__ErrorForInappropriateOption",
     "file": "score/filesystem/details/standard_filesystem_test.cpp",
-    "line": "874",
+    "line": "934",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -321050,7 +321176,7 @@
   {
     "name": "TempDirectory__CanGetTmpDirDirectory",
     "file": "score/filesystem/details/standard_filesystem_test.cpp",
-    "line": "1077",
+    "line": "1137",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -321064,7 +321190,7 @@
   {
     "name": "TempDirectory__CanGetTmpDirectory",
     "file": "score/filesystem/details/standard_filesystem_test.cpp",
-    "line": "1085",
+    "line": "1145",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -321078,7 +321204,7 @@
   {
     "name": "TempDirectory__CanGetTempDirectory",
     "file": "score/filesystem/details/standard_filesystem_test.cpp",
-    "line": "1094",
+    "line": "1154",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -321092,7 +321218,7 @@
   {
     "name": "TempDirectory__CanGetTempDirDirectory",
     "file": "score/filesystem/details/standard_filesystem_test.cpp",
-    "line": "1104",
+    "line": "1164",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -321106,7 +321232,7 @@
   {
     "name": "TempDirectory__NoEnvExists",
     "file": "score/filesystem/details/standard_filesystem_test.cpp",
-    "line": "1115",
+    "line": "1175",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -321120,7 +321246,7 @@
   {
     "name": "Permissions__DoesntTryToChangeSamePermissions",
     "file": "score/filesystem/details/standard_filesystem_test.cpp",
-    "line": "1128",
+    "line": "1188",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -321134,7 +321260,7 @@
   {
     "name": "Permissions__OverWritesAnyPreviousPermissions",
     "file": "score/filesystem/details/standard_filesystem_test.cpp",
-    "line": "1137",
+    "line": "1197",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -321148,7 +321274,7 @@
   {
     "name": "Permissions__AddsPermissions",
     "file": "score/filesystem/details/standard_filesystem_test.cpp",
-    "line": "1146",
+    "line": "1206",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -321162,7 +321288,7 @@
   {
     "name": "Permissions__RemovePermissions",
     "file": "score/filesystem/details/standard_filesystem_test.cpp",
-    "line": "1156",
+    "line": "1216",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -321176,7 +321302,7 @@
   {
     "name": "Permissions__ReceiveStatNotPossible",
     "file": "score/filesystem/details/standard_filesystem_test.cpp",
-    "line": "1166",
+    "line": "1226",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -321190,7 +321316,7 @@
   {
     "name": "Permissions__UnkownOption",
     "file": "score/filesystem/details/standard_filesystem_test.cpp",
-    "line": "1176",
+    "line": "1236",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -321204,7 +321330,7 @@
   {
     "name": "Permissions__FchmodatReturnsError",
     "file": "score/filesystem/details/standard_filesystem_test.cpp",
-    "line": "1185",
+    "line": "1245",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -321218,7 +321344,7 @@
   {
     "name": "Permissions__FollowSymlink",
     "file": "score/filesystem/details/standard_filesystem_test.cpp",
-    "line": "1196",
+    "line": "1256",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -321232,7 +321358,7 @@
   {
     "name": "Permissions__NoFollowSymlink",
     "file": "score/filesystem/details/standard_filesystem_test.cpp",
-    "line": "1209",
+    "line": "1269",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -321246,7 +321372,7 @@
   {
     "name": "Remove__CanRemoveSingleFile",
     "file": "score/filesystem/details/standard_filesystem_test.cpp",
-    "line": "1251",
+    "line": "1311",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -321260,7 +321386,7 @@
   {
     "name": "Remove__CanNotRemoveSingleFile",
     "file": "score/filesystem/details/standard_filesystem_test.cpp",
-    "line": "1260",
+    "line": "1320",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -321274,7 +321400,7 @@
   {
     "name": "RemoveAll__CanRemoveSingleFile",
     "file": "score/filesystem/details/standard_filesystem_test.cpp",
-    "line": "1272",
+    "line": "1332",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -321288,7 +321414,7 @@
   {
     "name": "RemoveAll__ErrorDuringRemovingSingleFile",
     "file": "score/filesystem/details/standard_filesystem_test.cpp",
-    "line": "1283",
+    "line": "1343",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -321302,7 +321428,7 @@
   {
     "name": "RemoveAll__CanRemoveFolderRecursive",
     "file": "score/filesystem/details/standard_filesystem_test.cpp",
-    "line": "1294",
+    "line": "1354",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -321316,7 +321442,7 @@
   {
     "name": "RemoveAll__FailsOnDirectoryRemoval",
     "file": "score/filesystem/details/standard_filesystem_test.cpp",
-    "line": "1325",
+    "line": "1385",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -321330,7 +321456,7 @@
   {
     "name": "RemoveAll__FailsOnFileRemoval",
     "file": "score/filesystem/details/standard_filesystem_test.cpp",
-    "line": "1355",
+    "line": "1415",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -321344,7 +321470,7 @@
   {
     "name": "RemoveAll__StatFailsOnFile",
     "file": "score/filesystem/details/standard_filesystem_test.cpp",
-    "line": "1385",
+    "line": "1445",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -321358,7 +321484,7 @@
   {
     "name": "RemoveAll__LStatFailsOnFile",
     "file": "score/filesystem/details/standard_filesystem_test.cpp",
-    "line": "1403",
+    "line": "1463",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -321372,7 +321498,7 @@
   {
     "name": "RemoveAll__NonExisted",
     "file": "score/filesystem/details/standard_filesystem_test.cpp",
-    "line": "1421",
+    "line": "1481",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -321386,7 +321512,7 @@
   {
     "name": "RemoveAll__FailedStatOnBaseFolder",
     "file": "score/filesystem/details/standard_filesystem_test.cpp",
-    "line": "1433",
+    "line": "1493",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -321400,7 +321526,7 @@
   {
     "name": "RemoveAllWithoutMocks__SymlinksAreNotFollowed",
     "file": "score/filesystem/details/standard_filesystem_test.cpp",
-    "line": "1444",
+    "line": "1504",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -321414,7 +321540,7 @@
   {
     "name": "HardLink__Simple",
     "file": "score/filesystem/details/standard_filesystem_test.cpp",
-    "line": "1490",
+    "line": "1550",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -321428,7 +321554,7 @@
   {
     "name": "HardLink__SameData",
     "file": "score/filesystem/details/standard_filesystem_test.cpp",
-    "line": "1504",
+    "line": "1564",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -321442,7 +321568,7 @@
   {
     "name": "HardLink__ErrorFromDoesntExist",
     "file": "score/filesystem/details/standard_filesystem_test.cpp",
-    "line": "1523",
+    "line": "1583",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -321456,7 +321582,7 @@
   {
     "name": "HardLink__ErrorFromIsDirectory",
     "file": "score/filesystem/details/standard_filesystem_test.cpp",
-    "line": "1532",
+    "line": "1592",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -321470,7 +321596,7 @@
   {
     "name": "HardLink__ErrorToIsAlreadyExist",
     "file": "score/filesystem/details/standard_filesystem_test.cpp",
-    "line": "1541",
+    "line": "1601",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -321484,7 +321610,7 @@
   {
     "name": "HardLink__Count",
     "file": "score/filesystem/details/standard_filesystem_test.cpp",
-    "line": "1558",
+    "line": "1618",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -321498,7 +321624,7 @@
   {
     "name": "HardLink__ErrorCount",
     "file": "score/filesystem/details/standard_filesystem_test.cpp",
-    "line": "1572",
+    "line": "1632",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -321512,7 +321638,7 @@
   {
     "name": "IsRegularFileFixture__RegularFile",
     "file": "score/filesystem/details/standard_filesystem_test.cpp",
-    "line": "1584",
+    "line": "1644",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -321526,7 +321652,7 @@
   {
     "name": "IsRegularFileFixture__Directory",
     "file": "score/filesystem/details/standard_filesystem_test.cpp",
-    "line": "1594",
+    "line": "1654",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -321540,7 +321666,7 @@
   {
     "name": "IsRegularFileFixture__NonExisted",
     "file": "score/filesystem/details/standard_filesystem_test.cpp",
-    "line": "1604",
+    "line": "1664",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -321554,7 +321680,7 @@
   {
     "name": "IsRegularFileFixture__StatusFailed",
     "file": "score/filesystem/details/standard_filesystem_test.cpp",
-    "line": "1614",
+    "line": "1674",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -321568,7 +321694,7 @@
   {
     "name": "IsDirectoryFixture__Directory",
     "file": "score/filesystem/details/standard_filesystem_test.cpp",
-    "line": "1625",
+    "line": "1685",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -321582,7 +321708,7 @@
   {
     "name": "IsDirectoryFixture__RegularFile",
     "file": "score/filesystem/details/standard_filesystem_test.cpp",
-    "line": "1635",
+    "line": "1695",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -321596,7 +321722,7 @@
   {
     "name": "IsDirectoryFixture__NonExisted",
     "file": "score/filesystem/details/standard_filesystem_test.cpp",
-    "line": "1645",
+    "line": "1705",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -321610,7 +321736,7 @@
   {
     "name": "IsDirectoryFixture__StatusFailed",
     "file": "score/filesystem/details/standard_filesystem_test.cpp",
-    "line": "1655",
+    "line": "1715",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -321624,7 +321750,7 @@
   {
     "name": "FilesystemFixtureWithoutMocks__IsEmpty_EmptyDirectory",
     "file": "score/filesystem/details/standard_filesystem_test.cpp",
-    "line": "1664",
+    "line": "1724",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -321638,7 +321764,7 @@
   {
     "name": "FilesystemFixtureWithoutMocks__IsEmpty_EmptyRegularFile",
     "file": "score/filesystem/details/standard_filesystem_test.cpp",
-    "line": "1674",
+    "line": "1734",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -321652,7 +321778,7 @@
   {
     "name": "FilesystemFixtureWithoutMocks__IsEmpty_NonEmptyDirectory",
     "file": "score/filesystem/details/standard_filesystem_test.cpp",
-    "line": "1684",
+    "line": "1744",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -321666,7 +321792,7 @@
   {
     "name": "FilesystemFixtureWithoutMocks__IsEmpty_NonEmptyRegularFile",
     "file": "score/filesystem/details/standard_filesystem_test.cpp",
-    "line": "1695",
+    "line": "1755",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -321680,7 +321806,7 @@
   {
     "name": "FilesystemFixtureWithoutMocks__IsEmpty_NonExisted",
     "file": "score/filesystem/details/standard_filesystem_test.cpp",
-    "line": "1705",
+    "line": "1765",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -321694,7 +321820,7 @@
   {
     "name": "FilesystemFixtureWithoutMocks__Check_Upd_FileSystem_ClearDirContent_Steps",
     "file": "score/filesystem/details/standard_filesystem_test.cpp",
-    "line": "1785",
+    "line": "1845",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -321708,7 +321834,7 @@
   {
     "name": "FilesystemFixtureWithoutMocks__CanonicalForEmptyPath",
     "file": "score/filesystem/details/standard_filesystem_test.cpp",
-    "line": "1853",
+    "line": "1913",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -321722,7 +321848,7 @@
   {
     "name": "FilesystemFixtureWithoutMocks__CanonicalForRelativePath",
     "file": "score/filesystem/details/standard_filesystem_test.cpp",
-    "line": "1858",
+    "line": "1918",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -321736,7 +321862,7 @@
   {
     "name": "FilesystemFixtureWithoutMocks__CanonicalForNonexistedPath",
     "file": "score/filesystem/details/standard_filesystem_test.cpp",
-    "line": "1870",
+    "line": "1930",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -321750,7 +321876,7 @@
   {
     "name": "FilesystemFixtureWithoutMocks__CanonicalForFileSymlink",
     "file": "score/filesystem/details/standard_filesystem_test.cpp",
-    "line": "1883",
+    "line": "1943",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -321764,7 +321890,7 @@
   {
     "name": "FilesystemFixtureWithoutMocks__CanonicalForFolderSymlink",
     "file": "score/filesystem/details/standard_filesystem_test.cpp",
-    "line": "1892",
+    "line": "1952",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -321778,7 +321904,7 @@
   {
     "name": "IsSymlinkFixture__Symlink",
     "file": "score/filesystem/details/standard_filesystem_test.cpp",
-    "line": "1746",
+    "line": "1806",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -321792,7 +321918,7 @@
   {
     "name": "IsSymlinkFixture__RegularFile",
     "file": "score/filesystem/details/standard_filesystem_test.cpp",
-    "line": "1756",
+    "line": "1816",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -321806,7 +321932,7 @@
   {
     "name": "IsSymlinkFixture__StatusFailed",
     "file": "score/filesystem/details/standard_filesystem_test.cpp",
-    "line": "1766",
+    "line": "1826",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -321820,7 +321946,7 @@
   {
     "name": "IsSymlinkFixture__DoesntExist",
     "file": "score/filesystem/details/standard_filesystem_test.cpp",
-    "line": "1775",
+    "line": "1835",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -321834,7 +321960,7 @@
   {
     "name": "CreateSymlink__RelativePath",
     "file": "score/filesystem/details/standard_filesystem_test.cpp",
-    "line": "1904",
+    "line": "1964",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -321848,7 +321974,7 @@
   {
     "name": "CreateSymlink__AbsolutePath",
     "file": "score/filesystem/details/standard_filesystem_test.cpp",
-    "line": "1915",
+    "line": "1975",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -321862,7 +321988,7 @@
   {
     "name": "CreateSymlink__SameFilename",
     "file": "score/filesystem/details/standard_filesystem_test.cpp",
-    "line": "1925",
+    "line": "1985",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -321876,7 +322002,7 @@
   {
     "name": "CreateSymlink__NoErrorFromNonExisted",
     "file": "score/filesystem/details/standard_filesystem_test.cpp",
-    "line": "1940",
+    "line": "2000",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -321890,7 +322016,7 @@
   {
     "name": "CreateSymlink__SymlinkToDirectory",
     "file": "score/filesystem/details/standard_filesystem_test.cpp",
-    "line": "1950",
+    "line": "2010",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -321904,7 +322030,7 @@
   {
     "name": "CreateSymlink__ErrorIfAlreadyExist",
     "file": "score/filesystem/details/standard_filesystem_test.cpp",
-    "line": "1960",
+    "line": "2020",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -321918,7 +322044,7 @@
   {
     "name": "SymlinkStatusFixture__TargetExists",
     "file": "score/filesystem/details/standard_filesystem_test.cpp",
-    "line": "1972",
+    "line": "2032",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -321932,7 +322058,7 @@
   {
     "name": "SymlinkStatusFixture__TargetDoesntExist",
     "file": "score/filesystem/details/standard_filesystem_test.cpp",
-    "line": "1984",
+    "line": "2044",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -321946,7 +322072,7 @@
   {
     "name": "SymlinkStatusFixture__SymlinkExists",
     "file": "score/filesystem/details/standard_filesystem_test.cpp",
-    "line": "2014",
+    "line": "2074",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -321960,7 +322086,7 @@
   {
     "name": "SymlinkStatusFixture__SymlinkDoesNotExist",
     "file": "score/filesystem/details/standard_filesystem_test.cpp",
-    "line": "2025",
+    "line": "2085",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -321974,7 +322100,7 @@
   {
     "name": "SymlinkStatusFixture__BufferTooSmall",
     "file": "score/filesystem/details/standard_filesystem_test.cpp",
-    "line": "2034",
+    "line": "2094",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -321988,7 +322114,7 @@
   {
     "name": "StatusFixture__TargetDoesntExist",
     "file": "score/filesystem/details/standard_filesystem_test.cpp",
-    "line": "1999",
+    "line": "2059",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -322002,7 +322128,7 @@
   {
     "name": "CreateDirectorySymlinkFixture__SymlinkToFolder",
     "file": "score/filesystem/details/standard_filesystem_test.cpp",
-    "line": "2049",
+    "line": "2109",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -322016,7 +322142,7 @@
   {
     "name": "CreateDirectorySymlinkFixture__EmptySymlink",
     "file": "score/filesystem/details/standard_filesystem_test.cpp",
-    "line": "2058",
+    "line": "2118",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -322030,7 +322156,7 @@
   {
     "name": "CopySymlinkFixture__NoError",
     "file": "score/filesystem/details/standard_filesystem_test.cpp",
-    "line": "2069",
+    "line": "2129",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -322044,7 +322170,7 @@
   {
     "name": "CopySymlinkFixture__ErrorDueToNonExisted",
     "file": "score/filesystem/details/standard_filesystem_test.cpp",
-    "line": "2082",
+    "line": "2142",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -322058,7 +322184,7 @@
   {
     "name": "CopySymlinkFixture__ErrorDueToAlreadyExisted",
     "file": "score/filesystem/details/standard_filesystem_test.cpp",
-    "line": "2089",
+    "line": "2149",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -322072,7 +322198,7 @@
   {
     "name": "WeaklyCanonicalFixture__CanResolveSymbolicLink",
     "file": "score/filesystem/details/standard_filesystem_test.cpp",
-    "line": "2103",
+    "line": "2163",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -322100,7 +322226,7 @@
   {
     "name": "FilesystemErrorTest__UserMessage",
     "file": "score/filesystem/error_test.cpp",
-    "line": "72",
+    "line": "73",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -322114,7 +322240,7 @@
   {
     "name": "FilesystemErrorTest__UnknownErrorCode",
     "file": "score/filesystem/error_test.cpp",
-    "line": "79",
+    "line": "80",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -326006,7 +326132,7 @@
   {
     "name": "FileFactoryTestExtra__CreateFileStreamUnopenedFile",
     "file": "score/filesystem/filestream/file_factory_test_extra.cpp",
-    "line": "80",
+    "line": "81",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -326020,7 +326146,7 @@
   {
     "name": "FileFactoryTestExtra__AtomicUpdateCleansUpWhenCreateFileStreamFails",
     "file": "score/filesystem/filestream/file_factory_test_extra.cpp",
-    "line": "95",
+    "line": "96",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -326032,9 +326158,23 @@
     "FullyVerifies": null
   },
   {
+    "name": "FileFactoryTestExtra__OpenRegularFileClosesFileWhenCreateFileStreamFails",
+    "file": "score/filesystem/filestream/file_factory_test_extra.cpp",
+    "line": "124",
+    "result": "passed",
+    "repo_name": "local_repo",
+    "hash": "",
+    "url": "",
+    "TestType": "fault-injection",
+    "DerivationTechnique": "error-guessing",
+    "result_text": "",
+    "PartiallyVerifies": "comp_req__filesystem__regular_file_open",
+    "FullyVerifies": null
+  },
+  {
     "name": "FileFactoryFakeTest__CanOpenStringStream",
     "file": "score/filesystem/filestream/file_factory_fake_test.cpp",
-    "line": "26",
+    "line": "28",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -326048,7 +326188,7 @@
   {
     "name": "FileFactoryFakeTest__FailedToOpenStringStream",
     "file": "score/filesystem/filestream/file_factory_fake_test.cpp",
-    "line": "42",
+    "line": "44",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -326062,7 +326202,7 @@
   {
     "name": "FileFactoryFakeTest__AtomicUpdateOfFailedStreamKeepsContent",
     "file": "score/filesystem/filestream/file_factory_fake_test.cpp",
-    "line": "53",
+    "line": "55",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -326076,7 +326216,35 @@
   {
     "name": "FileFactoryFakeTest__AtomicUpdateKeepsContentOfStreamFailingAfterClose",
     "file": "score/filesystem/filestream/file_factory_fake_test.cpp",
-    "line": "75",
+    "line": "77",
+    "result": "passed",
+    "repo_name": "local_repo",
+    "hash": "",
+    "url": "",
+    "TestType": "interface-test",
+    "DerivationTechnique": "error-guessing",
+    "result_text": "",
+    "PartiallyVerifies": "comp_req__filesystem__mock_fake",
+    "FullyVerifies": null
+  },
+  {
+    "name": "FileFactoryFakeTest__OpenRegularFileReadsStringStream",
+    "file": "score/filesystem/filestream/file_factory_fake_test.cpp",
+    "line": "99",
+    "result": "passed",
+    "repo_name": "local_repo",
+    "hash": "",
+    "url": "",
+    "TestType": "interface-test",
+    "DerivationTechnique": "requirements-analysis",
+    "result_text": "",
+    "PartiallyVerifies": "comp_req__filesystem__mock_fake",
+    "FullyVerifies": null
+  },
+  {
+    "name": "FileFactoryFakeTest__OpenRegularFileFailsToOpenStringStream",
+    "file": "score/filesystem/filestream/file_factory_fake_test.cpp",
+    "line": "118",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -326090,7 +326258,7 @@
   {
     "name": "FileFactoryTest__OpensFile",
     "file": "score/filesystem/filestream/file_factory_test.cpp",
-    "line": "95",
+    "line": "97",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -326104,7 +326272,7 @@
   {
     "name": "FileFactoryTest__OpensFileForAppending",
     "file": "score/filesystem/filestream/file_factory_test.cpp",
-    "line": "106",
+    "line": "108",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -326118,7 +326286,7 @@
   {
     "name": "FileFactoryTest__OpensNonExistingFile",
     "file": "score/filesystem/filestream/file_factory_test.cpp",
-    "line": "117",
+    "line": "119",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -326132,7 +326300,7 @@
   {
     "name": "FileFactoryTest__OpenForAtomicUpdate",
     "file": "score/filesystem/filestream/file_factory_test.cpp",
-    "line": "125",
+    "line": "127",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -326146,7 +326314,7 @@
   {
     "name": "FileFactoryTest__AtomicUpdateInvalidMode",
     "file": "score/filesystem/filestream/file_factory_test.cpp",
-    "line": "153",
+    "line": "155",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -326160,7 +326328,7 @@
   {
     "name": "FileFactoryTest__OldContentVisibleBeforeAtomicObjectGetsDeleted",
     "file": "score/filesystem/filestream/file_factory_test.cpp",
-    "line": "163",
+    "line": "165",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -326174,7 +326342,7 @@
   {
     "name": "FileFactoryTest__ErrorOnFailingAtomicUpdate",
     "file": "score/filesystem/filestream/file_factory_test.cpp",
-    "line": "284",
+    "line": "286",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -326188,7 +326356,7 @@
   {
     "name": "FileFactoryTest__AtomicUpdateWithEmptyPath",
     "file": "score/filesystem/filestream/file_factory_test.cpp",
-    "line": "299",
+    "line": "301",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -326200,9 +326368,93 @@
     "FullyVerifies": null
   },
   {
+    "name": "FileFactoryTest__OpenRegularFileReadsRegularFile",
+    "file": "score/filesystem/filestream/file_factory_test.cpp",
+    "line": "493",
+    "result": "passed",
+    "repo_name": "local_repo",
+    "hash": "",
+    "url": "",
+    "TestType": "requirements-based",
+    "DerivationTechnique": "requirements-analysis",
+    "result_text": "",
+    "PartiallyVerifies": "comp_req__filesystem__regular_file_open",
+    "FullyVerifies": null
+  },
+  {
+    "name": "FileFactoryTest__OpenRegularFileCreatesAndWritesRegularFile",
+    "file": "score/filesystem/filestream/file_factory_test.cpp",
+    "line": "509",
+    "result": "passed",
+    "repo_name": "local_repo",
+    "hash": "",
+    "url": "",
+    "TestType": "requirements-based",
+    "DerivationTechnique": "requirements-analysis",
+    "result_text": "",
+    "PartiallyVerifies": "comp_req__filesystem__regular_file_open",
+    "FullyVerifies": null
+  },
+  {
+    "name": "FileFactoryTest__OpenRegularFileRejectsFifoForReadingWithoutBlocking",
+    "file": "score/filesystem/filestream/file_factory_test.cpp",
+    "line": "529",
+    "result": "passed",
+    "repo_name": "local_repo",
+    "hash": "",
+    "url": "",
+    "TestType": "requirements-based",
+    "DerivationTechnique": "equivalence-classes",
+    "result_text": "",
+    "PartiallyVerifies": "comp_req__filesystem__regular_file_open",
+    "FullyVerifies": null
+  },
+  {
+    "name": "FileFactoryTest__OpenRegularFileRejectsFifoForWritingWithoutBlocking",
+    "file": "score/filesystem/filestream/file_factory_test.cpp",
+    "line": "546",
+    "result": "passed",
+    "repo_name": "local_repo",
+    "hash": "",
+    "url": "",
+    "TestType": "requirements-based",
+    "DerivationTechnique": "equivalence-classes",
+    "result_text": "",
+    "PartiallyVerifies": "comp_req__filesystem__regular_file_open",
+    "FullyVerifies": null
+  },
+  {
+    "name": "FileFactoryTest__OpenRegularFileRejectsDirectory",
+    "file": "score/filesystem/filestream/file_factory_test.cpp",
+    "line": "563",
+    "result": "passed",
+    "repo_name": "local_repo",
+    "hash": "",
+    "url": "",
+    "TestType": "requirements-based",
+    "DerivationTechnique": "equivalence-classes",
+    "result_text": "",
+    "PartiallyVerifies": "comp_req__filesystem__regular_file_open",
+    "FullyVerifies": null
+  },
+  {
+    "name": "FileFactoryTest__OpenRegularFileFailsForMissingFile",
+    "file": "score/filesystem/filestream/file_factory_test.cpp",
+    "line": "576",
+    "result": "passed",
+    "repo_name": "local_repo",
+    "hash": "",
+    "url": "",
+    "TestType": "requirements-based",
+    "DerivationTechnique": "error-guessing",
+    "result_text": "",
+    "PartiallyVerifies": "comp_req__filesystem__regular_file_open",
+    "FullyVerifies": null
+  },
+  {
     "name": "FileFactoryFailedAtomicUpdateTest__CloseKeepsTargetUnchanged",
     "file": "score/filesystem/filestream/file_factory_test.cpp",
-    "line": "242",
+    "line": "244",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -326216,7 +326468,7 @@
   {
     "name": "FileFactoryFailedAtomicUpdateTest__DestructionKeepsTargetUnchanged",
     "file": "score/filesystem/filestream/file_factory_test.cpp",
-    "line": "264",
+    "line": "266",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -326230,7 +326482,7 @@
   {
     "name": "FileFactoryTestWithFcntlMock__OpenFileHandleFailedOnOpen",
     "file": "score/filesystem/filestream/file_factory_test.cpp",
-    "line": "312",
+    "line": "314",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -326244,7 +326496,7 @@
   {
     "name": "FileFactoryTestWithFcntlMock__OpenFileHandleFailedOnOpen_AppendMode",
     "file": "score/filesystem/filestream/file_factory_test.cpp",
-    "line": "328",
+    "line": "330",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -326258,7 +326510,7 @@
   {
     "name": "FileFactoryTestWithFcntlMock__AtomicUpdateFileHandleFailedOnOpen",
     "file": "score/filesystem/filestream/file_factory_test.cpp",
-    "line": "344",
+    "line": "346",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -326272,7 +326524,7 @@
   {
     "name": "FileFactoryTestWithStatMock__AtomicUpdateFileHandleFailedOnStat",
     "file": "score/filesystem/filestream/file_factory_test.cpp",
-    "line": "356",
+    "line": "358",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -326286,7 +326538,7 @@
   {
     "name": "FileFactoryTestWithStatMock__OpenForAtomicUpdateWithOwnershipChange",
     "file": "score/filesystem/filestream/file_factory_test.cpp",
-    "line": "367",
+    "line": "369",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -326300,7 +326552,7 @@
   {
     "name": "FileFactoryTestWithStatMock__AtomicUpdateFileHandleFailedOnChown",
     "file": "score/filesystem/filestream/file_factory_test.cpp",
-    "line": "392",
+    "line": "394",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -326314,7 +326566,7 @@
   {
     "name": "FileFactoryTestWithStatMock__AtomicUpdateFailsWhenWriteAccessDenied",
     "file": "score/filesystem/filestream/file_factory_test.cpp",
-    "line": "413",
+    "line": "415",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -326328,7 +326580,7 @@
   {
     "name": "FileFactoryTestWithStatMock__AtomicUpdateSucceedsWhenWriteAccessGranted",
     "file": "score/filesystem/filestream/file_factory_test.cpp",
-    "line": "435",
+    "line": "437",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -326342,7 +326594,7 @@
   {
     "name": "FileFactoryTestWithStatMock__AtomicUpdateFailsOnNonRegularFile",
     "file": "score/filesystem/filestream/file_factory_test.cpp",
-    "line": "456",
+    "line": "458",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -326354,9 +326606,23 @@
     "FullyVerifies": null
   },
   {
+    "name": "FileFactoryTestWithStatMock__OpenRegularFileClosesFileWhenStatusIsUnavailable",
+    "file": "score/filesystem/filestream/file_factory_test.cpp",
+    "line": "589",
+    "result": "passed",
+    "repo_name": "local_repo",
+    "hash": "",
+    "url": "",
+    "TestType": "fault-injection",
+    "DerivationTechnique": "error-guessing",
+    "result_text": "",
+    "PartiallyVerifies": "comp_req__filesystem__regular_file_open",
+    "FullyVerifies": null
+  },
+  {
     "name": "FileFactoryHelpersTest__ComposeTempFilenameUsesAllParameters",
     "file": "score/filesystem/filestream/file_factory_test.cpp",
-    "line": "475",
+    "line": "477",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -326365,6 +326631,48 @@
     "DerivationTechnique": null,
     "result_text": "",
     "PartiallyVerifies": null,
+    "FullyVerifies": null
+  },
+  {
+    "name": "OpenRegularFileWithFcntlMock__RestoresBlockingIo",
+    "file": "score/filesystem/filestream/file_factory_test.cpp",
+    "line": "629",
+    "result": "passed",
+    "repo_name": "local_repo",
+    "hash": "",
+    "url": "",
+    "TestType": "interface-test",
+    "DerivationTechnique": "design-analysis",
+    "result_text": "",
+    "PartiallyVerifies": "comp_req__filesystem__regular_file_open",
+    "FullyVerifies": null
+  },
+  {
+    "name": "OpenRegularFileWithFcntlMock__FailsWhenStatusFlagsCannotBeRead",
+    "file": "score/filesystem/filestream/file_factory_test.cpp",
+    "line": "646",
+    "result": "passed",
+    "repo_name": "local_repo",
+    "hash": "",
+    "url": "",
+    "TestType": "fault-injection",
+    "DerivationTechnique": "error-guessing",
+    "result_text": "",
+    "PartiallyVerifies": "comp_req__filesystem__regular_file_open",
+    "FullyVerifies": null
+  },
+  {
+    "name": "OpenRegularFileWithFcntlMock__FailsWhenBlockingIoCannotBeRestored",
+    "file": "score/filesystem/filestream/file_factory_test.cpp",
+    "line": "661",
+    "result": "passed",
+    "repo_name": "local_repo",
+    "hash": "",
+    "url": "",
+    "TestType": "fault-injection",
+    "DerivationTechnique": "error-guessing",
+    "result_text": "",
+    "PartiallyVerifies": "comp_req__filesystem__regular_file_open",
     "FullyVerifies": null
   },
   {
@@ -350044,7 +350352,7 @@
   {
     "name": "Base64Test__EncodeTwoBytes",
     "file": "score/utils/base64_test.cpp",
-    "line": "44",
+    "line": "46",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -350058,7 +350366,7 @@
   {
     "name": "Base64Test__EncodeMultipleBytes",
     "file": "score/utils/base64_test.cpp",
-    "line": "55",
+    "line": "59",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -350072,7 +350380,7 @@
   {
     "name": "Base64Test__DecodeEmptyString",
     "file": "score/utils/base64_test.cpp",
-    "line": "66",
+    "line": "71",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -350086,7 +350394,7 @@
   {
     "name": "Base64Test__DecodeSingleByte",
     "file": "score/utils/base64_test.cpp",
-    "line": "77",
+    "line": "82",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -350100,7 +350408,7 @@
   {
     "name": "Base64Test__DecodeTwoBytes",
     "file": "score/utils/base64_test.cpp",
-    "line": "88",
+    "line": "95",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -350114,7 +350422,7 @@
   {
     "name": "Base64Test__DecodeMultipleBytes",
     "file": "score/utils/base64_test.cpp",
-    "line": "99",
+    "line": "107",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -350200,153 +350508,153 @@
     "file": "score/utils/meyer_singleton/meyer_singleton_test.cpp",
     "line": "123",
     "result": "passed",
-    "repo_name": null,
-    "hash": null,
-    "url": null,
-    "TestType": null,
-    "DerivationTechnique": null,
+    "repo_name": "local_repo",
+    "hash": "",
+    "url": "",
+    "TestType": "requirements-based",
+    "DerivationTechnique": "requirements-analysis",
     "result_text": "",
-    "PartiallyVerifies": null,
+    "PartiallyVerifies": "comp_req__utils__threadsafe_singleton",
     "FullyVerifies": null
   },
   {
     "name": "MeyerSingletonGetInstanceFixture__CallingTwiceWillInitializeObjectOnce",
     "file": "score/utils/meyer_singleton/meyer_singleton_test.cpp",
-    "line": "151",
+    "line": "165",
     "result": "passed",
-    "repo_name": null,
-    "hash": null,
-    "url": null,
-    "TestType": null,
-    "DerivationTechnique": null,
+    "repo_name": "local_repo",
+    "hash": "",
+    "url": "",
+    "TestType": "requirements-based",
+    "DerivationTechnique": "requirements-analysis",
     "result_text": "",
-    "PartiallyVerifies": null,
+    "PartiallyVerifies": "comp_req__utils__threadsafe_singleton",
     "FullyVerifies": null
   },
   {
     "name": "MeyerSingletonGetInstanceFixture__CallingWhileOtherThreadIsCallingGetInstanceReturnsValidObject",
     "file": "score/utils/meyer_singleton/meyer_singleton_test.cpp",
-    "line": "223",
+    "line": "257",
     "result": "passed",
-    "repo_name": null,
-    "hash": null,
-    "url": null,
-    "TestType": null,
-    "DerivationTechnique": null,
+    "repo_name": "local_repo",
+    "hash": "",
+    "url": "",
+    "TestType": "requirements-based",
+    "DerivationTechnique": "design-analysis",
     "result_text": "",
-    "PartiallyVerifies": null,
+    "PartiallyVerifies": "comp_req__utils__threadsafe_singleton",
     "FullyVerifies": null
   },
   {
     "name": "MeyerSingletonGetInstanceFixture__CallingAfterCallingGetInstanceWithCallableTerminates",
     "file": "score/utils/meyer_singleton/meyer_singleton_test.cpp",
-    "line": "286",
+    "line": "334",
     "result": "passed",
-    "repo_name": null,
-    "hash": null,
-    "url": null,
-    "TestType": null,
-    "DerivationTechnique": null,
+    "repo_name": "local_repo",
+    "hash": "",
+    "url": "",
+    "TestType": "requirements-based",
+    "DerivationTechnique": "requirements-analysis",
     "result_text": "",
-    "PartiallyVerifies": null,
+    "PartiallyVerifies": "comp_req__utils__threadsafe_singleton",
     "FullyVerifies": null
   },
   {
     "name": "MeyerSingletonGetInstanceFixture__CallingWhileOtherThreadIsCallingGetInstanceWithCallableTerminates",
     "file": "score/utils/meyer_singleton/meyer_singleton_test.cpp",
-    "line": "300",
+    "line": "355",
     "result": "passed",
-    "repo_name": null,
-    "hash": null,
-    "url": null,
-    "TestType": null,
-    "DerivationTechnique": null,
+    "repo_name": "local_repo",
+    "hash": "",
+    "url": "",
+    "TestType": "requirements-based",
+    "DerivationTechnique": "design-analysis",
     "result_text": "",
-    "PartiallyVerifies": null,
+    "PartiallyVerifies": "comp_req__utils__threadsafe_singleton",
     "FullyVerifies": null
   },
   {
     "name": "MeyerSingletonGetInstanceWithCallableFixture__CallingWillInitializeObjectWithProvidedArguments",
     "file": "score/utils/meyer_singleton/meyer_singleton_test.cpp",
-    "line": "136",
+    "line": "143",
     "result": "passed",
-    "repo_name": null,
-    "hash": null,
-    "url": null,
-    "TestType": null,
-    "DerivationTechnique": null,
+    "repo_name": "local_repo",
+    "hash": "",
+    "url": "",
+    "TestType": "requirements-based",
+    "DerivationTechnique": "requirements-analysis",
     "result_text": "",
-    "PartiallyVerifies": null,
+    "PartiallyVerifies": "comp_req__utils__threadsafe_singleton",
     "FullyVerifies": null
   },
   {
     "name": "MeyerSingletonGetInstanceWithCallableFixture__CallingTwiceWillInitializeObjectOnce",
     "file": "score/utils/meyer_singleton/meyer_singleton_test.cpp",
-    "line": "172",
+    "line": "192",
     "result": "passed",
-    "repo_name": null,
-    "hash": null,
-    "url": null,
-    "TestType": null,
-    "DerivationTechnique": null,
+    "repo_name": "local_repo",
+    "hash": "",
+    "url": "",
+    "TestType": "requirements-based",
+    "DerivationTechnique": "requirements-analysis",
     "result_text": "",
-    "PartiallyVerifies": null,
+    "PartiallyVerifies": "comp_req__utils__threadsafe_singleton",
     "FullyVerifies": null
   },
   {
     "name": "MeyerSingletonGetInstanceWithCallableFixture__CallingTwiceWillCallInitializationCallableOnce",
     "file": "score/utils/meyer_singleton/meyer_singleton_test.cpp",
-    "line": "199",
+    "line": "226",
     "result": "passed",
-    "repo_name": null,
-    "hash": null,
-    "url": null,
-    "TestType": null,
-    "DerivationTechnique": null,
+    "repo_name": "local_repo",
+    "hash": "",
+    "url": "",
+    "TestType": "requirements-based",
+    "DerivationTechnique": "requirements-analysis",
     "result_text": "",
-    "PartiallyVerifies": null,
+    "PartiallyVerifies": "comp_req__utils__threadsafe_singleton",
     "FullyVerifies": null
   },
   {
     "name": "MeyerSingletonGetInstanceWithCallableFixture__CallingWhileOtherThreadIsCallingGetInstanceWithCallableReturnsValidObject",
     "file": "score/utils/meyer_singleton/meyer_singleton_test.cpp",
-    "line": "252",
+    "line": "293",
     "result": "passed",
-    "repo_name": null,
-    "hash": null,
-    "url": null,
-    "TestType": null,
-    "DerivationTechnique": null,
+    "repo_name": "local_repo",
+    "hash": "",
+    "url": "",
+    "TestType": "requirements-based",
+    "DerivationTechnique": "design-analysis",
     "result_text": "",
-    "PartiallyVerifies": null,
+    "PartiallyVerifies": "comp_req__utils__threadsafe_singleton",
     "FullyVerifies": null
   },
   {
     "name": "MeyerSingletonGetInstanceWithCallableFixture__CallingAfterCallingGetInstanceTerminates",
     "file": "score/utils/meyer_singleton/meyer_singleton_test.cpp",
-    "line": "325",
+    "line": "388",
     "result": "passed",
-    "repo_name": null,
-    "hash": null,
-    "url": null,
-    "TestType": null,
-    "DerivationTechnique": null,
+    "repo_name": "local_repo",
+    "hash": "",
+    "url": "",
+    "TestType": "requirements-based",
+    "DerivationTechnique": "requirements-analysis",
     "result_text": "",
-    "PartiallyVerifies": null,
+    "PartiallyVerifies": "comp_req__utils__threadsafe_singleton",
     "FullyVerifies": null
   },
   {
     "name": "MeyerSingletonGetInstanceWithCallableFixture__CallingWhileOtherThreadIsCallingGetInstanceTerminates",
     "file": "score/utils/meyer_singleton/meyer_singleton_test.cpp",
-    "line": "339",
+    "line": "409",
     "result": "passed",
-    "repo_name": null,
-    "hash": null,
-    "url": null,
-    "TestType": null,
-    "DerivationTechnique": null,
+    "repo_name": "local_repo",
+    "hash": "",
+    "url": "",
+    "TestType": "requirements-based",
+    "DerivationTechnique": "design-analysis",
     "result_text": "",
-    "PartiallyVerifies": null,
+    "PartiallyVerifies": "comp_req__utils__threadsafe_singleton",
     "FullyVerifies": null
   },
   {
