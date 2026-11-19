@@ -205,6 +205,30 @@ TEST_F(UnistdFixture, PipeOpensWithoutError)
     EXPECT_TRUE(val.has_value());
 }
 
+TEST_F(UnistdFixture, PipeCreatesDescriptorsWithCloseOnExec)
+{
+    RecordProperty("Description", "Both ends of a pipe must not be inherited by processes created via execve()");
+    RecordProperty("TestType", "interface-test");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
+
+    // Given a pipe
+    int32_t fds[2] = {};
+
+    // When creating it
+    ASSERT_TRUE(unit_->pipe(&fds[0]).has_value());
+
+    // Then both ends have close-on-exec set
+    const int read_end_flags{::fcntl(fds[0], F_GETFD)};
+    const int write_end_flags{::fcntl(fds[1], F_GETFD)};
+    ::close(fds[0]);
+    ::close(fds[1]);
+
+    ASSERT_NE(read_end_flags, -1);
+    ASSERT_NE(write_end_flags, -1);
+    EXPECT_NE(read_end_flags & FD_CLOEXEC, 0);
+    EXPECT_NE(write_end_flags & FD_CLOEXEC, 0);
+}
+
 TEST_F(UnistdFixture, DupReturnsErrorIfPassInvalidFd)
 {
     RecordProperty("Verifies", "SCR-46010294");

@@ -16,6 +16,7 @@
 #include "score/os/version.h"
 
 #include <arpa/inet.h>
+#include <fcntl.h>
 #include <gmock/gmock.h>
 #include <gtest/gtest.h>
 #include <netinet/in.h>
@@ -230,6 +231,25 @@ TEST_F(SocketTestFixture, ListenShouldFailOnInvalidSocketFd)
 TEST_F(SocketTestFixture, TestAcceptAndConnect)
 {
     CreateServerAndClientSockets();
+}
+
+TEST_F(SocketTestFixture, AcceptedSocketHasCloseOnExecSet)
+{
+    RecordProperty(
+        "Description",
+        "An accepted socket has close-on-exec set, so it is not inherited by processes created via execve()");
+    RecordProperty("TestType", "interface-test");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
+
+    // Given a connected client
+    // When the server accepts the connection
+    CreateServerAndClientSockets();
+
+    // Then the accepted socket has close-on-exec set
+    ASSERT_NE(accepted_fd_, -1);
+    const int flags{::fcntl(accepted_fd_, F_GETFD)};
+    ASSERT_NE(flags, -1);
+    EXPECT_NE(flags & FD_CLOEXEC, 0);
 }
 
 TEST_F(SocketTestFixture, ConnectToInvalidAddressShouldFail)

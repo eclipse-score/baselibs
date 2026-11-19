@@ -87,6 +87,9 @@ class Socket : public ObjectSeam<Socket>
     virtual score::cpp::expected_blank<Error> listen(const std::int32_t sockfd,
                                                      const std::int32_t backlog) const noexcept = 0;
 
+    /// @brief Accepts a connection.
+    /// The returned socket is created with close-on-exec (FD_CLOEXEC).
+    /// This way it is not inherited by processes created via fork() + execve().
     virtual score::cpp::expected<std::int32_t, Error> accept(const std::int32_t sockfd,
                                                              struct sockaddr* const addr,
                                                              socklen_t* const addrlen) const noexcept = 0;

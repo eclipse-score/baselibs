@@ -13,6 +13,7 @@
 #include "score/os/inotify.h"
 #include "score/os/errno.h"
 
+#include <fcntl.h>
 #include <sys/inotify.h>
 
 #include <gtest/gtest.h>
@@ -45,6 +46,23 @@ struct InotifyTest : ::testing::Test
     std::string temp_dir_;
     score::cpp::expected<int, score::os::Error> fd;
 };
+
+TEST_F(InotifyTest, InotifyInstanceHasCloseOnExecSet)
+{
+    RecordProperty(
+        "Description",
+        "An inotify instance has close-on-exec set, so it is not inherited by processes created via execve()");
+    RecordProperty("TestType", "interface-test");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
+
+    // Given an inotify instance created in SetUp()
+    ASSERT_TRUE(fd.has_value());
+
+    // Then it has close-on-exec set
+    const int flags{::fcntl(fd.value(), F_GETFD)};
+    ASSERT_NE(flags, -1);
+    EXPECT_NE(flags & FD_CLOEXEC, 0);
+}
 
 TEST_F(InotifyTest, AddWatchSuccessfull)
 {

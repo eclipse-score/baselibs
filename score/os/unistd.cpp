@@ -12,11 +12,13 @@
  ********************************************************************************/
 #include "score/os/unistd.h"
 
+#include <fcntl.h>
+#include <unistd.h>
+
 #if defined(__QNX__)
 #include <process.h>
 #elif defined(__linux__)
 #include <sys/syscall.h>
-#include <unistd.h>
 #endif  // __QNX__
 
 score::cpp::expected_blank<score::os::Error> score::os::internal::UnistdImpl::close(
@@ -75,11 +77,14 @@ score::cpp::expected_blank<score::os::Error> score::os::internal::UnistdImpl::ac
 score::cpp::expected_blank<score::os::Error> score::os::internal::UnistdImpl::pipe(
     std::int32_t pipefd[2]) const noexcept
 {
+    // Both ends are created with close-on-exec.
+    // This way they are not inherited by processes created via fork() + execve().
+    // pipe2() sets the flag atomically, so no concurrent fork() can leak the descriptors.
     // Suppressed here because usage of this OSAL method is on banned list
     /* It is immposible to cover the return statement */
     /* Hence, added suppression */
     // NOLINTNEXTLINE(score-banned-function) see comment above
-    if (::pipe(pipefd) == -1)  // LCOV_EXCL_BR_LINE
+    if (::pipe2(pipefd, O_CLOEXEC) == -1)  // LCOV_EXCL_BR_LINE
     {
         return score::cpp::make_unexpected(score::os::Error::createFromErrno()); /* LCOV_EXCL_LINE */
         /*Error can not be reproduced in scope of unit tests. Incorrect value is prohibited, causes undefined behavior*/
