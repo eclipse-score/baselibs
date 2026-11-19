@@ -223,13 +223,16 @@ For all identified applicable failure initiators, the DFA is performed in the fo
    :id: feat_saf_dfa__baselibs__memory_access
    :failure_id: UI_01_02
    :failure_effect: memory of using component may be corrupted leading to safety requirement violation
-   :mitigation_issue: https://github.com/eclipse-score/score/issues/2816
-   :sufficient: no
+   :mitigated_by: aou_req__platform__no_mixed_asil[version==1], aou_req__platform__process_isolation[version==1]
+   :sufficient: yes
    :status: valid
-   :version: 2
+   :version: 3
 
-   All the baselibs components have to be developed to ASIL_B standard to maintain Freedom From Interference,
-   out of bounds access should be detected by unit testing/sanitizers.
+   Baselibs libraries are linked into the using application and execute in its POSIX process and memory space.
+   POSIX processes do not isolate memory errors within a process.
+   Therefore, the using application and all libraries it links shall implement the highest ASIL of their assigned requirements, as required by the platform AoU on mixed ASIL.
+   This also covers QM libraries of baselibs, which must not be used in an ASIL process unless they are raised to that ASIL.
+   Memory of other processes is protected by the operating system, as required by the platform AoU on process isolation linked above.
 
 .. feat_saf_dfa:: locked ressource
    :violates: feat_arc_sta__baselibs__static_view_arch[version==3]
@@ -273,13 +276,15 @@ For all identified applicable failure initiators, the DFA is performed in the fo
    :id: feat_saf_dfa__baselibs__blocked_execution
    :failure_id: UI_01_06
    :failure_effect: Using application is blocked from execution and thus cannot fulfill its safety function
-   :mitigation_issue: https://github.com/eclipse-score/score/issues/2816
-   :sufficient: no
+   :mitigated_by: aou_req__platform__flow_monitoring[version==1]
+   :sufficient: yes
    :status: valid
-   :version: 2
+   :version: 3
 
-   All the baselibs components have to be developed to ASIL_B standard to maintain Freedom From Interference,
-   all blocks should be detected by unit testing.
+   Baselibs functions execute in the thread of the calling application.
+   An intended blocking call, such as a wait or a file access, or a faulty non-terminating call stalls the caller.
+   The concurrency library provides abortable and time-limited waits to limit this risk.
+   Remaining blocking is covered by the platform flow-monitoring AoU, as for deadlocks and CPU starvation.
 
 .. feat_saf_dfa:: CPU starvation
    :violates: feat_arc_sta__baselibs__static_view_arch[version==3]
