@@ -173,6 +173,13 @@ TEST(TypeTraitsTest, IsTryLockableCompileTimeChecks)
 
 TEST(TypeTraitsTest, IsSharedLockableCompileTimeChecks)
 {
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
+    RecordProperty("PartiallyVerifies", "comp_req__concurrency__synchronized_shared");
+    RecordProperty("Description",
+                   "Check that shared-lockable detection accepts types with basic and shared locking operations, "
+                   "rejects types missing either interface and classifies standard mutex types correctly.");
+
     EXPECT_TRUE((is_shared_lockable_v<test::SharedLockableArchetype>));
     EXPECT_FALSE((is_shared_lockable_v<test::BasicLockableArchetype>));
     EXPECT_FALSE((is_shared_lockable_v<test::SharedLockWithoutBasicLocking>));

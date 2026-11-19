@@ -193,7 +193,7 @@ Functional Requirements
    :version: 1
    :satisfied_by: comp__baselibs_concurrency[version==1]
 
-   Synchronized object access shall provide shared-lock acquisition for lockable types that support shared locking, with non-modifiable access protected for the lifetime of the returned pointer.
+   For lockable types that support shared locking, synchronized object access shall acquire a shared lock that remains held for the lifetime of the returned pointer, except while its ``unlock_guard`` is active, , except while its shared lock is explicitly suspended using unlock_guard.
 
 .. comp_req:: Long-Running Threads Container
    :id: comp_req__concurrency__long_running_threads
