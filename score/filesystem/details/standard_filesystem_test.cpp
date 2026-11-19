@@ -14,6 +14,7 @@
 
 #include "score/filesystem/details/test_helper.h"
 #include "score/filesystem/error.h"
+#include "score/filesystem/file_utils/file_test_utils.h"
 #include "score/filesystem/filestream/file_factory_mock.h"
 #include "score/os/mocklib/mock_dirent.h"
 #include "score/os/mocklib/stat_mock.h"
@@ -25,6 +26,7 @@
 #include <gtest/gtest.h>
 
 #include <dirent.h>
+#include <sys/stat.h>
 #include <chrono>
 #include <cstring>
 #include <fstream>
@@ -46,6 +48,14 @@ using ::testing::StrEq;
 class FilesystemFixture : public ::testing::Test
 {
   public:
+    FilesystemFixture()
+    {
+        // Opening files checks the type of the opened file, which tests mocking stat() don't care about.
+        ON_CALL(*stat_mock_, fstat(_, _)).WillByDefault([this](const std::int32_t fd, os::StatBuffer& buffer) {
+            return real_stat_->fstat(fd, buffer);
+        });
+    }
+
     void ExpectStatWith(const time_t mtime,
                         std::string path = {},
                         const mode_t mode = mode_t{S_IFREG},
@@ -183,6 +193,7 @@ class FilesystemFixture : public ::testing::Test
     }
 
     os::MockGuard<os::StatMock> stat_mock_{};
+    std::unique_ptr<os::Stat> real_stat_{os::Stat::Default()};
     os::MockGuard<os::StdlibMock> stdlib_mock_{};
     os::MockGuard<os::StdioMock> stdio_mock_{};
     os::MockGuard<os::MockDirent> dirent_mock_{};
@@ -593,8 +604,8 @@ TEST_F(FilesystemCopyFile, FullDisk)
     auto ok_ss = [](Unused, Unused) -> std::unique_ptr<std::iostream> {
         return std::make_unique<std::stringstream>();
     };
-    EXPECT_CALL(*file_factory_mock_, Open(Eq(Path("/tmp/from")), _)).WillRepeatedly(Invoke(ok_ss));
-    EXPECT_CALL(*file_factory_mock_, Open(Eq(Path("/dev/full")), _)).WillRepeatedly(Invoke(bad_ss));
+    EXPECT_CALL(*file_factory_mock_, OpenRegularFile(Eq(Path("/tmp/from")), _)).WillRepeatedly(Invoke(ok_ss));
+    EXPECT_CALL(*file_factory_mock_, OpenRegularFile(Eq(Path("/dev/full")), _)).WillRepeatedly(Invoke(bad_ss));
 
     // When copying FROM to a full disk
     const auto result = unit_.CopyFile("/tmp/from", "/dev/full");
@@ -821,6 +832,55 @@ TEST_F(FilesystemCopyFile, SimulateRaceConditionOnSourceFile)
     EXPECT_EQ(result.error(), filesystem::ErrorCode::kCouldNotAccessFileDuringCopy);
 }
 
+TEST_F(FilesystemCopyFile, SourceReplacedByFifoAfterStatusCheckIsRejectedWithoutBlocking)
+{
+    RecordProperty("PartiallyVerifies", "comp_req__filesystem__api_abstraction");
+    RecordProperty("Description", "Check that CopyFile rejects a source that became a FIFO after the type check.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "error-guessing");
+    // The status check reports regular files, but the source on disk is a FIFO without a writer.
+    const auto temp_directory = FileTestUtils::GetTempDirectory();
+    ASSERT_TRUE(temp_directory.has_value());
+    const Path from{temp_directory.value() / "fifo_from"};
+    const Path to{temp_directory.value() / "regular_to"};
+    unlink(from.CStr());
+    ASSERT_EQ(::mkfifo(from.CStr(), S_IRUSR | S_IWUSR), 0);
+    ExpectStatWith(mode_t{S_IFREG}, from.Native());
+    ExpectStatWith(ENOENT, to.Native());
+
+    const auto result = unit_.CopyFile(from, to);
+    unlink(from.CStr());
+    unlink(to.CStr());
+
+    ASSERT_FALSE(result.has_value());
+    EXPECT_EQ(result.error(), filesystem::ErrorCode::kCouldNotAccessFileDuringCopy);
+}
+
+TEST_F(FilesystemCopyFile, DestinationReplacedByFifoAfterStatusCheckIsRejectedWithoutBlocking)
+{
+    RecordProperty("PartiallyVerifies", "comp_req__filesystem__api_abstraction");
+    RecordProperty("Description", "Check that CopyFile rejects a destination that became a FIFO after the type check.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "error-guessing");
+    // The status check reports a missing destination, but the destination on disk is a FIFO without a reader.
+    const auto temp_directory = FileTestUtils::GetTempDirectory();
+    ASSERT_TRUE(temp_directory.has_value());
+    const Path from{temp_directory.value() / "regular_from"};
+    const Path to{temp_directory.value() / "fifo_to"};
+    std::ofstream{from.Native()} << "Foo";
+    unlink(to.CStr());
+    ASSERT_EQ(::mkfifo(to.CStr(), S_IRUSR | S_IWUSR), 0);
+    ExpectStatWith(mode_t{S_IFREG}, from.Native());
+    ExpectStatWith(ENOENT, to.Native());
+
+    const auto result = unit_.CopyFile(from, to);
+    unlink(from.CStr());
+    unlink(to.CStr());
+
+    ASSERT_FALSE(result.has_value());
+    EXPECT_EQ(result.error(), filesystem::ErrorCode::kCouldNotAccessFileDuringCopy);
+}
+
 TEST_F(FilesystemCopyFile, BadSrcFile)
 {
     // Given a dummy file
@@ -836,8 +896,8 @@ TEST_F(FilesystemCopyFile, BadSrcFile)
     auto ok_ss = [](Unused, Unused) -> std::unique_ptr<std::iostream> {
         return std::make_unique<std::stringstream>();
     };
-    EXPECT_CALL(*file_factory_mock_, Open(Eq(Path("/tmp/from")), _)).WillOnce(Invoke(bad_ss));
-    EXPECT_CALL(*file_factory_mock_, Open(Eq(Path("/tmp/to")), _)).WillOnce(Invoke(ok_ss));
+    EXPECT_CALL(*file_factory_mock_, OpenRegularFile(Eq(Path("/tmp/from")), _)).WillOnce(Invoke(bad_ss));
+    EXPECT_CALL(*file_factory_mock_, OpenRegularFile(Eq(Path("/tmp/to")), _)).WillOnce(Invoke(ok_ss));
 
     // When copying with updating existing enabled
     const auto result = unit_.CopyFile("/tmp/from", "/tmp/to", CopyOptions::kOverwriteExisting);
@@ -861,8 +921,8 @@ TEST_F(FilesystemCopyFile, BadDestFile)
     auto ok_ss = [](Unused, Unused) -> std::unique_ptr<std::iostream> {
         return std::make_unique<std::stringstream>();
     };
-    EXPECT_CALL(*file_factory_mock_, Open(Eq(Path("/tmp/from")), _)).WillOnce(Invoke(ok_ss));
-    EXPECT_CALL(*file_factory_mock_, Open(Eq(Path("/tmp/to")), _)).WillOnce(Invoke(bad_ss));
+    EXPECT_CALL(*file_factory_mock_, OpenRegularFile(Eq(Path("/tmp/from")), _)).WillOnce(Invoke(ok_ss));
+    EXPECT_CALL(*file_factory_mock_, OpenRegularFile(Eq(Path("/tmp/to")), _)).WillOnce(Invoke(bad_ss));
 
     // When copying with updating existing enabled
     const auto result = unit_.CopyFile("/tmp/from", "/tmp/to", CopyOptions::kOverwriteExisting);

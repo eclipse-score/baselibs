@@ -354,12 +354,12 @@ Result<bool> FileUtils::FileContentsAreIdentical(const Path& path1, const Path& 
 
     // open files
     const auto flags = std::ios_base::in | std::ios_base::binary;
-    const auto file1 = file_factory_.Open(path1, flags);
+    const auto file1 = file_factory_.OpenRegularFile(path1, flags);
     if (((!file1.has_value()) || (file1.value() == nullptr)) || (file1.value()->fail()))
     {
         return MakeUnexpected(ErrorCode::kCouldNotCompareFiles, "Failed to open file1");
     }
-    const auto file2 = file_factory_.Open(path2, flags);
+    const auto file2 = file_factory_.OpenRegularFile(path2, flags);
     if (((!file2.has_value()) || (file2.value() == nullptr)) || (file2.value()->fail()))
     {
         return MakeUnexpected(ErrorCode::kCouldNotCompareFiles, "Failed to open file2");

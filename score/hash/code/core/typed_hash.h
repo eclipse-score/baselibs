@@ -98,7 +98,7 @@ score::Result<TypedHash<Algorithm>> TypedHash<Algorithm>::FromAny(score::json::A
     {
         return FromString(hash_string.value());
     }
-    return score::MakeUnexpected(score::json::Error::kParsingError, "Expected hex string");
+    return score::MakeUnexpected(score::json::Error::kWrongType, "Expected hex string");
 }
 
 template <HashAlgorithm Algorithm>

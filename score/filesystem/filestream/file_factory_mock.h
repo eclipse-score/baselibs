@@ -33,6 +33,10 @@ class FileFactoryMock : public IFileFactory
                 Open,
                 (const Path&, std::ios_base::openmode),
                 (noexcept, override));
+    MOCK_METHOD(score::Result<std::unique_ptr<std::iostream>>,
+                OpenRegularFile,
+                (const Path&, std::ios_base::openmode),
+                (noexcept, override));
     MOCK_METHOD(score::Result<std::unique_ptr<FileStream>>,
                 AtomicUpdate,
                 (const Path&, std::ios_base::openmode, const AtomicUpdateOwnershipFlags),

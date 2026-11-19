@@ -143,7 +143,7 @@ TEST(TypedHashTest, CanDeserializeFromJsonAny)
 
     const auto hash_result2{TypedHash<HashAlgorithm::kSha256>::FromAny(json::Any{5.4})};
     ASSERT_FALSE(hash_result2.has_value());
-    ASSERT_EQ(hash_result2.error(), score::json::Error::kParsingError);
+    ASSERT_EQ(hash_result2.error(), score::json::Error::kWrongType);
     ASSERT_EQ(hash_result2.error().UserMessage(), "Expected hex string");
 }
 

@@ -446,14 +446,10 @@ For the most up to date information on AoUs please follow the provided links to 
 This library provides the functionallity to read and write JSON files/data from and to the filesystem however this functionallity is considerd ASIL QM as this library itself does not do any filesystem integrity checks. The responsibility of filesystem integrity lies within the user (see AoU).
 
 [AoUs for vaJson (taken from the safety manual)](broken_link_c/tracker/940190?view_id=-11&layout_name=document&subtreeRoot=6204897)
-- The user of MICROSAR Adaptive Safe shall ensure that IoIntegrityStream is used
-when initializing vaJson from an input stream where safety requirements are assumed.
 - The user of MICROSAR Adaptive Safe shall ensure the integrity of the character
 buffer used to initialize vaJson where safety requirements are assumed.
 - The user of MICROSAR Adaptive Safe shall ensure the integrity of the file when
 initializing vaJson from a path to the file where safety requirements are assumed.
-
-This library does not provide a way for the user to to initialize vaJson from an input stream.
 
 ## Deprecated `base_library` flag
 

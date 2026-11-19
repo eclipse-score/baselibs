@@ -14,9 +14,9 @@
 /// @brief  Contains tests concerning the JsonOps class.
 #include "score/json/internal/parser/vajson/json_ops.h"
 
-#include <sstream>
 #include <string>
 #include <string_view>
+#include <utility>
 
 #include "gtest/gtest.h"
 #include "score/json/internal/parser/vajson/json_data.h"
@@ -34,14 +34,14 @@ namespace unit_test
 
 namespace
 {
-/// @brief Helper to create a JsonData + JsonOps pair from a string literal.
-struct TestStream
+/// @brief Helper to create a JsonData + JsonOps pair from a string.
+struct TestDocument
 {
-    std::istringstream iss;
+    std::string input;
     JsonData data;
     internal::JsonOps ops;
 
-    explicit TestStream(const std::string& input) : iss{input}, data{iss}, ops{data} {}
+    explicit TestDocument(std::string document) : input{std::move(document)}, data{input}, ops{data} {}
 };
 }  // namespace
 
@@ -49,7 +49,7 @@ struct TestStream
 /// @trace           score::json::vajson::internal::JsonOps::Skip
 TEST(UT__JsonOps, Skip)
 {
-    TestStream ts{"ab"};
+    TestDocument ts{"ab"};
 
     ASSERT_TRUE(ts.ops.Skip('a'));
     ASSERT_FALSE(ts.ops.Skip('a'));  // 'b' is next, not 'a'
@@ -61,7 +61,7 @@ TEST(UT__JsonOps, Skip)
 /// @trace           score::json::vajson::internal::JsonOps::Take
 TEST(UT__JsonOps, Take)
 {
-    TestStream ts{"ab"};
+    TestDocument ts{"ab"};
 
     ASSERT_EQ(ts.ops.Take(), 'a');
 }
@@ -70,7 +70,7 @@ TEST(UT__JsonOps, Take)
 /// @trace           score::json::vajson::internal::JsonOps::TryTake
 TEST(UT__JsonOps, TryTake__Error)
 {
-    TestStream ts{"ab"};
+    TestDocument ts{"ab"};
 
     {
         const auto r1{ts.ops.TryTake()};
@@ -85,7 +85,7 @@ TEST(UT__JsonOps, TryTake__Error)
     {
         const auto r3{ts.ops.TryTake()};
         ASSERT_FALSE(r3.has_value());
-        ASSERT_EQ(r3.error(), JsonErrc::kStreamFailure);
+        ASSERT_EQ(r3.error(), JsonErrc::kInvalidJson);
     }
 }
 
@@ -93,7 +93,7 @@ TEST(UT__JsonOps, TryTake__Error)
 /// @trace           score::json::vajson::internal::JsonOps::Move
 TEST(UT__JsonOps, Move)
 {
-    TestStream ts{"ab"};
+    TestDocument ts{"ab"};
 
     ASSERT_TRUE(ts.ops.Move());
     ASSERT_EQ(ts.ops.Take(), 'b');
@@ -109,16 +109,16 @@ TEST(UT__JsonOps, CheckString)
     const std::string_view expected{"expected string"};
 
     {
-        TestStream ts{std::string{expected}};
+        TestDocument ts{std::string{expected}};
         const auto result{ts.ops.CheckString(expected, "No error")};
         ASSERT_TRUE(result.has_value());
     }
 
     {
-        TestStream ts{std::string{expected}};
+        TestDocument ts{std::string{expected}};
         const auto result{ts.ops.CheckString("different string", "No error")};
         ASSERT_FALSE(result.has_value());
-        ASSERT_EQ(result.error(), JsonErrc::kStreamFailure);
+        ASSERT_EQ(result.error(), JsonErrc::kInvalidJson);
     }
 }
 
@@ -126,7 +126,7 @@ TEST(UT__JsonOps, CheckString)
 /// @trace           score::json::vajson::internal::JsonOps::ReadString
 TEST(UT__JsonOps, ReadStringAbortsOnEmpty)
 {
-    TestStream ts{"Does not matter"};
+    TestDocument ts{"Does not matter"};
 
     ASSERT_DEATH(score::cpp::ignore = ts.ops.ReadString(""), "");
 }
@@ -139,11 +139,11 @@ TEST(UT__JsonOps, ReadStringAbortsOnEmpty)
 TEST(UT__JsonOps, SkipWhitespace)
 {
     {
-        TestStream ts{"  \t\n\r  a"};
+        TestDocument ts{"  \t\n\r  a"};
         ASSERT_TRUE(ts.ops.SkipWhitespace());
     }
     {
-        TestStream ts{"  \t\n\r  "};
+        TestDocument ts{"  \t\n\r  "};
         ASSERT_FALSE(ts.ops.SkipWhitespace());
     }
 }
@@ -155,7 +155,7 @@ TEST(UT__JsonOps, SkipWhitespace)
 TEST(UT__JsonOps, ReadUntil)
 {
     const std::string input{"123456789:"};
-    TestStream ts{input};
+    TestDocument ts{input};
 
     const std::string_view expected_content{input.data(), input.size() - 1};
 
