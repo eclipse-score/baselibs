@@ -107,7 +107,7 @@ For all identified applicable failure initiators, the FMEA is performed in the f
    :failure_effect: When retrieving error information, the error code is returned as a domain-agnostic integer. If the user interprets this code under a different error domain than the one that produced it, the error is misidentified, potentially leading to incorrect error reaction.
    :mitigation_issue: https://github.com/eclipse-score/score/issues/2880
    :sufficient: no
-   :status: valid
+   :status: draft
    :version: 1
 
    If the user relies on the error code not only for diagnostic purposes but for selecting an error reaction path,
