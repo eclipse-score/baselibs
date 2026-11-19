@@ -531,13 +531,12 @@
 JSON parser.
 The JSON data must be provided to the parser as
 * a path to a file
-* a character buffer
-* a stream, e.g. a file or string stream.</p>
+* a character buffer.</p>
 <p>The JSON document size and the number of concurrently parsed documents is not restricted by vaJson.</p>
 <section id="sequences">
 <h3>Sequences<a class="headerlink" href="#sequences" title="Link to this heading">#</a></h3>
 <p class="plantuml">
-<object data="../../../../../../_images/plantuml-06d46db47759245dbf1ff5d15daff74ac65590da.svg" type="image/svg+xml" style="width:1388px;height:1746px;background:#FFFFFF;"></object></p>
+<object data="../../../../../../_images/plantuml-06d46db47759245dbf1ff5d15daff74ac65590da.svg" type="image/svg+xml" style="width:1245px;height:1277px;background:#FFFFFF;"></object></p>
 </section>
 </section>
 <section id="encoding">
@@ -573,7 +572,7 @@ that are instantiated by themselves depending on the last event.</p>
 </section>
 <section id="number-formatting">
 <h2>Number formatting<a class="headerlink" href="#number-formatting" title="Link to this heading">#</a></h2>
-<p>A Number of the input stream is reported to the applications event handler by calling OnNumber().
+<p>A number in the document is reported to the applications event handler by calling OnNumber().
 The parameter of the function (score::json::vajson::JsonNumber) contains the number and can provide it in different formats
 to the application:</p>
 <ul class="simple">
