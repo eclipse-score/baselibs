@@ -15,10 +15,12 @@
 
 #include "score/json/internal/parser/vajson/json_data.h"
 #include <array>
+#include <cstddef>
+#include <ios>
 #include <istream>
-#include <memory>
-#include <sstream>
+#include <string>
 #include <utility>
+#include <vector>
 
 #include "score/filesystem/filestream/file_factory.h"
 #include "score/filesystem/filestream/file_stream.h"
@@ -32,32 +34,34 @@ namespace json
 namespace vajson
 {
 /// @internal
-/// - Initialize the stream buffer from the given input stream.
+/// - Initialize the unread input with the whole document.
 /// - Set the capacity for the string buffer to the value defined in the static configuration.
 /// - Parse the BOM.
 /// @endinternal
-JsonData::JsonData(std::istream& input_stream) noexcept : stream_{input_stream}
+JsonData::JsonData(const StringView document) noexcept : input_{document}
 {
     this->current_buffer_.reserve(internal::config::kStringBufferSize);
     this->ParseBom();
 }
 
 /// @internal
-/// - Initialize the stream buffer from the given input stream.
-/// - Store the given input stream.
+/// - Store the document and initialize the unread input with it.
+/// - Set the capacity for the string buffer to the value defined in the static configuration.
+/// - Parse the BOM.
 /// @endinternal
-
-JsonData::JsonData(std::unique_ptr<std::istream> input_stream) noexcept : JsonData(*input_stream)
+JsonData::JsonData(std::vector<char> document) noexcept
+    : owned_document_{std::move(document)}, input_{owned_document_.data(), owned_document_.size()}
 {
-
-    this->owned_stream_ = std::move(input_stream);
+    this->current_buffer_.reserve(internal::config::kStringBufferSize);
+    this->ParseBom();
 }
 
 /// @internal
-/// - Create the input stream from the file.
-/// - If the file has been opened successfully.
-///   - Then create & return the JsonData object.
-/// - Else return a JsonErrc containing the original error message.
+/// - Open the file.
+/// - If the file has been opened successfully:
+///   - Read the whole file into memory.
+///   - If the file has been read successfully, then create & return the JsonData object owning the content.
+/// - Otherwise return a JsonErrc containing the error message.
 /// @endinternal
 auto JsonData::FromFile(const std::string_view path) noexcept -> Result<JsonData>
 {
@@ -69,9 +73,6 @@ auto JsonData::FromFile(const std::string_view path) noexcept -> Result<JsonData
     Result<JsonData> result{score::MakeUnexpected(JsonErrc::kStreamFailure, "Could not open file")};
     if (file_result.has_value())
     {
-        // Read the whole file into an owned buffer once, then parse it through the same in-memory istringstream
-        // fast path used for FromBuffer. Parsing directly off the file stream is slow because the reader issues
-        // seekg calls, which are expensive on a filebuf but O(1) on an in-memory stringbuf.
         std::istream& file{*file_result.value()};
         file.seekg(0, std::ios::end);
         const std::streamoff size{file.tellg()};
@@ -80,54 +81,37 @@ auto JsonData::FromFile(const std::string_view path) noexcept -> Result<JsonData
         {
             return score::MakeUnexpected(JsonErrc::kStreamFailure, "Could not read file");
         }
-        std::string content(static_cast<std::size_t>(size), '\0');
+        std::vector<char> content(static_cast<std::size_t>(size));
         // Read through the unformatted input layer so an I/O error sets badbit and a short read is detectable
         static_cast<void>(file.read(content.data(), size));
         if (file.bad() || (file.gcount() != size))
         {
             return score::MakeUnexpected(JsonErrc::kStreamFailure, "Could not read file");
         }
-        std::unique_ptr<std::istream> stream{std::make_unique<std::istringstream>(std::move(content))};
-        result.emplace(JsonData{std::move(stream)});
+        result.emplace(JsonData{std::move(content)});
     }
 
     return result;
 }
 
 /// @internal
-/// - Create the input stream from a buffer.
-/// - Create & return the JsonData object.
+/// - Create & return the JsonData object reading from the buffer.
 /// @endinternal
 auto JsonData::FromBuffer(const std::string_view buffer) noexcept -> Result<JsonData>
 {
-    std::unique_ptr<std::istream> iss{std::make_unique<std::istringstream>(std::string{buffer})};
-    return Result<JsonData>{JsonData{std::move(iss)}};
+    return Result<JsonData>{JsonData{buffer}};
 }
 
 /// @internal
-/// - If the first three bytes of the document are the UTF-8 BOM:
-///   - Move the stream buffer past the BOM.
-/// - If the stream is too short for a BOM check:
-///   - Ensure the stream state is cleared and position is restored.
+/// - If the document starts with the UTF-8 BOM:
+///   - Skip the BOM.
 /// @endinternal
 void JsonData::ParseBom() noexcept
 {
     constexpr std::array<const char, 3> kUtf8Bom{'\xEF', '\xBB', '\xBF'};
-    const std::string_view view{kUtf8Bom.data(), kUtf8Bom.size()};
 
     internal::JsonOps ops{*this};
-
-    // ReadString consumes the BOM if present and rewinds otherwise.
-    const Result<bool> result{ops.ReadString(view)};
-
-    if (!result.has_value())
-    {
-        // ReadString failed (e.g., stream shorter than BOM).
-        // Ensure stream is in a usable state for subsequent parsing.
-        auto& stream{this->stream_.get()};
-        stream.clear(stream.rdstate() & ~(std::ios::failbit | std::ios::eofbit));
-        stream.seekg(0, std::ios::beg);
-    }
+    static_cast<void>(ops.ReadString(StringView{kUtf8Bom.data(), kUtf8Bom.size()}));
 }
 
 }  // namespace vajson

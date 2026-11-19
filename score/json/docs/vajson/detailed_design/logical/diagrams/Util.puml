@@ -2,9 +2,6 @@
 hide empty members
 
 package "score" {
-  package stream {
-    class InputStream {}
-  }
 
   package "json" {
   package "vajson" {
@@ -54,7 +51,6 @@ JsonData --> Ref
 JsonOps --> JsonData
 JsonOps --> OptChar
 
-JsonData --> InputStream
 JsonData --> DepthCounter
 JsonData --> JsonErrorDomain
 JsonErrorDomain --> JsonException
