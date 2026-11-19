@@ -122,6 +122,13 @@ class MeyerSingletonFixture : public test::SingleTestPerProcessFixture
 using MeyerSingletonGetInstanceFixture = MeyerSingletonFixture;
 TEST_F(MeyerSingletonGetInstanceFixture, CallingWillInitializeObjectWithProvidedArguments)
 {
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
+    RecordProperty("PartiallyVerifies", "comp_req__utils__threadsafe_singleton");
+    RecordProperty("Description",
+                   "Check that GetInstance() creates the singleton instance with the construction arguments passed to "
+                   "it.");
+
     TestInSeparateProcess([]() {
         // When calling GetInstance with construction parameters
         auto& singleton = MeyerSingleton<DummyClass>::GetInstance(kDummyInt, kDummyDouble);
@@ -135,6 +142,13 @@ TEST_F(MeyerSingletonGetInstanceFixture, CallingWillInitializeObjectWithProvided
 using MeyerSingletonGetInstanceWithCallableFixture = MeyerSingletonFixture;
 TEST_F(MeyerSingletonGetInstanceWithCallableFixture, CallingWillInitializeObjectWithProvidedArguments)
 {
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
+    RecordProperty("PartiallyVerifies", "comp_req__utils__threadsafe_singleton");
+    RecordProperty("Description",
+                   "Check that GetInstanceInitializedWithCallable() creates the singleton instance from the object "
+                   "returned by the passed callable.");
+
     TestInSeparateProcess([]() {
         // When calling GetInstance with callable which constructs object with construction parameters
         auto construction_lambda = []() {
@@ -150,6 +164,12 @@ TEST_F(MeyerSingletonGetInstanceWithCallableFixture, CallingWillInitializeObject
 
 TEST_F(MeyerSingletonGetInstanceFixture, CallingTwiceWillInitializeObjectOnce)
 {
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
+    RecordProperty("PartiallyVerifies", "comp_req__utils__threadsafe_singleton");
+    RecordProperty("Description",
+                   "Check that calling GetInstance() twice constructs the singleton object only on the first call.");
+
     TestInSeparateProcess([]() {
         // When calling GetInstance twice
         const std::uint8_t initialization_count_before_call{InitializationTrackedClass::class_initialization_count_};
@@ -171,6 +191,13 @@ TEST_F(MeyerSingletonGetInstanceFixture, CallingTwiceWillInitializeObjectOnce)
 
 TEST_F(MeyerSingletonGetInstanceWithCallableFixture, CallingTwiceWillInitializeObjectOnce)
 {
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
+    RecordProperty("PartiallyVerifies", "comp_req__utils__threadsafe_singleton");
+    RecordProperty("Description",
+                   "Check that calling GetInstanceInitializedWithCallable() twice constructs the singleton object "
+                   "only on the first call.");
+
     TestInSeparateProcess([]() {
         auto construction_lambda = []() {
             return InitializationTrackedClass{};
@@ -198,6 +225,13 @@ TEST_F(MeyerSingletonGetInstanceWithCallableFixture, CallingTwiceWillInitializeO
 
 TEST_F(MeyerSingletonGetInstanceWithCallableFixture, CallingTwiceWillCallInitializationCallableOnce)
 {
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
+    RecordProperty("PartiallyVerifies", "comp_req__utils__threadsafe_singleton");
+    RecordProperty("Description",
+                   "Check that calling GetInstanceInitializedWithCallable() twice invokes the initialization "
+                   "callable only on the first call.");
+
     TestInSeparateProcess([this]() {
         // Given an initialization callable which tracks how many times it's been invoked
         auto construction_callable = CreateCallCountingInitializationCallback();
@@ -222,6 +256,13 @@ TEST_F(MeyerSingletonGetInstanceWithCallableFixture, CallingTwiceWillCallInitial
 
 TEST_F(MeyerSingletonGetInstanceFixture, CallingWhileOtherThreadIsCallingGetInstanceReturnsValidObject)
 {
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "design-analysis");
+    RecordProperty("PartiallyVerifies", "comp_req__utils__threadsafe_singleton");
+    RecordProperty("Description",
+                   "Check that GetInstance() returns a valid object when a concurrent GetInstance() call wins the "
+                   "initialization-state race, emulated by a mocked atomic.");
+
     TestInSeparateProcess([]() {
         AtomicMockGuard atomic_mock_guard{};
 
@@ -252,6 +293,13 @@ TEST_F(MeyerSingletonGetInstanceFixture, CallingWhileOtherThreadIsCallingGetInst
 TEST_F(MeyerSingletonGetInstanceWithCallableFixture,
        CallingWhileOtherThreadIsCallingGetInstanceWithCallableReturnsValidObject)
 {
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "design-analysis");
+    RecordProperty("PartiallyVerifies", "comp_req__utils__threadsafe_singleton");
+    RecordProperty("Description",
+                   "Check that GetInstanceInitializedWithCallable() returns a valid object when a concurrent call "
+                   "wins the initialization-state race, emulated by a mocked atomic.");
+
     TestInSeparateProcess([]() {
         AtomicMockGuard atomic_mock_guard{};
 
@@ -285,6 +333,13 @@ TEST_F(MeyerSingletonGetInstanceWithCallableFixture,
 
 TEST_F(MeyerSingletonGetInstanceFixture, CallingAfterCallingGetInstanceWithCallableTerminates)
 {
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
+    RecordProperty("PartiallyVerifies", "comp_req__utils__threadsafe_singleton");
+    RecordProperty("Description",
+                   "Check that GetInstance() terminates the program instead of creating a second instance after "
+                   "GetInstanceInitializedWithCallable() created the singleton.");
+
     TestInSeparateProcess([this]() {
         // Given that GetInstanceInitializedWithCallable was already called
         score::cpp::ignore = MeyerSingleton<InitializationTrackedClass>::GetInstanceInitializedWithCallable(
@@ -299,6 +354,14 @@ TEST_F(MeyerSingletonGetInstanceFixture, CallingAfterCallingGetInstanceWithCalla
 
 TEST_F(MeyerSingletonGetInstanceFixture, CallingWhileOtherThreadIsCallingGetInstanceWithCallableTerminates)
 {
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "design-analysis");
+    RecordProperty("PartiallyVerifies", "comp_req__utils__threadsafe_singleton");
+    RecordProperty(
+        "Description",
+        "Check that GetInstance() terminates the program when a concurrent GetInstanceInitializedWithCallable() "
+        "call wins the initialization-state race, emulated by a mocked atomic.");
+
     TestInSeparateProcess([]() {
         AtomicMockGuard atomic_mock_guard{};
 
@@ -324,6 +387,13 @@ TEST_F(MeyerSingletonGetInstanceFixture, CallingWhileOtherThreadIsCallingGetInst
 
 TEST_F(MeyerSingletonGetInstanceWithCallableFixture, CallingAfterCallingGetInstanceTerminates)
 {
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
+    RecordProperty("PartiallyVerifies", "comp_req__utils__threadsafe_singleton");
+    RecordProperty("Description",
+                   "Check that GetInstanceInitializedWithCallable() terminates the program instead of creating a "
+                   "second instance after GetInstance() created the singleton.");
+
     TestInSeparateProcess([this]() {
         // Given that GetInstance was already called
         score::cpp::ignore = MeyerSingleton<DummyClass>::GetInstance(kDummyInt + 1, kDummyDouble + 1.0);
@@ -338,6 +408,13 @@ TEST_F(MeyerSingletonGetInstanceWithCallableFixture, CallingAfterCallingGetInsta
 
 TEST_F(MeyerSingletonGetInstanceWithCallableFixture, CallingWhileOtherThreadIsCallingGetInstanceTerminates)
 {
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "design-analysis");
+    RecordProperty("PartiallyVerifies", "comp_req__utils__threadsafe_singleton");
+    RecordProperty("Description",
+                   "Check that GetInstanceInitializedWithCallable() terminates the program when a concurrent "
+                   "GetInstance() call wins the initialization-state race, emulated by a mocked atomic.");
+
     TestInSeparateProcess([this]() {
         AtomicMockGuard atomic_mock_guard{};
 
