@@ -40,7 +40,7 @@ score::cpp::expected<bool, ::score::os::Error> IsEntryForUser(
                 // casting void pointer.
                 // coverity[autosar_cpp14_m5_2_8_violation]
                 auto* const entry_uid = static_cast<uid_t*>(qualifier_result.value());
-                const bool is_same_uid = *entry_uid == user_identifier;
+                const bool is_same_uid = ::score::os::UserId{*entry_uid} == user_identifier;
                 operating_system.acl_free(entry_uid);
                 return is_same_uid;
             }
@@ -268,7 +268,8 @@ auto ::score::os::AccessControlList::SetUser(const UserIdentifier user_identifie
         return result;
     }
 
-    return operating_system.acl_set_qualifier(entry, &user_identifier);
+    const uid_t native_uid{user_identifier.native()};
+    return operating_system.acl_set_qualifier(entry, &native_uid);
 }
 
 auto ::score::os::AccessControlList::AddPermission(const Acl::Permission permission, ::score::os::Acl::Entry& entry)
@@ -375,12 +376,12 @@ score::os::AccessControlList::FindUserIdsWithPermission(const Acl::Permission pe
 
             if (is_permission_set.value())
             {
-                score::os::IAccessControlList::UserIdentifier exec_uid = {};
+                uid_t exec_uid{};
                 // This is safe because uid_t is expected to be TriviallyCopyable, ensuring that std::memcpy()
                 // correctly copies the value without violating strict aliasing or object lifetime rules.
                 // NOLINTNEXTLINE(score-banned-function): See above
                 std::ignore = std::memcpy(&exec_uid, uid_ptr.value(), sizeof(uid_t));
-                user_ids_with_perms.push_back(exec_uid);
+                user_ids_with_perms.emplace_back(exec_uid);
             }
             operating_system.acl_free(uid_ptr.value());
         }

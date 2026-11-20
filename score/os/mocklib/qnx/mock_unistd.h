@@ -29,7 +29,7 @@ class MockUnistd : public QnxUnistd
   public:
     MOCK_METHOD((score::cpp::expected<std::int32_t, score::os::Error>),
                 setgroupspid,
-                (std::int32_t gidsetsize, const gid_t* grouplist, pid_t pid),
+                (score::cpp::span<const GroupId> grouplist, pid_t pid),
                 (const, noexcept, override));
 };
 }  // namespace qnx
