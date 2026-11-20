@@ -18,7 +18,7 @@ Requirements
 .. document:: Utils Library Requirements
    :id: doc__utils_lib_requirements
    :status: valid
-   :version: 2
+   :version: 3
    :safety: ASIL_B
    :security: YES
    :realizes: wp__requirements_comp[version==1]
@@ -86,6 +86,18 @@ Functional Requirements
    :satisfied_by: comp__baselibs_utils[version==1]
 
    The Utils component shall provide a Registry_string_view that uses pointer equality and pointer-based hashing to enable O(1) identity comparisons between views originating from the same String_registry.
+
+.. comp_req:: Static Destruction Guard
+   :id: comp_req__utils__static_destruction_guard
+   :reqtype: Functional
+   :security: YES
+   :safety: ASIL_B
+   :derived_from: feat_req__baselibs__utils_library[version==2]
+   :status: valid
+   :version: 1
+   :satisfied_by: comp__baselibs_utils[version==1]
+
+   The Utils component shall provide a static destruction guard that keeps a guarded object with static storage duration alive until the last guard referencing it is destroyed.
 
 .. needextend:: c.this_doc() and (type == "comp_req" or type == "aou_req")
    :+tags: baselibs, utils
