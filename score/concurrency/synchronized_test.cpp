@@ -18,11 +18,13 @@
 #include "gmock/gmock.h"
 #include "gtest/gtest.h"
 
+#include <chrono>
 #include <functional>
 #include <future>
 #include <mutex>
 #include <shared_mutex>
 #include <string>
+#include <thread>
 #include <type_traits>
 #include <utility>
 #include <vector>
@@ -63,6 +65,20 @@ auto clone_synced(const Synced<T>& sync)
 {
     return WithLock(sync, clone);
 }
+
+constexpr auto end_scope = [](auto& locked_ptr) {
+    auto local_going_out_of_scope = std::move(locked_ptr);
+};
+
+template <typename T, typename = void>
+struct HasLockShared : std::false_type
+{
+};
+
+template <typename T>
+struct HasLockShared<T, std::void_t<decltype(std::declval<T&>().lock_shared())>> : std::true_type
+{
+};
 }  // namespace
 
 class TestStruct
@@ -296,6 +312,87 @@ TEST(SynchronizedTest, TryLockSupportsMutableConstAndUnavailableLockables)
             return std::as_const(sync_value).try_lock() == nullptr;
         });
         EXPECT_TRUE(try_lock_result.get());
+    }
+}
+
+TEST(SynchronizedTest, SharedLockProvidesConstAccessAndRequiresSharedMutexes)
+{
+    using namespace std::chrono_literals;
+
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
+    RecordProperty("PartiallyVerifies", "comp_req__concurrency__synchronized_shared");
+    RecordProperty("Description",
+                   "Check that shared locking provides const pointer access for shared-lockable mutexes "
+                   "and is unavailable for mutexes without shared locking. Verify an exclusive lock cannot be "
+                   "acquired while a shared pointer is alive and can be acquired after that pointer is destroyed.");
+
+    using SharedSynchronized = Synchronized<int, std::shared_mutex>;
+    static_assert(std::is_same_v<SharedSynchronized::shared_pointer,
+                                 score::concurrency::LockedPtr<const int, std::shared_lock<std::shared_mutex>>>);
+    static_assert(HasLockShared<SharedSynchronized>::value);
+    static_assert(HasLockShared<const SharedSynchronized>::value);
+    static_assert(HasLockShared<Synchronized<int, std::shared_timed_mutex>>::value);
+    static_assert(HasLockShared<const Synchronized<int, std::shared_timed_mutex>>::value);
+    static_assert(!HasLockShared<Synchronized<int, std::mutex>>::value);
+    static_assert(!HasLockShared<Synchronized<int, std::recursive_mutex>>::value);
+    static_assert(!HasLockShared<Synchronized<int, std::timed_mutex>>::value);
+    static_assert(!HasLockShared<Synchronized<int, std::recursive_timed_mutex>>::value);
+
+    auto lock_shared_hold_and_get_value = [](std::reference_wrapper<SharedSynchronized> sync_reference,
+                                             auto duration = 25ms) {
+        auto& sync_value = sync_reference.get();
+        auto sptr = sync_value.lock_shared();
+        std::this_thread::sleep_for(duration);
+        return *sptr;
+    };
+
+    SharedSynchronized sync_value(42);
+    const int* sync_value_ptr = sync_value.lock().get();
+    {
+        auto sptr = sync_value.lock_shared();
+        ASSERT_EQ(sptr.get(), sync_value_ptr) << "lock_shared() should point to the synchronized value.";
+        EXPECT_EQ(*sptr, 42) << "lock_shared() should provide access to the stored value.";
+    }
+
+    {
+        auto sptr = std::as_const(sync_value).lock_shared();
+        ASSERT_EQ(sptr.get(), sync_value_ptr) << "const lock_shared() should point to the synchronized value.";
+        EXPECT_EQ(*sptr, 42) << "const lock_shared() should provide access to the stored value.";
+    }
+
+    {
+        auto sptr = sync_value.lock_shared();
+        ASSERT_EQ(sptr.get(), sync_value_ptr) << "The held shared pointer should point to the synchronized value.";
+
+        auto lock_shared_value1 =
+            std::async(std::launch::async, lock_shared_hold_and_get_value, std::ref(sync_value), 25ms);
+        auto lock_shared_value2 =
+            std::async(std::launch::async, lock_shared_hold_and_get_value, std::ref(sync_value), 25ms);
+
+        EXPECT_EQ(lock_shared_value1.get(), 42) << "A concurrent shared reader should read the stored value.";
+        EXPECT_EQ(lock_shared_value2.get(), 42) << "A second concurrent shared reader should read the stored value.";
+        EXPECT_EQ(*sptr, 42) << "Concurrent shared readers should not change the stored value.";
+    }
+
+    {
+        auto write_lock_and_get_value = [](SharedSynchronized& sync) {
+            return *sync.lock();
+        };
+
+        SharedSynchronized rw_value(42);
+
+        auto read_ptr = rw_value.lock_shared();
+        auto writer_value = std::async(std::launch::async, write_lock_and_get_value, std::ref(rw_value));
+
+        EXPECT_EQ(writer_value.wait_for(50ms), std::future_status::timeout)
+            << "Exclusive locking should remain blocked while the shared pointer holds the lock.";
+
+        end_scope(read_ptr);
+
+        EXPECT_EQ(writer_value.get(), 42)
+            << "After the shared pointer releases its lock, the writer should acquire the exclusive lock and read the "
+               "stored value.";
     }
 }
 
