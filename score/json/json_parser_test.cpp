@@ -498,19 +498,19 @@ TEST_F(ParserTest, FromFileFail)
     EXPECT_FALSE(foo.has_value());
 }
 
-TEST_F(ParserTest, FromFileReportsReasonWhenFileCannotBeOpened)
+TEST_F(ParserTest, FromFileReportsIoErrorWhenFileCannotBeOpened)
 {
-    RecordProperty("PartiallyVerifies", "comp_req__json__parsing_error_reason");
+    RecordProperty("PartiallyVerifies", "comp_req__json__io_error");
     RecordProperty("Description",
-                   "Check that parsing from a non-existent file path returns a parsing error whose user message "
-                   "names the reason.");
+                   "Check that parsing from a non-existent file path returns an I/O error whose user message names "
+                   "the reason.");
     RecordProperty("TestType", "requirements-based");
     RecordProperty("DerivationTechnique", "error-guessing");
 
     const auto root{JsonParser{}.FromFile("non_existent.json")};
 
     ASSERT_FALSE(root.has_value());
-    EXPECT_EQ(root.error(), score::json::Error::kParsingError);
+    EXPECT_EQ(root.error(), score::json::Error::kIoError);
     EXPECT_THAT(root.error().UserMessage(), ::testing::HasSubstr("Could not open file"));
 }
 

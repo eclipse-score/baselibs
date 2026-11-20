@@ -92,6 +92,31 @@ General Requirements
 
    The JSON-Library shall report the reason of a parsing error together with the parsing error.
 
+.. comp_req:: I/O error
+   :id: comp_req__json__io_error
+   :reqtype: Functional
+   :security: YES
+   :safety: ASIL_B
+   :derived_from: feat_req__baselibs__json_library[version==2]
+   :status: valid
+   :version: 1
+   :satisfied_by: comp__baselibs_json_wrapper[version==1]
+
+   The JSON-Library shall report a failure to read or write a JSON file as an I/O error.
+
+.. comp_req:: Failing field of a deserialization error
+   :id: comp_req__json__deserialization_error_field
+   :reqtype: Functional
+   :security: YES
+   :safety: ASIL_B
+   :derived_from: feat_req__baselibs__json_library[version==2]
+   :status: valid
+   :version: 1
+   :satisfied_by: comp__baselibs_json_wrapper[version==1]
+
+   When converting JSON data into a user type fails, the JSON-Library shall report the name of the innermost field
+   that failed together with the error.
+
 User friendly API for information exchange
 ==========================================
 
@@ -136,6 +161,19 @@ User friendly API for information exchange
    validate that the requested return type is compatible with the type and value of the stored JSON data.
 
    Note: This includes checking if the stored value exceeds the range of the expected type.
+
+.. comp_req:: Out-of-range error
+   :id: comp_req__json__out_of_range_error
+   :reqtype: Functional
+   :security: YES
+   :safety: ASIL_B
+   :derived_from: feat_req__baselibs__json_library[version==2]
+   :status: valid
+   :version: 1
+   :satisfied_by: comp__baselibs_json_wrapper[version==1]
+
+   When a user requests a number as a type whose range does not include the number, the public API shall report an
+   out-of-range error.
 
 Full testability for the user facing API
 ========================================
