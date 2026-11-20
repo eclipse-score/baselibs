@@ -35,33 +35,40 @@ Operating System Abstraction Layer (OSAL)
    safety_analysis/dfa.rst
    detailed_design/chklst_impl_inspection.rst
 
-Abstract
+Overview
 ========
 
-The Operating System Abstraction Layer (OSAL) provides C++ interfaces to operating system and C standard library services for S-CORE components.
-It supports Linux and QNX through general interfaces and platform-specific extensions.
+Use the Operating System Abstraction Layer (OSAL) when your component needs C++ access to supported POSIX, C standard library, Linux, or QNX services.
+OSAL separates native service calls from component logic and supports controlled testing of service results and failures.
 
-Motivation and Rationale
-========================
+This page introduces the component's service scope, platform behavior, testability, and safety classification.
+For normative behavior and architecture allocation, see :need:`doc__osal_lib_requirements` and :need:`doc__osal_architecture`.
 
-Components use OSAL instead of calling supported native APIs directly, separating operating system access from component logic.
-Test doubles can replace service implementations to control results and exercise failure handling without exhausting real resources or altering system configuration.
-
-Scope and Use
+Service scope
 =============
 
-Use OSAL when a component needs:
+OSAL provides interfaces for the following service groups:
 
-- File and directory access, metadata queries, or memory mapping.
-- Process and thread control, synchronization, signals, or timers.
-- Socket communication, message queues, or other interprocess communication.
-- C standard library services such as environment-variable access.
+- File and directory access, metadata queries, and memory mapping.
+- Process and thread control, synchronization, signals, and timers.
+- Socket communication, message queues, and other interprocess communication.
+- C standard library services, including environment-variable access.
 
-General interfaces cover supported POSIX and C standard library services shared by Linux and QNX.
-Platform-specific interfaces expose services of the selected operating system; they do not provide cross-platform emulation.
+Platform behavior
+=================
 
-Safety and Specification
-========================
+General interfaces expose services supported on Linux and QNX.
+Platform-specific interfaces expose services available only on the selected operating system; OSAL does not emulate those services on other platforms.
 
-OSAL contains ASIL-B and QM functionality.
-Suitability for safety-related use depends on the selected function and its underlying operating system service, not on the interface family alone.
+Testability
+===========
+
+Selected interfaces provide replaceable implementations and mocks.
+Tests can use these seams to control service results and failures.
+
+Safety classification
+=====================
+
+OSAL includes ASIL-B and QM functionality.
+Safety-related use depends on the selected function and its underlying operating system service.
+The general, Linux, or QNX interface family alone does not determine the safety classification.

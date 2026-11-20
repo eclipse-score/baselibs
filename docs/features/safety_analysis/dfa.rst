@@ -249,7 +249,7 @@ For all identified applicable failure initiators, the DFA is performed in the fo
    :mitigated_by: aou_req__platform__flow_monitoring[version==1]
    :mitigation_issue: https://github.com/eclipse-score/baselibs/issues/705
    :sufficient: no
-   :status: invalid
+   :status: draft
    :version: 3
 
    File access through the filesystem component may stall execution.
@@ -263,7 +263,7 @@ For all identified applicable failure initiators, the DFA is performed in the fo
    :mitigated_by: aou_req__filesystem__thread_safety[version==1]
    :mitigation_issue: https://github.com/eclipse-score/baselibs/issues/705
    :sufficient: no
-   :status: invalid
+   :status: draft
    :version: 3
 
    The user has to care for concurrent file access. This is not covered by the filesytem library.
@@ -276,7 +276,7 @@ For all identified applicable failure initiators, the DFA is performed in the fo
    :mitigated_by: aou_req__bitmanipulation__concurrent_access[version==1]
    :mitigation_issue: https://github.com/eclipse-score/baselibs/issues/705
    :sufficient: no
-   :status: invalid
+   :status: draft
    :version: 3
 
    The user has to care for concurrent memory access. This is not covered by the bitmanipulation library.
@@ -304,7 +304,7 @@ For all identified applicable failure initiators, the DFA is performed in the fo
    :mitigated_by: aou_req__platform__flow_monitoring[version==1]
    :mitigation_issue: https://github.com/eclipse-score/baselibs/issues/705
    :sufficient: no
-   :status: invalid
+   :status: draft
    :version: 3
 
    Some care is taken to avoid using too much CPU time, but this cannot be covered fully.
