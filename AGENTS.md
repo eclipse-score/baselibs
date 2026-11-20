@@ -158,7 +158,11 @@ bazel test --config=score-linux-x86_64 --config=asan_ubsan_lsan --build_tests_on
 These rules apply to prose in code comments, Markdown, RST, and commit message bodies.
 
 - Write in English, in complete sentences.
-  Be concise; avoid filler, pleasantries, and hedging.
+- Be concise: remove words that carry no information, such as pleasantries and filler phrases.
+  Keep every condition, limitation, assumption, and rationale.
+- State uncertainty explicitly; do not drop a qualifier to make a statement sound stronger.
+- In requirements, keep the normative keywords (shall, should, may) as intended; they are not hedging.
+- Do not shorten existing text unless the task asks for it.
 - Use a single space after a period.
 - Do not decorate comments or sections with separator lines such as `// -----`.
 
