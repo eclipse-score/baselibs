@@ -200,6 +200,13 @@ bazel_dep(name = "score_coverage", version = "0.4.2", dev_dependency = True)
 
 bazel_dep(name = "score_platform", version = "0.7.6")
 
+# Temporary: remove once eclipse-score/score#3511 is merged and released.
+git_override(
+    module_name = "score_platform",
+    commit = "366ba3392606b5b8f99c7e9e10c0036e359c6e51",
+    remote = "https://github.com/eclipse-score/score.git",
+)
+
 ## Configure the python toolchain
 
 bazel_dep(name = "rules_python", version = "1.8.5")

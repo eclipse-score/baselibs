@@ -78,6 +78,13 @@ class StaticDestructionGuardTest : public ::testing::Test
 
 TEST_F(StaticDestructionGuardTest, FirstGuardConstructsGuardedInstanceExactlyOnce)
 {
+    ::testing::Test::RecordProperty("TestType", "requirements-based");
+    ::testing::Test::RecordProperty("DerivationTechnique", "boundary-values");
+    ::testing::Test::RecordProperty("PartiallyVerifies", "comp_req__utils__static_destruction_guard");
+    ::testing::Test::RecordProperty(
+        "Description",
+        "Check that the first guard constructs the guarded object and a second guard does not construct it again.");
+
     // Given a first guard has just been constructed
     Guard guard_1{};
     EXPECT_EQ(LifecycleTracker::construction_count, 1U);
@@ -91,6 +98,13 @@ TEST_F(StaticDestructionGuardTest, FirstGuardConstructsGuardedInstanceExactlyOnc
 
 TEST_F(StaticDestructionGuardTest, GuardedInstanceIsDestroyedOnceAllGuardsAreGone)
 {
+    ::testing::Test::RecordProperty("TestType", "requirements-based");
+    ::testing::Test::RecordProperty("DerivationTechnique", "requirements-analysis");
+    ::testing::Test::RecordProperty("PartiallyVerifies", "comp_req__utils__static_destruction_guard");
+    ::testing::Test::RecordProperty("Description",
+                                    "Check that nested guards keep the guarded object alive until the outermost guard "
+                                    "is destroyed, which destroys it exactly once.");
+
     // Given two nested guards are alive
     {
         Guard guard_1{};
@@ -113,6 +127,13 @@ TEST_F(StaticDestructionGuardTest, GuardedInstanceIsDestroyedOnceAllGuardsAreGon
 
 TEST_F(StaticDestructionGuardTest, GuardedInstanceOutlivesEveryGuardExceptTheLast)
 {
+    ::testing::Test::RecordProperty("TestType", "requirements-based");
+    ::testing::Test::RecordProperty("DerivationTechnique", "requirements-analysis");
+    ::testing::Test::RecordProperty("PartiallyVerifies", "comp_req__utils__static_destruction_guard");
+    ::testing::Test::RecordProperty("Description",
+                                    "Check that destroying guards in creation order keeps the guarded object alive "
+                                    "until the last guard is destroyed.");
+
     // Given two independently-owned guards are alive
     auto guard_1 = std::make_unique<Guard>();
     auto guard_2 = std::make_unique<Guard>();
@@ -133,6 +154,12 @@ TEST_F(StaticDestructionGuardTest, GuardedInstanceOutlivesEveryGuardExceptTheLas
 
 TEST_F(StaticDestructionGuardTest, GetStorageReturnsFreshlyConstructedValue)
 {
+    ::testing::Test::RecordProperty("TestType", "requirements-based");
+    ::testing::Test::RecordProperty("DerivationTechnique", "requirements-analysis");
+    ::testing::Test::RecordProperty("PartiallyVerifies", "comp_req__utils__static_destruction_guard");
+    ::testing::Test::RecordProperty(
+        "Description", "Check that the guarded object is accessible with its initial value while a guard is alive.");
+
     // Given a guard has just been constructed
     Guard guard{};
 
@@ -142,6 +169,13 @@ TEST_F(StaticDestructionGuardTest, GetStorageReturnsFreshlyConstructedValue)
 
 TEST_F(StaticDestructionGuardTest, GetStorageAlwaysRefersToTheSameLiveObject)
 {
+    ::testing::Test::RecordProperty("TestType", "requirements-based");
+    ::testing::Test::RecordProperty("DerivationTechnique", "requirements-analysis");
+    ::testing::Test::RecordProperty("PartiallyVerifies", "comp_req__utils__static_destruction_guard");
+    ::testing::Test::RecordProperty("Description",
+                                    "Check that every access to the guarded object refers to the same live object, so "
+                                    "a mutation is visible through a later access.");
+
     // Given a guard has just been constructed
     Guard guard{};
 

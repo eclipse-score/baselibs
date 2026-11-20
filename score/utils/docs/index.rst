@@ -18,7 +18,7 @@ utils
 .. document:: Utils Library
    :id: doc__utils
    :status: draft
-   :version: 1
+   :version: 2
    :safety: ASIL_B
    :security: YES
    :tags: baselibs_utils
@@ -61,5 +61,5 @@ The Utils library should provide type-safe utility functions and efficient algor
 * :need:`comp_req__utils__base64_encoding`
 * :need:`comp_req__utils__base64_decoding`
 * :need:`comp_req__utils__threadsafe_singleton`
-
-The component should be extensible in the future to support additional utility functions and algorithms as needed.
+* :need:`comp_req__utils__string_registry`
+* :need:`comp_req__utils__registry_string_view`
