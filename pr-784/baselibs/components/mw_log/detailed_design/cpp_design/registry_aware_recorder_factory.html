@@ -569,19 +569,15 @@ at runtime and gracefully falls back to console for any unavailable backend.</p>
 <td><p>Console logging</p></td>
 <td><p><code class="docutils literal notranslate"><span class="pre">config_KConsole_Logging</span></code> flag</p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">//score/mw/log/backend:file</span></code></p></td>
-<td><p>DLT file logging</p></td>
-<td><p><code class="docutils literal notranslate"><span class="pre">config_KFile_Logging</span></code> flag</p></td>
-</tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">//score/mw/log/backend:remote</span></code></p></td>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">&#64;score_logging//score/mw/log/backend:remote</span></code></p></td>
 <td><p>DataRouter remote DLT</p></td>
 <td><p><code class="docutils literal notranslate"><span class="pre">Remote_Logging</span></code> flag</p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">//score/mw/log/backend:remote</span></code></p></td>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">&#64;score_logging//score/mw/log/backend:remote</span></code></p></td>
 <td><p>GTL remote DLT (“DLTv2”, see <code class="docutils literal notranslate"><span class="pre">backend/dlt_trace_backend.md</span></code> in the <code class="docutils literal notranslate"><span class="pre">score_logging</span></code> repository)</p></td>
 <td><p><code class="docutils literal notranslate"><span class="pre">Remote_Logging</span></code> and <code class="docutils literal notranslate"><span class="pre">shm_dma_enabled</span></code> flag</p></td>
 </tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">//score/mw/log/backend:slog</span></code></p></td>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">&#64;score_logging//score/mw/log/backend:slog</span></code></p></td>
 <td><p>QNX slog2</p></td>
 <td><p>QNX only (<code class="docutils literal notranslate"><span class="pre">&#64;platforms//os:qnx</span></code>)</p></td>
 </tr>
