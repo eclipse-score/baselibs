@@ -61,6 +61,11 @@ class Unistd : public ObjectSeam<Unistd>
     virtual score::cpp::expected_blank<score::os::Error> unlink(const char* const pathname) const noexcept = 0;
     virtual score::cpp::expected_blank<score::os::Error> access(const char* const pathname,
                                                                 const AccessMode mode) const noexcept = 0;
+    /// @brief Creates a pipe.
+    /// Both file descriptors are created with close-on-exec (FD_CLOEXEC).
+    /// This way they are not inherited by processes created via fork() + execve().
+    /// To hand a pipe end to a child, duplicate it onto a different descriptor number with dup2() or clear the flag
+    /// with fcntl().
     // Wrapped function requires C-style array param
     // NOLINTNEXTLINE(modernize-avoid-c-arrays) see comment above
     virtual score::cpp::expected_blank<score::os::Error> pipe(std::int32_t pipefd[2]) const noexcept = 0;

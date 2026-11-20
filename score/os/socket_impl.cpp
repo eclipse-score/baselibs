@@ -48,9 +48,11 @@ score::cpp::expected<std::int32_t, Error> SocketImpl::accept(const std::int32_t 
                                                              struct sockaddr* const addr,
                                                              socklen_t* const addrlen) const noexcept
 {
+    // The accepted socket is created with close-on-exec.
+    // This way it is not inherited by processes created via fork() + execve().
     // Suppressed here because usage of this OSAL method is on banned list
     // NOLINTNEXTLINE(score-banned-function) see comment above
-    const std::int32_t ret = ::accept(sockfd, addr, addrlen);
+    const std::int32_t ret = ::accept4(sockfd, addr, addrlen, SOCK_CLOEXEC);
     if (ret == -1)
     {
         return score::cpp::make_unexpected(score::os::Error::createFromErrno());

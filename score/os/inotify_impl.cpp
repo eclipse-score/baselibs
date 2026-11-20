@@ -54,7 +54,10 @@ score::cpp::expected<std::int32_t, Error> InotifyImpl::inotify_init() const noex
     // inotify_init() fails when there is not enough memory, when the system/user has reached the maximum number of
     // inotify instances, or due to other kernel or file system limitations. There is no reliable way to simulate
     // above error cases within the scope of a unit test.
-    const std::int32_t ret{::inotify_init()};
+    //
+    // The instance is created with close-on-exec.
+    // This way it is not inherited by processes created via fork() + execve().
+    const std::int32_t ret{::inotify_init1(IN_CLOEXEC)};
     if (ret < 0)  // LCOV_EXCL_BR_LINE
     {
         return score::cpp::make_unexpected(Error::createFromErrno());  // LCOV_EXCL_LINE

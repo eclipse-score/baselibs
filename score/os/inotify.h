@@ -38,6 +38,9 @@ class Inotify : public ObjectSeam<Inotify>
         kInDelete = 512,  /* File was deleted in a watched directory */
     };
 
+    /// @brief Creates an inotify instance.
+    /// It is created with close-on-exec (FD_CLOEXEC).
+    /// This way it is not inherited by processes created via fork() + execve().
     virtual score::cpp::expected<std::int32_t, Error> inotify_init() const noexcept = 0;
     virtual score::cpp::expected<std::int32_t, Error> inotify_add_watch(const std::int32_t fd,
                                                                         const char* const pathname,
