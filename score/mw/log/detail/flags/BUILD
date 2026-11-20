@@ -27,18 +27,3 @@ config_setting(
         "@score_baselibs//score/mw/log:__subpackages__",
     ],
 )
-
-bool_flag(
-    name = "KFile_Logging",
-    build_setting_default = True,
-)
-
-config_setting(
-    name = "config_KFile_Logging",
-    flag_values = {
-        ":KFile_Logging": "True",
-    },
-    visibility = [
-        "@score_baselibs//score/mw/log:__subpackages__",
-    ],
-)
