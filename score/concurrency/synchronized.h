@@ -16,6 +16,7 @@
 #include "score/concurrency/locked_ptr.h"
 #include "score/concurrency/type_traits.h"
 
+#include <chrono>
 #include <functional>
 #include <memory>
 #include <mutex>
@@ -53,6 +54,14 @@ namespace score::concurrency
  *     - Attempts to acquire mut without blocking.
  *     - Returns a pointer (or a const_pointer for const Synchronized) that compares equal to nullptr if acquisition
  *       fails.
+ * - try_lock_for(duration) (when Lockable supports try_lock_for()):
+ *     - Attempts to acquire mut until the relative timeout expires.
+ *     - On success, returns a pointer (or a const_pointer for const Synchronized) that holds the lock for its lifetime.
+ *       If acquisition fails, returns a pointer that compares equal to nullptr.
+ * - try_lock_until(time_point) (when Lockable supports try_lock_until()):
+ *     - Attempts to acquire mut until the specified time point.
+ *     - On success, returns a pointer (or a const_pointer for const Synchronized) that holds the lock for its lifetime.
+ *       If acquisition fails, returns a pointer that compares equal to nullptr.
  * - WithLock(Func&& f):
  *     - Acquires the lock.
  *     - Invokes the callable f(pointer) or f(const_pointer) with the lock held.
@@ -222,6 +231,108 @@ class Synchronized
     {
         std::unique_lock lock{mut, std::try_to_lock};
         return const_pointer{lock.owns_lock() ? &obj : nullptr, std::move(lock)};
+    }
+
+    /**
+     * @brief Attempts to lock the internal Lockable for the specified duration without waiting longer than the
+     *        timeout.
+     * @tparam Rep Arithmetic representation type of the duration.
+     * @tparam Period Ratio representing the duration's tick period.
+     * @param timeout The maximum relative duration to wait for the lock.
+     * @return An RAII pointer that holds the lock and provides mutable access to the synchronized object, or a null
+     *         pointer if the lock could not be acquired before the timeout.
+     * @remarks This function is available only when Lockable supports try_lock_for(). The returned pointer must not
+     *          outlive the Synchronized object.
+     */
+    template <typename Rep,
+              typename Period,
+              typename Duration = std::chrono::duration<Rep, Period>,
+              typename LockableType = Lockable,
+              typename = std::enable_if_t<is_timed_lockable_for_v<LockableType, Duration> &&
+                                          std::is_same_v<LockableType, Lockable>>>
+    [[nodiscard]] pointer try_lock_for(const std::chrono::duration<Rep, Period>& timeout)
+    {
+        if (const bool is_locked = static_cast<bool>(mut.try_lock_for(timeout)); is_locked)
+        {
+            return pointer{&obj, std::unique_lock<Lockable>{mut, std::adopt_lock}};
+        }
+        return pointer{nullptr, std::unique_lock<Lockable>{mut, std::defer_lock}};
+    }
+
+    /**
+     * @brief Attempts to lock the internal Lockable for the specified duration without waiting longer than the
+     *        timeout.
+     * @tparam Rep Arithmetic representation type of the duration.
+     * @tparam Period Ratio representing the duration's tick period.
+     * @param timeout The maximum relative duration to wait for the lock.
+     * @return An RAII const_pointer that holds the lock and provides const access to the synchronized object, or a null
+     *         pointer if the lock could not be acquired before the timeout.
+     * @remarks This function is available only when Lockable supports try_lock_for(). The returned pointer must not
+     *          outlive the Synchronized object.
+     */
+    template <typename Rep,
+              typename Period,
+              typename Duration = std::chrono::duration<Rep, Period>,
+              typename LockableType = Lockable,
+              typename = std::enable_if_t<is_timed_lockable_for_v<LockableType, Duration> &&
+                                          std::is_same_v<LockableType, Lockable>>>
+    [[nodiscard]] const_pointer try_lock_for(const std::chrono::duration<Rep, Period>& timeout) const
+    {
+        if (const bool is_locked = static_cast<bool>(mut.try_lock_for(timeout)); is_locked)
+        {
+            return const_pointer{&obj, std::unique_lock<Lockable>{mut, std::adopt_lock}};
+        }
+        return const_pointer{nullptr, std::unique_lock<Lockable>{mut, std::defer_lock}};
+    }
+
+    /**
+     * @brief Attempts to lock the internal Lockable until the specified time point.
+     * @tparam Clock Clock type of the time point.
+     * @tparam Duration Duration type of the time point.
+     * @param timeout_time The absolute time point by which to acquire the lock.
+     * @return An RAII pointer that holds the lock and provides mutable access to the synchronized object, or a null
+     *         pointer if the lock could not be acquired by the specified time.
+     * @remarks This function is available only when Lockable supports try_lock_until(). The returned pointer must not
+     *          outlive the Synchronized object.
+     */
+    template <typename Clock,
+              typename Duration,
+              typename TimePoint = std::chrono::time_point<Clock, Duration>,
+              typename LockableType = Lockable,
+              typename = std::enable_if_t<is_timed_lockable_until_v<LockableType, TimePoint> &&
+                                          std::is_same_v<LockableType, Lockable>>>
+    [[nodiscard]] pointer try_lock_until(const std::chrono::time_point<Clock, Duration>& timeout_time)
+    {
+        if (const bool is_locked = static_cast<bool>(mut.try_lock_until(timeout_time)); is_locked)
+        {
+            return pointer{&obj, std::unique_lock<Lockable>{mut, std::adopt_lock}};
+        }
+        return pointer{nullptr, std::unique_lock<Lockable>{mut, std::defer_lock}};
+    }
+
+    /**
+     * @brief Attempts to lock the internal Lockable until the specified time point.
+     * @tparam Clock Clock type of the time point.
+     * @tparam Duration Duration type of the time point.
+     * @param timeout_time The absolute time point by which to acquire the lock.
+     * @return An RAII const_pointer that holds the lock and provides const access to the synchronized object, or a null
+     *         pointer if the lock could not be acquired by the specified time.
+     * @remarks This function is available only when Lockable supports try_lock_until(). The returned pointer must not
+     *          outlive the Synchronized object.
+     */
+    template <typename Clock,
+              typename Duration,
+              typename TimePoint = std::chrono::time_point<Clock, Duration>,
+              typename LockableType = Lockable,
+              typename = std::enable_if_t<is_timed_lockable_until_v<LockableType, TimePoint> &&
+                                          std::is_same_v<LockableType, Lockable>>>
+    [[nodiscard]] const_pointer try_lock_until(const std::chrono::time_point<Clock, Duration>& timeout_time) const
+    {
+        if (const bool is_locked = static_cast<bool>(mut.try_lock_until(timeout_time)); is_locked)
+        {
+            return const_pointer{&obj, std::unique_lock<Lockable>{mut, std::adopt_lock}};
+        }
+        return const_pointer{nullptr, std::unique_lock<Lockable>{mut, std::defer_lock}};
     }
 
     /**
