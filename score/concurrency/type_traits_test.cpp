@@ -234,7 +234,7 @@ TEST(TypeTraitsTest, IsTimedLockableForCompileTimeChecks)
 {
     RecordProperty("TestType", "requirements-based");
     RecordProperty("DerivationTechnique", "requirements-analysis");
-    RecordProperty("PartiallyVerifies", "comp_req__concurrency__synchronized_lock_for");
+    RecordProperty("PartiallyVerifies", "comp_req__concurrency__synchronized_for");
     RecordProperty("Description",
                    "Check that timed-lock detection accepts a basic lockable whose try_lock_for result can be "
                    "explicitly converted to bool.");
@@ -259,7 +259,7 @@ TEST(TypeTraitsTest, IsTimedLockableUntilCompileTimeChecks)
 {
     RecordProperty("TestType", "requirements-based");
     RecordProperty("DerivationTechnique", "requirements-analysis");
-    RecordProperty("PartiallyVerifies", "comp_req__concurrency__synchronized_lock_until");
+    RecordProperty("PartiallyVerifies", "comp_req__concurrency__synchronized_until");
     RecordProperty("Description",
                    "Check that deadline-lock detection accepts a basic lockable whose try_lock_until result can be "
                    "explicitly converted to bool.");
