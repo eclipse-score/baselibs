@@ -24,10 +24,10 @@ bazel_dep(name = "score_bazel_platforms", version = "1.1.0")
 
 bazel_dep(name = "score_bazel_cpp_toolchains", version = "1.1.0-rc1", dev_dependency = True)
 
-# TEMPORARY: test https://github.com/eclipse-score/bazel_cpp_toolchains/pull/187 on CI.
+# TEMPORARY: test https://github.com/eclipse-score/bazel_cpp_toolchains/pull/188 on CI.
 git_override(
     module_name = "score_bazel_cpp_toolchains",
-    commit = "2da4b3e01e7405a638022778beefbc298449a6e7",
+    commit = "807bcc21e8fca7b0486eeb9701320d42364007f3",
     remote = "https://github.com/eclipse-score/bazel_cpp_toolchains.git",
 )
 
@@ -64,14 +64,14 @@ gcc.toolchain(
 )
 gcc.toolchain(
     name = "score_qcc_x86_64_toolchain_805",
-    sdp_version = "8.0.5",
+    sdp_version = "8.0.6",
     target_cpu = "x86_64",
     target_os = "qnx",
     use_default_package = True,
 )
 gcc.toolchain(
     name = "score_qcc_aarch64_toolchain_805",
-    sdp_version = "8.0.5",
+    sdp_version = "8.0.6",
     target_cpu = "aarch64",
     target_os = "qnx",
     use_default_package = True,
@@ -79,7 +79,7 @@ gcc.toolchain(
 use_repo(
     gcc,
     "qnx_sdp_8_0_4_pkg",
-    "qnx_sdp_8_0_5_pkg",
+    "qnx_sdp_8_0_6_pkg",
     "score_gcc_aarch64_toolchain",
     "score_gcc_x86_64_toolchain",
     "score_qcc_aarch64_toolchain",
@@ -111,7 +111,7 @@ imagefs.toolchain(
 )
 imagefs.toolchain(
     name = "score_qnx_x86_64_ifs_toolchain_805",
-    sdp_to_import = "@qnx_sdp_8_0_5_pkg",
+    sdp_to_import = "@qnx_sdp_8_0_6_pkg",
     sdp_version = "8.0.0",
     target_cpu = "x86_64",
     target_os = "qnx",
@@ -119,7 +119,7 @@ imagefs.toolchain(
 )
 imagefs.toolchain(
     name = "score_qnx_aarch64_ifs_toolchain_805",
-    sdp_to_import = "@qnx_sdp_8_0_5_pkg",
+    sdp_to_import = "@qnx_sdp_8_0_6_pkg",
     sdp_version = "8.0.0",
     target_cpu = "aarch64",
     target_os = "qnx",

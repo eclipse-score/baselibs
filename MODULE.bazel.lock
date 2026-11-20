@@ -3392,8 +3392,8 @@
     },
     "@@score_bazel_cpp_toolchains+//extensions:gcc.bzl%gcc": {
       "general": {
-        "bzlTransitiveDigest": "5Ewbn4S6Ogudi8NF1eTzdeMBKkp3IbIfkUlQ6Szz3Ko=",
-        "usagesDigest": "ilxGQxExNoEr7zm41aZtOpqCn6X7hFsh/82/T5lNDU0=",
+        "bzlTransitiveDigest": "K3AdUJ545cPdhorgltlZW7mbnAzK+J8CUD9QobDWt0M=",
+        "usagesDigest": "x77txM1Q/NPJECGPDPYR03UrUuYBT8n7xFc9mdP6X/Q=",
         "recordedInputs": [
           "REPO_MAPPING:,score_cpp_policies score_cpp_policies+",
           "REPO_MAPPING:bazel_tools,rules_cc rules_cc+",
@@ -3455,19 +3455,18 @@
               "type": ""
             }
           },
-          "qnx_sdp_8_0_5_pkg": {
+          "qnx_sdp_8_0_6_pkg": {
             "repoRuleId": "@@score_bazel_cpp_toolchains+//rules:github_release_archive.bzl%github_release_archive",
             "attributes": {
-              "url": "https://api.github.com/repos/eclipse-score/qnx_sdp_pkg/releases/assets/758565616",
-              "build_file": "@@score_bazel_cpp_toolchains+//packages/qnx/sdp/8.0:sdp.BUILD",
+              "url": "https://api.github.com/repos/eclipse-score/qnx_sdp_pkg/releases/assets/772100027",
               "files": {},
               "patch_args": [],
               "patch_cmds": [],
               "patch_strip": 0,
               "patch_tool": "",
               "patches": [],
-              "sha256": "eaf000e6d8fe8b96685a0c0d5041e9fe62fe36c9fc3f0854033a7be9fbec8c89",
-              "strip_prefix": "",
+              "sha256": "b062211caeef17e5f985c829106c22291cb3fd2f621ee90ef01a58b0cda8d238",
+              "strip_prefix": "qnx_sdp_806",
               "type": "tar.gz"
             }
           },
@@ -3647,12 +3646,12 @@
               "license_info_value": "",
               "license_path": "/opt/score_qnx/license/licenses",
               "sdk_version": "",
-              "sdp_version": "8.0.5",
+              "sdp_version": "8.0.6",
               "tc_compiler_library_search_paths": [],
               "tc_cpu": "x86_64",
               "tc_identifier": "sdp_8.0.0",
               "tc_os": "qnx",
-              "tc_pkg_repo": "qnx_sdp_8_0_5_pkg",
+              "tc_pkg_repo": "qnx_sdp_8_0_6_pkg",
               "tc_tool_suffix": "_x86_64",
               "tc_system_toolchain": false,
               "tc_runtime_ecosystem": "",
@@ -3685,12 +3684,12 @@
               "license_info_value": "",
               "license_path": "/opt/score_qnx/license/licenses",
               "sdk_version": "",
-              "sdp_version": "8.0.5",
+              "sdp_version": "8.0.6",
               "tc_compiler_library_search_paths": [],
               "tc_cpu": "aarch64",
               "tc_identifier": "sdp_8.0.0",
               "tc_os": "qnx",
-              "tc_pkg_repo": "qnx_sdp_8_0_5_pkg",
+              "tc_pkg_repo": "qnx_sdp_8_0_6_pkg",
               "tc_tool_suffix": "_aarch64",
               "tc_system_toolchain": false,
               "tc_runtime_ecosystem": "",
@@ -3705,10 +3704,10 @@
     "@@score_rules_imagefs+//extensions:imagefs.bzl%imagefs": {
       "general": {
         "bzlTransitiveDigest": "QhWu3S0r+BB5gCeNfjskCjQbAFsZrzik1VQs9hwJLfQ=",
-        "usagesDigest": "N90CFrye6JOnF9m8Wgi5i/TzQRXIkOGAVsaAbOAKDUM=",
+        "usagesDigest": "l1ub5gkd18dQbBXr58jmFz0f2ifAhJ59egJMKiG+ldk=",
         "recordedInputs": [
           "REPO_MAPPING:,qnx_sdp_8_0_4_pkg score_bazel_cpp_toolchains++gcc+qnx_sdp_8_0_4_pkg",
-          "REPO_MAPPING:,qnx_sdp_8_0_5_pkg score_bazel_cpp_toolchains++gcc+qnx_sdp_8_0_5_pkg",
+          "REPO_MAPPING:,qnx_sdp_8_0_6_pkg score_bazel_cpp_toolchains++gcc+qnx_sdp_8_0_6_pkg",
           "REPO_MAPPING:bazel_lib+,bazel_tools bazel_tools",
           "REPO_MAPPING:score_rules_imagefs+,bazel_lib bazel_lib+",
           "REPO_MAPPING:score_rules_imagefs+,bazel_tools bazel_tools",
@@ -3742,7 +3741,7 @@
             "attributes": {
               "tc_cpu": "x86_64",
               "tc_os": "qnx",
-              "tc_pkg_repo": "'@@score_bazel_cpp_toolchains++gcc+qnx_sdp_8_0_5_pkg'",
+              "tc_pkg_repo": "'@@score_bazel_cpp_toolchains++gcc+qnx_sdp_8_0_6_pkg'",
               "sdp_version": "8.0.0",
               "tc_type": "ifs",
               "coreutils_pkg_repo": ""
@@ -3753,7 +3752,7 @@
             "attributes": {
               "tc_cpu": "aarch64",
               "tc_os": "qnx",
-              "tc_pkg_repo": "'@@score_bazel_cpp_toolchains++gcc+qnx_sdp_8_0_5_pkg'",
+              "tc_pkg_repo": "'@@score_bazel_cpp_toolchains++gcc+qnx_sdp_8_0_6_pkg'",
               "sdp_version": "8.0.0",
               "tc_type": "ifs",
               "coreutils_pkg_repo": ""

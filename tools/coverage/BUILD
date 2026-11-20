@@ -220,6 +220,6 @@ score_coverage_reporter(
     testonly = True,
     backend = "gcov",
     coverage_scope = ":coverage_scope_qnx",
-    gcov = "@qnx_sdp_8_0_5_pkg//:gcov_x86_64",
+    gcov = "@qnx_sdp_8_0_6_pkg//:gcov_x86_64",
     tags = ["manual"],
 )
