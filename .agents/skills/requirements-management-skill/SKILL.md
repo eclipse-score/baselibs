@@ -116,7 +116,7 @@ Every link value is written as `<target_id>[version==N]`, where `N` is the curre
 
 - `valid`: the requirement is in force but has not passed a requirements inspection. Use it for every new requirement.
 - `valid_inspected`: the requirement passed a requirements inspection. Keep this status as long as the requirement text is unchanged, including when only its links, title, or version change.
-- `invalid`: the requirement is not in force, e.g. while its `feat_req` does not exist yet.
+- `invalid`: the requirement is not in force, for example while its `feat_req` does not exist yet.
 
 Reset `valid_inspected` to `valid` only when the requirement text changes materially, since that requires a new inspection.
 
