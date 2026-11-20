@@ -60,6 +60,11 @@ class ExecutorTest : public ::testing::Test
 
 TEST_F(ExecutorTest, postCallable)
 {
+    RecordProperty("TestType", "interface-test");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
+    RecordProperty("PartiallyVerifies", "comp_req__concurrency__executor_interface");
+    RecordProperty("Description", "Check that Post() hands a callable to the executor as a task that can be executed.");
+
     // Given an Executor implementation
 
     // When posting a callable
@@ -76,6 +81,13 @@ TEST_F(ExecutorTest, postCallable)
 
 TEST_F(ExecutorTest, postCallableWithArgs)
 {
+    RecordProperty("TestType", "interface-test");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
+    RecordProperty("PartiallyVerifies", "comp_req__concurrency__executor_interface");
+    RecordProperty("Description",
+                   "Check that Post() hands a callable with bound arguments to the executor as a task that can be "
+                   "executed.");
+
     // Given an Executor implementation
 
     // When posting a callable
@@ -100,6 +112,11 @@ void postSomeTask(Executor& executor)
 
 TEST_F(ExecutorTest, postCallableUsingInterface)
 {
+    RecordProperty("TestType", "interface-test");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
+    RecordProperty("PartiallyVerifies", "comp_req__concurrency__executor_interface");
+    RecordProperty("Description", "Check that Post() is usable through the Executor base interface.");
+
     // Given an Executor
 
     // When posting a callable using the interface (not the impl)
@@ -111,6 +128,13 @@ TEST_F(ExecutorTest, postCallableUsingInterface)
 
 TEST_F(ExecutorTest, submitCallable)
 {
+    RecordProperty("TestType", "interface-test");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
+    RecordProperty("PartiallyVerifies", "comp_req__concurrency__executor_interface");
+    RecordProperty("Description",
+                   "Check that Submit() hands a callable to the executor and returns a result holding its value once "
+                   "executed.");
+
     // Given an Executor
 
     // When submitting a callable
@@ -126,6 +150,13 @@ TEST_F(ExecutorTest, submitCallable)
 
 TEST_F(ExecutorTest, submitCallableWithArgs)
 {
+    RecordProperty("TestType", "interface-test");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
+    RecordProperty("PartiallyVerifies", "comp_req__concurrency__executor_interface");
+    RecordProperty("Description",
+                   "Check that Submit() forwards bound arguments to the callable and returns a result holding its "
+                   "value once executed.");
+
     // Given an Executor
 
     // When submitting a callable
@@ -151,6 +182,11 @@ auto submitSomeTask(Executor& executor)
 
 TEST_F(ExecutorTest, submitCallableUsingInterface)
 {
+    RecordProperty("TestType", "interface-test");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
+    RecordProperty("PartiallyVerifies", "comp_req__concurrency__executor_interface");
+    RecordProperty("Description", "Check that Submit() is usable through the Executor base interface.");
+
     // Given an Executor
 
     // When submitting a callable using the interface (not the impl)

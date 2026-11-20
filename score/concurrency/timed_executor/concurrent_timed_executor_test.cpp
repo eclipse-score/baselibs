@@ -109,6 +109,12 @@ TEST_F(ConcurrentTimedExecutorFixture, CanConstruct)
 
 TEST_F(ConcurrentTimedExecutorFixture, HoldsExpectedConcurrentActions)
 {
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
+    RecordProperty("PartiallyVerifies", "comp_req__concurrency__thread_count_reporting");
+    RecordProperty("Description",
+                   "Check that MaxConcurrencyLevel() reports the thread count of the underlying executor.");
+
     // Given a ConcurrentTimedExecutor with two threads
     auto unit = CreateConcurrentTimedExecutorWithTwoThreads();
 
@@ -121,6 +127,11 @@ TEST_F(ConcurrentTimedExecutorFixture, HoldsExpectedConcurrentActions)
 
 TEST_F(ConcurrentTimedExecutorFixture, ShutdownRequestedIsFalseIfNotReqeusted)
 {
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
+    RecordProperty("PartiallyVerifies", "comp_req__concurrency__executor_interface");
+    RecordProperty("Description", "Check that ShutdownRequested() is false if no shutdown was requested.");
+
     // Given a ConcurrentTimedExecutor with two threads
     auto unit = CreateConcurrentTimedExecutorWithTwoThreads();
 
@@ -133,6 +144,11 @@ TEST_F(ConcurrentTimedExecutorFixture, ShutdownRequestedIsFalseIfNotReqeusted)
 
 TEST_F(ConcurrentTimedExecutorFixture, RequestingShutdownChangesState)
 {
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
+    RecordProperty("PartiallyVerifies", "comp_req__concurrency__executor_interface");
+    RecordProperty("Description", "Check that ShutdownRequested() is true after Shutdown() was called.");
+
     // Given a ConcurrentTimedExecutor with two threads
     auto unit = CreateConcurrentTimedExecutorWithTwoThreads();
 
@@ -157,6 +173,13 @@ TEST_F(ConcurrentTimedExecutorFixture, MemoryResourceIsNotChanged)
 
 TEST_F(ConcurrentTimedExecutorFixture, ExecutesDelayedTaskIfDelayPointWasAlreadyReached)
 {
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "boundary-values");
+    RecordProperty("PartiallyVerifies", "comp_req__concurrency__delayed_task");
+    RecordProperty("Description",
+                   "Check that a delayed task whose execution time point was already reached is executed once on "
+                   "the next work cycle.");
+
     // Given a ConcurrentTimedExecutor with two threads, where a delayed Task was scheduled
     auto unit = CreateConcurrentTimedExecutorWithTwoThreads();
     unit.Post(CreateDelayedTask(1U));
@@ -170,6 +193,11 @@ TEST_F(ConcurrentTimedExecutorFixture, ExecutesDelayedTaskIfDelayPointWasAlready
 
 TEST_F(ConcurrentTimedExecutorFixture, ExecutesDelayedTaskOnlyOnce)
 {
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
+    RecordProperty("PartiallyVerifies", "comp_req__concurrency__delayed_task");
+    RecordProperty("Description", "Check that an executed delayed task is not executed again on a later work cycle.");
+
     // Given a ConcurrentTimedExecutor where one task was already executed
     auto unit = CreateConcurrentTimedExecutorWithTwoThreads();
     unit.Post(CreateDelayedTask(1U));
@@ -185,6 +213,12 @@ TEST_F(ConcurrentTimedExecutorFixture, ExecutesDelayedTaskOnlyOnce)
 
 TEST_F(ConcurrentTimedExecutorFixture, WorkIsAborted)
 {
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
+    RecordProperty("PartiallyVerifies", "comp_req__concurrency__operation_timeout");
+    RecordProperty("Description",
+                   "Check that a work cycle with an already stopped stop token returns without blocking.");
+
     // Given a ConcurrentTimedExecutor with two threads, with a stop source, which stop was already requested
     auto unit = CreateConcurrentTimedExecutorWithTwoThreads();
     score::cpp::stop_source stop_source{};
@@ -198,6 +232,11 @@ TEST_F(ConcurrentTimedExecutorFixture, WorkIsAborted)
 
 TEST_F(ConcurrentTimedExecutorFixture, ExecutesPeriodicTasksPeriodically)
 {
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
+    RecordProperty("PartiallyVerifies", "comp_req__concurrency__periodic_task");
+    RecordProperty("Description", "Check that a periodic task is executed again once its interval has elapsed.");
+
     // Given a ConcurrentTimedExecutor with two threads, where a periodic Task was scheduled and executed once
     auto unit = CreateConcurrentTimedExecutorWithTwoThreads();
     unit.Post(CreatePeriodicTask());
@@ -213,6 +252,13 @@ TEST_F(ConcurrentTimedExecutorFixture, ExecutesPeriodicTasksPeriodically)
 
 TEST_F(ConcurrentTimedExecutorFixture, ExecutesTasksInRightOrder)
 {
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
+    RecordProperty("PartiallyVerifies", "comp_req__concurrency__delayed_task, comp_req__concurrency__periodic_task");
+    RecordProperty("Description",
+                   "Check that delayed and periodic tasks are executed in the order of their execution time "
+                   "points.");
+
     using namespace std::chrono_literals;
 
     // Given a ConcurrentTimedExecutor with two threads
@@ -265,6 +311,13 @@ TEST_F(ConcurrentTimedExecutorFixture, CanConstructAndDestructWithoutARaceCondit
 
 TEST_F(ConcurrentTimedExecutorFixture, EnsureThreadSafety)
 {
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "error-guessing");
+    RecordProperty("PartiallyVerifies", "comp_req__concurrency__delayed_task, comp_req__concurrency__periodic_task");
+    RecordProperty("Description",
+                   "Check that tasks posted to an executor with a real thread pool are executed in the order of "
+                   "their execution time points.");
+
     using namespace std::chrono_literals;
     std::atomic<std::chrono::steady_clock::time_point> slot_1{std::chrono::steady_clock::time_point::max()};
     std::atomic<std::chrono::steady_clock::time_point> slot_2{std::chrono::steady_clock::time_point::max()};
@@ -313,6 +366,12 @@ TEST_F(ConcurrentTimedExecutorFixture, EnsureThreadSafety)
 
 TEST_F(ConcurrentTimedExecutorFixture, EnsureWaitingForTasksExecutionPoint)
 {
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
+    RecordProperty("PartiallyVerifies", "comp_req__concurrency__delayed_task");
+    RecordProperty("Description",
+                   "Check that a task posted with an execution time point 10 ms ahead is not executed earlier.");
+
     using namespace std::chrono_literals;
     std::atomic<std::chrono::steady_clock::time_point> slot_1{std::chrono::steady_clock::time_point::max()};
 
@@ -340,6 +399,12 @@ TEST_F(ConcurrentTimedExecutorFixture, EnsureWaitingForTasksExecutionPoint)
 
 TEST_F(ConcurrentTimedExecutorFixture, EnsureTaskIsRetrievedAndExecuted)
 {
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "boundary-values");
+    RecordProperty("PartiallyVerifies", "comp_req__concurrency__delayed_task");
+    RecordProperty("Description",
+                   "Check that a task posted with the current time point is executed by the worker thread.");
+
     using namespace std::chrono_literals;
 
     // Given a ConcurrentTimedExecutor with a real thread pool
@@ -361,6 +426,13 @@ TEST_F(ConcurrentTimedExecutorFixture, EnsureTaskIsRetrievedAndExecuted)
 
 TEST_F(ConcurrentTimedExecutorFixture, EnsureWakeUpNotifiesWaitingWorker)
 {
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "design-analysis");
+    RecordProperty("PartiallyVerifies", "comp_req__concurrency__delayed_task");
+    RecordProperty("Description",
+                   "Check that posting an earlier task wakes a waiting worker so that a later delayed task is still "
+                   "executed.");
+
     using namespace std::chrono_literals;
 
     // Given a ConcurrentTimedExecutor with a real thread pool
