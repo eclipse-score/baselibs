@@ -191,6 +191,8 @@ bazel run //:docs    # Run sphinx-needs consistency checks and build HTML docume
 ### Documentation guidelines
 
 - Write RST prose about current capabilities, observable behavior, and constraints. Omit migration narratives, inventories of absent functionality, namespaces, code symbols, and implementation details.
+  Implementation details include memory addresses and pointers, locking primitives such as mutexes, internal storage layout, C++ idioms, and concrete `std::` types.
+  For example, write "Provides a hash value that is consistent with equality" instead of "Hashes the view by its backing string address".
 - Do not link RST prose to source files or Markdown READMEs to RST files.
 - Before deleting obsolete requirements, check whether their functionality moved elsewhere within Baselibs. Remove or retire obsolete needs consistently, updating architecture, safety analysis, incoming references, test metadata, and documentation bundle IDs together.
-- Preserve stable need IDs where possible, bump versions for material changes, and pin links to verified target versions. Tests must reference valid requirements they genuinely verify; do not invent requirements merely to preserve links.
+- Preserve stable need IDs where possible, bump versions only for material changes (see the requirements-management skill, Need Versioning), and pin links to verified target versions. Tests must reference valid requirements they genuinely verify; do not invent requirements merely to preserve links.

@@ -10,7 +10,7 @@ description: >-
 
 ### Author or edit `comp_req` / `aou_req`
 
-1. Edit `docs/baselibs/components/<component>/docs/requirements/index.rst`.
+1. Edit `score/<component>/docs/requirements/index.rst`.
 2. Use a stable lower-snake-case ID: `comp_req__<component>__<short_name>` or `aou_req__<component>__<short_name>`.
 3. Write the body following [Requirement Wording](#requirement-wording); split non-atomic requirements into separate needs.
 4. Set every required attribute from [Requirement Attributes](#requirement-attributes), including `:version:`.
@@ -74,7 +74,7 @@ Other IDs: requirements document `doc__<component>_requirements`; architecture c
 | `:reqtype:` | Yes | `Functional` \| `Interface` \| `Process` \| `Non-Functional` |
 | `:safety:` | Yes | `QM` \| `ASIL_B` |
 | `:security:` | Yes | `YES` \| `NO` |
-| `:status:` | Yes | `valid` \| `invalid` |
+| `:status:` | Yes | `valid` \| `valid_inspected` \| `invalid`; see [Requirement Status](#requirement-status) |
 | `:version:` | Yes | Whole number, starting at `1`; bump on material change |
 | body (content) | Yes | Normative text for `comp_req`; integrator/user assumption for `aou_req` |
 
@@ -96,7 +96,10 @@ Other IDs: requirements document `doc__<component>_requirements`; architecture c
 
 ## Need Versioning
 
-Every need has a whole-number `:version:`. Bump it on material body, safety, security, or link changes; typo and formatting fixes do not need a bump.
+Every need has a whole-number `:version:`. Bump it only on a material change: a change of the body's meaning, safety, security, or of what a link traces to.
+Do not bump for non-material changes, such as typo and formatting fixes, title changes, or retargeting a link to a renamed or re-versioned need without changing what it traces to.
+A non-material change must not cascade: keep the need's version, so pins to it stay valid and their owners need no edits.
+Document needs (`doc__...`) that no link pins can be bumped whenever their content changes.
 
 Every link value is written as `<target_id>[version==N]`, where `N` is the current version of the target need:
 
@@ -109,12 +112,21 @@ Every link value is written as `<target_id>[version==N]`, where `N` is the curre
 - For comma-separated links, pin each ID individually.
 - On unresolved-link failures, check the target version as well as the target ID.
 
+## Requirement Status
+
+- `valid`: the requirement is in force but has not passed a requirements inspection. Use it for every new requirement.
+- `valid_inspected`: the requirement passed a requirements inspection. Keep this status as long as the requirement text is unchanged, including when only its links, title, or version change.
+- `invalid`: the requirement is not in force, e.g. while its `feat_req` does not exist yet.
+
+Reset `valid_inspected` to `valid` only when the requirement text changes materially, since that requires a new inspection.
+
 ## Directory Structure
 
-Author `comp_req` / `aou_req` in each component's `requirements/index.rst`:
+Author `comp_req` / `aou_req` in each component's `requirements/index.rst`.
+Component docs live next to the component source and are mounted under `baselibs/components/<component>/` in the built documentation:
 
 ```
-docs/baselibs/components/<component>/docs/
+score/<component>/docs/
 ├── index.rst                 # component document node (doc__<component>)
 ├── requirements/index.rst    # comp_req + aou_req  <- edit here
 └── architecture/index.rst    # component architecture (comp__..., interfaces)
