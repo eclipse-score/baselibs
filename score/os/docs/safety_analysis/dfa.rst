@@ -16,8 +16,8 @@
 DFA (Dependent Failure Analysis)
 ================================
 
-.. document:: os DFA
-   :id: doc__os_dfa
+.. document:: OSAL DFA
+   :id: doc__osal_dfa
    :status: draft
    :version: 1
    :safety: ASIL_B
