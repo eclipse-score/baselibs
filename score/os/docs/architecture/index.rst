@@ -29,6 +29,7 @@ see :need:`doc__osal`
 
 .. note::
 
+   TODO: Document the list of OSAL subcomponent libraries.
    TODO: Document which OSAL functions can provide ASIL-B services based on their operating system dependencies.
    See `issue #663 <https://github.com/eclipse-score/baselibs/issues/663>`_.
 
@@ -42,7 +43,6 @@ Static Architecture
    :status: valid
    :version: 2
    :tags: baselibs_os
-   :implements: logic_arc_int__baselibs__osal_general[version==1], logic_arc_int__baselibs__osal_qnx[version==1]
    :consists_of: comp__baselibs_osal_qm[version==1]
    :uses: logic_arc_int__os__fcntl[version==1], logic_arc_int__os__stat[version==1], logic_arc_int__os__mman[version==1], logic_arc_int__os__unistd[version==1], logic_arc_int__os__libcpp[version==1], logic_arc_int__os__message_passing[version==1]
    :belongs_to: feat__baselibs[version==1]
