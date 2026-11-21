@@ -192,6 +192,14 @@ bazel_dep(name = "score_process_description", version = "2.2.5")
 
 bazel_dep(name = "score_tooling", version = "3.0.2", dev_dependency = True)
 
+# Prototype dependable element (//dependable_element): *_spn requirement macros of
+# rules_score (eclipse-score/tooling#586). Remove once released.
+git_override(
+    module_name = "score_tooling",
+    commit = "64ce975a186bfb4ed642141c89446502ffa026d7",
+    remote = "https://github.com/eclipse-score/tooling.git",
+)
+
 # LLVM source-based coverage pipeline (successor of @score_tooling//coverage),
 # see tools/coverage/. 0.2.0 fixes eclipse-score/baselibs#558 and
 # eclipse-score/coverage_tool#5 (third-party leak, dead report links, headers

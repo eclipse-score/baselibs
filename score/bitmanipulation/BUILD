@@ -15,6 +15,17 @@ load("@rules_cc//cc:defs.bzl", "cc_library", "cc_test")
 load("@score_baselibs//score/language/safecpp:toolchain_features.bzl", "COMPILER_WARNING_FEATURES")
 load("@score_docs_as_code//:docs.bzl", "docs_bundle")
 
+# Unit designs, public API and dynamic view: documented in docs/, validated by //dependable_element.
+exports_files(
+    [
+        "docs/architecture/bit_manipulation.puml",
+        "docs/architecture/bitmask_operators.puml",
+        "docs/architecture/dynamic.puml",
+        "docs/architecture/public_api.puml",
+    ],
+    visibility = ["//dependable_element:__pkg__"],
+)
+
 cc_test(
     name = "bit_manipulation_test",
     srcs = ["bit_manipulation_test.cpp"],
@@ -23,6 +34,7 @@ cc_test(
         "strict_warnings",
     ],
     tags = ["unit"],
+    visibility = ["//dependable_element:__pkg__"],
     deps = [
         ":bitmanipulation",
         "@googletest//:gtest_main",
@@ -37,6 +49,7 @@ cc_test(
         "strict_warnings",
     ],
     tags = ["unit"],
+    visibility = ["//dependable_element:__pkg__"],
     deps = [
         ":bitmask_operators",
         "@googletest//:gtest_main",
