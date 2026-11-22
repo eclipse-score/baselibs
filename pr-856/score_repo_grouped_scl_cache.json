@@ -18140,7 +18140,7 @@
             {
               "name": "SocketTestFixture__AcceptedSocketHasCloseOnExecSet",
               "file": "score/os/test/socket_test.cpp",
-              "line": 236,
+              "line": 292,
               "need": "comp_req__os__fd_close_on_exec",
               "verify_type": "partially",
               "result": "passed",
@@ -18149,7 +18149,7 @@
             {
               "name": "SocketTestFixture__AcceptedSocketKeepsNonBlockingStateOfListeningSocketOnQnxOnly",
               "file": "score/os/test/socket_test.cpp",
-              "line": 256,
+              "line": 312,
               "need": "comp_req__os__fd_close_on_exec",
               "verify_type": "partially",
               "result": "passed",

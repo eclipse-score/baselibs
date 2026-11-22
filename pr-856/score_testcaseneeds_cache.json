@@ -347524,7 +347524,7 @@
   {
     "name": "MessageFlag__IsDefaultConstructedWithSameValueAsNone",
     "file": "score/os/test/socket_test.cpp",
-    "line": "45",
+    "line": "51",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -347538,7 +347538,7 @@
   {
     "name": "Domain__IsDefaultConstructedWithSameValueAsInvalid",
     "file": "score/os/test/socket_test.cpp",
-    "line": "50",
+    "line": "56",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -347552,7 +347552,7 @@
   {
     "name": "SocketTestFixture__SocketShouldSucceedOnValidInput",
     "file": "score/os/test/socket_test.cpp",
-    "line": "180",
+    "line": "236",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -347566,7 +347566,7 @@
   {
     "name": "SocketTestFixture__SocketShouldFailOnInvalidInput",
     "file": "score/os/test/socket_test.cpp",
-    "line": "185",
+    "line": "241",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -347580,7 +347580,7 @@
   {
     "name": "SocketTestFixture__BindShouldSucceed",
     "file": "score/os/test/socket_test.cpp",
-    "line": "194",
+    "line": "250",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -347594,7 +347594,7 @@
   {
     "name": "SocketTestFixture__BindWithInvalidAddrShouldFail",
     "file": "score/os/test/socket_test.cpp",
-    "line": "201",
+    "line": "257",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -347608,7 +347608,7 @@
   {
     "name": "SocketTestFixture__BindWithInvalidSocketFdShouldFail",
     "file": "score/os/test/socket_test.cpp",
-    "line": "209",
+    "line": "265",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -347622,7 +347622,7 @@
   {
     "name": "SocketTestFixture__ListenShouldSucceed",
     "file": "score/os/test/socket_test.cpp",
-    "line": "216",
+    "line": "272",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -347636,7 +347636,7 @@
   {
     "name": "SocketTestFixture__ListenShouldFailOnInvalidSocketFd",
     "file": "score/os/test/socket_test.cpp",
-    "line": "224",
+    "line": "280",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -347650,7 +347650,7 @@
   {
     "name": "SocketTestFixture__TestAcceptAndConnect",
     "file": "score/os/test/socket_test.cpp",
-    "line": "231",
+    "line": "287",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -347664,7 +347664,7 @@
   {
     "name": "SocketTestFixture__AcceptedSocketHasCloseOnExecSet",
     "file": "score/os/test/socket_test.cpp",
-    "line": "236",
+    "line": "292",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -347678,7 +347678,7 @@
   {
     "name": "SocketTestFixture__AcceptedSocketKeepsNonBlockingStateOfListeningSocketOnQnxOnly",
     "file": "score/os/test/socket_test.cpp",
-    "line": "256",
+    "line": "312",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -347692,7 +347692,7 @@
   {
     "name": "SocketTestFixture__ConnectToInvalidAddressShouldFail",
     "file": "score/os/test/socket_test.cpp",
-    "line": "310",
+    "line": "358",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -347706,7 +347706,7 @@
   {
     "name": "SocketTestFixture__SetInvalidOption",
     "file": "score/os/test/socket_test.cpp",
-    "line": "359",
+    "line": "407",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -347720,7 +347720,7 @@
   {
     "name": "SocketTestFixture__GetOptionInsufficientBuffer",
     "file": "score/os/test/socket_test.cpp",
-    "line": "369",
+    "line": "417",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -347734,7 +347734,7 @@
   {
     "name": "SocketTestFixture__TestSendAndRecv",
     "file": "score/os/test/socket_test.cpp",
-    "line": "377",
+    "line": "425",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -347748,7 +347748,7 @@
   {
     "name": "SocketTestFixture__TestSendToClosedConnection",
     "file": "score/os/test/socket_test.cpp",
-    "line": "391",
+    "line": "439",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -347762,7 +347762,7 @@
   {
     "name": "SocketTestFixture__TestRecvFromClosedConnection",
     "file": "score/os/test/socket_test.cpp",
-    "line": "400",
+    "line": "448",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -347776,7 +347776,7 @@
   {
     "name": "SocketTestFixture__TestSendToAndRecvFrom",
     "file": "score/os/test/socket_test.cpp",
-    "line": "409",
+    "line": "457",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -347790,7 +347790,7 @@
   {
     "name": "SocketTestFixture__TestSendZeroLengthData",
     "file": "score/os/test/socket_test.cpp",
-    "line": "439",
+    "line": "487",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -347804,7 +347804,7 @@
   {
     "name": "SocketTestFixture__RecvFromZeroLengthBuffer",
     "file": "score/os/test/socket_test.cpp",
-    "line": "457",
+    "line": "505",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -347818,7 +347818,7 @@
   {
     "name": "SocketTestFixture__RecvFromClosedSocket",
     "file": "score/os/test/socket_test.cpp",
-    "line": "486",
+    "line": "534",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -347832,7 +347832,7 @@
   {
     "name": "SocketTestFixture__SendToInvalidFd",
     "file": "score/os/test/socket_test.cpp",
-    "line": "515",
+    "line": "563",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -347846,7 +347846,7 @@
   {
     "name": "SocketTestFixture__TestSendMsgAndRecvMsg",
     "file": "score/os/test/socket_test.cpp",
-    "line": "529",
+    "line": "577",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -347860,7 +347860,7 @@
   {
     "name": "SocketTestFixture__TestSendMsgToClosedConnection",
     "file": "score/os/test/socket_test.cpp",
-    "line": "556",
+    "line": "604",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -347874,7 +347874,7 @@
   {
     "name": "SocketTestFixture__TestSendmmsgToClosedConnection",
     "file": "score/os/test/socket_test.cpp",
-    "line": "572",
+    "line": "620",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -347888,7 +347888,7 @@
   {
     "name": "SocketTestFixture__TestRecvMsgFromClosedSocket",
     "file": "score/os/test/socket_test.cpp",
-    "line": "588",
+    "line": "636",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -347902,7 +347902,7 @@
   {
     "name": "SocketTestFixture__TestRecvMmsgFromClosedSocket",
     "file": "score/os/test/socket_test.cpp",
-    "line": "604",
+    "line": "652",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -347916,7 +347916,7 @@
   {
     "name": "SocketTestFixture__CreateAfRouteSocketShouldFail",
     "file": "score/os/test/socket_test.cpp",
-    "line": "631",
+    "line": "679",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -347930,7 +347930,7 @@
   {
     "name": "SocketTestFixture__CreateSocketWithInvalidDomain",
     "file": "score/os/test/socket_test.cpp",
-    "line": "639",
+    "line": "687",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -347944,7 +347944,7 @@
   {
     "name": "SocketTestFixture__CreateSocketWithDefaultDomain",
     "file": "score/os/test/socket_test.cpp",
-    "line": "651",
+    "line": "699",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -347958,7 +347958,7 @@
   {
     "name": "SocketTestFixture__TestSendmmsgAndRecvmmsg",
     "file": "score/os/test/socket_test.cpp",
-    "line": "695",
+    "line": "743",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -347972,7 +347972,7 @@
   {
     "name": "SocketTestFixture__SendZeroMessages",
     "file": "score/os/test/socket_test.cpp",
-    "line": "755",
+    "line": "803",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -347986,7 +347986,7 @@
   {
     "name": "SocketTestFixture__ReceiveZeroMessages",
     "file": "score/os/test/socket_test.cpp",
-    "line": "770",
+    "line": "818",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -348000,7 +348000,7 @@
   {
     "name": "SocketTestFixture__TestAcceptFailure",
     "file": "score/os/test/socket_test.cpp",
-    "line": "784",
+    "line": "832",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -348014,7 +348014,7 @@
   {
     "name": "SocketOptions/SocketTestSetSockOptFixture__SetAndGetOption/0",
     "file": "score/os/test/socket_test.cpp",
-    "line": "323",
+    "line": "371",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -348028,7 +348028,7 @@
   {
     "name": "SocketOptions/SocketTestSetSockOptFixture__SetAndGetOption/1",
     "file": "score/os/test/socket_test.cpp",
-    "line": "323",
+    "line": "371",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -348042,7 +348042,7 @@
   {
     "name": "SocketOptions/SocketTestSetSockOptFixture__SetAndGetOption/2",
     "file": "score/os/test/socket_test.cpp",
-    "line": "323",
+    "line": "371",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -348056,7 +348056,7 @@
   {
     "name": "SocketOptions/SocketTestSetSockOptFixture__TurnOffFlag/0",
     "file": "score/os/test/socket_test.cpp",
-    "line": "341",
+    "line": "389",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -348070,7 +348070,7 @@
   {
     "name": "SocketOptions/SocketTestSetSockOptFixture__TurnOffFlag/1",
     "file": "score/os/test/socket_test.cpp",
-    "line": "341",
+    "line": "389",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -348084,7 +348084,7 @@
   {
     "name": "SocketOptions/SocketTestSetSockOptFixture__TurnOffFlag/2",
     "file": "score/os/test/socket_test.cpp",
-    "line": "341",
+    "line": "389",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -348098,7 +348098,7 @@
   {
     "name": "SocketDomains/SocketTypeTestFixture__CreateSocket/0",
     "file": "score/os/test/socket_test.cpp",
-    "line": "626",
+    "line": "674",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -348112,7 +348112,7 @@
   {
     "name": "SocketDomains/SocketTypeTestFixture__CreateSocket/1",
     "file": "score/os/test/socket_test.cpp",
-    "line": "626",
+    "line": "674",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -348126,7 +348126,7 @@
   {
     "name": "SocketDomains/SocketTypeTestFixture__CreateSocket/2",
     "file": "score/os/test/socket_test.cpp",
-    "line": "626",
+    "line": "674",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -348140,7 +348140,7 @@
   {
     "name": "SocketFlags/SocketTestFlagFixture__TestSendWithFlags/0",
     "file": "score/os/test/socket_test.cpp",
-    "line": "676",
+    "line": "724",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -348154,7 +348154,7 @@
   {
     "name": "SocketFlags/SocketTestFlagFixture__TestSendWithFlags/1",
     "file": "score/os/test/socket_test.cpp",
-    "line": "676",
+    "line": "724",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -348168,7 +348168,7 @@
   {
     "name": "SocketFlags/SocketTestFlagFixture__TestSendWithFlags/2",
     "file": "score/os/test/socket_test.cpp",
-    "line": "676",
+    "line": "724",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -348182,7 +348182,7 @@
   {
     "name": "SocketFlags/SocketTestFlagFixture__TestSendWithFlags/3",
     "file": "score/os/test/socket_test.cpp",
-    "line": "676",
+    "line": "724",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -348196,7 +348196,7 @@
   {
     "name": "SocketFlags/SocketTestFlagFixture__TestSendWithFlags/4",
     "file": "score/os/test/socket_test.cpp",
-    "line": "676",
+    "line": "724",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -348210,7 +348210,7 @@
   {
     "name": "SocketFlags/SocketTestFlagFixture__TestSendWithFlags/5",
     "file": "score/os/test/socket_test.cpp",
-    "line": "676",
+    "line": "724",
     "result": "passed",
     "repo_name": null,
     "hash": null,
@@ -348224,7 +348224,7 @@
   {
     "name": "SocketFlags/SocketTestFlagFixture__TestSendWithFlags/6",
     "file": "score/os/test/socket_test.cpp",
-    "line": "676",
+    "line": "724",
     "result": "passed",
     "repo_name": null,
     "hash": null,
