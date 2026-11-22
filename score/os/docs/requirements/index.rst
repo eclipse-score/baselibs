@@ -60,5 +60,17 @@ Functional Requirements
 
    The OS component shall provide functions for unsetting environment variable.
 
+.. comp_req:: File descriptor close-on-exec
+   :id: comp_req__os__fd_close_on_exec
+   :reqtype: Functional
+   :security: YES
+   :safety: ASIL_B
+   :status: valid
+   :version: 1
+   :satisfied_by: comp__baselibs_os[version==1]
+
+   The OS component shall create pipes, accepted sockets and inotify instances with close-on-exec by default, and shall
+   allow the caller to choose the creation flags of pipes and inotify instances.
+
 .. needextend:: c.this_doc() and (type == "comp_req" or type == "aou_req")
    :+tags: baselibs, os

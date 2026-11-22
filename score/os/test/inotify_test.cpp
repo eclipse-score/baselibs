@@ -12,9 +12,11 @@
  ********************************************************************************/
 #include "score/os/inotify.h"
 #include "score/os/errno.h"
+#include "score/os/mocklib/inotify_mock.h"
 
 #include <fcntl.h>
 #include <sys/inotify.h>
+#include <unistd.h>
 
 #include <gtest/gtest.h>
 
@@ -40,6 +42,10 @@ struct InotifyTest : ::testing::Test
 
     void TearDown() override
     {
+        if (fd.has_value())
+        {
+            ::close(fd.value());
+        }
         ASSERT_EQ(::rmdir(temp_dir_.c_str()), 0);
     }
 
@@ -49,6 +55,7 @@ struct InotifyTest : ::testing::Test
 
 TEST_F(InotifyTest, InotifyInstanceHasCloseOnExecSet)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__os__fd_close_on_exec");
     RecordProperty(
         "Description",
         "An inotify instance has close-on-exec set, so it is not inherited by processes created via execve()");
@@ -62,6 +69,67 @@ TEST_F(InotifyTest, InotifyInstanceHasCloseOnExecSet)
     const int flags{::fcntl(fd.value(), F_GETFD)};
     ASSERT_NE(flags, -1);
     EXPECT_NE(flags & FD_CLOEXEC, 0);
+}
+
+TEST(InotifyDefaultImplementation, InotifyInit1ReportsNotSupportedWhenNotOverridden)
+{
+    RecordProperty("PartiallyVerifies", "comp_req__os__fd_close_on_exec");
+    RecordProperty("Description", "The default inotify_init1 of the interface reports ENOSYS");
+    RecordProperty("TestType", "interface-test");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
+
+    // Given a mock, which does not use the default implementation
+    score::os::InotifyMock mock{};
+
+    // When calling the default implementation of the interface explicitly
+    const auto result = mock.score::os::Inotify::inotify_init1(score::os::Inotify::InitFlag::kNone);
+
+    // Then it reports that the operation is not supported
+    ASSERT_FALSE(result.has_value());
+    EXPECT_EQ(result.error(), score::os::Error::createFromErrno(ENOSYS));
+}
+
+TEST_F(InotifyTest, InotifyInit1WithNoFlagsCreatesInheritableBlockingInstance)
+{
+    RecordProperty("PartiallyVerifies", "comp_req__os__fd_close_on_exec");
+    RecordProperty("Description", "inotify_init1 without flags leaves close-on-exec and non-blocking unset");
+    RecordProperty("TestType", "interface-test");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
+
+    // When creating an instance without flags
+    const auto instance{score::os::Inotify::instance().inotify_init1(score::os::Inotify::InitFlag::kNone)};
+    ASSERT_TRUE(instance.has_value());
+    const int fd_flags{::fcntl(instance.value(), F_GETFD)};
+    const int status_flags{::fcntl(instance.value(), F_GETFL)};
+    ::close(instance.value());
+
+    // Then neither close-on-exec nor non-blocking is set
+    ASSERT_NE(fd_flags, -1);
+    ASSERT_NE(status_flags, -1);
+    EXPECT_EQ(fd_flags & FD_CLOEXEC, 0);
+    EXPECT_EQ(status_flags & O_NONBLOCK, 0);
+}
+
+TEST_F(InotifyTest, InotifyInit1WithCloseOnExecAndNonBlockingSetsBothFlags)
+{
+    RecordProperty("PartiallyVerifies", "comp_req__os__fd_close_on_exec");
+    RecordProperty("Description", "inotify_init1 applies the requested close-on-exec and non-blocking flags");
+    RecordProperty("TestType", "interface-test");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
+
+    // When creating an instance with close-on-exec and non-blocking
+    const auto instance{score::os::Inotify::instance().inotify_init1(score::os::Inotify::InitFlag::kCloseOnExec |
+                                                                     score::os::Inotify::InitFlag::kNonBlocking)};
+    ASSERT_TRUE(instance.has_value());
+    const int fd_flags{::fcntl(instance.value(), F_GETFD)};
+    const int status_flags{::fcntl(instance.value(), F_GETFL)};
+    ::close(instance.value());
+
+    // Then both flags are set
+    ASSERT_NE(fd_flags, -1);
+    ASSERT_NE(status_flags, -1);
+    EXPECT_NE(fd_flags & FD_CLOEXEC, 0);
+    EXPECT_NE(status_flags & O_NONBLOCK, 0);
 }
 
 TEST_F(InotifyTest, AddWatchSuccessfull)

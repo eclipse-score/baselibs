@@ -46,6 +46,11 @@ class UnistdMock : public Unistd
                 (std::int32_t pipefd[2]),
                 (const, noexcept, override));
 
+    MOCK_METHOD(score::cpp::expected_blank<score::os::Error>,
+                pipe2,
+                (std::int32_t pipefd[2], const PipeFlag flags),
+                (const, noexcept, override));
+
     MOCK_METHOD((score::cpp::expected<std::int32_t, score::os::Error>),
                 dup,
                 (const std::int32_t oldfd),

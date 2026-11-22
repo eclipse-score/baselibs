@@ -27,6 +27,10 @@ class InotifyMock : public Inotify
   public:
     MOCK_METHOD((score::cpp::expected<std::int32_t, Error>), inotify_init, (), (const, noexcept, override));
     MOCK_METHOD((score::cpp::expected<std::int32_t, Error>),
+                inotify_init1,
+                (const InitFlag flags),
+                (const, noexcept, override));
+    MOCK_METHOD((score::cpp::expected<std::int32_t, Error>),
                 inotify_add_watch,
                 (std::int32_t fd, const char* pathname, EventMask mask),
                 (const, noexcept, override));

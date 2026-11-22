@@ -38,10 +38,24 @@ class Inotify : public ObjectSeam<Inotify>
         kInDelete = 512,  /* File was deleted in a watched directory */
     };
 
+    /// @brief Creation flags for inotify_init1(). They can be combined with the bitmask operators.
+    enum class InitFlag : std::uint32_t
+    {
+        kNone = 0,
+        kCloseOnExec = 1,  ///< The instance is not inherited by processes created via fork() + execve().
+        kNonBlocking = 2,  ///< Reads on the instance do not block.
+    };
+
     /// @brief Creates an inotify instance.
-    /// It is created with close-on-exec (FD_CLOEXEC).
+    /// It is created with close-on-exec (FD_CLOEXEC), as with inotify_init1(InitFlag::kCloseOnExec).
     /// This way it is not inherited by processes created via fork() + execve().
+    /// To get an inheritable instance, use inotify_init1() with other flags.
     virtual score::cpp::expected<std::int32_t, Error> inotify_init() const noexcept = 0;
+    /// @brief Creates an inotify instance with the given creation flags.
+    /// The flags are applied atomically. InitFlag::kNone creates an inheritable, blocking instance.
+    /// This method is not pure virtual, so that existing implementations of Inotify, for example fakes, keep compiling.
+    /// The default implementation returns an error for ENOSYS. InotifyImpl overrides it.
+    virtual score::cpp::expected<std::int32_t, Error> inotify_init1(const InitFlag flags) const noexcept;
     virtual score::cpp::expected<std::int32_t, Error> inotify_add_watch(const std::int32_t fd,
                                                                         const char* const pathname,
                                                                         const EventMask mask) const noexcept = 0;
@@ -66,6 +80,11 @@ namespace score
 {
 template <>
 struct enable_bitmask_operators<::score::os::Inotify::EventMask> : public std::true_type
+{
+};
+
+template <>
+struct enable_bitmask_operators<::score::os::Inotify::InitFlag> : public std::true_type
 {
 };
 }  // namespace score

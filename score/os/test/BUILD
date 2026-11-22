@@ -296,6 +296,7 @@ cc_test(
         "@googletest//:gtest_main",
         "@score_baselibs//score/os:errno",
         "@score_baselibs//score/os:inotify",
+        "@score_baselibs//score/os/mocklib:inotify_mock",
     ],
 )
 
@@ -462,6 +463,7 @@ cc_test(
         "@score_baselibs//score/os:mman",
         "@score_baselibs//score/os:socket",
         "@score_baselibs//score/os:unistd",
+        "@score_baselibs//score/os/mocklib:unistd_mock",
         "@score_baselibs//score/os/utils:signal",
     ],
 )

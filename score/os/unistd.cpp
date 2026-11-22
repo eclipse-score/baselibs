@@ -79,12 +79,29 @@ score::cpp::expected_blank<score::os::Error> score::os::internal::UnistdImpl::pi
 {
     // Both ends are created with close-on-exec.
     // This way they are not inherited by processes created via fork() + execve().
-    // pipe2() sets the flag atomically, so no concurrent fork() can leak the descriptors.
+    return this->pipe2(pipefd, PipeFlag::kCloseOnExec);
+}
+
+// Wrapped function requires C-style array param
+// NOLINTNEXTLINE(modernize-avoid-c-arrays) see comment above
+score::cpp::expected_blank<score::os::Error> score::os::internal::UnistdImpl::pipe2(std::int32_t pipefd[2],
+                                                                                    const PipeFlag flags) const noexcept
+{
+    // The flags are applied by pipe2() atomically, so no concurrent fork() can leak the descriptors.
+    std::uint32_t native_flags{0U};
+    if (static_cast<std::int32_t>(flags & PipeFlag::kCloseOnExec) != 0)
+    {
+        native_flags |= static_cast<std::uint32_t>(O_CLOEXEC);
+    }
+    if (static_cast<std::int32_t>(flags & PipeFlag::kNonBlocking) != 0)
+    {
+        native_flags |= static_cast<std::uint32_t>(O_NONBLOCK);
+    }
     // Suppressed here because usage of this OSAL method is on banned list
     /* It is immposible to cover the return statement */
     /* Hence, added suppression */
     // NOLINTNEXTLINE(score-banned-function) see comment above
-    if (::pipe2(pipefd, O_CLOEXEC) == -1)  // LCOV_EXCL_BR_LINE
+    if (::pipe2(pipefd, static_cast<std::int32_t>(native_flags)) == -1)  // LCOV_EXCL_BR_LINE
     {
         return score::cpp::make_unexpected(score::os::Error::createFromErrno()); /* LCOV_EXCL_LINE */
         /*Error can not be reproduced in scope of unit tests. Incorrect value is prohibited, causes undefined behavior*/
@@ -392,6 +409,14 @@ score::cpp::expected_blank<score::os::Error> score::os::internal::UnistdImpl::ge
         return score::cpp::make_unexpected(score::os::Error::createFromErrno());
     }
     return {};
+}
+
+// The default implementation reports that the operation is not supported, see the declaration.
+// Wrapped function requires C-style array param
+// NOLINTNEXTLINE(modernize-avoid-c-arrays) see comment above
+score::cpp::expected_blank<score::os::Error> score::os::Unistd::pipe2(std::int32_t[2], const PipeFlag) const noexcept
+{
+    return score::cpp::make_unexpected(score::os::Error::createFromErrno(ENOSYS));
 }
 
 score::os::Unistd& score::os::Unistd::instance() noexcept

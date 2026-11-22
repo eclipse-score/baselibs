@@ -235,6 +235,7 @@ TEST_F(SocketTestFixture, TestAcceptAndConnect)
 
 TEST_F(SocketTestFixture, AcceptedSocketHasCloseOnExecSet)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__os__fd_close_on_exec");
     RecordProperty(
         "Description",
         "An accepted socket has close-on-exec set, so it is not inherited by processes created via execve()");
@@ -250,6 +251,60 @@ TEST_F(SocketTestFixture, AcceptedSocketHasCloseOnExecSet)
     const int flags{::fcntl(accepted_fd_, F_GETFD)};
     ASSERT_NE(flags, -1);
     EXPECT_NE(flags & FD_CLOEXEC, 0);
+}
+
+TEST_F(SocketTestFixture, AcceptedSocketKeepsNonBlockingStateOfListeningSocketOnQnxOnly)
+{
+    RecordProperty("PartiallyVerifies", "comp_req__os__fd_close_on_exec");
+    RecordProperty("Description",
+                   "Accepting with close-on-exec does not change the O_NONBLOCK state of the accepted socket: it is "
+                   "the same as with a plain accept(). On QNX it is inherited from the listening socket, on Linux it "
+                   "is never inherited");
+    RecordProperty("TestType", "interface-test");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
+
+    // Given a non-blocking listening socket with a connected client
+    TestSocket();
+    InitAddr();
+    TestBind();
+    TestListen();
+    const int listener_flags{::fcntl(server_fd_, F_GETFL)};
+    ASSERT_NE(listener_flags, -1);
+    ASSERT_NE(::fcntl(server_fd_, F_SETFL, listener_flags | O_NONBLOCK), -1);
+    TestClientSocket();
+    InitServerAddr();
+    TestConnect();
+
+    // When the server accepts the connection
+    TestAccept();
+
+    // Then the accepted socket is non-blocking on QNX and blocking on Linux
+    ASSERT_NE(accepted_fd_, -1);
+    const int accepted_flags{::fcntl(accepted_fd_, F_GETFL)};
+    ASSERT_NE(accepted_flags, -1);
+#if defined(__QNX__)
+    EXPECT_NE(accepted_flags & O_NONBLOCK, 0);
+#else
+    EXPECT_EQ(accepted_flags & O_NONBLOCK, 0);
+#endif
+
+    // And a plain accept() on the same listening socket gives the same O_NONBLOCK state
+    const int second_client_fd{::socket(AF_INET, SOCK_STREAM, 0)};
+    ASSERT_NE(second_client_fd, -1);
+    const int connect_result{
+        ::connect(second_client_fd, reinterpret_cast<sockaddr*>(&server_addr_), sizeof(sockaddr_in))};
+    // NOLINTNEXTLINE(score-banned-function) plain accept() is the reference behaviour of this test
+    const int plain_accepted_fd{::accept(server_fd_, nullptr, nullptr)};
+    const int plain_accepted_flags{(plain_accepted_fd != -1) ? ::fcntl(plain_accepted_fd, F_GETFL) : -1};
+    if (plain_accepted_fd != -1)
+    {
+        unistd_.close(plain_accepted_fd);
+    }
+    unistd_.close(second_client_fd);
+    ASSERT_EQ(connect_result, 0);
+    ASSERT_NE(plain_accepted_fd, -1);
+    ASSERT_NE(plain_accepted_flags, -1);
+    EXPECT_EQ(plain_accepted_flags & O_NONBLOCK, accepted_flags & O_NONBLOCK);
 }
 
 TEST_F(SocketTestFixture, ConnectToInvalidAddressShouldFail)

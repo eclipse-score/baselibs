@@ -76,6 +76,10 @@ class Socket : public ObjectSeam<Socket>
         kRoute,  // In some system has the same effect like kNetlink
     };
 
+    /// @brief Creates a socket.
+    /// @a type is passed to the OS unchanged. The socket is only created with close-on-exec if the caller adds
+    /// SOCK_CLOEXEC to @a type. Callers whose sockets must not be inherited by processes created via fork() + execve()
+    /// should do so.
     virtual score::cpp::expected<std::int32_t, Error> socket(const Domain domain,
                                                              const std::int32_t type,
                                                              const std::int32_t protocol) const noexcept = 0;
@@ -90,6 +94,8 @@ class Socket : public ObjectSeam<Socket>
     /// @brief Accepts a connection.
     /// The returned socket is created with close-on-exec (FD_CLOEXEC).
     /// This way it is not inherited by processes created via fork() + execve().
+    /// Apart from that it is meant to behave like accept(): on QNX the returned socket is non-blocking if the listening
+    /// socket is, on Linux it is always blocking.
     virtual score::cpp::expected<std::int32_t, Error> accept(const std::int32_t sockfd,
                                                              struct sockaddr* const addr,
                                                              socklen_t* const addrlen) const noexcept = 0;

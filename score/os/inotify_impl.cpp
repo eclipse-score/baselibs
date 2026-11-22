@@ -50,14 +50,27 @@ std::uint32_t EventMaskToInteger(const Inotify::EventMask event_mask) noexcept
 
 score::cpp::expected<std::int32_t, Error> InotifyImpl::inotify_init() const noexcept
 {
-    // Manual code analysis:
-    // inotify_init() fails when there is not enough memory, when the system/user has reached the maximum number of
-    // inotify instances, or due to other kernel or file system limitations. There is no reliable way to simulate
-    // above error cases within the scope of a unit test.
-    //
     // The instance is created with close-on-exec.
     // This way it is not inherited by processes created via fork() + execve().
-    const std::int32_t ret{::inotify_init1(IN_CLOEXEC)};
+    return this->inotify_init1(InitFlag::kCloseOnExec);
+}
+
+score::cpp::expected<std::int32_t, Error> InotifyImpl::inotify_init1(const InitFlag flags) const noexcept
+{
+    std::uint32_t native_flags{0U};
+    if (static_cast<std::uint32_t>(flags & InitFlag::kCloseOnExec) != 0U)
+    {
+        native_flags |= static_cast<std::uint32_t>(IN_CLOEXEC);
+    }
+    if (static_cast<std::uint32_t>(flags & InitFlag::kNonBlocking) != 0U)
+    {
+        native_flags |= static_cast<std::uint32_t>(IN_NONBLOCK);
+    }
+    // Manual code analysis:
+    // inotify_init1() fails when there is not enough memory, when the system/user has reached the maximum number of
+    // inotify instances, or due to other kernel or file system limitations. There is no reliable way to simulate
+    // above error cases within the scope of a unit test.
+    const std::int32_t ret{::inotify_init1(static_cast<std::int32_t>(native_flags))};
     if (ret < 0)  // LCOV_EXCL_BR_LINE
     {
         return score::cpp::make_unexpected(Error::createFromErrno());  // LCOV_EXCL_LINE

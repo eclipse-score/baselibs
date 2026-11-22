@@ -11,6 +11,7 @@
  * SPDX-License-Identifier: Apache-2.0
  ********************************************************************************/
 #include "score/os/socket_impl.h"
+#include <fcntl.h>
 #include <type_traits>
 
 namespace score
@@ -50,9 +51,28 @@ score::cpp::expected<std::int32_t, Error> SocketImpl::accept(const std::int32_t 
 {
     // The accepted socket is created with close-on-exec.
     // This way it is not inherited by processes created via fork() + execve().
+    std::int32_t accept_flags{SOCK_CLOEXEC};
+// Suppress "AUTOSAR C++14 A16-0-1" rule findings. This rule stated: "The pre-processor shall only be used for
+// unconditional and conditional file inclusion and include guards, and using the following directives: (1) #ifndef,
+// #ifdef, (3) #if, (4) #if defined, (5) #elif, (6) #else, (7) #define, (8) #endif, (9) #include.".
+// Rationale: Pre-processor commands are used to allow different implementations for linux and QNX to exist
+// in the same file. It also prevents compiler errors in linux code when compiling for QNX and vice versa.
+// coverity[autosar_cpp14_a16_0_1_violation]
+#if defined(__QNX__)
+    // On QNX, accept() is expected to give the accepted socket the O_NONBLOCK state of the listening socket, while
+    // accept4() takes it only from its flags. QNX does not document either, so socket_test compares the result with a
+    // plain accept(). Keep the previous behaviour, so that close-on-exec is the only difference.
+    // NOLINTNEXTLINE(cppcoreguidelines-pro-type-vararg): fcntl is a POSIX variadic function
+    const std::int32_t listener_flags{::fcntl(sockfd, F_GETFL)};
+    if ((listener_flags != -1) && ((listener_flags & O_NONBLOCK) != 0))
+    {
+        accept_flags |= SOCK_NONBLOCK;
+    }
+// coverity[autosar_cpp14_a16_0_1_violation]
+#endif
     // Suppressed here because usage of this OSAL method is on banned list
     // NOLINTNEXTLINE(score-banned-function) see comment above
-    const std::int32_t ret = ::accept4(sockfd, addr, addrlen, SOCK_CLOEXEC);
+    const std::int32_t ret = ::accept4(sockfd, addr, addrlen, accept_flags);
     if (ret == -1)
     {
         return score::cpp::make_unexpected(score::os::Error::createFromErrno());

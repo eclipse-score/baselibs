@@ -10,6 +10,7 @@
  *
  * SPDX-License-Identifier: Apache-2.0
  ********************************************************************************/
+#include "score/os/mocklib/unistdmock.h"
 #include "score/os/unistd.h"
 #include "score/os/utils/signal_impl.h"
 
@@ -207,6 +208,7 @@ TEST_F(UnistdFixture, PipeOpensWithoutError)
 
 TEST_F(UnistdFixture, PipeCreatesDescriptorsWithCloseOnExec)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__os__fd_close_on_exec");
     RecordProperty("Description", "Both ends of a pipe must not be inherited by processes created via execve()");
     RecordProperty("TestType", "interface-test");
     RecordProperty("DerivationTechnique", "equivalence-classes");
@@ -227,6 +229,86 @@ TEST_F(UnistdFixture, PipeCreatesDescriptorsWithCloseOnExec)
     ASSERT_NE(write_end_flags, -1);
     EXPECT_NE(read_end_flags & FD_CLOEXEC, 0);
     EXPECT_NE(write_end_flags & FD_CLOEXEC, 0);
+}
+
+TEST_F(UnistdFixture, Pipe2WithNoFlagsCreatesInheritableBlockingDescriptors)
+{
+    RecordProperty("PartiallyVerifies", "comp_req__os__fd_close_on_exec");
+    RecordProperty("Description", "pipe2 without flags leaves close-on-exec and non-blocking unset on both ends");
+    RecordProperty("TestType", "interface-test");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
+
+    // Given a pipe created without flags
+    int32_t fds[2] = {};
+    ASSERT_TRUE(unit_->pipe2(&fds[0], Unistd::PipeFlag::kNone).has_value());
+
+    // When reading the descriptor and status flags of both ends
+    const int read_end_fd_flags{::fcntl(fds[0], F_GETFD)};
+    const int write_end_fd_flags{::fcntl(fds[1], F_GETFD)};
+    const int read_end_status_flags{::fcntl(fds[0], F_GETFL)};
+    const int write_end_status_flags{::fcntl(fds[1], F_GETFL)};
+    ::close(fds[0]);
+    ::close(fds[1]);
+
+    // Then neither close-on-exec nor non-blocking is set
+    ASSERT_NE(read_end_fd_flags, -1);
+    ASSERT_NE(write_end_fd_flags, -1);
+    ASSERT_NE(read_end_status_flags, -1);
+    ASSERT_NE(write_end_status_flags, -1);
+    EXPECT_EQ(read_end_fd_flags & FD_CLOEXEC, 0);
+    EXPECT_EQ(write_end_fd_flags & FD_CLOEXEC, 0);
+    EXPECT_EQ(read_end_status_flags & O_NONBLOCK, 0);
+    EXPECT_EQ(write_end_status_flags & O_NONBLOCK, 0);
+}
+
+TEST_F(UnistdFixture, Pipe2WithCloseOnExecAndNonBlockingSetsBothFlagsOnBothEnds)
+{
+    RecordProperty("PartiallyVerifies", "comp_req__os__fd_close_on_exec");
+    RecordProperty("Description", "pipe2 applies the requested close-on-exec and non-blocking flags to both ends");
+    RecordProperty("TestType", "interface-test");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
+
+    // Given a pipe created with close-on-exec and non-blocking
+    int32_t fds[2] = {};
+    ASSERT_TRUE(unit_->pipe2(&fds[0], Unistd::PipeFlag::kCloseOnExec | Unistd::PipeFlag::kNonBlocking).has_value());
+
+    // When reading the descriptor and status flags of both ends
+    const int read_end_fd_flags{::fcntl(fds[0], F_GETFD)};
+    const int write_end_fd_flags{::fcntl(fds[1], F_GETFD)};
+    const int read_end_status_flags{::fcntl(fds[0], F_GETFL)};
+    const int write_end_status_flags{::fcntl(fds[1], F_GETFL)};
+    ::close(fds[0]);
+    ::close(fds[1]);
+
+    // Then both flags are set on both ends
+    ASSERT_NE(read_end_fd_flags, -1);
+    ASSERT_NE(write_end_fd_flags, -1);
+    ASSERT_NE(read_end_status_flags, -1);
+    ASSERT_NE(write_end_status_flags, -1);
+    EXPECT_NE(read_end_fd_flags & FD_CLOEXEC, 0);
+    EXPECT_NE(write_end_fd_flags & FD_CLOEXEC, 0);
+    EXPECT_NE(read_end_status_flags & O_NONBLOCK, 0);
+    EXPECT_NE(write_end_status_flags & O_NONBLOCK, 0);
+}
+
+TEST(UnistdDefaultImplementation, Pipe2ReportsNotSupportedWhenNotOverridden)
+{
+    RecordProperty("PartiallyVerifies", "comp_req__os__fd_close_on_exec");
+    RecordProperty("Description",
+                   "The default pipe2 of the interface reports ENOSYS, so implementations without it compile");
+    RecordProperty("TestType", "interface-test");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
+
+    // Given a mock, which does not use the default implementation
+    UnistdMock mock{};
+    std::int32_t fds[2] = {};
+
+    // When calling the default implementation of the interface explicitly
+    const auto result = mock.Unistd::pipe2(&fds[0], Unistd::PipeFlag::kNone);
+
+    // Then it reports that the operation is not supported
+    ASSERT_FALSE(result.has_value());
+    EXPECT_EQ(result.error(), Error::createFromErrno(ENOSYS));
 }
 
 TEST_F(UnistdFixture, DupReturnsErrorIfPassInvalidFd)
