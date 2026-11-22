@@ -22,8 +22,10 @@
 #include <netinet/in.h>
 #include <sys/socket.h>
 #include <cerrno>
+#include <chrono>
 #include <cstdint>
 #include <cstdlib>
+#include <cstring>
 #include <exception>
 #include <limits>
 #include <thread>
@@ -41,6 +43,10 @@ using namespace ::testing;
 constexpr std::uint16_t kDefaultPortForTesting{61012U};
 constexpr std::string_view kDefaultAddrForTesting{"127.0.0.1"};
 constexpr std::string_view kTextForTesting{"Hello, BMW!"};
+// accept() on a non-blocking listening socket fails with EAGAIN until the connection has reached the listening queue.
+// This can still be the case after connect() has returned on the client side.
+constexpr int kMaxAcceptAttempts{200};
+constexpr std::chrono::milliseconds kAcceptRetryDelay{10};
 
 TEST(MessageFlag, IsDefaultConstructedWithSameValueAsNone)
 {
@@ -149,6 +155,56 @@ struct SocketTestFixture : public Test
             accepted_fd_ = accept_result.value();
             EXPECT_GT(accepted_fd_, 0);
         }
+    }
+
+    void MakeServerSocketNonBlocking()
+    {
+        const int flags{::fcntl(server_fd_, F_GETFL)};
+        ASSERT_NE(flags, -1);
+        ASSERT_NE(::fcntl(server_fd_, F_SETFL, flags | O_NONBLOCK), -1);
+    }
+
+    // Accepts a connection on a non-blocking listening socket. EAGAIN is retried, any other error fails the test.
+    void TestAcceptOnNonBlockingServerSocket()
+    {
+        for (int attempt{0}; attempt < kMaxAcceptAttempts; ++attempt)
+        {
+            unsigned int sock_size = sizeof(sockaddr_in);
+            const auto accept_result =
+                instance_.accept(server_fd_, reinterpret_cast<sockaddr*>(&client_addr_), &sock_size);
+            if (accept_result.has_value())
+            {
+                accepted_fd_ = accept_result.value();
+                EXPECT_GT(accepted_fd_, 0);
+                return;
+            }
+            ASSERT_EQ(accept_result.error(), Error::createFromErrno(EAGAIN))
+                << "accept() failed: " << accept_result.error().ToString();
+            std::this_thread::sleep_for(kAcceptRetryDelay);
+        }
+        FAIL() << "accept() still reported EAGAIN after " << kMaxAcceptAttempts << " attempts";
+    }
+
+    // Accepts a connection on a non-blocking listening socket with accept() of the C library. EAGAIN is retried.
+    // Returns the accepted descriptor, or -1 after reporting the error.
+    int AcceptWithLibcOnNonBlockingServerSocket()
+    {
+        for (int attempt{0}; attempt < kMaxAcceptAttempts; ++attempt)
+        {
+            // NOLINTNEXTLINE(score-banned-function): Socket::accept() is compared with the C library function.
+            const int fd{::accept(server_fd_, nullptr, nullptr)};
+            if (fd != -1)
+            {
+                return fd;
+            }
+            if (errno != EAGAIN)
+            {
+                break;
+            }
+            std::this_thread::sleep_for(kAcceptRetryDelay);
+        }
+        ADD_FAILURE() << "accept() failed: " << std::strerror(errno);
+        return -1;
     }
 
     void CreateServerAndClientSockets(int32_t type = SOCK_STREAM)
@@ -268,21 +324,19 @@ TEST_F(SocketTestFixture, AcceptedSocketKeepsNonBlockingStateOfListeningSocketOn
     InitAddr();
     TestBind();
     TestListen();
-    const int listener_flags{::fcntl(server_fd_, F_GETFL)};
-    ASSERT_NE(listener_flags, -1);
-    ASSERT_NE(::fcntl(server_fd_, F_SETFL, listener_flags | O_NONBLOCK), -1);
+    MakeServerSocketNonBlocking();
     TestClientSocket();
     InitServerAddr();
     TestConnect();
 
     // When the server accepts the connection
-    TestAccept();
+    TestAcceptOnNonBlockingServerSocket();
 
     // Then the accepted socket is non-blocking on QNX and blocking on Linux
     ASSERT_NE(accepted_fd_, -1);
     const int accepted_flags{::fcntl(accepted_fd_, F_GETFL)};
     ASSERT_NE(accepted_flags, -1);
-#if defined(__QNX__)
+#ifdef __QNX__
     EXPECT_NE(accepted_flags & O_NONBLOCK, 0);
 #else
     EXPECT_EQ(accepted_flags & O_NONBLOCK, 0);
@@ -291,18 +345,12 @@ TEST_F(SocketTestFixture, AcceptedSocketKeepsNonBlockingStateOfListeningSocketOn
     // And a plain accept() on the same listening socket gives the same O_NONBLOCK state
     const int second_client_fd{::socket(AF_INET, SOCK_STREAM, 0)};
     ASSERT_NE(second_client_fd, -1);
-    const int connect_result{
-        ::connect(second_client_fd, reinterpret_cast<sockaddr*>(&server_addr_), sizeof(sockaddr_in))};
-    // NOLINTNEXTLINE(score-banned-function) plain accept() is the reference behaviour of this test
-    const int plain_accepted_fd{::accept(server_fd_, nullptr, nullptr)};
-    const int plain_accepted_flags{(plain_accepted_fd != -1) ? ::fcntl(plain_accepted_fd, F_GETFL) : -1};
-    if (plain_accepted_fd != -1)
-    {
-        unistd_.close(plain_accepted_fd);
-    }
-    unistd_.close(second_client_fd);
-    ASSERT_EQ(connect_result, 0);
+    ASSERT_EQ(::connect(second_client_fd, reinterpret_cast<sockaddr*>(&server_addr_), sizeof(sockaddr_in)), 0);
+    const int plain_accepted_fd{AcceptWithLibcOnNonBlockingServerSocket()};
     ASSERT_NE(plain_accepted_fd, -1);
+    const int plain_accepted_flags{::fcntl(plain_accepted_fd, F_GETFL)};
+    unistd_.close(plain_accepted_fd);
+    unistd_.close(second_client_fd);
     ASSERT_NE(plain_accepted_flags, -1);
     EXPECT_EQ(plain_accepted_flags & O_NONBLOCK, accepted_flags & O_NONBLOCK);
 }

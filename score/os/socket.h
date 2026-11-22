@@ -94,7 +94,7 @@ class Socket : public ObjectSeam<Socket>
     /// @brief Accepts a connection.
     /// The returned socket is created with close-on-exec (FD_CLOEXEC).
     /// This way it is not inherited by processes created via fork() + execve().
-    /// Apart from that it is meant to behave like accept(): on QNX the returned socket is non-blocking if the listening
+    /// The blocking mode is the same as with accept(): on QNX the returned socket is non-blocking if the listening
     /// socket is, on Linux it is always blocking.
     virtual score::cpp::expected<std::int32_t, Error> accept(const std::int32_t sockfd,
                                                              struct sockaddr* const addr,

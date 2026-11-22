@@ -55,7 +55,7 @@ class Inotify : public ObjectSeam<Inotify>
     /// The flags are applied atomically. InitFlag::kNone creates an inheritable, blocking instance.
     /// This method is not pure virtual, so that existing implementations of Inotify, for example fakes, keep compiling.
     /// The default implementation returns an error for ENOSYS. InotifyImpl overrides it.
-    virtual score::cpp::expected<std::int32_t, Error> inotify_init1(const InitFlag flags) const noexcept;
+    [[nodiscard]] virtual score::cpp::expected<std::int32_t, Error> inotify_init1(const InitFlag flags) const noexcept;
     virtual score::cpp::expected<std::int32_t, Error> inotify_add_watch(const std::int32_t fd,
                                                                         const char* const pathname,
                                                                         const EventMask mask) const noexcept = 0;

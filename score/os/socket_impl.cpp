@@ -58,10 +58,10 @@ score::cpp::expected<std::int32_t, Error> SocketImpl::accept(const std::int32_t 
 // Rationale: Pre-processor commands are used to allow different implementations for linux and QNX to exist
 // in the same file. It also prevents compiler errors in linux code when compiling for QNX and vice versa.
 // coverity[autosar_cpp14_a16_0_1_violation]
-#if defined(__QNX__)
-    // On QNX, accept() is expected to give the accepted socket the O_NONBLOCK state of the listening socket, while
-    // accept4() takes it only from its flags. QNX does not document either, so socket_test compares the result with a
-    // plain accept(). Keep the previous behaviour, so that close-on-exec is the only difference.
+#ifdef __QNX__
+    // On QNX, accept() gives the accepted socket the O_NONBLOCK state of the listening socket, whereas accept4()
+    // applies only the flags it is passed. Pass SOCK_NONBLOCK for a non-blocking listening socket, so that the
+    // accepted socket has the same blocking mode as with accept().
     // NOLINTNEXTLINE(cppcoreguidelines-pro-type-vararg): fcntl is a POSIX variadic function
     const std::int32_t listener_flags{::fcntl(sockfd, F_GETFL)};
     if ((listener_flags != -1) && ((listener_flags & O_NONBLOCK) != 0))

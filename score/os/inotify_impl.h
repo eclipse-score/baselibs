@@ -25,7 +25,7 @@ class InotifyImpl final : public Inotify
   public:
     constexpr InotifyImpl() = default;
     score::cpp::expected<std::int32_t, Error> inotify_init() const noexcept override;
-    score::cpp::expected<std::int32_t, Error> inotify_init1(const InitFlag flags) const noexcept override;
+    [[nodiscard]] score::cpp::expected<std::int32_t, Error> inotify_init1(const InitFlag flags) const noexcept override;
 
     score::cpp::expected<std::int32_t, Error> inotify_add_watch(const std::int32_t fd,
                                                                 const char* const pathname,
