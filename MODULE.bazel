@@ -188,15 +188,24 @@ bazel_dep(name = "cxx.rs", version = "1.0.186")
 ## Custom Module Loading
 
 bazel_dep(name = "score_docs_as_code", version = "9.1.1")
+
+# Prototype dependable element: comp_saf_fmea may violate real_arc_int_op
+# (eclipse-score/docs-as-code#1091). Remove once released.
+git_override(
+    module_name = "score_docs_as_code",
+    commit = "b738ee8ab9734d5290bad9a641360832831a4455",
+    remote = "https://github.com/eclipse-score/docs-as-code.git",
+)
+
 bazel_dep(name = "score_process_description", version = "2.2.5")
 
 bazel_dep(name = "score_tooling", version = "3.0.2", dev_dependency = True)
 
-# Prototype dependable element (//dependable_element): *_spn requirement macros of
-# rules_score (eclipse-score/tooling#586). Remove once released.
+# Prototype dependable element (//dependable_element): *_spn macros of rules_score
+# (eclipse-score/tooling#586, #587). Remove once released.
 git_override(
     module_name = "score_tooling",
-    commit = "64ce975a186bfb4ed642141c89446502ffa026d7",
+    commit = "a444e623d4310f2ff1e0c7fe1ce4de04f636e3ba",
     remote = "https://github.com/eclipse-score/tooling.git",
 )
 

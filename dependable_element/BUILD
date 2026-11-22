@@ -11,17 +11,21 @@
 # SPDX-License-Identifier: Apache-2.0
 # *******************************************************************************
 
-# Prototype: baselibs as dependable element of rules_score with requirements read from
+# Prototype: baselibs as dependable element of rules_score with requirements and FMEA read from
 # Sphinx-Needs (*_spn macros) instead of TRLC. Currently one component.
 # Kept out of //score/...: score_tooling is a dev dependency and //score/... is built for QNX.
 
+load("@bazel_skylib//rules:diff_test.bzl", "diff_test")
 load(
     "@score_tooling//bazel/rules/rules_score:rules_score.bzl",
     "architectural_design",
+    "assumptions_of_use_spn",
     "component",
     "component_requirements_spn",
+    "dependability_analysis",
     "dependable_element",
     "feature_requirements_spn",
+    "safety_analysis_spn",
     "unit",
     "unit_design",
 )
@@ -87,12 +91,52 @@ architectural_design(
     static = ["//:docs/module/dependable_element.puml"],
 )
 
+# Own AoUs of the component; the FMEA lists them as measures.
+assumptions_of_use_spn(
+    name = "bitmanipulation_aous",
+    id_prefix = "aou_req__bitmanipulation__",
+    needs = ["//:needs_json_file"],
+)
+
+# FMEA from the comp_saf_fmea needs of fmea.rst. The $FailureMode macros of the fault trees
+# name a failure mode as BitmanipulationFmea.<need ID>.
+safety_analysis_spn(
+    name = "bitmanipulation_safety_analysis",
+    arch_design = ":architectural_design",
+    arch_id = "comp_arc_sta__baselibs__bit_manipulation",
+    fault_trees = [
+        "//score/bitmanipulation:docs/safety_analysis/fta_constraints.puml",
+        "//score/bitmanipulation:docs/safety_analysis/fta_late_return.puml",
+        "//score/bitmanipulation:docs/safety_analysis/fta_no_return.puml",
+        "//score/bitmanipulation:docs/safety_analysis/fta_wrong_input.puml",
+    ],
+    needs = ["//:needs_json_file"],
+    package = "BitmanipulationFmea",
+    safety_measures = [
+        ":bitmanipulation_aous",
+        ":bitmanipulation_requirements",
+    ],
+)
+
+# The docs render the fault trees with a copy of the FTA macros (PlantUML resolves
+# !include next to fmea.rst); it must not drift from score_tooling.
+diff_test(
+    name = "fta_metamodel_copy_test",
+    file1 = "@score_tooling//plantuml:fta_metamodel",
+    file2 = "//score/bitmanipulation:docs/safety_analysis/fta_metamodel.puml",
+)
+
+dependability_analysis(
+    name = "bitmanipulation_dependability_analysis",
+    arch_design = ":architectural_design",
+    safety_analysis = [":bitmanipulation_safety_analysis"],
+)
+
 dependable_element(
     name = "baselibs",
     architectural_design = [":architectural_design"],
     components = [":bitmanipulation"],
-    # Requirements traceability only; the safety analysis is not part of this prototype.
-    dependability_analysis = [],
+    dependability_analysis = [":bitmanipulation_dependability_analysis"],
     integrity_level = "B",
     # Traceability gaps are reported as warnings while the prototype is incomplete.
     maturity = "development",
