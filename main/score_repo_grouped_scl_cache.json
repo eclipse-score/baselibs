@@ -5700,15 +5700,6 @@
               "result_text": ""
             },
             {
-              "name": "ParserTest__FromFileReportsReasonWhenFileCannotBeOpened",
-              "file": "score/json/json_parser_test.cpp",
-              "line": 501,
-              "need": "comp_req__json__parsing_error_reason",
-              "verify_type": "partially",
-              "result": "passed",
-              "result_text": ""
-            },
-            {
               "name": "ParserTest/ParsingErrorReasonTest__ReportsReasonWithParsingError/EmptyDocument",
               "file": "score/json/json_parser_test.cpp",
               "line": 534,
@@ -5828,6 +5819,194 @@
               "file": "score/json/internal/parser/vajson/number_parser_test.cpp",
               "line": 37,
               "need": "comp_req__vajson__hex_integers",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            }
+          ]
+        }
+      },
+      {
+        "need": "comp_req__json__io_error",
+        "links": {
+          "CodeLinks": [],
+          "TestLinks": [
+            {
+              "name": "ParserTest__FromFileReportsIoErrorWhenFileCannotBeOpened",
+              "file": "score/json/json_parser_test.cpp",
+              "line": 501,
+              "need": "comp_req__json__io_error",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "JsonWriterWriteToFileTest/0__ToUnsyncedFileResultsInError",
+              "file": "score/json/json_writer_test.cpp",
+              "line": 217,
+              "need": "comp_req__json__io_error",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "JsonWriterWriteToFileTest/0__ToSyncedFileResultsInError",
+              "file": "score/json/json_writer_test.cpp",
+              "line": 238,
+              "need": "comp_req__json__io_error",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "JsonWriterWriteToFileTest/0__ToUnsyncedFileReportsIoErrorIfWritingFails",
+              "file": "score/json/json_writer_test.cpp",
+              "line": 280,
+              "need": "comp_req__json__io_error",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "JsonWriterWriteToFileTest/1__ToUnsyncedFileResultsInError",
+              "file": "score/json/json_writer_test.cpp",
+              "line": 217,
+              "need": "comp_req__json__io_error",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "JsonWriterWriteToFileTest/1__ToSyncedFileResultsInError",
+              "file": "score/json/json_writer_test.cpp",
+              "line": 238,
+              "need": "comp_req__json__io_error",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "JsonWriterWriteToFileTest/1__ToUnsyncedFileReportsIoErrorIfWritingFails",
+              "file": "score/json/json_writer_test.cpp",
+              "line": 280,
+              "need": "comp_req__json__io_error",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "JsonWriterWriteToFileTest/2__ToUnsyncedFileResultsInError",
+              "file": "score/json/json_writer_test.cpp",
+              "line": 217,
+              "need": "comp_req__json__io_error",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "JsonWriterWriteToFileTest/2__ToSyncedFileResultsInError",
+              "file": "score/json/json_writer_test.cpp",
+              "line": 238,
+              "need": "comp_req__json__io_error",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "JsonWriterWriteToFileTest/2__ToUnsyncedFileReportsIoErrorIfWritingFails",
+              "file": "score/json/json_writer_test.cpp",
+              "line": 280,
+              "need": "comp_req__json__io_error",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "JsonWriterWriteToFileTest/3__ToUnsyncedFileResultsInError",
+              "file": "score/json/json_writer_test.cpp",
+              "line": 217,
+              "need": "comp_req__json__io_error",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "JsonWriterWriteToFileTest/3__ToSyncedFileResultsInError",
+              "file": "score/json/json_writer_test.cpp",
+              "line": 238,
+              "need": "comp_req__json__io_error",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "JsonWriterWriteToFileTest/3__ToUnsyncedFileReportsIoErrorIfWritingFails",
+              "file": "score/json/json_writer_test.cpp",
+              "line": 280,
+              "need": "comp_req__json__io_error",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "JsonWriterWriteToFileTest/4__ToUnsyncedFileResultsInError",
+              "file": "score/json/json_writer_test.cpp",
+              "line": 217,
+              "need": "comp_req__json__io_error",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "JsonWriterWriteToFileTest/4__ToSyncedFileResultsInError",
+              "file": "score/json/json_writer_test.cpp",
+              "line": 238,
+              "need": "comp_req__json__io_error",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "JsonWriterWriteToFileTest/4__ToUnsyncedFileReportsIoErrorIfWritingFails",
+              "file": "score/json/json_writer_test.cpp",
+              "line": 280,
+              "need": "comp_req__json__io_error",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "JsonWriterWriteToFileTest/5__ToUnsyncedFileResultsInError",
+              "file": "score/json/json_writer_test.cpp",
+              "line": 217,
+              "need": "comp_req__json__io_error",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "JsonWriterWriteToFileTest/5__ToSyncedFileResultsInError",
+              "file": "score/json/json_writer_test.cpp",
+              "line": 238,
+              "need": "comp_req__json__io_error",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "JsonWriterWriteToFileTest/5__ToUnsyncedFileReportsIoErrorIfWritingFails",
+              "file": "score/json/json_writer_test.cpp",
+              "line": 280,
+              "need": "comp_req__json__io_error",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "JsonWriterSyncedFileTest__ReportsIoErrorIfCommittingFails",
+              "file": "score/json/json_writer_test.cpp",
+              "line": 329,
+              "need": "comp_req__json__io_error",
               "verify_type": "partially",
               "result": "passed",
               "result_text": ""
@@ -5988,6 +6167,112 @@
         }
       },
       {
+        "need": "comp_req__json__out_of_range_error",
+        "links": {
+          "CodeLinks": [],
+          "TestLinks": [
+            {
+              "name": "JsonSerializerTest__FailToDeserializeNumberOutOfRange",
+              "file": "score/json/json_serializer_test.cpp",
+              "line": 497,
+              "need": "comp_req__json__out_of_range_error",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "Number__ValueOutsideRangeOfRequestedTypeIsOutOfRange",
+              "file": "score/json/number_test.cpp",
+              "line": 714,
+              "need": "comp_req__json__out_of_range_error",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            }
+          ]
+        }
+      },
+      {
+        "need": "comp_req__json__deserialization_error_field",
+        "links": {
+          "CodeLinks": [],
+          "TestLinks": [
+            {
+              "name": "JsonSerializerTest/FailingFieldTest__ErrorNamesInnermostFailingField/NestedFieldOfWrongType",
+              "file": "score/json/json_serializer_test.cpp",
+              "line": 865,
+              "need": "comp_req__json__deserialization_error_field",
+              "verify_type": "fully",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "JsonSerializerTest/FailingFieldTest__ErrorNamesInnermostFailingField/NestedValueNotAnObject",
+              "file": "score/json/json_serializer_test.cpp",
+              "line": 865,
+              "need": "comp_req__json__deserialization_error_field",
+              "verify_type": "fully",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "JsonSerializerTest/FailingFieldTest__ErrorNamesInnermostFailingField/MissingFieldInListEntry",
+              "file": "score/json/json_serializer_test.cpp",
+              "line": 865,
+              "need": "comp_req__json__deserialization_error_field",
+              "verify_type": "fully",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "JsonSerializerTest/FailingFieldTest__ErrorNamesInnermostFailingField/ListValueNotAList",
+              "file": "score/json/json_serializer_test.cpp",
+              "line": 865,
+              "need": "comp_req__json__deserialization_error_field",
+              "verify_type": "fully",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "JsonSerializerTest/FailingFieldTest__ErrorNamesInnermostFailingField/ListEntryNotAnObject",
+              "file": "score/json/json_serializer_test.cpp",
+              "line": 865,
+              "need": "comp_req__json__deserialization_error_field",
+              "verify_type": "fully",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "JsonSerializerTest/FailingFieldTest__ErrorNamesInnermostFailingField/NumberOutOfRangeInOptional",
+              "file": "score/json/json_serializer_test.cpp",
+              "line": 865,
+              "need": "comp_req__json__deserialization_error_field",
+              "verify_type": "fully",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "JsonSerializerTest/FailingFieldTest__ErrorNamesInnermostFailingField/OptionalValueNotAnObject",
+              "file": "score/json/json_serializer_test.cpp",
+              "line": 865,
+              "need": "comp_req__json__deserialization_error_field",
+              "verify_type": "fully",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "JsonSerializerTest/FailingFieldTest__ErrorNamesInnermostFailingField/ExplicitSerializerError",
+              "file": "score/json/json_serializer_test.cpp",
+              "line": 865,
+              "need": "comp_req__json__deserialization_error_field",
+              "verify_type": "fully",
+              "result": "passed",
+              "result_text": ""
+            }
+          ]
+        }
+      },
+      {
         "need": "comp_req__json__serialization",
         "links": {
           "CodeLinks": [],
@@ -6013,7 +6298,7 @@
             {
               "name": "JsonWriterSyncedFileTest__SerializationFailureKeepsTargetUnchanged",
               "file": "score/json/json_writer_test.cpp",
-              "line": 255,
+              "line": 352,
               "need": "comp_req__json__serialization",
               "verify_type": "partially",
               "result": "passed",
@@ -6022,7 +6307,43 @@
             {
               "name": "JsonWriterDefaultFormattingTest__PrettyPrintsWhenFormattingIsOmitted",
               "file": "score/json/json_writer_test.cpp",
-              "line": 280,
+              "line": 377,
+              "need": "comp_req__json__serialization",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "SerializerTest__RejectsInfiniteDouble",
+              "file": "score/json/internal/writer/serializer_test.cpp",
+              "line": 237,
+              "need": "comp_req__json__serialization",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "SerializerTest__RejectsNegativeInfiniteFloat",
+              "file": "score/json/internal/writer/serializer_test.cpp",
+              "line": 252,
+              "need": "comp_req__json__serialization",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "SerializerTest__RejectsNotANumber",
+              "file": "score/json/internal/writer/serializer_test.cpp",
+              "line": 267,
+              "need": "comp_req__json__serialization",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "SerializerTest__RejectsNotANumberOnStream",
+              "file": "score/json/internal/writer/serializer_test.cpp",
+              "line": 281,
               "need": "comp_req__json__serialization",
               "verify_type": "partially",
               "result": "passed",
@@ -6031,7 +6352,7 @@
             {
               "name": "SerializerTest__PrettyPrintsNestedAny",
               "file": "score/json/internal/writer/serializer_test.cpp",
-              "line": 326,
+              "line": 329,
               "need": "comp_req__json__serialization",
               "verify_type": "partially",
               "result": "passed",
@@ -6040,7 +6361,7 @@
             {
               "name": "SerializerTest__PrettyPrintsMixedNesting",
               "file": "score/json/internal/writer/serializer_test.cpp",
-              "line": 454,
+              "line": 457,
               "need": "comp_req__json__serialization",
               "verify_type": "partially",
               "result": "passed",
@@ -6049,7 +6370,7 @@
             {
               "name": "SerializerTest__SerializesMixedNestingCompactly",
               "file": "score/json/internal/writer/serializer_test.cpp",
-              "line": 484,
+              "line": 487,
               "need": "comp_req__json__serialization",
               "verify_type": "partially",
               "result": "passed",
@@ -6058,7 +6379,7 @@
             {
               "name": "SerializerTest__SerializesTopLevelScalars",
               "file": "score/json/internal/writer/serializer_test.cpp",
-              "line": 498,
+              "line": 501,
               "need": "comp_req__json__serialization",
               "verify_type": "partially",
               "result": "passed",
@@ -6067,7 +6388,7 @@
             {
               "name": "SerializerTest__EscapesObjectKeysInNestedObjects",
               "file": "score/json/internal/writer/serializer_test.cpp",
-              "line": 519,
+              "line": 522,
               "need": "comp_req__json__serialization",
               "verify_type": "partially",
               "result": "passed",
@@ -6076,7 +6397,7 @@
             {
               "name": "SerializerTest__RejectsNonFiniteNumberNestedDeepInsideContainers",
               "file": "score/json/internal/writer/serializer_test.cpp",
-              "line": 534,
+              "line": 537,
               "need": "comp_req__json__serialization",
               "verify_type": "partially",
               "result": "passed",

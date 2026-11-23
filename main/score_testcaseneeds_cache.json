@@ -8386,7 +8386,7 @@
     "FullyVerifies": null
   },
   {
-    "name": "ParserTest__FromFileReportsReasonWhenFileCannotBeOpened",
+    "name": "ParserTest__FromFileReportsIoErrorWhenFileCannotBeOpened",
     "file": "score/json/json_parser_test.cpp",
     "line": "501",
     "result": "passed",
@@ -8396,7 +8396,7 @@
     "TestType": "requirements-based",
     "DerivationTechnique": "error-guessing",
     "result_text": "",
-    "PartiallyVerifies": "comp_req__json__parsing_error_reason",
+    "PartiallyVerifies": "comp_req__json__io_error",
     "FullyVerifies": null
   },
   {
@@ -8906,7 +8906,7 @@
   {
     "name": "JsonSerializerTest__TestSerialization",
     "file": "score/json/json_serializer_test.cpp",
-    "line": "113",
+    "line": "148",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -8920,7 +8920,7 @@
   {
     "name": "JsonSerializerTest__TestDeserialization",
     "file": "score/json/json_serializer_test.cpp",
-    "line": "167",
+    "line": "202",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -8934,7 +8934,7 @@
   {
     "name": "JsonSerializerTest__TestFailingDeserialization",
     "file": "score/json/json_serializer_test.cpp",
-    "line": "201",
+    "line": "236",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -8948,7 +8948,7 @@
   {
     "name": "JsonSerializerTest__UserProvidedDeserialization",
     "file": "score/json/json_serializer_test.cpp",
-    "line": "240",
+    "line": "275",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -8962,7 +8962,7 @@
   {
     "name": "JsonSerializerTest__UserProvidedSerialization",
     "file": "score/json/json_serializer_test.cpp",
-    "line": "265",
+    "line": "300",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -8976,7 +8976,7 @@
   {
     "name": "JsonSerializerTest__DeserializeOptionalFields",
     "file": "score/json/json_serializer_test.cpp",
-    "line": "299",
+    "line": "334",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -8990,7 +8990,7 @@
   {
     "name": "JsonSerializerTest__NoErrorOnMissingOptionalFields",
     "file": "score/json/json_serializer_test.cpp",
-    "line": "329",
+    "line": "364",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -9004,7 +9004,7 @@
   {
     "name": "JsonSerializerTest__ErrorOnMissingMandatoryFields",
     "file": "score/json/json_serializer_test.cpp",
-    "line": "359",
+    "line": "394",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -9018,7 +9018,7 @@
   {
     "name": "JsonSerializerTest__SerializingStructWithUnusedOptionalDoesntEmitField",
     "file": "score/json/json_serializer_test.cpp",
-    "line": "387",
+    "line": "422",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -9032,7 +9032,7 @@
   {
     "name": "JsonSerializerTest__DeserializingStructFromNonObjectFails",
     "file": "score/json/json_serializer_test.cpp",
-    "line": "411",
+    "line": "446",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -9046,7 +9046,7 @@
   {
     "name": "JsonSerializerTest__FailToDeserializeWrongNumberType",
     "file": "score/json/json_serializer_test.cpp",
-    "line": "432",
+    "line": "467",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -9058,9 +9058,23 @@
     "FullyVerifies": null
   },
   {
+    "name": "JsonSerializerTest__FailToDeserializeNumberOutOfRange",
+    "file": "score/json/json_serializer_test.cpp",
+    "line": "497",
+    "result": "passed",
+    "repo_name": "local_repo",
+    "hash": "",
+    "url": "",
+    "TestType": "requirements-based",
+    "DerivationTechnique": "boundary-values",
+    "result_text": "",
+    "PartiallyVerifies": "comp_req__json__out_of_range_error",
+    "FullyVerifies": null
+  },
+  {
     "name": "JsonSerializerTest__FailToDeserializeANonBooleanTypeToBool",
     "file": "score/json/json_serializer_test.cpp",
-    "line": "462",
+    "line": "523",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -9074,7 +9088,7 @@
   {
     "name": "JsonSerializerTest__FailToDeserializeANonNumberTypeToAnInteger",
     "file": "score/json/json_serializer_test.cpp",
-    "line": "491",
+    "line": "552",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -9088,7 +9102,7 @@
   {
     "name": "JsonSerializerTest__FailToDeserializeToVectorIfJSONIsNotAList",
     "file": "score/json/json_serializer_test.cpp",
-    "line": "521",
+    "line": "582",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -9102,7 +9116,7 @@
   {
     "name": "JsonSerializerTest__FailToDeserializeIntoAVectorIfJSONListHasMixedTypes",
     "file": "score/json/json_serializer_test.cpp",
-    "line": "543",
+    "line": "604",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -9116,7 +9130,7 @@
   {
     "name": "JsonSerializerTest__SucceedDeserializeListIntoVectorIfListConsistsOfSameType",
     "file": "score/json/json_serializer_test.cpp",
-    "line": "565",
+    "line": "626",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -9130,7 +9144,7 @@
   {
     "name": "JsonSerializerTest__SuceedDeserializeListIntoVectorOfAnyEvenOnMixedTypes",
     "file": "score/json/json_serializer_test.cpp",
-    "line": "586",
+    "line": "647",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -9144,7 +9158,7 @@
   {
     "name": "JsonSerializerTest__SerializeOptionalValuesIfTheyContainAValue",
     "file": "score/json/json_serializer_test.cpp",
-    "line": "613",
+    "line": "674",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -9158,7 +9172,7 @@
   {
     "name": "JsonSerializerTest__FailToDeserializeOptionalValueIfEnclosedTypesDoNotMatch",
     "file": "score/json/json_serializer_test.cpp",
-    "line": "637",
+    "line": "698",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -9172,7 +9186,7 @@
   {
     "name": "JsonSerializerTest__SerializeConstantObjects",
     "file": "score/json/json_serializer_test.cpp",
-    "line": "658",
+    "line": "719",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -9186,7 +9200,7 @@
   {
     "name": "JsonSerializerTest__UseCustomSerializationOnVisitableStruct",
     "file": "score/json/json_serializer_test.cpp",
-    "line": "702",
+    "line": "763",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -9200,7 +9214,7 @@
   {
     "name": "JsonSerializerTest__TypeMismatchErrorContainsFieldName",
     "file": "score/json/json_serializer_test.cpp",
-    "line": "722",
+    "line": "783",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -9214,7 +9228,7 @@
   {
     "name": "JsonSerializerTest__MissingMandatoryFieldErrorContainsFieldName",
     "file": "score/json/json_serializer_test.cpp",
-    "line": "753",
+    "line": "814",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -9226,18 +9240,116 @@
     "FullyVerifies": null
   },
   {
-    "name": "JsonSerializerTest__NestedTypeMismatchErrorContainsOutermostFieldName",
+    "name": "JsonSerializerTest/FailingFieldTest__ErrorNamesInnermostFailingField/NestedFieldOfWrongType",
     "file": "score/json/json_serializer_test.cpp",
-    "line": "776",
+    "line": "865",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
     "url": "",
-    "TestType": "control-flow-analysis",
-    "DerivationTechnique": "error-guessing",
+    "TestType": "requirements-based",
+    "DerivationTechnique": "equivalence-classes",
     "result_text": "",
     "PartiallyVerifies": null,
-    "FullyVerifies": null
+    "FullyVerifies": "comp_req__json__deserialization_error_field"
+  },
+  {
+    "name": "JsonSerializerTest/FailingFieldTest__ErrorNamesInnermostFailingField/NestedValueNotAnObject",
+    "file": "score/json/json_serializer_test.cpp",
+    "line": "865",
+    "result": "passed",
+    "repo_name": "local_repo",
+    "hash": "",
+    "url": "",
+    "TestType": "requirements-based",
+    "DerivationTechnique": "equivalence-classes",
+    "result_text": "",
+    "PartiallyVerifies": null,
+    "FullyVerifies": "comp_req__json__deserialization_error_field"
+  },
+  {
+    "name": "JsonSerializerTest/FailingFieldTest__ErrorNamesInnermostFailingField/MissingFieldInListEntry",
+    "file": "score/json/json_serializer_test.cpp",
+    "line": "865",
+    "result": "passed",
+    "repo_name": "local_repo",
+    "hash": "",
+    "url": "",
+    "TestType": "requirements-based",
+    "DerivationTechnique": "equivalence-classes",
+    "result_text": "",
+    "PartiallyVerifies": null,
+    "FullyVerifies": "comp_req__json__deserialization_error_field"
+  },
+  {
+    "name": "JsonSerializerTest/FailingFieldTest__ErrorNamesInnermostFailingField/ListValueNotAList",
+    "file": "score/json/json_serializer_test.cpp",
+    "line": "865",
+    "result": "passed",
+    "repo_name": "local_repo",
+    "hash": "",
+    "url": "",
+    "TestType": "requirements-based",
+    "DerivationTechnique": "equivalence-classes",
+    "result_text": "",
+    "PartiallyVerifies": null,
+    "FullyVerifies": "comp_req__json__deserialization_error_field"
+  },
+  {
+    "name": "JsonSerializerTest/FailingFieldTest__ErrorNamesInnermostFailingField/ListEntryNotAnObject",
+    "file": "score/json/json_serializer_test.cpp",
+    "line": "865",
+    "result": "passed",
+    "repo_name": "local_repo",
+    "hash": "",
+    "url": "",
+    "TestType": "requirements-based",
+    "DerivationTechnique": "equivalence-classes",
+    "result_text": "",
+    "PartiallyVerifies": null,
+    "FullyVerifies": "comp_req__json__deserialization_error_field"
+  },
+  {
+    "name": "JsonSerializerTest/FailingFieldTest__ErrorNamesInnermostFailingField/NumberOutOfRangeInOptional",
+    "file": "score/json/json_serializer_test.cpp",
+    "line": "865",
+    "result": "passed",
+    "repo_name": "local_repo",
+    "hash": "",
+    "url": "",
+    "TestType": "requirements-based",
+    "DerivationTechnique": "equivalence-classes",
+    "result_text": "",
+    "PartiallyVerifies": null,
+    "FullyVerifies": "comp_req__json__deserialization_error_field"
+  },
+  {
+    "name": "JsonSerializerTest/FailingFieldTest__ErrorNamesInnermostFailingField/OptionalValueNotAnObject",
+    "file": "score/json/json_serializer_test.cpp",
+    "line": "865",
+    "result": "passed",
+    "repo_name": "local_repo",
+    "hash": "",
+    "url": "",
+    "TestType": "requirements-based",
+    "DerivationTechnique": "equivalence-classes",
+    "result_text": "",
+    "PartiallyVerifies": null,
+    "FullyVerifies": "comp_req__json__deserialization_error_field"
+  },
+  {
+    "name": "JsonSerializerTest/FailingFieldTest__ErrorNamesInnermostFailingField/ExplicitSerializerError",
+    "file": "score/json/json_serializer_test.cpp",
+    "line": "865",
+    "result": "passed",
+    "repo_name": "local_repo",
+    "hash": "",
+    "url": "",
+    "TestType": "requirements-based",
+    "DerivationTechnique": "equivalence-classes",
+    "result_text": "",
+    "PartiallyVerifies": null,
+    "FullyVerifies": "comp_req__json__deserialization_error_field"
   },
   {
     "name": "JsonTest__ReadWrite",
@@ -9326,7 +9438,7 @@
   {
     "name": "JsonWriterWriteToFileTest/0__ToBuffer",
     "file": "score/json/json_writer_test.cpp",
-    "line": "137",
+    "line": "143",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -9340,7 +9452,7 @@
   {
     "name": "JsonWriterWriteToFileTest/0__ToFile",
     "file": "score/json/json_writer_test.cpp",
-    "line": "155",
+    "line": "161",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -9354,7 +9466,7 @@
   {
     "name": "JsonWriterWriteToFileTest/0__ToUnsyncedFile",
     "file": "score/json/json_writer_test.cpp",
-    "line": "174",
+    "line": "180",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -9368,7 +9480,7 @@
   {
     "name": "JsonWriterWriteToFileTest/0__ToSyncedFile",
     "file": "score/json/json_writer_test.cpp",
-    "line": "192",
+    "line": "198",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -9382,7 +9494,7 @@
   {
     "name": "JsonWriterWriteToFileTest/0__ToUnsyncedFileResultsInError",
     "file": "score/json/json_writer_test.cpp",
-    "line": "211",
+    "line": "217",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -9390,13 +9502,13 @@
     "TestType": "requirements-based",
     "DerivationTechnique": "requirements-analysis",
     "result_text": "",
-    "PartiallyVerifies": null,
+    "PartiallyVerifies": "comp_req__json__io_error",
     "FullyVerifies": null
   },
   {
     "name": "JsonWriterWriteToFileTest/0__ToSyncedFileResultsInError",
     "file": "score/json/json_writer_test.cpp",
-    "line": "233",
+    "line": "238",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -9404,13 +9516,27 @@
     "TestType": "requirements-based",
     "DerivationTechnique": "requirements-analysis",
     "result_text": "",
-    "PartiallyVerifies": null,
+    "PartiallyVerifies": "comp_req__json__io_error",
+    "FullyVerifies": null
+  },
+  {
+    "name": "JsonWriterWriteToFileTest/0__ToUnsyncedFileReportsIoErrorIfWritingFails",
+    "file": "score/json/json_writer_test.cpp",
+    "line": "280",
+    "result": "passed",
+    "repo_name": "local_repo",
+    "hash": "",
+    "url": "",
+    "TestType": "requirements-based",
+    "DerivationTechnique": "error-guessing",
+    "result_text": "",
+    "PartiallyVerifies": "comp_req__json__io_error",
     "FullyVerifies": null
   },
   {
     "name": "JsonWriterWriteToFileTest/1__ToBuffer",
     "file": "score/json/json_writer_test.cpp",
-    "line": "137",
+    "line": "143",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -9424,7 +9550,7 @@
   {
     "name": "JsonWriterWriteToFileTest/1__ToFile",
     "file": "score/json/json_writer_test.cpp",
-    "line": "155",
+    "line": "161",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -9438,7 +9564,7 @@
   {
     "name": "JsonWriterWriteToFileTest/1__ToUnsyncedFile",
     "file": "score/json/json_writer_test.cpp",
-    "line": "174",
+    "line": "180",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -9452,7 +9578,7 @@
   {
     "name": "JsonWriterWriteToFileTest/1__ToSyncedFile",
     "file": "score/json/json_writer_test.cpp",
-    "line": "192",
+    "line": "198",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -9466,7 +9592,7 @@
   {
     "name": "JsonWriterWriteToFileTest/1__ToUnsyncedFileResultsInError",
     "file": "score/json/json_writer_test.cpp",
-    "line": "211",
+    "line": "217",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -9474,13 +9600,13 @@
     "TestType": "requirements-based",
     "DerivationTechnique": "requirements-analysis",
     "result_text": "",
-    "PartiallyVerifies": null,
+    "PartiallyVerifies": "comp_req__json__io_error",
     "FullyVerifies": null
   },
   {
     "name": "JsonWriterWriteToFileTest/1__ToSyncedFileResultsInError",
     "file": "score/json/json_writer_test.cpp",
-    "line": "233",
+    "line": "238",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -9488,13 +9614,27 @@
     "TestType": "requirements-based",
     "DerivationTechnique": "requirements-analysis",
     "result_text": "",
-    "PartiallyVerifies": null,
+    "PartiallyVerifies": "comp_req__json__io_error",
+    "FullyVerifies": null
+  },
+  {
+    "name": "JsonWriterWriteToFileTest/1__ToUnsyncedFileReportsIoErrorIfWritingFails",
+    "file": "score/json/json_writer_test.cpp",
+    "line": "280",
+    "result": "passed",
+    "repo_name": "local_repo",
+    "hash": "",
+    "url": "",
+    "TestType": "requirements-based",
+    "DerivationTechnique": "error-guessing",
+    "result_text": "",
+    "PartiallyVerifies": "comp_req__json__io_error",
     "FullyVerifies": null
   },
   {
     "name": "JsonWriterWriteToFileTest/2__ToBuffer",
     "file": "score/json/json_writer_test.cpp",
-    "line": "137",
+    "line": "143",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -9508,7 +9648,7 @@
   {
     "name": "JsonWriterWriteToFileTest/2__ToFile",
     "file": "score/json/json_writer_test.cpp",
-    "line": "155",
+    "line": "161",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -9522,7 +9662,7 @@
   {
     "name": "JsonWriterWriteToFileTest/2__ToUnsyncedFile",
     "file": "score/json/json_writer_test.cpp",
-    "line": "174",
+    "line": "180",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -9536,7 +9676,7 @@
   {
     "name": "JsonWriterWriteToFileTest/2__ToSyncedFile",
     "file": "score/json/json_writer_test.cpp",
-    "line": "192",
+    "line": "198",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -9550,7 +9690,7 @@
   {
     "name": "JsonWriterWriteToFileTest/2__ToUnsyncedFileResultsInError",
     "file": "score/json/json_writer_test.cpp",
-    "line": "211",
+    "line": "217",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -9558,13 +9698,13 @@
     "TestType": "requirements-based",
     "DerivationTechnique": "requirements-analysis",
     "result_text": "",
-    "PartiallyVerifies": null,
+    "PartiallyVerifies": "comp_req__json__io_error",
     "FullyVerifies": null
   },
   {
     "name": "JsonWriterWriteToFileTest/2__ToSyncedFileResultsInError",
     "file": "score/json/json_writer_test.cpp",
-    "line": "233",
+    "line": "238",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -9572,13 +9712,27 @@
     "TestType": "requirements-based",
     "DerivationTechnique": "requirements-analysis",
     "result_text": "",
-    "PartiallyVerifies": null,
+    "PartiallyVerifies": "comp_req__json__io_error",
+    "FullyVerifies": null
+  },
+  {
+    "name": "JsonWriterWriteToFileTest/2__ToUnsyncedFileReportsIoErrorIfWritingFails",
+    "file": "score/json/json_writer_test.cpp",
+    "line": "280",
+    "result": "passed",
+    "repo_name": "local_repo",
+    "hash": "",
+    "url": "",
+    "TestType": "requirements-based",
+    "DerivationTechnique": "error-guessing",
+    "result_text": "",
+    "PartiallyVerifies": "comp_req__json__io_error",
     "FullyVerifies": null
   },
   {
     "name": "JsonWriterWriteToFileTest/3__ToBuffer",
     "file": "score/json/json_writer_test.cpp",
-    "line": "137",
+    "line": "143",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -9592,7 +9746,7 @@
   {
     "name": "JsonWriterWriteToFileTest/3__ToFile",
     "file": "score/json/json_writer_test.cpp",
-    "line": "155",
+    "line": "161",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -9606,7 +9760,7 @@
   {
     "name": "JsonWriterWriteToFileTest/3__ToUnsyncedFile",
     "file": "score/json/json_writer_test.cpp",
-    "line": "174",
+    "line": "180",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -9620,7 +9774,7 @@
   {
     "name": "JsonWriterWriteToFileTest/3__ToSyncedFile",
     "file": "score/json/json_writer_test.cpp",
-    "line": "192",
+    "line": "198",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -9634,7 +9788,7 @@
   {
     "name": "JsonWriterWriteToFileTest/3__ToUnsyncedFileResultsInError",
     "file": "score/json/json_writer_test.cpp",
-    "line": "211",
+    "line": "217",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -9642,13 +9796,13 @@
     "TestType": "requirements-based",
     "DerivationTechnique": "requirements-analysis",
     "result_text": "",
-    "PartiallyVerifies": null,
+    "PartiallyVerifies": "comp_req__json__io_error",
     "FullyVerifies": null
   },
   {
     "name": "JsonWriterWriteToFileTest/3__ToSyncedFileResultsInError",
     "file": "score/json/json_writer_test.cpp",
-    "line": "233",
+    "line": "238",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -9656,13 +9810,27 @@
     "TestType": "requirements-based",
     "DerivationTechnique": "requirements-analysis",
     "result_text": "",
-    "PartiallyVerifies": null,
+    "PartiallyVerifies": "comp_req__json__io_error",
+    "FullyVerifies": null
+  },
+  {
+    "name": "JsonWriterWriteToFileTest/3__ToUnsyncedFileReportsIoErrorIfWritingFails",
+    "file": "score/json/json_writer_test.cpp",
+    "line": "280",
+    "result": "passed",
+    "repo_name": "local_repo",
+    "hash": "",
+    "url": "",
+    "TestType": "requirements-based",
+    "DerivationTechnique": "error-guessing",
+    "result_text": "",
+    "PartiallyVerifies": "comp_req__json__io_error",
     "FullyVerifies": null
   },
   {
     "name": "JsonWriterWriteToFileTest/4__ToBuffer",
     "file": "score/json/json_writer_test.cpp",
-    "line": "137",
+    "line": "143",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -9676,7 +9844,7 @@
   {
     "name": "JsonWriterWriteToFileTest/4__ToFile",
     "file": "score/json/json_writer_test.cpp",
-    "line": "155",
+    "line": "161",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -9690,7 +9858,7 @@
   {
     "name": "JsonWriterWriteToFileTest/4__ToUnsyncedFile",
     "file": "score/json/json_writer_test.cpp",
-    "line": "174",
+    "line": "180",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -9704,7 +9872,7 @@
   {
     "name": "JsonWriterWriteToFileTest/4__ToSyncedFile",
     "file": "score/json/json_writer_test.cpp",
-    "line": "192",
+    "line": "198",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -9718,7 +9886,7 @@
   {
     "name": "JsonWriterWriteToFileTest/4__ToUnsyncedFileResultsInError",
     "file": "score/json/json_writer_test.cpp",
-    "line": "211",
+    "line": "217",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -9726,13 +9894,13 @@
     "TestType": "requirements-based",
     "DerivationTechnique": "requirements-analysis",
     "result_text": "",
-    "PartiallyVerifies": null,
+    "PartiallyVerifies": "comp_req__json__io_error",
     "FullyVerifies": null
   },
   {
     "name": "JsonWriterWriteToFileTest/4__ToSyncedFileResultsInError",
     "file": "score/json/json_writer_test.cpp",
-    "line": "233",
+    "line": "238",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -9740,13 +9908,27 @@
     "TestType": "requirements-based",
     "DerivationTechnique": "requirements-analysis",
     "result_text": "",
-    "PartiallyVerifies": null,
+    "PartiallyVerifies": "comp_req__json__io_error",
+    "FullyVerifies": null
+  },
+  {
+    "name": "JsonWriterWriteToFileTest/4__ToUnsyncedFileReportsIoErrorIfWritingFails",
+    "file": "score/json/json_writer_test.cpp",
+    "line": "280",
+    "result": "passed",
+    "repo_name": "local_repo",
+    "hash": "",
+    "url": "",
+    "TestType": "requirements-based",
+    "DerivationTechnique": "error-guessing",
+    "result_text": "",
+    "PartiallyVerifies": "comp_req__json__io_error",
     "FullyVerifies": null
   },
   {
     "name": "JsonWriterWriteToFileTest/5__ToBuffer",
     "file": "score/json/json_writer_test.cpp",
-    "line": "137",
+    "line": "143",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -9760,7 +9942,7 @@
   {
     "name": "JsonWriterWriteToFileTest/5__ToFile",
     "file": "score/json/json_writer_test.cpp",
-    "line": "155",
+    "line": "161",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -9774,7 +9956,7 @@
   {
     "name": "JsonWriterWriteToFileTest/5__ToUnsyncedFile",
     "file": "score/json/json_writer_test.cpp",
-    "line": "174",
+    "line": "180",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -9788,7 +9970,7 @@
   {
     "name": "JsonWriterWriteToFileTest/5__ToSyncedFile",
     "file": "score/json/json_writer_test.cpp",
-    "line": "192",
+    "line": "198",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -9802,7 +9984,7 @@
   {
     "name": "JsonWriterWriteToFileTest/5__ToUnsyncedFileResultsInError",
     "file": "score/json/json_writer_test.cpp",
-    "line": "211",
+    "line": "217",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -9810,13 +9992,13 @@
     "TestType": "requirements-based",
     "DerivationTechnique": "requirements-analysis",
     "result_text": "",
-    "PartiallyVerifies": null,
+    "PartiallyVerifies": "comp_req__json__io_error",
     "FullyVerifies": null
   },
   {
     "name": "JsonWriterWriteToFileTest/5__ToSyncedFileResultsInError",
     "file": "score/json/json_writer_test.cpp",
-    "line": "233",
+    "line": "238",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -9824,13 +10006,41 @@
     "TestType": "requirements-based",
     "DerivationTechnique": "requirements-analysis",
     "result_text": "",
-    "PartiallyVerifies": null,
+    "PartiallyVerifies": "comp_req__json__io_error",
+    "FullyVerifies": null
+  },
+  {
+    "name": "JsonWriterWriteToFileTest/5__ToUnsyncedFileReportsIoErrorIfWritingFails",
+    "file": "score/json/json_writer_test.cpp",
+    "line": "280",
+    "result": "passed",
+    "repo_name": "local_repo",
+    "hash": "",
+    "url": "",
+    "TestType": "requirements-based",
+    "DerivationTechnique": "error-guessing",
+    "result_text": "",
+    "PartiallyVerifies": "comp_req__json__io_error",
+    "FullyVerifies": null
+  },
+  {
+    "name": "JsonWriterSyncedFileTest__ReportsIoErrorIfCommittingFails",
+    "file": "score/json/json_writer_test.cpp",
+    "line": "329",
+    "result": "passed",
+    "repo_name": "local_repo",
+    "hash": "",
+    "url": "",
+    "TestType": "requirements-based",
+    "DerivationTechnique": "error-guessing",
+    "result_text": "",
+    "PartiallyVerifies": "comp_req__json__io_error",
     "FullyVerifies": null
   },
   {
     "name": "JsonWriterSyncedFileTest__SerializationFailureKeepsTargetUnchanged",
     "file": "score/json/json_writer_test.cpp",
-    "line": "255",
+    "line": "352",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -9844,7 +10054,7 @@
   {
     "name": "JsonWriterDefaultFormattingTest__PrettyPrintsWhenFormattingIsOmitted",
     "file": "score/json/json_writer_test.cpp",
-    "line": "280",
+    "line": "377",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -9858,7 +10068,7 @@
   {
     "name": "JsonWriterIntegerTest/0__FormatsIntegralValuesCorrectly",
     "file": "score/json/json_writer_test.cpp",
-    "line": "309",
+    "line": "406",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -9872,7 +10082,7 @@
   {
     "name": "JsonWriterIntegerTest/1__FormatsIntegralValuesCorrectly",
     "file": "score/json/json_writer_test.cpp",
-    "line": "309",
+    "line": "406",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -9886,7 +10096,7 @@
   {
     "name": "JsonWriterIntegerTest/2__FormatsIntegralValuesCorrectly",
     "file": "score/json/json_writer_test.cpp",
-    "line": "309",
+    "line": "406",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -9900,7 +10110,7 @@
   {
     "name": "JsonWriterIntegerTest/3__FormatsIntegralValuesCorrectly",
     "file": "score/json/json_writer_test.cpp",
-    "line": "309",
+    "line": "406",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -10628,7 +10838,7 @@
   {
     "name": "Number__FromNanToAnyOtherType",
     "file": "score/json/number_test.cpp",
-    "line": "646",
+    "line": "653",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -10642,7 +10852,7 @@
   {
     "name": "Number__NarrowingIntegerIsRejectedByType",
     "file": "score/json/number_test.cpp",
-    "line": "659",
+    "line": "666",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -10656,7 +10866,7 @@
   {
     "name": "Number__FloatingPointEdgeCases",
     "file": "score/json/number_test.cpp",
-    "line": "693",
+    "line": "700",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -10668,9 +10878,23 @@
     "FullyVerifies": null
   },
   {
+    "name": "Number__ValueOutsideRangeOfRequestedTypeIsOutOfRange",
+    "file": "score/json/number_test.cpp",
+    "line": "714",
+    "result": "passed",
+    "repo_name": "local_repo",
+    "hash": "",
+    "url": "",
+    "TestType": "requirements-based",
+    "DerivationTechnique": "boundary-values",
+    "result_text": "",
+    "PartiallyVerifies": "comp_req__json__out_of_range_error",
+    "FullyVerifies": null
+  },
+  {
     "name": "Number__CheckEqualOperator",
     "file": "score/json/number_test.cpp",
-    "line": "713",
+    "line": "764",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -11042,13 +11266,13 @@
     "TestType": "requirements-based",
     "DerivationTechnique": "error-guessing",
     "result_text": "",
-    "PartiallyVerifies": null,
+    "PartiallyVerifies": "comp_req__json__serialization",
     "FullyVerifies": null
   },
   {
     "name": "SerializerTest__RejectsNegativeInfiniteFloat",
     "file": "score/json/internal/writer/serializer_test.cpp",
-    "line": "251",
+    "line": "252",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -11056,13 +11280,13 @@
     "TestType": "requirements-based",
     "DerivationTechnique": "error-guessing",
     "result_text": "",
-    "PartiallyVerifies": null,
+    "PartiallyVerifies": "comp_req__json__serialization",
     "FullyVerifies": null
   },
   {
     "name": "SerializerTest__RejectsNotANumber",
     "file": "score/json/internal/writer/serializer_test.cpp",
-    "line": "265",
+    "line": "267",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -11070,13 +11294,13 @@
     "TestType": "requirements-based",
     "DerivationTechnique": "error-guessing",
     "result_text": "",
-    "PartiallyVerifies": null,
+    "PartiallyVerifies": "comp_req__json__serialization",
     "FullyVerifies": null
   },
   {
     "name": "SerializerTest__RejectsNotANumberOnStream",
     "file": "score/json/internal/writer/serializer_test.cpp",
-    "line": "278",
+    "line": "281",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -11084,13 +11308,13 @@
     "TestType": "requirements-based",
     "DerivationTechnique": "error-guessing",
     "result_text": "",
-    "PartiallyVerifies": null,
+    "PartiallyVerifies": "comp_req__json__serialization",
     "FullyVerifies": null
   },
   {
     "name": "SerializerTest__SerializesBothBooleanValues",
     "file": "score/json/internal/writer/serializer_test.cpp",
-    "line": "296",
+    "line": "299",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -11104,7 +11328,7 @@
   {
     "name": "SerializerTest__SerializesTopLevelList",
     "file": "score/json/internal/writer/serializer_test.cpp",
-    "line": "311",
+    "line": "314",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -11118,7 +11342,7 @@
   {
     "name": "SerializerTest__PrettyPrintsNestedAny",
     "file": "score/json/internal/writer/serializer_test.cpp",
-    "line": "326",
+    "line": "329",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -11132,7 +11356,7 @@
   {
     "name": "SerializerTest__PrettyPrintsEmptyContainersOnOneLine",
     "file": "score/json/internal/writer/serializer_test.cpp",
-    "line": "360",
+    "line": "363",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -11146,7 +11370,7 @@
   {
     "name": "SerializerTest__PrettyPrintsTopLevelScalarWithoutWhitespace",
     "file": "score/json/internal/writer/serializer_test.cpp",
-    "line": "389",
+    "line": "392",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -11160,7 +11384,7 @@
   {
     "name": "SerializerTest__PrettyPrintsToStream",
     "file": "score/json/internal/writer/serializer_test.cpp",
-    "line": "401",
+    "line": "404",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -11174,7 +11398,7 @@
   {
     "name": "SerializerTest__SerializesEmptyContainersCompactly",
     "file": "score/json/internal/writer/serializer_test.cpp",
-    "line": "417",
+    "line": "420",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -11188,7 +11412,7 @@
   {
     "name": "SerializerTest__PrettyPrintsMixedNesting",
     "file": "score/json/internal/writer/serializer_test.cpp",
-    "line": "454",
+    "line": "457",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -11202,7 +11426,7 @@
   {
     "name": "SerializerTest__SerializesMixedNestingCompactly",
     "file": "score/json/internal/writer/serializer_test.cpp",
-    "line": "484",
+    "line": "487",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -11216,7 +11440,7 @@
   {
     "name": "SerializerTest__SerializesTopLevelScalars",
     "file": "score/json/internal/writer/serializer_test.cpp",
-    "line": "498",
+    "line": "501",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -11230,7 +11454,7 @@
   {
     "name": "SerializerTest__EscapesObjectKeysInNestedObjects",
     "file": "score/json/internal/writer/serializer_test.cpp",
-    "line": "519",
+    "line": "522",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -11244,7 +11468,7 @@
   {
     "name": "SerializerTest__RejectsNonFiniteNumberNestedDeepInsideContainers",
     "file": "score/json/internal/writer/serializer_test.cpp",
-    "line": "534",
+    "line": "537",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
