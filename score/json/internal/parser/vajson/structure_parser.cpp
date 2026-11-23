@@ -25,12 +25,12 @@
 #include <string>
 #include <string_view>
 
-#include "score/json/internal/parser/vajson/depth_counter.h"
 #include "score/json/internal/parser/vajson/json_data.h"
 #include "score/json/internal/parser/vajson/json_error_domain.h"
 #include "score/json/internal/parser/vajson/json_number.h"
 #include "score/json/internal/parser/vajson/json_ops.h"
 #include "score/json/internal/parser/vajson/parser_state.h"
+#include "score/json/internal/parser/vajson/structure_validator.h"
 #include "score/json/internal/parser/vajson/types.h"
 
 namespace score
@@ -204,11 +204,6 @@ auto StructureParser::Parse() noexcept -> Result<void>
     return result.transform([](ParserState) noexcept {});
 }
 
-auto StructureParser::GetState() noexcept -> DepthCounter&
-{
-    return this->GetJsonDocument().GetState();
-}
-
 auto StructureParser::GetJsonDocument() noexcept -> JsonData&
 {
 
@@ -226,7 +221,7 @@ auto StructureParser::ParseNull() noexcept -> ParserResult
 
     return (this->json_ops_.CheckString("ull"sv, "StructureParser::ParseNull: Expected 'null'"sv))
         .and_then([this](void) noexcept {
-            return this->GetState().AddValue();
+            return this->structure_validator_.AddValue();
         })
         .and_then([this](void) noexcept {
             return this->OnNull();
@@ -245,7 +240,7 @@ auto StructureParser::ParseTrue() noexcept -> ParserResult
 
     return (this->json_ops_.CheckString("rue"sv, "StructureParser::ParseTrue: Expected 'true'"sv))
         .and_then([this](void) noexcept {
-            return this->GetState().AddValue();
+            return this->structure_validator_.AddValue();
         })
         .and_then([this](void) noexcept {
             return this->OnBool(true);
@@ -263,7 +258,7 @@ auto StructureParser::ParseFalse() noexcept -> ParserResult
 
     return (this->json_ops_.CheckString("alse"sv, "StructureParser::ParseFalse: Expected 'false'"sv))
         .and_then([this](void) noexcept {
-            return this->GetState().AddValue();
+            return this->structure_validator_.AddValue();
         })
         .and_then([this](void) noexcept {
             return this->OnBool(false);
@@ -281,7 +276,7 @@ auto StructureParser::ParseFalse() noexcept -> ParserResult
 /// @endinternal
 auto StructureParser::ParseNumber(const char cur) noexcept -> ParserResult
 {
-    return (this->GetState().AddValue())
+    return (this->structure_validator_.AddValue())
         .and_then([this, cur](void) noexcept {
             return JsonNumber::New(this->GetNumber(cur));
         })
@@ -319,13 +314,13 @@ auto StructureParser::ParseUnescapedString(CStringView string) noexcept -> Parse
 
     if (this->json_ops_.Skip(':'))
     {
-        result = this->GetState().AddKey().and_then([this, &string](void) noexcept {
+        result = this->structure_validator_.AddKey().and_then([this, &string]() noexcept {
             return this->OnKey(string);
         });
     }
     else
     {
-        result = this->GetState().AddValue().and_then([this, &string](void) noexcept {
+        result = this->structure_validator_.AddValue().and_then([this, &string]() noexcept {
             return this->OnString(string);
         });
     }
@@ -565,42 +560,40 @@ auto StructureParser::UnescapeChar(const char escaped) noexcept -> Result<char>
 }
 
 /// @internal
-/// - If an object can be added to the stack:
+/// - If an object may start at the current position:
 ///   - Call the OnStartObject callback and return its Result.
 /// - Otherwise:
 ///   - Return an error.
 /// @endinternal
 auto StructureParser::ParseStartObject() noexcept -> ParserResult
 {
-    return this->GetState().AddObject().and_then([this]() noexcept {
+    return this->structure_validator_.OpenObject().and_then([this]() noexcept {
         return this->OnStartObject();
     });
 }
 
 /// @internal
-/// - Move the position in the file past the closing brace.
-/// - Pop the Object from the ItemStack.
-/// - If the pop object call was successful:
+/// - If the innermost open container is an object that may end at the current position:
 ///   - Call the OnEndObject callback and return its Result.
 /// - Otherwise:
 ///   - Return an error.
 /// @endinternal
 auto StructureParser::ParseEndObject() noexcept -> ParserResult
 {
-    return this->GetState().PopObject().and_then([this]() noexcept {
+    return this->structure_validator_.CloseObject().and_then([this]() noexcept {
         return this->OnEndObject();
     });
 }
 
 /// @internal
-/// - If an array can be added to the stack:
+/// - If an array may start at the current position:
 ///   - Call the OnStartArray callback and return its Result.
 /// - Otherwise:
 ///   - Return an error.
 /// @endinternal
 auto StructureParser::ParseStartArray() noexcept -> ParserResult
 {
-    return this->GetState().AddArray().and_then(
+    return this->structure_validator_.OpenArray().and_then(
 
         [this](void) noexcept {
             return this->OnStartArray();
@@ -608,16 +601,14 @@ auto StructureParser::ParseStartArray() noexcept -> ParserResult
 }
 
 /// @internal
-/// - Move the position in the file past the closing bracket.
-/// - Pop the Array from the ItemStack.
-/// - If the pop array call was successful:
+/// - If the innermost open container is an array that may end at the current position:
 ///   - Call the OnEndArray callback and return its Result.
 /// - Otherwise:
 ///   - Return an error.
 /// @endinternal
 auto StructureParser::ParseEndArray() noexcept -> ParserResult
 {
-    return this->GetState().PopArray().and_then([this]() noexcept {
+    return this->structure_validator_.CloseArray().and_then([this]() noexcept {
         return this->OnEndArray();
     });
 }
@@ -630,18 +621,16 @@ auto StructureParser::ParseEndArray() noexcept -> ParserResult
 /// @endinternal
 auto StructureParser::ParseComma() noexcept -> ParserResult
 {
-    ParserResult result{ParserState::kRunning};
-    if (!this->GetState().AddComma())
-    {
-        result = score::MakeUnexpected(JsonErrc::kInvalidJson, "StructureParser::ParseComma: Unexpected comma.");
-    }
-    return result;
+    return this->structure_validator_.AddComma().transform([]() noexcept {
+        return ParserState::kRunning;
+    });
 }
 
 /// @internal
 /// - Skip all whitespace characters.
-/// - If the document has ended and the ItemStack is empty:
-///   - Return kFinished.
+/// - If the document has ended:
+///   - If the document consists of exactly one complete value, return kFinished.
+///   - Otherwise return an error.
 /// - If there are still characters in the document:
 ///   - Parse the next character.
 ///   - Determine the expected type to follow based on the parsed character.
@@ -656,7 +645,9 @@ auto StructureParser::ParseValue() noexcept -> ParserResult
 
     if (!this->json_ops_.SkipWhitespace())
     {
-        result = this->GetState().CheckEndOfFile();
+        result = this->structure_validator_.CheckEndOfDocument().transform([]() noexcept {
+            return ParserState::kFinished;
+        });
     }
 
     if (result == ParserState::kRunning)

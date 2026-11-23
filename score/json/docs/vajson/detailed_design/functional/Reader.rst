@@ -81,8 +81,9 @@ The event handler must inherit from score::json::vajson::internal::StructurePars
 Each function returns an ``ara::core::Result<score::json::vajson::ParserState>`` to report errors and to indicate whether the
 parser shall go on (``score::json::vajson::ParserState::kRunning``) or stop (``score::json::vajson::ParserState::kFinished``).
 
-A hierarchical parser can be implemented by the application by providing event handlers spread over several classes
-that are instantiated by themselves depending on the last event.
+A hierarchical parser can be implemented by the application by letting the event handler delegate events to further
+classes depending on the last event.
+A single parser processes a document from its start to its end, because it checks the structure of the whole document.
 
 
 Number formatting

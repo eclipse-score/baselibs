@@ -79,22 +79,17 @@ StructureParser --> StructureParser : ParseStartObject()
 activate StructureParser #DarkGray
 note right : For instance, an opening curly bracket was found
 
-StructureParser --> DepthCounter : AddObject()
-activate DepthCounter
-DepthCounter --> DepthCounter : AddElement()
-DepthCounter --> DepthCounter : CheckLastElement()
-alt Last element is a value
-DepthCounter --> StructureParser : Error Invalid JSON
-else Last element is an opening curly bracket
-DepthCounter --> StructureParser : Error Invalid JSON
+StructureParser --> StructureValidator : OpenObject()
+activate StructureValidator
+alt A completed value is not followed by a comma
+StructureValidator --> StructureParser : Error Invalid JSON
+else Inside an object without a key
+StructureValidator --> StructureParser : Error Invalid JSON
 else
-  alt Last element is a key
-  DepthCounter --> DepthCounter : Pop key from stack
-  end
-  DepthCounter --> DepthCounter : Push opening curly bracket onto stack
-  DepthCounter --> DepthCounter : Push new counter onto stack
-  DepthCounter --> StructureParser
-  deactivate DepthCounter
+  StructureValidator --> StructureValidator : Consume the pending key
+  StructureValidator --> StructureValidator : Push the object onto the open containers
+  StructureValidator --> StructureParser
+  deactivate StructureValidator
 end
 
 StructureParser --> Parser : OnStartObject()
