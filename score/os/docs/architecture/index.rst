@@ -47,7 +47,7 @@ Static Architecture
    :safety:  ASIL_B
    :status: valid
    :version: 1
-   :fulfils: comp_req__os__env_get[version==1], comp_req__os__env_set[version==1], comp_req__os__env_unset[version==1]
+   :fulfils: comp_req__os__env_get[version==1], comp_req__os__env_set[version==1], comp_req__os__env_unset[version==1], comp_req__os__fd_close_on_exec[version==1], comp_req__os__fd_creation_flags[version==1]
    :belongs_to: comp__baselibs_os[version==1]
 
    .. needarch::

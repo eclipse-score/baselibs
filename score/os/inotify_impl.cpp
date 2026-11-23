@@ -13,6 +13,8 @@
 #include "score/os/inotify_impl.h"
 
 #include <sys/inotify.h>
+
+#include <cerrno>
 #include <type_traits>
 
 namespace score
@@ -50,13 +52,18 @@ std::uint32_t EventMaskToInteger(const Inotify::EventMask event_mask) noexcept
 
 score::cpp::expected<std::int32_t, Error> InotifyImpl::inotify_init() const noexcept
 {
-    // The instance is created with close-on-exec.
-    // This way it is not inherited by processes created via fork() + execve().
     return this->inotify_init1(InitFlag::kCloseOnExec);
 }
 
 score::cpp::expected<std::int32_t, Error> InotifyImpl::inotify_init1(const InitFlag flags) const noexcept
 {
+    // Unknown flags are rejected like the OS does, instead of being dropped.
+    constexpr InitFlag kSupportedFlags{InitFlag::kCloseOnExec | InitFlag::kNonBlocking};
+    if (static_cast<std::uint32_t>(flags & ~kSupportedFlags) != 0U)
+    {
+        return score::cpp::make_unexpected(Error::createFromErrno(EINVAL));
+    }
+    // The flags are applied by inotify_init1() atomically, so no concurrent fork() can leak the descriptor.
     std::uint32_t native_flags{0U};
     if (static_cast<std::uint32_t>(flags & InitFlag::kCloseOnExec) != 0U)
     {

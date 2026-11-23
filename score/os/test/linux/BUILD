@@ -36,6 +36,7 @@ cc_test(
         "@googletest//:gtest_main",
         "@score_baselibs//score/os/linux",
         "@score_baselibs//score/os/linux:linux_header",
+        "@score_baselibs//score/quality/compiler_warnings",
     ],
 )
 

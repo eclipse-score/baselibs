@@ -77,9 +77,9 @@ class Socket : public ObjectSeam<Socket>
     };
 
     /// @brief Creates a socket.
-    /// @a type is passed to the OS unchanged. The socket is only created with close-on-exec if the caller adds
-    /// SOCK_CLOEXEC to @a type. Callers whose sockets must not be inherited by processes created via fork() + execve()
-    /// should do so.
+    /// @p type is passed to the OS unchanged.
+    /// The socket is created with close-on-exec only if @p type contains SOCK_CLOEXEC.
+    /// Add it if the socket must not be inherited by processes created via fork() + execve().
     virtual score::cpp::expected<std::int32_t, Error> socket(const Domain domain,
                                                              const std::int32_t type,
                                                              const std::int32_t protocol) const noexcept = 0;
@@ -94,8 +94,11 @@ class Socket : public ObjectSeam<Socket>
     /// @brief Accepts a connection.
     /// The returned socket is created with close-on-exec (FD_CLOEXEC).
     /// This way it is not inherited by processes created via fork() + execve().
-    /// The blocking mode is the same as with accept(): on QNX the returned socket is non-blocking if the listening
-    /// socket is, on Linux it is always blocking.
+    /// The blocking mode is the same as with accept().
+    /// On QNX the returned socket is non-blocking if @p sockfd is, on Linux it is always blocking.
+    /// On QNX, the blocking mode of @p sockfd is read with fcntl(F_GETFL) before the connection is accepted.
+    /// This is one additional system call, and its error is returned if it fails.
+    /// If another thread changes O_NONBLOCK on @p sockfd meanwhile, the returned socket can have the previous mode.
     virtual score::cpp::expected<std::int32_t, Error> accept(const std::int32_t sockfd,
                                                              struct sockaddr* const addr,
                                                              socklen_t* const addrlen) const noexcept = 0;

@@ -11,6 +11,7 @@
  * SPDX-License-Identifier: Apache-2.0
  ********************************************************************************/
 #include "score/os/linux/unistd.h"
+#include "score/quality/compiler_warnings/warnings.h"
 
 #include "gtest/gtest.h"
 
@@ -53,7 +54,13 @@ TEST(Pipe2, PassInvalidFlagGetFailure)
     constexpr int invalid_flag{-1};
     int32_t fds[2] = {};
 
+    // The deprecated function is called on purpose, to test it until it is removed.
+    // clang-format off
+    DISABLE_WARNING_PUSH
+    DISABLE_WARNING_DEPRECATED
     const int val = score::os::pipe2(fds, invalid_flag);
+    DISABLE_WARNING_POP
+    // clang-format on
 
     ASSERT_EQ(val, -1);
 }

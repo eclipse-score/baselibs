@@ -15,6 +15,8 @@
 #include <fcntl.h>
 #include <unistd.h>
 
+#include <cerrno>
+
 #if defined(__QNX__)
 #include <process.h>
 #elif defined(__linux__)
@@ -77,8 +79,6 @@ score::cpp::expected_blank<score::os::Error> score::os::internal::UnistdImpl::ac
 score::cpp::expected_blank<score::os::Error> score::os::internal::UnistdImpl::pipe(
     std::int32_t pipefd[2]) const noexcept
 {
-    // Both ends are created with close-on-exec.
-    // This way they are not inherited by processes created via fork() + execve().
     return this->pipe2(pipefd, PipeFlag::kCloseOnExec);
 }
 
@@ -87,13 +87,19 @@ score::cpp::expected_blank<score::os::Error> score::os::internal::UnistdImpl::pi
 score::cpp::expected_blank<score::os::Error> score::os::internal::UnistdImpl::pipe2(std::int32_t pipefd[2],
                                                                                     const PipeFlag flags) const noexcept
 {
+    // Unknown flags are rejected like the OS does, instead of being dropped.
+    constexpr PipeFlag kSupportedFlags{PipeFlag::kCloseOnExec | PipeFlag::kNonBlocking};
+    if (static_cast<std::uint32_t>(flags & ~kSupportedFlags) != 0U)
+    {
+        return score::cpp::make_unexpected(score::os::Error::createFromErrno(EINVAL));
+    }
     // The flags are applied by pipe2() atomically, so no concurrent fork() can leak the descriptors.
     std::uint32_t native_flags{0U};
-    if (static_cast<std::int32_t>(flags & PipeFlag::kCloseOnExec) != 0)
+    if (static_cast<std::uint32_t>(flags & PipeFlag::kCloseOnExec) != 0U)
     {
         native_flags |= static_cast<std::uint32_t>(O_CLOEXEC);
     }
-    if (static_cast<std::int32_t>(flags & PipeFlag::kNonBlocking) != 0)
+    if (static_cast<std::uint32_t>(flags & PipeFlag::kNonBlocking) != 0U)
     {
         native_flags |= static_cast<std::uint32_t>(O_NONBLOCK);
     }
@@ -409,14 +415,6 @@ score::cpp::expected_blank<score::os::Error> score::os::internal::UnistdImpl::ge
         return score::cpp::make_unexpected(score::os::Error::createFromErrno());
     }
     return {};
-}
-
-// The default implementation reports that the operation is not supported, see the declaration.
-// Wrapped function requires C-style array param
-// NOLINTNEXTLINE(modernize-avoid-c-arrays) see comment above
-score::cpp::expected_blank<score::os::Error> score::os::Unistd::pipe2(std::int32_t[2], const PipeFlag) const noexcept
-{
-    return score::cpp::make_unexpected(score::os::Error::createFromErrno(ENOSYS));
 }
 
 score::os::Unistd& score::os::Unistd::instance() noexcept

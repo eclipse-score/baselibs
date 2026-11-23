@@ -49,9 +49,8 @@ score::cpp::expected<std::int32_t, Error> SocketImpl::accept(const std::int32_t 
                                                              struct sockaddr* const addr,
                                                              socklen_t* const addrlen) const noexcept
 {
-    // The accepted socket is created with close-on-exec.
-    // This way it is not inherited by processes created via fork() + execve().
-    std::int32_t accept_flags{SOCK_CLOEXEC};
+    // SOCK_CLOEXEC is applied atomically by accept4(), so no concurrent fork() can leak the accepted socket.
+    std::uint32_t accept_flags{static_cast<std::uint32_t>(SOCK_CLOEXEC)};
 // Suppress "AUTOSAR C++14 A16-0-1" rule findings. This rule stated: "The pre-processor shall only be used for
 // unconditional and conditional file inclusion and include guards, and using the following directives: (1) #ifndef,
 // #ifdef, (3) #if, (4) #if defined, (5) #elif, (6) #else, (7) #define, (8) #endif, (9) #include.".
@@ -59,20 +58,23 @@ score::cpp::expected<std::int32_t, Error> SocketImpl::accept(const std::int32_t 
 // in the same file. It also prevents compiler errors in linux code when compiling for QNX and vice versa.
 // coverity[autosar_cpp14_a16_0_1_violation]
 #ifdef __QNX__
-    // On QNX, accept() gives the accepted socket the O_NONBLOCK state of the listening socket, whereas accept4()
-    // applies only the flags it is passed. Pass SOCK_NONBLOCK for a non-blocking listening socket, so that the
-    // accepted socket has the same blocking mode as with accept().
+    // QNX io-sock follows FreeBSD: accept() takes O_NONBLOCK from the listening socket, accept4() only from its flags.
+    // SOCK_NONBLOCK is passed for a non-blocking listening socket to keep the blocking mode of accept().
     // NOLINTNEXTLINE(cppcoreguidelines-pro-type-vararg): fcntl is a POSIX variadic function
     const std::int32_t listener_flags{::fcntl(sockfd, F_GETFL)};
-    if ((listener_flags != -1) && ((listener_flags & O_NONBLOCK) != 0))
+    if (listener_flags == -1)
     {
-        accept_flags |= SOCK_NONBLOCK;
+        return score::cpp::make_unexpected(score::os::Error::createFromErrno());
+    }
+    if ((static_cast<std::uint32_t>(listener_flags) & static_cast<std::uint32_t>(O_NONBLOCK)) != 0U)
+    {
+        accept_flags |= static_cast<std::uint32_t>(SOCK_NONBLOCK);
     }
 // coverity[autosar_cpp14_a16_0_1_violation]
 #endif
     // Suppressed here because usage of this OSAL method is on banned list
     // NOLINTNEXTLINE(score-banned-function) see comment above
-    const std::int32_t ret = ::accept4(sockfd, addr, addrlen, accept_flags);
+    const std::int32_t ret = ::accept4(sockfd, addr, addrlen, static_cast<std::int32_t>(accept_flags));
     if (ret == -1)
     {
         return score::cpp::make_unexpected(score::os::Error::createFromErrno());

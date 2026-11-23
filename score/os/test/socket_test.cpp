@@ -14,15 +14,16 @@
 
 #include "score/os/unistd.h"
 #include "score/os/version.h"
+#include "score/scope_exit/scope_exit.h"
 
 #include <arpa/inet.h>
 #include <fcntl.h>
 #include <gmock/gmock.h>
 #include <gtest/gtest.h>
 #include <netinet/in.h>
+#include <poll.h>
 #include <sys/socket.h>
 #include <cerrno>
-#include <chrono>
 #include <cstdint>
 #include <cstdlib>
 #include <cstring>
@@ -43,10 +44,7 @@ using namespace ::testing;
 constexpr std::uint16_t kDefaultPortForTesting{61012U};
 constexpr std::string_view kDefaultAddrForTesting{"127.0.0.1"};
 constexpr std::string_view kTextForTesting{"Hello, BMW!"};
-// accept() on a non-blocking listening socket fails with EAGAIN until the connection has reached the listening queue.
-// This can still be the case after connect() has returned on the client side.
-constexpr int kMaxAcceptAttempts{200};
-constexpr std::chrono::milliseconds kAcceptRetryDelay{10};
+constexpr int kPendingConnectionTimeoutMs{2000};
 
 TEST(MessageFlag, IsDefaultConstructedWithSameValueAsNone)
 {
@@ -164,47 +162,13 @@ struct SocketTestFixture : public Test
         ASSERT_NE(::fcntl(server_fd_, F_SETFL, flags | O_NONBLOCK), -1);
     }
 
-    // Accepts a connection on a non-blocking listening socket. EAGAIN is retried, any other error fails the test.
-    void TestAcceptOnNonBlockingServerSocket()
+    // Waits until a connection is pending on the listening socket.
+    // A non-blocking accept() fails with EAGAIN until the connection is queued.
+    // This can still happen after connect() has returned on the client side.
+    void WaitForPendingConnection()
     {
-        for (int attempt{0}; attempt < kMaxAcceptAttempts; ++attempt)
-        {
-            unsigned int sock_size = sizeof(sockaddr_in);
-            const auto accept_result =
-                instance_.accept(server_fd_, reinterpret_cast<sockaddr*>(&client_addr_), &sock_size);
-            if (accept_result.has_value())
-            {
-                accepted_fd_ = accept_result.value();
-                EXPECT_GT(accepted_fd_, 0);
-                return;
-            }
-            ASSERT_EQ(accept_result.error(), Error::createFromErrno(EAGAIN))
-                << "accept() failed: " << accept_result.error().ToString();
-            std::this_thread::sleep_for(kAcceptRetryDelay);
-        }
-        FAIL() << "accept() still reported EAGAIN after " << kMaxAcceptAttempts << " attempts";
-    }
-
-    // Accepts a connection on a non-blocking listening socket with accept() of the C library. EAGAIN is retried.
-    // Returns the accepted descriptor, or -1 after reporting the error.
-    int AcceptWithLibcOnNonBlockingServerSocket()
-    {
-        for (int attempt{0}; attempt < kMaxAcceptAttempts; ++attempt)
-        {
-            // NOLINTNEXTLINE(score-banned-function): Socket::accept() is compared with the C library function.
-            const int fd{::accept(server_fd_, nullptr, nullptr)};
-            if (fd != -1)
-            {
-                return fd;
-            }
-            if (errno != EAGAIN)
-            {
-                break;
-            }
-            std::this_thread::sleep_for(kAcceptRetryDelay);
-        }
-        ADD_FAILURE() << "accept() failed: " << std::strerror(errno);
-        return -1;
+        pollfd listener{server_fd_, POLLIN, 0};
+        ASSERT_EQ(::poll(&listener, 1U, kPendingConnectionTimeoutMs), 1) << "No connection is pending";
     }
 
     void CreateServerAndClientSockets(int32_t type = SOCK_STREAM)
@@ -295,8 +259,8 @@ TEST_F(SocketTestFixture, AcceptedSocketHasCloseOnExecSet)
     RecordProperty(
         "Description",
         "An accepted socket has close-on-exec set, so it is not inherited by processes created via execve()");
-    RecordProperty("TestType", "interface-test");
-    RecordProperty("DerivationTechnique", "equivalence-classes");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
 
     // Given a connected client
     // When the server accepts the connection
@@ -309,28 +273,28 @@ TEST_F(SocketTestFixture, AcceptedSocketHasCloseOnExecSet)
     EXPECT_NE(flags & FD_CLOEXEC, 0);
 }
 
-TEST_F(SocketTestFixture, AcceptedSocketKeepsNonBlockingStateOfListeningSocketOnQnxOnly)
+TEST_F(SocketTestFixture, AcceptedSocketHasSameBlockingModeAsPlainAccept)
 {
-    RecordProperty("PartiallyVerifies", "comp_req__os__fd_close_on_exec");
     RecordProperty("Description",
                    "Accepting with close-on-exec does not change the O_NONBLOCK state of the accepted socket: it is "
-                   "the same as with a plain accept(). On QNX it is inherited from the listening socket, on Linux it "
-                   "is never inherited");
+                   "the same as with a plain accept(). On QNX it is taken from the listening socket, on Linux it "
+                   "is never taken from it");
     RecordProperty("TestType", "interface-test");
     RecordProperty("DerivationTechnique", "equivalence-classes");
 
     // Given a non-blocking listening socket with a connected client
-    TestSocket();
+    ASSERT_NO_FATAL_FAILURE(TestSocket());
     InitAddr();
-    TestBind();
-    TestListen();
-    MakeServerSocketNonBlocking();
-    TestClientSocket();
+    ASSERT_NO_FATAL_FAILURE(TestBind());
+    ASSERT_NO_FATAL_FAILURE(TestListen());
+    ASSERT_NO_FATAL_FAILURE(MakeServerSocketNonBlocking());
+    ASSERT_NO_FATAL_FAILURE(TestClientSocket());
     InitServerAddr();
-    TestConnect();
+    ASSERT_NO_FATAL_FAILURE(TestConnect());
+    ASSERT_NO_FATAL_FAILURE(WaitForPendingConnection());
 
     // When the server accepts the connection
-    TestAcceptOnNonBlockingServerSocket();
+    ASSERT_NO_FATAL_FAILURE(TestAccept());
 
     // Then the accepted socket is non-blocking on QNX and blocking on Linux
     ASSERT_NE(accepted_fd_, -1);
@@ -345,14 +309,41 @@ TEST_F(SocketTestFixture, AcceptedSocketKeepsNonBlockingStateOfListeningSocketOn
     // And a plain accept() on the same listening socket gives the same O_NONBLOCK state
     const int second_client_fd{::socket(AF_INET, SOCK_STREAM, 0)};
     ASSERT_NE(second_client_fd, -1);
+    score::utils::ScopeExit<> close_second_client{[this, second_client_fd]() noexcept {
+        unistd_.close(second_client_fd);
+    }};
     ASSERT_EQ(::connect(second_client_fd, reinterpret_cast<sockaddr*>(&server_addr_), sizeof(sockaddr_in)), 0);
-    const int plain_accepted_fd{AcceptWithLibcOnNonBlockingServerSocket()};
-    ASSERT_NE(plain_accepted_fd, -1);
+    ASSERT_NO_FATAL_FAILURE(WaitForPendingConnection());
+    // NOLINTNEXTLINE(score-banned-function): Socket::accept() is compared with the C library function.
+    const int plain_accepted_fd{::accept(server_fd_, nullptr, nullptr)};
+    ASSERT_NE(plain_accepted_fd, -1) << "accept() failed: " << std::strerror(errno);
+    score::utils::ScopeExit<> close_plain_accepted{[this, plain_accepted_fd]() noexcept {
+        unistd_.close(plain_accepted_fd);
+    }};
     const int plain_accepted_flags{::fcntl(plain_accepted_fd, F_GETFL)};
-    unistd_.close(plain_accepted_fd);
-    unistd_.close(second_client_fd);
     ASSERT_NE(plain_accepted_flags, -1);
     EXPECT_EQ(plain_accepted_flags & O_NONBLOCK, accepted_flags & O_NONBLOCK);
+}
+
+TEST_F(SocketTestFixture, AcceptOnSocketThatIsNotListeningReturnsInvalidArgument)
+{
+    RecordProperty("Description",
+                   "accept() on a valid socket that is not listening returns the EINVAL error of the OS. On QNX this "
+                   "runs the accept4() error path after the blocking mode of the socket has been read");
+    RecordProperty("TestType", "interface-test");
+    RecordProperty("DerivationTechnique", "error-guessing");
+
+    // Given a valid socket that is bound but not listening
+    ASSERT_NO_FATAL_FAILURE(TestSocket());
+    InitAddr();
+    ASSERT_NO_FATAL_FAILURE(TestBind());
+
+    // When accepting a connection on it
+    const auto accept_result{instance_.accept(server_fd_, nullptr, nullptr)};
+
+    // Then the error of the OS is returned
+    ASSERT_FALSE(accept_result.has_value());
+    EXPECT_EQ(accept_result.error(), Error::createFromErrno(EINVAL));
 }
 
 TEST_F(SocketTestFixture, ConnectToInvalidAddressShouldFail)

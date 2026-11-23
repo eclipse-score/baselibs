@@ -69,8 +69,19 @@ Functional Requirements
    :version: 1
    :satisfied_by: comp__baselibs_os[version==1]
 
-   The OS component shall create pipes, accepted sockets and inotify instances with close-on-exec by default, and shall
-   allow the caller to choose the creation flags of pipes and inotify instances.
+   The OS component shall create pipes, accepted sockets and inotify instances with close-on-exec by default.
+
+.. comp_req:: File descriptor creation flags
+   :id: comp_req__os__fd_creation_flags
+   :reqtype: Functional
+   :security: YES
+   :safety: ASIL_B
+   :status: valid
+   :version: 1
+   :satisfied_by: comp__baselibs_os[version==1]
+
+   The OS component shall allow the caller to choose close-on-exec and non-blocking when creating pipes and inotify
+   instances, and shall reject unsupported creation flags.
 
 .. needextend:: c.this_doc() and (type == "comp_req" or type == "aou_req")
    :+tags: baselibs, os
