@@ -6246,6 +6246,433 @@
         }
       },
       {
+        "need": "comp_req__log__cfg_custom_types",
+        "links": {
+          "CodeLinks": [],
+          "TestLinks": [
+            {
+              "name": "LogStreamFixture__CanLogACustomType",
+              "file": "score/mw/log/log_stream_test.cpp",
+              "line": 813,
+              "need": "comp_req__log__cfg_custom_types",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            }
+          ]
+        }
+      },
+      {
+        "need": "comp_req__log__console_backend",
+        "links": {
+          "CodeLinks": [],
+          "TestLinks": [
+            {
+              "name": "ConsoleRegistrantTest__ConsoleBackendIsRegisteredAfterStaticInitialization",
+              "file": "score/mw/log/detail/console_registrant_enabled_test.cpp",
+              "line": 28,
+              "need": "comp_req__log__console_backend",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "ConsoleRegistrantTest__ConsoleBackendCreatorReturnsNonNullRecorder",
+              "file": "score/mw/log/detail/console_registrant_enabled_test.cpp",
+              "line": 38,
+              "need": "comp_req__log__console_backend",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            }
+          ]
+        }
+      },
+      {
+        "need": "comp_req__log__system_logger",
+        "links": {
+          "CodeLinks": [],
+          "TestLinks": [
+            {
+              "name": "TextRecorderFixture__LogSlog2Message",
+              "file": "score/mw/log/detail/text_recorder/text_recorder_test.cpp",
+              "line": 417,
+              "need": "comp_req__log__system_logger",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            }
+          ]
+        }
+      },
+      {
+        "need": "comp_req__log__global_config",
+        "links": {
+          "CodeLinks": [],
+          "TestLinks": [
+            {
+              "name": "ConfigurationFileDiscovererFixture__DiscovererShallFindGlobalConfigurationFile",
+              "file": "score/mw/log/configuration/configuration_file_discoverer_test.cpp",
+              "line": 133,
+              "need": "comp_req__log__global_config",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "TargetConfigReaderFixture__ConfigReaderShallParseEcuIdFromEcuConfig",
+              "file": "score/mw/log/configuration/target_config_reader_test.cpp",
+              "line": 166,
+              "need": "comp_req__log__global_config",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            }
+          ]
+        }
+      },
+      {
+        "need": "comp_req__log__cfg_file_loc",
+        "links": {
+          "CodeLinks": [],
+          "TestLinks": [
+            {
+              "name": "ConfigurationFileDiscovererFixture__DiscovererShallFindConfigurationFileInCwdEtc",
+              "file": "score/mw/log/configuration/configuration_file_discoverer_test.cpp",
+              "line": 152,
+              "need": "comp_req__log__cfg_file_loc",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "ConfigurationFileDiscovererFixture__DiscovererShallFindConfigurationFileInCwd",
+              "file": "score/mw/log/configuration/configuration_file_discoverer_test.cpp",
+              "line": 176,
+              "need": "comp_req__log__cfg_file_loc",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "ConfigurationFileDiscovererFixture__DiscovererShallFindConfigurationFileInExecPath",
+              "file": "score/mw/log/configuration/configuration_file_discoverer_test.cpp",
+              "line": 198,
+              "need": "comp_req__log__cfg_file_loc",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "ConfigurationFileDiscovererFixture__DiscovererShallFindConfigurationFileInEnvPath",
+              "file": "score/mw/log/configuration/configuration_file_discoverer_test.cpp",
+              "line": 223,
+              "need": "comp_req__log__cfg_file_loc",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "ConfigurationFileDiscovererFixture__DiscovererShallFindConfigurationFileInEnvPathOverrideCwdEtc",
+              "file": "score/mw/log/configuration/configuration_file_discoverer_test.cpp",
+              "line": 246,
+              "need": "comp_req__log__cfg_file_loc",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "ConfigurationFileDiscovererFixture__DiscovererShallFindConfigurationFileInEnvPathOverrideCwd",
+              "file": "score/mw/log/configuration/configuration_file_discoverer_test.cpp",
+              "line": 270,
+              "need": "comp_req__log__cfg_file_loc",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "ConfigurationFileDiscovererFixture__DiscovererShallFindConfigurationFileInEnvPathOverrideExecPath",
+              "file": "score/mw/log/configuration/configuration_file_discoverer_test.cpp",
+              "line": 294,
+              "need": "comp_req__log__cfg_file_loc",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            }
+          ]
+        }
+      },
+      {
+        "need": "comp_req__log__cfg_log_app_id",
+        "links": {
+          "CodeLinks": [],
+          "TestLinks": [
+            {
+              "name": "ConfigurationTestSuite__AppidWithMoreThanFourCharactersShallBeTruncated",
+              "file": "score/mw/log/configuration/configuration_test.cpp",
+              "line": 143,
+              "need": "comp_req__log__cfg_log_app_id",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "TargetConfigReaderFixture__ConfigReaderShallParseAppIdFromAppConfig",
+              "file": "score/mw/log/configuration/target_config_reader_test.cpp",
+              "line": 180,
+              "need": "comp_req__log__cfg_log_app_id",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            }
+          ]
+        }
+      },
+      {
+        "need": "comp_req__log__cfg_log_ecu_id",
+        "links": {
+          "CodeLinks": [],
+          "TestLinks": [
+            {
+              "name": "ConfigurationTestSuite__EcuidWithMoreThanFourCharactersShallBeTruncated",
+              "file": "score/mw/log/configuration/configuration_test.cpp",
+              "line": 159,
+              "need": "comp_req__log__cfg_log_ecu_id",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "TargetConfigReaderFixture__ConfigReaderShallParseEcuIdFromEcuConfig",
+              "file": "score/mw/log/configuration/target_config_reader_test.cpp",
+              "line": 166,
+              "need": "comp_req__log__cfg_log_ecu_id",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            }
+          ]
+        }
+      },
+      {
+        "need": "comp_req__log__cfg_file",
+        "links": {
+          "CodeLinks": [],
+          "TestLinks": [
+            {
+              "name": "TargetConfigReaderFixture__ConfigReaderShallParseAppIdFromAppConfig",
+              "file": "score/mw/log/configuration/target_config_reader_test.cpp",
+              "line": 180,
+              "need": "comp_req__log__cfg_file",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "TargetConfigReaderFixture__ConfigReaderShallParseLogLevelFromAppConfig",
+              "file": "score/mw/log/configuration/target_config_reader_test.cpp",
+              "line": 195,
+              "need": "comp_req__log__cfg_file",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "TargetConfigReaderFixture__ConfigReaderShallParseLogModeFromAppConfig",
+              "file": "score/mw/log/configuration/target_config_reader_test.cpp",
+              "line": 210,
+              "need": "comp_req__log__cfg_file",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            }
+          ]
+        }
+      },
+      {
+        "need": "comp_req__log__cfg_precedence",
+        "links": {
+          "CodeLinks": [],
+          "TestLinks": [
+            {
+              "name": "TargetConfigReaderFixture__ConfigReaderShallParseAppIdFromAppConfig",
+              "file": "score/mw/log/configuration/target_config_reader_test.cpp",
+              "line": 180,
+              "need": "comp_req__log__cfg_precedence",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "TargetConfigReaderFixture__ConfigReaderShallParseContextLogLevelFromEcuAndAppConfig",
+              "file": "score/mw/log/configuration/target_config_reader_test.cpp",
+              "line": 307,
+              "need": "comp_req__log__cfg_precedence",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            }
+          ]
+        }
+      },
+      {
+        "need": "comp_req__log__cfg_buffer_size",
+        "links": {
+          "CodeLinks": [],
+          "TestLinks": [
+            {
+              "name": "TargetConfigReaderFixture__ConfigReaderShallParseStackBufferSizeFromEcuConfig",
+              "file": "score/mw/log/configuration/target_config_reader_test.cpp",
+              "line": 249,
+              "need": "comp_req__log__cfg_buffer_size",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "TargetConfigReaderFixture__ConfigReaderShallParseRingBufferSizeFromEcuConfig",
+              "file": "score/mw/log/configuration/target_config_reader_test.cpp",
+              "line": 264,
+              "need": "comp_req__log__cfg_buffer_size",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "TargetConfigReaderFixture__ConfigReaderShallParseNumberOfSlots",
+              "file": "score/mw/log/configuration/target_config_reader_test.cpp",
+              "line": 322,
+              "need": "comp_req__log__cfg_buffer_size",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "TargetConfigReaderFixture__ConfigReaderShallParseSlotSizeBytes",
+              "file": "score/mw/log/configuration/target_config_reader_test.cpp",
+              "line": 335,
+              "need": "comp_req__log__cfg_buffer_size",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            }
+          ]
+        }
+      },
+      {
+        "need": "comp_req__log__cfg_sink_device",
+        "links": {
+          "CodeLinks": [],
+          "TestLinks": [
+            {
+              "name": "TargetConfigReaderFixture__ConfigReaderShallParseLogFilePathFromAppConfig",
+              "file": "score/mw/log/configuration/target_config_reader_test.cpp",
+              "line": 292,
+              "need": "comp_req__log__cfg_sink_device",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            }
+          ]
+        }
+      },
+      {
+        "need": "comp_req__log__cfg_syntax_err",
+        "links": {
+          "CodeLinks": [],
+          "TestLinks": [
+            {
+              "name": "TargetConfigReaderFixture__AppConfigSyntaxErrorShallFallbackToEcuConfig",
+              "file": "score/mw/log/configuration/target_config_reader_test.cpp",
+              "line": 371,
+              "need": "comp_req__log__cfg_syntax_err",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            }
+          ]
+        }
+      },
+      {
+        "need": "comp_req__log__cfg_invalid",
+        "links": {
+          "CodeLinks": [],
+          "TestLinks": [
+            {
+              "name": "TargetConfigReaderFixture__WrongLogLevelValueShallFallbackToEcuConfig",
+              "file": "score/mw/log/configuration/target_config_reader_test.cpp",
+              "line": 407,
+              "need": "comp_req__log__cfg_invalid",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "TargetConfigReaderFixture__AppConfigInvalidLogLevelFallbackToEcuConfig",
+              "file": "score/mw/log/configuration/target_config_reader_test.cpp",
+              "line": 426,
+              "need": "comp_req__log__cfg_invalid",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "TargetConfigReaderFixture__AppConfigInvalidLogModeFallbackToEcuConfig",
+              "file": "score/mw/log/configuration/target_config_reader_test.cpp",
+              "line": 445,
+              "need": "comp_req__log__cfg_invalid",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "TargetConfigReaderFixture__AppConfigInvalidContextConfigFallbackToEcuConfig",
+              "file": "score/mw/log/configuration/target_config_reader_test.cpp",
+              "line": 464,
+              "need": "comp_req__log__cfg_invalid",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            }
+          ]
+        }
+      },
+      {
+        "need": "comp_req__log__cfg_defaults",
+        "links": {
+          "CodeLinks": [],
+          "TestLinks": [
+            {
+              "name": "TargetConfigReaderFixture__WhenInvalidFilePathReaderShallReturnDefaultAppId",
+              "file": "score/mw/log/configuration/target_config_reader_test.cpp",
+              "line": 499,
+              "need": "comp_req__log__cfg_defaults",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "TargetConfigReaderFixture__EmptyConfigFileShallCauseDefaultAppId",
+              "file": "score/mw/log/configuration/target_config_reader_test.cpp",
+              "line": 518,
+              "need": "comp_req__log__cfg_defaults",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "TargetConfigReaderFixture__ConfigReaderShallFallBackToContextLogLevelDefaultWhenNoValidValueInConfigurationFiles",
+              "file": "score/mw/log/configuration/target_config_reader_test.cpp",
+              "line": 537,
+              "need": "comp_req__log__cfg_defaults",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            }
+          ]
+        }
+      },
+      {
         "need": "comp_req__hash__crc32_algorithm",
         "links": {
           "CodeLinks": [],
