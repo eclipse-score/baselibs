@@ -118,38 +118,6 @@ score::Result<Out> TryLosslessCast(const In value)
 
 }  // namespace
 
-class VariantComparator
-{
-  public:
-    explicit VariantComparator(const Number& lhs) : lhs_(lhs) {}
-    template <typename T, std::enable_if_t<(!std::is_same_v<T, float>) && (!std::is_same_v<T, double>), bool> = true>
-    bool operator()(const T& rhs) const noexcept
-    {
-        // LCOV_EXCL_BR_START Failed branch is unreachable since types are compared before
-        if (const auto result = lhs_.As<T>(); result.has_value())
-        // LCOV_EXCL_BR_STOP
-        {
-            return rhs == *result;
-        }
-        return false;  // LCOV_EXCL_LINE Unreachable since types are compared before
-    }
-
-    template <typename T, std::enable_if_t<(std::is_same_v<T, float> || std::is_same_v<T, double>), bool> = true>
-    bool operator()(const T& rhs) const noexcept
-    {
-        // LCOV_EXCL_BR_START Failed branch is unreachable since types are compared before
-        if (const auto result = lhs_.As<T>(); result.has_value())
-        // LCOV_EXCL_BR_STOP
-        {
-            return std::abs(rhs - *result) < std::numeric_limits<T>::epsilon();
-        }
-        return false;  // LCOV_EXCL_LINE Unreachable since types are compared before
-    }
-
-  private:
-    Number lhs_;
-};
-
 Number::Number(const ArithmeticType& value) : value_{value} {}
 
 // std::visit throws std::bad_variant_access if as-variant(value_i).valueless_by_exception() is true
@@ -158,11 +126,24 @@ Number::Number(const ArithmeticType& value) : value_{value} {}
 bool operator==(const Number& lhs, const Number& rhs) noexcept
 {
     SCORE_LANGUAGE_FUTURECPP_ASSERT_PRD(!lhs.value_.valueless_by_exception());
-    if (lhs.value_.index() != rhs.value_.index())
-    {
-        return false;  // The variants hold different types
-    }
-    return std::visit(VariantComparator{rhs}, lhs.value_);
+    return std::visit(
+        [&rhs](const auto value) noexcept {
+            using ValueType = std::decay_t<decltype(value)>;
+            const auto* const other{std::get_if<ValueType>(&rhs.value_)};
+            if (other == nullptr)
+            {
+                return false;  // The variants hold different types.
+            }
+            if constexpr (std::is_floating_point_v<ValueType>)
+            {
+                return std::abs(value - *other) < std::numeric_limits<ValueType>::epsilon();
+            }
+            else
+            {
+                return value == *other;
+            }
+        },
+        lhs.value_);
 }
 
 template <typename T, class>

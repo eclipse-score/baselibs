@@ -186,15 +186,7 @@ class score::json::Number {
 }
 
 score::json::Number *-- score::json::ArithmeticType
-score::json::Number --> score::json::VariantComparator : use
 score::json::Number --> score::Result : use
-
-
-class score::json::VariantComparator {
-  +<T: typename>operator()(T: rhs): bool
-}
-
-score::json::VariantComparator *-- score::json::Number
 
 
 enum score::json::Error {
