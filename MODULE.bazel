@@ -191,6 +191,14 @@ bazel_dep(name = "score_docs_as_code", version = "9.1.1")
 bazel_dep(name = "score_process_description", version = "2.2.5")
 
 bazel_dep(name = "score_tooling", version = "3.0.2", dev_dependency = True)
+bazel_dep(name = "score_tools", dev_dependency = True)
+
+# Evaluate the centralized CodeQL implementation from eclipse-score/tools#69.
+git_override(
+    module_name = "score_tools",
+    commit = "6be16bcf2f4fdf4e67d945a3c098b32fad5d2f1b",
+    remote = "https://github.com/eclipse-score/tools.git",
+)
 
 # LLVM source-based coverage pipeline (successor of @score_tooling//coverage),
 # see tools/coverage/. 0.2.0 fixes eclipse-score/baselibs#558 and

@@ -14,3 +14,6 @@ ubproject.toml
 
 # coverage report output (repo root only; tools/coverage is tracked)
 /coverage*/
+
+# CodeQL analysis output
+/_codeql_sca/
