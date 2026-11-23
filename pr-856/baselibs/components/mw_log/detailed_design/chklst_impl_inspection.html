@@ -73,7 +73,7 @@
     <link rel="index" title="Index" href="../../../../genindex.html" />
     <link rel="search" title="Search" href="../../../../search.html" />
     <link rel="next" title="os" href="../../os/index.html" />
-    <link rel="prev" title="Log Frontend Detailed Design" href="log_frontend_design.html" />
+    <link rel="prev" title="Design Decisions" href="cpp_design/design_decisions.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="color-scheme" content="light dark"/>
   <meta name="docsearch:language" content="en"/>
@@ -432,6 +432,14 @@
 <li class="toctree-l2 current active has-children"><a class="reference internal" href="index.html">Detailed Design</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
 <li class="toctree-l3"><a class="reference internal" href="rust_bridge_design.html">Rust Bridge Detailed Design</a></li>
 <li class="toctree-l3"><a class="reference internal" href="log_frontend_design.html">Log Frontend Detailed Design</a></li>
+<li class="toctree-l3"><a class="reference internal" href="external_libraries.html">External Libraries</a></li>
+<li class="toctree-l3"><a class="reference internal" href="cpp_design/README.html">Detailed Design</a></li>
+<li class="toctree-l3"><a class="reference internal" href="cpp_design/configuration_design.html">Low Level Design of the Configuration and Initialization for <code class="docutils literal notranslate"><span class="pre">mw::log</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="cpp_design/dependency_graph.html">Dependency graph</a></li>
+
+<li class="toctree-l3"><a class="reference internal" href="cpp_design/registry_aware_recorder_factory.html">Registry Aware Recorder Factory</a></li>
+<li class="toctree-l3"><a class="reference internal" href="cpp_design/dynamic_backend_loading_design.html">Dynamic backend loading for mw::log</a></li>
+<li class="toctree-l3"><a class="reference internal" href="cpp_design/design_decisions.html">Design Decisions</a></li>
 <li class="toctree-l3 current active"><a aria-current="page" class="current reference internal" href="#">Implementation Inspection Checklist</a></li>
 </ul>
 </details></li>
@@ -510,7 +518,7 @@
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <div class="need_container docutils container" id="SNCB-107ed6d4">
+  <div class="need_container docutils container" id="SNCB-8a53e6c0">
 <div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_document table" id="doc__log_impl_inspection">
 <tbody>
 <tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
@@ -566,9 +574,9 @@ by linking to C++ or Rust specific documentation.</p>
 <h2>Conduct<a class="headerlink" href="#conduct" title="Link to this heading">#</a></h2>
 <p>As described in the concept <a class="external_link reference external" href="https://eclipse-score.github.io/process_description//main/general_concepts/score_review_concept.html#doc_concept__wp_inspections">doc_concept__wp_inspections</a> the following “inspection roles” are expected to be filled:</p>
 <ul class="simple">
-<li><p>content responsible (author): &lt;contributor/committer explicitly named here, who is the main author, as can be seen in config mgt tooling&gt;</p></li>
-<li><p>reviewer: &lt;contributor/committer explicitly named here, who is the main content reviewer, must be different from content responsible&gt;</p></li>
-<li><p>moderator: &lt;committer explicitly named here, who is is the safety manager, security manager or quality manager initiating the inspection&gt;</p></li>
+<li><p>content responsible (author): <a class="github reference external" href="https://github.com/AdamBienkunski">AdamBienkunski</a></p></li>
+<li><p>reviewer: <a class="github reference external" href="https://github.com/rmaddikery">rmaddikery</a></p></li>
+<li><p>moderator: <a class="github reference external" href="https://github.com/aschemmel-tech">aschemmel-tech</a></p></li>
 </ul>
 </section>
 <section id="checklist">
@@ -576,15 +584,15 @@ by linking to C++ or Rust specific documentation.</p>
 <p>It is mandatory to fill in the “passed” column with “yes” or “no” for each checklist item and additionally to add in the remarks why it is passed or not passed.
 In case of “no” an issue link to the issue tracking system has to be added in the last column (if not solved in the same issue).
 See also <a class="external_link reference external" href="https://eclipse-score.github.io/process_description//main/general_concepts/score_review_concept.html#doc_concept__wp_inspections">doc_concept__wp_inspections</a> for further information about reviews in general and inspection in particular.</p>
-<div class="pst-scrollable-table-container"><table class="table" id="id1">
-<caption><span class="caption-number">Table 43 </span><span class="caption-text">Implementation Checklist</span><a class="headerlink" href="#id1" title="Link to this table">#</a></caption>
+<div class="pst-scrollable-table-container"><table class="table" id="id8">
+<caption><span class="caption-number">Table 43 </span><span class="caption-text">Implementation Checklist</span><a class="headerlink" href="#id8" title="Link to this table">#</a></caption>
 <colgroup>
-<col style="width: 9.1%" />
-<col style="width: 27.3%" />
-<col style="width: 45.5%" />
-<col style="width: 5.5%" />
-<col style="width: 5.5%" />
-<col style="width: 7.3%" />
+<col style="width: 5.8%" />
+<col style="width: 14.6%" />
+<col style="width: 17.5%" />
+<col style="width: 3.5%" />
+<col style="width: 46.8%" />
+<col style="width: 11.7%" />
 </colgroup>
 <thead>
 <tr class="row-odd"><th class="head"><p>Review ID</p></th>
@@ -600,54 +608,161 @@ See also <a class="external_link reference external" href="https://eclipse-score
 <td><p>Is the design according to guidelines?</p></td>
 <td><p>see <a class="external_link reference external" href="https://eclipse-score.github.io/process_description//main/process_areas/implementation/guidance/detailed_design_template.html#gd_temp__detailed_design">gd_temp__detailed_design</a> and <a class="external_link reference external" href="https://eclipse-score.github.io/process_description//main/process_areas/implementation/implementation_concept.html#doc_concept__imp_concept">doc_concept__imp_concept</a>
 (e.g. are the views done with the proposed UML diagrams)</p></td>
-<td></td>
-<td></td>
+<td><p>yes</p></td>
+<td><p>Checked: the detailed design consists of <a class="reference internal" href="rust_bridge_design.html"><span class="doc">Rust Bridge Detailed Design</span></a> for
+the Rust bridge and <a class="reference internal" href="log_frontend_design.html"><span class="doc">Log Frontend Detailed Design</span></a> for the C++ frontend,
+which follow the detailed design template (description, rationale behind
+the decomposition, static and dynamic diagrams). The diagrams are UML
+diagrams in PlantUML, linked to the component requirements and the
+component by <code class="docutils literal notranslate"><span class="pre">comp_arc_sta</span></code> and <code class="docutils literal notranslate"><span class="pre">comp_arc_dyn</span></code> needs. The
+explanations of the C++ design are in <code class="docutils literal notranslate"><span class="pre">cpp_design</span></code> and the diagrams in
+<code class="docutils literal notranslate"><span class="pre">_assets</span></code>. They were moved from <code class="docutils literal notranslate"><span class="pre">score/mw/log/design</span></code>, as the bundle
+<code class="docutils literal notranslate"><span class="pre">//score/mw/log:docs</span></code> rejects files and symbolic links to files
+outside <code class="docutils literal notranslate"><span class="pre">score/mw/log/docs</span></code> (<code class="docutils literal notranslate"><span class="pre">mounts.path_escape</span></code>).</p></td>
 <td></td>
 </tr>
 <tr class="row-odd"><td><p>IMPL_01_02</p></td>
 <td><p>Is the implementation according to specification?</p></td>
 <td><p>Check if the linked component requirements are fulfilled
 and detailed design also matches architecture description.</p></td>
-<td></td>
-<td></td>
-<td></td>
+<td><p>no</p></td>
+<td><p>Checked: 72 existing test cases are linked to 14 of the 18 component
+requirements. The requirement-to-test traceability is shown in
+<a class="reference internal" href="../../../../verification_report/requirements_statistics.html"><span class="doc">Component Requirements Statistics</span></a>.</p>
+<p>Following issues need to be addressed:</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="../requirements/index.html#comp_req__log__cfg_file_loc" title="comp_req__log__cfg_file_loc"><em class="xref need">Logging Configuration File ... (comp_req__log__cfg_file_loc)</em></a> is not fulfilled.
+<code class="docutils literal notranslate"><span class="pre">ConfigurationFileDiscoverer</span></code> searches
+<code class="docutils literal notranslate"><span class="pre">&lt;binary</span> <span class="pre">path&gt;/../etc/logging.json</span></code> before <code class="docutils literal notranslate"><span class="pre">&lt;cwd&gt;/etc/logging.json</span></code>
+and <code class="docutils literal notranslate"><span class="pre">&lt;cwd&gt;/logging.json</span></code>, the requirement places it last.</p></li>
+<li><p><a class="reference internal" href="../requirements/index.html#comp_req__log__cfg_log_ecu_id" title="comp_req__log__cfg_log_ecu_id"><em class="xref need">Logging Configuration Log E... (comp_req__log__cfg_log_ecu_id)</em></a> and
+<a class="reference internal" href="../requirements/index.html#comp_req__log__cfg_log_app_id" title="comp_req__log__cfg_log_app_id"><em class="xref need">Logging Configuration Log A... (comp_req__log__cfg_log_app_id)</em></a> are not fulfilled.
+<code class="docutils literal notranslate"><span class="pre">TargetConfigReader</span></code> accepts any string as ECU and application ID
+and does not check for 4 uppercase ASCII characters.</p></li>
+</ul>
+<p>Deviations:</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="../requirements/index.html#comp_req__log__system_logger" title="comp_req__log__system_logger"><em class="xref need">System Logger Backend (comp_req__log__system_logger)</em></a> is QNX only, the slog backend is
+not part of the Linux unit tests. <code class="docutils literal notranslate"><span class="pre">TextRecorder</span></code> logging of a
+<code class="docutils literal notranslate"><span class="pre">LogSlog2Message</span></code> is the only linked test.</p></li>
+<li><p><a class="reference internal" href="../requirements/index.html#comp_req__log__compat_os" title="comp_req__log__compat_os"><em class="xref need">Compatibility Supported Ope... (comp_req__log__compat_os)</em></a> is verified by building for QNX and
+Linux in CI, <a class="reference internal" href="../requirements/index.html#comp_req__log__compat_languages" title="comp_req__log__compat_languages"><em class="xref need">Compatibility Supported Pro... (comp_req__log__compat_languages)</em></a> by the C++ tests
+and the Rust tests.</p></li>
+<li><p>The Rust tests have no requirement links. docs-as-code provides no
+way to link Rust tests to requirements (see <code class="docutils literal notranslate"><span class="pre">test_to_doc_links.rst</span></code>
+in <code class="docutils literal notranslate"><span class="pre">score_docs_as_code</span></code>), and the other components have no links in
+their Rust tests either.</p></li>
+</ul>
+</td>
+<td><p><a class="reference external" href="https://github.com/eclipse-score/logging/issues/346">#346</a></p></td>
 </tr>
 <tr class="row-even"><td><p>IMPL_01_03</p></td>
 <td><p>Are the design decisions and constraints documented?</p></td>
 <td><p>Check also for plausibility of these.</p></td>
-<td></td>
-<td></td>
+<td><p>yes</p></td>
+<td><p>Design decisions in <code class="docutils literal notranslate"><span class="pre">cpp_design/README.md</span></code> and
+<code class="docutils literal notranslate"><span class="pre">cpp_design/design_decisions.md</span></code> were checked against the code. The
+constraints of the units (slot count, slot size, slots per drain cycle,
+queued slots) are expressed by the expectations of the unit tests.</p></td>
 <td></td>
 </tr>
 <tr class="row-odd"><td><p>IMPL_01_04</p></td>
 <td><p>Are all external libraries used by the component specified in the detailed design?</p></td>
 <td><p>Check the automated dependency analysis.
 Also make sure ASIL rated units also only use ASIL rated libraries.</p></td>
-<td></td>
-<td></td>
+<td><p>yes</p></td>
+<td><p>Dependency and FFI metadata are maintained in Bazel. The external
+libraries are listed in <a class="reference internal" href="external_libraries.html"><span class="doc">External Libraries</span></a>, generated with:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">bazel</span> <span class="n">query</span> <span class="s2">"kind('.*_library|rust_proc_macro',</span>
+  <span class="n">deps</span><span class="p">(</span><span class="o">//</span><span class="n">score</span><span class="o">/</span><span class="n">mw</span><span class="o">/</span><span class="n">log</span><span class="p">:</span><span class="n">log</span><span class="p">))</span><span class="s2">" --output=label_kind</span>
+</pre></div>
+</div>
+<p>Deviations:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">//score/language/futurecpp:futurecpp</span></code> and
+<code class="docutils literal notranslate"><span class="pre">//score/language/futurecpp:math</span></code> are third-party code without
+<code class="docutils literal notranslate"><span class="pre">FFI</span></code> tag and stated rating. <code class="docutils literal notranslate"><span class="pre">score/language/futurecpp</span></code> is a
+restricted path, which is changed only through the internal codebase. The crates <code class="docutils literal notranslate"><span class="pre">syn</span></code>, <code class="docutils literal notranslate"><span class="pre">quote</span></code> and
+<code class="docutils literal notranslate"><span class="pre">proc_macro2</span></code> are third-party build-time dependencies of
+<code class="docutils literal notranslate"><span class="pre">score_log_fmt_macro</span></code> from <code class="docutils literal notranslate"><span class="pre">&#64;score_crates</span></code> without <code class="docutils literal notranslate"><span class="pre">FFI</span></code> tag.</p></li>
+<li><p>The Rust crates <code class="docutils literal notranslate"><span class="pre">score_log</span></code>, <code class="docutils literal notranslate"><span class="pre">score_log_fmt</span></code>, <code class="docutils literal notranslate"><span class="pre">stdout_logger</span></code>
+and <code class="docutils literal notranslate"><span class="pre">stdout_logger_cpp_init</span></code> have no <code class="docutils literal notranslate"><span class="pre">FFI</span></code> tag. The Rust crates
+are classified by the <code class="docutils literal notranslate"><span class="pre">safety_level</span></code> flag in
+<code class="docutils literal notranslate"><span class="pre">//score/log_rust</span></code> instead, and <code class="docutils literal notranslate"><span class="pre">stdout_logger</span></code> is a testing and
+development backend.</p></li>
+<li><p>The <code class="docutils literal notranslate"><span class="pre">high_resolution_steady_clock</span></code> target is deprecated and its
+replacement is not available in the open source dependencies.</p></li>
+</ul>
+</td>
 <td></td>
 </tr>
 <tr class="row-even"><td><p>IMPL_02_01</p></td>
 <td><p>Are the static and dynamic code analysis reports verified for violations?</p></td>
 <td><p>All violations in ASIL related code must be justified. This includes the checks of coding guidelines.</p></td>
-<td></td>
-<td></td>
+<td><p>yes</p></td>
+<td><p>Refer to the generated <a class="reference internal" href="../../../../verification_report/module_verification_report.html"><span class="doc">verification report</span></a> and revision-specific
+CI results.</p>
+<p>Deviations:</p>
+<ul>
+<li><p>Static code analysis with MISRA C++:2023 checks is planned:
+<a class="reference external" href="https://github.com/eclipse-score/logging/issues/262">#262</a></p></li>
+<li><p>Dynamic code analysis using valgrind is planned:
+<a class="reference external" href="https://github.com/eclipse-score/logging/issues/389">#389</a></p></li>
+<li><p>Coverage gap: <code class="docutils literal notranslate"><span class="pre">stdout_logger</span></code> is tested only for its timestamp
+code, the logger itself (<code class="docutils literal notranslate"><span class="pre">lib.rs</span></code>) has no tests.
+<code class="docutils literal notranslate"><span class="pre">stdout_logger_cpp_init</span></code> has no tests.</p>
+<p>Clarification: <code class="docutils literal notranslate"><span class="pre">stdout_logger</span></code> is a testing and development backend
+(see its <code class="docutils literal notranslate"><span class="pre">BUILD</span></code> file), for production use <code class="docutils literal notranslate"><span class="pre">score_logging</span></code>.
+Resolve the gap with unit tests or justify it by this scope.</p>
+</li>
+</ul>
+</td>
 <td></td>
 </tr>
 <tr class="row-odd"><td><p>IMPL_02_02</p></td>
 <td><p>Do manual checks, that are derived from the coding guideline, find no safety critical error?</p></td>
 <td><p>Check this for the programming language used (e.g. C++ &lt;link_to_checks_list&gt;, Rust &lt;link_to_checks_list&gt;)</p></td>
-<td></td>
-<td></td>
+<td><p>yes</p></td>
+<td><p>Manual checks were done with a code review and against the <a class="reference external" href="https://eclipse-score.github.io/score/main/contribute/development/cpp/coding_guidelines.html">C++ guideline</a>.</p>
+<p>The output of <code class="docutils literal notranslate"><span class="pre">mw::log</span></code> shall not be relied upon for safety (see
+<a class="reference internal" href="../safety_analysis/aou_requirements.html#aou_req__log__relying_on_logs" title="aou_req__log__relying_on_logs"><em class="xref need">Applications relying on log... (aou_req__log__relying_on_logs)</em></a>). A safety critical error is
+therefore an error by which <code class="docutils literal notranslate"><span class="pre">mw::log</span></code> interferes with its safety
+related caller (freedom from interference): undefined behavior, memory
+corruption outside of <code class="docutils literal notranslate"><span class="pre">mw::log</span></code>, unexpected termination or blocking of
+the caller. Errors that only lose or duplicate log messages are tracked
+as bugs: <a class="reference external" href="https://github.com/eclipse-score/logging/issues/418">#418</a>
+and <a class="reference external" href="https://github.com/eclipse-score/logging/issues/419">#419</a>.</p>
+<p>No safety critical error was found.</p>
+<p>Accepted deviation:</p>
+<ul class="simple">
+<li><p>The coding guideline asks to avoid the prefix <code class="docutils literal notranslate"><span class="pre">I</span></code> for interfaces. The
+<code class="docutils literal notranslate"><span class="pre">IRecorderFactory</span></code>, <code class="docutils literal notranslate"><span class="pre">IMessageBuilder</span></code>, <code class="docutils literal notranslate"><span class="pre">ITargetConfigReader</span></code>,
+<code class="docutils literal notranslate"><span class="pre">IConfigurationFileDiscoverer</span></code> and <code class="docutils literal notranslate"><span class="pre">INvConfig</span></code> use it.</p></li>
+</ul>
+</td>
 <td></td>
 </tr>
 <tr class="row-even"><td><p>IMPL_03_01</p></td>
 <td><p>Do the UID of the interface in component documentation match the implemented interface names of the unit?</p></td>
 <td><p>Compare interface UIDs (which contains the interface name) in component architecture/detailed design documentation
 with public interfaces in source code (e.g. API headers, traits, public types/functions).</p></td>
-<td></td>
-<td></td>
-<td></td>
+<td><p>no</p></td>
+<td><p>The component architecture defines no interface, the <code class="docutils literal notranslate"><span class="pre">real_arc_int</span></code>
+entry is the template placeholder.</p>
+<p>Following issues need to be addressed:</p>
+<ul class="simple">
+<li><p>Add the interfaces to the component architecture and map them to the
+code in the detailed design.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">logic_arc_int__log_cpp__logging</span></code> is implemented by <code class="docutils literal notranslate"><span class="pre">LogFatal()</span></code> to
+<code class="docutils literal notranslate"><span class="pre">LogVerbose()</span></code>, <code class="docutils literal notranslate"><span class="pre">Logger</span></code> and <code class="docutils literal notranslate"><span class="pre">LogStream</span></code>,
+<code class="docutils literal notranslate"><span class="pre">logic_arc_int__log_rust__logging_rust</span></code> by the macros <code class="docutils literal notranslate"><span class="pre">log!</span></code>,
+<code class="docutils literal notranslate"><span class="pre">fatal!</span></code> to <code class="docutils literal notranslate"><span class="pre">trace!</span></code> and the trait <code class="docutils literal notranslate"><span class="pre">Log</span></code>. Both are defined in the
+feature architecture of the <code class="docutils literal notranslate"><span class="pre">score</span></code> repository, the names differ from
+the UIDs.</p></li>
+</ul>
+</td>
+<td><p><a class="reference external" href="https://github.com/eclipse-score/logging/issues/214">#214</a>,
+<a class="reference external" href="https://github.com/eclipse-score/logging/issues/422">#422</a></p></td>
 </tr>
 <tr class="row-odd"><td><p>IMPL_03_02</p></td>
 <td><p>Are detailed design and source code consistent and is the respective traceability established ?</p></td>
@@ -655,8 +770,10 @@ with public interfaces in source code (e.g. API headers, traits, public types/fu
 (e.g. naming of interfaces, units, functions/operations/messages, data types).
 Check if the folder/file names of the units and its source code matches the intended functionality.
 For example if a unit is named “communication” it should not contain code for “data processing”.</p></td>
-<td></td>
-<td></td>
+<td><p>yes</p></td>
+<td><p>The C++ design in <code class="docutils literal notranslate"><span class="pre">cpp_design</span></code> and <a class="reference internal" href="rust_bridge_design.html"><span class="doc">Rust Bridge Detailed Design</span></a> were
+compared with the code and corrected. The folder and file names of the units match their
+function.</p></td>
 <td></td>
 </tr>
 </tbody>
@@ -676,12 +793,12 @@ For example if a unit is named “communication” it should not contain code fo
                   
 <div class="prev-next-area">
     <a class="left-prev"
-       href="log_frontend_design.html"
+       href="cpp_design/design_decisions.html"
        title="previous page">
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">Log Frontend Detailed Design</p>
+        <p class="prev-next-title">Design Decisions</p>
       </div>
     </a>
     <a class="right-next"
