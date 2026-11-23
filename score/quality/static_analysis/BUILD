@@ -11,27 +11,11 @@
 # SPDX-License-Identifier: Apache-2.0
 # *******************************************************************************
 
-py_binary(
-    name = "codeql_lint",
-    srcs = ["codeql_lint.py"],
-    args = [
-        "--codeql_path=$(location @codeql_bundle//:codeql_cli)",
-        "--config_path=$(location :config)",
-        "--analysis_report_path=$(location @codeql_coding_standards//:analysis_report)",
-    ],
-    data = [
-        ":config",
-        "@codeql_bundle//:codeql_cli",
-        "@codeql_coding_standards//:analysis_report",
-        "@codeql_coding_standards//:process_coding_standards_config",
-    ],
-    main = "codeql_lint.py",
-    tags = ["local", "manual"],
-    target_compatible_with = ["@platforms//os:linux"],
-)
+load("@score_tools//codeql:defs.bzl", "codeql_sca")
 
-filegroup(
-    name = "config",
-    srcs = ["config.yaml"],
-    visibility = ["//visibility:public"],
+codeql_sca(
+    name = "codeql_lint",
+    configs = ["score-linux-x86_64"],
+    safety_level = "ASIL",
+    targets = ["//score/bitmanipulation/..."],
 )
