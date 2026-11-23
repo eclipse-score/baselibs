@@ -270,7 +270,8 @@ auto JsonParser::FromFile(const std::string_view file_path) const noexcept -> sc
     }
     else
     {
-        result = MakeUnexpected(Error::kParsingError, json_data.error().UserMessage());
+        // JsonData::FromFile only fails if the file cannot be opened or read.
+        result = MakeUnexpected(Error::kIoError, json_data.error().UserMessage());
     }
     return result;
 }

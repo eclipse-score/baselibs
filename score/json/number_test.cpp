@@ -619,6 +619,13 @@ void ExpectWrongType(const Result& result)
     EXPECT_EQ(result.error(), Error::kWrongType);
 }
 
+template <typename Result>
+void ExpectOutOfRange(const Result& result)
+{
+    ASSERT_FALSE(result.has_value());
+    EXPECT_EQ(result.error(), Error::kOutOfRange);
+}
+
 template <typename FloatingPoint>
 void TestNanToAnyOtherType()
 {
@@ -682,8 +689,8 @@ void TestFloatingPointEdgeCases(FloatingPoint maximum_integer)
 
     ExpectWrongType(Number{above_maximum_integer}.As<std::int64_t>());
     ExpectWrongType(Number{-above_maximum_integer}.As<std::int64_t>());
-    ExpectWrongType(Number{kInfinity}.As<std::int64_t>());
-    ExpectWrongType(Number{-kInfinity}.As<std::int64_t>());
+    ExpectOutOfRange(Number{kInfinity}.As<std::int64_t>());
+    ExpectOutOfRange(Number{-kInfinity}.As<std::int64_t>());
 
     CheckResult(Number{FloatingPoint{-0.0}}.As<std::uint8_t>(), 0, true);
     CheckResult(Number{kInfinity}.As<float>(), kInfinity, true);
@@ -702,6 +709,50 @@ TEST(Number, FloatingPointEdgeCases)
 
     TestFloatingPointEdgeCases<float>(GetMaximumIntegerInFloat());
     TestFloatingPointEdgeCases<double>(GetMaximumIntegerInDouble());
+}
+
+TEST(Number, ValueOutsideRangeOfRequestedTypeIsOutOfRange)
+{
+    RecordProperty("PartiallyVerifies", "comp_req__json__out_of_range_error");
+    RecordProperty("Description",
+                   "Check that requesting a number as a type whose range does not include it returns an out-of-range "
+                   "error, while a value within the range that cannot be converted without loss returns a wrong "
+                   "type error.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "boundary-values");
+
+    // Integer to integer, the parser stores every integer in the smallest type that holds it.
+    ExpectOutOfRange(Number{std::uint16_t{256}}.As<std::uint8_t>());
+    ExpectOutOfRange(Number{std::uint8_t{128}}.As<std::int8_t>());
+    ExpectOutOfRange(Number{std::uint64_t{std::numeric_limits<std::uint64_t>::max()}}.As<std::int64_t>());
+    ExpectOutOfRange(Number{std::int8_t{-1}}.As<std::uint64_t>());
+    ExpectOutOfRange(Number{std::int16_t{-129}}.As<std::int8_t>());
+    ExpectOutOfRange(Number{std::uint8_t{2}}.As<bool>());
+
+    // Floating point to integer.
+    ExpectOutOfRange(Number{256.0}.As<std::uint8_t>());
+    ExpectOutOfRange(Number{255.5}.As<std::uint8_t>());
+    ExpectOutOfRange(Number{127.5F}.As<std::int8_t>());
+    ExpectOutOfRange(Number{-128.5}.As<std::int8_t>());
+    ExpectOutOfRange(Number{1.5}.As<bool>());
+    ExpectOutOfRange(Number{-1.0}.As<std::uint8_t>());
+    ExpectOutOfRange(Number{-129.0}.As<std::int8_t>());
+    ExpectOutOfRange(Number{9223372036854775808.0}.As<std::int64_t>());
+    ExpectOutOfRange(Number{18446744073709551616.0F}.As<std::uint64_t>());
+    ExpectOutOfRange(Number{2.0}.As<bool>());
+
+    // Floating point to floating point.
+    ExpectOutOfRange(Number{std::numeric_limits<double>::max()}.As<float>());
+    ExpectOutOfRange(Number{std::numeric_limits<double>::lowest()}.As<float>());
+
+    // Within the range, but not convertible without loss.
+    ExpectWrongType(Number{254.5}.As<std::uint8_t>());
+    ExpectWrongType(Number{-0.5}.As<std::int8_t>());
+    ExpectWrongType(Number{0.5}.As<bool>());
+    ExpectWrongType(Number{std::uint64_t{1}}.As<std::uint8_t>());
+    ExpectWrongType(Number{std::int8_t{1}}.As<std::uint8_t>());
+    CheckResult(Number{255.0}.As<std::uint8_t>(), 255, true);
+    CheckResult(Number{-128.0}.As<std::int8_t>(), -128, true);
 }
 
 template <typename T1, typename T2>

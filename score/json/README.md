@@ -159,8 +159,9 @@ for (const auto& element : my_array_result.value().get())
 - Floating point: `float`, `double`
 
 An element can be converted into the requested type if it can be represented
-identically in that type without loss of information. Otherwise an `kWrongType`
-error will be returned, e.g. in case of a precision loss. To access the value
+identically in that type without loss of information. If the value lies outside
+the range of the requested type, a `kOutOfRange` error is returned. Otherwise a
+`kWrongType` error is returned, e.g. in case of a precision loss. To access the value
 you can use the `As<ArithmeticType>()` method on instances of `score::json::Any`
 and `score::json::Number`:
 
@@ -301,6 +302,22 @@ The same pattern works for optional nested objects, where `kKeyNotFound` means
 
 See the [unit tests](./object_test.cpp) for details.
 
+### Error codes
+
+Every failure is reported as a `score::json::Error`.
+Where available, the user message of the error names the reason.
+
+| Error code      | Reported when |
+|-----------------|---------------|
+| `kParsingError` | The input is not valid JSON, or it holds data the data model cannot represent, e.g. duplicate member names. |
+| `kIoError`      | A JSON file cannot be opened, read, written, or committed. |
+| `kWrongType`    | A value is requested as a type it does not have or cannot be converted to without loss. |
+| `kOutOfRange`   | A number is requested as a type whose range does not include it. |
+| `kKeyNotFound`  | An object has no member with the requested name. |
+| `kInvalidValue` | A value has the expected type, but its content is not accepted, e.g. NaN or infinity cannot be written as JSON. |
+
+`kInvalidFilePath` and `kUnknownError` are not reported by this library.
+
 ### Declarative parsing of JSON data
 
 An alternative to navigating the tree of json objects is to declare C++ structs
@@ -375,6 +392,10 @@ If a field is optional, and you want to tolerate missing fields, you may wrap
 the field type into an `std::optional` to indicate that deserialization should
 not fail if the field is missing. If there is no data for that field, its value
 will be `std::nullopt`.
+
+If deserialization fails, the error code tells the cause, e.g. `kKeyNotFound`, `kWrongType` or `kOutOfRange`.
+The user message of the error names the innermost field that failed, also inside nested structs, vectors and optionals.
+For example, deserializing `{"width": 10, "height": -1, "unit": "px"}` into `Size` returns `kOutOfRange` with the user message `height`.
 
 Currently, the following data types can be serialized to and from JSON:
 
