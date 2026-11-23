@@ -38,11 +38,19 @@ jobs:
         run: |
           bazel run //score/quality/static_analysis:codeql_lint -- \
             --output-dir /tmp/codeql-results
-      - name: Upload SARIF to code scanning
+      - name: Limit SARIF rule tags for GitHub Code Scanning
         if: always() && steps.run-codeql.outcome == 'success'
+        id: prepare-sarif
+        run: |
+          jq '(.runs[].tool | (.driver, .extensions[]?) | .rules[]? |
+            select(.properties.tags != null) | .properties.tags) |= .[:20]' \
+            /tmp/codeql-results/results/code-scanning.sarif \
+            > /tmp/codeql-results/results/code-scanning-github.sarif
+      - name: Upload SARIF to code scanning
+        if: always() && steps.prepare-sarif.outcome == 'success'
         uses: github/codeql-action/upload-sarif@cdf488f595d80d6e07e03d4674febd5ab45fa938 # v4
         with:
-          sarif_file: /tmp/codeql-results/results/code-scanning.sarif
+          sarif_file: /tmp/codeql-results/results/code-scanning-github.sarif
           category: static-analysis-codeql/linux
       - name: Upload CodeQL results
         if: always()
