@@ -25,6 +25,12 @@ exports_files(
     visibility = ["//tools:__pkg__"],
 )
 
+# Dependable element architecture: documented as mod_view_sta, validated by //dependable_element.
+exports_files(
+    ["docs/module/dependable_element.puml"],
+    visibility = ["//dependable_element:__pkg__"],
+)
+
 docs(
     bundles = [
         {

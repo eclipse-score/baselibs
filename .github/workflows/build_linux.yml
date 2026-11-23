@@ -56,7 +56,8 @@ jobs:
               -//score/os/test:acl_test
               -//score/os/test:errno_test
               -//score/os/test:socket_test
-            # Emulated tests need longer timeouts than native tests.
+              -//dependable_element/...
+            # Emulated tests need longer timeouts than native tests; //dependable_element tests are host-side.
             bazel-test-extra-flags: "--test_timeout=180,900,2700,10800 --test_tag_filters=-no_rust_doc_test"
           - name: x86_64-linux (examples/integration)
             artifact-name: x86_64-linux-integration
