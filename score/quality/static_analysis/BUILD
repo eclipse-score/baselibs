@@ -17,5 +17,8 @@ codeql_sca(
     name = "codeql_lint",
     configs = ["score-linux-x86_64"],
     safety_level = "ASIL",
-    targets = ["//score/bitmanipulation/..."],
+    targets = [
+        "//score/...",
+        "-//score/network/...",
+    ],
 )
