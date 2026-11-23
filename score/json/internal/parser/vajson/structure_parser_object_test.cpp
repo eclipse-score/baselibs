@@ -50,7 +50,7 @@ class DynamicObjectParser final : public StructureParserStub
         return ParserState::kRunning;
     }
 
-    auto OnEndObject(std::size_t) noexcept -> ParserResult override
+    auto OnEndObject() noexcept -> ParserResult override
     {
         this->end_ += 1;
         if (this->balance_ == 0)
@@ -73,7 +73,7 @@ class EndObjectParser final : public StructureParserStub
         return ParserState::kRunning;
     }
 
-    auto OnEndObject(std::size_t) noexcept -> ParserResult override
+    auto OnEndObject() noexcept -> ParserResult override
     {
         return score::MakeUnexpected(JsonErrc::kInvalidJson, "OnEndObject called.");
     }
@@ -90,7 +90,7 @@ class StartObjectParser final : public StructureParserStub
         return score::MakeUnexpected(JsonErrc::kInvalidJson, "OnStartObject called.");
     }
 
-    auto OnEndObject(std::size_t) noexcept -> ParserResult override
+    auto OnEndObject() noexcept -> ParserResult override
     {
         return ParserState::kRunning;
     }

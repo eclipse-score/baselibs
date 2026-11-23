@@ -195,10 +195,9 @@ class DepthCounter final
     /// @internal
     /// - If the stack contains elements:
     ///   - If the last element is an array:
-    ///     - Increase the element count for the array.
+    ///     - Return an empty Result.
     ///   - Else if the last element is a key:
     ///     - Pop the key, because the pair is complete.
-    ///     - Increase the count, because if a value follows a key, the enclosing element must be an object.
     ///   - Otherwise:
     ///     - Return an error.
     /// - Otherwise:
@@ -228,14 +227,10 @@ class DepthCounter final
             switch (std::char_traits<char>::to_int_type(last))
             {
                 case std::char_traits<char>::to_int_type('['):
-
-                    ++this->counter_.top();
                     break;
                 case std::char_traits<char>::to_int_type('k'):
 
                     this->stack_.pop();
-
-                    ++this->counter_.top();
                     break;
                 default:
 
@@ -253,7 +248,7 @@ class DepthCounter final
     }
 
     /// @brief           Pops an Object from the stack
-    /// @return          The number of keys in the object if the end object call was valid, or an error.
+    /// @return          The empty Result if the end object call was valid, or an error.
     /// @error           score::json::vajson::JsonErrc::kInvalidJson
     ///                  If the object cannot be closed.
     /// @context         ANY
@@ -266,20 +261,21 @@ class DepthCounter final
     /// - Otherwise:
     ///   - Return an error.
     /// @endinternal
-    auto PopObject() noexcept -> Result<std::size_t>
+    auto PopObject() noexcept -> score::Result<void>
     {
-        Result<std::size_t> result{
+        score::Result<void> result{
             score::MakeUnexpected(JsonErrc::kInvalidJson, "DepthCounter::PopObject: Not in an object.")};
         if (this->CheckLastElement('{'))
         {
             this->comma_expected_ = true;
-            static_cast<void>(result.emplace(this->Pop()));
+            this->Pop();
+            result = score::Result<void>{};
         }
         return result;
     }
 
     /// @brief           Pops an Array from the stack
-    /// @return          The number of elements in the array if the end array call was valid, or an error.
+    /// @return          The empty Result if the end array call was valid, or an error.
     /// @error           score::json::vajson::JsonErrc::kInvalidJson
     ///                  if in an object or on toplevel.
     /// @context         ANY
@@ -292,14 +288,15 @@ class DepthCounter final
     /// - Otherwise:
     ///   - Return an error.
     /// @endinternal
-    auto PopArray() noexcept -> Result<std::size_t>
+    auto PopArray() noexcept -> score::Result<void>
     {
-        Result<std::size_t> result{
+        score::Result<void> result{
             score::MakeUnexpected(JsonErrc::kInvalidJson, "DepthCounter::PopArray: Not in an array.")};
         if (this->CheckLastElement('['))
         {
             this->comma_expected_ = true;
-            static_cast<void>(result.emplace(this->Pop()));
+            this->Pop();
+            result = score::Result<void>{};
         }
         return result;
     }
@@ -344,34 +341,18 @@ class DepthCounter final
 
     /// @brief           Pops an element from the stack
     /// @details         Calling on empty counter invokes undefined behaviour.
-    /// @return          The value of the removed element.
     /// @context         ANY
     /// @pre             The stack contains at least one element.
     /// @threadsafe      FALSE
     /// @reentrant       FALSE
     /// @internal
     /// - Remove the element at the last position from the stack.
-    /// - Remove the counter at the last position and return its value.
-    /// - If the element was inside another element, increase the outer element's count.
     /// @endinternal
-    auto Pop() noexcept -> std::size_t
+    void Pop() noexcept
     {
-
-        const std::size_t count{this->counter_.top()};
-
-        this->counter_.pop();
-
         this->stack_.pop();
 
-        if (this->CheckLastElement('[') || this->CheckLastElement('{'))
-        {
-
-            ++this->counter_.top();
-        }
-
         this->CheckIfFinished();
-
-        return count;
     }
 
     /// @brief           Adds an element to the stack
@@ -390,7 +371,6 @@ class DepthCounter final
     /// - If the last element is not an object and not a value:
     ///   - If the last element is a key, pop it from the stack, because the pair is complete.
     ///   - Add the element to the stack.
-    ///   - Add a new counter to the stack.
     ///   - Return an empty Result.
     /// - Otherwise:
     ///   - Return an error.
@@ -424,8 +404,6 @@ class DepthCounter final
             }
 
             this->stack_.push(element);
-
-            this->counter_.push(0U);
         }
 
         return result;
@@ -456,8 +434,6 @@ class DepthCounter final
     /// @brief            Stores the stack items
     /// @details         Intentionally a string to make use of SSO.
     std::stack<char, std::string> stack_{};
-    /// @brief           Stores the element count of arrays and objects on the stack
-    std::stack<std::size_t> counter_{};
     /// @brief           Flag to indicate if a comma must appear before the next value
     bool comma_expected_{false};
     /// @brief           Flag to indicate if all elements are closed

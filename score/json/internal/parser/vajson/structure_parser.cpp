@@ -581,14 +581,14 @@ auto StructureParser::ParseStartObject() noexcept -> ParserResult
 /// - Move the position in the file past the closing brace.
 /// - Pop the Object from the ItemStack.
 /// - If the pop object call was successful:
-///   - Call the OnStartObject callback with the number of parsed keys and return its Result.
+///   - Call the OnEndObject callback and return its Result.
 /// - Otherwise:
 ///   - Return an error.
 /// @endinternal
 auto StructureParser::ParseEndObject() noexcept -> ParserResult
 {
-    return this->GetState().PopObject().and_then([this](std::size_t count) noexcept {
-        return this->OnEndObject(count);
+    return this->GetState().PopObject().and_then([this]() noexcept {
+        return this->OnEndObject();
     });
 }
 
@@ -611,14 +611,14 @@ auto StructureParser::ParseStartArray() noexcept -> ParserResult
 /// - Move the position in the file past the closing bracket.
 /// - Pop the Array from the ItemStack.
 /// - If the pop array call was successful:
-///   - Call the OnEndArray callback with the number of parsed elements and return its Result.
+///   - Call the OnEndArray callback and return its Result.
 /// - Otherwise:
 ///   - Return an error.
 /// @endinternal
 auto StructureParser::ParseEndArray() noexcept -> ParserResult
 {
-    return this->GetState().PopArray().and_then([this](std::size_t count) noexcept {
-        return this->OnEndArray(count);
+    return this->GetState().PopArray().and_then([this]() noexcept {
+        return this->OnEndArray();
     });
 }
 

@@ -18,7 +18,6 @@
 #ifndef SCORE_JSON_INTERNAL_PARSER_VAJSON_STRUCTURE_PARSER_H
 #define SCORE_JSON_INTERNAL_PARSER_VAJSON_STRUCTURE_PARSER_H
 
-#include <cstddef>
 #include <cstdint>
 
 #include "score/json/internal/parser/vajson/depth_counter.h"
@@ -132,13 +131,13 @@ class StructureParser
     /// @reentrant       FALSE
     virtual auto OnStartObject() noexcept -> ParserResult = 0;
 
-    /// @brief           Called for the end of an object with its number of keys
+    /// @brief           Called for the end of an object
     /// @return          The parser state, or an error that aborts parsing.
     /// @context         ANY
     /// @pre             -
     /// @threadsafe      FALSE
     /// @reentrant       FALSE
-    virtual auto OnEndObject(std::size_t) noexcept -> ParserResult = 0;
+    virtual auto OnEndObject() noexcept -> ParserResult = 0;
 
     /// @brief           Called for the start of an array
     /// @return          The parser state, or an error that aborts parsing.
@@ -148,13 +147,13 @@ class StructureParser
     /// @reentrant       FALSE
     virtual auto OnStartArray() noexcept -> ParserResult = 0;
 
-    /// @brief           Called for the end of an array with its number of elements
+    /// @brief           Called for the end of an array
     /// @return          The parser state, or an error that aborts parsing.
     /// @context         ANY
     /// @pre             -
     /// @threadsafe      FALSE
     /// @reentrant       FALSE
-    virtual auto OnEndArray(std::size_t) noexcept -> ParserResult = 0;
+    virtual auto OnEndArray() noexcept -> ParserResult = 0;
 
     /// @brief           Returns the Json structure state
     /// @return          The Json structure state.

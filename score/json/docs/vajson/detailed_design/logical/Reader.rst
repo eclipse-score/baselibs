@@ -103,9 +103,9 @@ StructureParser
             - {abstract} virtual auto OnString(CStringView) -> ParserResult
             - {abstract} virtual auto OnKey(CStringView) -> ParserResult
             - {abstract} virtual auto OnStartObject() -> ParserResult
-            - {abstract} virtual auto OnEndObject(std::size_t) -> ParserResult
+            - {abstract} virtual auto OnEndObject() -> ParserResult
             - {abstract} virtual auto OnStartArray() -> ParserResult
-            - {abstract} virtual auto OnEndArray(std::size_t) -> ParserResult
+            - {abstract} virtual auto OnEndArray() -> ParserResult
           }
 
           class OptChar {}

@@ -50,7 +50,7 @@ class DynamicArrayParser final : public StructureParserStub
         return ParserState::kRunning;
     }
 
-    auto OnEndArray(std::size_t) noexcept -> ParserResult override
+    auto OnEndArray() noexcept -> ParserResult override
     {
         this->end_ += 1;
         if (this->balance_ == 0)
@@ -62,7 +62,7 @@ class DynamicArrayParser final : public StructureParserStub
     }
 };
 
-class LimitedEndArrayParser final : public StructureParserStub
+class EndArrayParser final : public StructureParserStub
 {
   public:
     using StructureParserStub::StructureParserStub;
@@ -73,13 +73,9 @@ class LimitedEndArrayParser final : public StructureParserStub
         return ParserState::kRunning;
     }
 
-    auto OnEndArray(std::size_t number_of_elems) noexcept -> ParserResult override
+    auto OnEndArray() noexcept -> ParserResult override
     {
-        if (number_of_elems >= 2)
-        {
-            return score::MakeUnexpected(JsonErrc::kInvalidJson, "OnEndArray called with array size >=2.");
-        }
-        return ParserResult{ParserState::kRunning};
+        return score::MakeUnexpected(JsonErrc::kInvalidJson, "OnEndArray called.");
     }
 };
 
@@ -100,7 +96,7 @@ class LimitedStartArrayParser final : public StructureParserStub
         return ParserResult{ParserState::kRunning};
     }
 
-    auto OnEndArray(std::size_t) noexcept -> ParserResult override
+    auto OnEndArray() noexcept -> ParserResult override
     {
         return ParserState::kRunning;
     }
@@ -153,12 +149,12 @@ TEST(UT__Parser__Array__Error, Dynamic__OnEndArray)
 {
     auto doc{JsonData::FromBuffer(std::string_view{R"([1,2])"})};
     ASSERT_TRUE(doc.has_value());
-    LimitedEndArrayParser parser{doc.value()};
+    EndArrayParser parser{doc.value()};
 
     const auto parser_result{parser.Parse()};
     ASSERT_FALSE(parser_result.has_value());
     ASSERT_EQ(parser_result.error(), JsonErrc::kInvalidJson);
-    ASSERT_EQ(parser_result.error().UserMessage(), std::string_view{"OnEndArray called with array size >=2."});
+    ASSERT_EQ(parser_result.error().UserMessage(), std::string_view{"OnEndArray called."});
 }
 
 /// Tests that when the overridden OnStartArray method returns an error, that error is propagated.

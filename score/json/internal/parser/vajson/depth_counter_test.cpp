@@ -268,22 +268,6 @@ TEST(UT__DepthCounter, AddElement__Valid)
     ASSERT_TRUE(dc.AddArray().has_value());
 }
 
-/// @brief           Test that Pop method increments the counter of the outer container
-/// @trace           CREQ-Json-Validation
-TEST(UT__DepthCounter, Pop)
-{
-    internal::DepthCounter dc{};
-    ASSERT_TRUE(dc.AddObject().has_value());
-    ASSERT_TRUE(dc.AddKey().has_value());
-    ASSERT_TRUE(dc.AddObject().has_value());
-    const auto pop_result1{dc.PopObject()};
-    ASSERT_TRUE(pop_result1.has_value());
-    ASSERT_EQ(pop_result1.value(), 0);
-    const auto pop_result2{dc.PopObject()};
-    ASSERT_TRUE(pop_result2.has_value());
-    ASSERT_EQ(pop_result2.value(), 1);
-}
-
 /// @brief           Test AddComma method
 /// @trace           CREQ-Json-Validation
 TEST(UT__DepthCounter, AddComma)
