@@ -19,6 +19,8 @@ activate MessageBuilder
 
 group "First Slot"
 Backend -> SlotDrainer : Flush()
+SlotDrainer -> SlotDrainer : lock(context_mutex_)
+note right of SlotDrainer : The mutex is held until Flush() returns\n(std::lock_guard). PushBack() locks it as well.
 
 SlotDrainer -> MessageBuilder : GetNextSpan(log_record)
 
@@ -55,15 +57,18 @@ SlotDrainer -> MessageBuilder : GetNextSpan()
 SlotDrainer -> CircularBuffer : empty()
 CircularBuffer -> SlotDrainer: true
 
+SlotDrainer -> SlotDrainer : unlock(context_mutex_)
 Backend <-- SlotDrainer
 end
 
 group "Error Case"
 
 Backend -> SlotDrainer : Flush()
+SlotDrainer -> SlotDrainer : lock(context_mutex_)
 SlotDrainer -> NonBlockingWriter : FlushIntoFile()
 NonBlockingWriter -> SlotDrainer: kWouldBlock
 note left of SlotDrainer : SlotDrainer ignores errors
+SlotDrainer -> SlotDrainer : unlock(context_mutex_)
 Backend <--- SlotDrainer
 
 end

@@ -1,0 +1,109 @@
+@startuml activity_diagram
+
+skinparam backgroundColor #FEFEFE
+skinparam activityBackgroundColor #FFFFFF
+skinparam activityBorderColor #666666
+skinparam activityDiamondBackgroundColor #FFF2CC
+skinparam activityDiamondBorderColor #D6B656
+skinparam noteBackgroundColor #FFFFCC
+skinparam noteBorderColor #999999
+
+title mw::log — RegistryAwareRecorderFactory::CreateFromConfiguration() Decision Flow
+
+|RegistryAwareRecorderFactory|
+start
+
+:Receive **memory_resource** parameter;
+
+if (memory_resource == nullptr?) then (yes)
+    :ReportInitializationError(kMemoryResourceError);
+    #FFCCCC:Return **CreateWithConsoleLoggingOnly**(memory_resource);
+    stop
+else (no)
+endif
+
+:Read the configuration with the **TargetConfigReader**;
+
+if (configuration read?) then (no)
+    :ReportInitializationError(error,
+    "Failed to load configuration files. Fallback to console logging.");
+    #FFCCCC:Return **CreateWithConsoleLoggingOnly**(memory_resource);
+    stop
+else (yes)
+endif
+
+:Initialize **recorders** vector (empty)
+and **console_already_added** = false;
+
+repeat :Next logMode from config;
+
+    |Backend Table|
+    :Query **IsBackendAvailable(logMode)**;
+
+    if (backend registered?) then (yes)
+        |RegistryAwareRecorderFactory|
+        :recorder = **CreateRecorderForMode**(logMode, config, memory_resource);
+        note right
+            Calls gBackendCreators[logMode](config, memory_resource)
+            via the registered function pointer.
+        end note
+
+        if (recorder != nullptr?) then (yes)
+            :Add recorder to **recorders** vector;
+            if (logMode == kConsole?) then (yes)
+                :console_already_added = true;
+            else (no)
+            endif
+        else (no - creation failed)
+            note right
+                Recorder factory returned nullptr.
+                The logMode is skipped.
+            end note
+        endif
+
+    else (no - slot is nullptr)
+        |RegistryAwareRecorderFactory|
+        :ReportInitializationError(
+        kRecorderFactoryUnsupportedLogMode,
+        "Requested log mode not available. Falling back to console.");
+
+        if (console_already_added == false\nand kConsole backend registered?) then (yes)
+            :console = **CreateRecorderForMode**(kConsole, config, memory_resource);
+            if (console != nullptr?) then (yes)
+                :Add console recorder to **recorders** vector;
+                :console_already_added = true;
+            else (no)
+            endif
+        else (no)
+        endif
+    endif
+
+repeat while (more logModes?) is (yes)
+-> no;
+
+|RegistryAwareRecorderFactory|
+
+if (recorders.empty()?) then (yes)
+    :ReportInitializationError(kNoLogModeSpecified);
+    #FFCCCC:Return **CreateWithConsoleLoggingOnly**(memory_resource);
+    note right
+        Console recorder with the default configuration,
+        EmptyRecorder if no console backend is registered.
+    end note
+    stop
+else (no)
+endif
+
+if (recorders.size() == 1?) then (yes)
+    :Return **move(recorders[0])**;
+    stop
+else (no - multiple recorders)
+    :Return **CompositeRecorder(move(recorders))**;
+    note right
+        Each Log() call is forwarded
+        to all recorders.
+    end note
+    stop
+endif
+
+@enduml

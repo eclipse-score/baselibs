@@ -52,7 +52,11 @@ Rationale:
 
 Covers requirements for Detailed Design (DD) and Implementation.
 
-The ![dynamic backend selection diagram](./dynamic_backend_selection.puml) shows the backend selection sequence.
+The dynamic backend selection diagram shows the backend selection sequence.
+
+```{uml} ../_assets/dynamic_backend_selection.puml
+:caption: dynamic backend selection diagram
+```
 
 The diagram uses swimlanes to clearly separate the two configuration layers:
 
@@ -174,7 +178,7 @@ NOTE: config file placed at the path specified by `backend_config_path` (default
 
 References:
 - [CWE-426: Untrusted Search Path](https://cwe.mitre.org/data/definitions/426.html)
-- [EP-23: Feature Flags in Bazel](../../docs/enhancement_proposals/proposals/23_feature_flags.md)
+- EP-23: Feature Flags in Bazel (`docs/enhancement_proposals/proposals/23_feature_flags.md` of the `score_baselibs` repository)
 
 #### REQ-DD-4: Fallback Chain
 
@@ -658,50 +662,50 @@ Verify that the toolchain identity CI gate (REQ-DD-1) does not add measurable ov
 
 These requirements define the operational context and constraints that the integrator, deployer, and plugin author must satisfy for the dynamic loading architecture to function correctly and safely.
 
-#### AOU-1: qtsafefs Backend Directory
+### AOU-1: qtsafefs Backend Directory
 
 The backend directory (integrator-defined, resolved via the `backend_dir` feature flag in `//score/mw/log/flags`, default `/opt/libmwlog/backends/`) shall reside on a qtsafefs-mounted filesystem with integrity checking enabled.
 
-#### AOU-2: pathtrust-Enabled Filesystems
+### AOU-2: pathtrust-Enabled Filesystems
 
 All filesystems from which backend .so files and their transitive dependencies are loaded shall have pathtrust enabled.
 
-#### AOU-3: procnto -mX Enabled
+### AOU-3: procnto -mX Enabled
 
 The target ECU shall run procnto with the -mX flag to enforce PROT_EXEC restrictions on mmap(). Only files with the +x permission bit can be loaded as executable code.
 
-#### AOU-4: secpol Configuration
+### AOU-4: secpol Configuration
 
 The process's secpol configuration shall deny PROCMGR_AID_UNTRUSTED_EXEC. This ensures dlopen() only loads pathtrust-verified libraries.
 
-#### AOU-5: Backend .so File Permissions
+### AOU-5: Backend .so File Permissions
 
 All deployed backend .so files shall:
 - Have the +x (executable) permission bit set.
 - Be owned by root (or the designated system user).
 - Not be world-writable.
 
-#### AOU-6: Environment Variable Integrity
+### AOU-6: Environment Variable Integrity
 
 LD_PRELOAD, LD_LIBRARY_PATH, DL_DEBUG, LD_DEBUG, and PATH shall not be modified after process start. The process should use the setuid bit to have the runtime linker automatically unset LD_LIBRARY_PATH and LD_PRELOAD.
 
-#### AOU-7: Logging Configuration File
+### AOU-7: Logging Configuration File
 
 The logging configuration file (E.g.: backend_config.json) shall explicitly list the backend .so filenames to load. It shall reside on a qtsafefs-mounted filesystem that is RO to prevent tampering.
 
-#### AOU-8: No mw::log in Plugin Constructors
+### AOU-8: No mw::log in Plugin Constructors
 
 Plugin .so files shall not call mw::log APIs in __attribute__((constructor)) functions or static initializers. Plugin constructors shall not call setenv(), putenv(), signal(), or spawn threads.
 
-#### AOU-9: Shared Memory Semantics
+### AOU-9: Shared Memory Semantics
 
 Since RTLD_NOSHARE is not used, libc/libstdc++ are shared between libmwlog.so and all backend .so files. Memory allocated by the backend (E.g.: via std::make_unique) can be freed by the frontend and vice versa. Standard C++ ownership semantics (std::unique_ptr<Recorder>) apply normally across the dlopen() boundary. The backend's Recorder destructor is the primary cleanup mechanism.
 
-#### AOU-10: Plugin Vtable Lifetime
+### AOU-10: Plugin Vtable Lifetime
 
 The C++ virtual function table (vtable) of Recorder objects returned by the backend factory remains valid for the entire process lifetime. This is guaranteed by the no-dlclose() policy (REQ-SAFE-1) - the backend .so's code pages are never unmapped.
 
-#### AOU-11: Toolchain Identity for Backend Plugins
+### AOU-11: Toolchain Identity for Backend Plugins
 
 All backend .so files shall be built with the identical toolchain as libmwlog.so:
 - Same GCC/Clang version
@@ -709,11 +713,11 @@ All backend .so files shall be built with the identical toolchain as libmwlog.so
 - Same libstdc++/libc++ version
 - Same target architecture flags
 
-#### AOU-12: Transitive Dependencies on Trusted Filesystems
+### AOU-12: Transitive Dependencies on Trusted Filesystems
 
 All shared libraries transitively required by backend .so files (i.e., their DT_NEEDED entries) shall reside on qtsafefs-mounted, pathtrust-enabled filesystems.
 
-#### AOU-13: EM/PHM Timing Budget
+### AOU-13: EM/PHM Timing Budget
 
 The integrator shall ensure that the EM and PHM checkpoint timing budget for init sequences that include dynamic plugin loading accounts for the measured worst-case dlopen() latency (including early startup with RTLD_NOW) with margin.
 
