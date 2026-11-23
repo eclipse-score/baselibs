@@ -14,6 +14,7 @@
 name: CodeQL static analysis (evaluation)
 permissions:
   contents: read
+  security-events: write
 on:
   pull_request:
     types: [opened, reopened, synchronize]
@@ -33,9 +34,16 @@ jobs:
         with:
           unique-cache-name: ${{ github.workflow }}-${{ github.job }}
       - name: Run CodeQL analysis
+        id: run-codeql
         run: |
           bazel run //score/quality/static_analysis:codeql_lint -- \
             --output-dir /tmp/codeql-results
+      - name: Upload SARIF to code scanning
+        if: always() && steps.run-codeql.outcome == 'success'
+        uses: github/codeql-action/upload-sarif@cdf488f595d80d6e07e03d4674febd5ab45fa938 # v4
+        with:
+          sarif_file: /tmp/codeql-results/results/code-scanning.sarif
+          category: static-analysis-codeql/linux
       - name: Upload CodeQL results
         if: always()
         uses: actions/upload-artifact@v7
