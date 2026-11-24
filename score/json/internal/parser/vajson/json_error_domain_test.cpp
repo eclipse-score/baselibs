@@ -28,7 +28,7 @@ namespace unit_test
 {
 
 /// Test vaJson error domain messages.
-TEST(UT__ErrorDomain, General)
+TEST(JsonErrorDomainTest, MessageForReturnsMessagePerErrorCode)
 {
     const JsonErrorDomain domain{};
 

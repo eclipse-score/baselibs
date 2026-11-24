@@ -52,7 +52,7 @@ class DynamicNumberParser final : public StructureParserStub
 
 /// Test that numbers are counted — integer array.
 /// @trace           CREQ-Json-EventCallbacks
-TEST(UT__Parser__Number, Dynamic__IntegerArray)
+TEST(StructureParserNumberTest, CallsOnNumberForEachInteger)
 {
     auto data{JsonData::FromBuffer(std::string_view{"[1,2,3,4,5]"})};
     ASSERT_TRUE(data.has_value());
@@ -63,7 +63,7 @@ TEST(UT__Parser__Number, Dynamic__IntegerArray)
 
 /// Test that numbers are counted — float array.
 /// @trace           CREQ-Json-EventCallbacks
-TEST(UT__Parser__Number, Dynamic__FloatArray)
+TEST(StructureParserNumberTest, CallsOnNumberForEachFloatingPointNumber)
 {
     auto data{JsonData::FromBuffer(std::string_view{"[1.0,-1.5,3.14]"})};
     ASSERT_TRUE(data.has_value());
