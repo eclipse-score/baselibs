@@ -158,6 +158,9 @@ TEST(CreateRecorderFactoryTest, CreateStubReturnsEmptyRecorder)
 
 TEST_F(RegistryAwareRecorderFactoryTest, CreateWithConsoleLoggingOnlyReturnsRecorder)
 {
+    RecordProperty("PartiallyVerifies", "comp_arc_dyn__log__cpp_backend_registration");
+    RecordProperty("TestType", "interface-test");
+    RecordProperty("DerivationTechnique", "design-analysis");
     RecordProperty("Description",
                    "CreateWithConsoleLoggingOnly shall return a valid Recorder when console backend is registered.");
     RecordProperty("TestingTechnique", "Requirements-based test");
@@ -254,6 +257,8 @@ TEST_F(RegistryAwareRecorderFactoryConfigFixture, ConfigurationWithConfigReaderM
 
 TEST_F(RegistryAwareRecorderFactoryConfigFixture, ConfigurationErrorShallFallbackToConsoleLogging)
 {
+    RecordProperty("PartiallyVerifies", "comp_arc_dyn__log__cpp_recorder_factory");
+    RecordProperty("TestType", "requirements-based");
     RecordProperty("Requirement", "SCR-861534, SCR-7263552");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "RecorderFactory will return text recorder in case of configuration error.");
@@ -275,6 +280,8 @@ TEST_F(RegistryAwareRecorderFactoryConfigFixture, ConfigurationErrorShallFallbac
 
 TEST_F(RegistryAwareRecorderFactoryConfigFixture, NoRecorderConfiguredShallReturnEmptyRecorder)
 {
+    RecordProperty("PartiallyVerifies", "comp_arc_dyn__log__cpp_recorder_factory");
+    RecordProperty("TestType", "requirements-based");
     RecordProperty("Requirement", "SCR-861534");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "RecorderFactory can return empty recorder if no recorder is configured.");
@@ -289,6 +296,8 @@ TEST_F(RegistryAwareRecorderFactoryConfigFixture, NoRecorderConfiguredShallRetur
 
 TEST_F(RegistryAwareRecorderFactoryConfigFixture, ConsoleConfiguredShallReturnConsoleRecorder)
 {
+    RecordProperty("PartiallyVerifies", "comp_arc_sta__log__cpp_recorders");
+    RecordProperty("TestType", "requirements-based");
     RecordProperty("Requirement", "SCR-861534");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "RecorderFactory can create ConsoleRecorder if console is configured.");
@@ -310,6 +319,8 @@ TEST_F(RegistryAwareRecorderFactoryConfigFixture, ConsoleConfiguredShallReturnCo
 
 TEST_F(RegistryAwareRecorderFactoryConfigFixture, InvalidLogModeShallReturnEmptyRecorder)
 {
+    RecordProperty("PartiallyVerifies", "comp_arc_dyn__log__cpp_recorder_factory");
+    RecordProperty("TestType", "requirements-based");
     RecordProperty("Requirement", "SCR-861534");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "RecorderFactory will create EmptyRecorder in case of invalid log mode.");

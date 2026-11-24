@@ -74,6 +74,7 @@ class SlotDrainerFixture : public ::testing::Test
 
 TEST_F(SlotDrainerFixture, TestOneWriteFileFailurePath)
 {
+    RecordProperty("PartiallyVerifies", "comp_arc_dyn__log__cpp_slot_drainer_flush");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Writes will fail with IO error in case of failure path.");
     RecordProperty("TestType", "interface-test");
@@ -103,6 +104,7 @@ TEST_F(SlotDrainerFixture, TestOneWriteFileFailurePath)
 
 TEST_F(SlotDrainerFixture, IncompleteWriteFileShouldMakeFlushSpansReturnWouldBlock)
 {
+    RecordProperty("PartiallyVerifies", "comp_arc_dyn__log__cpp_slot_drainer_flush");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "If write not completed, the Flush API would wait till flushing is complete.");
     RecordProperty("TestType", "interface-test");
@@ -137,6 +139,7 @@ TEST_F(SlotDrainerFixture, IncompleteWriteFileShouldMakeFlushSpansReturnWouldBlo
 
 TEST_F(SlotDrainerFixture, TestOneSlotOneSpan)
 {
+    RecordProperty("PartiallyVerifies", "comp_arc_dyn__log__cpp_slot_drainer_sequence");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Writes shall succeed in case of proper arguments.");
     RecordProperty("TestType", "interface-test");
@@ -171,6 +174,7 @@ TEST_F(SlotDrainerFixture, TestOneSlotOneSpan)
 
 TEST_F(SlotDrainerFixture, TestTooManySlotsForSingleCallShallNotBeAbleToFlushAllSlots)
 {
+    RecordProperty("PartiallyVerifies", "comp_arc_dyn__log__cpp_slot_drainer_sequence");
     RecordProperty("ASIL", "B");
     RecordProperty("Description",
                    "Fails to flush all slots in case of exceeding the limit of slots to be processed per one call.");

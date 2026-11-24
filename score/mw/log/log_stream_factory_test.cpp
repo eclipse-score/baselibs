@@ -30,6 +30,13 @@ namespace
 
 TEST(LogStreamFactoryTest, GetStreamOutsideLogging)
 {
+    RecordProperty("PartiallyVerifies", "comp_arc_sta__log__cpp_frontend_dependencies");
+    RecordProperty("TestType", "interface-test");
+    RecordProperty("DerivationTechnique", "design-analysis");
+    RecordProperty("Description",
+                   "A log stream obtained from the LogStreamFactory can be written, also when it is requested from "
+                   "within logging (thread-local guard active), without fatal failures.");
+
     auto log_level = LogLevel::kVerbose;
     const std::string_view context_id = "1234";
 

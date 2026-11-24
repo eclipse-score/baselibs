@@ -132,7 +132,7 @@ class ConfigurationFileDiscovererFixture : public ::testing::Test
 
 TEST_F(ConfigurationFileDiscovererFixture, DiscovererShallFindGlobalConfigurationFile)
 {
-    RecordProperty("PartiallyVerifies", "comp_req__log__global_config");
+    RecordProperty("PartiallyVerifies", "comp_req__log__global_config, comp_arc_sta__log__cpp_configuration");
     RecordProperty("TestType", "requirements-based");
     RecordProperty("Requirement", "SCR-1634075");
     RecordProperty("ASIL", "B");
@@ -245,7 +245,7 @@ TEST_F(ConfigurationFileDiscovererFixture, DiscovererShallFindConfigurationFileI
 
 TEST_F(ConfigurationFileDiscovererFixture, DiscovererShallFindConfigurationFileInEnvPathOverrideCwdEtc)
 {
-    RecordProperty("PartiallyVerifies", "comp_req__log__cfg_file_loc");
+    RecordProperty("PartiallyVerifies", "comp_req__log__cfg_file_loc, comp_arc_dyn__log__cpp_configuration");
     RecordProperty("TestType", "requirements-based");
     RecordProperty("Requirement", "SCR-1633294");
     RecordProperty("ASIL", "B");
@@ -317,6 +317,8 @@ TEST_F(ConfigurationFileDiscovererFixture, DiscovererShallFindConfigurationFileI
 
 TEST_F(ConfigurationFileDiscovererFixture, DiscovererShallReturnEmptyIfNothingExists)
 {
+    RecordProperty("PartiallyVerifies", "comp_arc_dyn__log__cpp_configuration");
+    RecordProperty("TestType", "requirements-based");
     RecordProperty("Requirement", "SCR-1633294");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Verifies that the discoverer shall return an empty list if no config file exists.");

@@ -36,6 +36,7 @@ const auto kContext = std::string_view{"MYCT"};
 
 TEST(Logging, CanSetAndRetrieveDefaultRecorder)
 {
+    RecordProperty("PartiallyVerifies", "comp_arc_sta__log__static_view");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Verify the ability of retrieving the default logger.");
     RecordProperty("TestType", "interface-test");
@@ -115,6 +116,7 @@ TEST_F(LoggingFixture, CanLogDebugWithoutContext)
 
 TEST_F(LoggingFixture, CanLogInfoWithoutContext)
 {
+    RecordProperty("PartiallyVerifies", "comp_arc_sta__log__static_view");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Verify the ability of logging info message without context provided.");
     RecordProperty("TestType", "interface-test");

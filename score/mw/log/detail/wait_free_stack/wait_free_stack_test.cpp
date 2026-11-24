@@ -34,6 +34,8 @@ using ::testing::Return;
 
 TEST(WaitFreeStack, AtomicOperationFetchAddForWriteIndex)
 {
+    RecordProperty("PartiallyVerifies", "comp_arc_dyn__log__cpp_wait_free_stack");
+    RecordProperty("TestType", "requirements-based");
     RecordProperty("Requirement", "SCR-861578");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Check atomic fetch_add function for write_index_.");
@@ -57,6 +59,8 @@ TEST(WaitFreeStack, AtomicOperationFetchAddForWriteIndex)
 
 TEST(WaitFreeStack, AtomicShallBeLockFree)
 {
+    RecordProperty("PartiallyVerifies", "comp_arc_dyn__log__cpp_wait_free_stack");
+    RecordProperty("TestType", "requirements-based");
     RecordProperty("Requirement", "SCR-861578");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Check atomic lock-free.");
@@ -71,6 +75,8 @@ TEST(WaitFreeStack, AtomicShallBeLockFree)
 
 TEST(WaitFreeStack, ConcurrentPushingAndReadingShouldReturnExpectedElements)
 {
+    RecordProperty("PartiallyVerifies", "comp_arc_dyn__log__cpp_wait_free_stack");
+    RecordProperty("TestType", "requirements-based");
     RecordProperty("Requirement", "SCR-861550");
     RecordProperty("ASIL", "B");
     RecordProperty("Description",

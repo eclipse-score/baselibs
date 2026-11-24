@@ -48,6 +48,7 @@ class RuntimeFixture : public ::testing::Test
 
 TEST_F(RuntimeFixture, CanSetALoggingBackend)
 {
+    RecordProperty("PartiallyVerifies", "comp_arc_sta__log__static_view");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Verify the ability to set backend logging without exception.");
     RecordProperty("TestType", "interface-test");
@@ -131,6 +132,7 @@ TEST_F(RuntimeFixture, WithLoggerContainerHasFreeCapacityExpectedThatNewLoggerCo
 
 TEST(RuntimeTest, RuntimeInitializationWithPointer)
 {
+    RecordProperty("PartiallyVerifies", "comp_arc_sta__log__cpp_frontend_dependencies");
     RecordProperty("ASIL", "B");
     RecordProperty("Description",
                    "This suite only exists to test the second branch of the runtime initialization. Since this is "
