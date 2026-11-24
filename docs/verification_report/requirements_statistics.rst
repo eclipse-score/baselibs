@@ -62,9 +62,9 @@ Overview
    :labels: invalid, valid and not tested, valid and tested
    :colors: red,yellow, green
 
-   type == 'comp_req' and status == 'invalid'
-   type == 'comp_req' and testlink == '' and (status == 'valid' or status == 'invalid')
-   type == 'comp_req' and testlink != '' and (status == 'valid' or status == 'invalid')
+   type == 'comp_req' and not is_external and status == 'invalid'
+   type == 'comp_req' and not is_external and testlink == '' and (status == 'valid' or status == 'invalid')
+   type == 'comp_req' and not is_external and testlink != '' and (status == 'valid' or status == 'invalid')
 
 .. needpie:: Test Results
    :labels: passed, failed, skipped
@@ -80,7 +80,7 @@ Requirements Without Tests
 Valid requirements that are not yet covered by any test.
 
 .. needtable:: REQUIREMENTS WITHOUT TESTS
-   :filter: type == "comp_req" and status == "valid" and testlink == ""
+   :filter: type == "comp_req" and not is_external and status == "valid" and testlink == ""
    :columns: id;title;satisfied_by as "Satisfied by";safety as "Safety"
    :class: compact-needtable
 
@@ -91,7 +91,7 @@ Valid requirements that are covered by at least one test, along with the tests
 verifying them.
 
 .. needtable:: REQUIREMENTS WITH TESTS
-   :filter: type == "comp_req" and status == "valid" and testlink != ""
+   :filter: type == "comp_req" and not is_external and status == "valid" and testlink != ""
    :columns: id;title;satisfied_by as "Satisfied by";safety as "Safety";testlink as "Tests"
    :colwidths: 10,20,10,8,52
    :class: compact-needtable
