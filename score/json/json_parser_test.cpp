@@ -59,7 +59,20 @@ void VerifyJson(const score::json::Any& parsed_json)
     EXPECT_EQ(foo_value.value().get(), "foo");
 }
 
-TEST(JsonParserTest, FromBuffer)
+class JsonParserTest : public testing::Test
+{
+  protected:
+    std::string CreateJsonFile(const std::string_view filename, const std::string_view json_string)
+    {
+        const auto file_path{::testing::TempDir() + std::string{filename}};
+        std::ofstream ofstream{file_path};
+        ofstream << json_string.data();
+        ofstream.close();
+        return file_path;
+    }
+};
+
+TEST_F(JsonParserTest, FromBufferParsesObject)
 {
     RecordProperty("Verifies", "::score::json::JsonParser::FromBuffer");
     RecordProperty("ASIL", "B");
@@ -74,7 +87,7 @@ TEST(JsonParserTest, FromBuffer)
     VerifyJson(result.value());
 }
 
-TEST(JsonParserTest, ViaLiteral)
+TEST_F(JsonParserTest, JsonLiteralParsesObject)
 {
     RecordProperty("Verifies", "::score::json::operator\"\"_json");
     RecordProperty("ASIL", "B");
@@ -90,7 +103,7 @@ TEST(JsonParserTest, ViaLiteral)
     VerifyJson(parsed_json);
 }
 
-TEST(JsonParserTest, ViaErrorLiteral)
+TEST(JsonParserDeathTest, JsonLiteralAbortsOnInvalidJson)
 {
     RecordProperty("Verifies", "5310867");
     RecordProperty("ASIL", "B");
@@ -102,7 +115,7 @@ TEST(JsonParserTest, ViaErrorLiteral)
     EXPECT_EXIT(R"({"something"})"_json, ::testing::KilledBySignal(SIGABRT), "");
 }
 
-TEST(JsonParserTest, ViaErrorLiteralPrintsReason)
+TEST(JsonParserDeathTest, JsonLiteralPrintsReasonBeforeAborting)
 {
     RecordProperty("PartiallyVerifies", "comp_req__json__parsing_error_reason");
     RecordProperty("Description",
@@ -113,7 +126,7 @@ TEST(JsonParserTest, ViaErrorLiteralPrintsReason)
     EXPECT_EXIT(R"({"a": 1 "b": 2})"_json, ::testing::KilledBySignal(SIGABRT), "Missing comma");
 }
 
-TEST(JsonParserTest, FromFileSuceess)
+TEST_F(JsonParserTest, FromFileParsesObject)
 {
     RecordProperty("Verifies", "::score::json::JsonParser::FromFile");
     RecordProperty("ASIL", "B");
@@ -136,7 +149,7 @@ TEST(JsonParserTest, FromFileSuceess)
     VerifyJson(result.value());
 }
 
-TEST(JsonParserTest, FromFileParseError)
+TEST_F(JsonParserTest, FromFileReturnsParsingErrorForInvalidJson)
 {
     RecordProperty("Verifies", "5310867");
     RecordProperty("ASIL", "B");
@@ -199,20 +212,7 @@ constexpr std::string_view kSimpleJsonBuffer{R"(
 }
 )"};
 
-class ParserTest : public testing::Test
-{
-  protected:
-    std::string CreateJsonFile(const std::string_view filename, const std::string_view json_string)
-    {
-        const auto file_path{::testing::TempDir() + std::string{filename}};
-        std::ofstream ofstream{file_path};
-        ofstream << json_string.data();
-        ofstream.close();
-        return file_path;
-    }
-};
-
-TEST_F(ParserTest, CanParseObjectBool)
+TEST_F(JsonParserTest, FromBufferParsesBoolMember)
 {
     RecordProperty("PartiallyVerifies", "comp_req__json__deserialization");
     RecordProperty("Description", "Check that parsing a boolean value from a JSON buffer returns the correct value.");
@@ -229,7 +229,7 @@ TEST_F(ParserTest, CanParseObjectBool)
     EXPECT_EQ(value, true);
 }
 
-TEST_F(ParserTest, CanParseObjectString)
+TEST_F(JsonParserTest, FromBufferParsesStringMember)
 {
     RecordProperty("PartiallyVerifies", "comp_req__json__deserialization");
     RecordProperty("Description", "Check that parsing a string value from a JSON buffer returns the correct value.");
@@ -246,7 +246,7 @@ TEST_F(ParserTest, CanParseObjectString)
     EXPECT_EQ(value, "gold");
 }
 
-TEST_F(ParserTest, CanParseObjectNull)
+TEST_F(JsonParserTest, FromBufferParsesNullMember)
 {
     RecordProperty("PartiallyVerifies", "comp_req__json__deserialization");
     RecordProperty("Description", "Check that parsing a null value from a JSON buffer returns the correct value.");
@@ -263,7 +263,7 @@ TEST_F(ParserTest, CanParseObjectNull)
     EXPECT_EQ(value, Null{});
 }
 
-TEST_F(ParserTest, CanParseObjectNumber)
+TEST_F(JsonParserTest, FromBufferParsesUint64Member)
 {
     RecordProperty("PartiallyVerifies", "comp_req__json__deserialization");
     RecordProperty("Description", "Check that parsing a uint64_t value from a JSON buffer returns the correct value.");
@@ -280,7 +280,7 @@ TEST_F(ParserTest, CanParseObjectNumber)
     EXPECT_EQ(value, 123);
 }
 
-TEST_F(ParserTest, CanParseObjectFloatingPointNumber)
+TEST_F(JsonParserTest, FromBufferParsesFloatMember)
 {
     RecordProperty("PartiallyVerifies", "comp_req__json__deserialization");
     RecordProperty("Description", "Check that parsing a float value from a JSON buffer returns the correct value.");
@@ -301,7 +301,7 @@ TEST_F(ParserTest, CanParseObjectFloatingPointNumber)
     EXPECT_FALSE(double_as_float_value);
 }
 
-TEST_F(ParserTest, CanParseObjectInObject)
+TEST_F(JsonParserTest, FromBufferParsesNestedObject)
 {
     RecordProperty("PartiallyVerifies", "comp_req__json__deserialization");
     RecordProperty("Description", "Check that parsing a nested object from a JSON buffer returns the correct value.");
@@ -318,7 +318,7 @@ TEST_F(ParserTest, CanParseObjectInObject)
     EXPECT_EQ(value.at("a").As<std::string>().value().get(), "b");
 }
 
-TEST_F(ParserTest, CanParseListInObject)
+TEST_F(JsonParserTest, FromBufferParsesListMember)
 {
     RecordProperty("PartiallyVerifies", "comp_req__json__deserialization");
     RecordProperty("Description", "Check that parsing a list from a JSON buffer returns the correct values in order.");
@@ -337,7 +337,7 @@ TEST_F(ParserTest, CanParseListInObject)
     EXPECT_EQ(value[2].As<std::string>().value().get(), "third");
 }
 
-TEST_F(ParserTest, CanParseObjectInObjectAndIterateOverKeys)
+TEST_F(JsonParserTest, IteratesOverAllMembersOfParsedObject)
 {
     RecordProperty("PartiallyVerifies", "comp_req__json__deserialization");
     RecordProperty(
@@ -386,7 +386,7 @@ TEST_F(ParserTest, CanParseObjectInObjectAndIterateOverKeys)
     EXPECT_EQ(collected_paths.at(1), "/persistent/cdc/nvmblock/key_value_storage");
 }
 
-TEST_F(ParserTest, EmitsErrorWhenParsingObjectWithValueButNoKey)
+TEST_F(JsonParserTest, FromBufferRejectsObjectValueWithoutKey)
 {
     RecordProperty("PartiallyVerifies", "comp_req__json__deserialization");
     RecordProperty("Description",
@@ -406,7 +406,7 @@ false
     EXPECT_EQ(root.error(), score::json::Error::kParsingError);
 }
 
-TEST_F(ParserTest, EmitsErrorWhenParsingObjectWithBinaryValue)
+TEST_F(JsonParserTest, FromBufferRejectsBinaryValue)
 {
     RecordProperty("PartiallyVerifies", "comp_req__json__deserialization");
     RecordProperty("Description",
@@ -438,7 +438,7 @@ TEST_F(ParserTest, EmitsErrorWhenParsingObjectWithBinaryValue)
     EXPECT_EQ(root.error(), score::json::Error::kParsingError);
 }
 
-TEST_F(ParserTest, EmitsErrorWhenParsingTooLargeNumber)
+TEST_F(JsonParserTest, FromBufferRejectsTooLargeNumber)
 {
     RecordProperty("PartiallyVerifies", "comp_req__json__deserialization");
     RecordProperty("Description", "Check that parsing a number too large to be represented is rejected as malformed.");
@@ -455,7 +455,7 @@ TEST_F(ParserTest, EmitsErrorWhenParsingTooLargeNumber)
     EXPECT_EQ(root.error(), score::json::Error::kParsingError);
 }
 
-TEST_F(ParserTest, EmitsErrorWhenParsingNumberOutsideTheGrammar)
+TEST_F(JsonParserTest, FromBufferRejectsNumberOutsideTheGrammar)
 {
     RecordProperty("PartiallyVerifies", "comp_req__vajson__number_grammar");
     RecordProperty("Description",
@@ -473,7 +473,7 @@ TEST_F(ParserTest, EmitsErrorWhenParsingNumberOutsideTheGrammar)
     }
 }
 
-TEST_F(ParserTest, EmitsErrorWhenParsingHexadecimalNumberExceeding64Bits)
+TEST_F(JsonParserTest, FromBufferRejectsHexadecimalNumberExceeding64Bits)
 {
     RecordProperty("PartiallyVerifies", "comp_req__vajson__hex_integers");
     RecordProperty("Description",
@@ -488,7 +488,7 @@ TEST_F(ParserTest, EmitsErrorWhenParsingHexadecimalNumberExceeding64Bits)
     EXPECT_EQ(root.error(), score::json::Error::kParsingError);
 }
 
-TEST_F(ParserTest, FromFileFail)
+TEST_F(JsonParserTest, FromFileFailsForNonExistentFile)
 {
     RecordProperty("PartiallyVerifies", "comp_req__json__deserialization");
     RecordProperty("Description", "Check that parsing from a non-existent file path returns an error.");
@@ -500,7 +500,7 @@ TEST_F(ParserTest, FromFileFail)
     EXPECT_FALSE(foo.has_value());
 }
 
-TEST_F(ParserTest, FromFileReportsIoErrorWhenFileCannotBeOpened)
+TEST_F(JsonParserTest, FromFileReportsIoErrorWhenFileCannotBeOpened)
 {
     RecordProperty("PartiallyVerifies", "comp_req__json__io_error");
     RecordProperty("Description",
@@ -529,11 +529,11 @@ void PrintTo(const ParsingErrorReasonParam& param, std::ostream* os)
     *os << param.json;
 }
 
-class ParsingErrorReasonTest : public testing::TestWithParam<ParsingErrorReasonParam>
+class JsonParserErrorReasonTest : public testing::TestWithParam<ParsingErrorReasonParam>
 {
 };
 
-TEST_P(ParsingErrorReasonTest, ReportsReasonWithParsingError)
+TEST_P(JsonParserErrorReasonTest, ReportsReasonWithParsingError)
 {
     RecordProperty("PartiallyVerifies", "comp_req__json__parsing_error_reason");
     RecordProperty("Description",
@@ -550,8 +550,8 @@ TEST_P(ParsingErrorReasonTest, ReportsReasonWithParsingError)
 }
 
 INSTANTIATE_TEST_SUITE_P(
-    ParserTest,
-    ParsingErrorReasonTest,
+    FromBuffer,
+    JsonParserErrorReasonTest,
     testing::Values(
         ParsingErrorReasonParam{"EmptyDocument", "", "Document is empty"},
         ParsingErrorReasonParam{"MissingComma", R"({"a": 1 "b": 2})", "Missing comma"},
@@ -561,7 +561,7 @@ INSTANTIATE_TEST_SUITE_P(
         return std::string{param_info.param.name};
     });
 
-TEST_F(ParserTest, FromFileRejectsDirectory)
+TEST_F(JsonParserTest, FromFileRejectsDirectory)
 {
     RecordProperty("PartiallyVerifies", "comp_req__json__regular_file");
     RecordProperty("Description", "Check that parsing from a directory path returns an I/O error.");
@@ -575,7 +575,7 @@ TEST_F(ParserTest, FromFileRejectsDirectory)
     EXPECT_THAT(result.error().UserMessage(), ::testing::HasSubstr("Not a regular file"));
 }
 
-TEST_F(ParserTest, FromFileRejectsFifoWithoutBlocking)
+TEST_F(JsonParserTest, FromFileRejectsFifoWithoutBlocking)
 {
     RecordProperty("PartiallyVerifies", "comp_req__json__regular_file");
     RecordProperty("Description", "Check that parsing from a FIFO without a writer returns an I/O error.");
@@ -593,7 +593,7 @@ TEST_F(ParserTest, FromFileRejectsFifoWithoutBlocking)
     EXPECT_THAT(result.error().UserMessage(), ::testing::HasSubstr("Not a regular file"));
 }
 
-TEST_F(ParserTest, FromFileRejectsFileAboveMaxFileSize)
+TEST_F(JsonParserTest, FromFileRejectsFileAboveMaxFileSize)
 {
     RecordProperty("PartiallyVerifies", "comp_req__json__max_file_size");
     RecordProperty("Description", "Check that parsing valid JSON from a file of 64 MiB + 1 byte returns an I/O error.");
@@ -610,7 +610,7 @@ TEST_F(ParserTest, FromFileRejectsFileAboveMaxFileSize)
     EXPECT_EQ(result.error(), score::json::Error::kIoError);
 }
 
-TEST_F(ParserTest, ParsingFromFileWorks)
+TEST_F(JsonParserTest, FromFileParsesBoolMember)
 {
     RecordProperty("PartiallyVerifies", "comp_req__json__deserialization");
     RecordProperty("Description", "Check that parsing a JSON buffer written to a file returns the correct value.");
@@ -642,11 +642,11 @@ void PrintTo(const DuplicateMemberNameParam& param, std::ostream* os)
     *os << param.json;
 }
 
-class DuplicateMemberNameTest : public testing::TestWithParam<DuplicateMemberNameParam>
+class JsonParserDuplicateMemberNameTest : public testing::TestWithParam<DuplicateMemberNameParam>
 {
 };
 
-TEST_P(DuplicateMemberNameTest, EmitsErrorWhenParsingObjectWithDuplicateMemberName)
+TEST_P(JsonParserDuplicateMemberNameTest, FromBufferRejectsDuplicateMemberName)
 {
     RecordProperty("PartiallyVerifies", "comp_req__json__duplicate_member_names");
     RecordProperty("Description",
@@ -661,8 +661,8 @@ TEST_P(DuplicateMemberNameTest, EmitsErrorWhenParsingObjectWithDuplicateMemberNa
     EXPECT_EQ(root.error(), score::json::Error::kParsingError);
 }
 
-INSTANTIATE_TEST_SUITE_P(ParserTest,
-                         DuplicateMemberNameTest,
+INSTANTIATE_TEST_SUITE_P(FromBuffer,
+                         JsonParserDuplicateMemberNameTest,
                          testing::Values(DuplicateMemberNameParam{"Null", R"({"a": null, "a": null})"},
                                          DuplicateMemberNameParam{"Bool", R"({"a": true, "a": false})"},
                                          DuplicateMemberNameParam{"Number", R"({"a": 1, "a": 2})"},
@@ -681,7 +681,7 @@ INSTANTIATE_TEST_SUITE_P(ParserTest,
                              return std::string{param_info.param.name};
                          });
 
-TEST_F(ParserTest, EmitsErrorWhenParsingObjectWithDuplicateEscapedMemberName)
+TEST_F(JsonParserTest, FromBufferRejectsDuplicateEscapedMemberName)
 {
     RecordProperty("PartiallyVerifies", "comp_req__json__duplicate_member_names");
     RecordProperty("Description",
@@ -696,7 +696,7 @@ TEST_F(ParserTest, EmitsErrorWhenParsingObjectWithDuplicateEscapedMemberName)
     EXPECT_EQ(root.error(), score::json::Error::kParsingError);
 }
 
-TEST_F(ParserTest, CanParseSameMemberNameInDifferentObjects)
+TEST_F(JsonParserTest, FromBufferAcceptsSameMemberNameInDifferentObjects)
 {
     RecordProperty("PartiallyVerifies", "comp_req__json__duplicate_member_names");
     RecordProperty("Description",
@@ -715,7 +715,7 @@ TEST_F(ParserTest, CanParseSameMemberNameInDifferentObjects)
     EXPECT_EQ(GetValueOfObject<std::uint64_t>(root.value(), "A"), 4U);
 }
 
-TEST_F(ParserTest, CanParseEmptyMemberName)
+TEST_F(JsonParserTest, FromBufferAcceptsEmptyMemberName)
 {
     RecordProperty("PartiallyVerifies", "comp_req__json__deserialization");
     RecordProperty("Description",
@@ -737,7 +737,7 @@ TEST_F(ParserTest, CanParseEmptyMemberName)
     EXPECT_EQ(container.at(0).As<bool>().value(), true);
 }
 
-TEST(JsonParserVajsonTest, CanParseObjectHexadecimalNumber)
+TEST_F(JsonParserTest, FromBufferParsesHexadecimalNumbers)
 {
     RecordProperty("PartiallyVerifies", "comp_req__vajson__hex_integers");
     RecordProperty("Description",
@@ -786,7 +786,7 @@ TEST(JsonParserVajsonTest, CanParseObjectHexadecimalNumber)
     EXPECT_EQ(GetValueOfObject<std::int64_t>(root.value(), "negative_hex"), -0x10);
 }
 
-TEST(JsonParserVajsonTest, CanParseTwoByteBuffer)
+TEST_F(JsonParserTest, FromBufferParsesTwoByteBuffer)
 {
     RecordProperty("PartiallyVerifies", "comp_req__json__deserialization");
     RecordProperty(
@@ -805,7 +805,7 @@ TEST(JsonParserVajsonTest, CanParseTwoByteBuffer)
     EXPECT_TRUE(obj->get().empty());
 }
 
-TEST(JsonParserVajsonTest, CanParseBufferWithUtf8Bom)
+TEST_F(JsonParserTest, FromBufferSkipsUtf8Bom)
 {
     RecordProperty("PartiallyVerifies", "comp_req__json__deserialization");
     RecordProperty("Description",
@@ -877,7 +877,7 @@ void CheckReturnedValues(score::Result<T> min, score::Result<T> max)
     EXPECT_TRUE(diff < std::numeric_limits<T>::epsilon());
 }
 
-TEST(NumberTest, WhenParsingABoolStoredInAJsonThenParsingIsSuccessfulAndCorrectValueIsReturned)
+TEST_F(JsonParserTest, FromBufferParsesBoolValues)
 {
     RecordProperty("PartiallyVerifies", "comp_req__json__deserialization");
     RecordProperty("Description",
@@ -899,7 +899,7 @@ TEST(NumberTest, WhenParsingABoolStoredInAJsonThenParsingIsSuccessfulAndCorrectV
     CheckReturnedValues<bool>(min, max);
 }
 
-TEST(NumberTest, WhenParsingAUint8StoredInAJsonThenParsingIsSuccessfulAndCorrectValueIsReturned)
+TEST_F(JsonParserTest, FromBufferParsesUint8Limits)
 {
     RecordProperty("PartiallyVerifies", "comp_req__json__deserialization");
     RecordProperty(
@@ -922,7 +922,7 @@ TEST(NumberTest, WhenParsingAUint8StoredInAJsonThenParsingIsSuccessfulAndCorrect
     CheckReturnedValues<std::uint8_t>(min, max);
 }
 
-TEST(NumberTest, WhenParsingAUint16StoredInAJsonThenParsingIsSuccessfulAndCorrectValueIsReturned)
+TEST_F(JsonParserTest, FromBufferParsesUint16Limits)
 {
     RecordProperty("PartiallyVerifies", "comp_req__json__deserialization");
     RecordProperty(
@@ -945,7 +945,7 @@ TEST(NumberTest, WhenParsingAUint16StoredInAJsonThenParsingIsSuccessfulAndCorrec
     CheckReturnedValues<std::uint16_t>(min, max);
 }
 
-TEST(NumberTest, WhenParsingAUint32StoredInAJsonThenParsingIsSuccessfulAndCorrectValueIsReturned)
+TEST_F(JsonParserTest, FromBufferParsesUint32Limits)
 {
     RecordProperty("PartiallyVerifies", "comp_req__json__deserialization");
     RecordProperty(
@@ -968,7 +968,7 @@ TEST(NumberTest, WhenParsingAUint32StoredInAJsonThenParsingIsSuccessfulAndCorrec
     CheckReturnedValues<std::uint32_t>(min, max);
 }
 
-TEST(NumberTest, WhenParsingAUint64StoredInAJsonThenParsingIsSuccessfulAndCorrectValueIsReturned)
+TEST_F(JsonParserTest, FromBufferParsesUint64Limits)
 {
     RecordProperty("PartiallyVerifies", "comp_req__json__deserialization");
     RecordProperty(
@@ -991,7 +991,7 @@ TEST(NumberTest, WhenParsingAUint64StoredInAJsonThenParsingIsSuccessfulAndCorrec
     CheckReturnedValues<std::uint64_t>(min, max);
 }
 
-TEST(NumberTest, WhenParsingAInt8StoredInAJsonThenParsingIsSuccessfulAndCorrectValueIsReturned)
+TEST_F(JsonParserTest, FromBufferParsesInt8Limits)
 {
     RecordProperty("PartiallyVerifies", "comp_req__json__deserialization");
     RecordProperty(
@@ -1014,7 +1014,7 @@ TEST(NumberTest, WhenParsingAInt8StoredInAJsonThenParsingIsSuccessfulAndCorrectV
     CheckReturnedValues<std::int8_t>(min, max);
 }
 
-TEST(NumberTest, WhenParsingAInt16StoredInAJsonThenParsingIsSuccessfulAndCorrectValueIsReturned)
+TEST_F(JsonParserTest, FromBufferParsesInt16Limits)
 {
     RecordProperty("PartiallyVerifies", "comp_req__json__deserialization");
     RecordProperty(
@@ -1037,7 +1037,7 @@ TEST(NumberTest, WhenParsingAInt16StoredInAJsonThenParsingIsSuccessfulAndCorrect
     CheckReturnedValues<std::int16_t>(min, max);
 }
 
-TEST(NumberTest, WhenParsingAInt32StoredInAJsonThenParsingIsSuccessfulAndCorrectValueIsReturned)
+TEST_F(JsonParserTest, FromBufferParsesInt32Limits)
 {
     RecordProperty("PartiallyVerifies", "comp_req__json__deserialization");
     RecordProperty(
@@ -1060,7 +1060,7 @@ TEST(NumberTest, WhenParsingAInt32StoredInAJsonThenParsingIsSuccessfulAndCorrect
     CheckReturnedValues<std::int32_t>(min, max);
 }
 
-TEST(NumberTest, WhenParsingAInt64StoredInAJsonThenParsingIsSuccessfulAndCorrectValueIsReturned)
+TEST_F(JsonParserTest, FromBufferParsesInt64Limits)
 {
     RecordProperty("PartiallyVerifies", "comp_req__json__deserialization");
     RecordProperty(
@@ -1082,7 +1082,7 @@ TEST(NumberTest, WhenParsingAInt64StoredInAJsonThenParsingIsSuccessfulAndCorrect
     // Then the correct values are returned
     CheckReturnedValues<std::int64_t>(min, max);
 }
-TEST(NumberTest, WhenParsingAFloatStoredInAJsonThenParsingIsSuccessfulAndCorrectValueIsReturned)
+TEST_F(JsonParserTest, FromBufferParsesFloatLimits)
 {
     RecordProperty("PartiallyVerifies", "comp_req__json__deserialization");
     RecordProperty("Description",
@@ -1105,7 +1105,7 @@ TEST(NumberTest, WhenParsingAFloatStoredInAJsonThenParsingIsSuccessfulAndCorrect
     CheckReturnedValues<float>(min, max);
 }
 
-TEST(NumberTest, WhenParsingADoubleStoredInAJsonThenParsingIsSuccessfulAndCorrectValueIsReturned)
+TEST_F(JsonParserTest, FromBufferParsesDoubleLimits)
 {
     RecordProperty("PartiallyVerifies", "comp_req__json__deserialization");
     RecordProperty("Description",

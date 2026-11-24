@@ -16,7 +16,7 @@
 
 #include <string_view>
 
-TEST(JsonTest, ReadWrite)
+TEST(JsonTest, ReadsBackWrittenObject)
 {
     RecordProperty("Verifies", "SCR-5310867");
     RecordProperty("ASIL", "B");
@@ -68,7 +68,7 @@ TEST(JsonTest, ReadWrite)
               4);
 }
 
-TEST(JsonTest, ReadWriteEmptyMemberName)
+TEST(JsonTest, ReadsBackWrittenEmptyMemberNames)
 {
     RecordProperty("PartiallyVerifies", "comp_req__json__serialization, comp_req__json__deserialization");
     RecordProperty("Description",
@@ -140,7 +140,7 @@ TEST(JsonTest, RejectsUnescapedControlCharacters)
     EXPECT_FALSE(score::json::JsonParser{}.FromBuffer(std::string_view{"{\"value\":\"a\0b\"}", 15U}).has_value());
 }
 
-TEST(JsonTest, ReadWriteEscapedCharacters)
+TEST(JsonTest, ReadsBackWrittenEscapedCharacters)
 {
     RecordProperty("PartiallyVerifies", "comp_req__json__serialization, comp_req__json__deserialization");
     RecordProperty("Description",

@@ -23,7 +23,7 @@ namespace json
 namespace
 {
 
-TEST(Any, CanDefaultConstruct)
+TEST(AnyTest, DefaultConstructsNull)
 {
     RecordProperty("Verifies", "5310867");
     RecordProperty("ASIL", "B");
@@ -41,7 +41,7 @@ TEST(Any, CanDefaultConstruct)
     EXPECT_TRUE(value.has_value());
 }
 
-TEST(Any, CanConstructFromBool)
+TEST(AnyTest, ConstructsFromBool)
 {
     RecordProperty("Verifies", "5310867");
     RecordProperty("ASIL", "B");
@@ -60,7 +60,7 @@ TEST(Any, CanConstructFromBool)
     EXPECT_EQ(value.value(), true);
 }
 
-TEST(Any, CanConstructFromFloat)
+TEST(AnyTest, ConstructsFromFloat)
 {
     RecordProperty("Verifies", "5310867");
     RecordProperty("ASIL", "B");
@@ -78,7 +78,7 @@ TEST(Any, CanConstructFromFloat)
     EXPECT_EQ(value.value(), 4.2F);
 }
 
-TEST(Any, CanConstructFromFloatNumber)
+TEST(AnyTest, ConstructsFromFloatNumber)
 {
     RecordProperty("Verifies", "5310867");
     RecordProperty("ASIL", "B");
@@ -97,7 +97,7 @@ TEST(Any, CanConstructFromFloatNumber)
     EXPECT_EQ(value.value(), 4.2F);
 }
 
-TEST(Any, CanConstructFromUint64)
+TEST(AnyTest, ConstructsFromUint64)
 {
     RecordProperty("Verifies", "5310867");
     RecordProperty("ASIL", "B");
@@ -115,7 +115,7 @@ TEST(Any, CanConstructFromUint64)
     EXPECT_EQ(value.value(), std::uint64_t{42});
 }
 
-TEST(Any, CanConstructFromIntegralNumber)
+TEST(AnyTest, ConstructsFromIntegralNumber)
 {
     RecordProperty("Verifies", "5310867");
     RecordProperty("ASIL", "B");
@@ -134,7 +134,7 @@ TEST(Any, CanConstructFromIntegralNumber)
     EXPECT_EQ(value.value(), std::uint64_t{42});
 }
 
-TEST(Any, CanConstructFromString)
+TEST(AnyTest, ConstructsFromString)
 {
     RecordProperty("Verifies", "5310867");
     RecordProperty("ASIL", "B");
@@ -149,7 +149,7 @@ TEST(Any, CanConstructFromString)
     EXPECT_EQ(value.value().get(), std::string{"foo"});
 }
 
-TEST(Any, CanConstructFromNull)
+TEST(AnyTest, ConstructsFromNull)
 {
     RecordProperty("Verifies", "5310867");
     RecordProperty("ASIL", "B");
@@ -164,7 +164,7 @@ TEST(Any, CanConstructFromNull)
     EXPECT_TRUE(value.has_value());
 }
 
-TEST(Any, CanConstructFromObject)
+TEST(AnyTest, ConstructsFromObject)
 {
     RecordProperty("Verifies", "5310867");
     RecordProperty("ASIL", "B");
@@ -179,7 +179,7 @@ TEST(Any, CanConstructFromObject)
     EXPECT_TRUE(value.has_value());
 }
 
-TEST(Any, CanConstructFromList)
+TEST(AnyTest, ConstructsFromList)
 {
     RecordProperty("Verifies", "5310867");
     RecordProperty("ASIL", "B");
@@ -194,7 +194,7 @@ TEST(Any, CanConstructFromList)
     EXPECT_TRUE(value.has_value());
 }
 
-TEST(Any, CanAssignBool)
+TEST(AnyTest, AssignsBool)
 {
     RecordProperty("Verifies", "5310867");
     RecordProperty("ASIL", "B");
@@ -215,7 +215,7 @@ TEST(Any, CanAssignBool)
     EXPECT_EQ(value.value(), true);
 }
 
-TEST(Any, CanAssignFloat)
+TEST(AnyTest, AssignsFloat)
 {
     RecordProperty("Verifies", "5310867");
     RecordProperty("ASIL", "B");
@@ -232,7 +232,7 @@ TEST(Any, CanAssignFloat)
     EXPECT_EQ(value.value(), 4.2F);
 }
 
-TEST(Any, CanAssignFloatNumber)
+TEST(AnyTest, AssignsFloatNumber)
 {
     RecordProperty("Verifies", "5310867");
     RecordProperty("ASIL", "B");
@@ -250,7 +250,7 @@ TEST(Any, CanAssignFloatNumber)
     EXPECT_EQ(value.value(), 4.2F);
 }
 
-TEST(Any, CanAssignUint64)
+TEST(AnyTest, AssignsUint64)
 {
     RecordProperty("Verifies", "5310867");
     RecordProperty("ASIL", "B");
@@ -267,7 +267,7 @@ TEST(Any, CanAssignUint64)
     EXPECT_EQ(value.value(), std::uint64_t{42});
 }
 
-TEST(Any, CanAssignUint64Number)
+TEST(AnyTest, AssignsUint64Number)
 {
     RecordProperty("Verifies", "5310867");
     RecordProperty("ASIL", "B");
@@ -285,7 +285,7 @@ TEST(Any, CanAssignUint64Number)
     EXPECT_EQ(value.value(), std::uint64_t{42});
 }
 
-TEST(Any, CanAssignString)
+TEST(AnyTest, AssignsString)
 {
     RecordProperty("Verifies", "5310867");
     RecordProperty("ASIL", "B");
@@ -302,7 +302,7 @@ TEST(Any, CanAssignString)
     EXPECT_EQ(value.value().get(), std::string{"foo"});
 }
 
-TEST(Any, CanAssignNull)
+TEST(AnyTest, AssignsNull)
 {
     RecordProperty("Verifies", "5310867");
     RecordProperty("ASIL", "B");
@@ -319,7 +319,7 @@ TEST(Any, CanAssignNull)
     EXPECT_TRUE(value.has_value());
 }
 
-TEST(Any, CanAssignObject)
+TEST(AnyTest, AssignsObject)
 {
     RecordProperty("Verifies", "5310867");
     RecordProperty("ASIL", "B");
@@ -336,7 +336,7 @@ TEST(Any, CanAssignObject)
     EXPECT_TRUE(value.has_value());
 }
 
-TEST(Any, CanAssignList)
+TEST(AnyTest, AssignsList)
 {
     RecordProperty("Verifies", "5310867");
     RecordProperty("ASIL", "B");
@@ -353,7 +353,7 @@ TEST(Any, CanAssignList)
     EXPECT_TRUE(value.has_value());
 }
 
-TEST(Any, CanRetrieveNumberForBool)
+TEST(AnyTest, ConvertsBoolToNumber)
 {
     RecordProperty("Verifies", "5310867");
     RecordProperty("ASIL", "B");
@@ -371,7 +371,7 @@ TEST(Any, CanRetrieveNumberForBool)
     EXPECT_EQ(value.value(), std::uint64_t{0});
 }
 
-TEST(Any, CanNotRetrieveWronglyTypedValue)
+TEST(AnyTest, AsStringReturnsWrongTypeForList)
 {
     RecordProperty("Verifies", "5310867");
     RecordProperty("ASIL", "B");
@@ -391,7 +391,7 @@ TEST(Any, CanNotRetrieveWronglyTypedValue)
     EXPECT_EQ(value.error(), Error::kWrongType);
 }
 
-TEST(Any, CanNotRetrieveWronglyTypedReference)
+TEST(AnyTest, AsListReturnsWrongTypeForBool)
 {
     RecordProperty("Verifies", "5310867");
     RecordProperty("ASIL", "B");
@@ -411,7 +411,7 @@ TEST(Any, CanNotRetrieveWronglyTypedReference)
     EXPECT_EQ(value.error(), Error::kWrongType);
 }
 
-TEST(Any, CanNotRetrieveWronglyTypedValueConst)
+TEST(AnyTest, ConstAsBoolReturnsWrongTypeForList)
 {
     RecordProperty("Verifies", "5310867");
     RecordProperty("ASIL", "B");
@@ -432,7 +432,7 @@ TEST(Any, CanNotRetrieveWronglyTypedValueConst)
     EXPECT_EQ(value.error(), Error::kWrongType);
 }
 
-TEST(Any, CanNotRetrieveWronglyTypedReferenceConst)
+TEST(AnyTest, ConstAsListReturnsWrongTypeForBool)
 {
     RecordProperty("Verifies", "5310867");
     RecordProperty("ASIL", "B");
@@ -454,7 +454,7 @@ TEST(Any, CanNotRetrieveWronglyTypedReferenceConst)
     EXPECT_EQ(value.error(), Error::kWrongType);
 }
 
-TEST(Any, CanAccessStringAsStdStringView)
+TEST(AnyTest, AsStringViewReturnsString)
 {
     RecordProperty("Verifies", "5310867");
     RecordProperty("ASIL", "B");
@@ -471,7 +471,7 @@ TEST(Any, CanAccessStringAsStdStringView)
     EXPECT_TRUE(value.value() == std::string_view{"foo"});
 }
 
-TEST(Any, CanNotRetrieveWronglyTypedStringView)
+TEST(AnyTest, AsStringViewReturnsWrongTypeForList)
 {
     RecordProperty("Verifies", "5310867");
     RecordProperty("ASIL", "B");
@@ -499,7 +499,7 @@ void TestEqualOperator(T1 lhs, T2 rhs, bool result)
     EXPECT_EQ(json::Any(std::move(lhs)) == json::Any(std::move(rhs)), result);
 }
 
-TEST(Any, CheckEqualOperator)
+TEST(AnyTest, EqualityComparesTypeAndValue)
 {
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Tests the equal comparator of Any.");
@@ -562,7 +562,7 @@ TEST(Any, CheckEqualOperator)
     }
 }
 
-TEST(Any, CloneBool)
+TEST(AnyTest, CloneByValueCopiesBool)
 {
     RecordProperty("Verifies", "::score::json::Any::CloneByValue");
     RecordProperty("ASIL", "B");
@@ -581,7 +581,7 @@ TEST(Any, CloneBool)
     EXPECT_EQ(unit, cloned_unit);
 }
 
-TEST(Any, CloneNumber)
+TEST(AnyTest, CloneByValueCopiesNumber)
 {
     RecordProperty("Verifies", "::score::json::Any::CloneByValue");
     RecordProperty("ASIL", "B");
@@ -600,7 +600,7 @@ TEST(Any, CloneNumber)
     EXPECT_EQ(unit, cloned_unit);
 }
 
-TEST(Any, CloneNull)
+TEST(AnyTest, CloneByValueCopiesNull)
 {
     RecordProperty("Verifies", "::score::json::Any::CloneByValue");
     RecordProperty("ASIL", "B");
@@ -619,7 +619,7 @@ TEST(Any, CloneNull)
     EXPECT_EQ(unit, cloned_unit);
 }
 
-TEST(Any, CloneString)
+TEST(AnyTest, CloneByValueCopiesString)
 {
     RecordProperty("Verifies", "::score::json::Any::CloneByValue");
     RecordProperty("ASIL", "B");
@@ -638,7 +638,7 @@ TEST(Any, CloneString)
     EXPECT_EQ(unit, cloned_unit);
 }
 
-TEST(Any, CloneObject)
+TEST(AnyTest, CloneByValueCopiesObject)
 {
     RecordProperty("Verifies", "::score::json::Any::CloneByValue");
     RecordProperty("ASIL", "B");
@@ -660,7 +660,7 @@ TEST(Any, CloneObject)
     EXPECT_EQ(unit, cloned_unit);
 }
 
-TEST(Any, CloneList)
+TEST(AnyTest, CloneByValueCopiesList)
 {
     RecordProperty("Verifies", "::score::json::Any::CloneByValue");
     RecordProperty("ASIL", "B");
