@@ -20,8 +20,8 @@
 #include <string_view>
 
 #include "gtest/gtest.h"
+#include "score/json/error.h"
 #include "score/json/internal/parser/vajson/json_data.h"
-#include "score/json/internal/parser/vajson/json_error_domain.h"
 #include "score/json/internal/parser/vajson/structure_parser_stub.h"
 
 namespace score
@@ -35,7 +35,7 @@ namespace unit_test
 namespace
 {
 
-/// Helper: assert that the given JSON string is rejected with kInvalidJson.
+/// Helper: assert that the given JSON string is rejected with kParsingError.
 void AssertInvalid(std::string_view json)
 {
     auto data{JsonData::FromBuffer(json)};
@@ -43,7 +43,7 @@ void AssertInvalid(std::string_view json)
     StructureParserStub parser{data.value()};
     const auto result{parser.Parse()};
     ASSERT_FALSE(result.has_value());
-    ASSERT_EQ(result.error(), JsonErrc::kInvalidJson);
+    ASSERT_EQ(result.error(), Error::kParsingError);
 }
 
 }  // namespace

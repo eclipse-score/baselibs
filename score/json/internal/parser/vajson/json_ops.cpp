@@ -20,6 +20,7 @@
 #include <string_view>
 
 #include "score/assert.hpp"
+#include "score/json/error.h"
 #include "score/json/internal/parser/vajson/json_data.h"
 namespace score
 {
@@ -41,7 +42,7 @@ auto JsonOps::TryTake() noexcept -> Result<char>
 {
     std::string_view& input{this->GetInput()};
     Result<char> result{
-        score::MakeUnexpected(JsonErrc::kInvalidJson, "JsonOps::TryTake: Unexpected end of the document.")};
+        score::MakeUnexpected(Error::kParsingError, "JsonOps::TryTake: Unexpected end of the document.")};
 
     if (!input.empty())
     {
@@ -88,7 +89,7 @@ auto JsonOps::Skip(const char character) noexcept -> bool
 auto JsonOps::CheckString(const std::string_view string, const std::string_view error_msg) noexcept
     -> score::Result<void>
 {
-    score::Result<void> result{score::MakeUnexpected(JsonErrc::kInvalidJson, error_msg)};
+    score::Result<void> result{score::MakeUnexpected(Error::kParsingError, error_msg)};
     if (this->ReadString(string))
     {
         result.emplace();

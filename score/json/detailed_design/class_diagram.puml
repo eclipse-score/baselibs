@@ -124,9 +124,6 @@ score::json::internal::writer::Serializer --> score::Result : use
 enum amsr::json::ParserState #LightSteelBlue
 
 
-enum amsr::json::JsonErrc #LightSteelBlue
-
-
 class amsr::json::ParserResult <<typedef>> #LightSteelBlue
 
 
@@ -148,7 +145,6 @@ AnyTreeBuilder --> score::json::Error : use
 AnyTreeBuilder --> score::Result : use
 AnyTreeBuilder --> amsr::json::ParserResult : use
 AnyTreeBuilder --> amsr::json::ParserState : use
-AnyTreeBuilder --> amsr::json::JsonErrc : use
 
 
 class score::json::Any {

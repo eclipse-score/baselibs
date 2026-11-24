@@ -26,7 +26,7 @@ namespace score::json::vajson::internal
 
 /// @brief           Checks the order of the tokens of a JSON document
 /// @details         The parser reports each token in document order.
-///                  A method returns score::json::vajson::JsonErrc::kInvalidJson if its token is not allowed at the
+///                  A method returns score::json::Error::kParsingError if its token is not allowed at the
 ///                  current position.
 ///                  Commas are lenient: an array or object may contain leading, repeated, and trailing commas.
 ///                  Not thread-safe.

@@ -17,7 +17,6 @@
 
 #include "gtest/gtest.h"
 #include "score/json/internal/parser/vajson/json_data.h"
-#include "score/json/internal/parser/vajson/json_error_domain.h"
 #include "score/json/internal/parser/vajson/structure_parser_stub.h"
 #include <string>
 #include <vector>

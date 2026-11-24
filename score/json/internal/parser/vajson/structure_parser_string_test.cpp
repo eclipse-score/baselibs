@@ -16,8 +16,8 @@
 #include "score/json/internal/parser/vajson/structure_parser.h"
 
 #include "gtest/gtest.h"
+#include "score/json/error.h"
 #include "score/json/internal/parser/vajson/json_data.h"
-#include "score/json/internal/parser/vajson/json_error_domain.h"
 #include "score/json/internal/parser/vajson/structure_parser_stub.h"
 #include <optional>
 #include <string>
@@ -66,7 +66,7 @@ class ErrorStringParser final : public StructureParserStub
   private:
     auto OnString(CStringView) noexcept -> ParserResult override
     {
-        return score::MakeUnexpected(JsonErrc::kInvalidJson, "OnString called.");
+        return score::MakeUnexpected(Error::kParsingError, "OnString called.");
     }
 };
 
@@ -109,7 +109,7 @@ TEST(StructureParserStringTest, PropagatesOnStringError)
 
     const auto parser_result{parser.Parse()};
     ASSERT_FALSE(parser_result.has_value());
-    ASSERT_EQ(parser_result.error(), JsonErrc::kInvalidJson);
+    ASSERT_EQ(parser_result.error(), Error::kParsingError);
     ASSERT_EQ(parser_result.error().UserMessage(), std::string_view{"OnString called."});
 }
 

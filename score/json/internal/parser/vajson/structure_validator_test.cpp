@@ -17,7 +17,7 @@
 #include <string_view>
 
 #include "gtest/gtest.h"
-#include "score/json/internal/parser/vajson/json_error_domain.h"
+#include "score/json/error.h"
 
 namespace score::json::vajson::unit_test
 {
@@ -128,7 +128,7 @@ TEST_P(StructureValidatorRejectsTest, ReportsViolatedRule)
     const auto result{Validate(GetParam().tokens)};
 
     ASSERT_FALSE(result.has_value());
-    EXPECT_EQ(result.error(), JsonErrc::kInvalidJson);
+    EXPECT_EQ(result.error(), Error::kParsingError);
     EXPECT_EQ(result.error().UserMessage(), GetParam().message);
 }
 

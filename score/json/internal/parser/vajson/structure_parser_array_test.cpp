@@ -16,8 +16,8 @@
 #include "score/json/internal/parser/vajson/structure_parser.h"
 
 #include "gtest/gtest.h"
+#include "score/json/error.h"
 #include "score/json/internal/parser/vajson/json_data.h"
-#include "score/json/internal/parser/vajson/json_error_domain.h"
 #include "score/json/internal/parser/vajson/structure_parser_stub.h"
 
 namespace score
@@ -55,7 +55,7 @@ class DynamicArrayParser final : public StructureParserStub
         this->end_ += 1;
         if (this->balance_ == 0)
         {
-            return score::MakeUnexpected(JsonErrc::kInvalidJson, "EndArray called too often");
+            return score::MakeUnexpected(Error::kParsingError, "EndArray called too often");
         }
         this->balance_ -= 1;
         return ParserResult{ParserState::kRunning};
@@ -75,7 +75,7 @@ class EndArrayParser final : public StructureParserStub
 
     auto OnEndArray() noexcept -> ParserResult override
     {
-        return score::MakeUnexpected(JsonErrc::kInvalidJson, "OnEndArray called.");
+        return score::MakeUnexpected(Error::kParsingError, "OnEndArray called.");
     }
 };
 
@@ -90,7 +90,7 @@ class LimitedStartArrayParser final : public StructureParserStub
         static std::uint8_t call_cnt{0};
         if (call_cnt > 0)
         {
-            return score::MakeUnexpected(JsonErrc::kInvalidJson, "OnStartArray called a second time.");
+            return score::MakeUnexpected(Error::kParsingError, "OnStartArray called a second time.");
         }
         call_cnt++;
         return ParserResult{ParserState::kRunning};
@@ -153,7 +153,7 @@ TEST(StructureParserArrayTest, PropagatesOnEndArrayError)
 
     const auto parser_result{parser.Parse()};
     ASSERT_FALSE(parser_result.has_value());
-    ASSERT_EQ(parser_result.error(), JsonErrc::kInvalidJson);
+    ASSERT_EQ(parser_result.error(), Error::kParsingError);
     ASSERT_EQ(parser_result.error().UserMessage(), std::string_view{"OnEndArray called."});
 }
 
@@ -167,7 +167,7 @@ TEST(StructureParserArrayTest, PropagatesOnStartArrayError)
 
     const auto parser_result{parser.Parse()};
     ASSERT_FALSE(parser_result.has_value());
-    ASSERT_EQ(parser_result.error(), JsonErrc::kInvalidJson);
+    ASSERT_EQ(parser_result.error(), Error::kParsingError);
     ASSERT_EQ(parser_result.error().UserMessage(), std::string_view{"OnStartArray called a second time."});
 }
 

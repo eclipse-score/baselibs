@@ -23,6 +23,7 @@
 #include <type_traits>
 #include <utility>
 
+#include "score/json/error.h"
 #include "score/json/internal/parser/vajson/types.h"
 #include "score/language/futurecpp/include/score/optional.hpp"
 
@@ -311,19 +312,19 @@ TEST(JsonNumberTest, NewRejectsInvalidNumbers)
         StringView sv{"0a"};
         Result<JsonNumber> uut{JsonNumber::New(sv)};
         ASSERT_FALSE(uut.has_value());
-        ASSERT_EQ(uut.error(), JsonErrc::kInvalidJson);
+        ASSERT_EQ(uut.error(), Error::kParsingError);
     }
     {
         StringView sv{"-"};
         Result<JsonNumber> uut{JsonNumber::New(sv)};
         ASSERT_FALSE(uut.has_value());
-        ASSERT_EQ(uut.error(), JsonErrc::kInvalidJson);
+        ASSERT_EQ(uut.error(), Error::kParsingError);
     }
     {
         StringView sv{""};
         Result<JsonNumber> uut{JsonNumber::New(sv)};
         ASSERT_FALSE(uut.has_value());
-        ASSERT_EQ(uut.error(), JsonErrc::kInvalidJson);
+        ASSERT_EQ(uut.error(), Error::kParsingError);
     }
     {
         // Using an extended ASCII character does not work since this document is UTF-8 encoded.
@@ -335,7 +336,7 @@ TEST(JsonNumberTest, NewRejectsInvalidNumbers)
 
         Result<JsonNumber> uut{JsonNumber::New(sv)};
         ASSERT_FALSE(uut.has_value());
-        ASSERT_EQ(uut.error(), JsonErrc::kInvalidJson);
+        ASSERT_EQ(uut.error(), Error::kParsingError);
     }
 }
 
@@ -734,7 +735,7 @@ TEST(JsonNumberTest, RejectsNumbersOutsideTheGrammar)
     {
         const Result<JsonNumber> result{JsonNumber::New(number)};
         ASSERT_FALSE(result.has_value()) << number;
-        EXPECT_EQ(result.error(), JsonErrc::kInvalidJson) << number;
+        EXPECT_EQ(result.error(), Error::kParsingError) << number;
     }
 }
 

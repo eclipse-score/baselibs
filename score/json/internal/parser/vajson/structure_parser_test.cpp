@@ -16,8 +16,8 @@
 #include "score/json/internal/parser/vajson/structure_parser.h"
 
 #include "gtest/gtest.h"
+#include "score/json/error.h"
 #include "score/json/internal/parser/vajson/json_data.h"
-#include "score/json/internal/parser/vajson/json_error_domain.h"
 #include <utility>
 
 namespace score
@@ -96,7 +96,7 @@ class FailingParser final : public internal::StructureParser
         if (this->count_ >= this->num_accepted_)
         {
             ++this->count_;
-            return score::MakeUnexpected(JsonErrc::kInvalidJson, "Callback failed.");
+            return score::MakeUnexpected(Error::kParsingError, "Callback failed.");
         }
         ++this->count_;
         return ParserResult{ParserState::kRunning};
@@ -125,7 +125,7 @@ TEST(StructureParserTest, PropagatesErrorOfAnyCallback)
         FailingParser parser{data, idx};
         const auto parse_result{parser.Parse()};
         ASSERT_FALSE(parse_result.has_value());
-        ASSERT_EQ(parse_result.error(), JsonErrc::kInvalidJson);
+        ASSERT_EQ(parse_result.error(), Error::kParsingError);
         ASSERT_EQ(parse_result.error().UserMessage(), std::string_view{"Callback failed."});
         EXPECT_EQ(parser.GetCount(), idx + 1U);
     }
