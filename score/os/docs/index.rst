@@ -12,13 +12,13 @@
    # SPDX-License-Identifier: Apache-2.0
    # *******************************************************************************
 
-os
-###
+Operating System Abstraction Layer (OSAL)
+#########################################
 
-.. document:: OS Library
-   :id: doc__os
+.. document:: OSAL
+   :id: doc__osal
    :status: draft
-   :version: 1
+   :version: 2
    :safety: ASIL_B
    :security: YES
    :tags: baselibs_os
@@ -35,25 +35,40 @@ os
    safety_analysis/dfa.rst
    detailed_design/chklst_impl_inspection.rst
 
-Abstract
+Overview
 ========
 
-This component request proposes the integration of a safe OS library for operating system abstractions.
+Use the Operating System Abstraction Layer (OSAL) when your component needs C++ access to supported POSIX, C standard library, Linux, or QNX services.
+OSAL separates native service calls from component logic and supports controlled testing of service results and failures.
 
-Motivation and Rationale
-========================
+This page introduces the component's service scope, platform behavior, testability, and safety classification.
+For normative behavior and architecture allocation, see :need:`doc__osal_lib_requirements` and :need:`doc__osal_architecture`.
 
-The OS library shall provide safe and efficient abstractions for operating system functionalities.
-The library shall enable developers to interact with the underlying operating system in a type-safe manner, reducing
-the risk of runtime errors and improving code quality.
-An OS library with type-safe abstractions is needed in the S-CORE software platform due to the frequent interaction with operating system features
-and the need for reliable OS operations.
-
-Specification
+Service scope
 =============
 
-The following details and requirements describe the aspects of the current feature in the context of S-CORE.
+OSAL provides interfaces for the following service groups:
 
-General considerations
-----------------------
-The OS library should provide type-safe abstractions for operating system functionalities:
+- File and directory access, metadata queries, and memory mapping.
+- Process and thread control, synchronization, signals, and timers.
+- Socket communication, message queues, and other interprocess communication.
+- C standard library services, including environment-variable access.
+
+Platform behavior
+=================
+
+General interfaces expose services supported on Linux and QNX.
+Platform-specific interfaces expose services available only on the selected operating system; OSAL does not emulate those services on other platforms.
+
+Testability
+===========
+
+Selected interfaces provide replaceable implementations and mocks.
+Tests can use these seams to control service results and failures.
+
+Safety classification
+=====================
+
+OSAL includes ASIL-B and QM functionality.
+Safety-related use depends on the selected function and its underlying operating system service.
+The general, Linux, or QNX interface family alone does not determine the safety classification.
