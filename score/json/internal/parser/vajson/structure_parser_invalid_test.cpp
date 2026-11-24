@@ -50,78 +50,73 @@ void AssertInvalid(std::string_view json)
 
 // ---- Empty document -------------------------------------------------------
 
-TEST(UT__Parser__Invalid, Dynamic__EmptyDocument)
-{
-    AssertInvalid("");
-}
-
-TEST(UT__Parser__Invalid, Dynamic__NoData)
+TEST(StructureParserInvalidTest, RejectsEmptyDocument)
 {
     AssertInvalid("");
 }
 
 // ---- Malformed JSON keywords (wrong length) --------------------------------
 
-TEST(UT__Parser__Invalid, Dynamic__UnknownType3_truee)
+TEST(StructureParserInvalidTest, RejectsTrueWithTrailingLetter)
 {
     AssertInvalid("truee");
 }
 
-TEST(UT__Parser__Invalid, Dynamic__UnknownType4_falsee)
+TEST(StructureParserInvalidTest, RejectsFalseWithTrailingLetter)
 {
     AssertInvalid("falsee");
 }
 
 // ---- Malformed JSON keywords (wrong case) ----------------------------------
 
-TEST(UT__Parser__Invalid, Dynamic__UnknownType6_False)
+TEST(StructureParserInvalidTest, RejectsCapitalizedFalse)
 {
     AssertInvalid("False");
 }
 
-TEST(UT__Parser__Invalid, Dynamic__UnknownType7_True)
+TEST(StructureParserInvalidTest, RejectsCapitalizedTrue)
 {
     AssertInvalid("True");
 }
 
-TEST(UT__Parser__Invalid, Dynamic__UnknownType8_Null)
+TEST(StructureParserInvalidTest, RejectsCapitalizedNull)
 {
     AssertInvalid("Null");
 }
 
 // ---- Malformed JSON keywords (correct length/case, wrong chars) ------------
 
-TEST(UT__Parser__Invalid, Dynamic__UnknownType9_nxyl)
+TEST(StructureParserInvalidTest, RejectsNullWithWrongLetters)
 {
     AssertInvalid("nxyl");
 }
 
-TEST(UT__Parser__Invalid, Dynamic__UnknownType10_n00l)
+TEST(StructureParserInvalidTest, RejectsNullWithDigits)
 {
     AssertInvalid("n00l");
 }
 
-TEST(UT__Parser__Invalid, Dynamic__UnknownType11_txye)
+TEST(StructureParserInvalidTest, RejectsTrueWithWrongLetters)
 {
     AssertInvalid("txye");
 }
 
-TEST(UT__Parser__Invalid, Dynamic__UnknownType12_t12e)
+TEST(StructureParserInvalidTest, RejectsTrueWithDigits)
 {
     AssertInvalid("t12e");
 }
 
-TEST(UT__Parser__Invalid, Dynamic__UnknownType13_fxyze)
+TEST(StructureParserInvalidTest, RejectsFalseWithWrongLetters)
 {
     AssertInvalid("fxyze");
 }
 
-TEST(UT__Parser__Invalid, Dynamic__UnknownType14_f456e)
+TEST(StructureParserInvalidTest, RejectsFalseWithDigits)
 {
     AssertInvalid("f456e");
 }
 
-TEST(UT__Parser__Invalid, Dynamic__TruncatedInput)
+TEST(StructureParserInvalidTest, RejectsTruncatedInput)
 {
     RecordProperty("PartiallyVerifies", "comp_req__vajson__validation");
     RecordProperty("TestType", "requirements-based");
@@ -139,102 +134,102 @@ TEST(UT__Parser__Invalid, Dynamic__TruncatedInput)
 
 // ---- Invalid JSON sequences ------------------------------------------------
 
-TEST(UT__Parser__Invalid, Dynamic__KeyWithoutValue)
+TEST(StructureParserInvalidTest, RejectsKeyWithoutValue)
 {
     AssertInvalid(R"({ "key": , "another_key": )");
 }
 
-TEST(UT__Parser__Invalid, Dynamic__ValueWithoutKey)
+TEST(StructureParserInvalidTest, RejectsValueWithoutKey)
 {
     AssertInvalid(R"({ "key": "value", "value", "key": 1 })");
 }
 
-TEST(UT__Parser__Invalid, Dynamic__EofAfterKey)
+TEST(StructureParserInvalidTest, RejectsEndOfInputAfterKey)
 {
     AssertInvalid(R"({"key")");
 }
 
-TEST(UT__Parser__Invalid, Dynamic__UnexpectedObjectClose1)
+TEST(StructureParserInvalidTest, RejectsObjectCloseInsteadOfValue)
 {
     AssertInvalid(R"({ "key": } )");
 }
 
-TEST(UT__Parser__Invalid, Dynamic__UnexpectedObjectClose2)
+TEST(StructureParserInvalidTest, RejectsObjectCloseInArray)
 {
     AssertInvalid(R"([ } ])");
 }
 
-TEST(UT__Parser__Invalid, Dynamic__UnexpectedArrayOpen)
+TEST(StructureParserInvalidTest, RejectsArrayOpenFollowedByObjectClose)
 {
     AssertInvalid(R"({ [ })");
 }
 
-TEST(UT__Parser__Invalid, Dynamic__UnexpectedArrayClose)
+TEST(StructureParserInvalidTest, RejectsArrayCloseInObject)
 {
     AssertInvalid(R"({ ] })");
 }
 
-TEST(UT__Parser__Invalid, Dynamic__NonterminatingString1)
+TEST(StructureParserInvalidTest, RejectsUnterminatedString)
 {
     AssertInvalid(R"("This goes on until the end of file)");
 }
 
-TEST(UT__Parser__Invalid, Dynamic__NonterminatingString2)
+TEST(StructureParserInvalidTest, RejectsKeyWithMissingClosingQuote)
 {
     AssertInvalid(R"({ "this is a key: 1, "k": 1 } )");
 }
 
-TEST(UT__Parser__Invalid, Dynamic__NonterminatingNumber1)
+TEST(StructureParserInvalidTest, RejectsLoneMinusSign)
 {
     AssertInvalid(R"(-)");
 }
 
-TEST(UT__Parser__Invalid, Dynamic__NonterminatingNumber2)
+TEST(StructureParserInvalidTest, RejectsNumberWithLeadingZeros)
 {
     AssertInvalid(R"(000)");
 }
 
-TEST(UT__Parser__Invalid, Dynamic__NonterminatingNumber3)
+TEST(StructureParserInvalidTest, RejectsNumberFollowedByHexadecimalLetter)
 {
     AssertInvalid(R"(0a)");
 }
 
-TEST(UT__Parser__Invalid, Dynamic__NonterminatingNumber4)
+TEST(StructureParserInvalidTest, RejectsNumberFollowedByNonHexadecimalLetter)
 {
     AssertInvalid(R"(0z)");
 }
 
-TEST(UT__Parser__Invalid, Dynamic__NonTerminatingObject)
+TEST(StructureParserInvalidTest, RejectsUnclosedObject)
 {
     AssertInvalid("{");
 }
 
-TEST(UT__Parser__Invalid, Dynamic__NonTerminatingArray)
+TEST(StructureParserInvalidTest, RejectsUnclosedArray)
 {
     AssertInvalid("[");
 }
 
-TEST(UT__Parser__Invalid, Dynamic__TopLevelKeys)
+TEST(StructureParserInvalidTest, RejectsTopLevelKey)
 {
     AssertInvalid(R"("key": 2)");
 }
 
-TEST(UT__Parser__Invalid, Dynamic__MultipleTopLevelElements)
+TEST(StructureParserInvalidTest, RejectsCommaSeparatedTopLevelValues)
 {
     AssertInvalid(R"(2, 3, 4)");
 }
 
-TEST(UT__Parser__Invalid, Dynamic__MultipleTopLevelObjects)
+TEST(StructureParserInvalidTest, RejectsMultipleTopLevelObjects)
 {
     AssertInvalid(R"({}{})");
 }
 
-TEST(UT__Parser__Invalid, Dynamic__MultipleValues)
+TEST(StructureParserInvalidTest, RejectsWhitespaceSeparatedTopLevelValues)
 {
     AssertInvalid(R"(2 3 4)");
 }
 
-TEST(UT__Parser__Invalid, Dynamic__TruncatedUnicodeEscape)
+TEST(StructureParserInvalidTest, RejectsTruncatedUnicodeEscape)
 {
     RecordProperty("PartiallyVerifies", "comp_req__vajson__unicode, comp_req__vajson__validation");
     RecordProperty("TestType", "requirements-based");
@@ -244,7 +239,7 @@ TEST(UT__Parser__Invalid, Dynamic__TruncatedUnicodeEscape)
     AssertInvalid(R"("test\u12)");
 }
 
-TEST(UT__Parser__Invalid, Dynamic__NonHexadecimalUnicodeEscape)
+TEST(StructureParserInvalidTest, RejectsNonHexadecimalUnicodeEscape)
 {
     RecordProperty("PartiallyVerifies", "comp_req__vajson__unicode, comp_req__vajson__validation");
     RecordProperty("TestType", "requirements-based");
@@ -254,7 +249,7 @@ TEST(UT__Parser__Invalid, Dynamic__NonHexadecimalUnicodeEscape)
     AssertInvalid(R"("test\u12g4")");
 }
 
-TEST(UT__Parser__Invalid, Dynamic__LoneHighSurrogate)
+TEST(StructureParserInvalidTest, RejectsLoneHighSurrogate)
 {
     RecordProperty("PartiallyVerifies", "comp_req__vajson__unicode");
     RecordProperty("TestType", "requirements-based");
@@ -264,7 +259,7 @@ TEST(UT__Parser__Invalid, Dynamic__LoneHighSurrogate)
     AssertInvalid(R"("test\ud83d")");
 }
 
-TEST(UT__Parser__Invalid, Dynamic__HighSurrogateFollowedByNonSurrogate)
+TEST(StructureParserInvalidTest, RejectsHighSurrogateFollowedByNonSurrogate)
 {
     RecordProperty("PartiallyVerifies", "comp_req__vajson__unicode");
     RecordProperty("TestType", "requirements-based");
@@ -274,7 +269,7 @@ TEST(UT__Parser__Invalid, Dynamic__HighSurrogateFollowedByNonSurrogate)
     AssertInvalid(R"("test\ud83d\u0041")");
 }
 
-TEST(UT__Parser__Invalid, Dynamic__HighSurrogateFollowedByOtherEscape)
+TEST(StructureParserInvalidTest, RejectsHighSurrogateFollowedByOtherEscape)
 {
     RecordProperty("PartiallyVerifies", "comp_req__vajson__unicode");
     RecordProperty("TestType", "requirements-based");
@@ -284,7 +279,7 @@ TEST(UT__Parser__Invalid, Dynamic__HighSurrogateFollowedByOtherEscape)
     AssertInvalid(R"("test\ud83d\n")");
 }
 
-TEST(UT__Parser__Invalid, Dynamic__LoneLowSurrogate)
+TEST(StructureParserInvalidTest, RejectsLoneLowSurrogate)
 {
     RecordProperty("PartiallyVerifies", "comp_req__vajson__unicode");
     RecordProperty("TestType", "requirements-based");
@@ -294,12 +289,12 @@ TEST(UT__Parser__Invalid, Dynamic__LoneLowSurrogate)
     AssertInvalid(R"("test\ude00")");
 }
 
-TEST(UT__Parser__Invalid, Dynamic__UnknownEscape)
+TEST(StructureParserInvalidTest, RejectsUnknownEscape)
 {
     AssertInvalid(R"("test\{1234\}")");
 }
 
-TEST(UT__Parser__Invalid, Dynamic__UnescapedControlCharacterInString)
+TEST(StructureParserInvalidTest, RejectsUnescapedControlCharacterInString)
 {
     RecordProperty("PartiallyVerifies", "comp_req__vajson__validation");
     RecordProperty("TestType", "requirements-based");
@@ -315,7 +310,7 @@ TEST(UT__Parser__Invalid, Dynamic__UnescapedControlCharacterInString)
     }
 }
 
-TEST(UT__Parser__Invalid, Dynamic__UnescapedControlCharacterInKey)
+TEST(StructureParserInvalidTest, RejectsUnescapedControlCharacterInKey)
 {
     RecordProperty("PartiallyVerifies", "comp_req__vajson__validation");
     RecordProperty("TestType", "requirements-based");
@@ -325,167 +320,167 @@ TEST(UT__Parser__Invalid, Dynamic__UnescapedControlCharacterInKey)
     AssertInvalid("{\"a\tb\":1}");
 }
 
-TEST(UT__Parser__Invalid, Dynamic__OnlyWhitespace)
+TEST(StructureParserInvalidTest, RejectsDocumentWithOnlyWhitespace)
 {
     AssertInvalid(" \t\n\r");
 }
 
-TEST(UT__Parser__Invalid, Dynamic__OnlyArrayClose)
+TEST(StructureParserInvalidTest, RejectsLoneArrayClose)
 {
     AssertInvalid("]");
 }
 
-TEST(UT__Parser__Invalid, Dynamic__OnlyObjectClose)
+TEST(StructureParserInvalidTest, RejectsLoneObjectClose)
 {
     AssertInvalid("}");
 }
 
-TEST(UT__Parser__Invalid, Dynamic__OctalNumber1)
+TEST(StructureParserInvalidTest, RejectsOctalNumber)
 {
     AssertInvalid("0123");
 }
 
-TEST(UT__Parser__Invalid, Dynamic__OctalNumber2)
+TEST(StructureParserInvalidTest, RejectsNegativeOctalNumber)
 {
     AssertInvalid("-010");
 }
 
-TEST(UT__Parser__Invalid, Dynamic__ObjectOpenInsteadOfKey)
+TEST(StructureParserInvalidTest, RejectsObjectOpenInsteadOfKey)
 {
     AssertInvalid("{{");
 }
 
-TEST(UT__Parser__Invalid, Dynamic__ArrayOpenInsteadOfKey)
+TEST(StructureParserInvalidTest, RejectsArrayOpenInsteadOfKey)
 {
     AssertInvalid("{[");
 }
 
-TEST(UT__Parser__Invalid, Dynamic__StringInsteadOfKey)
+TEST(StructureParserInvalidTest, RejectsKeyFollowedByCommaAndString)
 {
     AssertInvalid(R"({"true", ""})");
 }
 
-TEST(UT__Parser__Invalid, Dynamic__ValueInsteadOfKey)
+TEST(StructureParserInvalidTest, RejectsKeyFollowedByObjectClose)
 {
     AssertInvalid(R"({"true" })");
 }
 
-TEST(UT__Parser__Invalid, Dynamic__NumberAndString)
+TEST(StructureParserInvalidTest, RejectsNumberAsKey)
 {
     AssertInvalid(R"({1234"true" })");
 }
 
-TEST(UT__Parser__Invalid, Dynamic__MissingCommaInObject)
+TEST(StructureParserInvalidTest, RejectsMissingCommaInObject)
 {
     AssertInvalid(R"({"key":1 "Key":2})");
 }
 
-TEST(UT__Parser__Invalid, Dynamic__MissingCommaInArray)
+TEST(StructureParserInvalidTest, RejectsMissingCommaInArray)
 {
     AssertInvalid(R"(["abc" "def"])");
 }
 
-TEST(UT__Parser__Invalid, Dynamic__UnquotedKey)
+TEST(StructureParserInvalidTest, RejectsUnquotedKey)
 {
     AssertInvalid(R"({unquoted_key: "keys must be quoted"})");
 }
 
-TEST(UT__Parser__Invalid, Dynamic__CommaAfterClose)
+TEST(StructureParserInvalidTest, RejectsCommaAfterTopLevelArray)
 {
     AssertInvalid(R"(["Comma after the close"],)");
 }
 
-TEST(UT__Parser__Invalid, Dynamic__ExtraArrayAfterClose)
+TEST(StructureParserInvalidTest, RejectsExtraArrayClose)
 {
     AssertInvalid(R"(["Extra close"]])");
 }
 
-TEST(UT__Parser__Invalid, Dynamic__ExtraValueAfterClose)
+TEST(StructureParserInvalidTest, RejectsValueAfterTopLevelObject)
 {
     AssertInvalid(R"({"Extra value after close": true} "misplaced quoted value")");
 }
 
-TEST(UT__Parser__Invalid, Dynamic__IllegalExpression)
+TEST(StructureParserInvalidTest, RejectsExpressionAsValue)
 {
     AssertInvalid(R"({"Illegal expression": 1 + 2})");
 }
 
-TEST(UT__Parser__Invalid, Dynamic__IllegalInvocation)
+TEST(StructureParserInvalidTest, RejectsFunctionCallAsValue)
 {
     AssertInvalid(R"({"Illegal invocation": alert()})");
 }
 
-TEST(UT__Parser__Invalid, Dynamic__IllegalEscape)
+TEST(StructureParserInvalidTest, RejectsHexadecimalEscape)
 {
     AssertInvalid(R"(["Illegal backslash escape: \x15"])");
 }
 
-TEST(UT__Parser__Invalid, Dynamic__Naked)
+TEST(StructureParserInvalidTest, RejectsEscapeOutsideString)
 {
     AssertInvalid(R"([\naked])");
 }
 
-TEST(UT__Parser__Invalid, Dynamic__IllegalEscapeNumber)
+TEST(StructureParserInvalidTest, RejectsOctalEscape)
 {
     AssertInvalid(R"(["Illegal backslash escape: \017"])");
 }
 
-TEST(UT__Parser__Invalid, Dynamic__MissingColon)
+TEST(StructureParserInvalidTest, RejectsMissingColon)
 {
     AssertInvalid(R"({"Missing colon" null})");
 }
 
-TEST(UT__Parser__Invalid, Dynamic__DoubleColon)
+TEST(StructureParserInvalidTest, RejectsDoubleColon)
 {
     AssertInvalid(R"({"Double colon":: null})");
 }
 
-TEST(UT__Parser__Invalid, Dynamic__CommaInsteadOfColon)
+TEST(StructureParserInvalidTest, RejectsCommaInsteadOfColon)
 {
     AssertInvalid(R"({"Comma instead of colon", null})");
 }
 
-TEST(UT__Parser__Invalid, Dynamic__ColonInsteadOfComma)
+TEST(StructureParserInvalidTest, RejectsColonInArray)
 {
     AssertInvalid(R"(["Colon instead of comma": false])");
 }
 
-TEST(UT__Parser__Invalid, Dynamic__BadValue)
+TEST(StructureParserInvalidTest, RejectsUnknownLiteral)
 {
     AssertInvalid(R"(["Bad value", truth])");
 }
 
-TEST(UT__Parser__Invalid, Dynamic__SingleQuote)
+TEST(StructureParserInvalidTest, RejectsSingleQuotedString)
 {
     AssertInvalid(R"(['single quote'])");
 }
 
-TEST(UT__Parser__Invalid, Dynamic__BackslashInString)
+TEST(StructureParserInvalidTest, RejectsBackslashFollowedBySpace)
 {
     AssertInvalid("[\"tab\\   character\\   in\\  string\\  \"]");
 }
 
-TEST(UT__Parser__Invalid, Dynamic__BackslashLineBreak)
+TEST(StructureParserInvalidTest, RejectsBackslashFollowedByLineBreak)
 {
     AssertInvalid("[\"line\\\nbreak\"]");
 }
 
-TEST(UT__Parser__Invalid, Dynamic__CommaInsteadOfClosing)
+TEST(StructureParserInvalidTest, RejectsCommaInsteadOfObjectClose)
 {
     AssertInvalid(R"({"Comma instead if closing brace": true,)");
 }
 
-TEST(UT__Parser__Invalid, Dynamic__ArrayWithoutComma)
+TEST(StructureParserInvalidTest, RejectsMissingCommaBetweenObjectsInArray)
 {
     AssertInvalid(R"([{}{}])");
 }
 
-TEST(UT__Parser__Invalid, Dynamic__TrailingValue)
+TEST(StructureParserInvalidTest, RejectsValueAfterTopLevelArray)
 {
     AssertInvalid(R"([]123)");
 }
 
-TEST(UT__Parser__Invalid, Dynamic__TrailingKey)
+TEST(StructureParserInvalidTest, RejectsKeyAfterTopLevelArray)
 {
     AssertInvalid(R"([]"key":)");
 }

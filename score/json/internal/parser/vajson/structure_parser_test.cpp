@@ -110,7 +110,7 @@ class FailingParser final : public internal::StructureParser
 
 /// Test that an error returned by any callback aborts parsing with that error.
 /// @trace           score::json::vajson::internal::StructureParser
-TEST(UT__Parser, Static__CallbackError)
+TEST(StructureParserTest, PropagatesErrorOfAnyCallback)
 {
     constexpr std::string_view doc{R"({"key": [123, "string", null, true]})"};
     const std::size_t num_events{9};

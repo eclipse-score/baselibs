@@ -25,7 +25,7 @@ namespace
 using ::testing::Eq;
 using ::testing::Ne;
 
-TEST(Error, CanMakeError)
+TEST(ErrorTest, MakeErrorStoresErrorCode)
 {
     RecordProperty("Verifies", "::score::json::MakeError");
     RecordProperty("ASIL", "B");
@@ -39,7 +39,7 @@ TEST(Error, CanMakeError)
     EXPECT_THAT(*error, Eq(static_cast<result::ErrorCode>(Error::kParsingError)));
 }
 
-TEST(Error, CanMakeErrorWithUserMessage)
+TEST(ErrorTest, MakeErrorStoresUserMessage)
 {
     RecordProperty("Verifies", "::score::json::MakeError");
     RecordProperty("ASIL", "B");
@@ -54,7 +54,7 @@ TEST(Error, CanMakeErrorWithUserMessage)
     EXPECT_THAT(error.UserMessage(), Eq(userMessage));
 }
 
-TEST(Error, CanGetMessageForWrongType)
+TEST(ErrorTest, MessageIsNotEmptyForWrongType)
 {
     RecordProperty("Verifies", "::score::result::Error::Message");
     RecordProperty("ASIL", "B");
@@ -70,7 +70,7 @@ TEST(Error, CanGetMessageForWrongType)
     EXPECT_THAT(message, Ne(std::string_view{}));
 }
 
-TEST(Error, CanGetMessageForKeyNotFound)
+TEST(ErrorTest, MessageIsNotEmptyForKeyNotFound)
 {
     RecordProperty("Verifies", "::score::result::Error::Message");
     RecordProperty("ASIL", "B");
@@ -86,7 +86,7 @@ TEST(Error, CanGetMessageForKeyNotFound)
     EXPECT_THAT(message, Ne(std::string_view{}));
 }
 
-TEST(Error, CanGetMessageForParsingError)
+TEST(ErrorTest, MessageIsNotEmptyForParsingError)
 {
     RecordProperty("Verifies", "::score::result::Error::Message");
     RecordProperty("ASIL", "B");
@@ -102,7 +102,7 @@ TEST(Error, CanGetMessageForParsingError)
     EXPECT_THAT(message, Ne(std::string_view{}));
 }
 
-TEST(Error, CanGetMessageForInvalidFilePath)
+TEST(ErrorTest, MessageIsNotEmptyForInvalidFilePath)
 {
     RecordProperty("Verifies", "::score::result::Error::Message");
     RecordProperty("ASIL", "B");
@@ -118,7 +118,7 @@ TEST(Error, CanGetMessageForInvalidFilePath)
     EXPECT_THAT(message, Ne(std::string_view{}));
 }
 
-TEST(Error, CanGetMessageForUnknownError)
+TEST(ErrorTest, MessageIsNotEmptyForUnknownError)
 {
     RecordProperty("Verifies", "::score::result::Error::Message");
     RecordProperty("ASIL", "B");
@@ -134,7 +134,7 @@ TEST(Error, CanGetMessageForUnknownError)
     EXPECT_THAT(message, Ne(std::string_view{}));
 }
 
-TEST(Error, CanGetMessageForUndefinedError)
+TEST(ErrorTest, MessageIsNotEmptyForUndefinedError)
 {
     RecordProperty("Verifies", "::score::result::Error::Message");
     RecordProperty("ASIL", "B");

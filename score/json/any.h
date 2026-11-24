@@ -126,7 +126,7 @@ class Any
     }
 
     Any(Any&& t) = default;
-    // False positive, this is the move assignement operator not a forwarding reference overload.
+    // False positive, this is the move assignment operator not a forwarding reference overload.
     // coverity[autosar_cpp14_a13_3_1_violation : FALSE]
     Any& operator=(Any&& t) = default;
     Any(const Any& t) = delete;

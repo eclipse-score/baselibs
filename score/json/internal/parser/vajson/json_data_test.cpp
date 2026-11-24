@@ -38,7 +38,7 @@ namespace unit_test
 constexpr std::size_t kNoSizeLimit{std::numeric_limits<std::size_t>::max()};
 
 /// Test that JsonData can open a file.
-TEST(UT__JsonOps__JsonData, ConstructFromFile)
+TEST(JsonDataTest, FromFileAcceptsExistingFile)
 {
     const std::string file{"/tmp/vajson_test.json"};
     std::FILE* const fp{std::fopen(file.c_str(), "w")};
@@ -50,7 +50,7 @@ TEST(UT__JsonOps__JsonData, ConstructFromFile)
 }
 
 /// Test that JsonData can open a StringView character buffer.
-TEST(UT__JsonOps__JsonData, ConstructFromStringView)
+TEST(JsonDataTest, FromBufferAcceptsStringView)
 {
     const StringView view{"doesntmatter"};
 
@@ -60,7 +60,7 @@ TEST(UT__JsonOps__JsonData, ConstructFromStringView)
 }
 
 /// Test that JsonData returns a JsonErrc if the file cannot be opened.
-TEST(UT__JsonOps__JsonData, ConstructFromNonExistingFile)
+TEST(JsonDataTest, FromFileReturnsStreamFailureForMissingFile)
 {
     const Result<JsonData> result{JsonData::FromFile("doesnotexist", kNoSizeLimit)};
 
@@ -112,7 +112,7 @@ TEST_P(JsonDataFileSizeTest, RejectsFileAboveSizeLimit)
 
 INSTANTIATE_TEST_SUITE_P(ChunkBoundaries, JsonDataFileSizeTest, ::testing::Values(1U, 65535U, 65536U, 65537U, 200000U));
 
-TEST(UT__JsonOps__JsonData, AppliesSizeLimitToBytesReadBeyondReportedSize)
+TEST(JsonDataTest, FromFileAppliesSizeLimitToBytesReadBeyondReportedSize)
 {
     RecordProperty("PartiallyVerifies", "comp_req__json__max_file_size");
     RecordProperty("Description", "Check that FromFile limits the bytes read from a file that reports size 0.");
@@ -136,7 +136,7 @@ TEST(UT__JsonOps__JsonData, AppliesSizeLimitToBytesReadBeyondReportedSize)
 ///
 /// - Create a document that contains a UTF-8 BOM followed by a character.
 /// - Assert that the first character read is the one following the BOM.
-TEST(UT__JsonOps__JsonData, SkipsUtf8Bom)
+TEST(JsonDataTest, FromBufferSkipsUtf8Bom)
 {
     // The UTF-8 BOM.
     const std::string data{'\xEF', '\xBB', '\xBF', 'x'};
@@ -153,7 +153,7 @@ TEST(UT__JsonOps__JsonData, SkipsUtf8Bom)
 ///
 /// - Create a document that starts with a BOM other than UTF-8.
 /// - Assert that the first character read is the first byte of the document.
-TEST(UT__JsonOps__JsonData, KeepsUnknownBom)
+TEST(JsonDataTest, FromBufferKeepsNonUtf8Bom)
 {
     // The UTF-16 BE BOM (not UTF-8, should not be recognized).
     const std::string data{'\xFE', '\xFF'};
@@ -172,7 +172,7 @@ TEST(UT__JsonOps__JsonData, KeepsUnknownBom)
 /// - Request the string buffer and add data to it.
 /// - Assert that the string buffer contains the data.
 /// - Assert that GetClearedStringBuffer empties the string buffer.
-TEST(UT__JsonOps__JsonData, CurrentStringBuffer)
+TEST(JsonDataTest, StringBufferHoldsCurrentStringUntilCleared)
 {
     Result<JsonData> result{JsonData::FromBuffer(std::string_view{""})};
     ASSERT_TRUE(result.has_value());

@@ -37,7 +37,7 @@ using DynamicAnyParser = StructureParserStub;
 
 /// Test that vaJson can parse a simple integer value.
 /// @trace           CREQ-Json-Deserialization
-TEST(UT__Parser__Valid, Dynamic__ParseInt)
+TEST(StructureParserValidTest, AcceptsNumber)
 {
     auto data{JsonData::FromBuffer(std::string_view{"42"})};
     ASSERT_TRUE(data.has_value());
@@ -47,7 +47,7 @@ TEST(UT__Parser__Valid, Dynamic__ParseInt)
 
 /// Test that vaJson can parse a simple boolean value.
 /// @trace           CREQ-Json-Deserialization
-TEST(UT__Parser__Valid, Dynamic__ParseBool)
+TEST(StructureParserValidTest, AcceptsBool)
 {
     auto data{JsonData::FromBuffer(std::string_view{"true"})};
     ASSERT_TRUE(data.has_value());
@@ -57,7 +57,7 @@ TEST(UT__Parser__Valid, Dynamic__ParseBool)
 
 /// Test that vaJson can parse a null value.
 /// @trace           CREQ-Json-Deserialization
-TEST(UT__Parser__Valid, Dynamic__ParseNull)
+TEST(StructureParserValidTest, AcceptsNull)
 {
     auto data{JsonData::FromBuffer(std::string_view{"null"})};
     ASSERT_TRUE(data.has_value());
@@ -67,7 +67,7 @@ TEST(UT__Parser__Valid, Dynamic__ParseNull)
 
 /// Test that vaJson can parse a JSON object.
 /// @trace           CREQ-Json-Deserialization
-TEST(UT__Parser__Valid, Dynamic__ParseObject)
+TEST(StructureParserValidTest, AcceptsObject)
 {
     auto data{JsonData::FromBuffer(std::string_view{R"({"key": 42, "flag": true, "name": "test"})"})};
     ASSERT_TRUE(data.has_value());
@@ -77,7 +77,7 @@ TEST(UT__Parser__Valid, Dynamic__ParseObject)
 
 /// Test that vaJson can parse a JSON array.
 /// @trace           CREQ-Json-Deserialization
-TEST(UT__Parser__Valid, Dynamic__ParseArray)
+TEST(StructureParserValidTest, AcceptsArray)
 {
     auto data{JsonData::FromBuffer(std::string_view{R"([1, 2, 3, null, true, false, "str"])"})};
     ASSERT_TRUE(data.has_value());
@@ -87,7 +87,7 @@ TEST(UT__Parser__Valid, Dynamic__ParseArray)
 
 /// Test that vaJson can parse a nested JSON structure.
 /// @trace           CREQ-Json-Deserialization
-TEST(UT__Parser__Valid, Dynamic__ParseNested)
+TEST(StructureParserValidTest, AcceptsNestedContainers)
 {
     auto data{JsonData::FromBuffer(std::string_view{R"({"a": [1, {"b": 2}], "c": null})"})};
     ASSERT_TRUE(data.has_value());

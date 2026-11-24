@@ -75,7 +75,7 @@ class ErrorBoolParser final : public StructureParserStub
 
 /// Test that callbacks for a boolean value can be registered — single true.
 /// @trace           CREQ-Json-EventCallbacks
-TEST(UT__Parser__Bool, Dynamic__True)
+TEST(StructureParserBoolTest, CallsOnBoolWithTrue)
 {
     auto data{JsonData::FromBuffer(std::string_view{"true"})};
     ASSERT_TRUE(data.has_value());
@@ -87,7 +87,7 @@ TEST(UT__Parser__Bool, Dynamic__True)
 
 /// Test that callbacks for a boolean value can be registered — single false.
 /// @trace           CREQ-Json-EventCallbacks
-TEST(UT__Parser__Bool, Dynamic__False)
+TEST(StructureParserBoolTest, CallsOnBoolWithFalse)
 {
     auto data{JsonData::FromBuffer(std::string_view{"false"})};
     ASSERT_TRUE(data.has_value());
@@ -99,7 +99,7 @@ TEST(UT__Parser__Bool, Dynamic__False)
 
 /// Test that callbacks for boolean values can be registered — array of bools.
 /// @trace           CREQ-Json-EventCallbacks
-TEST(UT__Parser__Bool, Dynamic__Bools)
+TEST(StructureParserBoolTest, CallsOnBoolForEachBoolInArray)
 {
     auto data{JsonData::FromBuffer(std::string_view{"[true,true,false,false,false]"})};
     ASSERT_TRUE(data.has_value());
@@ -111,7 +111,7 @@ TEST(UT__Parser__Bool, Dynamic__Bools)
 
 /// Test that parsing fails if 'true' is not expected.
 /// @trace           ::score::json::vajson::internal::StructureParser::ParseValue
-TEST(UT__Parser__Bool, Dynamic__ParseTrue_WrongFormat)
+TEST(StructureParserBoolTest, RejectsTrueAsKey)
 {
     auto result{JsonData::FromBuffer(std::string_view{R"({true:123})"})};
     ASSERT_TRUE(result.has_value());
@@ -125,7 +125,7 @@ TEST(UT__Parser__Bool, Dynamic__ParseTrue_WrongFormat)
 
 /// Test that parsing fails if 'false' is not expected.
 /// @trace           ::score::json::vajson::internal::StructureParser::ParseValue
-TEST(UT__Parser__Bool, Dynamic__ParseFalse__WrongFormat)
+TEST(StructureParserBoolTest, RejectsFalseAsKey)
 {
     auto result{JsonData::FromBuffer(std::string_view{R"({false:123})"})};
     ASSERT_TRUE(result.has_value());
@@ -137,7 +137,7 @@ TEST(UT__Parser__Bool, Dynamic__ParseFalse__WrongFormat)
     ASSERT_EQ(parse_result.error(), JsonErrc::kInvalidJson);
 }
 
-TEST(UT__Parser__Bool, Dynamic__MalformedLiteralMessage)
+TEST(StructureParserBoolTest, RejectsMalformedLiteralWithReason)
 {
     RecordProperty("PartiallyVerifies", "comp_req__vajson__validation");
     RecordProperty("TestType", "requirements-based");
@@ -163,7 +163,7 @@ TEST(UT__Parser__Bool, Dynamic__MalformedLiteralMessage)
 
 /// Tests that when the overridden OnBool method returns an error, that error is propagated.
 /// @trace           score::json::vajson::internal::StructureParser::ParseFalse
-TEST(UT__Parser__Bool, Dynamic__ParseFalse__Error)
+TEST(StructureParserBoolTest, PropagatesOnBoolErrorForFalse)
 {
     auto doc{JsonData::FromBuffer(std::string_view{"false"})};
     ASSERT_TRUE(doc.has_value());
@@ -177,7 +177,7 @@ TEST(UT__Parser__Bool, Dynamic__ParseFalse__Error)
 
 /// Tests that when the overridden OnBool method returns an error, that error is propagated.
 /// @trace           score::json::vajson::internal::StructureParser::ParseTrue
-TEST(UT__Parser__Bool, Dynamic__ParseTrue__Error)
+TEST(StructureParserBoolTest, PropagatesOnBoolErrorForTrue)
 {
     auto doc{JsonData::FromBuffer(std::string_view{"true"})};
     ASSERT_TRUE(doc.has_value());

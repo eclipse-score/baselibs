@@ -21,7 +21,7 @@ namespace score
 namespace json
 {
 
-// Default constractor has special init so it has a different implemetation
+// Default constructor has special init so it has a different implementation
 // coverity[autosar_cpp14_a12_1_5_violation: FALSE]
 Any::Any() : value_(Null{}) {}
 

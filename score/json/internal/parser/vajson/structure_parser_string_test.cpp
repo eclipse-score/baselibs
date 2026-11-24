@@ -90,7 +90,7 @@ auto ParseString(const std::string_view json) -> std::optional<std::string>
 
 /// Test that string callbacks are called for a string array.
 /// @trace           CREQ-Json-EventCallbacks
-TEST(UT__Parser__String, Dynamic__StringArray)
+TEST(StructureParserStringTest, CallsOnStringForEachStringInArray)
 {
     auto data{JsonData::FromBuffer(std::string_view{R"(["hello","world"])"})};
     ASSERT_TRUE(data.has_value());
@@ -101,7 +101,7 @@ TEST(UT__Parser__String, Dynamic__StringArray)
 
 /// Tests that when the overridden OnString method returns an error, that error is propagated.
 /// @trace           score::json::vajson::internal::StructureParser::ParseUnescapedString
-TEST(UT__Parser__String, Dynamic__ParseUnescapedString__Error)
+TEST(StructureParserStringTest, PropagatesOnStringError)
 {
     auto doc{JsonData::FromBuffer(std::string_view{R"("SomeString")"})};
     ASSERT_TRUE(doc.has_value());
@@ -114,7 +114,7 @@ TEST(UT__Parser__String, Dynamic__ParseUnescapedString__Error)
 }
 
 /// Tests that the two-character JSON string escapes are decoded before the string callback.
-TEST(UT__Parser__String, Dynamic__TwoCharacterEscapes)
+TEST(StructureParserStringTest, DecodesTwoCharacterEscapes)
 {
     RecordProperty("PartiallyVerifies", "comp_req__vajson__unicode");
     RecordProperty("TestType", "requirements-based");
@@ -127,7 +127,7 @@ TEST(UT__Parser__String, Dynamic__TwoCharacterEscapes)
 }
 
 /// Tests that Unicode escapes are decoded into UTF-8, for every UTF-8 sequence length.
-TEST(UT__Parser__String, Dynamic__UnicodeEscape)
+TEST(StructureParserStringTest, DecodesUnicodeEscapesToUtf8)
 {
     RecordProperty("PartiallyVerifies", "comp_req__vajson__unicode");
     RecordProperty("TestType", "requirements-based");
@@ -156,7 +156,7 @@ TEST(UT__Parser__String, Dynamic__UnicodeEscape)
 }
 
 /// Tests Unicode escapes in context, including boundary values and non-recursive decoding.
-TEST(UT__Parser__String, Dynamic__UnicodeEscapeInContext)
+TEST(StructureParserStringTest, DecodesUnicodeEscapesAtUtf8LengthBoundaries)
 {
     RecordProperty("PartiallyVerifies", "comp_req__vajson__unicode");
     RecordProperty("TestType", "requirements-based");
@@ -217,7 +217,7 @@ TEST(UT__Parser__String, Dynamic__UnicodeEscapeInContext)
 }
 
 /// Tests that a Unicode escape is decoded when it appears in an object key.
-TEST(UT__Parser__String, Dynamic__UnicodeEscapeInKey)
+TEST(StructureParserStringTest, DecodesUnicodeEscapeInKey)
 {
     RecordProperty("PartiallyVerifies", "comp_req__vajson__unicode");
     RecordProperty("TestType", "requirements-based");

@@ -31,7 +31,7 @@ void CheckResult(Result res, Value val, bool expect_has_value)
     // We allow casting from double to float by user request
     // and it leads to precision loss. Because of that we can't
     // compare float and double directly and we are casting
-    // 'val' to float first to verify correctess of a conversion
+    // 'val' to float first to verify correctness of a conversion
     constexpr bool res_is_float = std::is_same_v<Result, score::Result<float>>;
     constexpr bool val_is_double = std::is_same_v<Value, double>;
     EXPECT_EQ(res.has_value(), expect_has_value);
@@ -83,7 +83,7 @@ void TestFromUnsignedToAnyOtherType(bool uint8_ok,
     CheckResult(Number{kZero}.As<bool>(), false, true);
 }
 
-TEST(Number, FromUint8ToAnyOtherType)
+TEST(NumberTest, ConvertsUint8MaxOnlyToTypesThatHoldIt)
 {
     RecordProperty("Verifies", "::score::json::Number::As");
     RecordProperty("ASIL", "B");
@@ -105,7 +105,7 @@ TEST(Number, FromUint8ToAnyOtherType)
     );
 }
 
-TEST(Number, FromUint16ToAnyOtherType)
+TEST(NumberTest, ConvertsUint16MaxOnlyToTypesThatHoldIt)
 {
     RecordProperty("Verifies", "::score::json::Number::As");
     RecordProperty("ASIL", "B");
@@ -127,7 +127,7 @@ TEST(Number, FromUint16ToAnyOtherType)
     );
 }
 
-TEST(Number, FromUint32ToAnyOtherType)
+TEST(NumberTest, ConvertsUint32MaxOnlyToTypesThatHoldIt)
 {
     RecordProperty("Verifies", "::score::json::Number::As");
     RecordProperty("ASIL", "B");
@@ -149,7 +149,7 @@ TEST(Number, FromUint32ToAnyOtherType)
     );
 }
 
-TEST(Number, FromUint64ToAnyOtherType)
+TEST(NumberTest, ConvertsUint64MaxOnlyToTypesThatHoldIt)
 {
     RecordProperty("Verifies", "::score::json::Number::As");
     RecordProperty("ASIL", "B");
@@ -180,7 +180,7 @@ void TestFromSignedToAnyOtherType(bool int8_ok,
                                   bool double_ok)
 {
     // The parser should only return a signed integer if the value is negative.
-    // So any cast to an unsigend shall fail if the number contains a signed integer.
+    // So any cast to an unsigned shall fail if the number contains a signed integer.
 
     constexpr Signed kMax = std::numeric_limits<int8_t>::max();
     constexpr Signed kMin = std::numeric_limits<int8_t>::min();
@@ -228,7 +228,7 @@ void TestFromSignedToAnyOtherType(bool int8_ok,
     CheckResult(Number{kZero}.As<bool>(), false, true);
 }
 
-TEST(Number, FromInt8ToAnyOtherType)
+TEST(NumberTest, ConvertsInt8ValuesOnlyToTypesThatHoldThem)
 {
     RecordProperty("Verifies", "::score::json::Number::As");
     RecordProperty("ASIL", "B");
@@ -246,7 +246,7 @@ TEST(Number, FromInt8ToAnyOtherType)
     );
 }
 
-TEST(Number, FromInt16ToAnyOtherType)
+TEST(NumberTest, ConvertsInt16ValuesOnlyToTypesThatHoldThem)
 {
     RecordProperty("Verifies", "::score::json::Number::As");
     RecordProperty("ASIL", "B");
@@ -264,7 +264,7 @@ TEST(Number, FromInt16ToAnyOtherType)
     );
 }
 
-TEST(Number, FromInt32ToAnyOtherType)
+TEST(NumberTest, ConvertsInt32ValuesOnlyToTypesThatHoldThem)
 {
     RecordProperty("Verifies", "::score::json::Number::As");
     RecordProperty("ASIL", "B");
@@ -282,7 +282,7 @@ TEST(Number, FromInt32ToAnyOtherType)
     );
 }
 
-TEST(Number, FromInt64ToAnyOtherType)
+TEST(NumberTest, ConvertsInt64ValuesOnlyToTypesThatHoldThem)
 {
     RecordProperty("Verifies", "::score::json::Number::As");
     RecordProperty("ASIL", "B");
@@ -588,7 +588,7 @@ void TestFloatingPointValues(FloatingPoint maximum_integer)
     );
 }
 
-TEST(Number, FromFloatToAnyOtherType)
+TEST(NumberTest, ConvertsFloatValuesOnlyToTypesThatHoldThem)
 {
     RecordProperty("Verifies", "::score::json::Number::As");
     RecordProperty("ASIL", "B");
@@ -600,7 +600,7 @@ TEST(Number, FromFloatToAnyOtherType)
     TestFloatingPointValues<float>(GetMaximumIntegerInFloat());
 }
 
-TEST(Number, FromDoubleToAnyOtherType)
+TEST(NumberTest, ConvertsDoubleValuesOnlyToTypesThatHoldThem)
 {
     RecordProperty("Verifies", "::score::json::Number::As");
     RecordProperty("ASIL", "B");
@@ -650,7 +650,7 @@ void TestNanToAnyOtherType()
     EXPECT_TRUE(std::isnan(as_double.value()));
 }
 
-TEST(Number, FromNanToAnyOtherType)
+TEST(NumberTest, ConvertsNanOnlyToFloatingPointTypes)
 {
     RecordProperty("Verifies", "::score::json::Number::As");
     RecordProperty("ASIL", "B");
@@ -663,7 +663,7 @@ TEST(Number, FromNanToAnyOtherType)
     TestNanToAnyOtherType<double>();
 }
 
-TEST(Number, NarrowingIntegerIsRejectedByType)
+TEST(NumberTest, ReturnsWrongTypeForNarrowingIntegerConversion)
 {
     RecordProperty("Verifies", "::score::json::Number::As");
     RecordProperty("ASIL", "B");
@@ -697,7 +697,7 @@ void TestFloatingPointEdgeCases(FloatingPoint maximum_integer)
     CheckResult(Number{-kInfinity}.As<double>(), -kInfinity, true);
 }
 
-TEST(Number, FloatingPointEdgeCases)
+TEST(NumberTest, ConvertsFloatingPointValuesBeyondExactIntegerRange)
 {
     RecordProperty("Verifies", "::score::json::Number::As");
     RecordProperty("ASIL", "B");
@@ -711,7 +711,7 @@ TEST(Number, FloatingPointEdgeCases)
     TestFloatingPointEdgeCases<double>(GetMaximumIntegerInDouble());
 }
 
-TEST(Number, ValueOutsideRangeOfRequestedTypeIsOutOfRange)
+TEST(NumberTest, ReturnsOutOfRangeForValueOutsideRequestedType)
 {
     RecordProperty("PartiallyVerifies", "comp_req__json__out_of_range_error");
     RecordProperty("Description",
@@ -761,7 +761,7 @@ void TestEqualOperator(T1 lhs, T2 rhs, bool result)
     EXPECT_EQ(Number(lhs) == Number(rhs), result);
 }
 
-TEST(Number, CheckEqualOperator)
+TEST(NumberTest, EqualityComparesTypeAndValue)
 {
     RecordProperty("Verifies", "::score::json::Number::operator==");
     RecordProperty("ASIL", "B");

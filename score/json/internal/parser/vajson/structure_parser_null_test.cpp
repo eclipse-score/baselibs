@@ -65,7 +65,7 @@ class ErrorNullParser final : public StructureParserStub
 
 /// Test that null is counted — single null value.
 /// @trace           CREQ-Json-EventCallbacks
-TEST(UT__Parser__Null, Dynamic__SingleNull)
+TEST(StructureParserNullTest, CallsOnNullForNull)
 {
     auto data{JsonData::FromBuffer(std::string_view{"null"})};
     ASSERT_TRUE(data.has_value());
@@ -76,7 +76,7 @@ TEST(UT__Parser__Null, Dynamic__SingleNull)
 
 /// Test that null is counted — multiple null values.
 /// @trace           CREQ-Json-EventCallbacks
-TEST(UT__Parser__Null, Dynamic__MultipleNulls)
+TEST(StructureParserNullTest, CallsOnNullForEachNullInArray)
 {
     auto data{JsonData::FromBuffer(std::string_view{"[null,null,null]"})};
     ASSERT_TRUE(data.has_value());
@@ -87,7 +87,7 @@ TEST(UT__Parser__Null, Dynamic__MultipleNulls)
 
 /// Test that no nulls are counted when not present.
 /// @trace           CREQ-Json-EventCallbacks
-TEST(UT__Parser__Null, Dynamic__NoNulls)
+TEST(StructureParserNullTest, DoesNotCallOnNullForBool)
 {
     auto data{JsonData::FromBuffer(std::string_view{"true"})};
     ASSERT_TRUE(data.has_value());
@@ -98,7 +98,7 @@ TEST(UT__Parser__Null, Dynamic__NoNulls)
 
 /// Test that parsing fails if 'null' is used as key without quotation marks.
 /// @trace           score::json::vajson::internal::StructureParser::ParseValue
-TEST(UT__Parser__Null, Dynamic__WrongFormat)
+TEST(StructureParserNullTest, RejectsNullAsKey)
 {
     auto result{JsonData::FromBuffer(std::string_view{R"({null:123})"})};
     ASSERT_TRUE(result.has_value());
@@ -112,7 +112,7 @@ TEST(UT__Parser__Null, Dynamic__WrongFormat)
 
 /// Tests that when the overridden OnNull method returns an error, that error is propagated.
 /// @trace           score::json::vajson::internal::StructureParser::ParseNull
-TEST(UT__Parser__Null, Dynamic__OnNull__Error)
+TEST(StructureParserNullTest, PropagatesOnNullError)
 {
     auto doc{JsonData::FromBuffer(std::string_view{"null"})};
     ASSERT_TRUE(doc.has_value());

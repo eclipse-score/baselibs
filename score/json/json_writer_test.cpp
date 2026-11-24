@@ -107,7 +107,7 @@ using WriterTestCases = ::testing::Types<WriterTestCase<TestJsonList, Formatting
                                          WriterTestCase<TestJsonAny, Formatting::kPrettyPrint>>;
 
 template <typename T>
-class JsonWriterWriteToFileTest : public ::testing::Test
+class JsonWriterFormattingTest : public ::testing::Test
 {
   protected:
     using SampleJson = typename T::SampleJson;
@@ -138,9 +138,9 @@ class JsonWriterWriteToFileTest : public ::testing::Test
         std::make_shared<score::filesystem::FileFactoryFake>(stream_)};
 };
 
-TYPED_TEST_SUITE(JsonWriterWriteToFileTest, WriterTestCases, );
+TYPED_TEST_SUITE(JsonWriterFormattingTest, WriterTestCases, );
 
-TYPED_TEST(JsonWriterWriteToFileTest, ToBuffer)
+TYPED_TEST(JsonWriterFormattingTest, ToBufferWritesFormattedJson)
 {
     this->RecordProperty("Verifies", "::score::json::JsonWriter::ToBuffer");
     this->RecordProperty("ASIL", "B");
@@ -158,26 +158,7 @@ TYPED_TEST(JsonWriterWriteToFileTest, ToBuffer)
     EXPECT_EQ(buffer, TestFixture::Expected());
 }
 
-TYPED_TEST(JsonWriterWriteToFileTest, ToFile)
-{
-    this->RecordProperty("Verifies", "::score::json::JsonWriter::ToFile");
-    this->RecordProperty("ASIL", "B");
-    this->RecordProperty("Description", "writing json to string buffer, cf. RFC-8259 section 4, 5 and 9");
-    this->RecordProperty("TestType", "interface-test");
-    this->RecordProperty("DerivationTechnique", "equivalence-classes");  // boundary values
-    this->RecordProperty("Priority", "3");
-
-    typename TestFixture::SampleJson json;
-
-    EXPECT_CALL(*this->file_factory_fake_, AtomicUpdate(StrEq("/foo/foo.json"), std::ios::out | std::ios::trunc, _))
-        .Times(1);
-
-    auto file_content{this->WriteToFile(json, "/foo/foo.json", FileSyncMode::kSynced)};
-
-    EXPECT_EQ(file_content, TestFixture::Expected());
-}
-
-TYPED_TEST(JsonWriterWriteToFileTest, ToUnsyncedFile)
+TYPED_TEST(JsonWriterFormattingTest, ToUnsyncedFileWritesFormattedJson)
 {
     this->RecordProperty("Verifies", "::score::json::JsonWriter::ToFile");
     this->RecordProperty("ASIL", "B");
@@ -195,7 +176,7 @@ TYPED_TEST(JsonWriterWriteToFileTest, ToUnsyncedFile)
     EXPECT_EQ(file_content, TestFixture::Expected());
 }
 
-TYPED_TEST(JsonWriterWriteToFileTest, ToSyncedFile)
+TYPED_TEST(JsonWriterFormattingTest, ToSyncedFileWritesFormattedJson)
 {
     this->RecordProperty("Verifies", "::score::json::JsonWriter::ToFile");
     this->RecordProperty("ASIL", "B");
@@ -214,7 +195,7 @@ TYPED_TEST(JsonWriterWriteToFileTest, ToSyncedFile)
     EXPECT_EQ(file_content, TestFixture::Expected());
 }
 
-TYPED_TEST(JsonWriterWriteToFileTest, ToUnsyncedFileResultsInError)
+TYPED_TEST(JsonWriterFormattingTest, ToUnsyncedFileReturnsIoErrorIfFileCannotBeOpened)
 {
     this->RecordProperty("PartiallyVerifies", "comp_req__json__io_error");
     this->RecordProperty("Description",
@@ -235,7 +216,7 @@ TYPED_TEST(JsonWriterWriteToFileTest, ToUnsyncedFileResultsInError)
     EXPECT_EQ(result.error(), score::json::Error::kIoError);
 }
 
-TYPED_TEST(JsonWriterWriteToFileTest, ToSyncedFileResultsInError)
+TYPED_TEST(JsonWriterFormattingTest, ToSyncedFileReturnsIoErrorIfUpdateCannotBeStarted)
 {
     this->RecordProperty("PartiallyVerifies", "comp_req__json__io_error");
     this->RecordProperty("Description",
@@ -277,7 +258,7 @@ class FlushFailingStreamBuf : public std::streambuf
     std::array<char, kBufferSize> buffer_{};
 };
 
-TYPED_TEST(JsonWriterWriteToFileTest, ToUnsyncedFileReportsIoErrorIfWritingFails)
+TYPED_TEST(JsonWriterFormattingTest, ToUnsyncedFileReturnsIoErrorIfWritingFails)
 {
     this->RecordProperty("PartiallyVerifies", "comp_req__json__io_error");
     this->RecordProperty("Description",
@@ -326,7 +307,7 @@ class CloseFailingFileBuf : public score::filesystem::details::StdioFileBuf
     static constexpr int kNoFileDescriptor{-1};
 };
 
-TEST(JsonWriterSyncedFileTest, ReportsIoErrorIfCommittingFails)
+TEST(JsonWriterTest, ToSyncedFileReturnsIoErrorIfCommittingFails)
 {
     RecordProperty("PartiallyVerifies", "comp_req__json__io_error");
     RecordProperty("Description",
@@ -349,7 +330,7 @@ TEST(JsonWriterSyncedFileTest, ReportsIoErrorIfCommittingFails)
     EXPECT_EQ(result.error().UserMessage(), "Close failed");
 }
 
-TEST(JsonWriterSyncedFileTest, SerializationFailureKeepsTargetUnchanged)
+TEST(JsonWriterTest, ToSyncedFileKeepsTargetUnchangedOnSerializationFailure)
 {
     RecordProperty("PartiallyVerifies", "comp_req__json__serialization");
     RecordProperty("Description",
@@ -374,7 +355,7 @@ TEST(JsonWriterSyncedFileTest, SerializationFailureKeepsTargetUnchanged)
     EXPECT_EQ(file_factory->Get(kPath).str(), kOldContent);
 }
 
-TEST(JsonWriterDefaultFormattingTest, PrettyPrintsWhenFormattingIsOmitted)
+TEST(JsonWriterTest, PrettyPrintsWhenFormattingIsOmitted)
 {
     RecordProperty("PartiallyVerifies", "comp_req__json__serialization");
     RecordProperty("Description",

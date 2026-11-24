@@ -248,7 +248,7 @@ JSON with a structure similar to:
     "geometry": {
       "shape": "rectangle",
       "size": {
-        "heigth": 10,
+        "height": 10,
         "width": 20,
         "unit": "px"
       },
@@ -382,7 +382,7 @@ void DeserializeFromJson()
     }
     else
     {
-        // size.error() contains the reason why deserilization failed
+        // size.error() contains the reason why deserialization failed
     }
 }
 ```
@@ -464,7 +464,7 @@ For the most up to date information on AoUs please follow the provided links to 
 - Avoid using real number values if rounding errors have safety impact
 - Filesystem Integrity Responsibility Lies with the User
 
-This library provides the functionallity to read and write JSON files/data from and to the filesystem however this functionallity is considerd ASIL QM as this library itself does not do any filesystem integrity checks. The responsibility of filesystem integrity lies within the user (see AoU).
+This library provides the functionality to read and write JSON files/data from and to the filesystem however this functionality is considered ASIL QM as this library itself does not do any filesystem integrity checks. The responsibility of filesystem integrity lies within the user (see AoU).
 
 [AoUs for vaJson (taken from the safety manual)](broken_link_c/tracker/940190?view_id=-11&layout_name=document&subtreeRoot=6204897)
 - The user of MICROSAR Adaptive Safe shall ensure the integrity of the character

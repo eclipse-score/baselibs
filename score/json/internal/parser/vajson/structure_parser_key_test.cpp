@@ -55,7 +55,7 @@ class DynamicKeyParser final : public StructureParserStub
 
 /// Test that key callback is called for a single-key object.
 /// @trace           CREQ-Json-EventCallbacks
-TEST(UT__Parser__Key, Dynamic__SingleKey)
+TEST(StructureParserKeyTest, CallsOnKeyForSingleKey)
 {
     auto data{JsonData::FromBuffer(std::string_view{R"({"key":42})"})};
     ASSERT_TRUE(data.has_value());
@@ -66,7 +66,7 @@ TEST(UT__Parser__Key, Dynamic__SingleKey)
 
 /// Test that key callbacks are called for a multi-key object.
 /// @trace           CREQ-Json-EventCallbacks
-TEST(UT__Parser__Key, Dynamic__MultipleKeys)
+TEST(StructureParserKeyTest, CallsOnKeyForEachKeyInOrder)
 {
     auto data{JsonData::FromBuffer(std::string_view{R"({"a":1,"b":2,"c":3})"})};
     ASSERT_TRUE(data.has_value());
@@ -77,7 +77,7 @@ TEST(UT__Parser__Key, Dynamic__MultipleKeys)
 
 /// Test that key callbacks are collected from a nested object.
 /// @trace           CREQ-Json-EventCallbacks
-TEST(UT__Parser__Key, Dynamic__NestedKeys)
+TEST(StructureParserKeyTest, CallsOnKeyForNestedKeys)
 {
     auto data{JsonData::FromBuffer(std::string_view{R"({"outer":{"inner":1}})"})};
     ASSERT_TRUE(data.has_value());

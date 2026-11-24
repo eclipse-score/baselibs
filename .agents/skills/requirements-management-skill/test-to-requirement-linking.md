@@ -101,7 +101,7 @@ class MyComponentTest : public ::testing::Test
     }
 };
 
-TEST_F(MyComponentTest, GivenValidInput_WhenParsed_ThenReturnsExpectedValue)
+TEST_F(MyComponentTest, ParsesValidIntegerLiteral)
 {
     RecordProperty("PartiallyVerifies", "comp_req__json__number_parsing");
     RecordProperty("Description", "Check that parsing a valid integer literal yields its numeric value.");
@@ -113,7 +113,7 @@ TEST_F(MyComponentTest, GivenValidInput_WhenParsed_ThenReturnsExpectedValue)
 For a free `TEST(...)`, record every property inside the test body:
 
 ```cpp
-TEST(MyComponentTest, GivenFullQueue_WhenPush_ThenReturnsFalse)
+TEST(MyComponentTest, PushToFullQueueReturnsFalse)
 {
     RecordProperty("TestType", "interface-test");
     RecordProperty("DerivationTechnique", "boundary-values");
