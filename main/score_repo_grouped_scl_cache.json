@@ -6606,6 +6606,204 @@
               "verify_type": "partially",
               "result": "passed",
               "result_text": ""
+            },
+            {
+              "name": "StructureValidatorTest__AcceptsWellFormedDocuments",
+              "file": "score/json/internal/parser/vajson/structure_validator_test.cpp",
+              "line": 89,
+              "need": "comp_req__vajson__validation",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "StructureValidatorTest/StructureValidatorRejectsTest__ReportsViolatedRule/SecondTopLevelValue",
+              "file": "score/json/internal/parser/vajson/structure_validator_test.cpp",
+              "line": 119,
+              "need": "comp_req__vajson__validation",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "StructureValidatorTest/StructureValidatorRejectsTest__ReportsViolatedRule/ContainerAfterTopLevelValue",
+              "file": "score/json/internal/parser/vajson/structure_validator_test.cpp",
+              "line": 119,
+              "need": "comp_req__vajson__validation",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "StructureValidatorTest/StructureValidatorRejectsTest__ReportsViolatedRule/KeyAfterTopLevelValue",
+              "file": "score/json/internal/parser/vajson/structure_validator_test.cpp",
+              "line": 119,
+              "need": "comp_req__vajson__validation",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "StructureValidatorTest/StructureValidatorRejectsTest__ReportsViolatedRule/ValueWithoutComma",
+              "file": "score/json/internal/parser/vajson/structure_validator_test.cpp",
+              "line": 119,
+              "need": "comp_req__vajson__validation",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "StructureValidatorTest/StructureValidatorRejectsTest__ReportsViolatedRule/ContainerWithoutComma",
+              "file": "score/json/internal/parser/vajson/structure_validator_test.cpp",
+              "line": 119,
+              "need": "comp_req__vajson__validation",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "StructureValidatorTest/StructureValidatorRejectsTest__ReportsViolatedRule/KeyWithoutComma",
+              "file": "score/json/internal/parser/vajson/structure_validator_test.cpp",
+              "line": 119,
+              "need": "comp_req__vajson__validation",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "StructureValidatorTest/StructureValidatorRejectsTest__ReportsViolatedRule/ValueWithoutKey",
+              "file": "score/json/internal/parser/vajson/structure_validator_test.cpp",
+              "line": 119,
+              "need": "comp_req__vajson__validation",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "StructureValidatorTest/StructureValidatorRejectsTest__ReportsViolatedRule/ContainerWithoutKey",
+              "file": "score/json/internal/parser/vajson/structure_validator_test.cpp",
+              "line": 119,
+              "need": "comp_req__vajson__validation",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "StructureValidatorTest/StructureValidatorRejectsTest__ReportsViolatedRule/KeyAfterKey",
+              "file": "score/json/internal/parser/vajson/structure_validator_test.cpp",
+              "line": 119,
+              "need": "comp_req__vajson__validation",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "StructureValidatorTest/StructureValidatorRejectsTest__ReportsViolatedRule/CommaAfterKey",
+              "file": "score/json/internal/parser/vajson/structure_validator_test.cpp",
+              "line": 119,
+              "need": "comp_req__vajson__validation",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "StructureValidatorTest/StructureValidatorRejectsTest__ReportsViolatedRule/CloseAfterKey",
+              "file": "score/json/internal/parser/vajson/structure_validator_test.cpp",
+              "line": 119,
+              "need": "comp_req__vajson__validation",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "StructureValidatorTest/StructureValidatorRejectsTest__ReportsViolatedRule/TopLevelKey",
+              "file": "score/json/internal/parser/vajson/structure_validator_test.cpp",
+              "line": 119,
+              "need": "comp_req__vajson__validation",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "StructureValidatorTest/StructureValidatorRejectsTest__ReportsViolatedRule/KeyInArray",
+              "file": "score/json/internal/parser/vajson/structure_validator_test.cpp",
+              "line": 119,
+              "need": "comp_req__vajson__validation",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "StructureValidatorTest/StructureValidatorRejectsTest__ReportsViolatedRule/TopLevelComma",
+              "file": "score/json/internal/parser/vajson/structure_validator_test.cpp",
+              "line": 119,
+              "need": "comp_req__vajson__validation",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "StructureValidatorTest/StructureValidatorRejectsTest__ReportsViolatedRule/CommaAfterTopLevelValue",
+              "file": "score/json/internal/parser/vajson/structure_validator_test.cpp",
+              "line": 119,
+              "need": "comp_req__vajson__validation",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "StructureValidatorTest/StructureValidatorRejectsTest__ReportsViolatedRule/TopLevelArrayClose",
+              "file": "score/json/internal/parser/vajson/structure_validator_test.cpp",
+              "line": 119,
+              "need": "comp_req__vajson__validation",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "StructureValidatorTest/StructureValidatorRejectsTest__ReportsViolatedRule/ArrayCloseInObject",
+              "file": "score/json/internal/parser/vajson/structure_validator_test.cpp",
+              "line": 119,
+              "need": "comp_req__vajson__validation",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "StructureValidatorTest/StructureValidatorRejectsTest__ReportsViolatedRule/ObjectCloseInArray",
+              "file": "score/json/internal/parser/vajson/structure_validator_test.cpp",
+              "line": 119,
+              "need": "comp_req__vajson__validation",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "StructureValidatorTest/StructureValidatorRejectsTest__ReportsViolatedRule/EmptyDocument",
+              "file": "score/json/internal/parser/vajson/structure_validator_test.cpp",
+              "line": 119,
+              "need": "comp_req__vajson__validation",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "StructureValidatorTest/StructureValidatorRejectsTest__ReportsViolatedRule/UnclosedArray",
+              "file": "score/json/internal/parser/vajson/structure_validator_test.cpp",
+              "line": 119,
+              "need": "comp_req__vajson__validation",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "StructureValidatorTest/StructureValidatorRejectsTest__ReportsViolatedRule/UnclosedObject",
+              "file": "score/json/internal/parser/vajson/structure_validator_test.cpp",
+              "line": 119,
+              "need": "comp_req__vajson__validation",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
             }
           ]
         }
@@ -6701,6 +6899,23 @@
               "file": "score/json/internal/parser/vajson/structure_parser_string_test.cpp",
               "line": 220,
               "need": "comp_req__vajson__unicode",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            }
+          ]
+        }
+      },
+      {
+        "need": "comp_req__vajson__trailing_commas",
+        "links": {
+          "CodeLinks": [],
+          "TestLinks": [
+            {
+              "name": "StructureValidatorTest__AcceptsTrailingCommas",
+              "file": "score/json/internal/parser/vajson/structure_validator_test.cpp",
+              "line": 105,
+              "need": "comp_req__vajson__trailing_commas",
               "verify_type": "partially",
               "result": "passed",
               "result_text": ""
