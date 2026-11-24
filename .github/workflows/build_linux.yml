@@ -127,7 +127,7 @@ jobs:
     uses: ./.github/workflows/coverage_report.yml
   docs-build:
     needs: [linux-build-and-test, coverage-report]
-    uses: eclipse-score/cicd-workflows/.github/workflows/docs.yml@3f61217cfa69b1d40b366049ace7fc63932e63c2
+    uses: eclipse-score/cicd-workflows/.github/workflows/docs.yml@2d1dc93f0edb9f99dbcce4c0065d31d73996f04a
     permissions:
       contents: read
     with:
