@@ -157,7 +157,7 @@ TEST(JsonSerializerTest, TestSerialization)
     // Given an instance of a serializable struct
     TypeToSerialize unit{42, "Blubb", NestedType{43, true, {44, 45}}};
 
-    // Wne serialized to JSON
+    // When serialized to JSON
     auto serialized = ToJsonAny(unit);
 
     // Then it contains all attributes from the struct, set to the values the instance had before serialization.
@@ -486,7 +486,7 @@ TEST(JsonSerializerTest, FailToDeserializeWrongNumberType)
     }
 } )"_json;
 
-    // When trying to deserilalize the JSON into a struct
+    // When trying to deserialize the JSON into a struct
     auto unit{FromJsonAny<TypeToSerialize>(std::move(source))};
 
     // Then this fails, returning a WrongType error
@@ -541,7 +541,7 @@ TEST(JsonSerializerTest, FailToDeserializeANonBooleanTypeToBool)
     }
 } )"_json;
 
-    // When trying to deserilalize the JSON into a struct
+    // When trying to deserialize the JSON into a struct
     auto unit{FromJsonAny<TypeToSerialize>(std::move(source))};
 
     // Then this fails, returning a WrongType error
@@ -571,7 +571,7 @@ TEST(JsonSerializerTest, FailToDeserializeANonNumberTypeToAnInteger)
     }
 } )"_json;
 
-    // When trying to deserilalize the JSON into a struct
+    // When trying to deserialize the JSON into a struct
     auto unit{FromJsonAny<TypeToSerialize>(std::move(source))};
 
     // Then this fails, returning a WrongType error

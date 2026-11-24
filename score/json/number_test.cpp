@@ -31,7 +31,7 @@ void CheckResult(Result res, Value val, bool expect_has_value)
     // We allow casting from double to float by user request
     // and it leads to precision loss. Because of that we can't
     // compare float and double directly and we are casting
-    // 'val' to float first to verify correctess of a conversion
+    // 'val' to float first to verify correctness of a conversion
     constexpr bool res_is_float = std::is_same_v<Result, score::Result<float>>;
     constexpr bool val_is_double = std::is_same_v<Value, double>;
     EXPECT_EQ(res.has_value(), expect_has_value);
@@ -180,7 +180,7 @@ void TestFromSignedToAnyOtherType(bool int8_ok,
                                   bool double_ok)
 {
     // The parser should only return a signed integer if the value is negative.
-    // So any cast to an unsigend shall fail if the number contains a signed integer.
+    // So any cast to an unsigned shall fail if the number contains a signed integer.
 
     constexpr Signed kMax = std::numeric_limits<int8_t>::max();
     constexpr Signed kMin = std::numeric_limits<int8_t>::min();

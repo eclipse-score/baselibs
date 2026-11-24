@@ -73,7 +73,7 @@ Safety Manual VaJson
 
     .. SMI:: SMI-JSON-InitializeJSONWithFilePath
 
-       **The user of the embedded software shall ensure the integrity of a file whose path is used to intialize vaJson where safety requirements are assumed.**
+       **The user of the embedded software shall ensure the integrity of a file whose path is used to initialize vaJson where safety requirements are assumed.**
 
        During initialization of vaJson, a file path can be passed. If safety requirements are to be assumed, the user shall verify the integrity of
        the file to which the path points. The file's integrity must be ensured for as long as the JsonData or ParserFile object exists.

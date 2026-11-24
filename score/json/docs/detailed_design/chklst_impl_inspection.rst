@@ -40,7 +40,7 @@ As described in the concept :need:`doc_concept__wp_inspections` the following "i
 
 - content responsible (author): <contributor/committer explicitly named here, who is the main author, as can be seen in config mgt tooling>
 - reviewer: <contributor/committer explicitly named here, who is the main content reviewer, must be different from content responsible>
-- moderator: <committer explicitly named here, who is is the safety manager, security manager or quality manager initiating the inspection>
+- moderator: <committer explicitly named here, who is the safety manager, security manager or quality manager initiating the inspection>
 
 Checklist
 ---------

@@ -365,7 +365,7 @@ TEST_P(UT__Number__I8Success, ConvertsValidIntegers8bit)
     EXPECT_EQ(actual, Expected());
 }
 
-/// @brief           Instanciation of testcases for multiple values with successful conversion
+/// @brief           Instantiation of test cases for multiple values with successful conversion
 /// @details         Input data:
 ///                  - Positive and negative integers within the range of a std::int8_t, including min, max,
 ///                    intermediate, and zero values
@@ -390,7 +390,7 @@ TEST_P(UT__Number__I8Failure, FailsOnInvalidIntegers8bit)
     ASSERT_FALSE(actual.has_value());
 }
 
-/// @brief           Instanciation of testcases for multiple values where conversion fails
+/// @brief           Instantiation of test cases for multiple values where conversion fails
 /// @details         Input data:
 ///                  - Numbers that cannot be converted to a std::int8_t, such as floating point, scientific notation,
 ///                    invalid characters, and to integers that are too big
@@ -426,7 +426,7 @@ TEST_P(UT__Number__U8Success, ConvertsValidIntegers8bit)
     EXPECT_EQ(actual, Expected());
 }
 
-/// @brief           Instanciation of testcases for multiple values with successful conversion
+/// @brief           Instantiation of test cases for multiple values with successful conversion
 /// @details         Input data:
 ///                  - Positive integers within the range of a std::uint8_t including min, max, intermediate, and zero
 ///                    values
@@ -448,7 +448,7 @@ TEST_P(UT__Number__U8Failure, FailsOnInvalidIntegers8bit)
     ASSERT_FALSE(actual.has_value());
 }
 
-/// @brief           Instanciation of testcases for multiple values where conversion fails
+/// @brief           Instantiation of test cases for multiple values where conversion fails
 /// @details         Input data:
 ///                  - Numbers that cannot be converted to a std::uint8_t, such as negative values, floating point,
 ///                    scientific notation, invalid characters, and integers that are too big
@@ -486,7 +486,7 @@ TEST_P(UT__Number__DoubleSuccess, ConvertsValidDoubles)
     ASSERT_TRUE(CompareFloat(actual.value(), Expected().value()));
 }
 
-/// @brief           Instanciation of testcases for multiple values with successful conversion
+/// @brief           Instantiation of test cases for multiple values with successful conversion
 /// @details         Input data:
 ///                  - Positive and negative numbers, such as integers and floats, including zero
 INSTANTIATE_TEST_SUITE_P(FloatTestDouble,
@@ -513,7 +513,7 @@ TEST_P(UT__Number__DoubleFailure, FailsOnInvalidDoubles)
     ASSERT_FALSE(actual.has_value());
 }
 
-/// @brief           Instanciation of testcases for multiple values where conversion fails
+/// @brief           Instantiation of test cases for multiple values where conversion fails
 /// @details         Input data:
 ///                  - Numbers that cannot be converted to a double, such as invalid characters, bases without exponent,
 ///                    exponent with a base of zero, exponent in octal notation

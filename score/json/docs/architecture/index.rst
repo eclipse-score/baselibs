@@ -53,7 +53,7 @@ Currently vaJson is the only implementation, for parsing as well as for serializ
 Rationale Behind Architecture Decomposition
 *******************************************
 
-The decomposition in a wrapper and an implemetation component already comes from the feature definition,
+The decomposition in a wrapper and an implementation component already comes from the feature definition,
 the main driver is to re-use existing implementation(s) and to allow replacing the implementation while providing a stable API.
 
 Static Architecture

@@ -571,10 +571,10 @@ TEST(Any, CloneBool)
     RecordProperty("DerivationTechnique", "equivalence-classes");  // boundary values
     RecordProperty("Priority", "3");
 
-    // Given a Any object holing a boolean
+    // Given an Any object holding a boolean
     Any unit{true};
 
-    // When cloning the the object
+    // When cloning the object
     Any cloned_unit = unit.CloneByValue();
 
     // Then the cloned Any must contain the same value
@@ -590,10 +590,10 @@ TEST(Any, CloneNumber)
     RecordProperty("DerivationTechnique", "equivalence-classes");  // boundary values
     RecordProperty("Priority", "3");
 
-    // Given a Any object holing a number
+    // Given an Any object holding a number
     Any unit{std::uint16_t{42U}};
 
-    // When cloning the the object
+    // When cloning the object
     Any cloned_unit = unit.CloneByValue();
 
     // Then the cloned Any must contain the same value
@@ -609,10 +609,10 @@ TEST(Any, CloneNull)
     RecordProperty("DerivationTechnique", "equivalence-classes");  // boundary values
     RecordProperty("Priority", "3");
 
-    // Given a Any object holing nothing
+    // Given an Any object holding nothing
     Any unit{};
 
-    // When cloning the the object
+    // When cloning the object
     Any cloned_unit = unit.CloneByValue();
 
     // Then the cloned Any must contain the same value
@@ -628,10 +628,10 @@ TEST(Any, CloneString)
     RecordProperty("DerivationTechnique", "equivalence-classes");  // boundary values
     RecordProperty("Priority", "2");
 
-    // Given a Any object holing a string
+    // Given an Any object holding a string
     Any unit{std::string{"foo"}};
 
-    // When cloning the the object
+    // When cloning the object
     Any cloned_unit = unit.CloneByValue();
 
     // Then the cloned Any must contain the same value
@@ -647,13 +647,13 @@ TEST(Any, CloneObject)
     RecordProperty("DerivationTechnique", "equivalence-classes");  // boundary values
     RecordProperty("Priority", "3");
 
-    // Given a Any object holing a json::Object
+    // Given an Any object holding a json::Object
     Object object;
     object["number_field"] = Any{42U};
     object["boolean_field"] = Any{true};
     Any unit{std::move(object)};
 
-    // When cloning the the object
+    // When cloning the object
     auto cloned_unit = unit.CloneByValue();
 
     // Then the cloned Any must contain the same value
@@ -669,12 +669,12 @@ TEST(Any, CloneList)
     RecordProperty("DerivationTechnique", "equivalence-classes");  // boundary values
     RecordProperty("Priority", "3");
 
-    // Given a Any object holing a List
+    // Given an Any object holding a List
     List list{};
     list.push_back(Any{42U});
     Any unit{List{std::move(list)}};
 
-    // When cloning the the object
+    // When cloning the object
     auto cloned_unit = unit.CloneByValue();
 
     // Then the cloned Any must contain the same value
