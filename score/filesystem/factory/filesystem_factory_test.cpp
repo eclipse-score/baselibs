@@ -23,6 +23,10 @@ namespace
 
 TEST(FilesystemFactoryTest, InstanceResolution)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__filesystem__api_abstraction");
+    RecordProperty("Description", "Check that the production factory creates non-null filesystem interfaces.");
+    RecordProperty("TestType", "interface-test");
+    RecordProperty("DerivationTechnique", "design-analysis");
     FilesystemFactory unit;
 
     const Filesystem& fs = unit.CreateInstance();

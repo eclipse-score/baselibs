@@ -23,6 +23,12 @@ namespace
 
 TEST(IFileUtils, InstanceResolution)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__filesystem__file_utils");
+    RecordProperty("Description",
+                   "Check that the singleton file utilities interface is available and reports errors "
+                   "for invalid input.");
+    RecordProperty("TestType", "interface-test");
+    RecordProperty("DerivationTechnique", "design-analysis");
     auto& utils = IFileUtils::instance();
     const auto file = utils.CreateDirectories("", score::os::Stat::Mode::kNone);
 

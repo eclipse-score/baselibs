@@ -80,6 +80,11 @@ class FileFactoryTestExtra : public ::testing::Test
 
 TEST_F(FileFactoryTestExtra, CreateFileStreamUnopenedFile)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__filesystem__file_io");
+    RecordProperty("Description",
+                   "Check 'FileFactoryTestExtra.CreateFileStreamUnopenedFile' behavior for the filesystem component.");
+    RecordProperty("TestType", "fault-injection");
+    RecordProperty("DerivationTechnique", "error-guessing");
     class MockStdioFileBuf : public details::StdioFileBuf
     {
       public:
@@ -95,6 +100,12 @@ TEST_F(FileFactoryTestExtra, CreateFileStreamUnopenedFile)
 
 TEST_F(FileFactoryTestExtra, AtomicUpdateCleansUpWhenCreateFileStreamFails)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__filesystem__file_io");
+    RecordProperty("Description",
+                   "Check 'FileFactoryTestExtra.AtomicUpdateCleansUpWhenCreateFileStreamFails' behavior for the "
+                   "filesystem component.");
+    RecordProperty("TestType", "fault-injection");
+    RecordProperty("DerivationTechnique", "error-guessing");
     // In the STDIO_FILEBUF_BASE_TESTING environment, is_open() is a mock that
     // returns 0 (false) by default, causing CreateFileStream to fail.
 

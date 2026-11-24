@@ -23,6 +23,13 @@ namespace
 
 TEST(IFileFactory, InstanceResolution)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__filesystem__file_io");
+    RecordProperty("Description", "Check 'IFileFactory.InstanceResolution' behavior for the filesystem component.");
+    RecordProperty(
+        "Description",
+        "Check that the singleton file factory interface is available and returns an error for a missing file.");
+    RecordProperty("TestType", "interface-test");
+    RecordProperty("DerivationTechnique", "design-analysis");
     auto& factory = IFileFactory::instance();
     const auto file = factory.Open("/tmp/does_not_exist", std::ios_base::in | std::ios_base::out);
 

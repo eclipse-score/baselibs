@@ -23,6 +23,10 @@ namespace
 
 TEST(FilesystemFactoryMockObjectsTest, InstanceResolution)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__filesystem__mock_fake");
+    RecordProperty("Description", "Check that the mock-objects factory provides all injectable filesystem interfaces.");
+    RecordProperty("TestType", "interface-test");
+    RecordProperty("DerivationTechnique", "design-analysis");
     FilesystemFactoryMockObjects unit;
 
     const Filesystem& fs = unit.CreateInstance();
@@ -34,6 +38,10 @@ TEST(FilesystemFactoryMockObjectsTest, InstanceResolution)
 
 TEST(FilesystemFactoryMockObjectsTest, SameInstanceForStandard)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__filesystem__full_testability");
+    RecordProperty("Description", "Check that the standard-filesystem interface returns the injected mock instance.");
+    RecordProperty("TestType", "interface-test");
+    RecordProperty("DerivationTechnique", "design-analysis");
     FilesystemFactoryMockObjects unit;
     StandardFilesystemMock* mock = &unit.GetStandard();
     IStandardFilesystem* expected{mock};
@@ -45,6 +53,10 @@ TEST(FilesystemFactoryMockObjectsTest, SameInstanceForStandard)
 
 TEST(FilesystemFactoryMockObjectsTest, SameInstanceForUtils)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__filesystem__full_testability");
+    RecordProperty("Description", "Check that the file-utils interface returns the injected mock instance.");
+    RecordProperty("TestType", "interface-test");
+    RecordProperty("DerivationTechnique", "design-analysis");
     FilesystemFactoryMockObjects unit;
     FileUtilsMock* mock = &unit.GetUtils();
     IFileUtils* expected{mock};
@@ -56,6 +68,10 @@ TEST(FilesystemFactoryMockObjectsTest, SameInstanceForUtils)
 
 TEST(FilesystemFactoryMockObjectsTest, SameInstanceForStreams)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__filesystem__full_testability");
+    RecordProperty("Description", "Check that the filestream interface returns the injected mock instance.");
+    RecordProperty("TestType", "interface-test");
+    RecordProperty("DerivationTechnique", "design-analysis");
     FilesystemFactoryMockObjects unit;
     FileFactoryMock* mock = &unit.GetStreams();
     IFileFactory* expected{mock};

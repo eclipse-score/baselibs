@@ -61,6 +61,10 @@ class DirentFakeFixture : public ::testing::Test
 
 TEST_F(DirentFakeFixture, DirectoryIterator)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__filesystem__directory_iterators");
+    RecordProperty("Description", "Check 'DirentFakeFixture.DirectoryIterator' behavior for the filesystem component.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     std::list<std::string> filelist;
     for (const auto& entry : DirectoryIterator{"/tmp"})
     {
@@ -74,6 +78,11 @@ TEST_F(DirentFakeFixture, DirectoryIterator)
 
 TEST_F(DirentFakeFixture, RecursiveDirectoryIterator)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__filesystem__directory_iterators");
+    RecordProperty("Description",
+                   "Check 'DirentFakeFixture.RecursiveDirectoryIterator' behavior for the filesystem component.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     std::list<std::string> filelist;
     RecursiveDirectoryIterator recurIterator{"/tmp"};
     for (const auto& entry : recurIterator)
@@ -94,6 +103,11 @@ TEST_F(DirentFakeFixture, RecursiveDirectoryIterator)
 }
 TEST_F(DirentFakeFixture, OpendirForNonExisted)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__filesystem__directory_iterators");
+    RecordProperty("Description",
+                   "Check 'DirentFakeFixture.OpendirForNonExisted' behavior for the filesystem component.");
+    RecordProperty("TestType", "interface-test");
+    RecordProperty("DerivationTechnique", "error-guessing");
     auto& unit = filesystem_mock_->GetDirentFake();
 
     const auto& result = unit.opendir("/non_existed");
@@ -102,6 +116,11 @@ TEST_F(DirentFakeFixture, OpendirForNonExisted)
 
 TEST_F(DirentFakeFixture, OpendirForNonDirectory)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__filesystem__directory_iterators");
+    RecordProperty("Description",
+                   "Check 'DirentFakeFixture.OpendirForNonDirectory' behavior for the filesystem component.");
+    RecordProperty("TestType", "interface-test");
+    RecordProperty("DerivationTechnique", "error-guessing");
     auto& unit = filesystem_mock_->GetDirentFake();
 
     const auto& result = unit.opendir("/tmp/foo/file1");
@@ -111,6 +130,11 @@ TEST_F(DirentFakeFixture, OpendirForNonDirectory)
 
 TEST_F(DirentFakeFixture, ReaddirForInvalidDescriptor)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__filesystem__directory_iterators");
+    RecordProperty("Description",
+                   "Check 'DirentFakeFixture.ReaddirForInvalidDescriptor' behavior for the filesystem component.");
+    RecordProperty("TestType", "interface-test");
+    RecordProperty("DerivationTechnique", "error-guessing");
     auto& unit = filesystem_mock_->GetDirentFake();
 
     const auto& result = unit.readdir(nullptr);
@@ -120,6 +144,11 @@ TEST_F(DirentFakeFixture, ReaddirForInvalidDescriptor)
 
 TEST_F(DirentFakeFixture, ClosedirForInvalidDescriptor)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__filesystem__directory_iterators");
+    RecordProperty("Description",
+                   "Check 'DirentFakeFixture.ClosedirForInvalidDescriptor' behavior for the filesystem component.");
+    RecordProperty("TestType", "interface-test");
+    RecordProperty("DerivationTechnique", "error-guessing");
     auto& unit = filesystem_mock_->GetDirentFake();
 
     const auto& result = unit.closedir(nullptr);

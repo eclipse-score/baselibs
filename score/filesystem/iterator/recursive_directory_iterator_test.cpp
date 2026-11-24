@@ -99,6 +99,15 @@ class RecursiveDirectoryIteratorFixture : public ::testing::Test
 
 TEST_F(RecursiveDirectoryIteratorFixture, DefaultConstructedEqualEnd)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__filesystem__directory_iterators");
+    RecordProperty(
+        "Description",
+        "Check 'RecursiveDirectoryIteratorFixture.DefaultConstructedEqualEnd' behavior for the filesystem component.");
+    RecordProperty(
+        "Description",
+        "Check 'RecursiveDirectoryIteratorFixture.DefaultConstructedEqualEnd' behavior for the filesystem component.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     RecursiveDirectoryIterator unit{"/"};
 
     EXPECT_EQ(RecursiveDirectoryIterator{}, end(unit));
@@ -106,6 +115,15 @@ TEST_F(RecursiveDirectoryIteratorFixture, DefaultConstructedEqualEnd)
 
 TEST_F(RecursiveDirectoryIteratorFixture, IterateRangeBased)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__filesystem__directory_iterators");
+    RecordProperty(
+        "Description",
+        "Check 'RecursiveDirectoryIteratorFixture.IterateRangeBased' behavior for the filesystem component.");
+    RecordProperty(
+        "Description",
+        "Check 'RecursiveDirectoryIteratorFixture.IterateRangeBased' behavior for the filesystem component.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     CreateFolder("folder_0");
     CreateFolder("folder_1");
     CreateFile("file_1.txt");
@@ -136,6 +154,15 @@ TEST_F(RecursiveDirectoryIteratorFixture, IterateRangeBased)
 
 TEST_F(RecursiveDirectoryIteratorFixture, IterateNonExistingDirectory)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__filesystem__directory_iterators");
+    RecordProperty(
+        "Description",
+        "Check 'RecursiveDirectoryIteratorFixture.IterateNonExistingDirectory' behavior for the filesystem component.");
+    RecordProperty(
+        "Description",
+        "Check 'RecursiveDirectoryIteratorFixture.IterateNonExistingDirectory' behavior for the filesystem component.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     RecursiveDirectoryIterator unit{Path{"/tmp/recursive_directory_iterator_test_not_existing"}};
 
     EXPECT_EQ(unit, end(RecursiveDirectoryIterator{}));
@@ -145,6 +172,15 @@ TEST_F(RecursiveDirectoryIteratorFixture, IterateNonExistingDirectory)
 
 TEST_F(RecursiveDirectoryIteratorFixture, CanDereferenceIterator)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__filesystem__directory_iterators");
+    RecordProperty(
+        "Description",
+        "Check 'RecursiveDirectoryIteratorFixture.CanDereferenceIterator' behavior for the filesystem component.");
+    RecordProperty(
+        "Description",
+        "Check 'RecursiveDirectoryIteratorFixture.CanDereferenceIterator' behavior for the filesystem component.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     CreateFile("file_1.txt");
     RecursiveDirectoryIterator unit{TempFolder()};
 
@@ -156,6 +192,11 @@ TEST_F(RecursiveDirectoryIteratorFixture, CanDereferenceIterator)
 
 TEST_F(RecursiveDirectoryIteratorFixture, ArrowOperator)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__filesystem__directory_iterators");
+    RecordProperty("Description",
+                   "Check 'RecursiveDirectoryIteratorFixture.ArrowOperator' behavior for the filesystem component.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     CreateFile("file_1.txt");
     RecursiveDirectoryIterator unit{TempFolder()};
 
@@ -167,6 +208,15 @@ TEST_F(RecursiveDirectoryIteratorFixture, ArrowOperator)
 
 TEST_F(RecursiveDirectoryIteratorFixture, IterateEmptyDirectory)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__filesystem__directory_iterators");
+    RecordProperty(
+        "Description",
+        "Check 'RecursiveDirectoryIteratorFixture.IterateEmptyDirectory' behavior for the filesystem component.");
+    RecordProperty(
+        "Description",
+        "Check 'RecursiveDirectoryIteratorFixture.IterateEmptyDirectory' behavior for the filesystem component.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     CreateFolder("folder_1");
 
     RecursiveDirectoryIterator unit{Path{TempFolder() / "folder_1"}};
@@ -177,6 +227,11 @@ TEST_F(RecursiveDirectoryIteratorFixture, IterateEmptyDirectory)
 
 TEST_F(RecursiveDirectoryIteratorFixture, FailedReaddir)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__filesystem__directory_iterators");
+    RecordProperty("Description",
+                   "Check 'RecursiveDirectoryIteratorFixture.FailedReaddir' behavior for the filesystem component.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     test::DirentWithCorrectSize dir_entry{};
     // trick qcc to skip dirent::d_name size check, whcih is 1 on QNX:
     memcpy(&dir_entry.entry.d_name[0], "filename", sizeof("filename"));
@@ -198,6 +253,11 @@ TEST_F(RecursiveDirectoryIteratorFixture, FailedReaddir)
 
 TEST_F(RecursiveDirectoryIteratorFixture, FailedStatus)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__filesystem__directory_iterators");
+    RecordProperty("Description",
+                   "Check 'RecursiveDirectoryIteratorFixture.FailedStatus' behavior for the filesystem component.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     CreateFolder("folder_1");
     CreateFolder("folder_2");
 
@@ -214,6 +274,15 @@ TEST_F(RecursiveDirectoryIteratorFixture, FailedStatus)
 
 TEST_F(RecursiveDirectoryIteratorFixture, IterateOnDefaultConstructed)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__filesystem__directory_iterators");
+    RecordProperty(
+        "Description",
+        "Check 'RecursiveDirectoryIteratorFixture.IterateOnDefaultConstructed' behavior for the filesystem component.");
+    RecordProperty(
+        "Description",
+        "Check 'RecursiveDirectoryIteratorFixture.IterateOnDefaultConstructed' behavior for the filesystem component.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     RecursiveDirectoryIterator unit{};
 
     ++unit;
@@ -224,6 +293,11 @@ TEST_F(RecursiveDirectoryIteratorFixture, IterateOnDefaultConstructed)
 
 TEST_F(RecursiveDirectoryIteratorFixture, FollowSymlink)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__filesystem__directory_iterators");
+    RecordProperty("Description",
+                   "Check 'RecursiveDirectoryIteratorFixture.FollowSymlink' behavior for the filesystem component.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     CreateFolder("a");
     CreateFolder("a/b");
     CreateFolder("z");
@@ -246,6 +320,15 @@ TEST_F(RecursiveDirectoryIteratorFixture, FollowSymlink)
 
 TEST_F(RecursiveDirectoryIteratorFixture, DoNotFollowSymlink)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__filesystem__directory_iterators");
+    RecordProperty(
+        "Description",
+        "Check 'RecursiveDirectoryIteratorFixture.DoNotFollowSymlink' behavior for the filesystem component.");
+    RecordProperty(
+        "Description",
+        "Check 'RecursiveDirectoryIteratorFixture.DoNotFollowSymlink' behavior for the filesystem component.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     CreateFolder("a");
     CreateFolder("a/b");
     CreateFolder("z");
@@ -267,6 +350,15 @@ TEST_F(RecursiveDirectoryIteratorFixture, DoNotFollowSymlink)
 
 TEST_F(RecursiveDirectoryIteratorFixture, ErrorInCaseCircularSymlinks)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__filesystem__directory_iterators");
+    RecordProperty(
+        "Description",
+        "Check 'RecursiveDirectoryIteratorFixture.ErrorInCaseCircularSymlinks' behavior for the filesystem component.");
+    RecordProperty(
+        "Description",
+        "Check 'RecursiveDirectoryIteratorFixture.ErrorInCaseCircularSymlinks' behavior for the filesystem component.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     CreateFolder("a");
     CreateSymlink("../a", "a/symlink");
 
@@ -282,6 +374,15 @@ TEST_F(RecursiveDirectoryIteratorFixture, ErrorInCaseCircularSymlinks)
 
 TEST_F(RecursiveDirectoryIteratorFixture, FailedSymlinkStatus)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__filesystem__directory_iterators");
+    RecordProperty(
+        "Description",
+        "Check 'RecursiveDirectoryIteratorFixture.FailedSymlinkStatus' behavior for the filesystem component.");
+    RecordProperty(
+        "Description",
+        "Check 'RecursiveDirectoryIteratorFixture.FailedSymlinkStatus' behavior for the filesystem component.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     CreateFolder("folder_1");
     CreateFolder("folder_2");
 

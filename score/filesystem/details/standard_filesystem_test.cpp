@@ -277,41 +277,79 @@ class FilesystemFixtureWithoutMocks : public ::testing::Test
 
 TEST_F(FilesystemFixture, StatusFindsRegularFile)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__filesystem__api_abstraction");
+    RecordProperty("Description",
+                   "Check 'FilesystemFixture.StatusFindsRegularFile' behavior for the filesystem component.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     ExpectStatusEqual(S_IFREG | S_IRWXU, {FileType::kRegular, Perms::kReadWriteExecUser});
 }
 
 TEST_F(FilesystemFixture, StatusFindsDirectory)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__filesystem__api_abstraction");
+    RecordProperty("Description",
+                   "Check 'FilesystemFixture.StatusFindsDirectory' behavior for the filesystem component.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     ExpectStatusEqual(S_IFDIR | S_IROTH, {FileType::kDirectory, Perms::kReadOthers});
 }
 
 TEST_F(FilesystemFixture, StatusFindsBlockDevice)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__filesystem__api_abstraction");
+    RecordProperty("Description",
+                   "Check 'FilesystemFixture.StatusFindsBlockDevice' behavior for the filesystem component.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     ExpectStatusEqual(S_IFBLK | S_IRGRP | S_IXGRP, {FileType::kBlock, Perms::kReadGroup | Perms::kExecGroup});
 }
 
 TEST_F(FilesystemFixture, StatusFindsCharDevice)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__filesystem__api_abstraction");
+    RecordProperty("Description",
+                   "Check 'FilesystemFixture.StatusFindsCharDevice' behavior for the filesystem component.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     ExpectStatusEqual(S_IFCHR, {FileType::kCharacter, Perms::kNone});
 }
 
 TEST_F(FilesystemFixture, StatusFindsFifo)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__filesystem__api_abstraction");
+    RecordProperty("Description", "Check 'FilesystemFixture.StatusFindsFifo' behavior for the filesystem component.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     ExpectStatusEqual(S_IFIFO, {FileType::kFifo, Perms::kNone});
 }
 
 TEST_F(FilesystemFixture, StatusFindsSocket)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__filesystem__api_abstraction");
+    RecordProperty("Description", "Check 'FilesystemFixture.StatusFindsSocket' behavior for the filesystem component.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     ExpectStatusEqual(S_IFSOCK, {FileType::kSocket, Perms::kNone});
 }
 
 TEST_F(FilesystemFixture, StatusFindsUnkownType)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__filesystem__api_abstraction");
+    RecordProperty("Description",
+                   "Check 'FilesystemFixture.StatusFindsUnkownType' behavior for the filesystem component.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     ExpectStatusEqual(S_IROTH, {FileType::kUnknown, Perms::kReadOthers});
 }
 
 TEST_F(FilesystemFixture, NoPermissionsForStat)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__filesystem__api_abstraction");
+    RecordProperty("Description",
+                   "Check 'FilesystemFixture.NoPermissionsForStat' behavior for the filesystem component.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     ExpectStatWith(EACCES);
 
     const auto status = unit_.Status("/foo/bar");
@@ -321,6 +359,10 @@ TEST_F(FilesystemFixture, NoPermissionsForStat)
 
 TEST_F(FilesystemFixture, FileNotFound)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__filesystem__api_abstraction");
+    RecordProperty("Description", "Check 'FilesystemFixture.FileNotFound' behavior for the filesystem component.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     ExpectStatWith(ENOENT);
 
     const auto status = unit_.Status("/foo/bar");
@@ -332,6 +374,10 @@ TEST_F(FilesystemFixture, FileNotFound)
 
 TEST_F(FilesystemFixture, AnyOtherError)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__filesystem__api_abstraction");
+    RecordProperty("Description", "Check 'FilesystemFixture.AnyOtherError' behavior for the filesystem component.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     ExpectStatWith(ELOOP);
 
     const auto status = unit_.Status("/foo/bar");
@@ -341,6 +387,11 @@ TEST_F(FilesystemFixture, AnyOtherError)
 
 TEST_F(FilesystemFixture, ExistsWhileFileExists)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__filesystem__api_abstraction");
+    RecordProperty("Description",
+                   "Check 'FilesystemFixture.ExistsWhileFileExists' behavior for the filesystem component.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     ExpectStatWith(mode_t{S_IFREG});
 
     const auto result = unit_.Exists("/foo/bar");
@@ -351,6 +402,11 @@ TEST_F(FilesystemFixture, ExistsWhileFileExists)
 
 TEST_F(FilesystemFixture, ExistsWithUnkownFileType)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__filesystem__api_abstraction");
+    RecordProperty("Description",
+                   "Check 'FilesystemFixture.ExistsWithUnkownFileType' behavior for the filesystem component.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     ExpectStatWith(mode_t{});
 
     const auto result = unit_.Exists("/foo/bar");
@@ -361,6 +417,11 @@ TEST_F(FilesystemFixture, ExistsWithUnkownFileType)
 
 TEST_F(FilesystemFixture, ExistsWhileFileDoesNotExists)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__filesystem__api_abstraction");
+    RecordProperty("Description",
+                   "Check 'FilesystemFixture.ExistsWhileFileDoesNotExists' behavior for the filesystem component.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     ExpectStatWith(ENOENT);
 
     const auto result = unit_.Exists("/foo/bar");
@@ -371,6 +432,11 @@ TEST_F(FilesystemFixture, ExistsWhileFileDoesNotExists)
 
 TEST_F(FilesystemFixture, ExistsWithOtherError)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__filesystem__api_abstraction");
+    RecordProperty("Description",
+                   "Check 'FilesystemFixture.ExistsWithOtherError' behavior for the filesystem component.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     ExpectStatWith(ELOOP);
 
     const auto result = unit_.Exists("/foo/bar");
@@ -380,6 +446,10 @@ TEST_F(FilesystemFixture, ExistsWithOtherError)
 
 TEST_F(FilesystemFixture, RetrieveLastTime)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__filesystem__api_abstraction");
+    RecordProperty("Description", "Check 'FilesystemFixture.RetrieveLastTime' behavior for the filesystem component.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     ExpectStatWith(time_t{42});
 
     const auto time = unit_.LastWriteTime("/foo/bar");
@@ -390,6 +460,11 @@ TEST_F(FilesystemFixture, RetrieveLastTime)
 
 TEST_F(FilesystemFixture, RetrieveLastTimeFailure)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__filesystem__api_abstraction");
+    RecordProperty("Description",
+                   "Check 'FilesystemFixture.RetrieveLastTimeFailure' behavior for the filesystem component.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     ExpectStatWith(ELOOP);
 
     const auto time = unit_.LastWriteTime("/foo/bar");
@@ -399,6 +474,15 @@ TEST_F(FilesystemFixture, RetrieveLastTimeFailure)
 
 TEST_F(FilesystemFixture, WeaklyCanonicalForExistedAbsolutePath)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__filesystem__api_abstraction");
+    RecordProperty(
+        "Description",
+        "Check 'FilesystemFixture.WeaklyCanonicalForExistedAbsolutePath' behavior for the filesystem component.");
+    RecordProperty(
+        "Description",
+        "Check 'FilesystemFixture.WeaklyCanonicalForExistedAbsolutePath' behavior for the filesystem component.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     ExpectRealpathWith("/tmp/from", "/tmp/from");
 
     const auto path = unit_.WeaklyCanonical("/tmp/from");
@@ -409,6 +493,15 @@ TEST_F(FilesystemFixture, WeaklyCanonicalForExistedAbsolutePath)
 
 TEST_F(FilesystemFixture, WeaklyCanonicalForNonExistedAbsolutePath)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__filesystem__api_abstraction");
+    RecordProperty(
+        "Description",
+        "Check 'FilesystemFixture.WeaklyCanonicalForNonExistedAbsolutePath' behavior for the filesystem component.");
+    RecordProperty(
+        "Description",
+        "Check 'FilesystemFixture.WeaklyCanonicalForNonExistedAbsolutePath' behavior for the filesystem component.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     ExpectRealpathWith("/foo/bar", ENOENT);
     ExpectRealpathWith("/", ENOENT);
 
@@ -420,6 +513,12 @@ TEST_F(FilesystemFixture, WeaklyCanonicalForNonExistedAbsolutePath)
 
 TEST_F(FilesystemFixture, WeaklyCanonicalForPartlyNonExistedAbsolutePath)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__filesystem__api_abstraction");
+    RecordProperty("Description",
+                   "Check 'FilesystemFixture.WeaklyCanonicalForPartlyNonExistedAbsolutePath' behavior for the "
+                   "filesystem component.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     ExpectRealpathWith("/foo/./bar", ENOENT);
     ExpectRealpathWith("/", "/");
     ExpectRealpathWith("/foo", ENOENT);
@@ -432,6 +531,11 @@ TEST_F(FilesystemFixture, WeaklyCanonicalForPartlyNonExistedAbsolutePath)
 
 TEST_F(FilesystemFixture, WeaklyCanonicalForRelativePath)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__filesystem__api_abstraction");
+    RecordProperty("Description",
+                   "Check 'FilesystemFixture.WeaklyCanonicalForRelativePath' behavior for the filesystem component.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     ExpectGetcwdWith("/tmp");
     ExpectRealpathWith("/tmp/./foo/bar", "/tmp/foo/bar");
 
@@ -443,6 +547,15 @@ TEST_F(FilesystemFixture, WeaklyCanonicalForRelativePath)
 
 TEST_F(FilesystemFixture, WeaklyCanonicalForNonExistedRelativePath)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__filesystem__api_abstraction");
+    RecordProperty(
+        "Description",
+        "Check 'FilesystemFixture.WeaklyCanonicalForNonExistedRelativePath' behavior for the filesystem component.");
+    RecordProperty(
+        "Description",
+        "Check 'FilesystemFixture.WeaklyCanonicalForNonExistedRelativePath' behavior for the filesystem component.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     ExpectGetcwdWith("/tmp");
     ExpectRealpathWith("/tmp/foo/./bar", ENOENT);
     ExpectRealpathWith("/tmp/foo", ENOENT);
@@ -455,6 +568,15 @@ TEST_F(FilesystemFixture, WeaklyCanonicalForNonExistedRelativePath)
 
 TEST_F(FilesystemFixture, WeaklyCanonicalForFailedCurrentPath)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__filesystem__api_abstraction");
+    RecordProperty(
+        "Description",
+        "Check 'FilesystemFixture.WeaklyCanonicalForFailedCurrentPath' behavior for the filesystem component.");
+    RecordProperty(
+        "Description",
+        "Check 'FilesystemFixture.WeaklyCanonicalForFailedCurrentPath' behavior for the filesystem component.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     EXPECT_CALL(*unistd_mock_, getcwd(_, _))
         .WillRepeatedly(
             Return(score::cpp::unexpected<score::os::Error>{score::os::Error::createFromErrno(ENAMETOOLONG)}));
@@ -466,6 +588,11 @@ TEST_F(FilesystemFixture, WeaklyCanonicalForFailedCurrentPath)
 
 TEST_F(FilesystemFixture, WeaklyCanonicalForEmptyPath)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__filesystem__api_abstraction");
+    RecordProperty("Description",
+                   "Check 'FilesystemFixture.WeaklyCanonicalForEmptyPath' behavior for the filesystem component.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     const auto path = unit_.WeaklyCanonical("");
 
     ASSERT_TRUE(path.has_value());
@@ -474,6 +601,10 @@ TEST_F(FilesystemFixture, WeaklyCanonicalForEmptyPath)
 
 TEST_F(FilesystemFixture, GetCurrentPath)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__filesystem__api_abstraction");
+    RecordProperty("Description", "Check 'FilesystemFixture.GetCurrentPath' behavior for the filesystem component.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     EXPECT_CALL(*unistd_mock_, getcwd(_, _))
         .WillOnce(Return(score::cpp::expected<char*, os::Error>{const_cast<char*>("/foo/bar")}));
 
@@ -485,6 +616,10 @@ TEST_F(FilesystemFixture, GetCurrentPath)
 
 TEST_F(FilesystemFixture, SetCurrentPath)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__filesystem__api_abstraction");
+    RecordProperty("Description", "Check 'FilesystemFixture.SetCurrentPath' behavior for the filesystem component.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     const Path path{"/foo/bar"};
     EXPECT_CALL(*unistd_mock_, chdir(path.CStr())).WillOnce(Return(score::cpp::expected_blank<os::Error>{}));
 
@@ -495,6 +630,11 @@ TEST_F(FilesystemFixture, SetCurrentPath)
 
 TEST_F(FilesystemFixture, SetCurrentPathFailed)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__filesystem__api_abstraction");
+    RecordProperty("Description",
+                   "Check 'FilesystemFixture.SetCurrentPathFailed' behavior for the filesystem component.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     const Path path{"/foo/bar"};
     EXPECT_CALL(*unistd_mock_, chdir(path.CStr()))
         .WillOnce(Return(score::cpp::unexpected<os::Error>{score::os::Error::createFromErrno(ENOENT)}));
@@ -508,6 +648,11 @@ using FilesystemCopyFile = FilesystemFixture;
 
 TEST_F(FilesystemCopyFile, ErrorWhileAccessingFrom)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__filesystem__api_abstraction");
+    RecordProperty("Description",
+                   "Check 'FilesystemCopyFile.ErrorWhileAccessingFrom' behavior for the filesystem component.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     // Expecting that an error occurs while accessing the FROM file
     ExpectStatWith(ELOOP, "/tmp/from");
 
@@ -521,6 +666,11 @@ TEST_F(FilesystemCopyFile, ErrorWhileAccessingFrom)
 
 TEST_F(FilesystemCopyFile, TryingToCopyNotAFile)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__filesystem__api_abstraction");
+    RecordProperty("Description",
+                   "Check 'FilesystemCopyFile.TryingToCopyNotAFile' behavior for the filesystem component.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     // Expecting that we try to copy not a file (Bulk-Device in this case)
     ExpectStatWith(mode_t{S_IFBLK});
 
@@ -534,6 +684,11 @@ TEST_F(FilesystemCopyFile, TryingToCopyNotAFile)
 
 TEST_F(FilesystemCopyFile, ErrorWhileAccessingTo)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__filesystem__api_abstraction");
+    RecordProperty("Description",
+                   "Check 'FilesystemCopyFile.ErrorWhileAccessingTo' behavior for the filesystem component.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     // Expecting that an error occurs while accessing the to file
     ExpectStatWith(mode_t{S_IFREG}, "/tmp/from");
     ExpectStatWith(ELOOP, "/tmp/to");
@@ -548,6 +703,15 @@ TEST_F(FilesystemCopyFile, ErrorWhileAccessingTo)
 
 TEST_F(FilesystemCopyFile, ModesOfSourceFileIsCopiedtoDestination)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__filesystem__api_abstraction");
+    RecordProperty(
+        "Description",
+        "Check 'FilesystemCopyFile.ModesOfSourceFileIsCopiedtoDestination' behavior for the filesystem component.");
+    RecordProperty(
+        "Description",
+        "Check 'FilesystemCopyFile.ModesOfSourceFileIsCopiedtoDestination' behavior for the filesystem component.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     // Given a dummy file
     PrepareDummyFile(".");
     stat_mock_->restore_instance();
@@ -562,6 +726,11 @@ TEST_F(FilesystemCopyFile, ModesOfSourceFileIsCopiedtoDestination)
 
 TEST_F(FilesystemCopyFile, FileContentsAreEqual)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__filesystem__api_abstraction");
+    RecordProperty("Description",
+                   "Check 'FilesystemCopyFile.FileContentsAreEqual' behavior for the filesystem component.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     // Given a dummy file
     PrepareDummyFile("Hello World!");
     stat_mock_->restore_instance();
@@ -576,6 +745,10 @@ TEST_F(FilesystemCopyFile, FileContentsAreEqual)
 
 TEST_F(FilesystemCopyFile, CopyEmptyFile)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__filesystem__api_abstraction");
+    RecordProperty("Description", "Check 'FilesystemCopyFile.CopyEmptyFile' behavior for the filesystem component.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     // Given a dummy file
     PrepareDummyFile("");
     stat_mock_->restore_instance();
@@ -590,6 +763,10 @@ TEST_F(FilesystemCopyFile, CopyEmptyFile)
 
 TEST_F(FilesystemCopyFile, FullDisk)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__filesystem__api_abstraction");
+    RecordProperty("Description", "Check 'FilesystemCopyFile.FullDisk' behavior for the filesystem component.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     // Given a dummy file
     PrepareDummyFile("");
     stat_mock_->restore_instance();
@@ -617,6 +794,11 @@ TEST_F(FilesystemCopyFile, FullDisk)
 
 TEST_F(FilesystemCopyFile, SettingPermissionsFails)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__filesystem__api_abstraction");
+    RecordProperty("Description",
+                   "Check 'FilesystemCopyFile.SettingPermissionsFails' behavior for the filesystem component.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     // Given a dummy file
     PrepareDummyFile("");
 
@@ -638,6 +820,11 @@ TEST_F(FilesystemCopyFile, SettingPermissionsFails)
 
 TEST_F(FilesystemCopyFile, OpeningInputStreamFails)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__filesystem__api_abstraction");
+    RecordProperty("Description",
+                   "Check 'FilesystemCopyFile.OpeningInputStreamFails' behavior for the filesystem component.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     // Given that no real file exists
 
     // Expecting that at first that from exists and to does not
@@ -654,6 +841,11 @@ TEST_F(FilesystemCopyFile, OpeningInputStreamFails)
 
 TEST_F(FilesystemCopyFile, OpeningOutputStreamFails)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__filesystem__api_abstraction");
+    RecordProperty("Description",
+                   "Check 'FilesystemCopyFile.OpeningOutputStreamFails' behavior for the filesystem component.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     // Given a dummy file
     PrepareDummyFile("");
 
@@ -671,6 +863,11 @@ TEST_F(FilesystemCopyFile, OpeningOutputStreamFails)
 
 TEST_F(FilesystemCopyFile, DestExistsAndNotFile)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__filesystem__api_abstraction");
+    RecordProperty("Description",
+                   "Check 'FilesystemCopyFile.DestExistsAndNotFile' behavior for the filesystem component.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     // Given a dummy file and directory
     PrepareDummyFile("");
     ExpectStatWith(mode_t{S_IFREG}, "/tmp/from");
@@ -686,6 +883,11 @@ TEST_F(FilesystemCopyFile, DestExistsAndNotFile)
 
 TEST_F(FilesystemCopyFile, DestExistsAndNoOptions)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__filesystem__api_abstraction");
+    RecordProperty("Description",
+                   "Check 'FilesystemCopyFile.DestExistsAndNoOptions' behavior for the filesystem component.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     // Given a file that was already copied
     PrepareDummyFile("");
     stat_mock_->restore_instance();
@@ -701,6 +903,11 @@ TEST_F(FilesystemCopyFile, DestExistsAndNoOptions)
 
 TEST_F(FilesystemCopyFile, DestExistsAndSkipsExisting)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__filesystem__api_abstraction");
+    RecordProperty("Description",
+                   "Check 'FilesystemCopyFile.DestExistsAndSkipsExisting' behavior for the filesystem component.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     // Given a file that was already copied
     PrepareDummyFile("");
     stat_mock_->restore_instance();
@@ -715,6 +922,11 @@ TEST_F(FilesystemCopyFile, DestExistsAndSkipsExisting)
 
 TEST_F(FilesystemCopyFile, DestExistsAndOverwrite)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__filesystem__api_abstraction");
+    RecordProperty("Description",
+                   "Check 'FilesystemCopyFile.DestExistsAndOverwrite' behavior for the filesystem component.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     // Given a file where the destination exists
     PrepareDummyFile("42");
     stat_mock_->restore_instance();
@@ -731,6 +943,11 @@ TEST_F(FilesystemCopyFile, DestExistsAndOverwrite)
 
 TEST_F(FilesystemCopyFile, DestExistsAndUpdateExisting)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__filesystem__api_abstraction");
+    RecordProperty("Description",
+                   "Check 'FilesystemCopyFile.DestExistsAndUpdateExisting' behavior for the filesystem component.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     // Given a file that is newer then an already existing destination
     PrepareDummyFile("");
     std::ignore = unit_.CopyFile("/tmp/from", "/tmp/to");
@@ -748,6 +965,15 @@ TEST_F(FilesystemCopyFile, DestExistsAndUpdateExisting)
 
 TEST_F(FilesystemCopyFile, UpdateExistingFailedOnFirstLastWriteTime)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__filesystem__api_abstraction");
+    RecordProperty(
+        "Description",
+        "Check 'FilesystemCopyFile.UpdateExistingFailedOnFirstLastWriteTime' behavior for the filesystem component.");
+    RecordProperty(
+        "Description",
+        "Check 'FilesystemCopyFile.UpdateExistingFailedOnFirstLastWriteTime' behavior for the filesystem component.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     // Given
     ::testing::InSequence seq{};
     auto set_mode = [](auto, auto& buffer, auto) {
@@ -771,6 +997,15 @@ TEST_F(FilesystemCopyFile, UpdateExistingFailedOnFirstLastWriteTime)
 
 TEST_F(FilesystemCopyFile, UpdateExistingFailedOnSecondLastWriteTime)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__filesystem__api_abstraction");
+    RecordProperty(
+        "Description",
+        "Check 'FilesystemCopyFile.UpdateExistingFailedOnSecondLastWriteTime' behavior for the filesystem component.");
+    RecordProperty(
+        "Description",
+        "Check 'FilesystemCopyFile.UpdateExistingFailedOnSecondLastWriteTime' behavior for the filesystem component.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     // Given
     ::testing::InSequence seq{};
     auto set_mode = [](auto, auto& buffer, auto) {
@@ -792,6 +1027,15 @@ TEST_F(FilesystemCopyFile, UpdateExistingFailedOnSecondLastWriteTime)
 
 TEST_F(FilesystemCopyFile, DestExistsAndUpdateExistingNotNecessary)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__filesystem__api_abstraction");
+    RecordProperty(
+        "Description",
+        "Check 'FilesystemCopyFile.DestExistsAndUpdateExistingNotNecessary' behavior for the filesystem component.");
+    RecordProperty(
+        "Description",
+        "Check 'FilesystemCopyFile.DestExistsAndUpdateExistingNotNecessary' behavior for the filesystem component.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     // Given a file that is older than an already existing destination
     PrepareDummyFile("");
     stat_mock_->restore_instance();
@@ -807,6 +1051,15 @@ TEST_F(FilesystemCopyFile, DestExistsAndUpdateExistingNotNecessary)
 
 TEST_F(FilesystemCopyFile, SimulateRaceConditionOnSourceFile)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__filesystem__api_abstraction");
+    RecordProperty(
+        "Description",
+        "Check 'FilesystemCopyFile.SimulateRaceConditionOnSourceFile' behavior for the filesystem component.");
+    RecordProperty(
+        "Description",
+        "Check 'FilesystemCopyFile.SimulateRaceConditionOnSourceFile' behavior for the filesystem component.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     ::testing::InSequence seq{};
 
     // Given a dummy file
@@ -883,6 +1136,10 @@ TEST_F(FilesystemCopyFile, DestinationReplacedByFifoAfterStatusCheckIsRejectedWi
 
 TEST_F(FilesystemCopyFile, BadSrcFile)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__filesystem__api_abstraction");
+    RecordProperty("Description", "Check 'FilesystemCopyFile.BadSrcFile' behavior for the filesystem component.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     // Given a dummy file
     PrepareDummyFile("");
     stat_mock_->restore_instance();
@@ -908,6 +1165,10 @@ TEST_F(FilesystemCopyFile, BadSrcFile)
 
 TEST_F(FilesystemCopyFile, BadDestFile)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__filesystem__api_abstraction");
+    RecordProperty("Description", "Check 'FilesystemCopyFile.BadDestFile' behavior for the filesystem component.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     // Given a dummy file
     PrepareDummyFile("");
     stat_mock_->restore_instance();
@@ -933,6 +1194,11 @@ TEST_F(FilesystemCopyFile, BadDestFile)
 
 TEST_F(FilesystemCopyFile, ErrorForInappropriateOption)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__filesystem__api_abstraction");
+    RecordProperty("Description",
+                   "Check 'FilesystemCopyFile.ErrorForInappropriateOption' behavior for the filesystem component.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     // Given a dummy file
     PrepareDummyFile("Hello World!");
     stat_mock_->restore_instance();
@@ -947,6 +1213,10 @@ TEST_F(FilesystemCopyFile, ErrorForInappropriateOption)
 
 TEST_F(FilesystemFixture, CreateDirectory)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__filesystem__api_abstraction");
+    RecordProperty("Description", "Check 'FilesystemFixture.CreateDirectory' behavior for the filesystem component.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     // Expecting no error on mkdir
     ExpectStatWith(ENOENT);
     EXPECT_CALL(*stat_mock_, mkdir(_, _)).WillOnce(Return(score::cpp::expected_blank<os::Error>{}));
@@ -960,6 +1230,11 @@ TEST_F(FilesystemFixture, CreateDirectory)
 
 TEST_F(FilesystemFixture, CreateDirectoryThatAlreadyExists)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__filesystem__api_abstraction");
+    RecordProperty("Description",
+                   "Check 'FilesystemFixture.CreateDirectoryThatAlreadyExists' behavior for the filesystem component.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     // the directory is already exists
     ExpectStatWith(mode_t{S_IFDIR});
 
@@ -972,6 +1247,12 @@ TEST_F(FilesystemFixture, CreateDirectoryThatAlreadyExists)
 
 TEST_F(FilesystemFixture, CreateDirectoryReturnsSuccessWhenPathAlreadyExistsAndIsADirectory)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__filesystem__api_abstraction");
+    RecordProperty("Description",
+                   "Check 'FilesystemFixture.CreateDirectoryReturnsSuccessWhenPathAlreadyExistsAndIsADirectory' "
+                   "behavior for the filesystem component.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     // Expecting mkdir returns an error that the path already exists
     EXPECT_CALL(*stat_mock_, mkdir(_, _))
         .WillOnce(Return(score::cpp::make_unexpected(score::os::Error::createFromErrno(EEXIST))));
@@ -988,6 +1269,12 @@ TEST_F(FilesystemFixture, CreateDirectoryReturnsSuccessWhenPathAlreadyExistsAndI
 
 TEST_F(FilesystemFixture, CreateDirectoryReturnsErrorWhenPathAlreadyExistsAndIsNotADirectory)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__filesystem__api_abstraction");
+    RecordProperty("Description",
+                   "Check 'FilesystemFixture.CreateDirectoryReturnsErrorWhenPathAlreadyExistsAndIsNotADirectory' "
+                   "behavior for the filesystem component.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     // Expecting mkdir returns an error that the path already exists
     EXPECT_CALL(*stat_mock_, mkdir(_, _))
         .WillOnce(Return(score::cpp::make_unexpected(score::os::Error::createFromErrno(EEXIST))));
@@ -1005,6 +1292,12 @@ TEST_F(FilesystemFixture, CreateDirectoryReturnsErrorWhenPathAlreadyExistsAndIsN
 
 TEST_F(FilesystemFixture, CreateDirectoryReturnsErrorWhenMkdirAndStatFails)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__filesystem__api_abstraction");
+    RecordProperty("Description",
+                   "Check 'FilesystemFixture.CreateDirectoryReturnsErrorWhenMkdirAndStatFails' behavior for the "
+                   "filesystem component.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
 
     EXPECT_CALL(*stat_mock_, stat(_, _, true))
         .WillOnce(Return(score::cpp::make_unexpected(score::os::Error::createFromErrno(EIO))));
@@ -1021,6 +1314,12 @@ TEST_F(FilesystemFixture, CreateDirectoryReturnsErrorWhenMkdirAndStatFails)
 
 TEST_F(FilesystemFixture, CreateDirectoryReturnsErrorWhenPathAlreadyExistsAndIsDirectoryFails)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__filesystem__api_abstraction");
+    RecordProperty("Description",
+                   "Check 'FilesystemFixture.CreateDirectoryReturnsErrorWhenPathAlreadyExistsAndIsDirectoryFails' "
+                   "behavior for the filesystem component.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     // Expecting mkdir returns an error that the path already exists
     EXPECT_CALL(*stat_mock_, mkdir(_, _))
         .WillOnce(Return(score::cpp::make_unexpected(score::os::Error::createFromErrno(EEXIST))));
@@ -1038,6 +1337,17 @@ TEST_F(FilesystemFixture, CreateDirectoryReturnsErrorWhenPathAlreadyExistsAndIsD
 
 TEST_F(FilesystemFixture, CreateDirectoryReturnsErrorWhenPathDoesNotExistAndUnderlyingCreateDirectoryFails)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__filesystem__api_abstraction");
+    RecordProperty(
+        "Description",
+        "Check 'FilesystemFixture.CreateDirectoryReturnsErrorWhenPathDoesNotExistAndUnderlyingCreateDirectoryFails' "
+        "behavior for the filesystem component.");
+    RecordProperty(
+        "Description",
+        "Check 'FilesystemFixture.CreateDirectoryReturnsErrorWhenPathDoesNotExistAndUnderlyingCreateDirectoryFails' "
+        "behavior for the filesystem component.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     // Expecting an error on mkdir
     EXPECT_CALL(*stat_mock_, mkdir(_, _))
         .WillOnce(Return(score::cpp::make_unexpected(score::os::Error::createFromErrno(ELOOP))));
@@ -1052,6 +1362,15 @@ TEST_F(FilesystemFixture, CreateDirectoryReturnsErrorWhenPathDoesNotExistAndUnde
 
 TEST_F(FilesystemFixture, CreateDirectoriesWithAllPathsExistent)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__filesystem__api_abstraction");
+    RecordProperty(
+        "Description",
+        "Check 'FilesystemFixture.CreateDirectoriesWithAllPathsExistent' behavior for the filesystem component.");
+    RecordProperty(
+        "Description",
+        "Check 'FilesystemFixture.CreateDirectoriesWithAllPathsExistent' behavior for the filesystem component.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     // Expecting that all paths exist
     ExpectStatWith(mode_t{S_IFDIR}, "/foo");
     ExpectStatWith(mode_t{S_IFDIR}, "/foo/bar");
@@ -1065,6 +1384,11 @@ TEST_F(FilesystemFixture, CreateDirectoriesWithAllPathsExistent)
 
 TEST_F(FilesystemFixture, CreateDirectoriesWithEmptyPath)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__filesystem__api_abstraction");
+    RecordProperty("Description",
+                   "Check 'FilesystemFixture.CreateDirectoriesWithEmptyPath' behavior for the filesystem component.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     // When creating a directory
     const auto result = unit_.CreateDirectories("");
 
@@ -1075,6 +1399,15 @@ TEST_F(FilesystemFixture, CreateDirectoriesWithEmptyPath)
 
 TEST_F(FilesystemFixture, CreateMissingParentDirectoriesAbsolutePath)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__filesystem__api_abstraction");
+    RecordProperty(
+        "Description",
+        "Check 'FilesystemFixture.CreateMissingParentDirectoriesAbsolutePath' behavior for the filesystem component.");
+    RecordProperty(
+        "Description",
+        "Check 'FilesystemFixture.CreateMissingParentDirectoriesAbsolutePath' behavior for the filesystem component.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     // Expecting that the parent path does not exist, that the parent path is also created
     EXPECT_CALL(*stat_mock_, mkdir(StrEq("/foo"), _)).WillOnce(Return(score::cpp::expected_blank<os::Error>{}));
     EXPECT_CALL(*stat_mock_, mkdir(StrEq("/foo/bar"), _)).WillOnce(Return(score::cpp::expected_blank<os::Error>{}));
@@ -1090,6 +1423,15 @@ TEST_F(FilesystemFixture, CreateMissingParentDirectoriesAbsolutePath)
 
 TEST_F(FilesystemFixture, CreateMissingParentDirectoriesRelativePath)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__filesystem__api_abstraction");
+    RecordProperty(
+        "Description",
+        "Check 'FilesystemFixture.CreateMissingParentDirectoriesRelativePath' behavior for the filesystem component.");
+    RecordProperty(
+        "Description",
+        "Check 'FilesystemFixture.CreateMissingParentDirectoriesRelativePath' behavior for the filesystem component.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     // Expecting that the parent path does not exist, that the parent path is also created
     EXPECT_CALL(*stat_mock_, mkdir(StrEq("foo"), _)).WillOnce(Return(score::cpp::expected_blank<os::Error>{}));
     EXPECT_CALL(*stat_mock_, mkdir(StrEq("foo/bar"), _)).WillOnce(Return(score::cpp::expected_blank<os::Error>{}));
@@ -1105,6 +1447,15 @@ TEST_F(FilesystemFixture, CreateMissingParentDirectoriesRelativePath)
 
 TEST_F(FilesystemFixture, CreateParentDirectoriesWhileMkdirFailed)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__filesystem__api_abstraction");
+    RecordProperty(
+        "Description",
+        "Check 'FilesystemFixture.CreateParentDirectoriesWhileMkdirFailed' behavior for the filesystem component.");
+    RecordProperty(
+        "Description",
+        "Check 'FilesystemFixture.CreateParentDirectoriesWhileMkdirFailed' behavior for the filesystem component.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     // Expecting that mkdir failed
     ExpectStatWith(ENOENT, "foo");
     EXPECT_CALL(*stat_mock_, mkdir(StrEq("foo"), _))
@@ -1119,6 +1470,15 @@ TEST_F(FilesystemFixture, CreateParentDirectoriesWhileMkdirFailed)
 
 TEST_F(FilesystemFixture, CreateDirectoriesWithSeparatorAtPathEnd)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__filesystem__api_abstraction");
+    RecordProperty(
+        "Description",
+        "Check 'FilesystemFixture.CreateDirectoriesWithSeparatorAtPathEnd' behavior for the filesystem component.");
+    RecordProperty(
+        "Description",
+        "Check 'FilesystemFixture.CreateDirectoriesWithSeparatorAtPathEnd' behavior for the filesystem component.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     // Expecting that the parent path does not exist, that the parent path is also created
     EXPECT_CALL(*stat_mock_, mkdir(StrEq("foo"), _)).WillOnce(Return(score::cpp::expected_blank<os::Error>{}));
     EXPECT_CALL(*stat_mock_, mkdir(StrEq("foo/bar"), _)).WillOnce(Return(score::cpp::expected_blank<os::Error>{}));
@@ -1136,6 +1496,10 @@ using TempDirectory = FilesystemFixture;
 
 TEST_F(TempDirectory, CanGetTmpDirDirectory)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__filesystem__api_abstraction");
+    RecordProperty("Description", "Check 'TempDirectory.CanGetTmpDirDirectory' behavior for the filesystem component.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     EnvVariableExist("TMPDIR");
     const auto tmp_path = unit_.TempDirectoryPath();
 
@@ -1144,6 +1508,10 @@ TEST_F(TempDirectory, CanGetTmpDirDirectory)
 
 TEST_F(TempDirectory, CanGetTmpDirectory)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__filesystem__api_abstraction");
+    RecordProperty("Description", "Check 'TempDirectory.CanGetTmpDirectory' behavior for the filesystem component.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     EnvVariableDoesNotExist("TMPDIR");
     EnvVariableExist("TMP");
     const auto tmp_path = unit_.TempDirectoryPath();
@@ -1153,6 +1521,10 @@ TEST_F(TempDirectory, CanGetTmpDirectory)
 
 TEST_F(TempDirectory, CanGetTempDirectory)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__filesystem__api_abstraction");
+    RecordProperty("Description", "Check 'TempDirectory.CanGetTempDirectory' behavior for the filesystem component.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     EnvVariableDoesNotExist("TMPDIR");
     EnvVariableDoesNotExist("TMP");
     EnvVariableExist("TEMP");
@@ -1163,6 +1535,11 @@ TEST_F(TempDirectory, CanGetTempDirectory)
 
 TEST_F(TempDirectory, CanGetTempDirDirectory)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__filesystem__api_abstraction");
+    RecordProperty("Description",
+                   "Check 'TempDirectory.CanGetTempDirDirectory' behavior for the filesystem component.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     EnvVariableDoesNotExist("TMPDIR");
     EnvVariableDoesNotExist("TMP");
     EnvVariableDoesNotExist("TEMP");
@@ -1174,6 +1551,10 @@ TEST_F(TempDirectory, CanGetTempDirDirectory)
 
 TEST_F(TempDirectory, NoEnvExists)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__filesystem__api_abstraction");
+    RecordProperty("Description", "Check 'TempDirectory.NoEnvExists' behavior for the filesystem component.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     EnvVariableDoesNotExist("TMPDIR");
     EnvVariableDoesNotExist("TMP");
     EnvVariableDoesNotExist("TEMP");
@@ -1187,6 +1568,11 @@ using Permissions = FilesystemFixture;
 
 TEST_F(Permissions, DoesntTryToChangeSamePermissions)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__filesystem__api_abstraction");
+    RecordProperty("Description",
+                   "Check 'Permissions.DoesntTryToChangeSamePermissions' behavior for the filesystem component.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     ExpectStatWith(mode_t{S_IRUSR | S_IWUSR});
     ExpectNoFcmodat();
     const auto result = unit_.Permissions("/foo/bar", Perms::kReadUser | Perms::kWriteUser, PermOptions::kReplace);
@@ -1196,6 +1582,11 @@ TEST_F(Permissions, DoesntTryToChangeSamePermissions)
 
 TEST_F(Permissions, OverWritesAnyPreviousPermissions)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__filesystem__api_abstraction");
+    RecordProperty("Description",
+                   "Check 'Permissions.OverWritesAnyPreviousPermissions' behavior for the filesystem component.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     ExpectStatWith(mode_t{S_IRUSR | S_IWUSR});
     ExpectFcmodat(Perms::kReadOthers);
     const auto result = unit_.Permissions("/foo/bar", Perms::kReadOthers, PermOptions::kReplace);
@@ -1205,6 +1596,10 @@ TEST_F(Permissions, OverWritesAnyPreviousPermissions)
 
 TEST_F(Permissions, AddsPermissions)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__filesystem__api_abstraction");
+    RecordProperty("Description", "Check 'Permissions.AddsPermissions' behavior for the filesystem component.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     ExpectStatWith(mode_t{S_IRUSR | S_IWUSR});
     ExpectFcmodat(Perms::kReadOthers | Perms::kReadUser | Perms::kWriteUser);
 
@@ -1215,6 +1610,10 @@ TEST_F(Permissions, AddsPermissions)
 
 TEST_F(Permissions, RemovePermissions)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__filesystem__api_abstraction");
+    RecordProperty("Description", "Check 'Permissions.RemovePermissions' behavior for the filesystem component.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     ExpectStatWith(mode_t{S_IRUSR | S_IROTH});
     ExpectFcmodat(Perms::kReadUser);
 
@@ -1225,6 +1624,10 @@ TEST_F(Permissions, RemovePermissions)
 
 TEST_F(Permissions, ReceiveStatNotPossible)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__filesystem__api_abstraction");
+    RecordProperty("Description", "Check 'Permissions.ReceiveStatNotPossible' behavior for the filesystem component.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     ExpectStatWith(ELOOP);
 
     const auto result = unit_.Permissions("/foo/bar", Perms::kReadOthers, PermOptions::kAdd);
@@ -1235,6 +1638,10 @@ TEST_F(Permissions, ReceiveStatNotPossible)
 
 TEST_F(Permissions, UnkownOption)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__filesystem__api_abstraction");
+    RecordProperty("Description", "Check 'Permissions.UnkownOption' behavior for the filesystem component.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     ExpectStatWith(mode_t{S_IRUSR});
     const auto result = unit_.Permissions("/foo/bar", Perms::kReadOthers, static_cast<PermOptions>(42));
 
@@ -1244,6 +1651,10 @@ TEST_F(Permissions, UnkownOption)
 
 TEST_F(Permissions, FchmodatReturnsError)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__filesystem__api_abstraction");
+    RecordProperty("Description", "Check 'Permissions.FchmodatReturnsError' behavior for the filesystem component.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     ExpectStatWith(mode_t{S_IRUSR});
     EXPECT_CALL(*stat_mock_, fchmodat(_, _, _, _))
         .WillOnce(Return(score::cpp::make_unexpected(score::os::Error::createFromErrno(ELOOP))));
@@ -1255,6 +1666,10 @@ TEST_F(Permissions, FchmodatReturnsError)
 
 TEST_F(Permissions, FollowSymlink)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__filesystem__api_abstraction");
+    RecordProperty("Description", "Check 'Permissions.FollowSymlink' behavior for the filesystem component.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     // expect calls which follow symlink
     EXPECT_CALL(*stat_mock_, stat(_, _, true)).Times(1);
     EXPECT_CALL(*stat_mock_, stat(_, _, false)).Times(0);
@@ -1268,6 +1683,10 @@ TEST_F(Permissions, FollowSymlink)
 
 TEST_F(Permissions, NoFollowSymlink)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__filesystem__api_abstraction");
+    RecordProperty("Description", "Check 'Permissions.NoFollowSymlink' behavior for the filesystem component.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     // expect calls which NO follow symlink
     EXPECT_CALL(*stat_mock_, stat(_, _, true)).Times(0);
     EXPECT_CALL(*stat_mock_, stat(_, _, false)).Times(1);
@@ -1310,6 +1729,10 @@ class Remove : public FilesystemFixture
 
 TEST_F(Remove, CanRemoveSingleFile)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__filesystem__api_abstraction");
+    RecordProperty("Description", "Check 'Remove.CanRemoveSingleFile' behavior for the filesystem component.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     EXPECT_CALL(*stdio_mock_, remove(StrEq("/foo/bar"))).WillOnce(Return(score::cpp::expected_blank<os::Error>{}));
 
     const auto result = unit_.Remove("/foo/bar");
@@ -1319,6 +1742,10 @@ TEST_F(Remove, CanRemoveSingleFile)
 
 TEST_F(Remove, CanNotRemoveSingleFile)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__filesystem__api_abstraction");
+    RecordProperty("Description", "Check 'Remove.CanNotRemoveSingleFile' behavior for the filesystem component.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     EXPECT_CALL(*stdio_mock_, remove(StrEq("/foo/bar")))
         .WillOnce(Return(score::cpp::make_unexpected(score::os::Error::createFromErrno(ELOOP))));
 
@@ -1331,6 +1758,10 @@ using RemoveAll = Remove;
 
 TEST_F(RemoveAll, CanRemoveSingleFile)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__filesystem__api_abstraction");
+    RecordProperty("Description", "Check 'RemoveAll.CanRemoveSingleFile' behavior for the filesystem component.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     ExpectStatWith(mode_t{S_IFREG}, "/foo/bar/file.txt", false);
     EXPECT_CALL(*stdio_mock_, remove(StrEq("/foo/bar/file.txt")))
         .WillOnce(Return(score::cpp::expected_blank<os::Error>{}));
@@ -1342,6 +1773,11 @@ TEST_F(RemoveAll, CanRemoveSingleFile)
 
 TEST_F(RemoveAll, ErrorDuringRemovingSingleFile)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__filesystem__api_abstraction");
+    RecordProperty("Description",
+                   "Check 'RemoveAll.ErrorDuringRemovingSingleFile' behavior for the filesystem component.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     ExpectStatWith(mode_t{S_IFREG}, "/foo/bar/file.txt", false);
     EXPECT_CALL(*stdio_mock_, remove(StrEq("/foo/bar/file.txt")))
         .WillOnce(Return(score::cpp::make_unexpected(score::os::Error::createFromErrno(ELOOP))));
@@ -1353,6 +1789,10 @@ TEST_F(RemoveAll, ErrorDuringRemovingSingleFile)
 
 TEST_F(RemoveAll, CanRemoveFolderRecursive)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__filesystem__api_abstraction");
+    RecordProperty("Description", "Check 'RemoveAll.CanRemoveFolderRecursive' behavior for the filesystem component.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     // Given a sub-directory and a file
     filesystem_.emplace("/foo/bar/file.txt");
     ExpectStatWith(mode_t{S_IFREG}, "/foo/bar/file.txt", true);
@@ -1384,6 +1824,10 @@ TEST_F(RemoveAll, CanRemoveFolderRecursive)
 
 TEST_F(RemoveAll, FailsOnDirectoryRemoval)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__filesystem__api_abstraction");
+    RecordProperty("Description", "Check 'RemoveAll.FailsOnDirectoryRemoval' behavior for the filesystem component.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     // Given a sub-directory and a file
     filesystem_.emplace("/foo/bar/file.txt");
     ExpectStatWith(mode_t{S_IFREG}, "/foo/bar/file.txt", true);
@@ -1414,6 +1858,10 @@ TEST_F(RemoveAll, FailsOnDirectoryRemoval)
 
 TEST_F(RemoveAll, FailsOnFileRemoval)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__filesystem__api_abstraction");
+    RecordProperty("Description", "Check 'RemoveAll.FailsOnFileRemoval' behavior for the filesystem component.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     // Given a sub-directory and a file
     filesystem_.emplace("/foo/bar/file.txt");
     ExpectStatWith(mode_t{S_IFREG}, "/foo/bar/file.txt", true);
@@ -1444,6 +1892,10 @@ TEST_F(RemoveAll, FailsOnFileRemoval)
 
 TEST_F(RemoveAll, StatFailsOnFile)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__filesystem__api_abstraction");
+    RecordProperty("Description", "Check 'RemoveAll.StatFailsOnFile' behavior for the filesystem component.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     // Given a sub-directory and a file, where the stat of the file fails
     filesystem_.emplace("/foo/file.txt");
     ExpectStatWith(mode_t{S_IFREG}, "/foo/file.txt", false);  // failed in RecursiveDirectoryIterator
@@ -1462,6 +1914,10 @@ TEST_F(RemoveAll, StatFailsOnFile)
 
 TEST_F(RemoveAll, LStatFailsOnFile)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__filesystem__api_abstraction");
+    RecordProperty("Description", "Check 'RemoveAll.LStatFailsOnFile' behavior for the filesystem component.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     // Given a sub-directory and a file, where the stat of the file fails
     filesystem_.emplace("/foo/file.txt");
     ExpectStatWith(mode_t{S_IFREG}, "/foo/file.txt", true);
@@ -1480,6 +1936,10 @@ TEST_F(RemoveAll, LStatFailsOnFile)
 
 TEST_F(RemoveAll, NonExisted)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__filesystem__api_abstraction");
+    RecordProperty("Description", "Check 'RemoveAll.NonExisted' behavior for the filesystem component.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     // The directory doesn't exist
     ExpectStatWith(ENOENT, "/nonexisted", false);
 
@@ -1492,6 +1952,10 @@ TEST_F(RemoveAll, NonExisted)
 
 TEST_F(RemoveAll, FailedStatOnBaseFolder)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__filesystem__api_abstraction");
+    RecordProperty("Description", "Check 'RemoveAll.FailedStatOnBaseFolder' behavior for the filesystem component.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     ExpectStatWith(ELOOP, "/foo", false);
 
     const auto result = unit_.RemoveAll("/foo");
@@ -1503,6 +1967,11 @@ using RemoveAllWithoutMocks = FilesystemFixtureWithoutMocks;
 
 TEST_F(RemoveAllWithoutMocks, SymlinksAreNotFollowed)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__filesystem__api_abstraction");
+    RecordProperty("Description",
+                   "Check 'RemoveAllWithoutMocks.SymlinksAreNotFollowed' behavior for the filesystem component.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     // Given "foo" folder with symlinks to "zzz" folder
     CreateFolder("foo");
     CreateFolder("foo/bar");
@@ -1549,6 +2018,10 @@ class HardLink : public FilesystemFixture
 
 TEST_F(HardLink, Simple)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__filesystem__api_abstraction");
+    RecordProperty("Description", "Check 'HardLink.Simple' behavior for the filesystem component.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     {
         std::ofstream file(TempFolder() / "from");
         file << "42";
@@ -1563,6 +2036,10 @@ TEST_F(HardLink, Simple)
 
 TEST_F(HardLink, SameData)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__filesystem__api_abstraction");
+    RecordProperty("Description", "Check 'HardLink.SameData' behavior for the filesystem component.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     {
         std::ofstream file(TempFolder() / "from");
         file << "42";
@@ -1582,6 +2059,10 @@ TEST_F(HardLink, SameData)
 
 TEST_F(HardLink, ErrorFromDoesntExist)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__filesystem__api_abstraction");
+    RecordProperty("Description", "Check 'HardLink.ErrorFromDoesntExist' behavior for the filesystem component.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     unistd_mock_->restore_instance();
 
     auto result = unit_.CreateHardLink(TempFolder() / "nonexisted", TempFolder() / "to");
@@ -1591,6 +2072,10 @@ TEST_F(HardLink, ErrorFromDoesntExist)
 
 TEST_F(HardLink, ErrorFromIsDirectory)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__filesystem__api_abstraction");
+    RecordProperty("Description", "Check 'HardLink.ErrorFromIsDirectory' behavior for the filesystem component.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     unistd_mock_->restore_instance();
 
     auto result = unit_.CreateHardLink(TempFolder(), TempFolder() / "to");
@@ -1600,6 +2085,10 @@ TEST_F(HardLink, ErrorFromIsDirectory)
 
 TEST_F(HardLink, ErrorToIsAlreadyExist)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__filesystem__api_abstraction");
+    RecordProperty("Description", "Check 'HardLink.ErrorToIsAlreadyExist' behavior for the filesystem component.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     {
         std::ofstream file(TempFolder() / "from");
         file << "42";
@@ -1617,6 +2106,10 @@ TEST_F(HardLink, ErrorToIsAlreadyExist)
 
 TEST_F(HardLink, Count)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__filesystem__api_abstraction");
+    RecordProperty("Description", "Check 'HardLink.Count' behavior for the filesystem component.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
 
     EXPECT_CALL(*stat_mock_, stat(StrEq("/tmp/from"), _, true)).WillOnce(Invoke([](auto, auto& buffer, auto) {
         buffer.st_nlink = 42U;
@@ -1631,6 +2124,10 @@ TEST_F(HardLink, Count)
 
 TEST_F(HardLink, ErrorCount)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__filesystem__api_abstraction");
+    RecordProperty("Description", "Check 'HardLink.ErrorCount' behavior for the filesystem component.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     EXPECT_CALL(*stat_mock_, stat(StrEq("/tmp/from"), _, true))
         .WillOnce(Return(score::cpp::make_unexpected(score::os::Error::createFromErrno(EACCES))));
 
@@ -1643,6 +2140,10 @@ using IsRegularFileFixture = FilesystemFixture;
 
 TEST_F(IsRegularFileFixture, RegularFile)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__filesystem__api_abstraction");
+    RecordProperty("Description", "Check 'IsRegularFileFixture.RegularFile' behavior for the filesystem component.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     ExpectStatWith(mode_t{S_IFREG});
 
     const auto result = unit_.IsRegularFile("/tmp/file");
@@ -1653,6 +2154,10 @@ TEST_F(IsRegularFileFixture, RegularFile)
 
 TEST_F(IsRegularFileFixture, Directory)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__filesystem__api_abstraction");
+    RecordProperty("Description", "Check 'IsRegularFileFixture.Directory' behavior for the filesystem component.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     ExpectStatWith(mode_t{S_IFDIR});
 
     const auto result = unit_.IsRegularFile("/tmp/dir");
@@ -1663,6 +2168,10 @@ TEST_F(IsRegularFileFixture, Directory)
 
 TEST_F(IsRegularFileFixture, NonExisted)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__filesystem__api_abstraction");
+    RecordProperty("Description", "Check 'IsRegularFileFixture.NonExisted' behavior for the filesystem component.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     ExpectStatWith(ENOENT);
 
     const auto result = unit_.IsRegularFile("/nonexisted");
@@ -1673,6 +2182,10 @@ TEST_F(IsRegularFileFixture, NonExisted)
 
 TEST_F(IsRegularFileFixture, StatusFailed)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__filesystem__api_abstraction");
+    RecordProperty("Description", "Check 'IsRegularFileFixture.StatusFailed' behavior for the filesystem component.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     ExpectStatWith(ELOOP);
 
     const auto result = unit_.IsRegularFile("/record_with_failed_status");
@@ -1684,6 +2197,10 @@ using IsDirectoryFixture = FilesystemFixture;
 
 TEST_F(IsDirectoryFixture, Directory)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__filesystem__api_abstraction");
+    RecordProperty("Description", "Check 'IsDirectoryFixture.Directory' behavior for the filesystem component.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     ExpectStatWith(mode_t{S_IFDIR});
 
     const auto result = unit_.IsDirectory("/tmp/dir");
@@ -1694,6 +2211,10 @@ TEST_F(IsDirectoryFixture, Directory)
 
 TEST_F(IsDirectoryFixture, RegularFile)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__filesystem__api_abstraction");
+    RecordProperty("Description", "Check 'IsDirectoryFixture.RegularFile' behavior for the filesystem component.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     ExpectStatWith(mode_t{S_IFREG});
 
     const auto result = unit_.IsDirectory("/tmp/file");
@@ -1704,6 +2225,10 @@ TEST_F(IsDirectoryFixture, RegularFile)
 
 TEST_F(IsDirectoryFixture, NonExisted)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__filesystem__api_abstraction");
+    RecordProperty("Description", "Check 'IsDirectoryFixture.NonExisted' behavior for the filesystem component.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     ExpectStatWith(ENOENT);
 
     const auto result = unit_.IsDirectory("/nonexisted");
@@ -1714,6 +2239,10 @@ TEST_F(IsDirectoryFixture, NonExisted)
 
 TEST_F(IsDirectoryFixture, StatusFailed)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__filesystem__api_abstraction");
+    RecordProperty("Description", "Check 'IsDirectoryFixture.StatusFailed' behavior for the filesystem component.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     ExpectStatWith(ELOOP);
 
     const auto result = unit_.IsDirectory("/record_with_failed_status");
@@ -1723,6 +2252,15 @@ TEST_F(IsDirectoryFixture, StatusFailed)
 
 TEST_F(FilesystemFixtureWithoutMocks, IsEmpty_EmptyDirectory)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__filesystem__api_abstraction");
+    RecordProperty(
+        "Description",
+        "Check 'FilesystemFixtureWithoutMocks.IsEmpty_EmptyDirectory' behavior for the filesystem component.");
+    RecordProperty(
+        "Description",
+        "Check 'FilesystemFixtureWithoutMocks.IsEmpty_EmptyDirectory' behavior for the filesystem component.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     CreateFolder("dir");
 
     const auto result = unit_.IsEmpty(TempFolder() / "dir");
@@ -1733,6 +2271,15 @@ TEST_F(FilesystemFixtureWithoutMocks, IsEmpty_EmptyDirectory)
 
 TEST_F(FilesystemFixtureWithoutMocks, IsEmpty_EmptyRegularFile)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__filesystem__api_abstraction");
+    RecordProperty(
+        "Description",
+        "Check 'FilesystemFixtureWithoutMocks.IsEmpty_EmptyRegularFile' behavior for the filesystem component.");
+    RecordProperty(
+        "Description",
+        "Check 'FilesystemFixtureWithoutMocks.IsEmpty_EmptyRegularFile' behavior for the filesystem component.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     WriteFile("from", "");
 
     const auto result = unit_.IsEmpty(TempFolder() / "from");
@@ -1743,6 +2290,15 @@ TEST_F(FilesystemFixtureWithoutMocks, IsEmpty_EmptyRegularFile)
 
 TEST_F(FilesystemFixtureWithoutMocks, IsEmpty_NonEmptyDirectory)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__filesystem__api_abstraction");
+    RecordProperty(
+        "Description",
+        "Check 'FilesystemFixtureWithoutMocks.IsEmpty_NonEmptyDirectory' behavior for the filesystem component.");
+    RecordProperty(
+        "Description",
+        "Check 'FilesystemFixtureWithoutMocks.IsEmpty_NonEmptyDirectory' behavior for the filesystem component.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     CreateFolder("dir");
     WriteFile("dir/from", "");
 
@@ -1754,6 +2310,15 @@ TEST_F(FilesystemFixtureWithoutMocks, IsEmpty_NonEmptyDirectory)
 
 TEST_F(FilesystemFixtureWithoutMocks, IsEmpty_NonEmptyRegularFile)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__filesystem__api_abstraction");
+    RecordProperty(
+        "Description",
+        "Check 'FilesystemFixtureWithoutMocks.IsEmpty_NonEmptyRegularFile' behavior for the filesystem component.");
+    RecordProperty(
+        "Description",
+        "Check 'FilesystemFixtureWithoutMocks.IsEmpty_NonEmptyRegularFile' behavior for the filesystem component.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     WriteFile("from", "42");
 
     const auto result = unit_.IsEmpty(TempFolder() / "from");
@@ -1764,6 +2329,11 @@ TEST_F(FilesystemFixtureWithoutMocks, IsEmpty_NonEmptyRegularFile)
 
 TEST_F(FilesystemFixtureWithoutMocks, IsEmpty_NonExisted)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__filesystem__api_abstraction");
+    RecordProperty("Description",
+                   "Check 'FilesystemFixtureWithoutMocks.IsEmpty_NonExisted' behavior for the filesystem component.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     const auto result = unit_.IsEmpty("/nonexisted");
 
     ASSERT_FALSE(result.has_value());
@@ -1771,6 +2341,11 @@ TEST_F(FilesystemFixtureWithoutMocks, IsEmpty_NonExisted)
 
 TEST_F(FilesystemFixture, IsEmpty_StatusFailed)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__filesystem__api_abstraction");
+    RecordProperty("Description",
+                   "Check 'FilesystemFixture.IsEmpty_StatusFailed' behavior for the filesystem component.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     ExpectStatWith(ELOOP);
 
     const auto result = unit_.IsEmpty("/record_with_failed_status");
@@ -1780,6 +2355,11 @@ TEST_F(FilesystemFixture, IsEmpty_StatusFailed)
 
 TEST_F(FilesystemFixture, IsEmpty_OpendDirFailed)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__filesystem__api_abstraction");
+    RecordProperty("Description",
+                   "Check 'FilesystemFixture.IsEmpty_OpendDirFailed' behavior for the filesystem component.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     // Directory exists but cannot be opened
     ExpectStatWith(mode_t{S_IFDIR}, "/tmp/dir");
     EXPECT_CALL(*dirent_mock_, opendir(_))
@@ -1792,6 +2372,11 @@ TEST_F(FilesystemFixture, IsEmpty_OpendDirFailed)
 
 TEST_F(FilesystemFixture, IsEmpty_NoDirNofile)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__filesystem__api_abstraction");
+    RecordProperty("Description",
+                   "Check 'FilesystemFixture.IsEmpty_NoDirNofile' behavior for the filesystem component.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     // Not a directory, not a regular file
     ExpectStatWith(mode_t{S_IFCHR}, "/tmp/dir");
 
@@ -1805,6 +2390,10 @@ using IsSymlinkFixture = FilesystemFixture;
 
 TEST_F(IsSymlinkFixture, Symlink)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__filesystem__api_abstraction");
+    RecordProperty("Description", "Check 'IsSymlinkFixture.Symlink' behavior for the filesystem component.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     ExpectStatWith(mode_t{S_IFLNK}, "/tmp/symlink", false);
 
     const auto result = unit_.IsSymlink("/tmp/symlink");
@@ -1815,6 +2404,10 @@ TEST_F(IsSymlinkFixture, Symlink)
 
 TEST_F(IsSymlinkFixture, RegularFile)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__filesystem__api_abstraction");
+    RecordProperty("Description", "Check 'IsSymlinkFixture.RegularFile' behavior for the filesystem component.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     ExpectStatWith(mode_t{S_IFREG}, "/tmp/file", false);
 
     const auto result = unit_.IsSymlink("/tmp/file");
@@ -1825,6 +2418,10 @@ TEST_F(IsSymlinkFixture, RegularFile)
 
 TEST_F(IsSymlinkFixture, StatusFailed)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__filesystem__api_abstraction");
+    RecordProperty("Description", "Check 'IsSymlinkFixture.StatusFailed' behavior for the filesystem component.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     ExpectStatWith(ELOOP, "/record_with_failed_status", false);
 
     const auto result = unit_.IsSymlink("/record_with_failed_status");
@@ -1834,6 +2431,10 @@ TEST_F(IsSymlinkFixture, StatusFailed)
 
 TEST_F(IsSymlinkFixture, DoesntExist)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__filesystem__api_abstraction");
+    RecordProperty("Description", "Check 'IsSymlinkFixture.DoesntExist' behavior for the filesystem component.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     ExpectStatWith(ENOENT, "/non-existed", false);
 
     const auto result = unit_.IsSymlink("/non-existed");
@@ -1844,6 +2445,12 @@ TEST_F(IsSymlinkFixture, DoesntExist)
 
 TEST_F(FilesystemFixtureWithoutMocks, Check_Upd_FileSystem_ClearDirContent_Steps)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__filesystem__api_abstraction");
+    RecordProperty("Description",
+                   "Check 'FilesystemFixtureWithoutMocks.Check_Upd_FileSystem_ClearDirContent_Steps' behavior for the "
+                   "filesystem component.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     // This test added to check steps in Upd_FileSystem_ClearDirContent() function
     // in case the path ends with a separator
 
@@ -1876,11 +2483,21 @@ TEST_F(FilesystemFixtureWithoutMocks, Check_Upd_FileSystem_ClearDirContent_Steps
 
 TEST_F(FilesystemFixture, AbsoluteForEmptyPath)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__filesystem__api_abstraction");
+    RecordProperty("Description",
+                   "Check 'FilesystemFixture.AbsoluteForEmptyPath' behavior for the filesystem component.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     EXPECT_STREQ(unit_.Absolute("").value().CStr(), "");
 }
 
 TEST_F(FilesystemFixture, AbsoluteForAbsolutePaths)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__filesystem__api_abstraction");
+    RecordProperty("Description",
+                   "Check 'FilesystemFixture.AbsoluteForAbsolutePaths' behavior for the filesystem component.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     EXPECT_STREQ(unit_.Absolute("/").value().CStr(), "/");
     EXPECT_STREQ(unit_.Absolute("/foo").value().CStr(), "/foo");
     EXPECT_STREQ(unit_.Absolute("/foo/bar").value().CStr(), "/foo/bar");
@@ -1890,6 +2507,11 @@ TEST_F(FilesystemFixture, AbsoluteForAbsolutePaths)
 
 TEST_F(FilesystemFixture, AbsoluteForRelativePaths)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__filesystem__api_abstraction");
+    RecordProperty("Description",
+                   "Check 'FilesystemFixture.AbsoluteForRelativePaths' behavior for the filesystem component.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     EXPECT_CALL(*unistd_mock_, getcwd(_, _))
         .WillRepeatedly(Return(score::cpp::expected<char*, os::Error>{const_cast<char*>("/current/path")}));
 
@@ -1902,6 +2524,10 @@ TEST_F(FilesystemFixture, AbsoluteForRelativePaths)
 
 TEST_F(FilesystemFixture, AbsoluteForError)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__filesystem__api_abstraction");
+    RecordProperty("Description", "Check 'FilesystemFixture.AbsoluteForError' behavior for the filesystem component.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     EXPECT_CALL(*unistd_mock_, getcwd(_, _))
         .WillOnce(Return(score::cpp::make_unexpected(score::os::Error::createFromErrno(EACCES))));
 
@@ -1912,11 +2538,29 @@ TEST_F(FilesystemFixture, AbsoluteForError)
 
 TEST_F(FilesystemFixtureWithoutMocks, CanonicalForEmptyPath)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__filesystem__api_abstraction");
+    RecordProperty(
+        "Description",
+        "Check 'FilesystemFixtureWithoutMocks.CanonicalForEmptyPath' behavior for the filesystem component.");
+    RecordProperty(
+        "Description",
+        "Check 'FilesystemFixtureWithoutMocks.CanonicalForEmptyPath' behavior for the filesystem component.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     EXPECT_FALSE(unit_.Canonical("").has_value());
 }
 
 TEST_F(FilesystemFixtureWithoutMocks, CanonicalForRelativePath)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__filesystem__api_abstraction");
+    RecordProperty(
+        "Description",
+        "Check 'FilesystemFixtureWithoutMocks.CanonicalForRelativePath' behavior for the filesystem component.");
+    RecordProperty(
+        "Description",
+        "Check 'FilesystemFixtureWithoutMocks.CanonicalForRelativePath' behavior for the filesystem component.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     SetCurrentPath(TempFolder());
     WriteFile("file", "");
     CreateFolder("folder");
@@ -1929,11 +2573,25 @@ TEST_F(FilesystemFixtureWithoutMocks, CanonicalForRelativePath)
 
 TEST_F(FilesystemFixtureWithoutMocks, CanonicalForNonexistedPath)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__filesystem__api_abstraction");
+    RecordProperty(
+        "Description",
+        "Check 'FilesystemFixtureWithoutMocks.CanonicalForNonexistedPath' behavior for the filesystem component.");
+    RecordProperty(
+        "Description",
+        "Check 'FilesystemFixtureWithoutMocks.CanonicalForNonexistedPath' behavior for the filesystem component.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     EXPECT_FALSE(unit_.Canonical("/non-existed").has_value());
 }
 
 TEST_F(FilesystemFixture, CanonicalForFailedGetCurrentPath)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__filesystem__api_abstraction");
+    RecordProperty("Description",
+                   "Check 'FilesystemFixture.CanonicalForFailedGetCurrentPath' behavior for the filesystem component.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     EXPECT_CALL(*unistd_mock_, getcwd(_, _))
         .WillOnce(Return(score::cpp::make_unexpected(score::os::Error::createFromErrno(EACCES))));
 
@@ -1942,6 +2600,15 @@ TEST_F(FilesystemFixture, CanonicalForFailedGetCurrentPath)
 
 TEST_F(FilesystemFixtureWithoutMocks, CanonicalForFileSymlink)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__filesystem__api_abstraction");
+    RecordProperty(
+        "Description",
+        "Check 'FilesystemFixtureWithoutMocks.CanonicalForFileSymlink' behavior for the filesystem component.");
+    RecordProperty(
+        "Description",
+        "Check 'FilesystemFixtureWithoutMocks.CanonicalForFileSymlink' behavior for the filesystem component.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     SetCurrentPath(TempFolder());
     WriteFile("file", "");
     ASSERT_EQ(::symlink("./file", "./symlink"), 0);
@@ -1951,6 +2618,15 @@ TEST_F(FilesystemFixtureWithoutMocks, CanonicalForFileSymlink)
 
 TEST_F(FilesystemFixtureWithoutMocks, CanonicalForFolderSymlink)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__filesystem__api_abstraction");
+    RecordProperty(
+        "Description",
+        "Check 'FilesystemFixtureWithoutMocks.CanonicalForFolderSymlink' behavior for the filesystem component.");
+    RecordProperty(
+        "Description",
+        "Check 'FilesystemFixtureWithoutMocks.CanonicalForFolderSymlink' behavior for the filesystem component.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     SetCurrentPath(TempFolder());
 
     CreateFolder("folder");
@@ -1963,6 +2639,10 @@ using CreateSymlink = FilesystemFixtureWithoutMocks;
 
 TEST_F(CreateSymlink, RelativePath)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__filesystem__api_abstraction");
+    RecordProperty("Description", "Check 'CreateSymlink.RelativePath' behavior for the filesystem component.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     SetCurrentPath(TempFolder());
     WriteFile("target", "42");
 
@@ -1974,6 +2654,10 @@ TEST_F(CreateSymlink, RelativePath)
 
 TEST_F(CreateSymlink, AbsolutePath)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__filesystem__api_abstraction");
+    RecordProperty("Description", "Check 'CreateSymlink.AbsolutePath' behavior for the filesystem component.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     WriteFile("target", "42");
 
     auto result = unit_.CreateSymlink(TempFolder() / "target", TempFolder() / "symlink");
@@ -1984,6 +2668,10 @@ TEST_F(CreateSymlink, AbsolutePath)
 
 TEST_F(CreateSymlink, SameFilename)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__filesystem__api_abstraction");
+    RecordProperty("Description", "Check 'CreateSymlink.SameFilename' behavior for the filesystem component.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     WriteFile("target", "42");
 
     auto result = unit_.CreateSymlink(TempFolder() / "target", TempFolder() / "symlink");
@@ -1999,6 +2687,10 @@ TEST_F(CreateSymlink, SameFilename)
 
 TEST_F(CreateSymlink, NoErrorFromNonExisted)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__filesystem__api_abstraction");
+    RecordProperty("Description", "Check 'CreateSymlink.NoErrorFromNonExisted' behavior for the filesystem component.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     SetCurrentPath(TempFolder());
     ASSERT_FALSE(unit_.Exists("./nonexisted").value());
 
@@ -2009,6 +2701,10 @@ TEST_F(CreateSymlink, NoErrorFromNonExisted)
 
 TEST_F(CreateSymlink, SymlinkToDirectory)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__filesystem__api_abstraction");
+    RecordProperty("Description", "Check 'CreateSymlink.SymlinkToDirectory' behavior for the filesystem component.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     CreateFolder("folder");
 
     auto result = unit_.CreateSymlink(TempFolder() / "folder", TempFolder() / "symlink");
@@ -2019,6 +2715,10 @@ TEST_F(CreateSymlink, SymlinkToDirectory)
 
 TEST_F(CreateSymlink, ErrorIfAlreadyExist)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__filesystem__api_abstraction");
+    RecordProperty("Description", "Check 'CreateSymlink.ErrorIfAlreadyExist' behavior for the filesystem component.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     WriteFile("target", "");
     WriteFile("symlink", "");
 
@@ -2031,6 +2731,10 @@ using SymlinkStatusFixture = FilesystemFixtureWithoutMocks;
 
 TEST_F(SymlinkStatusFixture, TargetExists)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__filesystem__api_abstraction");
+    RecordProperty("Description", "Check 'SymlinkStatusFixture.TargetExists' behavior for the filesystem component.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     WriteFile("target", "");
     const Path symlink_path = TempFolder() / "symlink";
     EXPECT_TRUE(unit_.CreateSymlink(TempFolder() / "target", symlink_path));
@@ -2043,6 +2747,11 @@ TEST_F(SymlinkStatusFixture, TargetExists)
 
 TEST_F(SymlinkStatusFixture, TargetDoesntExist)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__filesystem__api_abstraction");
+    RecordProperty("Description",
+                   "Check 'SymlinkStatusFixture.TargetDoesntExist' behavior for the filesystem component.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     const Path target_path = TempFolder() / "non-existed";
     ASSERT_FALSE(unit_.Exists(target_path).value());
     const Path symlink_path = TempFolder() / "symlink";
@@ -2058,6 +2767,10 @@ using StatusFixture = FilesystemFixtureWithoutMocks;
 
 TEST_F(StatusFixture, TargetDoesntExist)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__filesystem__api_abstraction");
+    RecordProperty("Description", "Check 'StatusFixture.TargetDoesntExist' behavior for the filesystem component.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     const Path target_path = TempFolder() / "non-existed";
     ASSERT_FALSE(unit_.Exists(target_path).value());
     const Path symlink_path = TempFolder() / "symlink";
@@ -2073,6 +2786,10 @@ using ReadSymlinkFixture = FilesystemFixtureWithoutMocks;
 
 TEST_F(SymlinkStatusFixture, SymlinkExists)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__filesystem__api_abstraction");
+    RecordProperty("Description", "Check 'SymlinkStatusFixture.SymlinkExists' behavior for the filesystem component.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     const Path symlink_path = TempFolder() / "symlink";
     EXPECT_TRUE(unit_.CreateSymlink("foo/bar", symlink_path));
 
@@ -2084,6 +2801,11 @@ TEST_F(SymlinkStatusFixture, SymlinkExists)
 
 TEST_F(SymlinkStatusFixture, SymlinkDoesNotExist)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__filesystem__api_abstraction");
+    RecordProperty("Description",
+                   "Check 'SymlinkStatusFixture.SymlinkDoesNotExist' behavior for the filesystem component.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     const Path symlink_path = TempFolder() / "symlink";
 
     const auto result = unit_.ReadSymlink(symlink_path);
@@ -2093,6 +2815,10 @@ TEST_F(SymlinkStatusFixture, SymlinkDoesNotExist)
 
 TEST_F(SymlinkStatusFixture, BufferTooSmall)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__filesystem__api_abstraction");
+    RecordProperty("Description", "Check 'SymlinkStatusFixture.BufferTooSmall' behavior for the filesystem component.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     os::MockGuard<os::UnistdMock> unistd_mock{};
     EXPECT_CALL(*unistd_mock, readlink(_, _, _)).WillOnce(Invoke([](const char*, char*, const std::size_t bufsize) {
         return bufsize;
@@ -2108,6 +2834,11 @@ using CreateDirectorySymlinkFixture = FilesystemFixtureWithoutMocks;
 
 TEST_F(CreateDirectorySymlinkFixture, SymlinkToFolder)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__filesystem__api_abstraction");
+    RecordProperty("Description",
+                   "Check 'CreateDirectorySymlinkFixture.SymlinkToFolder' behavior for the filesystem component.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     CreateFolder("foo");
 
     const auto result = unit_.CreateDirectorySymlink(TempFolder() / "foo", TempFolder() / "symlink");
@@ -2117,6 +2848,11 @@ TEST_F(CreateDirectorySymlinkFixture, SymlinkToFolder)
 
 TEST_F(CreateDirectorySymlinkFixture, EmptySymlink)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__filesystem__api_abstraction");
+    RecordProperty("Description",
+                   "Check 'CreateDirectorySymlinkFixture.EmptySymlink' behavior for the filesystem component.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     CreateFolder("foo");
 
     const auto result = unit_.CreateDirectorySymlink("", TempFolder() / "symlink");
@@ -2128,6 +2864,10 @@ using CopySymlinkFixture = FilesystemFixtureWithoutMocks;
 
 TEST_F(CopySymlinkFixture, NoError)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__filesystem__api_abstraction");
+    RecordProperty("Description", "Check 'CopySymlinkFixture.NoError' behavior for the filesystem component.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     const Path from = TempFolder() / "from";
     EXPECT_TRUE(unit_.CreateSymlink("foo/bar", from));
     const Path to = TempFolder() / "to";
@@ -2141,6 +2881,11 @@ TEST_F(CopySymlinkFixture, NoError)
 
 TEST_F(CopySymlinkFixture, ErrorDueToNonExisted)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__filesystem__api_abstraction");
+    RecordProperty("Description",
+                   "Check 'CopySymlinkFixture.ErrorDueToNonExisted' behavior for the filesystem component.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     const auto result = unit_.CopySymlink(TempFolder() / "from-non-existed", TempFolder() / "to");
 
     EXPECT_FALSE(result.has_value());
@@ -2148,6 +2893,11 @@ TEST_F(CopySymlinkFixture, ErrorDueToNonExisted)
 
 TEST_F(CopySymlinkFixture, ErrorDueToAlreadyExisted)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__filesystem__api_abstraction");
+    RecordProperty("Description",
+                   "Check 'CopySymlinkFixture.ErrorDueToAlreadyExisted' behavior for the filesystem component.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     const Path from = TempFolder() / "from";
     EXPECT_TRUE(unit_.CreateSymlink("foo/bar", from));
     const Path to = TempFolder() / "to";
@@ -2162,6 +2912,11 @@ using WeaklyCanonicalFixture = FilesystemFixtureWithoutMocks;
 
 TEST_F(WeaklyCanonicalFixture, CanResolveSymbolicLink)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__filesystem__api_abstraction");
+    RecordProperty("Description",
+                   "Check 'WeaklyCanonicalFixture.CanResolveSymbolicLink' behavior for the filesystem component.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     SetCurrentPath(TempFolder());
     CreateFolder("foo");
     CreateSymboliclink("foo", "link-to-foo");
