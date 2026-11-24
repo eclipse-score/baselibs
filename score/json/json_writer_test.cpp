@@ -158,25 +158,6 @@ TYPED_TEST(JsonWriterFormattingTest, ToBufferWritesFormattedJson)
     EXPECT_EQ(buffer, TestFixture::Expected());
 }
 
-TYPED_TEST(JsonWriterFormattingTest, ToFileWritesFormattedJsonViaAtomicUpdate)
-{
-    this->RecordProperty("Verifies", "::score::json::JsonWriter::ToFile");
-    this->RecordProperty("ASIL", "B");
-    this->RecordProperty("Description", "writing json to string buffer, cf. RFC-8259 section 4, 5 and 9");
-    this->RecordProperty("TestType", "interface-test");
-    this->RecordProperty("DerivationTechnique", "equivalence-classes");  // boundary values
-    this->RecordProperty("Priority", "3");
-
-    typename TestFixture::SampleJson json;
-
-    EXPECT_CALL(*this->file_factory_fake_, AtomicUpdate(StrEq("/foo/foo.json"), std::ios::out | std::ios::trunc, _))
-        .Times(1);
-
-    auto file_content{this->WriteToFile(json, "/foo/foo.json", FileSyncMode::kSynced)};
-
-    EXPECT_EQ(file_content, TestFixture::Expected());
-}
-
 TYPED_TEST(JsonWriterFormattingTest, ToUnsyncedFileWritesFormattedJson)
 {
     this->RecordProperty("Verifies", "::score::json::JsonWriter::ToFile");

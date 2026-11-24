@@ -55,11 +55,6 @@ TEST(StructureParserInvalidTest, RejectsEmptyDocument)
     AssertInvalid("");
 }
 
-TEST(StructureParserInvalidTest, RejectsDocumentWithoutData)
-{
-    AssertInvalid("");
-}
-
 // ---- Malformed JSON keywords (wrong length) --------------------------------
 
 TEST(StructureParserInvalidTest, RejectsTrueWithTrailingLetter)
