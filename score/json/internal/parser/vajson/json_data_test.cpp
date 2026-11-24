@@ -166,20 +166,6 @@ TEST(UT__JsonOps__JsonData, KeepsUnknownBom)
     ASSERT_EQ(ops.TryTake(), '\xFE');
 }
 
-/// Test that JsonData returns the underlying DepthCounter.
-///
-/// - Assert that initially the DepthCounter is empty.
-TEST(UT__JsonOps__JsonData, GetState)
-{
-    Result<JsonData> result{JsonData::FromBuffer(std::string_view{""})};
-    ASSERT_TRUE(result.has_value());
-
-    JsonData doc{std::move(result.value())};
-    internal::DepthCounter& state{doc.GetState()};
-    ASSERT_FALSE(state.CheckEndOfFile().has_value());
-    ASSERT_EQ(state.CheckEndOfFile().error(), JsonErrc::kInvalidJson);
-}
-
 /// Test that JsonData can store/retrieve the current string buffer.
 ///
 /// - Assert that initially the string buffer is empty.

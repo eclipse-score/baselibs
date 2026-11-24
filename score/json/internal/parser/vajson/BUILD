@@ -22,9 +22,9 @@ cc_library(
         "json_data.cpp",
         "json_ops.cpp",
         "structure_parser.cpp",
+        "structure_validator.cpp",
     ],
     hdrs = [
-        "depth_counter.h",
         "json_data.h",
         "json_error_domain.h",
         "json_number.h",
@@ -35,6 +35,7 @@ cc_library(
         "reader_config.h",
         "reader_fwd.h",
         "structure_parser.h",
+        "structure_validator.h",
         "types.h",
     ],
     features = COMPILER_WARNING_FEATURES,
@@ -50,7 +51,6 @@ cc_library(
 cc_gtest_unit_test(
     name = "unit_test",
     srcs = [
-        "depth_counter_test.cpp",
         "json_data_test.cpp",
         "json_error_domain_test.cpp",
         "json_number_test.cpp",
@@ -67,6 +67,7 @@ cc_gtest_unit_test(
         "structure_parser_string_test.cpp",
         "structure_parser_test.cpp",
         "structure_parser_valid_test.cpp",
+        "structure_validator_test.cpp",
     ],
     features = COMPILER_WARNING_FEATURES,
     deps = [

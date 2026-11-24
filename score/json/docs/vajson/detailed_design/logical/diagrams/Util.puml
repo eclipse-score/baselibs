@@ -23,7 +23,6 @@ package "score" {
 
     class JsonData {}
 
-    class DepthCounter {}
     class JsonErrorDomain {}
     class JsonException {}
 
@@ -51,7 +50,6 @@ JsonData --> Ref
 JsonOps --> JsonData
 JsonOps --> OptChar
 
-JsonData --> DepthCounter
 JsonData --> JsonErrorDomain
 JsonErrorDomain --> JsonException
 

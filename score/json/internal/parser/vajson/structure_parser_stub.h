@@ -61,7 +61,7 @@ class StructureParserStub : public internal::StructureParser
         return ParserState::kRunning;
     }
 
-    auto OnEndObject(std::size_t) noexcept -> ParserResult override
+    auto OnEndObject() noexcept -> ParserResult override
     {
         return ParserState::kRunning;
     }
@@ -71,7 +71,7 @@ class StructureParserStub : public internal::StructureParser
         return ParserState::kRunning;
     }
 
-    auto OnEndArray(std::size_t) noexcept -> ParserResult override
+    auto OnEndArray() noexcept -> ParserResult override
     {
         return ParserState::kRunning;
     }

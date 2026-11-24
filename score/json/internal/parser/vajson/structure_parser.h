@@ -18,13 +18,12 @@
 #ifndef SCORE_JSON_INTERNAL_PARSER_VAJSON_STRUCTURE_PARSER_H
 #define SCORE_JSON_INTERNAL_PARSER_VAJSON_STRUCTURE_PARSER_H
 
-#include <cstddef>
 #include <cstdint>
 
-#include "score/json/internal/parser/vajson/depth_counter.h"
 #include "score/json/internal/parser/vajson/json_number.h"
 #include "score/json/internal/parser/vajson/json_ops.h"
 #include "score/json/internal/parser/vajson/parser_state.h"
+#include "score/json/internal/parser/vajson/structure_validator.h"
 #include "score/json/internal/parser/vajson/types.h"
 
 namespace score
@@ -132,13 +131,13 @@ class StructureParser
     /// @reentrant       FALSE
     virtual auto OnStartObject() noexcept -> ParserResult = 0;
 
-    /// @brief           Called for the end of an object with its number of keys
+    /// @brief           Called for the end of an object
     /// @return          The parser state, or an error that aborts parsing.
     /// @context         ANY
     /// @pre             -
     /// @threadsafe      FALSE
     /// @reentrant       FALSE
-    virtual auto OnEndObject(std::size_t) noexcept -> ParserResult = 0;
+    virtual auto OnEndObject() noexcept -> ParserResult = 0;
 
     /// @brief           Called for the start of an array
     /// @return          The parser state, or an error that aborts parsing.
@@ -148,20 +147,13 @@ class StructureParser
     /// @reentrant       FALSE
     virtual auto OnStartArray() noexcept -> ParserResult = 0;
 
-    /// @brief           Called for the end of an array with its number of elements
+    /// @brief           Called for the end of an array
     /// @return          The parser state, or an error that aborts parsing.
     /// @context         ANY
     /// @pre             -
     /// @threadsafe      FALSE
     /// @reentrant       FALSE
-    virtual auto OnEndArray(std::size_t) noexcept -> ParserResult = 0;
-
-    /// @brief           Returns the Json structure state
-    /// @return          The Json structure state.
-    /// @context         ANY
-    /// @pre             -
-    /// @threadsafe      TRUE, for different this pointer
-    auto GetState() noexcept -> DepthCounter&;
+    virtual auto OnEndArray() noexcept -> ParserResult = 0;
 
     /// @brief           Returns a reference to the Json file
     /// @return          Reference to the Json file.
@@ -344,9 +336,9 @@ class StructureParser
     auto ParseEndArray() noexcept -> ParserResult;
 
     /// @brief           Parses a comma in a list/object
-    /// @return          kRunning if the parser is in an object or array, or an error.
+    /// @return          kRunning if the comma is allowed at the current position, or an error.
     /// @error           score::json::vajson::JsonErrc::kInvalidJson
-    ///                  if in an object or on toplevel
+    ///                  if the comma is outside of an array or object, or follows a key
     /// @context         ANY
     /// @pre             -
     /// @threadsafe      FALSE
@@ -377,6 +369,8 @@ class StructureParser
 
     /// @brief           Operations on the JSON document
     JsonOps json_ops_;
+    /// @brief           Checks the order of the parsed tokens
+    StructureValidator structure_validator_{};
 };
 
 }  // namespace internal

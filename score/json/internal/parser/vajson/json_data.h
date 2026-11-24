@@ -18,7 +18,6 @@
 #ifndef SCORE_JSON_INTERNAL_PARSER_VAJSON_JSON_DATA_H
 #define SCORE_JSON_INTERNAL_PARSER_VAJSON_JSON_DATA_H
 
-#include "score/json/internal/parser/vajson/depth_counter.h"
 #include "score/json/internal/parser/vajson/parser_state.h"
 #include "score/json/internal/parser/vajson/reader_config.h"
 #include "score/json/internal/parser/vajson/reader_fwd.h"
@@ -34,7 +33,7 @@ namespace vajson
 {
 
 /// @brief           A JSON data representation
-/// @details         Handles the data state, such as the current position in the document and nesting of JSON tree.
+/// @details         Handles the data state, such as the current position in the document.
 /// @trace           DSGN-JSON-Reader-Deserialization
 class JsonData final
 {
@@ -106,16 +105,6 @@ class JsonData final
     /// @synchronous     -
     static auto FromBuffer(std::string_view buffer) noexcept -> Result<JsonData>;
 
-    /// @brief           Returns the JSON structure state
-    /// @return          The current state.
-    /// @context         ANY
-    /// @pre             -
-    /// @threadsafe      TRUE, for different this pointer
-    auto GetState() & noexcept -> internal::DepthCounter&
-    {
-        return this->depth_counter_;
-    }
-
     /// @brief           Returns the current string
     /// @return          The current string.
     /// @context         ANY
@@ -183,8 +172,6 @@ class JsonData final
     std::vector<char> owned_document_{};
     /// @brief           The unread part of the document
     StringView input_{};
-    /// @brief           JSON structure state
-    internal::DepthCounter depth_counter_{};
     /// @brief           Current buffer
     String current_buffer_{};
 };

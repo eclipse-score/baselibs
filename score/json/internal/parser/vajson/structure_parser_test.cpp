@@ -76,7 +76,7 @@ class FailingParser final : public internal::StructureParser
         return this->OnEvent();
     }
 
-    auto OnEndObject(std::size_t) noexcept -> ParserResult override
+    auto OnEndObject() noexcept -> ParserResult override
     {
         return this->OnEvent();
     }
@@ -86,7 +86,7 @@ class FailingParser final : public internal::StructureParser
         return this->OnEvent();
     }
 
-    auto OnEndArray(std::size_t) noexcept -> ParserResult override
+    auto OnEndArray() noexcept -> ParserResult override
     {
         return this->OnEvent();
     }

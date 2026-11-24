@@ -27,6 +27,11 @@ Reader
 
       Contains the logic for a SAX-style JSON parser based on dynamic polymorphism.
 
+    .. Unit:: StructureValidator
+      :safety: ASIL_D
+
+      Contains the logic to check the order of the tokens of a JSON document.
+
 ..
     LogicalUnit:: Util
     :trace: DSGN-JSON-Reader-Deserialization, DSGN-JSON-Reader-Encoding, DSGN-JSON-Reader-Number-Formatting
@@ -40,11 +45,6 @@ Reader
       :safety: ASIL_D
 
       Contains the logic for operations on a JSON file.
-
-    .. Unit:: DepthCounter
-      :safety: ASIL_D
-
-      Contains the logic to track the nesting depth.
 
     .. Unit:: OptChar
       :safety: ASIL_D
@@ -103,9 +103,9 @@ StructureParser
             - {abstract} virtual auto OnString(CStringView) -> ParserResult
             - {abstract} virtual auto OnKey(CStringView) -> ParserResult
             - {abstract} virtual auto OnStartObject() -> ParserResult
-            - {abstract} virtual auto OnEndObject(std::size_t) -> ParserResult
+            - {abstract} virtual auto OnEndObject() -> ParserResult
             - {abstract} virtual auto OnStartArray() -> ParserResult
-            - {abstract} virtual auto OnEndArray(std::size_t) -> ParserResult
+            - {abstract} virtual auto OnEndArray() -> ParserResult
           }
 
           class OptChar {}
@@ -113,11 +113,15 @@ StructureParser
           class JsonOps {}
 
           class JsonData {}
+
+          class StructureValidator {}
         }
       }
     }
 
     StructureParser --> JsonOps
+
+    StructureParser --> StructureValidator
 
     StructureParser --> JsonData
 
@@ -143,14 +147,10 @@ JsonData
           + {static} auto FromFile(StringView path, std::size_t max_size) -> Result<JsonData>
           + {static} auto FromBuffer(StringView buffer) -> Result<JsonData>
         }
-
-        class DepthCounter {}
       }
     }
 
     JsonOps --> JsonData
-
-    JsonData --> DepthCounter
 
     @enduml
 
