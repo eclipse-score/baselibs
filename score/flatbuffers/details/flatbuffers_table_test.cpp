@@ -15,11 +15,11 @@
 #include <cstdint>
 #include <cstring>
 #include <iterator>
-#include <vector>
 
 #include "flatbuffers/flatbuffer_builder.h"
 #include "flatbuffers/verifier.h"
 #include "gtest/gtest.h"
+#include "score/flatbuffers/details/full_table_fixture.hpp"
 
 namespace score
 {
@@ -32,44 +32,12 @@ namespace test
 
 using namespace ::flatbuffers;
 
-// These tests compare against native values, so they assume a little-endian host, matching FlatBuffers' wire format.
-static_assert(FLATBUFFERS_LITTLEENDIAN, "flatbuffers table tests assume a little-endian host");
-
 namespace
 {
 
-// A vtable is an array of 2-byte voffset_t entries.
-// Entry 0 holds the vtable's own byte size, entry 1 holds the table object's byte size.
-// Entry 2 onward holds one byte offset per field, in declaration order.
-// So field index i lives at byte offset 4 + 2 * i within the vtable.
-// This is the same formula FlatBufferBuilder::FieldIndexToOffset() uses internally.
-// The tables in this file have no .fbs schema, so the slot numbers are hardcoded here.
-constexpr voffset_t kScalarFieldSlot{4};         // Field 0: int32 scalar.
-constexpr voffset_t kOptionalFieldSlot{6};       // Field 1: optional int32 (generic GetOptional).
-constexpr voffset_t kBoolFieldSlot{8};           // Field 2: optional bool (stored as uint8).
-constexpr voffset_t kStringFieldSlot{10};        // Field 3: string offset.
-constexpr voffset_t kSecondStringFieldSlot{12};  // Field 4: second string offset.
-constexpr voffset_t kVectorFieldSlot{14};        // Field 5: vector<int32> offset.
-constexpr voffset_t kStructFieldSlot{16};        // Field 6: inline struct.
-constexpr voffset_t kVector64FieldSlot{18};      // Field 7: 64-bit-offset vector<int32>.
-// BuildFullTable never writes this slot, and it lies beyond the vtable, so lookups take the "field not present" path.
-constexpr voffset_t kAbsentFieldSlot{100};
 // kVector64FieldSlot is the highest slot BuildFullTable writes, so its vtable ends right after it.
 // This is the first slot outside that vtable and thus the boundary of the vtable size check.
 constexpr voffset_t kFirstSlotPastVtable{kVector64FieldSlot + sizeof(voffset_t)};
-
-// Initial capacity hint for each test's FlatBufferBuilder64; the builder grows as needed.
-constexpr size_t kInitialBufferCapacity{256U};
-
-constexpr int32_t kScalarFieldValue{42};
-constexpr int32_t kOptionalFieldValue{7};
-constexpr uint8_t kBoolFieldValue{1U};
-constexpr char kStringFieldValue[]{"hello"};
-constexpr char kSecondStringFieldValue[]{"world"};
-constexpr int32_t kVectorValues[]{1, 2, 3};
-constexpr int32_t kVector64Values[]{100, 200, 300};
-constexpr int32_t kStructFieldX{11};
-constexpr int32_t kStructFieldY{22};
 
 // Default passed to GetField and SetField.
 // It differs from every value written in this file, so a test can tell a returned default from a stored value.
@@ -81,12 +49,6 @@ constexpr int32_t kMutatedValue{99};
 // Written as a relative offset it resolves outside the buffer,
 // and written as a length it exceeds the buffer.
 constexpr uint64_t kOutOfBoundsValue{10'000'000ULL};
-
-struct Point2D
-{
-    int32_t x;
-    int32_t y;
-};
 
 // Overwrites the stored relative offset of a present offset field with a raw value.
 // Writing the raw bytes avoids forming an out-of-bounds pointer, which SetPointer would require.
@@ -100,74 +62,6 @@ bool WriteRawOffset(Table& table, const voffset_t field, const OffsetType value)
     }
     std::memcpy(field_address, &value, sizeof(value));
     return true;
-}
-
-// Builds a single table exercising every field kind Table can read.
-// The i-th AddElement/AddOffset/AddStruct call is field index i and uses the matching slot constant above.
-// The values written are independent of the slot numbers:
-//
-//   index  slot constant           slot  value written
-//     0    kScalarFieldSlot           4  kScalarFieldValue (42)
-//     1    kOptionalFieldSlot         6  kOptionalFieldValue (7)
-//     2    kBoolFieldSlot             8  kBoolFieldValue (1, i.e. true)
-//     3    kStringFieldSlot          10  kStringFieldValue ("hello")
-//     4    kSecondStringFieldSlot    12  kSecondStringFieldValue ("world")
-//     5    kVectorFieldSlot          14  kVectorValues ({1, 2, 3})
-//     6    kStructFieldSlot          16  {kStructFieldX, kStructFieldY} (11, 22)
-//     7    kVector64FieldSlot        18  kVector64Values ({100, 200, 300})
-//
-// FlatBufferBuilder fills the buffer back to front, which currently yields this layout:
-//
-//   bytes    content                                         size
-//    0-3     root offset (points forward to table)              4   <- fbb.GetBufferPointer()
-//    4-23    vtable header, then 8 field slots (2 B each)      20
-//   24-27    alignment padding                                  4
-//   28-31    table header: soffset_t back to vtable             4   <- table start, Table::data_[0]
-//   32-39    vec64 field (8-byte offset A, slot 18)             8   <- in-table offset 4
-//   40-47    struct field (Point2D inline: x, y)                8   <- in-table offset 12
-//   48-51    vec field (4-byte offset D, slot 14)               4   <- in-table offset 20
-//   52-55    str2 field (4-byte offset C, slot 12)              4   <- in-table offset 24
-//   56-59    str1 field (4-byte offset B, slot 10)              4   <- in-table offset 28
-//   60-62    padding (aligns the int32 fields below)            3
-//    63      bool field (1 byte, slot 8)                        1   <- in-table offset 35
-//   64-67    optional field (int32, slot 6)                     4   <- in-table offset 36
-//   68-71    scalar field (int32, slot 4)                       4   <- in-table offset 40
-//   72-87    vec data                                          16   <- D
-//   88-99    str2 "world"                                      12   <- C
-//  100-111   str1 "hello"                                      12   <- B
-//  112-135   vec64 data (built first, stored last)             24   <- A
-//
-// The byte layout is an implementation detail of the builder and illustrates the offset indirection only.
-// Tests look fields up by slot and derive any byte positions they need at runtime.
-Table* BuildFullTable(FlatBufferBuilder64& fbb)
-{
-    // Create... writes to the tail now and hands back a lightweight handle.
-    // All 64-bit-offset content must be serialized before any 32-bit-offset content, so CreateVector64 comes first.
-    const auto vec64 = fbb.CreateVector64(std::vector<int32_t>(std::begin(kVector64Values), std::end(kVector64Values)));
-    const auto str1 = fbb.CreateString(kStringFieldValue);
-    const auto str2 = fbb.CreateString(kSecondStringFieldValue);
-    const auto vec = fbb.CreateVector(kVectorValues, std::size(kVectorValues));
-    const Point2D point{kStructFieldX, kStructFieldY};
-
-    const auto start = fbb.StartTable();
-
-    // AddElement writes the value itself directly into the table.
-    fbb.AddElement<int32_t>(kScalarFieldSlot, kScalarFieldValue, 0);
-    fbb.AddElement<int32_t>(kOptionalFieldSlot, kOptionalFieldValue, 0);
-    fbb.AddElement<uint8_t>(kBoolFieldSlot, kBoolFieldValue, 0U);
-
-    // AddOffset writes a number to the table saying where the data is.
-    fbb.AddOffset(kStringFieldSlot, str1);
-    fbb.AddOffset(kSecondStringFieldSlot, str2);
-    fbb.AddOffset(kVectorFieldSlot, vec);
-    // AddStruct is like AddElement, not AddOffset: it copies the whole struct directly into the
-    // table, since Point2D is fixed-size and needs no tail storage.
-    fbb.AddStruct(kStructFieldSlot, &point);
-    fbb.AddOffset(kVector64FieldSlot, vec64);
-    const auto root = fbb.EndTable(start);
-    fbb.Finish(Offset<Table>(root));
-
-    return GetMutableRoot<Table>(fbb.GetBufferPointer());
 }
 
 }  // namespace
