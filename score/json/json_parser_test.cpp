@@ -12,6 +12,8 @@
  ********************************************************************************/
 #include "score/json/json_parser.h"
 
+#include "score/quality/compiler_warnings/warnings.h"
+
 #include <gmock/gmock.h>
 #include <gtest/gtest.h>
 
@@ -89,41 +91,42 @@ TEST_F(JsonParserTest, FromBufferParsesObject)
 
 TEST_F(JsonParserTest, JsonLiteralParsesObject)
 {
-    RecordProperty("Verifies", "::score::json::operator\"\"_json");
-    RecordProperty("ASIL", "B");
-    RecordProperty("Description",
-                   "Parsing json object using "
-                   "_json operator, cf. RFC-8259 section 9");
+    RecordProperty("Description", "Check that the deprecated _json literal parses a valid JSON object.");
     RecordProperty("TestType", "interface-test");
-    RecordProperty("DerivationTechnique", "equivalence-classes");  // boundary values
-    RecordProperty("Priority", "3");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
 
     // Same JSON as kJsonInput; the _json operator only accepts a string literal.
+    DISABLE_WARNING_PUSH
+    DISABLE_WARNING_DEPRECATED
     auto parsed_json{R"({ "num": 1, "string": "foo" })"_json};
+    DISABLE_WARNING_POP
     VerifyJson(parsed_json);
 }
 
 TEST(JsonParserDeathTest, JsonLiteralAbortsOnInvalidJson)
 {
-    RecordProperty("Verifies", "5310867");
-    RecordProperty("ASIL", "B");
-    RecordProperty("Description", "Parsing invalid json object using _json operator, cf. RFC-8259 section 9");
-    RecordProperty("TestType", "requirements-based");  // requirements test
-    RecordProperty("DerivationTechnique", "error-guessing");
-    RecordProperty("Priority", "3");
+    RecordProperty("Description",
+                   "Check that the deprecated _json literal aborts on an object member without a value.");
+    RecordProperty("TestType", "interface-test");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
 
+    DISABLE_WARNING_PUSH
+    DISABLE_WARNING_DEPRECATED
     EXPECT_EXIT(R"({"something"})"_json, ::testing::KilledBySignal(SIGABRT), "");
+    DISABLE_WARNING_POP
 }
 
 TEST(JsonParserDeathTest, JsonLiteralPrintsReasonBeforeAborting)
 {
-    RecordProperty("PartiallyVerifies", "comp_req__json__parsing_error_reason");
     RecordProperty("Description",
-                   "Check that the _json operator prints the reason of the parsing error before aborting.");
-    RecordProperty("TestType", "requirements-based");
-    RecordProperty("DerivationTechnique", "requirements-analysis");
+                   "Check that the deprecated _json literal prints the parsing error reason before aborting.");
+    RecordProperty("TestType", "interface-test");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
 
+    DISABLE_WARNING_PUSH
+    DISABLE_WARNING_DEPRECATED
     EXPECT_EXIT(R"({"a": 1 "b": 2})"_json, ::testing::KilledBySignal(SIGABRT), "Missing comma");
+    DISABLE_WARNING_POP
 }
 
 TEST_F(JsonParserTest, FromFileParsesObject)
