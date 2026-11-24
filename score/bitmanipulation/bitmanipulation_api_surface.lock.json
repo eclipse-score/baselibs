@@ -1,0 +1,85 @@
+{
+  "target": ":bitmanipulation",
+  "symbols": [],
+  "undocumented_symbols": [
+    {
+      "name": "HalfByte",
+      "qualified_name": "score::platform::HalfByte",
+      "kind": "class",
+      "signature": "class HalfByte"
+    },
+    {
+      "name": "HalfByte",
+      "qualified_name": "score::platform::HalfByte::HalfByte",
+      "kind": "constructor",
+      "signature": "constexpr HalfByte : void (const std::uint8_t)"
+    },
+    {
+      "name": "Byte",
+      "qualified_name": "score::platform::Byte",
+      "kind": "class",
+      "signature": "class Byte"
+    },
+    {
+      "name": "Byte",
+      "qualified_name": "score::platform::Byte::Byte",
+      "kind": "constructor",
+      "signature": "constexpr Byte : void (const HalfByte, const HalfByte)"
+    },
+    {
+      "name": "Byte",
+      "qualified_name": "score::platform::Byte::Byte",
+      "kind": "constructor",
+      "signature": "constexpr Byte : void (const std::uint8_t)"
+    },
+    {
+      "name": "UpperHalfByte",
+      "qualified_name": "score::platform::Byte::UpperHalfByte",
+      "kind": "method",
+      "signature": "constexpr UpperHalfByte : HalfByte () const"
+    },
+    {
+      "name": "LowerHalfByte",
+      "qualified_name": "score::platform::Byte::LowerHalfByte",
+      "kind": "method",
+      "signature": "constexpr LowerHalfByte : HalfByte () const"
+    },
+    {
+      "name": "InRange",
+      "qualified_name": "score::platform::InRange",
+      "kind": "template_function",
+      "signature": "constexpr InRange : bool (const T &, std::size_t)"
+    },
+    {
+      "name": "SetBit",
+      "qualified_name": "score::platform::SetBit",
+      "kind": "template_function",
+      "signature": "constexpr SetBit : bool (T &, const std::size_t) noexcept"
+    },
+    {
+      "name": "ClearBit",
+      "qualified_name": "score::platform::ClearBit",
+      "kind": "template_function",
+      "signature": "constexpr ClearBit : bool (T &, const std::size_t) noexcept"
+    },
+    {
+      "name": "ToggleBit",
+      "qualified_name": "score::platform::ToggleBit",
+      "kind": "template_function",
+      "signature": "constexpr ToggleBit : bool (T &, const std::size_t) noexcept"
+    },
+    {
+      "name": "CheckBit",
+      "qualified_name": "score::platform::CheckBit",
+      "kind": "template_function",
+      "signature": "constexpr CheckBit : bool (const T &, const std::size_t) noexcept"
+    },
+    {
+      "name": "GetByte",
+      "qualified_name": "score::platform::GetByte",
+      "kind": "template_function",
+      "signature": "constexpr GetByte : std::uint8_t (const T) noexcept"
+    }
+  ],
+  "version": "1"
+}

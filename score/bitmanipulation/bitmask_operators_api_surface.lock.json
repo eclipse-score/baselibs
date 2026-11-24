@@ -1,0 +1,67 @@
+{
+  "target": ":bitmask_operators",
+  "symbols": [],
+  "undocumented_symbols": [
+    {
+      "name": "enable_bitmask_operators",
+      "qualified_name": "score::enable_bitmask_operators",
+      "kind": "template_class",
+      "signature": "enable_bitmask_operators"
+    },
+    {
+      "name": "enable_bitmask_operators",
+      "qualified_name": "score::enable_bitmask_operators",
+      "kind": "class",
+      "signature": "class enable_bitmask_operators"
+    },
+    {
+      "name": "IsEnabledEnum",
+      "qualified_name": "details::IsEnabledEnum",
+      "kind": "template_type_alias",
+      "signature": "using IsEnabledEnum = typename std::enable_if<std::is_enum<T>::value && score::enable_bitmask_operators<T>::value, T>::type"
+    },
+    {
+      "name": "operator|",
+      "qualified_name": "operator|",
+      "kind": "template_function",
+      "signature": "constexpr operator| : ::details::IsEnabledEnum<T> (const T &, const T &)"
+    },
+    {
+      "name": "operator&",
+      "qualified_name": "operator&",
+      "kind": "template_function",
+      "signature": "constexpr operator& : typename std::enable_if<std::is_enum<T>::value && score::enable_bitmask_operators<T>::value, bool>::type (const T &, const T &)"
+    },
+    {
+      "name": "operator^",
+      "qualified_name": "operator^",
+      "kind": "template_function",
+      "signature": "constexpr operator^ : ::details::IsEnabledEnum<T> (const T &, const T &)"
+    },
+    {
+      "name": "operator~",
+      "qualified_name": "operator~",
+      "kind": "template_function",
+      "signature": "constexpr operator~ : ::details::IsEnabledEnum<T> (const T &)"
+    },
+    {
+      "name": "operator&=",
+      "qualified_name": "operator&=",
+      "kind": "template_function",
+      "signature": "constexpr operator&= : ::details::IsEnabledEnum<T> (T &, const T &)"
+    },
+    {
+      "name": "operator|=",
+      "qualified_name": "operator|=",
+      "kind": "template_function",
+      "signature": "constexpr operator|= : ::details::IsEnabledEnum<T> (T &, const T &)"
+    },
+    {
+      "name": "operator^=",
+      "qualified_name": "operator^=",
+      "kind": "template_function",
+      "signature": "constexpr operator^= : ::details::IsEnabledEnum<T> (T &, const T &)"
+    }
+  ],
+  "version": "1"
+}

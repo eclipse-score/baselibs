@@ -14,6 +14,7 @@
 load("@rules_cc//cc:defs.bzl", "cc_library", "cc_test")
 load("@score_baselibs//score/language/safecpp:toolchain_features.bzl", "COMPILER_WARNING_FEATURES")
 load("@score_docs_as_code//:docs.bzl", "docs_bundle")
+load("@score_tooling//api_surface:api_surface.bzl", "api_surface_test")
 
 cc_test(
     name = "bit_manipulation_test",
@@ -63,6 +64,20 @@ cc_library(
     visibility = [
         "//visibility:public",  # platform_only
     ],
+)
+
+api_surface_test(
+    name = "bitmanipulation_api_surface_test",
+    check_docs = False,
+    lock_file = "bitmanipulation_api_surface.lock.json",
+    target = ":bitmanipulation",
+)
+
+api_surface_test(
+    name = "bitmask_operators_api_surface_test",
+    check_docs = False,
+    lock_file = "bitmask_operators_api_surface.lock.json",
+    target = ":bitmask_operators",
 )
 
 docs_bundle(
