@@ -13574,7 +13574,7 @@
   {
     "name": "FilesystemFixture__WeaklyCanonicalForNonExistedAbsolutePath",
     "file": "score/filesystem/details/standard_filesystem_test.cpp",
-    "line": 491,
+    "line": 494,
     "need": "comp_req__filesystem__api_abstraction",
     "verify_type": "partially",
     "result": "passed",
@@ -13586,7 +13586,7 @@
   {
     "name": "FilesystemFixture__WeaklyCanonicalForPartlyNonExistedAbsolutePath",
     "file": "score/filesystem/details/standard_filesystem_test.cpp",
-    "line": 508,
+    "line": 514,
     "need": "comp_req__filesystem__api_abstraction",
     "verify_type": "partially",
     "result": "passed",
@@ -13598,7 +13598,7 @@
   {
     "name": "FilesystemFixture__WeaklyCanonicalForRelativePath",
     "file": "score/filesystem/details/standard_filesystem_test.cpp",
-    "line": 526,
+    "line": 532,
     "need": "comp_req__filesystem__api_abstraction",
     "verify_type": "partially",
     "result": "passed",
@@ -13610,7 +13610,7 @@
   {
     "name": "FilesystemFixture__WeaklyCanonicalForNonExistedRelativePath",
     "file": "score/filesystem/details/standard_filesystem_test.cpp",
-    "line": 542,
+    "line": 548,
     "need": "comp_req__filesystem__api_abstraction",
     "verify_type": "partially",
     "result": "passed",
@@ -13622,7 +13622,7 @@
   {
     "name": "FilesystemFixture__WeaklyCanonicalForFailedCurrentPath",
     "file": "score/filesystem/details/standard_filesystem_test.cpp",
-    "line": 560,
+    "line": 569,
     "need": "comp_req__filesystem__api_abstraction",
     "verify_type": "partially",
     "result": "passed",
@@ -13634,7 +13634,7 @@
   {
     "name": "FilesystemFixture__WeaklyCanonicalForEmptyPath",
     "file": "score/filesystem/details/standard_filesystem_test.cpp",
-    "line": 577,
+    "line": 589,
     "need": "comp_req__filesystem__api_abstraction",
     "verify_type": "partially",
     "result": "passed",
@@ -13646,7 +13646,7 @@
   {
     "name": "FilesystemFixture__GetCurrentPath",
     "file": "score/filesystem/details/standard_filesystem_test.cpp",
-    "line": 590,
+    "line": 602,
     "need": "comp_req__filesystem__api_abstraction",
     "verify_type": "partially",
     "result": "passed",
@@ -13658,7 +13658,7 @@
   {
     "name": "FilesystemFixture__SetCurrentPath",
     "file": "score/filesystem/details/standard_filesystem_test.cpp",
-    "line": 605,
+    "line": 617,
     "need": "comp_req__filesystem__api_abstraction",
     "verify_type": "partially",
     "result": "passed",
@@ -13670,7 +13670,7 @@
   {
     "name": "FilesystemFixture__SetCurrentPathFailed",
     "file": "score/filesystem/details/standard_filesystem_test.cpp",
-    "line": 619,
+    "line": 631,
     "need": "comp_req__filesystem__api_abstraction",
     "verify_type": "partially",
     "result": "passed",
@@ -13682,7 +13682,7 @@
   {
     "name": "FilesystemFixture__CreateDirectory",
     "file": "score/filesystem/details/standard_filesystem_test.cpp",
-    "line": 1187,
+    "line": 1214,
     "need": "comp_req__filesystem__api_abstraction",
     "verify_type": "partially",
     "result": "passed",
@@ -13694,7 +13694,7 @@
   {
     "name": "FilesystemFixture__CreateDirectoryThatAlreadyExists",
     "file": "score/filesystem/details/standard_filesystem_test.cpp",
-    "line": 1204,
+    "line": 1231,
     "need": "comp_req__filesystem__api_abstraction",
     "verify_type": "partially",
     "result": "passed",
@@ -13706,7 +13706,7 @@
   {
     "name": "FilesystemFixture__CreateDirectoryReturnsSuccessWhenPathAlreadyExistsAndIsADirectory",
     "file": "score/filesystem/details/standard_filesystem_test.cpp",
-    "line": 1221,
+    "line": 1248,
     "need": "comp_req__filesystem__api_abstraction",
     "verify_type": "partially",
     "result": "passed",
@@ -13718,7 +13718,7 @@
   {
     "name": "FilesystemFixture__CreateDirectoryReturnsErrorWhenPathAlreadyExistsAndIsNotADirectory",
     "file": "score/filesystem/details/standard_filesystem_test.cpp",
-    "line": 1243,
+    "line": 1270,
     "need": "comp_req__filesystem__api_abstraction",
     "verify_type": "partially",
     "result": "passed",
@@ -13730,7 +13730,7 @@
   {
     "name": "FilesystemFixture__CreateDirectoryReturnsErrorWhenMkdirAndStatFails",
     "file": "score/filesystem/details/standard_filesystem_test.cpp",
-    "line": 1266,
+    "line": 1293,
     "need": "comp_req__filesystem__api_abstraction",
     "verify_type": "partially",
     "result": "passed",
@@ -13742,7 +13742,7 @@
   {
     "name": "FilesystemFixture__CreateDirectoryReturnsErrorWhenPathAlreadyExistsAndIsDirectoryFails",
     "file": "score/filesystem/details/standard_filesystem_test.cpp",
-    "line": 1288,
+    "line": 1315,
     "need": "comp_req__filesystem__api_abstraction",
     "verify_type": "partially",
     "result": "passed",
@@ -13754,7 +13754,7 @@
   {
     "name": "FilesystemFixture__CreateDirectoryReturnsErrorWhenPathDoesNotExistAndUnderlyingCreateDirectoryFails",
     "file": "score/filesystem/details/standard_filesystem_test.cpp",
-    "line": 1311,
+    "line": 1338,
     "need": "comp_req__filesystem__api_abstraction",
     "verify_type": "partially",
     "result": "passed",
@@ -13766,7 +13766,7 @@
   {
     "name": "FilesystemFixture__CreateDirectoriesWithAllPathsExistent",
     "file": "score/filesystem/details/standard_filesystem_test.cpp",
-    "line": 1332,
+    "line": 1363,
     "need": "comp_req__filesystem__api_abstraction",
     "verify_type": "partially",
     "result": "passed",
@@ -13778,7 +13778,7 @@
   {
     "name": "FilesystemFixture__CreateDirectoriesWithEmptyPath",
     "file": "score/filesystem/details/standard_filesystem_test.cpp",
-    "line": 1351,
+    "line": 1385,
     "need": "comp_req__filesystem__api_abstraction",
     "verify_type": "partially",
     "result": "passed",
@@ -13790,7 +13790,7 @@
   {
     "name": "FilesystemFixture__CreateMissingParentDirectoriesAbsolutePath",
     "file": "score/filesystem/details/standard_filesystem_test.cpp",
-    "line": 1366,
+    "line": 1400,
     "need": "comp_req__filesystem__api_abstraction",
     "verify_type": "partially",
     "result": "passed",
@@ -13802,7 +13802,7 @@
   {
     "name": "FilesystemFixture__CreateMissingParentDirectoriesRelativePath",
     "file": "score/filesystem/details/standard_filesystem_test.cpp",
-    "line": 1387,
+    "line": 1424,
     "need": "comp_req__filesystem__api_abstraction",
     "verify_type": "partially",
     "result": "passed",
@@ -13814,7 +13814,7 @@
   {
     "name": "FilesystemFixture__CreateParentDirectoriesWhileMkdirFailed",
     "file": "score/filesystem/details/standard_filesystem_test.cpp",
-    "line": 1408,
+    "line": 1448,
     "need": "comp_req__filesystem__api_abstraction",
     "verify_type": "partially",
     "result": "passed",
@@ -13826,7 +13826,7 @@
   {
     "name": "FilesystemFixture__CreateDirectoriesWithSeparatorAtPathEnd",
     "file": "score/filesystem/details/standard_filesystem_test.cpp",
-    "line": 1428,
+    "line": 1471,
     "need": "comp_req__filesystem__api_abstraction",
     "verify_type": "partially",
     "result": "passed",
@@ -13838,7 +13838,7 @@
   {
     "name": "FilesystemFixture__IsEmpty_StatusFailed",
     "file": "score/filesystem/details/standard_filesystem_test.cpp",
-    "line": 2284,
+    "line": 2342,
     "need": "comp_req__filesystem__api_abstraction",
     "verify_type": "partially",
     "result": "passed",
@@ -13850,7 +13850,7 @@
   {
     "name": "FilesystemFixture__IsEmpty_OpendDirFailed",
     "file": "score/filesystem/details/standard_filesystem_test.cpp",
-    "line": 2298,
+    "line": 2356,
     "need": "comp_req__filesystem__api_abstraction",
     "verify_type": "partially",
     "result": "passed",
@@ -13862,7 +13862,7 @@
   {
     "name": "FilesystemFixture__IsEmpty_NoDirNofile",
     "file": "score/filesystem/details/standard_filesystem_test.cpp",
-    "line": 2315,
+    "line": 2373,
     "need": "comp_req__filesystem__api_abstraction",
     "verify_type": "partially",
     "result": "passed",
@@ -13874,7 +13874,7 @@
   {
     "name": "FilesystemFixture__AbsoluteForEmptyPath",
     "file": "score/filesystem/details/standard_filesystem_test.cpp",
-    "line": 2426,
+    "line": 2484,
     "need": "comp_req__filesystem__api_abstraction",
     "verify_type": "partially",
     "result": "passed",
@@ -13886,7 +13886,7 @@
   {
     "name": "FilesystemFixture__AbsoluteForAbsolutePaths",
     "file": "score/filesystem/details/standard_filesystem_test.cpp",
-    "line": 2436,
+    "line": 2494,
     "need": "comp_req__filesystem__api_abstraction",
     "verify_type": "partially",
     "result": "passed",
@@ -13898,7 +13898,7 @@
   {
     "name": "FilesystemFixture__AbsoluteForRelativePaths",
     "file": "score/filesystem/details/standard_filesystem_test.cpp",
-    "line": 2450,
+    "line": 2508,
     "need": "comp_req__filesystem__api_abstraction",
     "verify_type": "partially",
     "result": "passed",
@@ -13910,7 +13910,7 @@
   {
     "name": "FilesystemFixture__AbsoluteForError",
     "file": "score/filesystem/details/standard_filesystem_test.cpp",
-    "line": 2467,
+    "line": 2525,
     "need": "comp_req__filesystem__api_abstraction",
     "verify_type": "partially",
     "result": "passed",
@@ -13922,7 +13922,7 @@
   {
     "name": "FilesystemFixture__CanonicalForFailedGetCurrentPath",
     "file": "score/filesystem/details/standard_filesystem_test.cpp",
-    "line": 2521,
+    "line": 2588,
     "need": "comp_req__filesystem__api_abstraction",
     "verify_type": "partially",
     "result": "passed",
@@ -13934,7 +13934,7 @@
   {
     "name": "FilesystemCopyFile__ErrorWhileAccessingFrom",
     "file": "score/filesystem/details/standard_filesystem_test.cpp",
-    "line": 637,
+    "line": 649,
     "need": "comp_req__filesystem__api_abstraction",
     "verify_type": "partially",
     "result": "passed",
@@ -13946,7 +13946,7 @@
   {
     "name": "FilesystemCopyFile__TryingToCopyNotAFile",
     "file": "score/filesystem/details/standard_filesystem_test.cpp",
-    "line": 655,
+    "line": 667,
     "need": "comp_req__filesystem__api_abstraction",
     "verify_type": "partially",
     "result": "passed",
@@ -13958,7 +13958,7 @@
   {
     "name": "FilesystemCopyFile__ErrorWhileAccessingTo",
     "file": "score/filesystem/details/standard_filesystem_test.cpp",
-    "line": 673,
+    "line": 685,
     "need": "comp_req__filesystem__api_abstraction",
     "verify_type": "partially",
     "result": "passed",
@@ -13970,7 +13970,7 @@
   {
     "name": "FilesystemCopyFile__ModesOfSourceFileIsCopiedtoDestination",
     "file": "score/filesystem/details/standard_filesystem_test.cpp",
-    "line": 692,
+    "line": 704,
     "need": "comp_req__filesystem__api_abstraction",
     "verify_type": "partially",
     "result": "passed",
@@ -13982,7 +13982,7 @@
   {
     "name": "FilesystemCopyFile__FileContentsAreEqual",
     "file": "score/filesystem/details/standard_filesystem_test.cpp",
-    "line": 712,
+    "line": 727,
     "need": "comp_req__filesystem__api_abstraction",
     "verify_type": "partially",
     "result": "passed",
@@ -13994,7 +13994,7 @@
   {
     "name": "FilesystemCopyFile__CopyEmptyFile",
     "file": "score/filesystem/details/standard_filesystem_test.cpp",
-    "line": 731,
+    "line": 746,
     "need": "comp_req__filesystem__api_abstraction",
     "verify_type": "partially",
     "result": "passed",
@@ -14006,7 +14006,7 @@
   {
     "name": "FilesystemCopyFile__FullDisk",
     "file": "score/filesystem/details/standard_filesystem_test.cpp",
-    "line": 749,
+    "line": 764,
     "need": "comp_req__filesystem__api_abstraction",
     "verify_type": "partially",
     "result": "passed",
@@ -14018,7 +14018,7 @@
   {
     "name": "FilesystemCopyFile__SettingPermissionsFails",
     "file": "score/filesystem/details/standard_filesystem_test.cpp",
-    "line": 780,
+    "line": 795,
     "need": "comp_req__filesystem__api_abstraction",
     "verify_type": "partially",
     "result": "passed",
@@ -14030,7 +14030,7 @@
   {
     "name": "FilesystemCopyFile__OpeningInputStreamFails",
     "file": "score/filesystem/details/standard_filesystem_test.cpp",
-    "line": 806,
+    "line": 821,
     "need": "comp_req__filesystem__api_abstraction",
     "verify_type": "partially",
     "result": "passed",
@@ -14042,7 +14042,7 @@
   {
     "name": "FilesystemCopyFile__OpeningOutputStreamFails",
     "file": "score/filesystem/details/standard_filesystem_test.cpp",
-    "line": 827,
+    "line": 842,
     "need": "comp_req__filesystem__api_abstraction",
     "verify_type": "partially",
     "result": "passed",
@@ -14054,7 +14054,7 @@
   {
     "name": "FilesystemCopyFile__DestExistsAndNotFile",
     "file": "score/filesystem/details/standard_filesystem_test.cpp",
-    "line": 849,
+    "line": 864,
     "need": "comp_req__filesystem__api_abstraction",
     "verify_type": "partially",
     "result": "passed",
@@ -14066,7 +14066,7 @@
   {
     "name": "FilesystemCopyFile__DestExistsAndNoOptions",
     "file": "score/filesystem/details/standard_filesystem_test.cpp",
-    "line": 869,
+    "line": 884,
     "need": "comp_req__filesystem__api_abstraction",
     "verify_type": "partially",
     "result": "passed",
@@ -14078,7 +14078,7 @@
   {
     "name": "FilesystemCopyFile__DestExistsAndSkipsExisting",
     "file": "score/filesystem/details/standard_filesystem_test.cpp",
-    "line": 889,
+    "line": 904,
     "need": "comp_req__filesystem__api_abstraction",
     "verify_type": "partially",
     "result": "passed",
@@ -14090,7 +14090,7 @@
   {
     "name": "FilesystemCopyFile__DestExistsAndOverwrite",
     "file": "score/filesystem/details/standard_filesystem_test.cpp",
-    "line": 908,
+    "line": 923,
     "need": "comp_req__filesystem__api_abstraction",
     "verify_type": "partially",
     "result": "passed",
@@ -14102,7 +14102,7 @@
   {
     "name": "FilesystemCopyFile__DestExistsAndUpdateExisting",
     "file": "score/filesystem/details/standard_filesystem_test.cpp",
-    "line": 929,
+    "line": 944,
     "need": "comp_req__filesystem__api_abstraction",
     "verify_type": "partially",
     "result": "passed",
@@ -14114,7 +14114,7 @@
   {
     "name": "FilesystemCopyFile__UpdateExistingFailedOnFirstLastWriteTime",
     "file": "score/filesystem/details/standard_filesystem_test.cpp",
-    "line": 951,
+    "line": 966,
     "need": "comp_req__filesystem__api_abstraction",
     "verify_type": "partially",
     "result": "passed",
@@ -14126,7 +14126,7 @@
   {
     "name": "FilesystemCopyFile__UpdateExistingFailedOnSecondLastWriteTime",
     "file": "score/filesystem/details/standard_filesystem_test.cpp",
-    "line": 980,
+    "line": 998,
     "need": "comp_req__filesystem__api_abstraction",
     "verify_type": "partially",
     "result": "passed",
@@ -14138,7 +14138,7 @@
   {
     "name": "FilesystemCopyFile__DestExistsAndUpdateExistingNotNecessary",
     "file": "score/filesystem/details/standard_filesystem_test.cpp",
-    "line": 1007,
+    "line": 1028,
     "need": "comp_req__filesystem__api_abstraction",
     "verify_type": "partially",
     "result": "passed",
@@ -14150,7 +14150,7 @@
   {
     "name": "FilesystemCopyFile__SimulateRaceConditionOnSourceFile",
     "file": "score/filesystem/details/standard_filesystem_test.cpp",
-    "line": 1028,
+    "line": 1052,
     "need": "comp_req__filesystem__api_abstraction",
     "verify_type": "partially",
     "result": "passed",
@@ -14162,7 +14162,7 @@
   {
     "name": "FilesystemCopyFile__SourceReplacedByFifoAfterStatusCheckIsRejectedWithoutBlocking",
     "file": "score/filesystem/details/standard_filesystem_test.cpp",
-    "line": 1061,
+    "line": 1088,
     "need": "comp_req__filesystem__api_abstraction",
     "verify_type": "partially",
     "result": "passed",
@@ -14174,7 +14174,7 @@
   {
     "name": "FilesystemCopyFile__DestinationReplacedByFifoAfterStatusCheckIsRejectedWithoutBlocking",
     "file": "score/filesystem/details/standard_filesystem_test.cpp",
-    "line": 1085,
+    "line": 1112,
     "need": "comp_req__filesystem__api_abstraction",
     "verify_type": "partially",
     "result": "passed",
@@ -14186,7 +14186,7 @@
   {
     "name": "FilesystemCopyFile__BadSrcFile",
     "file": "score/filesystem/details/standard_filesystem_test.cpp",
-    "line": 1110,
+    "line": 1137,
     "need": "comp_req__filesystem__api_abstraction",
     "verify_type": "partially",
     "result": "passed",
@@ -14198,7 +14198,7 @@
   {
     "name": "FilesystemCopyFile__BadDestFile",
     "file": "score/filesystem/details/standard_filesystem_test.cpp",
-    "line": 1139,
+    "line": 1166,
     "need": "comp_req__filesystem__api_abstraction",
     "verify_type": "partially",
     "result": "passed",
@@ -14210,7 +14210,7 @@
   {
     "name": "FilesystemCopyFile__ErrorForInappropriateOption",
     "file": "score/filesystem/details/standard_filesystem_test.cpp",
-    "line": 1168,
+    "line": 1195,
     "need": "comp_req__filesystem__api_abstraction",
     "verify_type": "partially",
     "result": "passed",
@@ -14222,7 +14222,7 @@
   {
     "name": "TempDirectory__CanGetTmpDirDirectory",
     "file": "score/filesystem/details/standard_filesystem_test.cpp",
-    "line": 1451,
+    "line": 1497,
     "need": "comp_req__filesystem__api_abstraction",
     "verify_type": "partially",
     "result": "passed",
@@ -14234,7 +14234,7 @@
   {
     "name": "TempDirectory__CanGetTmpDirectory",
     "file": "score/filesystem/details/standard_filesystem_test.cpp",
-    "line": 1463,
+    "line": 1509,
     "need": "comp_req__filesystem__api_abstraction",
     "verify_type": "partially",
     "result": "passed",
@@ -14246,7 +14246,7 @@
   {
     "name": "TempDirectory__CanGetTempDirectory",
     "file": "score/filesystem/details/standard_filesystem_test.cpp",
-    "line": 1476,
+    "line": 1522,
     "need": "comp_req__filesystem__api_abstraction",
     "verify_type": "partially",
     "result": "passed",
@@ -14258,7 +14258,7 @@
   {
     "name": "TempDirectory__CanGetTempDirDirectory",
     "file": "score/filesystem/details/standard_filesystem_test.cpp",
-    "line": 1490,
+    "line": 1536,
     "need": "comp_req__filesystem__api_abstraction",
     "verify_type": "partially",
     "result": "passed",
@@ -14270,7 +14270,7 @@
   {
     "name": "TempDirectory__NoEnvExists",
     "file": "score/filesystem/details/standard_filesystem_test.cpp",
-    "line": 1506,
+    "line": 1552,
     "need": "comp_req__filesystem__api_abstraction",
     "verify_type": "partially",
     "result": "passed",
@@ -14282,7 +14282,7 @@
   {
     "name": "Permissions__DoesntTryToChangeSamePermissions",
     "file": "score/filesystem/details/standard_filesystem_test.cpp",
-    "line": 1523,
+    "line": 1569,
     "need": "comp_req__filesystem__api_abstraction",
     "verify_type": "partially",
     "result": "passed",
@@ -14294,7 +14294,7 @@
   {
     "name": "Permissions__OverWritesAnyPreviousPermissions",
     "file": "score/filesystem/details/standard_filesystem_test.cpp",
-    "line": 1537,
+    "line": 1583,
     "need": "comp_req__filesystem__api_abstraction",
     "verify_type": "partially",
     "result": "passed",
@@ -14306,7 +14306,7 @@
   {
     "name": "Permissions__AddsPermissions",
     "file": "score/filesystem/details/standard_filesystem_test.cpp",
-    "line": 1551,
+    "line": 1597,
     "need": "comp_req__filesystem__api_abstraction",
     "verify_type": "partially",
     "result": "passed",
@@ -14318,7 +14318,7 @@
   {
     "name": "Permissions__RemovePermissions",
     "file": "score/filesystem/details/standard_filesystem_test.cpp",
-    "line": 1565,
+    "line": 1611,
     "need": "comp_req__filesystem__api_abstraction",
     "verify_type": "partially",
     "result": "passed",
@@ -14330,7 +14330,7 @@
   {
     "name": "Permissions__ReceiveStatNotPossible",
     "file": "score/filesystem/details/standard_filesystem_test.cpp",
-    "line": 1579,
+    "line": 1625,
     "need": "comp_req__filesystem__api_abstraction",
     "verify_type": "partially",
     "result": "passed",
@@ -14342,7 +14342,7 @@
   {
     "name": "Permissions__UnkownOption",
     "file": "score/filesystem/details/standard_filesystem_test.cpp",
-    "line": 1593,
+    "line": 1639,
     "need": "comp_req__filesystem__api_abstraction",
     "verify_type": "partially",
     "result": "passed",
@@ -14354,7 +14354,7 @@
   {
     "name": "Permissions__FchmodatReturnsError",
     "file": "score/filesystem/details/standard_filesystem_test.cpp",
-    "line": 1606,
+    "line": 1652,
     "need": "comp_req__filesystem__api_abstraction",
     "verify_type": "partially",
     "result": "passed",
@@ -14366,7 +14366,7 @@
   {
     "name": "Permissions__FollowSymlink",
     "file": "score/filesystem/details/standard_filesystem_test.cpp",
-    "line": 1621,
+    "line": 1667,
     "need": "comp_req__filesystem__api_abstraction",
     "verify_type": "partially",
     "result": "passed",
@@ -14378,7 +14378,7 @@
   {
     "name": "Permissions__NoFollowSymlink",
     "file": "score/filesystem/details/standard_filesystem_test.cpp",
-    "line": 1638,
+    "line": 1684,
     "need": "comp_req__filesystem__api_abstraction",
     "verify_type": "partially",
     "result": "passed",
@@ -14390,7 +14390,7 @@
   {
     "name": "Remove__CanRemoveSingleFile",
     "file": "score/filesystem/details/standard_filesystem_test.cpp",
-    "line": 1684,
+    "line": 1730,
     "need": "comp_req__filesystem__api_abstraction",
     "verify_type": "partially",
     "result": "passed",
@@ -14402,7 +14402,7 @@
   {
     "name": "Remove__CanNotRemoveSingleFile",
     "file": "score/filesystem/details/standard_filesystem_test.cpp",
-    "line": 1697,
+    "line": 1743,
     "need": "comp_req__filesystem__api_abstraction",
     "verify_type": "partially",
     "result": "passed",
@@ -14414,7 +14414,7 @@
   {
     "name": "RemoveAll__CanRemoveSingleFile",
     "file": "score/filesystem/details/standard_filesystem_test.cpp",
-    "line": 1713,
+    "line": 1759,
     "need": "comp_req__filesystem__api_abstraction",
     "verify_type": "partially",
     "result": "passed",
@@ -14426,7 +14426,7 @@
   {
     "name": "RemoveAll__ErrorDuringRemovingSingleFile",
     "file": "score/filesystem/details/standard_filesystem_test.cpp",
-    "line": 1728,
+    "line": 1774,
     "need": "comp_req__filesystem__api_abstraction",
     "verify_type": "partially",
     "result": "passed",
@@ -14438,7 +14438,7 @@
   {
     "name": "RemoveAll__CanRemoveFolderRecursive",
     "file": "score/filesystem/details/standard_filesystem_test.cpp",
-    "line": 1744,
+    "line": 1790,
     "need": "comp_req__filesystem__api_abstraction",
     "verify_type": "partially",
     "result": "passed",
@@ -14450,7 +14450,7 @@
   {
     "name": "RemoveAll__FailsOnDirectoryRemoval",
     "file": "score/filesystem/details/standard_filesystem_test.cpp",
-    "line": 1779,
+    "line": 1825,
     "need": "comp_req__filesystem__api_abstraction",
     "verify_type": "partially",
     "result": "passed",
@@ -14462,7 +14462,7 @@
   {
     "name": "RemoveAll__FailsOnFileRemoval",
     "file": "score/filesystem/details/standard_filesystem_test.cpp",
-    "line": 1813,
+    "line": 1859,
     "need": "comp_req__filesystem__api_abstraction",
     "verify_type": "partially",
     "result": "passed",
@@ -14474,7 +14474,7 @@
   {
     "name": "RemoveAll__StatFailsOnFile",
     "file": "score/filesystem/details/standard_filesystem_test.cpp",
-    "line": 1847,
+    "line": 1893,
     "need": "comp_req__filesystem__api_abstraction",
     "verify_type": "partially",
     "result": "passed",
@@ -14486,7 +14486,7 @@
   {
     "name": "RemoveAll__LStatFailsOnFile",
     "file": "score/filesystem/details/standard_filesystem_test.cpp",
-    "line": 1869,
+    "line": 1915,
     "need": "comp_req__filesystem__api_abstraction",
     "verify_type": "partially",
     "result": "passed",
@@ -14498,7 +14498,7 @@
   {
     "name": "RemoveAll__NonExisted",
     "file": "score/filesystem/details/standard_filesystem_test.cpp",
-    "line": 1891,
+    "line": 1937,
     "need": "comp_req__filesystem__api_abstraction",
     "verify_type": "partially",
     "result": "passed",
@@ -14510,7 +14510,7 @@
   {
     "name": "RemoveAll__FailedStatOnBaseFolder",
     "file": "score/filesystem/details/standard_filesystem_test.cpp",
-    "line": 1907,
+    "line": 1953,
     "need": "comp_req__filesystem__api_abstraction",
     "verify_type": "partially",
     "result": "passed",
@@ -14522,7 +14522,7 @@
   {
     "name": "RemoveAllWithoutMocks__SymlinksAreNotFollowed",
     "file": "score/filesystem/details/standard_filesystem_test.cpp",
-    "line": 1922,
+    "line": 1968,
     "need": "comp_req__filesystem__api_abstraction",
     "verify_type": "partially",
     "result": "passed",
@@ -14534,7 +14534,7 @@
   {
     "name": "HardLink__Simple",
     "file": "score/filesystem/details/standard_filesystem_test.cpp",
-    "line": 1973,
+    "line": 2019,
     "need": "comp_req__filesystem__api_abstraction",
     "verify_type": "partially",
     "result": "passed",
@@ -14546,7 +14546,7 @@
   {
     "name": "HardLink__SameData",
     "file": "score/filesystem/details/standard_filesystem_test.cpp",
-    "line": 1991,
+    "line": 2037,
     "need": "comp_req__filesystem__api_abstraction",
     "verify_type": "partially",
     "result": "passed",
@@ -14558,7 +14558,7 @@
   {
     "name": "HardLink__ErrorFromDoesntExist",
     "file": "score/filesystem/details/standard_filesystem_test.cpp",
-    "line": 2014,
+    "line": 2060,
     "need": "comp_req__filesystem__api_abstraction",
     "verify_type": "partially",
     "result": "passed",
@@ -14570,7 +14570,7 @@
   {
     "name": "HardLink__ErrorFromIsDirectory",
     "file": "score/filesystem/details/standard_filesystem_test.cpp",
-    "line": 2027,
+    "line": 2073,
     "need": "comp_req__filesystem__api_abstraction",
     "verify_type": "partially",
     "result": "passed",
@@ -14582,7 +14582,7 @@
   {
     "name": "HardLink__ErrorToIsAlreadyExist",
     "file": "score/filesystem/details/standard_filesystem_test.cpp",
-    "line": 2040,
+    "line": 2086,
     "need": "comp_req__filesystem__api_abstraction",
     "verify_type": "partially",
     "result": "passed",
@@ -14594,7 +14594,7 @@
   {
     "name": "HardLink__Count",
     "file": "score/filesystem/details/standard_filesystem_test.cpp",
-    "line": 2061,
+    "line": 2107,
     "need": "comp_req__filesystem__api_abstraction",
     "verify_type": "partially",
     "result": "passed",
@@ -14606,7 +14606,7 @@
   {
     "name": "HardLink__ErrorCount",
     "file": "score/filesystem/details/standard_filesystem_test.cpp",
-    "line": 2079,
+    "line": 2125,
     "need": "comp_req__filesystem__api_abstraction",
     "verify_type": "partially",
     "result": "passed",
@@ -14618,7 +14618,7 @@
   {
     "name": "IsRegularFileFixture__RegularFile",
     "file": "score/filesystem/details/standard_filesystem_test.cpp",
-    "line": 2095,
+    "line": 2141,
     "need": "comp_req__filesystem__api_abstraction",
     "verify_type": "partially",
     "result": "passed",
@@ -14630,7 +14630,7 @@
   {
     "name": "IsRegularFileFixture__Directory",
     "file": "score/filesystem/details/standard_filesystem_test.cpp",
-    "line": 2109,
+    "line": 2155,
     "need": "comp_req__filesystem__api_abstraction",
     "verify_type": "partially",
     "result": "passed",
@@ -14642,7 +14642,7 @@
   {
     "name": "IsRegularFileFixture__NonExisted",
     "file": "score/filesystem/details/standard_filesystem_test.cpp",
-    "line": 2123,
+    "line": 2169,
     "need": "comp_req__filesystem__api_abstraction",
     "verify_type": "partially",
     "result": "passed",
@@ -14654,7 +14654,7 @@
   {
     "name": "IsRegularFileFixture__StatusFailed",
     "file": "score/filesystem/details/standard_filesystem_test.cpp",
-    "line": 2137,
+    "line": 2183,
     "need": "comp_req__filesystem__api_abstraction",
     "verify_type": "partially",
     "result": "passed",
@@ -14666,7 +14666,7 @@
   {
     "name": "IsDirectoryFixture__Directory",
     "file": "score/filesystem/details/standard_filesystem_test.cpp",
-    "line": 2152,
+    "line": 2198,
     "need": "comp_req__filesystem__api_abstraction",
     "verify_type": "partially",
     "result": "passed",
@@ -14678,7 +14678,7 @@
   {
     "name": "IsDirectoryFixture__RegularFile",
     "file": "score/filesystem/details/standard_filesystem_test.cpp",
-    "line": 2166,
+    "line": 2212,
     "need": "comp_req__filesystem__api_abstraction",
     "verify_type": "partially",
     "result": "passed",
@@ -14690,7 +14690,7 @@
   {
     "name": "IsDirectoryFixture__NonExisted",
     "file": "score/filesystem/details/standard_filesystem_test.cpp",
-    "line": 2180,
+    "line": 2226,
     "need": "comp_req__filesystem__api_abstraction",
     "verify_type": "partially",
     "result": "passed",
@@ -14702,7 +14702,7 @@
   {
     "name": "IsDirectoryFixture__StatusFailed",
     "file": "score/filesystem/details/standard_filesystem_test.cpp",
-    "line": 2194,
+    "line": 2240,
     "need": "comp_req__filesystem__api_abstraction",
     "verify_type": "partially",
     "result": "passed",
@@ -14714,7 +14714,7 @@
   {
     "name": "FilesystemFixtureWithoutMocks__IsEmpty_EmptyDirectory",
     "file": "score/filesystem/details/standard_filesystem_test.cpp",
-    "line": 2207,
+    "line": 2253,
     "need": "comp_req__filesystem__api_abstraction",
     "verify_type": "partially",
     "result": "passed",
@@ -14726,7 +14726,7 @@
   {
     "name": "FilesystemFixtureWithoutMocks__IsEmpty_EmptyRegularFile",
     "file": "score/filesystem/details/standard_filesystem_test.cpp",
-    "line": 2223,
+    "line": 2272,
     "need": "comp_req__filesystem__api_abstraction",
     "verify_type": "partially",
     "result": "passed",
@@ -14738,7 +14738,7 @@
   {
     "name": "FilesystemFixtureWithoutMocks__IsEmpty_NonEmptyDirectory",
     "file": "score/filesystem/details/standard_filesystem_test.cpp",
-    "line": 2239,
+    "line": 2291,
     "need": "comp_req__filesystem__api_abstraction",
     "verify_type": "partially",
     "result": "passed",
@@ -14750,7 +14750,7 @@
   {
     "name": "FilesystemFixtureWithoutMocks__IsEmpty_NonEmptyRegularFile",
     "file": "score/filesystem/details/standard_filesystem_test.cpp",
-    "line": 2256,
+    "line": 2311,
     "need": "comp_req__filesystem__api_abstraction",
     "verify_type": "partially",
     "result": "passed",
@@ -14762,7 +14762,7 @@
   {
     "name": "FilesystemFixtureWithoutMocks__IsEmpty_NonExisted",
     "file": "score/filesystem/details/standard_filesystem_test.cpp",
-    "line": 2272,
+    "line": 2330,
     "need": "comp_req__filesystem__api_abstraction",
     "verify_type": "partially",
     "result": "passed",
@@ -14774,7 +14774,7 @@
   {
     "name": "FilesystemFixtureWithoutMocks__Check_Upd_FileSystem_ClearDirContent_Steps",
     "file": "score/filesystem/details/standard_filesystem_test.cpp",
-    "line": 2388,
+    "line": 2446,
     "need": "comp_req__filesystem__api_abstraction",
     "verify_type": "partially",
     "result": "passed",
@@ -14786,7 +14786,7 @@
   {
     "name": "FilesystemFixtureWithoutMocks__CanonicalForEmptyPath",
     "file": "score/filesystem/details/standard_filesystem_test.cpp",
-    "line": 2481,
+    "line": 2539,
     "need": "comp_req__filesystem__api_abstraction",
     "verify_type": "partially",
     "result": "passed",
@@ -14798,7 +14798,7 @@
   {
     "name": "FilesystemFixtureWithoutMocks__CanonicalForRelativePath",
     "file": "score/filesystem/details/standard_filesystem_test.cpp",
-    "line": 2492,
+    "line": 2553,
     "need": "comp_req__filesystem__api_abstraction",
     "verify_type": "partially",
     "result": "passed",
@@ -14810,7 +14810,7 @@
   {
     "name": "FilesystemFixtureWithoutMocks__CanonicalForNonexistedPath",
     "file": "score/filesystem/details/standard_filesystem_test.cpp",
-    "line": 2510,
+    "line": 2574,
     "need": "comp_req__filesystem__api_abstraction",
     "verify_type": "partially",
     "result": "passed",
@@ -14822,7 +14822,7 @@
   {
     "name": "FilesystemFixtureWithoutMocks__CanonicalForFileSymlink",
     "file": "score/filesystem/details/standard_filesystem_test.cpp",
-    "line": 2534,
+    "line": 2601,
     "need": "comp_req__filesystem__api_abstraction",
     "verify_type": "partially",
     "result": "passed",
@@ -14834,7 +14834,7 @@
   {
     "name": "FilesystemFixtureWithoutMocks__CanonicalForFolderSymlink",
     "file": "score/filesystem/details/standard_filesystem_test.cpp",
-    "line": 2549,
+    "line": 2619,
     "need": "comp_req__filesystem__api_abstraction",
     "verify_type": "partially",
     "result": "passed",
@@ -14846,7 +14846,7 @@
   {
     "name": "IsSymlinkFixture__Symlink",
     "file": "score/filesystem/details/standard_filesystem_test.cpp",
-    "line": 2333,
+    "line": 2391,
     "need": "comp_req__filesystem__api_abstraction",
     "verify_type": "partially",
     "result": "passed",
@@ -14858,7 +14858,7 @@
   {
     "name": "IsSymlinkFixture__RegularFile",
     "file": "score/filesystem/details/standard_filesystem_test.cpp",
-    "line": 2347,
+    "line": 2405,
     "need": "comp_req__filesystem__api_abstraction",
     "verify_type": "partially",
     "result": "passed",
@@ -14870,7 +14870,7 @@
   {
     "name": "IsSymlinkFixture__StatusFailed",
     "file": "score/filesystem/details/standard_filesystem_test.cpp",
-    "line": 2361,
+    "line": 2419,
     "need": "comp_req__filesystem__api_abstraction",
     "verify_type": "partially",
     "result": "passed",
@@ -14882,7 +14882,7 @@
   {
     "name": "IsSymlinkFixture__DoesntExist",
     "file": "score/filesystem/details/standard_filesystem_test.cpp",
-    "line": 2374,
+    "line": 2432,
     "need": "comp_req__filesystem__api_abstraction",
     "verify_type": "partially",
     "result": "passed",
@@ -14894,7 +14894,7 @@
   {
     "name": "CreateSymlink__RelativePath",
     "file": "score/filesystem/details/standard_filesystem_test.cpp",
-    "line": 2567,
+    "line": 2640,
     "need": "comp_req__filesystem__api_abstraction",
     "verify_type": "partially",
     "result": "passed",
@@ -14906,7 +14906,7 @@
   {
     "name": "CreateSymlink__AbsolutePath",
     "file": "score/filesystem/details/standard_filesystem_test.cpp",
-    "line": 2582,
+    "line": 2655,
     "need": "comp_req__filesystem__api_abstraction",
     "verify_type": "partially",
     "result": "passed",
@@ -14918,7 +14918,7 @@
   {
     "name": "CreateSymlink__SameFilename",
     "file": "score/filesystem/details/standard_filesystem_test.cpp",
-    "line": 2596,
+    "line": 2669,
     "need": "comp_req__filesystem__api_abstraction",
     "verify_type": "partially",
     "result": "passed",
@@ -14930,7 +14930,7 @@
   {
     "name": "CreateSymlink__NoErrorFromNonExisted",
     "file": "score/filesystem/details/standard_filesystem_test.cpp",
-    "line": 2615,
+    "line": 2688,
     "need": "comp_req__filesystem__api_abstraction",
     "verify_type": "partially",
     "result": "passed",
@@ -14942,7 +14942,7 @@
   {
     "name": "CreateSymlink__SymlinkToDirectory",
     "file": "score/filesystem/details/standard_filesystem_test.cpp",
-    "line": 2629,
+    "line": 2702,
     "need": "comp_req__filesystem__api_abstraction",
     "verify_type": "partially",
     "result": "passed",
@@ -14954,7 +14954,7 @@
   {
     "name": "CreateSymlink__ErrorIfAlreadyExist",
     "file": "score/filesystem/details/standard_filesystem_test.cpp",
-    "line": 2643,
+    "line": 2716,
     "need": "comp_req__filesystem__api_abstraction",
     "verify_type": "partially",
     "result": "passed",
@@ -14966,7 +14966,7 @@
   {
     "name": "SymlinkStatusFixture__TargetExists",
     "file": "score/filesystem/details/standard_filesystem_test.cpp",
-    "line": 2659,
+    "line": 2732,
     "need": "comp_req__filesystem__api_abstraction",
     "verify_type": "partially",
     "result": "passed",
@@ -14978,7 +14978,7 @@
   {
     "name": "SymlinkStatusFixture__TargetDoesntExist",
     "file": "score/filesystem/details/standard_filesystem_test.cpp",
-    "line": 2675,
+    "line": 2748,
     "need": "comp_req__filesystem__api_abstraction",
     "verify_type": "partially",
     "result": "passed",
@@ -14990,7 +14990,7 @@
   {
     "name": "SymlinkStatusFixture__SymlinkExists",
     "file": "score/filesystem/details/standard_filesystem_test.cpp",
-    "line": 2714,
+    "line": 2787,
     "need": "comp_req__filesystem__api_abstraction",
     "verify_type": "partially",
     "result": "passed",
@@ -15002,7 +15002,7 @@
   {
     "name": "SymlinkStatusFixture__SymlinkDoesNotExist",
     "file": "score/filesystem/details/standard_filesystem_test.cpp",
-    "line": 2729,
+    "line": 2802,
     "need": "comp_req__filesystem__api_abstraction",
     "verify_type": "partially",
     "result": "passed",
@@ -15014,7 +15014,7 @@
   {
     "name": "SymlinkStatusFixture__BufferTooSmall",
     "file": "score/filesystem/details/standard_filesystem_test.cpp",
-    "line": 2743,
+    "line": 2816,
     "need": "comp_req__filesystem__api_abstraction",
     "verify_type": "partially",
     "result": "passed",
@@ -15026,7 +15026,7 @@
   {
     "name": "StatusFixture__TargetDoesntExist",
     "file": "score/filesystem/details/standard_filesystem_test.cpp",
-    "line": 2695,
+    "line": 2768,
     "need": "comp_req__filesystem__api_abstraction",
     "verify_type": "partially",
     "result": "passed",
@@ -15038,7 +15038,7 @@
   {
     "name": "CreateDirectorySymlinkFixture__SymlinkToFolder",
     "file": "score/filesystem/details/standard_filesystem_test.cpp",
-    "line": 2762,
+    "line": 2835,
     "need": "comp_req__filesystem__api_abstraction",
     "verify_type": "partially",
     "result": "passed",
@@ -15050,7 +15050,7 @@
   {
     "name": "CreateDirectorySymlinkFixture__EmptySymlink",
     "file": "score/filesystem/details/standard_filesystem_test.cpp",
-    "line": 2776,
+    "line": 2849,
     "need": "comp_req__filesystem__api_abstraction",
     "verify_type": "partially",
     "result": "passed",
@@ -15062,7 +15062,7 @@
   {
     "name": "CopySymlinkFixture__NoError",
     "file": "score/filesystem/details/standard_filesystem_test.cpp",
-    "line": 2792,
+    "line": 2865,
     "need": "comp_req__filesystem__api_abstraction",
     "verify_type": "partially",
     "result": "passed",
@@ -15074,7 +15074,7 @@
   {
     "name": "CopySymlinkFixture__ErrorDueToNonExisted",
     "file": "score/filesystem/details/standard_filesystem_test.cpp",
-    "line": 2809,
+    "line": 2882,
     "need": "comp_req__filesystem__api_abstraction",
     "verify_type": "partially",
     "result": "passed",
@@ -15086,7 +15086,7 @@
   {
     "name": "CopySymlinkFixture__ErrorDueToAlreadyExisted",
     "file": "score/filesystem/details/standard_filesystem_test.cpp",
-    "line": 2821,
+    "line": 2894,
     "need": "comp_req__filesystem__api_abstraction",
     "verify_type": "partially",
     "result": "passed",
@@ -15098,7 +15098,7 @@
   {
     "name": "WeaklyCanonicalFixture__CanResolveSymbolicLink",
     "file": "score/filesystem/details/standard_filesystem_test.cpp",
-    "line": 2840,
+    "line": 2913,
     "need": "comp_req__filesystem__api_abstraction",
     "verify_type": "partially",
     "result": "passed",
@@ -15350,7 +15350,7 @@
   {
     "name": "DirectoryIteratorFixture__IterateRangeBased",
     "file": "score/filesystem/iterator/directory_iterator_test.cpp",
-    "line": 79,
+    "line": 82,
     "need": "comp_req__filesystem__directory_iterators",
     "verify_type": "partially",
     "result": "passed",
@@ -15362,7 +15362,7 @@
   {
     "name": "DirectoryIteratorFixture__IterateNonExistingDirectory",
     "file": "score/filesystem/iterator/directory_iterator_test.cpp",
-    "line": 99,
+    "line": 102,
     "need": "comp_req__filesystem__directory_iterators",
     "verify_type": "partially",
     "result": "passed",
@@ -15374,7 +15374,7 @@
   {
     "name": "DirectoryIteratorFixture__CanDereferenceIterator",
     "file": "score/filesystem/iterator/directory_iterator_test.cpp",
-    "line": 115,
+    "line": 121,
     "need": "comp_req__filesystem__directory_iterators",
     "verify_type": "partially",
     "result": "passed",
@@ -15386,7 +15386,7 @@
   {
     "name": "DirectoryIteratorFixture__DefaultConstructedIsEmpty",
     "file": "score/filesystem/iterator/directory_iterator_test.cpp",
-    "line": 129,
+    "line": 135,
     "need": "comp_req__filesystem__directory_iterators",
     "verify_type": "partially",
     "result": "passed",
@@ -15398,7 +15398,7 @@
   {
     "name": "DirectoryIteratorFixture__DefaultConstructedIsSafeToIncrement",
     "file": "score/filesystem/iterator/directory_iterator_test.cpp",
-    "line": 144,
+    "line": 150,
     "need": "comp_req__filesystem__directory_iterators",
     "verify_type": "partially",
     "result": "passed",
@@ -15410,7 +15410,7 @@
   {
     "name": "DirectoryIteratorFixture__DefaultConstructedIsSafeToDereference",
     "file": "score/filesystem/iterator/directory_iterator_test.cpp",
-    "line": 159,
+    "line": 168,
     "need": "comp_req__filesystem__directory_iterators",
     "verify_type": "partially",
     "result": "passed",
@@ -15422,7 +15422,7 @@
   {
     "name": "DirectoryIteratorFixture__ReaddirError",
     "file": "score/filesystem/iterator/directory_iterator_test.cpp",
-    "line": 172,
+    "line": 181,
     "need": "comp_req__filesystem__directory_iterators",
     "verify_type": "partially",
     "result": "passed",
@@ -15518,7 +15518,7 @@
   {
     "name": "RecursiveDirectoryIteratorFixture__IterateRangeBased",
     "file": "score/filesystem/iterator/recursive_directory_iterator_test.cpp",
-    "line": 113,
+    "line": 116,
     "need": "comp_req__filesystem__directory_iterators",
     "verify_type": "partially",
     "result": "passed",
@@ -15530,7 +15530,7 @@
   {
     "name": "RecursiveDirectoryIteratorFixture__IterateNonExistingDirectory",
     "file": "score/filesystem/iterator/recursive_directory_iterator_test.cpp",
-    "line": 149,
+    "line": 155,
     "need": "comp_req__filesystem__directory_iterators",
     "verify_type": "partially",
     "result": "passed",
@@ -15542,7 +15542,7 @@
   {
     "name": "RecursiveDirectoryIteratorFixture__CanDereferenceIterator",
     "file": "score/filesystem/iterator/recursive_directory_iterator_test.cpp",
-    "line": 164,
+    "line": 173,
     "need": "comp_req__filesystem__directory_iterators",
     "verify_type": "partially",
     "result": "passed",
@@ -15554,7 +15554,7 @@
   {
     "name": "RecursiveDirectoryIteratorFixture__ArrowOperator",
     "file": "score/filesystem/iterator/recursive_directory_iterator_test.cpp",
-    "line": 181,
+    "line": 193,
     "need": "comp_req__filesystem__directory_iterators",
     "verify_type": "partially",
     "result": "passed",
@@ -15566,7 +15566,7 @@
   {
     "name": "RecursiveDirectoryIteratorFixture__IterateEmptyDirectory",
     "file": "score/filesystem/iterator/recursive_directory_iterator_test.cpp",
-    "line": 197,
+    "line": 209,
     "need": "comp_req__filesystem__directory_iterators",
     "verify_type": "partially",
     "result": "passed",
@@ -15578,7 +15578,7 @@
   {
     "name": "RecursiveDirectoryIteratorFixture__FailedReaddir",
     "file": "score/filesystem/iterator/recursive_directory_iterator_test.cpp",
-    "line": 213,
+    "line": 228,
     "need": "comp_req__filesystem__directory_iterators",
     "verify_type": "partially",
     "result": "passed",
@@ -15590,7 +15590,7 @@
   {
     "name": "RecursiveDirectoryIteratorFixture__FailedStatus",
     "file": "score/filesystem/iterator/recursive_directory_iterator_test.cpp",
-    "line": 239,
+    "line": 254,
     "need": "comp_req__filesystem__directory_iterators",
     "verify_type": "partially",
     "result": "passed",
@@ -15602,7 +15602,7 @@
   {
     "name": "RecursiveDirectoryIteratorFixture__IterateOnDefaultConstructed",
     "file": "score/filesystem/iterator/recursive_directory_iterator_test.cpp",
-    "line": 260,
+    "line": 275,
     "need": "comp_req__filesystem__directory_iterators",
     "verify_type": "partially",
     "result": "passed",
@@ -15614,7 +15614,7 @@
   {
     "name": "RecursiveDirectoryIteratorFixture__FollowSymlink",
     "file": "score/filesystem/iterator/recursive_directory_iterator_test.cpp",
-    "line": 276,
+    "line": 294,
     "need": "comp_req__filesystem__directory_iterators",
     "verify_type": "partially",
     "result": "passed",
@@ -15626,7 +15626,7 @@
   {
     "name": "RecursiveDirectoryIteratorFixture__DoNotFollowSymlink",
     "file": "score/filesystem/iterator/recursive_directory_iterator_test.cpp",
-    "line": 303,
+    "line": 321,
     "need": "comp_req__filesystem__directory_iterators",
     "verify_type": "partially",
     "result": "passed",
@@ -15638,7 +15638,7 @@
   {
     "name": "RecursiveDirectoryIteratorFixture__ErrorInCaseCircularSymlinks",
     "file": "score/filesystem/iterator/recursive_directory_iterator_test.cpp",
-    "line": 330,
+    "line": 351,
     "need": "comp_req__filesystem__directory_iterators",
     "verify_type": "partially",
     "result": "passed",
@@ -15650,7 +15650,7 @@
   {
     "name": "RecursiveDirectoryIteratorFixture__FailedSymlinkStatus",
     "file": "score/filesystem/iterator/recursive_directory_iterator_test.cpp",
-    "line": 351,
+    "line": 375,
     "need": "comp_req__filesystem__directory_iterators",
     "verify_type": "partially",
     "result": "passed",
@@ -16202,7 +16202,7 @@
   {
     "name": "Path__ReplaceExtension",
     "file": "score/filesystem/path_test.cpp",
-    "line": 1201,
+    "line": 1204,
     "need": "comp_req__filesystem__path_utilities",
     "verify_type": "partially",
     "result": "passed",
@@ -16214,7 +16214,7 @@
   {
     "name": "Path__RemoveFilename",
     "file": "score/filesystem/path_test.cpp",
-    "line": 1225,
+    "line": 1228,
     "need": "comp_req__filesystem__path_utilities",
     "verify_type": "partially",
     "result": "passed",
@@ -16226,7 +16226,7 @@
   {
     "name": "Path__CopyOperator_SelfAssignment",
     "file": "score/filesystem/path_test.cpp",
-    "line": 1253,
+    "line": 1256,
     "need": "comp_req__filesystem__path_utilities",
     "verify_type": "partially",
     "result": "passed",
@@ -16238,7 +16238,7 @@
   {
     "name": "Path__MoveOperator_SelfAssignment",
     "file": "score/filesystem/path_test.cpp",
-    "line": 1266,
+    "line": 1269,
     "need": "comp_req__filesystem__path_utilities",
     "verify_type": "partially",
     "result": "passed",
@@ -16322,7 +16322,7 @@
   {
     "name": "PathIteratorFixture__PathToArrayWithouSeparator",
     "file": "score/filesystem/path_test.cpp",
-    "line": 920,
+    "line": 923,
     "need": "comp_req__filesystem__path_utilities",
     "verify_type": "partially",
     "result": "passed",
@@ -16334,7 +16334,7 @@
   {
     "name": "PathIteratorFixture__SplitRelativePathDot",
     "file": "score/filesystem/path_test.cpp",
-    "line": 933,
+    "line": 936,
     "need": "comp_req__filesystem__path_utilities",
     "verify_type": "partially",
     "result": "passed",
@@ -16346,7 +16346,7 @@
   {
     "name": "PathIteratorFixture__SplitRelativePathDotDot",
     "file": "score/filesystem/path_test.cpp",
-    "line": 948,
+    "line": 951,
     "need": "comp_req__filesystem__path_utilities",
     "verify_type": "partially",
     "result": "passed",
@@ -16358,7 +16358,7 @@
   {
     "name": "PathIteratorFixture__ConcatPath",
     "file": "score/filesystem/path_test.cpp",
-    "line": 1077,
+    "line": 1080,
     "need": "comp_req__filesystem__path_utilities",
     "verify_type": "partially",
     "result": "passed",
@@ -16370,7 +16370,7 @@
   {
     "name": "PathIteratorFixture__AppendPath",
     "file": "score/filesystem/path_test.cpp",
-    "line": 1093,
+    "line": 1096,
     "need": "comp_req__filesystem__path_utilities",
     "verify_type": "partially",
     "result": "passed",
@@ -16382,7 +16382,7 @@
   {
     "name": "PathIterator__LongPathIncrement",
     "file": "score/filesystem/path_test.cpp",
-    "line": 963,
+    "line": 966,
     "need": "comp_req__filesystem__path_utilities",
     "verify_type": "partially",
     "result": "passed",
@@ -16394,7 +16394,7 @@
   {
     "name": "PathIterator__ShortPathIncrement",
     "file": "score/filesystem/path_test.cpp",
-    "line": 986,
+    "line": 989,
     "need": "comp_req__filesystem__path_utilities",
     "verify_type": "partially",
     "result": "passed",
@@ -16406,7 +16406,7 @@
   {
     "name": "PathIterator__EmptyPathIncrement",
     "file": "score/filesystem/path_test.cpp",
-    "line": 1003,
+    "line": 1006,
     "need": "comp_req__filesystem__path_utilities",
     "verify_type": "partially",
     "result": "passed",
@@ -16418,7 +16418,7 @@
   {
     "name": "PathIterator__LongPathDecrement",
     "file": "score/filesystem/path_test.cpp",
-    "line": 1017,
+    "line": 1020,
     "need": "comp_req__filesystem__path_utilities",
     "verify_type": "partially",
     "result": "passed",
@@ -16430,7 +16430,7 @@
   {
     "name": "PathIterator__ShortPathDecrement",
     "file": "score/filesystem/path_test.cpp",
-    "line": 1044,
+    "line": 1047,
     "need": "comp_req__filesystem__path_utilities",
     "verify_type": "partially",
     "result": "passed",
@@ -16442,7 +16442,7 @@
   {
     "name": "PathIterator__EmptyPathDecrement",
     "file": "score/filesystem/path_test.cpp",
-    "line": 1063,
+    "line": 1066,
     "need": "comp_req__filesystem__path_utilities",
     "verify_type": "partially",
     "result": "passed",
@@ -16454,7 +16454,7 @@
   {
     "name": "PathIterator__PostIncrement",
     "file": "score/filesystem/path_test.cpp",
-    "line": 1110,
+    "line": 1113,
     "need": "comp_req__filesystem__path_utilities",
     "verify_type": "partially",
     "result": "passed",
@@ -16466,7 +16466,7 @@
   {
     "name": "PathIterator__PostDecrement",
     "file": "score/filesystem/path_test.cpp",
-    "line": 1126,
+    "line": 1129,
     "need": "comp_req__filesystem__path_utilities",
     "verify_type": "partially",
     "result": "passed",
@@ -16478,7 +16478,7 @@
   {
     "name": "PathIterator__Equality",
     "file": "score/filesystem/path_test.cpp",
-    "line": 1148,
+    "line": 1151,
     "need": "comp_req__filesystem__path_utilities",
     "verify_type": "partially",
     "result": "passed",
@@ -16490,7 +16490,7 @@
   {
     "name": "PathIterator__CompareIteratorsFromDifferentVariable",
     "file": "score/filesystem/path_test.cpp",
-    "line": 1174,
+    "line": 1177,
     "need": "comp_req__filesystem__path_utilities",
     "verify_type": "partially",
     "result": "passed",
@@ -16502,7 +16502,7 @@
   {
     "name": "PathIterator__CompareWithEmptyIterator",
     "file": "score/filesystem/path_test.cpp",
-    "line": 1189,
+    "line": 1192,
     "need": "comp_req__filesystem__path_utilities",
     "verify_type": "partially",
     "result": "passed",
@@ -16514,7 +16514,7 @@
   {
     "name": "PathIterator__CopyOperator",
     "file": "score/filesystem/path_test.cpp",
-    "line": 1238,
+    "line": 1241,
     "need": "comp_req__filesystem__path_utilities",
     "verify_type": "partially",
     "result": "passed",
@@ -16526,7 +16526,7 @@
   {
     "name": "PathIterator__CopyOperator_SelfAssignment",
     "file": "score/filesystem/path_test.cpp",
-    "line": 1280,
+    "line": 1283,
     "need": "comp_req__filesystem__path_utilities",
     "verify_type": "partially",
     "result": "passed",
@@ -16538,7 +16538,7 @@
   {
     "name": "PathIterator__MoveOperator_SelfAssignment",
     "file": "score/filesystem/path_test.cpp",
-    "line": 1295,
+    "line": 1298,
     "need": "comp_req__filesystem__path_utilities",
     "verify_type": "partially",
     "result": "passed",
@@ -16550,7 +16550,7 @@
   {
     "name": "PathIterator__MoveOperator_Assignment",
     "file": "score/filesystem/path_test.cpp",
-    "line": 1311,
+    "line": 1314,
     "need": "comp_req__filesystem__path_utilities",
     "verify_type": "partially",
     "result": "passed",
@@ -16742,7 +16742,7 @@
   {
     "name": "FilesystemFakeFixture__CreateDirectory_ParentFolderDoesntExist",
     "file": "score/filesystem/standard_filesystem_fake_test.cpp",
-    "line": 312,
+    "line": 315,
     "need": "comp_req__filesystem__api_abstraction",
     "verify_type": "partially",
     "result": "passed",
@@ -16754,7 +16754,7 @@
   {
     "name": "FilesystemFakeFixture__CreateDirectories",
     "file": "score/filesystem/standard_filesystem_fake_test.cpp",
-    "line": 325,
+    "line": 331,
     "need": "comp_req__filesystem__api_abstraction",
     "verify_type": "partially",
     "result": "passed",
@@ -16766,7 +16766,7 @@
   {
     "name": "FilesystemFakeFixture__CreateDirectoriesThatAlreadyExist",
     "file": "score/filesystem/standard_filesystem_fake_test.cpp",
-    "line": 340,
+    "line": 346,
     "need": "comp_req__filesystem__api_abstraction",
     "verify_type": "partially",
     "result": "passed",
@@ -16778,7 +16778,7 @@
   {
     "name": "FilesystemFakeFixture__CreateDirectoriesInvalidPath",
     "file": "score/filesystem/standard_filesystem_fake_test.cpp",
-    "line": 355,
+    "line": 364,
     "need": "comp_req__filesystem__api_abstraction",
     "verify_type": "partially",
     "result": "passed",
@@ -16790,7 +16790,7 @@
   {
     "name": "FilesystemFakeFixture__SetPermissionsReplace",
     "file": "score/filesystem/standard_filesystem_fake_test.cpp",
-    "line": 369,
+    "line": 378,
     "need": "comp_req__filesystem__api_abstraction",
     "verify_type": "partially",
     "result": "passed",
@@ -16802,7 +16802,7 @@
   {
     "name": "FilesystemFakeFixture__SetPermissionsAdd",
     "file": "score/filesystem/standard_filesystem_fake_test.cpp",
-    "line": 387,
+    "line": 396,
     "need": "comp_req__filesystem__api_abstraction",
     "verify_type": "partially",
     "result": "passed",
@@ -16814,7 +16814,7 @@
   {
     "name": "FilesystemFakeFixture__SetPermissionsRemove",
     "file": "score/filesystem/standard_filesystem_fake_test.cpp",
-    "line": 405,
+    "line": 414,
     "need": "comp_req__filesystem__api_abstraction",
     "verify_type": "partially",
     "result": "passed",
@@ -16826,7 +16826,7 @@
   {
     "name": "FilesystemFakeFixture__SetPermissionsNonExistedPath",
     "file": "score/filesystem/standard_filesystem_fake_test.cpp",
-    "line": 423,
+    "line": 432,
     "need": "comp_req__filesystem__api_abstraction",
     "verify_type": "partially",
     "result": "passed",
@@ -16838,7 +16838,7 @@
   {
     "name": "FilesystemFakeFixture__SetPermissionsEmptyPath",
     "file": "score/filesystem/standard_filesystem_fake_test.cpp",
-    "line": 435,
+    "line": 444,
     "need": "comp_req__filesystem__api_abstraction",
     "verify_type": "partially",
     "result": "passed",
@@ -16850,7 +16850,7 @@
   {
     "name": "FilesystemFakeFixture__SetPermissionsInvalidOptions",
     "file": "score/filesystem/standard_filesystem_fake_test.cpp",
-    "line": 447,
+    "line": 456,
     "need": "comp_req__filesystem__api_abstraction",
     "verify_type": "partially",
     "result": "passed",
@@ -16862,7 +16862,7 @@
   {
     "name": "FilesystemFakeFixture__Remove_File",
     "file": "score/filesystem/standard_filesystem_fake_test.cpp",
-    "line": 461,
+    "line": 470,
     "need": "comp_req__filesystem__api_abstraction",
     "verify_type": "partially",
     "result": "passed",
@@ -16874,7 +16874,7 @@
   {
     "name": "FilesystemFakeFixture__Remove_NonExisted",
     "file": "score/filesystem/standard_filesystem_fake_test.cpp",
-    "line": 475,
+    "line": 484,
     "need": "comp_req__filesystem__api_abstraction",
     "verify_type": "partially",
     "result": "passed",
@@ -16886,7 +16886,7 @@
   {
     "name": "FilesystemFakeFixture__Remove_NonExistedParent",
     "file": "score/filesystem/standard_filesystem_fake_test.cpp",
-    "line": 487,
+    "line": 496,
     "need": "comp_req__filesystem__api_abstraction",
     "verify_type": "partially",
     "result": "passed",
@@ -16898,7 +16898,7 @@
   {
     "name": "FilesystemFakeFixture__Remove_InvalidPath",
     "file": "score/filesystem/standard_filesystem_fake_test.cpp",
-    "line": 501,
+    "line": 510,
     "need": "comp_req__filesystem__api_abstraction",
     "verify_type": "partially",
     "result": "passed",
@@ -16910,7 +16910,7 @@
   {
     "name": "FilesystemFakeFixture__Remove_EmptyFolder",
     "file": "score/filesystem/standard_filesystem_fake_test.cpp",
-    "line": 515,
+    "line": 524,
     "need": "comp_req__filesystem__api_abstraction",
     "verify_type": "partially",
     "result": "passed",
@@ -16922,7 +16922,7 @@
   {
     "name": "FilesystemFakeFixture__Remove_NonEmptyFolder",
     "file": "score/filesystem/standard_filesystem_fake_test.cpp",
-    "line": 530,
+    "line": 539,
     "need": "comp_req__filesystem__api_abstraction",
     "verify_type": "partially",
     "result": "passed",
@@ -16934,7 +16934,7 @@
   {
     "name": "FilesystemFakeFixture__RemoveAll_Directory",
     "file": "score/filesystem/standard_filesystem_fake_test.cpp",
-    "line": 545,
+    "line": 554,
     "need": "comp_req__filesystem__api_abstraction",
     "verify_type": "partially",
     "result": "passed",
@@ -16946,7 +16946,7 @@
   {
     "name": "FilesystemFakeFixture__RemoveAll_File",
     "file": "score/filesystem/standard_filesystem_fake_test.cpp",
-    "line": 560,
+    "line": 569,
     "need": "comp_req__filesystem__api_abstraction",
     "verify_type": "partially",
     "result": "passed",
@@ -16958,7 +16958,7 @@
   {
     "name": "FilesystemFakeFixture__RemoveAll_NonExisted",
     "file": "score/filesystem/standard_filesystem_fake_test.cpp",
-    "line": 576,
+    "line": 585,
     "need": "comp_req__filesystem__api_abstraction",
     "verify_type": "partially",
     "result": "passed",
@@ -16970,7 +16970,7 @@
   {
     "name": "FilesystemFakeFixture__RemoveAll_NonExistedParentPath",
     "file": "score/filesystem/standard_filesystem_fake_test.cpp",
-    "line": 591,
+    "line": 600,
     "need": "comp_req__filesystem__api_abstraction",
     "verify_type": "partially",
     "result": "passed",
@@ -16982,7 +16982,7 @@
   {
     "name": "FilesystemFakeFixture__RemoveAll_InvalidPath",
     "file": "score/filesystem/standard_filesystem_fake_test.cpp",
-    "line": 607,
+    "line": 619,
     "need": "comp_req__filesystem__api_abstraction",
     "verify_type": "partially",
     "result": "passed",
@@ -16994,7 +16994,7 @@
   {
     "name": "FilesystemFakeFixture__SetCurrentPath_Simple",
     "file": "score/filesystem/standard_filesystem_fake_test.cpp",
-    "line": 623,
+    "line": 635,
     "need": "comp_req__filesystem__api_abstraction",
     "verify_type": "partially",
     "result": "passed",
@@ -17006,7 +17006,7 @@
   {
     "name": "FilesystemFakeFixture__SetCurrentPath_NonExisted",
     "file": "score/filesystem/standard_filesystem_fake_test.cpp",
-    "line": 640,
+    "line": 652,
     "need": "comp_req__filesystem__api_abstraction",
     "verify_type": "partially",
     "result": "passed",
@@ -17018,7 +17018,7 @@
   {
     "name": "FilesystemFakeFixture__CopyFile_ErrorWhileAccessingFrom",
     "file": "score/filesystem/standard_filesystem_fake_test.cpp",
-    "line": 654,
+    "line": 666,
     "need": "comp_req__filesystem__api_abstraction",
     "verify_type": "partially",
     "result": "passed",
@@ -17030,7 +17030,7 @@
   {
     "name": "FilesystemFakeFixture__CopyFile_TryingToCopyNotAFile",
     "file": "score/filesystem/standard_filesystem_fake_test.cpp",
-    "line": 674,
+    "line": 689,
     "need": "comp_req__filesystem__api_abstraction",
     "verify_type": "partially",
     "result": "passed",
@@ -17042,7 +17042,7 @@
   {
     "name": "FilesystemFakeFixture__CopyFile_ErrorWhileAccessingTo",
     "file": "score/filesystem/standard_filesystem_fake_test.cpp",
-    "line": 693,
+    "line": 711,
     "need": "comp_req__filesystem__api_abstraction",
     "verify_type": "partially",
     "result": "passed",
@@ -17054,7 +17054,7 @@
   {
     "name": "FilesystemFakeFixture__CopyFile_ModesOfSourceFileIsCopiedtoDestination",
     "file": "score/filesystem/standard_filesystem_fake_test.cpp",
-    "line": 713,
+    "line": 734,
     "need": "comp_req__filesystem__api_abstraction",
     "verify_type": "partially",
     "result": "passed",
@@ -17066,7 +17066,7 @@
   {
     "name": "FilesystemFakeFixture__CopyFile_FileContentsAreEqual",
     "file": "score/filesystem/standard_filesystem_fake_test.cpp",
-    "line": 732,
+    "line": 753,
     "need": "comp_req__filesystem__api_abstraction",
     "verify_type": "partially",
     "result": "passed",
@@ -17078,7 +17078,7 @@
   {
     "name": "FilesystemFakeFixture__CopyFile_CopyEmptyFile",
     "file": "score/filesystem/standard_filesystem_fake_test.cpp",
-    "line": 751,
+    "line": 775,
     "need": "comp_req__filesystem__api_abstraction",
     "verify_type": "partially",
     "result": "passed",
@@ -17090,7 +17090,7 @@
   {
     "name": "FilesystemFakeFixture__CopyFile_DestExistsAndNotFile",
     "file": "score/filesystem/standard_filesystem_fake_test.cpp",
-    "line": 769,
+    "line": 793,
     "need": "comp_req__filesystem__api_abstraction",
     "verify_type": "partially",
     "result": "passed",
@@ -17102,7 +17102,7 @@
   {
     "name": "FilesystemFakeFixture__CopyFile_DestExistsAndNoOptions",
     "file": "score/filesystem/standard_filesystem_fake_test.cpp",
-    "line": 789,
+    "line": 816,
     "need": "comp_req__filesystem__api_abstraction",
     "verify_type": "partially",
     "result": "passed",
@@ -17114,7 +17114,7 @@
   {
     "name": "FilesystemFakeFixture__CopyFile_DestExistsAndSkipsExisting",
     "file": "score/filesystem/standard_filesystem_fake_test.cpp",
-    "line": 809,
+    "line": 839,
     "need": "comp_req__filesystem__api_abstraction",
     "verify_type": "partially",
     "result": "passed",
@@ -17126,7 +17126,7 @@
   {
     "name": "FilesystemFakeFixture__CopyFile_DestExistsAndOverwrite",
     "file": "score/filesystem/standard_filesystem_fake_test.cpp",
-    "line": 829,
+    "line": 862,
     "need": "comp_req__filesystem__api_abstraction",
     "verify_type": "partially",
     "result": "passed",
@@ -17138,7 +17138,7 @@
   {
     "name": "FilesystemFakeFixture__ErrorForInappropriateOption",
     "file": "score/filesystem/standard_filesystem_fake_test.cpp",
-    "line": 850,
+    "line": 886,
     "need": "comp_req__filesystem__api_abstraction",
     "verify_type": "partially",
     "result": "passed",
@@ -17150,7 +17150,7 @@
   {
     "name": "FilesystemFakeFixture__CopyFile_DestExistsAndUpdateExisting",
     "file": "score/filesystem/standard_filesystem_fake_test.cpp",
-    "line": 869,
+    "line": 905,
     "need": "comp_req__filesystem__api_abstraction",
     "verify_type": "partially",
     "result": "passed",
@@ -17162,7 +17162,7 @@
   {
     "name": "FilesystemFakeFixture__CopyFile_DestExistsAndUpdateExistingNotNecessary",
     "file": "score/filesystem/standard_filesystem_fake_test.cpp",
-    "line": 891,
+    "line": 930,
     "need": "comp_req__filesystem__api_abstraction",
     "verify_type": "partially",
     "result": "passed",
@@ -17174,7 +17174,7 @@
   {
     "name": "FilesystemFakeFixture__CopyFile_ErrorWhileRemove",
     "file": "score/filesystem/standard_filesystem_fake_test.cpp",
-    "line": 914,
+    "line": 953,
     "need": "comp_req__filesystem__api_abstraction",
     "verify_type": "partially",
     "result": "passed",
@@ -17186,7 +17186,7 @@
   {
     "name": "FilesystemFakeFixture__FileFactory_CreateNewFile",
     "file": "score/filesystem/standard_filesystem_fake_test.cpp",
-    "line": 937,
+    "line": 976,
     "need": "comp_req__filesystem__api_abstraction",
     "verify_type": "partially",
     "result": "passed",
@@ -17198,7 +17198,7 @@
   {
     "name": "FilesystemFakeFixture__FileFactory_WriteToFileTwice",
     "file": "score/filesystem/standard_filesystem_fake_test.cpp",
-    "line": 958,
+    "line": 997,
     "need": "comp_req__filesystem__api_abstraction",
     "verify_type": "partially",
     "result": "passed",
@@ -17210,7 +17210,7 @@
   {
     "name": "FilesystemFakeFixture__FileFactory_CreateFileInCurrentFolder",
     "file": "score/filesystem/standard_filesystem_fake_test.cpp",
-    "line": 985,
+    "line": 1024,
     "need": "comp_req__filesystem__api_abstraction",
     "verify_type": "partially",
     "result": "passed",
@@ -17222,7 +17222,7 @@
   {
     "name": "FilesystemFakeFixture__FileFactory_CreateAndCopyFile",
     "file": "score/filesystem/standard_filesystem_fake_test.cpp",
-    "line": 1013,
+    "line": 1055,
     "need": "comp_req__filesystem__api_abstraction",
     "verify_type": "partially",
     "result": "passed",
@@ -17234,7 +17234,7 @@
   {
     "name": "FilesystemFakeFixture__FileFactory_FailedToOpenEmptyFilename",
     "file": "score/filesystem/standard_filesystem_fake_test.cpp",
-    "line": 1039,
+    "line": 1084,
     "need": "comp_req__filesystem__api_abstraction",
     "verify_type": "partially",
     "result": "passed",
@@ -17246,7 +17246,7 @@
   {
     "name": "FilesystemFakeFixture__FileFactory_FailedToOpenDirectoryAsAFile",
     "file": "score/filesystem/standard_filesystem_fake_test.cpp",
-    "line": 1054,
+    "line": 1102,
     "need": "comp_req__filesystem__api_abstraction",
     "verify_type": "partially",
     "result": "passed",
@@ -17258,7 +17258,7 @@
   {
     "name": "FilesystemFakeFixture__FileFactory_FailedToOpenInvalidPath",
     "file": "score/filesystem/standard_filesystem_fake_test.cpp",
-    "line": 1069,
+    "line": 1117,
     "need": "comp_req__filesystem__api_abstraction",
     "verify_type": "partially",
     "result": "passed",
@@ -17270,7 +17270,7 @@
   {
     "name": "FilesystemFakeFixture__FileFactory_FailedToOpenEmptyPath",
     "file": "score/filesystem/standard_filesystem_fake_test.cpp",
-    "line": 1084,
+    "line": 1135,
     "need": "comp_req__filesystem__api_abstraction",
     "verify_type": "partially",
     "result": "passed",
@@ -17282,7 +17282,7 @@
   {
     "name": "FilesystemFakeFixture__CreateHardLink_Simple",
     "file": "score/filesystem/standard_filesystem_fake_test.cpp",
-    "line": 1097,
+    "line": 1151,
     "need": "comp_req__filesystem__api_abstraction",
     "verify_type": "partially",
     "result": "passed",
@@ -17294,7 +17294,7 @@
   {
     "name": "FilesystemFakeFixture__CreateHardLink_SameData",
     "file": "score/filesystem/standard_filesystem_fake_test.cpp",
-    "line": 1112,
+    "line": 1166,
     "need": "comp_req__filesystem__api_abstraction",
     "verify_type": "partially",
     "result": "passed",
@@ -17306,7 +17306,7 @@
   {
     "name": "FilesystemFakeFixture__CreateHardLink_ErrorFromDoesntExist",
     "file": "score/filesystem/standard_filesystem_fake_test.cpp",
-    "line": 1129,
+    "line": 1183,
     "need": "comp_req__filesystem__api_abstraction",
     "verify_type": "partially",
     "result": "passed",
@@ -17318,7 +17318,7 @@
   {
     "name": "FilesystemFakeFixture__CreateHardLink_ErrorFromIsDirectory",
     "file": "score/filesystem/standard_filesystem_fake_test.cpp",
-    "line": 1144,
+    "line": 1201,
     "need": "comp_req__filesystem__api_abstraction",
     "verify_type": "partially",
     "result": "passed",
@@ -17330,7 +17330,7 @@
   {
     "name": "FilesystemFakeFixture__CreateHardLink_ErrorToParrentPathIsNotDirectory",
     "file": "score/filesystem/standard_filesystem_fake_test.cpp",
-    "line": 1159,
+    "line": 1219,
     "need": "comp_req__filesystem__api_abstraction",
     "verify_type": "partially",
     "result": "passed",
@@ -17342,7 +17342,7 @@
   {
     "name": "FilesystemFakeFixture__CreateHardLink_ErrorToIsAlreadyExist",
     "file": "score/filesystem/standard_filesystem_fake_test.cpp",
-    "line": 1175,
+    "line": 1235,
     "need": "comp_req__filesystem__api_abstraction",
     "verify_type": "partially",
     "result": "passed",
@@ -17354,7 +17354,7 @@
   {
     "name": "FilesystemFakeFixture__CreateHardLink_ErrorToDirectoryNonExisted",
     "file": "score/filesystem/standard_filesystem_fake_test.cpp",
-    "line": 1191,
+    "line": 1254,
     "need": "comp_req__filesystem__api_abstraction",
     "verify_type": "partially",
     "result": "passed",
@@ -17366,7 +17366,7 @@
   {
     "name": "FilesystemFakeFixture__CreateHardLink_ErrorEmptyFilename",
     "file": "score/filesystem/standard_filesystem_fake_test.cpp",
-    "line": 1206,
+    "line": 1269,
     "need": "comp_req__filesystem__api_abstraction",
     "verify_type": "partially",
     "result": "passed",
@@ -17378,7 +17378,7 @@
   {
     "name": "FilesystemFakeFixture__HardLinkCount_File1",
     "file": "score/filesystem/standard_filesystem_fake_test.cpp",
-    "line": 1221,
+    "line": 1287,
     "need": "comp_req__filesystem__api_abstraction",
     "verify_type": "partially",
     "result": "passed",
@@ -17390,7 +17390,7 @@
   {
     "name": "FilesystemFakeFixture__HardLinkCount_File2",
     "file": "score/filesystem/standard_filesystem_fake_test.cpp",
-    "line": 1236,
+    "line": 1302,
     "need": "comp_req__filesystem__api_abstraction",
     "verify_type": "partially",
     "result": "passed",
@@ -17402,7 +17402,7 @@
   {
     "name": "FilesystemFakeFixture__HardLinkCount_Directory",
     "file": "score/filesystem/standard_filesystem_fake_test.cpp",
-    "line": 1255,
+    "line": 1321,
     "need": "comp_req__filesystem__api_abstraction",
     "verify_type": "partially",
     "result": "passed",
@@ -17414,7 +17414,7 @@
   {
     "name": "FilesystemFakeFixture__HardLinkCount_ErrorNonExisted",
     "file": "score/filesystem/standard_filesystem_fake_test.cpp",
-    "line": 1276,
+    "line": 1342,
     "need": "comp_req__filesystem__api_abstraction",
     "verify_type": "partially",
     "result": "passed",
@@ -17426,7 +17426,7 @@
   {
     "name": "FilesystemFakeFixture__IsDirectory_Directory",
     "file": "score/filesystem/standard_filesystem_fake_test.cpp",
-    "line": 1291,
+    "line": 1360,
     "need": "comp_req__filesystem__api_abstraction",
     "verify_type": "partially",
     "result": "passed",
@@ -17438,7 +17438,7 @@
   {
     "name": "FilesystemFakeFixture__IsDirectory_RegularFile",
     "file": "score/filesystem/standard_filesystem_fake_test.cpp",
-    "line": 1306,
+    "line": 1375,
     "need": "comp_req__filesystem__api_abstraction",
     "verify_type": "partially",
     "result": "passed",
@@ -17450,7 +17450,7 @@
   {
     "name": "FilesystemFakeFixture__IsDirectory_NonExisted",
     "file": "score/filesystem/standard_filesystem_fake_test.cpp",
-    "line": 1321,
+    "line": 1390,
     "need": "comp_req__filesystem__api_abstraction",
     "verify_type": "partially",
     "result": "passed",
@@ -17462,7 +17462,7 @@
   {
     "name": "FilesystemFakeFixture__IsRegularFile_RegularFile",
     "file": "score/filesystem/standard_filesystem_fake_test.cpp",
-    "line": 1334,
+    "line": 1403,
     "need": "comp_req__filesystem__api_abstraction",
     "verify_type": "partially",
     "result": "passed",
@@ -17474,7 +17474,7 @@
   {
     "name": "FilesystemFakeFixture__IsRegularFile_Directory",
     "file": "score/filesystem/standard_filesystem_fake_test.cpp",
-    "line": 1349,
+    "line": 1418,
     "need": "comp_req__filesystem__api_abstraction",
     "verify_type": "partially",
     "result": "passed",
@@ -17486,7 +17486,7 @@
   {
     "name": "FilesystemFakeFixture__IsRegularFile_NonExisted",
     "file": "score/filesystem/standard_filesystem_fake_test.cpp",
-    "line": 1364,
+    "line": 1433,
     "need": "comp_req__filesystem__api_abstraction",
     "verify_type": "partially",
     "result": "passed",
@@ -17498,7 +17498,7 @@
   {
     "name": "FilesystemFakeFixture__IsSymlink_RegularFile",
     "file": "score/filesystem/standard_filesystem_fake_test.cpp",
-    "line": 1377,
+    "line": 1446,
     "need": "comp_req__filesystem__api_abstraction",
     "verify_type": "partially",
     "result": "passed",
@@ -17510,7 +17510,7 @@
   {
     "name": "FilesystemFakeFixture__IsSymlink_Symlink",
     "file": "score/filesystem/standard_filesystem_fake_test.cpp",
-    "line": 1392,
+    "line": 1461,
     "need": "comp_req__filesystem__api_abstraction",
     "verify_type": "partially",
     "result": "passed",
@@ -17522,7 +17522,7 @@
   {
     "name": "FilesystemFakeFixture__IsEmpty_EmptyFile",
     "file": "score/filesystem/standard_filesystem_fake_test.cpp",
-    "line": 1407,
+    "line": 1476,
     "need": "comp_req__filesystem__api_abstraction",
     "verify_type": "partially",
     "result": "passed",
@@ -17534,7 +17534,7 @@
   {
     "name": "FilesystemFakeFixture__IsEmpty_EmptyDirectory",
     "file": "score/filesystem/standard_filesystem_fake_test.cpp",
-    "line": 1422,
+    "line": 1491,
     "need": "comp_req__filesystem__api_abstraction",
     "verify_type": "partially",
     "result": "passed",
@@ -17546,7 +17546,7 @@
   {
     "name": "FilesystemFakeFixture__IsEmpty_NonExisted",
     "file": "score/filesystem/standard_filesystem_fake_test.cpp",
-    "line": 1437,
+    "line": 1506,
     "need": "comp_req__filesystem__api_abstraction",
     "verify_type": "partially",
     "result": "passed",
@@ -17558,7 +17558,7 @@
   {
     "name": "FilesystemFakeFixture__IsEmpty_NonEmptyFile",
     "file": "score/filesystem/standard_filesystem_fake_test.cpp",
-    "line": 1450,
+    "line": 1519,
     "need": "comp_req__filesystem__api_abstraction",
     "verify_type": "partially",
     "result": "passed",
@@ -17570,7 +17570,7 @@
   {
     "name": "FilesystemFakeFixture__IsEmpty_NonEmptyDirectory",
     "file": "score/filesystem/standard_filesystem_fake_test.cpp",
-    "line": 1465,
+    "line": 1534,
     "need": "comp_req__filesystem__api_abstraction",
     "verify_type": "partially",
     "result": "passed",
@@ -17582,7 +17582,7 @@
   {
     "name": "FilesystemFakeFixture__AbsoluteForEmptyPath",
     "file": "score/filesystem/standard_filesystem_fake_test.cpp",
-    "line": 1480,
+    "line": 1549,
     "need": "comp_req__filesystem__api_abstraction",
     "verify_type": "partially",
     "result": "passed",
@@ -17594,7 +17594,7 @@
   {
     "name": "FilesystemFakeFixture__AbsoluteForAbsolutePaths",
     "file": "score/filesystem/standard_filesystem_fake_test.cpp",
-    "line": 1490,
+    "line": 1559,
     "need": "comp_req__filesystem__api_abstraction",
     "verify_type": "partially",
     "result": "passed",
@@ -17606,7 +17606,7 @@
   {
     "name": "FilesystemFakeFixture__AbsoluteForRelativePaths",
     "file": "score/filesystem/standard_filesystem_fake_test.cpp",
-    "line": 1504,
+    "line": 1573,
     "need": "comp_req__filesystem__api_abstraction",
     "verify_type": "partially",
     "result": "passed",
@@ -17618,7 +17618,7 @@
   {
     "name": "FilesystemFakeFixture__AbsoluteForError",
     "file": "score/filesystem/standard_filesystem_fake_test.cpp",
-    "line": 1520,
+    "line": 1589,
     "need": "comp_req__filesystem__api_abstraction",
     "verify_type": "partially",
     "result": "passed",
@@ -17630,7 +17630,7 @@
   {
     "name": "IsValid__kReplace",
     "file": "score/filesystem/standard_filesystem_fake_test.cpp",
-    "line": 1534,
+    "line": 1603,
     "need": "comp_req__filesystem__api_abstraction",
     "verify_type": "partially",
     "result": "passed",
@@ -17642,7 +17642,7 @@
   {
     "name": "IsValid__kAdd",
     "file": "score/filesystem/standard_filesystem_fake_test.cpp",
-    "line": 1543,
+    "line": 1612,
     "need": "comp_req__filesystem__api_abstraction",
     "verify_type": "partially",
     "result": "passed",
@@ -17654,7 +17654,7 @@
   {
     "name": "IsValid__kRemove",
     "file": "score/filesystem/standard_filesystem_fake_test.cpp",
-    "line": 1552,
+    "line": 1621,
     "need": "comp_req__filesystem__api_abstraction",
     "verify_type": "partially",
     "result": "passed",
@@ -17666,7 +17666,7 @@
   {
     "name": "IsValid__Invalid",
     "file": "score/filesystem/standard_filesystem_fake_test.cpp",
-    "line": 1561,
+    "line": 1630,
     "need": "comp_req__filesystem__api_abstraction",
     "verify_type": "partially",
     "result": "passed",
@@ -17678,7 +17678,7 @@
   {
     "name": "IsValid__NoOperation",
     "file": "score/filesystem/standard_filesystem_fake_test.cpp",
-    "line": 1570,
+    "line": 1639,
     "need": "comp_req__filesystem__api_abstraction",
     "verify_type": "partially",
     "result": "passed",
@@ -17824,6 +17824,18 @@
     "file": "score/filesystem/factory/filesystem_factory_mock_objects_test.cpp",
     "line": 69,
     "need": "comp_req__filesystem__full_testability",
+    "verify_type": "partially",
+    "result": "passed",
+    "result_text": "",
+    "repo_name": "local_repo",
+    "hash": "",
+    "url": ""
+  },
+  {
+    "name": "FilesystemFactoryTest__InstanceResolution",
+    "file": "score/filesystem/factory/filesystem_factory_test.cpp",
+    "line": 24,
+    "need": "comp_req__filesystem__api_abstraction",
     "verify_type": "partially",
     "result": "passed",
     "result_text": "",
@@ -18542,7 +18554,7 @@
   {
     "name": "FileUtilsTest__CreateDirectoryFailsOnCreate",
     "file": "score/filesystem/file_utils/file_utils_test.cpp",
-    "line": 151,
+    "line": 154,
     "need": "comp_req__filesystem__file_utils",
     "verify_type": "partially",
     "result": "passed",
@@ -18554,7 +18566,7 @@
   {
     "name": "FileUtilsTest__CreateDirectoryFailsOnIsDirectory",
     "file": "score/filesystem/file_utils/file_utils_test.cpp",
-    "line": 168,
+    "line": 171,
     "need": "comp_req__filesystem__file_utils",
     "verify_type": "partially",
     "result": "passed",
@@ -18566,7 +18578,7 @@
   {
     "name": "FileUtilsTest__CreateDirectoryFailsOnPermissions",
     "file": "score/filesystem/file_utils/file_utils_test.cpp",
-    "line": 185,
+    "line": 188,
     "need": "comp_req__filesystem__file_utils",
     "verify_type": "partially",
     "result": "passed",
@@ -18578,7 +18590,7 @@
   {
     "name": "FileUtilsTest__CreateDirectories_AbsolutePathTest",
     "file": "score/filesystem/file_utils/file_utils_test.cpp",
-    "line": 202,
+    "line": 205,
     "need": "comp_req__filesystem__file_utils",
     "verify_type": "partially",
     "result": "passed",
@@ -18590,7 +18602,7 @@
   {
     "name": "FileUtilsTest__CreateDirectories_AbsolutePathRetryTest",
     "file": "score/filesystem/file_utils/file_utils_test.cpp",
-    "line": 223,
+    "line": 226,
     "need": "comp_req__filesystem__file_utils",
     "verify_type": "partially",
     "result": "passed",
@@ -18602,7 +18614,7 @@
   {
     "name": "FileUtilsTest__CreateDirectories_AbsolutePathRetryFailTest",
     "file": "score/filesystem/file_utils/file_utils_test.cpp",
-    "line": 251,
+    "line": 257,
     "need": "comp_req__filesystem__file_utils",
     "verify_type": "partially",
     "result": "passed",
@@ -18614,7 +18626,7 @@
   {
     "name": "FileUtilsTest__CreateDirectories_RelativePathTest",
     "file": "score/filesystem/file_utils/file_utils_test.cpp",
-    "line": 271,
+    "line": 280,
     "need": "comp_req__filesystem__file_utils",
     "verify_type": "partially",
     "result": "passed",
@@ -18626,7 +18638,7 @@
   {
     "name": "FileUtilsTest__CreateDirectories_PartialDirectoryExistsTest",
     "file": "score/filesystem/file_utils/file_utils_test.cpp",
-    "line": 293,
+    "line": 302,
     "need": "comp_req__filesystem__file_utils",
     "verify_type": "partially",
     "result": "passed",
@@ -18638,7 +18650,7 @@
   {
     "name": "FileUtilsTest__CreateDirectories_PathEndsWithSlash",
     "file": "score/filesystem/file_utils/file_utils_test.cpp",
-    "line": 315,
+    "line": 327,
     "need": "comp_req__filesystem__file_utils",
     "verify_type": "partially",
     "result": "passed",
@@ -18650,7 +18662,7 @@
   {
     "name": "FileUtilsTest__CreateDirectories_FailsWithExistingPathWithWrongPermissions",
     "file": "score/filesystem/file_utils/file_utils_test.cpp",
-    "line": 327,
+    "line": 339,
     "need": "comp_req__filesystem__file_utils",
     "verify_type": "partially",
     "result": "passed",
@@ -18662,7 +18674,7 @@
   {
     "name": "FileUtilsTest__ValidateGroup_failedStat",
     "file": "score/filesystem/file_utils/file_utils_test.cpp",
-    "line": 345,
+    "line": 357,
     "need": "comp_req__filesystem__file_utils",
     "verify_type": "partially",
     "result": "passed",
@@ -18674,7 +18686,7 @@
   {
     "name": "FileUtilsTest__ValidateGroup_failedGetgrnam",
     "file": "score/filesystem/file_utils/file_utils_test.cpp",
-    "line": 364,
+    "line": 376,
     "need": "comp_req__filesystem__file_utils",
     "verify_type": "partially",
     "result": "passed",
@@ -18686,7 +18698,7 @@
   {
     "name": "FileUtilsTest__ValidateGroup_equalGroups",
     "file": "score/filesystem/file_utils/file_utils_test.cpp",
-    "line": 383,
+    "line": 395,
     "need": "comp_req__filesystem__file_utils",
     "verify_type": "partially",
     "result": "passed",
@@ -18698,7 +18710,7 @@
   {
     "name": "FileUtilsTest__ValidateGroup_diffGroups",
     "file": "score/filesystem/file_utils/file_utils_test.cpp",
-    "line": 414,
+    "line": 426,
     "need": "comp_req__filesystem__file_utils",
     "verify_type": "partially",
     "result": "passed",
@@ -18710,7 +18722,7 @@
   {
     "name": "FileUtilsTest__ChangeGroup_checkCalls",
     "file": "score/filesystem/file_utils/file_utils_test.cpp",
-    "line": 446,
+    "line": 458,
     "need": "comp_req__filesystem__file_utils",
     "verify_type": "partially",
     "result": "passed",
@@ -18722,7 +18734,7 @@
   {
     "name": "FileUtilsTest__ChangeGroup_checkFailGetGroupName",
     "file": "score/filesystem/file_utils/file_utils_test.cpp",
-    "line": 474,
+    "line": 486,
     "need": "comp_req__filesystem__file_utils",
     "verify_type": "partially",
     "result": "passed",
@@ -18734,7 +18746,7 @@
   {
     "name": "FileUtilsTest__ChangeGroup_checkFailChmod",
     "file": "score/filesystem/file_utils/file_utils_test.cpp",
-    "line": 493,
+    "line": 505,
     "need": "comp_req__filesystem__file_utils",
     "verify_type": "partially",
     "result": "passed",
@@ -18746,7 +18758,7 @@
   {
     "name": "FileUtilsTest__ChangeGroup_checkOkChmodByGID",
     "file": "score/filesystem/file_utils/file_utils_test.cpp",
-    "line": 514,
+    "line": 526,
     "need": "comp_req__filesystem__file_utils",
     "verify_type": "partially",
     "result": "passed",
@@ -18758,7 +18770,7 @@
   {
     "name": "FileUtilsTest__ChangeGroup_checkNokChmodByGID",
     "file": "score/filesystem/file_utils/file_utils_test.cpp",
-    "line": 535,
+    "line": 547,
     "need": "comp_req__filesystem__file_utils",
     "verify_type": "partially",
     "result": "passed",
@@ -18770,7 +18782,7 @@
   {
     "name": "FileUtilsTest__SyncDirectory_ok",
     "file": "score/filesystem/file_utils/file_utils_test.cpp",
-    "line": 557,
+    "line": 569,
     "need": "comp_req__filesystem__file_utils",
     "verify_type": "partially",
     "result": "passed",
@@ -18782,7 +18794,7 @@
   {
     "name": "FileUtilsTest__SyncDirectory_failed_open",
     "file": "score/filesystem/file_utils/file_utils_test.cpp",
-    "line": 574,
+    "line": 586,
     "need": "comp_req__filesystem__file_utils",
     "verify_type": "partially",
     "result": "passed",
@@ -18794,7 +18806,7 @@
   {
     "name": "FileUtilsTest__SyncDirectory_failed_fsync",
     "file": "score/filesystem/file_utils/file_utils_test.cpp",
-    "line": 591,
+    "line": 603,
     "need": "comp_req__filesystem__file_utils",
     "verify_type": "partially",
     "result": "passed",
@@ -18806,7 +18818,7 @@
   {
     "name": "FileUtilsTest_OpenUniqueFile__OpenUniqueFile_ok",
     "file": "score/filesystem/file_utils/file_utils_test.cpp",
-    "line": 641,
+    "line": 653,
     "need": "comp_req__filesystem__file_utils",
     "verify_type": "partially",
     "result": "passed",
@@ -18818,7 +18830,7 @@
   {
     "name": "FileUtilsTest_OpenUniqueFile__OpenUniqueFile_fails_with_wrong_path",
     "file": "score/filesystem/file_utils/file_utils_test.cpp",
-    "line": 663,
+    "line": 675,
     "need": "comp_req__filesystem__file_utils",
     "verify_type": "partially",
     "result": "passed",
@@ -18830,7 +18842,7 @@
   {
     "name": "FileUtilsTest_OpenUniqueFile__OpenUniqueFile_mkstemp_fails",
     "file": "score/filesystem/file_utils/file_utils_test.cpp",
-    "line": 681,
+    "line": 693,
     "need": "comp_req__filesystem__file_utils",
     "verify_type": "partially",
     "result": "passed",
@@ -18842,7 +18854,7 @@
   {
     "name": "FileUtilsTest_OpenUniqueFile__OpenUniqueFile_close_fails",
     "file": "score/filesystem/file_utils/file_utils_test.cpp",
-    "line": 699,
+    "line": 714,
     "need": "comp_req__filesystem__file_utils",
     "verify_type": "partially",
     "result": "passed",
@@ -18854,7 +18866,7 @@
   {
     "name": "FileUtilsTest_OpenUniqueFile__OpenUniqueFile_open_fails",
     "file": "score/filesystem/file_utils/file_utils_test.cpp",
-    "line": 716,
+    "line": 734,
     "need": "comp_req__filesystem__file_utils",
     "verify_type": "partially",
     "result": "passed",
@@ -18866,7 +18878,7 @@
   {
     "name": "FileUtilsTest_FileContentsAreIdentical__FilesAreEqual",
     "file": "score/filesystem/file_utils/file_utils_test.cpp",
-    "line": 785,
+    "line": 806,
     "need": "comp_req__filesystem__file_utils",
     "verify_type": "partially",
     "result": "passed",
@@ -18878,7 +18890,7 @@
   {
     "name": "FileUtilsTest_FileContentsAreIdentical__FilesAreEmpty",
     "file": "score/filesystem/file_utils/file_utils_test.cpp",
-    "line": 804,
+    "line": 828,
     "need": "comp_req__filesystem__file_utils",
     "verify_type": "partially",
     "result": "passed",
@@ -18890,7 +18902,7 @@
   {
     "name": "FileUtilsTest_FileContentsAreIdentical__FirstFileIsLarger",
     "file": "score/filesystem/file_utils/file_utils_test.cpp",
-    "line": 823,
+    "line": 850,
     "need": "comp_req__filesystem__file_utils",
     "verify_type": "partially",
     "result": "passed",
@@ -18902,7 +18914,7 @@
   {
     "name": "FileUtilsTest_FileContentsAreIdentical__SecondFileIsLarger",
     "file": "score/filesystem/file_utils/file_utils_test.cpp",
-    "line": 842,
+    "line": 872,
     "need": "comp_req__filesystem__file_utils",
     "verify_type": "partially",
     "result": "passed",
@@ -18914,7 +18926,7 @@
   {
     "name": "FileUtilsTest_FileContentsAreIdentical__ContentAreNotEqual",
     "file": "score/filesystem/file_utils/file_utils_test.cpp",
-    "line": 861,
+    "line": 894,
     "need": "comp_req__filesystem__file_utils",
     "verify_type": "partially",
     "result": "passed",
@@ -18926,7 +18938,7 @@
   {
     "name": "FileUtilsTest_FileContentsAreIdentical__FailedIsRegilarFileForPath1",
     "file": "score/filesystem/file_utils/file_utils_test.cpp",
-    "line": 880,
+    "line": 916,
     "need": "comp_req__filesystem__file_utils",
     "verify_type": "partially",
     "result": "passed",
@@ -18938,7 +18950,7 @@
   {
     "name": "FileUtilsTest_FileContentsAreIdentical__FailedIsRegilarFileForPath2",
     "file": "score/filesystem/file_utils/file_utils_test.cpp",
-    "line": 897,
+    "line": 933,
     "need": "comp_req__filesystem__file_utils",
     "verify_type": "partially",
     "result": "passed",
@@ -18950,7 +18962,7 @@
   {
     "name": "FileUtilsTest_FileContentsAreIdentical__Path1DoesntExist",
     "file": "score/filesystem/file_utils/file_utils_test.cpp",
-    "line": 915,
+    "line": 951,
     "need": "comp_req__filesystem__file_utils",
     "verify_type": "partially",
     "result": "passed",
@@ -18962,7 +18974,7 @@
   {
     "name": "FileUtilsTest_FileContentsAreIdentical__Path2DoesntExist",
     "file": "score/filesystem/file_utils/file_utils_test.cpp",
-    "line": 932,
+    "line": 971,
     "need": "comp_req__filesystem__file_utils",
     "verify_type": "partially",
     "result": "passed",
@@ -18974,7 +18986,7 @@
   {
     "name": "FileUtilsTest_FileContentsAreIdentical__File1_Bad",
     "file": "score/filesystem/file_utils/file_utils_test.cpp",
-    "line": 950,
+    "line": 992,
     "need": "comp_req__filesystem__file_utils",
     "verify_type": "partially",
     "result": "passed",
@@ -18986,7 +18998,7 @@
   {
     "name": "FileUtilsTest_FileContentsAreIdentical__File1_NullPtr",
     "file": "score/filesystem/file_utils/file_utils_test.cpp",
-    "line": 968,
+    "line": 1010,
     "need": "comp_req__filesystem__file_utils",
     "verify_type": "partially",
     "result": "passed",
@@ -18998,7 +19010,7 @@
   {
     "name": "FileUtilsTest_FileContentsAreIdentical__File1_Error",
     "file": "score/filesystem/file_utils/file_utils_test.cpp",
-    "line": 987,
+    "line": 1032,
     "need": "comp_req__filesystem__file_utils",
     "verify_type": "partially",
     "result": "passed",
@@ -19010,7 +19022,7 @@
   {
     "name": "FileUtilsTest_FileContentsAreIdentical__File2_Bad",
     "file": "score/filesystem/file_utils/file_utils_test.cpp",
-    "line": 1005,
+    "line": 1050,
     "need": "comp_req__filesystem__file_utils",
     "verify_type": "partially",
     "result": "passed",
@@ -19022,7 +19034,7 @@
   {
     "name": "FileUtilsTest_FileContentsAreIdentical__File2_NullPtr",
     "file": "score/filesystem/file_utils/file_utils_test.cpp",
-    "line": 1024,
+    "line": 1069,
     "need": "comp_req__filesystem__file_utils",
     "verify_type": "partially",
     "result": "passed",
@@ -19034,7 +19046,7 @@
   {
     "name": "FileUtilsTest_FileContentsAreIdentical__File2_Error",
     "file": "score/filesystem/file_utils/file_utils_test.cpp",
-    "line": 1044,
+    "line": 1092,
     "need": "comp_req__filesystem__file_utils",
     "verify_type": "partially",
     "result": "passed",
