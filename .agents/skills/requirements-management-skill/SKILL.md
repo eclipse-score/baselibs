@@ -115,7 +115,10 @@ Every link value is written as `<target_id>[version==N]`, where `N` is the curre
 ## Requirement Status
 
 - `valid`: the requirement is in force but has not passed a requirements inspection. Use it for every new requirement.
-- `valid_inspected`: the requirement passed a requirements inspection. Keep this status as long as the requirement text is unchanged, including when only its links, title, or version change.
+- `valid_inspected`: the requirement passed a human requirements inspection according to the S-CORE process, and the human inspector filled out the inspection checklist.
+  This status is relevant for ASIL code, including this repository's `ASIL_B` requirements.
+  An automated or AI-assisted review or a successful documentation build does not replace the human inspection or justify setting this status.
+  Keep this status as long as the requirement text is unchanged, including when only its links, title, or version change.
 - `invalid`: the requirement is not in force, for example while its `feat_req` does not exist yet.
 
 Reset `valid_inspected` to `valid` only when the requirement text changes materially, since that requires a new inspection.
