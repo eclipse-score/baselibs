@@ -183,6 +183,30 @@ Functional Requirements
 
    Synchronized object access shall provide a non-blocking lock acquisition operation that returns an empty pointer when the lock cannot be acquired immediately.
 
+.. comp_req:: Timed Synchronized Access
+   :id: comp_req__concurrency__synchronized_for
+   :reqtype: Functional
+   :security: YES
+   :safety: ASIL_B
+   :derived_from: feat_req__baselibs__concurrency_library[version==2]
+   :status: valid
+   :version: 1
+   :satisfied_by: comp__baselibs_concurrency[version==1]
+
+   Synchronized object access shall provide a timed lock acquisition operation that returns an empty pointer when the lock cannot be acquired within the specified duration.
+
+.. comp_req:: Deadline-Based Synchronized Access
+   :id: comp_req__concurrency__synchronized_until
+   :reqtype: Functional
+   :security: YES
+   :safety: ASIL_B
+   :derived_from: feat_req__baselibs__concurrency_library[version==2]
+   :status: valid
+   :version: 1
+   :satisfied_by: comp__baselibs_concurrency[version==1]
+
+   Synchronized object access shall provide a deadline-based lock acquisition operation that returns an empty pointer when the lock cannot be acquired by the specified time point.
+
 .. comp_req:: Long-Running Threads Container
    :id: comp_req__concurrency__long_running_threads
    :reqtype: Functional
