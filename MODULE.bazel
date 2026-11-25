@@ -33,18 +33,21 @@ WARNING_FEATURES = [
     "@score_cpp_policies//warnings/gcc/features:warnings_as_errors",
 ]
 
-# Same for the sanitizer features. UBSan needs a compiler-specific variant on top of the base.
-SANITIZER_FEATURES = [
-    "@score_cpp_policies//sanitizers/features:debug_symbols",
+# S-CORE Sanitizer Features
+# These features are shared by GCC and Clang. The toolchain adds its own
+# UBSan variant, which implies the base feature and supplies the correct link flags.
+_SANITIZER_FEATURES = [
     "@score_cpp_policies//sanitizers/features:asan",
-    "@score_cpp_policies//sanitizers/features:ubsan_base",
+    "@score_cpp_policies//sanitizers/features:debug_symbols",
     "@score_cpp_policies//sanitizers/features:lsan",
     "@score_cpp_policies//sanitizers/features:tsan",
+    "@score_cpp_policies//sanitizers/features:ubsan_base",
 ]
+# end S-CORE Sanitizer Features
 
-GCC_SANITIZER_FEATURES = SANITIZER_FEATURES + ["@score_cpp_policies//sanitizers/features:ubsan_gcc"]
+GCC_SANITIZER_FEATURES = _SANITIZER_FEATURES + ["@score_cpp_policies//sanitizers/features:ubsan_gcc"]
 
-LLVM_SANITIZER_FEATURES = SANITIZER_FEATURES + ["@score_cpp_policies//sanitizers/features:ubsan_clang"]
+LLVM_SANITIZER_FEATURES = _SANITIZER_FEATURES + ["@score_cpp_policies//sanitizers/features:ubsan_clang"]
 
 # Linux C++ toolchains.
 gcc = use_extension("@score_bazel_cpp_toolchains//extensions:gcc.bzl", "gcc", dev_dependency = True)
