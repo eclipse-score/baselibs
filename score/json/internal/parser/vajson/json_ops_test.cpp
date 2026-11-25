@@ -47,7 +47,7 @@ struct TestDocument
 
 /// @brief           Test that Skip can skip characters and handles eof.
 /// @trace           score::json::vajson::internal::JsonOps::Skip
-TEST(UT__JsonOps, Skip)
+TEST(JsonOpsTest, SkipConsumesOnlyMatchingCharacter)
 {
     TestDocument ts{"ab"};
 
@@ -59,7 +59,7 @@ TEST(UT__JsonOps, Skip)
 
 /// Test that Take can take characters.
 /// @trace           score::json::vajson::internal::JsonOps::Take
-TEST(UT__JsonOps, Take)
+TEST(JsonOpsTest, TakeReturnsNextCharacter)
 {
     TestDocument ts{"ab"};
 
@@ -68,7 +68,7 @@ TEST(UT__JsonOps, Take)
 
 /// Test that TryTake returns an error if position is at end of string.
 /// @trace           score::json::vajson::internal::JsonOps::TryTake
-TEST(UT__JsonOps, TryTake__Error)
+TEST(JsonOpsTest, TryTakeReturnsInvalidJsonAtEndOfInput)
 {
     TestDocument ts{"ab"};
 
@@ -91,7 +91,7 @@ TEST(UT__JsonOps, TryTake__Error)
 
 /// Test that Move skips the current character.
 /// @trace           score::json::vajson::internal::JsonOps::Move
-TEST(UT__JsonOps, Move)
+TEST(JsonOpsTest, MoveAdvancesToNextCharacter)
 {
     TestDocument ts{"ab"};
 
@@ -104,7 +104,7 @@ TEST(UT__JsonOps, Move)
 /// - Assert that CheckString succeeds if the expected string comes next.
 /// - Assert that CheckString fails if the next string is not as expected.
 /// @trace           score::json::vajson::internal::JsonOps::CheckString
-TEST(UT__JsonOps, CheckString)
+TEST(JsonOpsTest, CheckStringAcceptsOnlyExpectedString)
 {
     const std::string_view expected{"expected string"};
 
@@ -124,7 +124,7 @@ TEST(UT__JsonOps, CheckString)
 
 /// Test that ReadString aborts if the requested string is empty.
 /// @trace           score::json::vajson::internal::JsonOps::ReadString
-TEST(UT__JsonOps, ReadStringAbortsOnEmpty)
+TEST(JsonOpsDeathTest, ReadStringAbortsOnEmptyString)
 {
     TestDocument ts{"Does not matter"};
 
@@ -136,7 +136,7 @@ TEST(UT__JsonOps, ReadStringAbortsOnEmpty)
 /// - Assert that all whitespace characters are skipped.
 /// - Assert that an EOF after whitespace characters is recognized.
 /// @trace           score::json::vajson::internal::JsonOps::SkipWhitespace
-TEST(UT__JsonOps, SkipWhitespace)
+TEST(JsonOpsTest, SkipWhitespaceReturnsWhetherNonWhitespaceFollows)
 {
     {
         TestDocument ts{"  \t\n\r  a"};
@@ -152,7 +152,7 @@ TEST(UT__JsonOps, SkipWhitespace)
 ///
 /// - Assert that the callback is invoked and gets all characters excluding the specified delimiter.
 /// @trace           score::json::vajson::internal::JsonOps::ReadUntil
-TEST(UT__JsonOps, ReadUntil)
+TEST(JsonOpsTest, ReadUntilPassesContentBeforeDelimiter)
 {
     const std::string input{"123456789:"};
     TestDocument ts{input};

@@ -42,6 +42,11 @@ TEST(ThreadPool, ConstructionAndDestructionOnHeapWithBasePointer)
 
 TEST(ThreadPool, ExecutesSubmittedCallables)
 {
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
+    RecordProperty("PartiallyVerifies", "comp_req__concurrency__long_running_threads");
+    RecordProperty("Description", "Check that a LongRunningThreadsContainer executes both submitted callables.");
+
     // Given a LongRunningThreadsContainer
     LongRunningThreadsContainer unit{};
 
@@ -62,6 +67,13 @@ TEST(ThreadPool, ExecutesSubmittedCallables)
 
 TEST(ThreadPool, CorrectMaxConcurrencyLevel)
 {
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
+    RecordProperty("PartiallyVerifies", "comp_req__concurrency__thread_count_reporting");
+    RecordProperty("Description",
+                   "Check that MaxConcurrencyLevel() of a LongRunningThreadsContainer reports more than 100 "
+                   "threads.");
+
     // Given a LongRunningThreadsContainer
     LongRunningThreadsContainer unit{};
 
@@ -72,6 +84,13 @@ TEST(ThreadPool, CorrectMaxConcurrencyLevel)
 
 TEST(ThreadPool, StopRequestFunctional)
 {
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
+    RecordProperty("PartiallyVerifies", "comp_req__concurrency__long_running_threads");
+    RecordProperty("Description",
+                   "Check that ShutdownRequested() is false before and true after Shutdown() on a "
+                   "LongRunningThreadsContainer with running tasks.");
+
     // Given a LongRunningThreadsContainer with two threads, that includes two long running tasks
     LongRunningThreadsContainer unit{};
 
@@ -122,6 +141,12 @@ TEST(ThreadPool, DestructionStopsAndJoinsThreads)
 
 TEST(ThreadPool, CanAbortThread)
 {
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
+    RecordProperty("PartiallyVerifies", "comp_req__concurrency__task_cancellation");
+    RecordProperty("Description",
+                   "Check that aborting the result of a long running task requests a stop on the running task.");
+
     // Given a ThreadPool with two threads, that includes one long running tasks
     LongRunningThreadsContainer unit{};
 
@@ -146,6 +171,13 @@ TEST(ThreadPool, CanAbortThread)
 
 TEST(ThreadPool, ExecuteTaskWhileThreadPoolWasAlreadyRequestedToShutDown)
 {
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
+    RecordProperty("PartiallyVerifies", "comp_req__concurrency__executor_interface");
+    RecordProperty("Description",
+                   "Check that a task submitted to a LongRunningThreadsContainer after Shutdown() is still "
+                   "executed.");
+
     std::atomic<std::size_t> counter{0};
 
     // Given a LongRunningThreadsContainer with one thread that is already shutdown
@@ -163,6 +195,13 @@ TEST(ThreadPool, ExecuteTaskWhileThreadPoolWasAlreadyRequestedToShutDown)
 
 TEST(ThreadPool, ExecuteTaskWhileThreadPoolWasAlreadyDestructed)
 {
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "error-guessing");
+    RecordProperty("PartiallyVerifies", "comp_req__concurrency__long_running_threads");
+    RecordProperty("Description",
+                   "Check that a task submitted right before destroying a LongRunningThreadsContainer is still "
+                   "executed.");
+
     std::atomic<std::size_t> counter{0};
 
     {

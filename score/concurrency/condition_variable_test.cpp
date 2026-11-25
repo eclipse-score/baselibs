@@ -90,6 +90,13 @@ TEST_F(InterruptibleConditionalVariableBasicTest, construct_with_ref_template_pa
 
 TEST_F(InterruptibleConditionalVariableBasicTest, wait_until_early_return_on_stop_token_requested)
 {
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "boundary-values");
+    RecordProperty("PartiallyVerifies", "comp_req__concurrency__condition_variable");
+    RecordProperty("Description",
+                   "Check that wait_until() returns false for an expired deadline when the predicate requests a stop "
+                   "and remains unsatisfied.");
+
     InterruptibleConditionalVariableBasic<MockMutex&, ConditionVariableMock&> cv{test_mtx_, mock_cv_};
 
     const auto result =
@@ -102,6 +109,13 @@ TEST_F(InterruptibleConditionalVariableBasicTest, wait_until_early_return_on_sto
 
 TEST_F(InterruptibleConditionalVariableBasicTest, wait_until_early_return_on_already_gone_timeout)
 {
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "boundary-values");
+    RecordProperty("PartiallyVerifies", "comp_req__concurrency__condition_variable");
+    RecordProperty("Description",
+                   "Check that wait_until() with a predicate returns false for a time point in the past if the "
+                   "predicate is not satisfied.");
+
     InterruptibleConditionalVariableBasic<MockMutex&, ConditionVariableMock&> cv{test_mtx_, mock_cv_};
 
     const auto result = cv.wait_until(lock_,
@@ -115,6 +129,13 @@ TEST_F(InterruptibleConditionalVariableBasicTest, wait_until_early_return_on_alr
 
 TEST_F(InterruptibleConditionalVariableBasicTest, cv_test_max_time)
 {
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "boundary-values");
+    RecordProperty("PartiallyVerifies", "comp_req__concurrency__condition_variable");
+    RecordProperty("Description",
+                   "Check that wait_until() with the maximum time point waits without a timeout until the "
+                   "predicate is satisfied.");
+
     auto timemax = std::chrono::time_point<std::chrono::steady_clock>::max();
     bool stop_waiting = false;
 
@@ -132,6 +153,13 @@ TEST_F(InterruptibleConditionalVariableBasicTest, cv_test_max_time)
 
 TEST_F(InterruptibleConditionalVariableBasicTest, NoEarlySpuriousWakeups)
 {
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "error-guessing");
+    RecordProperty("PartiallyVerifies", "comp_req__concurrency__condition_variable");
+    RecordProperty("Description",
+                   "Check that wait_until() with an unsatisfied predicate keeps waiting until the time point is "
+                   "reached.");
+
     InterruptibleConditionalVariable unit;
 
     score::concurrency::testing::SteadyClock::time_point time_point{score::concurrency::testing::SteadyClock::now() +
@@ -235,6 +263,12 @@ TEST_F(InterruptibleConditionalVariableBasicTest, NotifyAllInvokesNotifyAllOnLoc
 
 TEST_F(InterruptibleConditionalVariableBasicTest, WaitNotifiesAllWaitingThreadsIfStopIsRequestedDuringWait)
 {
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
+    RecordProperty("PartiallyVerifies", "comp_req__concurrency__condition_variable");
+    RecordProperty("Description",
+                   "Check that wait() wakes all waiters and returns false if a stop is requested during the wait.");
+
     bool stop_waiting = false;
 
     EXPECT_CALL(mock_cv_, wait(::testing::_))
@@ -256,6 +290,13 @@ TEST_F(InterruptibleConditionalVariableBasicTest, WaitNotifiesAllWaitingThreadsI
 
 TEST_F(InterruptibleConditionalVariableBasicTest, WaitUntilNotifiesAllWaitingThreadsIfStopIsRequestedDuringWait)
 {
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
+    RecordProperty("PartiallyVerifies", "comp_req__concurrency__condition_variable");
+    RecordProperty("Description",
+                   "Check that wait_until() wakes all waiters and returns no_timeout if a stop is requested during "
+                   "the wait.");
+
     const auto abs_time = std::chrono::steady_clock::now() + std::chrono::milliseconds(3000);
 
     EXPECT_CALL(mock_cv_, wait_until(::testing::_, ::testing::_))
@@ -276,6 +317,13 @@ TEST_F(InterruptibleConditionalVariableBasicTest, WaitUntilNotifiesAllWaitingThr
 TEST_F(InterruptibleConditionalVariableBasicTest,
        WaitUntilWithPredicateNotifiesAllWaitingThreadsIfStopIsRequestedDuringWait)
 {
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
+    RecordProperty("PartiallyVerifies", "comp_req__concurrency__condition_variable");
+    RecordProperty("Description",
+                   "Check that wait_until() with a predicate wakes all waiters and returns false if a stop is "
+                   "requested during the wait.");
+
     bool stop_waiting = false;
     const auto abs_time = std::chrono::steady_clock::now() + std::chrono::milliseconds(1000);
 
@@ -298,6 +346,11 @@ TEST_F(InterruptibleConditionalVariableBasicTest,
 
 TEST_F(InterruptibleConditionalVariableBasicTest, WaitImmediatelyReturnsTrueWithPredicate)
 {
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
+    RecordProperty("PartiallyVerifies", "comp_req__concurrency__condition_variable");
+    RecordProperty("Description", "Check that wait() with a predicate returns true once the predicate is satisfied.");
+
     ::testing::MockFunction<bool(void)> wait_stop_callback;
     EXPECT_CALL(wait_stop_callback, Call())
         .Times(2)
@@ -314,6 +367,12 @@ TEST_F(InterruptibleConditionalVariableBasicTest, WaitImmediatelyReturnsTrueWith
 
 TEST_F(InterruptibleConditionalVariableBasicTest, WaitUntilImmediatelyReturnsTrueWithPredicate)
 {
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
+    RecordProperty("PartiallyVerifies", "comp_req__concurrency__condition_variable");
+    RecordProperty("Description",
+                   "Check that wait_until() with a predicate returns true once the predicate is satisfied.");
+
     const auto abs_time = std::chrono::steady_clock::now() + std::chrono::milliseconds(3000);
 
     ::testing::MockFunction<bool(void)> wait_stop_callback;
@@ -333,6 +392,13 @@ TEST_F(InterruptibleConditionalVariableBasicTest, WaitUntilImmediatelyReturnsTru
 TEST_F(InterruptibleConditionalVariableBasicTest,
        WaitUntilReturnsNoTimeoutWithoutWaitingWhenStopRequestedBeforeWaitStarts)
 {
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "boundary-values");
+    RecordProperty("PartiallyVerifies", "comp_req__concurrency__condition_variable");
+    RecordProperty("Description",
+                   "Check that wait_until() returns no_timeout without waiting if a stop was requested before the "
+                   "wait started.");
+
     stop_source_.request_stop();
     const auto abs_time = std::chrono::steady_clock::now() + std::chrono::milliseconds(100);
 
@@ -346,6 +412,12 @@ TEST_F(InterruptibleConditionalVariableBasicTest,
 
 TEST_F(InterruptibleConditionalVariableBasicTest, WaitUntilReturnsTimeoutForImmediateTimeout)
 {
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "boundary-values");
+    RecordProperty("PartiallyVerifies", "comp_req__concurrency__condition_variable");
+    RecordProperty("Description",
+                   "Check that wait_until() returns timeout without waiting for a time point in the past.");
+
     auto past_time = std::chrono::steady_clock::now() - std::chrono::seconds(1);
 
     EXPECT_CALL(mock_cv_, wait_until(::testing::_, ::testing::_)).Times(0);
@@ -358,6 +430,12 @@ TEST_F(InterruptibleConditionalVariableBasicTest, WaitUntilReturnsTimeoutForImme
 
 TEST_F(InterruptibleConditionalVariableBasicTest, WaitUntilImmediatelyReturnIfStopIsRequesteBeforeLocking)
 {
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "error-guessing");
+    RecordProperty("PartiallyVerifies", "comp_req__concurrency__condition_variable");
+    RecordProperty("Description",
+                   "Check that wait_until() returns no_timeout when the underlying timed wait requests a stop.");
+
     ON_CALL(test_mtx_, lock()).WillByDefault(::testing::Invoke([this]() {
         stop_source_.request_stop();
     }));
@@ -380,6 +458,13 @@ TEST_F(InterruptibleConditionalVariableBasicTest, WaitUntilImmediatelyReturnIfSt
 
 TEST_F(InterruptibleConditionalVariableBasicTest, WaitUntilImmediatelyReturnIfStopIsRequesteAfterLocking)
 {
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "error-guessing");
+    RecordProperty("PartiallyVerifies", "comp_req__concurrency__condition_variable");
+    RecordProperty("Description",
+                   "Check that wait_until() returns no_timeout and releases the internal mutex if a stop is "
+                   "requested right after locking it.");
+
     // This test verifies that the conditional variable lock is immediately released in wait_until_impl method
     // when the stop token is requested, ensuring proper handling of stop requests.
     std::unique_lock lock{test_mtx_};

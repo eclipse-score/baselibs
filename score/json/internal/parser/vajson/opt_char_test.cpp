@@ -26,7 +26,7 @@ namespace unit_test
 {
 
 /// Test OptChar with a valid char.
-TEST(UT__JsonOps__OptChar, ValidChar)
+TEST(OptCharTest, HoldsValidCharacter)
 {
     char constexpr value{'a'};
     const internal::OptChar opt{static_cast<std::int64_t>(value)};
@@ -36,7 +36,7 @@ TEST(UT__JsonOps__OptChar, ValidChar)
 }
 
 /// Test OptChar with an EOF char.
-TEST(UT__JsonOps__OptChar, EofChar)
+TEST(OptCharDeathTest, ReportsEndOfFileAndAbortsOnValueAccess)
 {
     const internal::OptChar opt{static_cast<std::int64_t>(-1)};
     ASSERT_FALSE(opt.HasValue());
@@ -45,7 +45,7 @@ TEST(UT__JsonOps__OptChar, EofChar)
 }
 
 /// Test OptChar comparison operator.
-TEST(UT__JsonOps__OptChar, Comparison)
+TEST(OptCharTest, ComparesEqualOnlyToHeldCharacter)
 {
     const internal::OptChar opt1{'a'};
     const internal::OptChar opt2{-1};

@@ -25,7 +25,7 @@ namespace unit_test
 
 /// @brief           Tests if IsDigit works as expected.
 /// @trace           CREQ-Json-ProvidedSerializers
-TEST(UT__NumberParser, IsDigit)
+TEST(NumberParserTest, IsDigitAcceptsOnlyDecimalDigits)
 {
     ASSERT_FALSE(internal::util::IsDigit('/'));
     ASSERT_TRUE(internal::util::IsDigit('0'));
@@ -34,7 +34,7 @@ TEST(UT__NumberParser, IsDigit)
 }
 
 /// @brief           Tests if IsHexDigit works as expected.
-TEST(UT__NumberParser, IsHexDigit)
+TEST(NumberParserTest, IsHexDigitAcceptsOnlyHexadecimalDigits)
 {
     RecordProperty("PartiallyVerifies", "comp_req__vajson__hex_integers");
     RecordProperty("Description",

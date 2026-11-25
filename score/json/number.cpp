@@ -98,6 +98,55 @@ constexpr bool IsLosslessCast(const In value) noexcept
     }
 }
 
+// Returns whether value lies outside the range of Out, regardless of the precision of Out.
+template <typename Out, typename In>
+constexpr bool IsOutOfRange(const In value) noexcept
+{
+    if constexpr (std::is_floating_point_v<Out>)
+    {
+        // Every integer lies within the range of float, so only an overflow to infinity is out of range.
+        if constexpr (std::is_floating_point_v<In>)
+        {
+            return (!IsInfinite(value)) && IsInfinite(static_cast<Out>(value));
+        }
+        else
+        {
+            return false;
+        }
+    }
+    else if constexpr (std::is_integral_v<In>)
+    {
+        if constexpr (std::is_signed_v<In>)
+        {
+            if (value < In{0})
+            {
+                return std::is_unsigned_v<Out> ||
+                       (static_cast<std::int64_t>(value) < static_cast<std::int64_t>(std::numeric_limits<Out>::min()));
+            }
+        }
+        return static_cast<std::uint64_t>(value) > static_cast<std::uint64_t>(std::numeric_limits<Out>::max());
+    }
+    else
+    {
+        // NaN fails every comparison and is therefore not out of range.
+        const bool below_range{value < static_cast<In>(std::numeric_limits<Out>::lowest())};
+        if constexpr (std::numeric_limits<Out>::digits <= std::numeric_limits<In>::digits)
+        {
+            // The maximum of Out is exactly representable in In.
+            return below_range || (value > static_cast<In>(std::numeric_limits<Out>::max()));
+        }
+        else
+        {
+            // The maximum of Out is not representable in In, but 2^digits is.
+            // The values of In below 2^digits are integers not above the maximum of Out.
+            constexpr auto kHalfUpperBound{std::uint64_t{1}
+                                           << static_cast<std::uint32_t>(std::numeric_limits<Out>::digits - 1)};
+            constexpr In kUpperBound{static_cast<In>(kHalfUpperBound) * In{2}};
+            return below_range || (value >= kUpperBound);
+        }
+    }
+}
+
 template <typename Out, typename In>
 score::Result<Out> TryLosslessCast(const In value)
 {
@@ -113,42 +162,14 @@ score::Result<Out> TryLosslessCast(const In value)
             return static_cast<Out>(value);
         }
     }
+    if (IsOutOfRange<Out>(value))
+    {
+        return score::MakeUnexpected(Error::kOutOfRange);
+    }
     return score::MakeUnexpected(Error::kWrongType);
 }
 
 }  // namespace
-
-class VariantComparator
-{
-  public:
-    explicit VariantComparator(const Number& lhs) : lhs_(lhs) {}
-    template <typename T, std::enable_if_t<(!std::is_same_v<T, float>) && (!std::is_same_v<T, double>), bool> = true>
-    bool operator()(const T& rhs) const noexcept
-    {
-        // LCOV_EXCL_BR_START Failed branch is unreachable since types are compared before
-        if (const auto result = lhs_.As<T>(); result.has_value())
-        // LCOV_EXCL_BR_STOP
-        {
-            return rhs == *result;
-        }
-        return false;  // LCOV_EXCL_LINE Unreachable since types are compared before
-    }
-
-    template <typename T, std::enable_if_t<(std::is_same_v<T, float> || std::is_same_v<T, double>), bool> = true>
-    bool operator()(const T& rhs) const noexcept
-    {
-        // LCOV_EXCL_BR_START Failed branch is unreachable since types are compared before
-        if (const auto result = lhs_.As<T>(); result.has_value())
-        // LCOV_EXCL_BR_STOP
-        {
-            return std::abs(rhs - *result) < std::numeric_limits<T>::epsilon();
-        }
-        return false;  // LCOV_EXCL_LINE Unreachable since types are compared before
-    }
-
-  private:
-    Number lhs_;
-};
 
 Number::Number(const ArithmeticType& value) : value_{value} {}
 
@@ -158,11 +179,24 @@ Number::Number(const ArithmeticType& value) : value_{value} {}
 bool operator==(const Number& lhs, const Number& rhs) noexcept
 {
     SCORE_LANGUAGE_FUTURECPP_ASSERT_PRD(!lhs.value_.valueless_by_exception());
-    if (lhs.value_.index() != rhs.value_.index())
-    {
-        return false;  // The variants hold different types
-    }
-    return std::visit(VariantComparator{rhs}, lhs.value_);
+    return std::visit(
+        [&rhs](const auto value) noexcept {
+            using ValueType = std::decay_t<decltype(value)>;
+            const auto* const other{std::get_if<ValueType>(&rhs.value_)};
+            if (other == nullptr)
+            {
+                return false;  // The variants hold different types.
+            }
+            if constexpr (std::is_floating_point_v<ValueType>)
+            {
+                return std::abs(value - *other) < std::numeric_limits<ValueType>::epsilon();
+            }
+            else
+            {
+                return value == *other;
+            }
+        },
+        lhs.value_);
 }
 
 template <typename T, class>

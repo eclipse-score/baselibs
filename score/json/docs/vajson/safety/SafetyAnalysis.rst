@@ -46,8 +46,7 @@ Safety Analysis of vajson
                       Valid JSON is rejected as invalid and, thus, safety requirements are violated.
             :measure: Check for invalid JSON during deserialization.
                       This is verified by the following test cases:
-                      - UT__Parser__Invalid__Static
-                      - UT__Parser__Invalid__Dynamic
+                      - StructureParserInvalidTest.*
 
         .. fm:: FM-LibVac-Usage LibVac Common types and API functionality may not be safe.
             :effect: Safety requirement of this component will be compromised.
@@ -97,14 +96,15 @@ Safety Analysis of vajson
             :effect:  Valid JSON as demanded by the CREQ is rejected as invalid and, thus, safety requirements are violated.
             :measure: Check commas for validity during deserialization.
                       This is verified by the following test cases:
-                      - UT__JsonParser__Parsing__Parse
+                      - Corpus/JsonTestSuiteTest.FromBufferMatchesExpectedOutcome/NArrayExtraComma
+                      - Corpus/JsonTestSuiteTest.FromBufferMatchesExpectedOutcome/NObjectTrailingComma
 
         .. fm:: FM-VaJson-HexIntegers: Hexadecimal integers are treated as invalid JSON.
             :effect:  Valid JSON as demanded by the CREQ is rejected as invalid and, thus, safety requirements are violated.
             :measure: Accept hexadecimal integers explicitly and convert them with base 16.
                       This is verified by the following test cases:
-                      - JsonParserVajsonTest__CanParseObjectHexadecimalNumber
-                      - Number__ConvertsHexadecimalIntegersWithinTheTargetRange
+                      - JsonParserTest.FromBufferParsesHexadecimalNumbers
+                      - JsonNumberTest.ConvertsHexadecimalIntegersWithinTheTargetRange
 
         .. fm:: FM-VaJson-NumberGrammar: Number literals outside the accepted number grammar are accepted.
             :details: The standard conversion routines accept forms outside the grammar, e.g. hexadecimal floating-point
@@ -113,10 +113,10 @@ Safety Analysis of vajson
             :measure: Check every number against the accepted number grammar before conversion.
                       Convert integers only with an explicit base.
                       This is verified by the following test cases:
-                      - Number__RejectsNumbersOutsideTheGrammar
-                      - Number__HexadecimalIntegersDoNotConvertToFloatingPoint
-                      - ParserTest__EmitsErrorWhenParsingNumberOutsideTheGrammar
-                      - ParserTest__EmitsErrorWhenParsingHexadecimalNumberExceeding64Bits
+                      - JsonNumberTest.RejectsNumbersOutsideTheGrammar
+                      - JsonNumberTest.HexadecimalIntegersDoNotConvertToFloatingPoint
+                      - JsonParserTest.FromBufferRejectsNumberOutsideTheGrammar
+                      - JsonParserTest.FromBufferRejectsHexadecimalNumberExceeding64Bits
 
         .. fm:: FM-VaJson-NumberConversion: Number conversion changes value.
             :details: Number conversion from textual JSON representation to a numerical value changes the value.
@@ -124,10 +124,10 @@ Safety Analysis of vajson
                       requirements are violated.
             :measure: Use only well-known standard library functions for number conversion.
                       This is verified by the following test cases:
-                      - Number__Uint64
-                      - Number__Int64
-                      - Number__Double
-                      - Number__ConvertsHexadecimalIntegersWithinTheTargetRange
+                      - JsonNumberTest.RejectsValuesOutsideUint64Range
+                      - JsonNumberTest.RejectsValuesOutsideInt64Range
+                      - JsonNumberTest.RejectsValuesOutsideDoubleRange
+                      - JsonNumberTest.ConvertsHexadecimalIntegersWithinTheTargetRange
 
         .. fm:: FM-VaJson-NumberLength: JSON numbers can consist of an unlimited number of characters.
             :details: The numerical value of a sufficiently long JSON number cannot be represented by any standard C++ type.
@@ -140,10 +140,9 @@ Safety Analysis of vajson
             :effect:  Invalid data is deserialized and, thus, safety requirements are violated.
             :measure: Check for invalid characters in the input data during deserialization.
                       This is verified by the following test cases:
-                      - UT__Parser__Invalid__Static
-                      - UT__Parser__Invalid__Dynamic
-                      - UT__Parser__Invalid__Dynamic__UnescapedControlCharacterInString
-                      - UT__Parser__Invalid__Dynamic__UnescapedControlCharacterInKey
+                      - StructureParserInvalidTest.*
+                      - StructureParserInvalidTest.RejectsUnescapedControlCharacterInString
+                      - StructureParserInvalidTest.RejectsUnescapedControlCharacterInKey
 
         .. fm:: FM-VaJson-InvalidEscapeSequence Input contains invalid escape sequences.
             :details: The input contains invalid escape sequences not specified in the JSON specification.
@@ -172,14 +171,23 @@ Safety Analysis of vajson
             :details: The parser does not call the user callback for a JSON event.
             :effect:  Deserialized data is lost and, thus, safety requirements are violated.
             :measure: Correct behaviour is verified by the following test cases:
-                      - UT__JsonParser__Parsing__Parse
+                      - StructureParserArrayTest.*
+                      - StructureParserBoolTest.*
+                      - StructureParserKeyTest.*
+                      - StructureParserNullTest.*
+                      - StructureParserNumberTest.*
+                      - StructureParserObjectTest.*
+                      - StructureParserStringTest.*
 
         .. fm:: FM-VaJson-CallbackMismatch Wrong callback is called or called with wrong data.
             :details: The parser calls the wrong callback for the JSON event using the correct data or it calls the correct
                       callback using incorrect data.
             :effect:  User receives incorrect data and, thus, safety requirements are violated.
             :measure: Correct behaviour is verified by the following test cases:
-                      - UT__JsonParser__Parsing__Parse
+                      - StructureParserBoolTest.*
+                      - StructureParserKeyTest.*
+                      - StructureParserStringTest.*
+                      - JsonParserTest.FromBufferParses*
 
         - DSGN-JSON-Reader-Data-Items
             - JsonParser
@@ -207,16 +215,16 @@ Safety Analysis of vajson
                       Escape sequences that are malformed or that contain an unpaired surrogate are rejected as
                       invalid JSON, so they cannot reach the user misinterpreted.
                       Correct behaviour is verified by the following test cases:
-                      - UT__Parser__String__Dynamic__TwoCharacterEscapes
-                      - UT__Parser__String__Dynamic__UnicodeEscape
-                      - UT__Parser__String__Dynamic__UnicodeEscapeInContext
-                      - UT__Parser__String__Dynamic__UnicodeEscapeInKey
-                      - UT__Parser__Invalid__Dynamic__TruncatedUnicodeEscape
-                      - UT__Parser__Invalid__Dynamic__NonHexadecimalUnicodeEscape
-                      - UT__Parser__Invalid__Dynamic__LoneHighSurrogate
-                      - UT__Parser__Invalid__Dynamic__HighSurrogateFollowedByNonSurrogate
-                      - UT__Parser__Invalid__Dynamic__HighSurrogateFollowedByOtherEscape
-                      - UT__Parser__Invalid__Dynamic__LoneLowSurrogate
+                      - StructureParserStringTest.DecodesTwoCharacterEscapes
+                      - StructureParserStringTest.DecodesUnicodeEscapesToUtf8
+                      - StructureParserStringTest.DecodesUnicodeEscapesAtUtf8LengthBoundaries
+                      - StructureParserStringTest.DecodesUnicodeEscapeInKey
+                      - StructureParserInvalidTest.RejectsTruncatedUnicodeEscape
+                      - StructureParserInvalidTest.RejectsNonHexadecimalUnicodeEscape
+                      - StructureParserInvalidTest.RejectsLoneHighSurrogate
+                      - StructureParserInvalidTest.RejectsHighSurrogateFollowedByNonSurrogate
+                      - StructureParserInvalidTest.RejectsHighSurrogateFollowedByOtherEscape
+                      - StructureParserInvalidTest.RejectsLoneLowSurrogate
 
         .. fm:: FM-VaJson-ByteOrderMark Byte order marks can appear inside strings.
             :details: VaJson cannot report the presence of a byte order mark inside of a string.

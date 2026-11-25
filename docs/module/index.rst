@@ -24,6 +24,7 @@
               comp__baselibs_flatbuffers[version==1], comp__baselibs_hash[version==1],
               comp__baselibs_static_reflection[version==1], comp__baselibs_scope_exit[version==1]
    :status: valid
+   :maturity: experimental
    :version: 3
    :safety: ASIL_B
    :security: YES

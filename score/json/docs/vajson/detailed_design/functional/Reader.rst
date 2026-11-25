@@ -74,15 +74,16 @@ The event handler must inherit from score::json::vajson::internal::StructurePars
 * A string is reported to the applications event handler by calling ``OnString(ara::core::StringView)``
 * A key is reported to the applications event handler by calling ``OnKey(ara::core::StringView)``
 * The start of an object is reported to the applications event handler by calling ``OnStartObject()``
-* The end of an object is reported to the applications event handler by calling ``OnEndObject(std::size_t)``
+* The end of an object is reported to the applications event handler by calling ``OnEndObject()``
 * The start of an array is reported to the applications event handler by calling ``OnStartArray()``
-* The end of an object is reported to the applications event handler by calling ``OnEndArray(std::size_t)``
+* The end of an array is reported to the applications event handler by calling ``OnEndArray()``
 
 Each function returns an ``ara::core::Result<score::json::vajson::ParserState>`` to report errors and to indicate whether the
 parser shall go on (``score::json::vajson::ParserState::kRunning``) or stop (``score::json::vajson::ParserState::kFinished``).
 
-A hierarchical parser can be implemented by the application by providing event handlers spread over several classes
-that are instantiated by themselves depending on the last event.
+A hierarchical parser can be implemented by the application by letting the event handler delegate events to further
+classes depending on the last event.
+A single parser processes a document from its start to its end, because it checks the structure of the whole document.
 
 
 Number formatting

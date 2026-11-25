@@ -12,16 +12,16 @@
  ********************************************************************************/
 
 #include "score/json/any.h"
-#include "score/overload.hpp"
 
 #include <score/assert.hpp>
+#include <type_traits>
 
 namespace score
 {
 namespace json
 {
 
-// Default constractor has special init so it has a different implemetation
+// Default constructor has special init so it has a different implementation
 // coverity[autosar_cpp14_a12_1_5_violation: FALSE]
 Any::Any() : value_(Null{}) {}
 
@@ -30,68 +30,26 @@ Any::Any() : value_(Null{}) {}
 // coverity[autosar_cpp14_a15_5_3_violation]
 bool operator==(const Any& lhs, const Any& rhs) noexcept
 {
-    if (lhs.value_.index() != rhs.value_.index())
-    {
-        return false;  // The variants hold different types
-    }
-
     SCORE_LANGUAGE_FUTURECPP_ASSERT_PRD(!lhs.value_.valueless_by_exception());
-    return std::visit(score::cpp::overload(
-                          [&rhs](const bool value) noexcept {
-                              // LCOV_EXCL_BR_START Failed branch is unreachable since types are compared before
-                              if (const auto result = rhs.As<bool>(); result.has_value())
-                              // LCOV_EXCL_BR_STOP
-                              {
-                                  return value == *result;
-                              }
-                              return false;  // LCOV_EXCL_LINE Unreachable since types are compared before
-                          },
-                          [&rhs](const std::string& value) noexcept {
-                              // LCOV_EXCL_BR_START Failed branch is unreachable since types are compared before
-                              if (const auto result = rhs.As<std::string>(); result.has_value())
-                              // LCOV_EXCL_BR_STOP
-                              {
-                                  return value == result->get();
-                              }
-                              return false;  // LCOV_EXCL_LINE Unreachable since types are compared before
-                          },
-                          [&rhs](const Number& value) noexcept {
-                              // LCOV_EXCL_BR_START Failed branch is unreachable since types are compared before
-                              if (const auto result = rhs.As<Number>(); result.has_value())
-                              // LCOV_EXCL_BR_STOP
-                              {
-                                  return value == *result;
-                              }
-                              return false;  // LCOV_EXCL_LINE Unreachable since types are compared before
-                          },
-                          // The code is present in a single line due to clang format failure.
-                          // coverity[autosar_cpp14_a7_1_7_violation]
-                          [&rhs](Null) noexcept {
-                              return rhs.As<Null>().has_value();
-                          },
-                          // This is a false positive, we here using lvalue reference.
-                          // coverity[autosar_cpp14_a8_4_12_violation : FALSE]
-                          [&rhs](const std::unique_ptr<Object>& value) noexcept {
-                              // LCOV_EXCL_BR_START Failed branch is unreachable since types are compared before
-                              if (const auto result = rhs.As<Object>(); result.has_value())
-                              // LCOV_EXCL_BR_STOP
-                              {
-                                  return *value == result->get();
-                              }
-                              return false;  // LCOV_EXCL_LINE Unreachable since types are compared before
-                          },
-                          // This is a false positive, we here using lvalue reference.
-                          // coverity[autosar_cpp14_a8_4_12_violation : FALSE]
-                          [&rhs](const std::unique_ptr<List>& value) noexcept {
-                              // LCOV_EXCL_BR_START Failed branch is unreachable since types are compared before
-                              if (const auto result = rhs.As<List>(); result.has_value())
-                              // LCOV_EXCL_BR_STOP
-                              {
-                                  return *value == result->get();
-                              }
-                              return false;  // LCOV_EXCL_LINE Unreachable since types are compared before
-                          }),
-                      lhs.value_);
+    return std::visit(
+        [&rhs](const auto& value) noexcept {
+            using ValueType = std::decay_t<decltype(value)>;
+            const auto* const other{std::get_if<ValueType>(&rhs.value_)};
+            if (other == nullptr)
+            {
+                return false;  // The variants hold different types.
+            }
+            if constexpr (std::is_same_v<ValueType, std::unique_ptr<Object>> ||
+                          std::is_same_v<ValueType, std::unique_ptr<List>>)
+            {
+                return *value == **other;
+            }
+            else
+            {
+                return value == *other;
+            }
+        },
+        lhs.value_);
 }
 
 // std::visit throws std::bad_variant_access if as-variant(value_i).valueless_by_exception() is true

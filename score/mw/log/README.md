@@ -632,35 +632,28 @@ Overloads of `mw::log::LogStream` for other `ara::core` could be provided congru
 
 ## Feature Flags
 
-- **KFile_Logging** : for enabling/disabling KFile log mode, by default is enabled.
 - **KConsole_Logging** : for enabling/disabling KConsole log mode, by default is enabled.
 - **KRemote_Logging** : for enabling/disabling KRemote log mode, but this additionally requires a daemon process that gathers log mesages and forwards them to external systems for Analysis. E.g.: datarouter (DLT daemon)
 - **shm_dma_enabled** : when enabled, the KRemote backend uses Generic Trace Library (GTL) implementation that supports shared memory (Shm) with Direct Memory Access (DMA) capability. When disabled, only POSIX Shm is used. See the [DltTraceBackend (DLTv2) design document](./design/backend/dlt_trace_backend.md) for details on this backend.
 
 ### Building mw::log with/out feature flags.
 
-  * KFile_Logging & KConsole_Logging are enabled by default.
+  * KConsole_Logging is enabled by default.
 
   ```bash
-  bazel build --config=spp_host_gcc //score/mw/log/...
-  ```
-
-  * Disable file logging
-
-  ```bash
-  bazel build --config=spp_host_gcc //score/mw/log/... --//score/mw/log/detail/flags:KFile_Logging=False
+  bazel build --config=score-linux-x86_64 //score/mw/log/...
   ```
 
   * Disable console logging
 
   ```bash
-  bazel build --config=spp_host_gcc //score/mw/log/... --//score/mw/log/detail/flags:KConsole_Logging=False
+  bazel build --config=score-linux-x86_64 //score/mw/log/... --//score/mw/log/detail/flags:KConsole_Logging=False
   ```
 
   * Enable Shm transport with DMA capabilty for remote backend
 
   ```bash
-  bazel build --config=spp_host_gcc //score/mw/log/... --//score/mw/log/flags:shm_dma_enabled=True
+  bazel build --config=score-linux-x86_64 //score/mw/log/... --@score_logging//score/mw/log/flags:shm_dma_enabled=True
   ```
 
 For build or test you can enable/disable log mode.

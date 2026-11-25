@@ -80,6 +80,13 @@ TEST_F(DelayedTaskTest, ConstructionAndDestructionOnHeapWithBasePointer)
 
 TEST_F(DelayedTaskTest, ExecutesCallbackWithCorrectAttributes)
 {
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
+    RecordProperty("PartiallyVerifies", "comp_req__concurrency__delayed_task");
+    RecordProperty("Description",
+                   "Check that a timed DelayedTask invokes its callback with the stop token and the configured "
+                   "execution time point.");
+
     auto unit = DelayedTaskFactory::Make<score::concurrency::testing::SteadyClock>(
         score::cpp::pmr::get_default_resource(),
         execution_time_point_,
@@ -95,6 +102,13 @@ TEST_F(DelayedTaskTest, ExecutesCallbackWithCorrectAttributes)
 
 TEST_F(DelayedTaskTest, UnderlyingTaskIsNotExecutedOnRequestedStop)
 {
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
+    RecordProperty("PartiallyVerifies", "comp_req__concurrency__delayed_task");
+    RecordProperty("Description",
+                   "Check that a timed DelayedTask whose stop was requested before execution does not invoke its "
+                   "callback.");
+
     auto unit = DelayedTaskFactory::Make<score::concurrency::testing::SteadyClock>(
         score::cpp::pmr::get_default_resource(),
         execution_time_point_,
@@ -111,6 +125,13 @@ TEST_F(DelayedTaskTest, UnderlyingTaskIsNotExecutedOnRequestedStop)
 
 TEST_F(DelayedTaskTest, RetreivesCorrectExectuionTimePoint)
 {
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
+    RecordProperty("PartiallyVerifies", "comp_req__concurrency__delayed_task");
+    RecordProperty("Description",
+                   "Check that a timed DelayedTask reports the configured execution time point as next execution "
+                   "point.");
+
     auto unit = DelayedTaskFactory::Make<score::concurrency::testing::SteadyClock>(
         score::cpp::pmr::get_default_resource(),
         execution_time_point_,
@@ -127,6 +148,12 @@ TEST_F(DelayedTaskTest, RetreivesCorrectExectuionTimePoint)
 
 TEST_F(DelayedTaskTest, RetreivesNoExectuionTimePointWhenStopped)
 {
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
+    RecordProperty("PartiallyVerifies", "comp_req__concurrency__delayed_task");
+    RecordProperty("Description",
+                   "Check that a timed DelayedTask reports no next execution point after its stop was requested.");
+
     auto unit = DelayedTaskFactory::Make<score::concurrency::testing::SteadyClock>(
         score::cpp::pmr::get_default_resource(),
         execution_time_point_,
@@ -143,6 +170,12 @@ TEST_F(DelayedTaskTest, RetreivesNoExectuionTimePointWhenStopped)
 
 TEST_F(DelayedTaskTest, RetreivesNoExectuionWhenExecuted)
 {
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
+    RecordProperty("PartiallyVerifies", "comp_req__concurrency__delayed_task");
+    RecordProperty("Description",
+                   "Check that a timed DelayedTask reports no next execution point after it was executed once.");
+
     auto unit = DelayedTaskFactory::Make<score::concurrency::testing::SteadyClock>(
         score::cpp::pmr::get_default_resource(),
         execution_time_point_,
@@ -159,6 +192,11 @@ TEST_F(DelayedTaskTest, RetreivesNoExectuionWhenExecuted)
 
 TEST_F(DelayedTaskTest, ExecutesCallbackWithParameter)
 {
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
+    RecordProperty("PartiallyVerifies", "comp_req__concurrency__delayed_task");
+    RecordProperty("Description", "Check that a timed DelayedTask invokes its callback with the bound argument.");
+
     std::int32_t observer{0};
     auto unit = DelayedTaskFactory::Make<score::concurrency::testing::SteadyClock>(
         score::cpp::pmr::get_default_resource(),
@@ -177,6 +215,12 @@ TEST_F(DelayedTaskTest, ExecutesCallbackWithParameter)
 
 TEST_F(DelayedTaskTest, MakeWithTaskResultLeadsToAssociatedTaskAndTaskResult)
 {
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
+    RecordProperty("PartiallyVerifies", "comp_req__concurrency__task_result");
+    RecordProperty("Description",
+                   "Check that the result of an executed timed DelayedTask is accessible through its TaskResult.");
+
     // Given a task created using the make_* function
     auto unit = DelayedTaskFactory::MakeWithTaskResult<score::concurrency::testing::SteadyClock>(
         score::cpp::pmr::get_default_resource(),
@@ -196,6 +240,13 @@ TEST_F(DelayedTaskTest, MakeWithTaskResultLeadsToAssociatedTaskAndTaskResult)
 
 TEST_F(DelayedTaskTest, MakeWithTaskResultCapturesAllArguments)
 {
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
+    RecordProperty("PartiallyVerifies", "comp_req__concurrency__delayed_task");
+    RecordProperty("Description",
+                   "Check that a timed DelayedTask created with a task result invokes its callback with all bound "
+                   "arguments.");
+
     int arg1 = 42;
     double arg2 = 3.14;
 

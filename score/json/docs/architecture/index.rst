@@ -53,7 +53,7 @@ Currently vaJson is the only implementation, for parsing as well as for serializ
 Rationale Behind Architecture Decomposition
 *******************************************
 
-The decomposition in a wrapper and an implemetation component already comes from the feature definition,
+The decomposition in a wrapper and an implementation component already comes from the feature definition,
 the main driver is to re-use existing implementation(s) and to allow replacing the implementation while providing a stable API.
 
 Static Architecture
@@ -74,8 +74,8 @@ Static Architecture
    :security: YES
    :safety:  ASIL_B
    :status: valid
-   :version: 4
-   :fulfils: comp_req__json__deserialization[version==1], comp_req__json__serialization[version==1], comp_req__json__user_format[version==1], comp_req__json__duplicate_member_names[version==1], comp_req__json__parsing_error_reason[version==1], comp_req__json__lang_idioms[version==1], comp_req__json__lang_infra[version==1], comp_req__json__type_compatibility[version==1], comp_req__json__full_testability[version==1], comp_req__json__asil[version==1]
+   :version: 6
+   :fulfils: comp_req__json__deserialization[version==1], comp_req__json__serialization[version==1], comp_req__json__user_format[version==1], comp_req__json__duplicate_member_names[version==1], comp_req__json__parsing_error_reason[version==1], comp_req__json__io_error[version==1], comp_req__json__regular_file[version==1], comp_req__json__max_file_size[version==1], comp_req__json__deserialization_error_field[version==1], comp_req__json__lang_idioms[version==1], comp_req__json__lang_infra[version==1], comp_req__json__type_compatibility[version==1], comp_req__json__out_of_range_error[version==1], comp_req__json__full_testability[version==1], comp_req__json__asil[version==1]
    :belongs_to: comp__baselibs_json[version==2]
 
    .. needarch::
@@ -93,8 +93,8 @@ Dynamic Architecture
    :security: YES
    :safety: ASIL_B
    :status: invalid
-   :version: 4
-   :fulfils: comp_req__json__deserialization[version==1], comp_req__json__serialization[version==1], comp_req__json__user_format[version==1], comp_req__json__duplicate_member_names[version==1], comp_req__json__parsing_error_reason[version==1], comp_req__json__lang_idioms[version==1], comp_req__json__lang_infra[version==1], comp_req__json__type_compatibility[version==1], comp_req__json__full_testability[version==1], comp_req__json__asil[version==1]
+   :version: 6
+   :fulfils: comp_req__json__deserialization[version==1], comp_req__json__serialization[version==1], comp_req__json__user_format[version==1], comp_req__json__duplicate_member_names[version==1], comp_req__json__parsing_error_reason[version==1], comp_req__json__io_error[version==1], comp_req__json__regular_file[version==1], comp_req__json__max_file_size[version==1], comp_req__json__deserialization_error_field[version==1], comp_req__json__lang_idioms[version==1], comp_req__json__lang_infra[version==1], comp_req__json__type_compatibility[version==1], comp_req__json__out_of_range_error[version==1], comp_req__json__full_testability[version==1], comp_req__json__asil[version==1]
    :belongs_to: comp__baselibs_json[version==2]
 
    put here a sequence diagram (TBD)

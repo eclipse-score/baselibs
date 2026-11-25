@@ -193,25 +193,46 @@ TEST_P(JsonTestSuiteTest, FromBufferMatchesExpectedOutcome)
     }
 }
 
+/// Converts a corpus file name into an underscore-free test name, e.g. n_number_1.0e+.json into NNumber1Dot0ePlus.
 std::string TestName(const ::testing::TestParamInfo<std::string>& info)
 {
-    constexpr std::string_view kHexDigits{"0123456789abcdef"};
+    constexpr std::string_view kHexDigits{"0123456789ABCDEF"};
     const std::string file_name{FileName(info.param)};
     std::string name{};
+    bool starts_word{true};
     for (const char c : file_name.substr(0U, file_name.size() - std::string_view{".json"}.size()))
     {
         const auto byte{static_cast<unsigned char>(c)};
-        if (std::isalnum(byte) || (c == '_'))
+        if (std::isalnum(byte) != 0)
         {
-            name.push_back(c);
+            name.push_back(starts_word ? static_cast<char>(std::toupper(byte)) : c);
+            starts_word = false;
+            continue;
         }
-        else
+        // Spell out symbols instead of dropping them, so that, e.g., 1.0e+ and 1.0e- stay distinct test names.
+        switch (c)
         {
-            // Escape instead of replacing so that, e.g., 1.0e+ and 1.0e- stay distinct test names.
-            name.push_back('_');
-            name.push_back(kHexDigits[byte >> 4U]);
-            name.push_back(kHexDigits[byte & 0xFU]);
+            case '_':
+                break;
+            case '+':
+                name += "Plus";
+                break;
+            case '-':
+                name += "Minus";
+                break;
+            case '.':
+                name += "Dot";
+                break;
+            case '#':
+                name += "Hash";
+                break;
+            default:
+                name.push_back('X');
+                name.push_back(kHexDigits[byte >> 4U]);
+                name.push_back(kHexDigits[byte & 0xFU]);
+                break;
         }
+        starts_word = true;
     }
     return name;
 }

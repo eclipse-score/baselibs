@@ -23,7 +23,7 @@
 ///   * escaped strings       -> escape-sequence decoding path
 ///   * booleans / nulls      -> keyword-matching path
 ///   * flat object keys      -> key parsing + object (unordered_map) insertion
-///   * deep nesting          -> depth counter / recursion path
+///   * deep nesting          -> structure validator / recursion path
 ///   * realistic config      -> mixed, representative workload
 ///
 /// Every benchmark scales the document size via state.range(0) and reports both

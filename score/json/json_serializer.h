@@ -24,6 +24,7 @@
 #include <algorithm>
 #include <cstdint>
 #include <optional>
+#include <string_view>
 #include <utility>
 #include <vector>
 
@@ -167,6 +168,41 @@ struct HasFromAny<T, std::void_t<decltype(T::FromAny(Any{}))>> : std::true_type
 {
 };
 
+/// User messages of the errors reported if a JSON value is not of the container type expected for a visitable struct
+/// or a vector.
+inline constexpr std::string_view kExpectedObject{"Expected an object"};
+inline constexpr std::string_view kExpectedList{"Expected a list"};
+
+/// Helper template to determine whether the JsonSerializer of a type reports deserialization errors that already name
+/// the failing field of a nested struct.
+template <typename T, typename = void>
+struct NamesFailingField : std::false_type
+{
+};
+
+template <typename T>
+struct NamesFailingField<T, std::enable_if_t<JsonSerializer<T>::kNamesFailingField>> : std::true_type
+{
+};
+
+/// Names the field in the error of its deserialization, unless the error names a field of a nested struct already.
+template <typename Field>
+inline result::Error NameFailingField(const result::Error& error, const char* const field_name)
+{
+    // This is a false positive from coverity. Apparently, "if constexpr" is unknown to this tool.
+    // coverity[autosar_cpp14_a7_1_8_violation]
+    // coverity[autosar_cpp14_m6_4_1_violation]
+    if constexpr (NamesFailingField<Field>::value)
+    {
+        // Only a JSON value of the wrong container type fails without naming a field of the nested struct.
+        if ((error.UserMessage() != kExpectedObject) && (error.UserMessage() != kExpectedList))
+        {
+            return error;
+        }
+    }
+    return error.WithUserMessage(field_name);
+}
+
 /// Data used during deserialization of a struct.
 struct DeserializeAsJson
 {
@@ -206,8 +242,9 @@ inline void JsonDeserializeStructImpl(DeserializeAsJson& visitor, Field& field, 
         }
         else
         {
-            // Annotate with the failing field name; field_name is a static const char* from struct_visitable.
-            score::cpp::ignore = visitor.error.emplace(field_content.error().WithUserMessage(field_name));
+            // field_name is a static const char* from struct_visitable.
+            score::cpp::ignore = visitor.error.emplace(
+                NameFailingField<score::cpp::remove_cvref_t<Field>>(field_content.error(), field_name));
         }
     }
     else
@@ -284,6 +321,9 @@ class JsonSerializer<
                      !(detail::serializer::HasToAny<T>::value || detail::deserializer::HasFromAny<T>::value)>>
 {
   public:
+    /// Deserialization errors name the failing field of the struct.
+    static constexpr bool kNamesFailingField{true};
+
     template <typename U>
     [[nodiscard]] static Any ToAny(U&& obj)
     {
@@ -310,7 +350,7 @@ class JsonSerializer<
         }
         else
         {
-            return MakeUnexpected<T>(obj.error());
+            return MakeUnexpected<T>(obj.error().WithUserMessage(detail::deserializer::kExpectedObject));
         }
     }
 };
@@ -335,7 +375,9 @@ class JsonSerializer<N, std::enable_if_t<std::is_arithmetic_v<N> && !std::is_sam
             }
             else
             {
-                return MakeUnexpected(Error::kWrongType, "Number not convertible to expected arithmetic type");
+                // Keeps the error code, which tells a value out of range from a lossy conversion.
+                return MakeUnexpected<N>(
+                    val.error().WithUserMessage("Number not convertible to expected arithmetic type"));
             }
         }
         else
@@ -396,6 +438,8 @@ template <typename T>
 class JsonSerializer<std::vector<T>>
 {
   public:
+    /// Deserialization errors name the failing field of a nested struct if those of T do.
+    static constexpr bool kNamesFailingField{detail::deserializer::NamesFailingField<T>::value};
     [[nodiscard]] static Any ToAny(const std::vector<T>& vec)
     {
         List json_list{};
@@ -421,14 +465,14 @@ class JsonSerializer<std::vector<T>>
                 }
                 else
                 {
-                    return MakeUnexpected(Error::kWrongType, "List entry not of expected type");
+                    return MakeUnexpected<std::vector<T>>(val.error());
                 }
             }
             return result;
         }
         else
         {
-            return MakeUnexpected(Error::kWrongType, "Expected a list");
+            return MakeUnexpected(Error::kWrongType, detail::deserializer::kExpectedList);
         }
     }
 };
@@ -439,6 +483,8 @@ template <typename T>
 class JsonSerializer<std::optional<T>>
 {
   public:
+    /// Deserialization errors name the failing field of a nested struct if those of T do.
+    static constexpr bool kNamesFailingField{detail::deserializer::NamesFailingField<T>::value};
     template <typename U = std::optional<T>>
     [[nodiscard]] static Any ToAny(U&& opt)
     {
@@ -460,7 +506,7 @@ class JsonSerializer<std::optional<T>>
         }
         else
         {
-            return MakeUnexpected(Error::kWrongType, "Optional value not of expected type");
+            return MakeUnexpected<std::optional<T>>(val.error());
         }
     }
 };

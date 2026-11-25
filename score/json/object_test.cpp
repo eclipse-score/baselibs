@@ -24,10 +24,10 @@ namespace json
 namespace
 {
 
-class AttributeGettersTest : public ::testing::Test
+class ObjectTest : public ::testing::Test
 {
   public:
-    AttributeGettersTest() : test_data_{}, test_data_value_{test_data_}, test_data_result_{test_data_value_}
+    ObjectTest() : test_data_{}, test_data_value_{test_data_}, test_data_result_{test_data_value_}
     {
         test_data_.insert(std::make_pair("string", std::string{"Lorem ipsum dolor sit amet"}));
         test_data_.insert(std::make_pair("int", std::uint64_t{42}));
@@ -62,7 +62,7 @@ class AttributeGettersTest : public ::testing::Test
     const Result<std::reference_wrapper<const json::Object>> test_data_result_;
 };
 
-TEST_F(AttributeGettersTest, GetBoolUsingResult)
+TEST_F(ObjectTest, GetAttributeReturnsBoolFromResult)
 {
     RecordProperty("Verifies", "::score::json::GetAttribute");
     RecordProperty("ASIL", "B");
@@ -77,7 +77,7 @@ TEST_F(AttributeGettersTest, GetBoolUsingResult)
     EXPECT_TRUE(attr_result.value());
 }
 
-TEST_F(AttributeGettersTest, GetBoolDirectValue)
+TEST_F(ObjectTest, GetAttributeReturnsBoolFromObject)
 {
     RecordProperty("Verifies", "::score::json::GetAttribute");
     RecordProperty("ASIL", "B");
@@ -92,7 +92,7 @@ TEST_F(AttributeGettersTest, GetBoolDirectValue)
     EXPECT_TRUE(attr_result.value());
 }
 
-TEST_F(AttributeGettersTest, GetIntegerUsingResult)
+TEST_F(ObjectTest, GetAttributeReturnsIntegerFromResult)
 {
     RecordProperty("Verifies", "::score::json::GetAttribute");
     RecordProperty("ASIL", "B");
@@ -110,7 +110,7 @@ TEST_F(AttributeGettersTest, GetIntegerUsingResult)
     EXPECT_EQ(attr_result_unsigned.value(), 42u);
 }
 
-TEST_F(AttributeGettersTest, GetIntegerDirectValue)
+TEST_F(ObjectTest, GetAttributeReturnsIntegerFromObject)
 {
     RecordProperty("Verifies", "::score::json::GetAttribute");
     RecordProperty("ASIL", "B");
@@ -128,7 +128,7 @@ TEST_F(AttributeGettersTest, GetIntegerDirectValue)
     EXPECT_EQ(attr_result_unsigned.value(), 42u);
 }
 
-TEST_F(AttributeGettersTest, GetFloatingPointUsingResult)
+TEST_F(ObjectTest, GetAttributeReturnsFloatingPointFromResult)
 {
     RecordProperty("Verifies", "::score::json::GetAttribute");
     RecordProperty("ASIL", "B");
@@ -146,7 +146,7 @@ TEST_F(AttributeGettersTest, GetFloatingPointUsingResult)
     EXPECT_EQ(double_result.value(), static_cast<double>(float_result.value()));
 }
 
-TEST_F(AttributeGettersTest, GetFloatingPointDirectValue)
+TEST_F(ObjectTest, GetAttributeReturnsFloatingPointFromObject)
 {
     RecordProperty("Verifies", "::score::json::GetAttribute");
     RecordProperty("ASIL", "B");
@@ -164,7 +164,7 @@ TEST_F(AttributeGettersTest, GetFloatingPointDirectValue)
     EXPECT_EQ(double_result.value(), static_cast<double>(float_result.value()));
 }
 
-TEST_F(AttributeGettersTest, GetStringUsingResult)
+TEST_F(ObjectTest, GetAttributeReturnsStringFromResult)
 {
     RecordProperty("Verifies", "::score::json::GetAttribute");
     RecordProperty("ASIL", "B");
@@ -180,7 +180,7 @@ TEST_F(AttributeGettersTest, GetStringUsingResult)
     EXPECT_EQ(std::string(str_value.data()), "Lorem ipsum dolor sit amet");
 }
 
-TEST_F(AttributeGettersTest, GetStringDirectValue)
+TEST_F(ObjectTest, GetAttributeReturnsStringFromObject)
 {
     RecordProperty("Verifies", "::score::json::GetAttribute");
     RecordProperty("ASIL", "B");
@@ -196,7 +196,7 @@ TEST_F(AttributeGettersTest, GetStringDirectValue)
     EXPECT_EQ(std::string(str_value.data()), "Lorem ipsum dolor sit amet");
 }
 
-TEST_F(AttributeGettersTest, GetListUsingResult)
+TEST_F(ObjectTest, GetAttributeReturnsListFromResult)
 {
     RecordProperty("Verifies", "::score::json::GetAttribute");
     RecordProperty("ASIL", "B");
@@ -211,7 +211,7 @@ TEST_F(AttributeGettersTest, GetListUsingResult)
     EXPECT_EQ(list[0].As<std::string>().value().get(), "one");
 }
 
-TEST_F(AttributeGettersTest, GetListDirectValue)
+TEST_F(ObjectTest, GetAttributeReturnsListFromObject)
 {
     RecordProperty("Verifies", "::score::json::GetAttribute");
     RecordProperty("ASIL", "B");
@@ -226,7 +226,7 @@ TEST_F(AttributeGettersTest, GetListDirectValue)
     EXPECT_EQ(list[0].As<std::string>().value().get(), "one");
 }
 
-TEST_F(AttributeGettersTest, GetObjectUsingResult)
+TEST_F(ObjectTest, GetAttributeReturnsObjectFromResult)
 {
     RecordProperty("Verifies", "::score::json::GetAttribute");
     RecordProperty("ASIL", "B");
@@ -242,7 +242,7 @@ TEST_F(AttributeGettersTest, GetObjectUsingResult)
     EXPECT_EQ(std::string(color.data()), "blue");
 }
 
-TEST_F(AttributeGettersTest, GetObjectDirectValue)
+TEST_F(ObjectTest, GetAttributeReturnsObjectFromObject)
 {
     RecordProperty("Verifies", "::score::json::GetAttribute");
     RecordProperty("ASIL", "B");
@@ -258,7 +258,7 @@ TEST_F(AttributeGettersTest, GetObjectDirectValue)
     EXPECT_EQ(std::string(color.data()), "blue");
 }
 
-TEST_F(AttributeGettersTest, CascadingAccessSuccessCase)
+TEST_F(ObjectTest, GetAttributeReturnsNestedAttributeThroughChainedCalls)
 {
     RecordProperty("Verifies", "::score::json::GetAttribute");
     RecordProperty("ASIL", "B");
@@ -281,7 +281,7 @@ TEST_F(AttributeGettersTest, CascadingAccessSuccessCase)
     ASSERT_EQ(width.value(), 20u);
 }
 
-TEST_F(AttributeGettersTest, CascadingAccessErrorCase)
+TEST_F(ObjectTest, GetAttributePropagatesErrorThroughChainedCalls)
 {
     RecordProperty("Verifies", "::score::json::GetAttribute");
     RecordProperty("ASIL", "B");

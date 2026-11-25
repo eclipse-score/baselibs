@@ -21,7 +21,10 @@
 #include <charconv>
 #include <cstdint>
 #include <iomanip>
+#include <optional>
+#include <ostream>
 #include <string>
+#include <string_view>
 #include <vector>
 
 namespace completely::different
@@ -89,6 +92,38 @@ struct VisitableTypeWithCustomSerialization
 
 SCORE_STRUCT_VISITABLE(VisitableTypeWithCustomSerialization, integer_val, string_val)
 
+/// Visitable struct that is deserialized by an explicit JsonSerializer specialization instead of field by field.
+struct VisitableTypeWithExplicitSerializer
+{
+    std::uint32_t integer_val{};
+};
+
+SCORE_STRUCT_VISITABLE(VisitableTypeWithExplicitSerializer, integer_val)
+
+}  // namespace score::json::test
+
+namespace score::json
+{
+
+template <>
+class JsonSerializer<test::VisitableTypeWithExplicitSerializer>
+{
+  public:
+    [[nodiscard]] static Result<test::VisitableTypeWithExplicitSerializer> FromAny(const Any& any)
+    {
+        if (const auto value = any.As<std::uint32_t>(); value.has_value())
+        {
+            return test::VisitableTypeWithExplicitSerializer{*value};
+        }
+        return MakeUnexpected(Error::kInvalidValue, "Invalid format");
+    }
+};
+
+}  // namespace score::json
+
+namespace score::json::test
+{
+
 namespace
 {
 
@@ -110,7 +145,7 @@ struct TypeToSerialize
 
 SCORE_STRUCT_VISITABLE(TypeToSerialize, integer_val, string_val, nested_val)
 
-TEST(JsonSerializerTest, TestSerialization)
+TEST(JsonSerializerTest, SerializesVisitableStruct)
 {
     RecordProperty("TestType", "interface-test");
     RecordProperty("Verifies", "::score::json::ToJsonAny");
@@ -122,7 +157,7 @@ TEST(JsonSerializerTest, TestSerialization)
     // Given an instance of a serializable struct
     TypeToSerialize unit{42, "Blubb", NestedType{43, true, {44, 45}}};
 
-    // Wne serialized to JSON
+    // When serialized to JSON
     auto serialized = ToJsonAny(unit);
 
     // Then it contains all attributes from the struct, set to the values the instance had before serialization.
@@ -164,7 +199,7 @@ TEST(JsonSerializerTest, TestSerialization)
     }
 }
 
-TEST(JsonSerializerTest, TestDeserialization)
+TEST(JsonSerializerTest, DeserializesVisitableStruct)
 {
     RecordProperty("TestType", "interface-test");
     RecordProperty("Verifies", "::score::json::FromJsonAny");
@@ -198,7 +233,7 @@ TEST(JsonSerializerTest, TestDeserialization)
     EXPECT_THAT(unit->nested_val.nested_array, ::testing::ElementsAre(44, 45));
 }
 
-TEST(JsonSerializerTest, TestFailingDeserialization)
+TEST(JsonSerializerTest, ReturnsErrorForJsonNotMatchingStruct)
 {
     RecordProperty("TestType", "interface-test");
     RecordProperty("Verifies", "::score::json::FromJsonAny");
@@ -237,7 +272,7 @@ struct TypeWithCustomSerializable
 
 SCORE_STRUCT_VISITABLE(TypeWithCustomSerializable, custom_type)
 
-TEST(JsonSerializerTest, UserProvidedDeserialization)
+TEST(JsonSerializerTest, UsesUserProvidedDeserialization)
 {
     RecordProperty("TestType", "interface-test");
     RecordProperty("Verifies", "::score::json::FromJsonAny");
@@ -262,7 +297,7 @@ TEST(JsonSerializerTest, UserProvidedDeserialization)
     EXPECT_THAT(result->custom_type.data, ::testing::ElementsAre(0x13, 0x37));
 }
 
-TEST(JsonSerializerTest, UserProvidedSerialization)
+TEST(JsonSerializerTest, UsesUserProvidedSerialization)
 {
     RecordProperty("TestType", "interface-test");
     RecordProperty("Verifies", "::score::json::ToJsonAny");
@@ -296,7 +331,7 @@ struct TypeWithOptionalValue
 
 SCORE_STRUCT_VISITABLE(TypeWithOptionalValue, mandatory_val, never_ever_val, optional_val)
 
-TEST(JsonSerializerTest, DeserializeOptionalFields)
+TEST(JsonSerializerTest, DeserializesPresentOptionalField)
 {
     RecordProperty("TestType", "interface-test");
     RecordProperty("Verifies", "::score::json::FromJsonAny");
@@ -326,7 +361,7 @@ TEST(JsonSerializerTest, DeserializeOptionalFields)
     EXPECT_EQ(unit->optional_val.value(), 43);
 }
 
-TEST(JsonSerializerTest, NoErrorOnMissingOptionalFields)
+TEST(JsonSerializerTest, DeserializesMissingOptionalFieldAsNullopt)
 {
     RecordProperty("TestType", "interface-test");
     RecordProperty("Verifies", "::score::json::FromJsonAny");
@@ -356,7 +391,7 @@ TEST(JsonSerializerTest, NoErrorOnMissingOptionalFields)
     EXPECT_EQ(unit->mandatory_val, 42);
 }
 
-TEST(JsonSerializerTest, ErrorOnMissingMandatoryFields)
+TEST(JsonSerializerTest, ReturnsErrorForMissingMandatoryField)
 {
     RecordProperty("TestType", "interface-test");
     RecordProperty("Verifies", "::score::json::FromJsonAny");
@@ -384,7 +419,7 @@ TEST(JsonSerializerTest, ErrorOnMissingMandatoryFields)
     EXPECT_EQ(unit.error(), Error::kKeyNotFound);
 }
 
-TEST(JsonSerializerTest, SerializingStructWithUnusedOptionalDoesntEmitField)
+TEST(JsonSerializerTest, OmitsEmptyOptionalFieldOnSerialization)
 {
     RecordProperty("TestType", "interface-test");
     RecordProperty("Verifies", "::score::json::ToJsonAny");
@@ -408,7 +443,7 @@ TEST(JsonSerializerTest, SerializingStructWithUnusedOptionalDoesntEmitField)
     EXPECT_EQ(0, object->get().count("optional_val"));
 }
 
-TEST(JsonSerializerTest, DeserializingStructFromNonObjectFails)
+TEST(JsonSerializerTest, ReturnsErrorForStructFromNonObject)
 {
     RecordProperty("TestType", "control-flow-analysis");  // data flow
     RecordProperty("Description",
@@ -429,7 +464,7 @@ TEST(JsonSerializerTest, DeserializingStructFromNonObjectFails)
     EXPECT_EQ(unit.error(), Error::kWrongType);
 }
 
-TEST(JsonSerializerTest, FailToDeserializeWrongNumberType)
+TEST(JsonSerializerTest, ReturnsErrorForFloatInIntegerField)
 {
     RecordProperty("TestType", "control-flow-analysis");  // data flow
     RecordProperty(
@@ -451,7 +486,7 @@ TEST(JsonSerializerTest, FailToDeserializeWrongNumberType)
     }
 } )"_json;
 
-    // When trying to deserilalize the JSON into a struct
+    // When trying to deserialize the JSON into a struct
     auto unit{FromJsonAny<TypeToSerialize>(std::move(source))};
 
     // Then this fails, returning a WrongType error
@@ -459,7 +494,33 @@ TEST(JsonSerializerTest, FailToDeserializeWrongNumberType)
     EXPECT_EQ(unit.error(), Error::kWrongType);
 }
 
-TEST(JsonSerializerTest, FailToDeserializeANonBooleanTypeToBool)
+TEST(JsonSerializerTest, ReturnsOutOfRangeForNumberOutsideFieldType)
+{
+    RecordProperty("PartiallyVerifies", "comp_req__json__out_of_range_error");
+    RecordProperty("Description",
+                   "Check that deserializing a number into a field whose type cannot hold it returns an out-of-range "
+                   "error that names the field.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "boundary-values");
+
+    auto source = R"({
+"integer_val": 4294967296,
+"string_val": "Blah",
+"nested_val": {
+    "nested_int": 43,
+    "nested_bool": true,
+    "nested_array": [44, 45]
+    }
+} )"_json;
+
+    auto unit{FromJsonAny<TypeToSerialize>(std::move(source))};
+
+    ASSERT_FALSE(unit.has_value());
+    EXPECT_EQ(unit.error(), Error::kOutOfRange);
+    EXPECT_EQ(unit.error().UserMessage(), "integer_val");
+}
+
+TEST(JsonSerializerTest, ReturnsErrorForStringInBoolField)
 {
     RecordProperty("TestType", "control-flow-analysis");  // data flow
     RecordProperty("Description",
@@ -480,7 +541,7 @@ TEST(JsonSerializerTest, FailToDeserializeANonBooleanTypeToBool)
     }
 } )"_json;
 
-    // When trying to deserilalize the JSON into a struct
+    // When trying to deserialize the JSON into a struct
     auto unit{FromJsonAny<TypeToSerialize>(std::move(source))};
 
     // Then this fails, returning a WrongType error
@@ -488,7 +549,7 @@ TEST(JsonSerializerTest, FailToDeserializeANonBooleanTypeToBool)
     EXPECT_EQ(unit.error(), Error::kWrongType);
 }
 
-TEST(JsonSerializerTest, FailToDeserializeANonNumberTypeToAnInteger)
+TEST(JsonSerializerTest, ReturnsErrorForStringInIntegerField)
 {
     RecordProperty("TestType", "control-flow-analysis");  // data flow
     RecordProperty("Description",
@@ -510,7 +571,7 @@ TEST(JsonSerializerTest, FailToDeserializeANonNumberTypeToAnInteger)
     }
 } )"_json;
 
-    // When trying to deserilalize the JSON into a struct
+    // When trying to deserialize the JSON into a struct
     auto unit{FromJsonAny<TypeToSerialize>(std::move(source))};
 
     // Then this fails, returning a WrongType error
@@ -518,7 +579,7 @@ TEST(JsonSerializerTest, FailToDeserializeANonNumberTypeToAnInteger)
     EXPECT_EQ(unit.error(), Error::kWrongType);
 }
 
-TEST(JsonSerializerTest, FailToDeserializeToVectorIfJSONIsNotAList)
+TEST(JsonSerializerTest, ReturnsErrorForVectorFromNonList)
 {
     RecordProperty("TestType", "interface-test");
     RecordProperty("Verifies", "::score::json::FromJsonAny");
@@ -540,7 +601,7 @@ TEST(JsonSerializerTest, FailToDeserializeToVectorIfJSONIsNotAList)
     EXPECT_EQ(unit.error(), Error::kWrongType);
 }
 
-TEST(JsonSerializerTest, FailToDeserializeIntoAVectorIfJSONListHasMixedTypes)
+TEST(JsonSerializerTest, ReturnsErrorForVectorFromMixedTypeList)
 {
     RecordProperty("TestType", "control-flow-analysis");  // data flow
     RecordProperty("Description",
@@ -562,7 +623,7 @@ TEST(JsonSerializerTest, FailToDeserializeIntoAVectorIfJSONListHasMixedTypes)
     EXPECT_EQ(unit.error(), Error::kWrongType);
 }
 
-TEST(JsonSerializerTest, SucceedDeserializeListIntoVectorIfListConsistsOfSameType)
+TEST(JsonSerializerTest, DeserializesListOfSameTypeIntoVector)
 {
     RecordProperty("TestType", "interface-test");
     RecordProperty("Verifies", "::score::json::FromJsonAny");
@@ -583,7 +644,7 @@ TEST(JsonSerializerTest, SucceedDeserializeListIntoVectorIfListConsistsOfSameTyp
     EXPECT_THAT(*unit, ::testing::ElementsAre(42, 43, 44));
 }
 
-TEST(JsonSerializerTest, SuceedDeserializeListIntoVectorOfAnyEvenOnMixedTypes)
+TEST(JsonSerializerTest, DeserializesMixedTypeListIntoVectorOfAny)
 {
     RecordProperty("TestType", "interface-test");
     RecordProperty("Verifies", "::score::json::FromJsonAny");
@@ -610,7 +671,7 @@ TEST(JsonSerializerTest, SuceedDeserializeListIntoVectorOfAnyEvenOnMixedTypes)
     EXPECT_EQ(num.value(), 42);
 }
 
-TEST(JsonSerializerTest, SerializeOptionalValuesIfTheyContainAValue)
+TEST(JsonSerializerTest, SerializesOptionalFieldWithValue)
 {
     RecordProperty("TestType", "interface-test");
     RecordProperty("Verifies", "::score::json::ToJsonAny");
@@ -634,7 +695,7 @@ TEST(JsonSerializerTest, SerializeOptionalValuesIfTheyContainAValue)
     EXPECT_EQ(43, *val);
 }
 
-TEST(JsonSerializerTest, FailToDeserializeOptionalValueIfEnclosedTypesDoNotMatch)
+TEST(JsonSerializerTest, ReturnsErrorForOptionalWithMismatchingType)
 {
     RecordProperty("TestType", "interface-test");
     RecordProperty("Verifies", "::score::json::FromJsonAny");
@@ -655,7 +716,7 @@ TEST(JsonSerializerTest, FailToDeserializeOptionalValueIfEnclosedTypesDoNotMatch
     EXPECT_EQ(unit.error(), Error::kWrongType);
 }
 
-TEST(JsonSerializerTest, SerializeConstantObjects)
+TEST(JsonSerializerTest, SerializesConstantStruct)
 {
     RecordProperty("TestType", "interface-test");
     RecordProperty("Verifies", "::score::json::ToJsonAny");
@@ -699,7 +760,7 @@ TEST(JsonSerializerTest, SerializeConstantObjects)
     EXPECT_EQ(45, second.value());
 }
 
-TEST(JsonSerializerTest, UseCustomSerializationOnVisitableStruct)
+TEST(JsonSerializerTest, PrefersCustomSerializationOverVisitable)
 {
     RecordProperty("TestType", "interface-test");
     RecordProperty("Verifies", "JsonSerializer");
@@ -773,36 +834,98 @@ TEST(JsonSerializerTest, MissingMandatoryFieldErrorContainsFieldName)
     EXPECT_EQ(unit.error().UserMessage(), "integer_val");
 }
 
-TEST(JsonSerializerTest, NestedTypeMismatchErrorContainsOutermostFieldName)
+struct TypeWithNestedContainers
 {
-    RecordProperty("TestType", "control-flow-analysis");  // data flow
-    RecordProperty("Verifies", "::score::json::FromJsonAny");
-    RecordProperty("Description",
-                   "Verify that a type-mismatch inside a nested struct is reported under the parent field name, "
-                   "because each deserialization level re-stamps the error with its own field key");
-    RecordProperty("ASIL", "QM");
-    RecordProperty("Priority", "3");
-    RecordProperty("DerivationTechnique", "error-guessing");
+    NestedType nested_val{};
+    std::vector<NestedType> nested_list{};
+    std::optional<NestedType> nested_optional{};
+    VisitableTypeWithExplicitSerializer explicit_val{};
+};
 
-    // Given a JSON where nested_val.nested_bool holds a string instead of a bool
-    auto source = R"({
-"integer_val": 42,
-"string_val": "ok",
-"nested_val": {
-    "nested_int": 43,
-    "nested_bool": "not-a-bool",
-    "nested_array": [44, 45]
-    }
-} )"_json;
+SCORE_STRUCT_VISITABLE(TypeWithNestedContainers, nested_val, nested_list, nested_optional, explicit_val)
 
-    // When deserializing into the struct
-    auto unit{FromJsonAny<TypeToSerialize>(std::move(source))};
+struct FailingFieldParam
+{
+    std::string_view name;
+    std::string_view json;
+    Error error;
+    std::string_view field;
+};
 
-    // Then the error code is WrongType and the UserMessage names the parent struct field, not the inner field
-    ASSERT_FALSE(unit.has_value());
-    EXPECT_EQ(unit.error(), Error::kWrongType);
-    EXPECT_EQ(unit.error().UserMessage(), "nested_val");
+// Found by gtest via ADL to print GetParam() in failure messages.
+void PrintTo(const FailingFieldParam& param, std::ostream* os)
+{
+    *os << param.json;
 }
+
+class JsonSerializerFailingFieldTest : public testing::TestWithParam<FailingFieldParam>
+{
+};
+
+TEST_P(JsonSerializerFailingFieldTest, ErrorNamesInnermostFailingField)
+{
+    RecordProperty("FullyVerifies", "comp_req__json__deserialization_error_field");
+    RecordProperty("Description",
+                   "Check that a failing deserialization into nested structs, also inside vectors and optionals, "
+                   "keeps the error code of the failure and names the innermost failing field.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
+
+    auto source{JsonParser{}.FromBuffer(GetParam().json)};
+    ASSERT_TRUE(source.has_value());
+
+    const auto unit{FromJsonAny<TypeWithNestedContainers>(std::move(source).value())};
+
+    ASSERT_FALSE(unit.has_value());
+    EXPECT_EQ(unit.error(), GetParam().error);
+    EXPECT_EQ(unit.error().UserMessage(), GetParam().field);
+}
+
+INSTANTIATE_TEST_SUITE_P(
+    NestedFields,
+    JsonSerializerFailingFieldTest,
+    testing::Values(
+        FailingFieldParam{"NestedFieldOfWrongType",
+                          R"({"nested_val": {"nested_int": 1, "nested_bool": "x", "nested_array": []}})",
+                          Error::kWrongType,
+                          "nested_bool"},
+        FailingFieldParam{"NestedValueNotAnObject", R"({"nested_val": 1})", Error::kWrongType, "nested_val"},
+        FailingFieldParam{"MissingFieldInListEntry",
+                          R"({"nested_val": {"nested_int": 1, "nested_bool": true, "nested_array": []},
+                              "nested_list": [{"nested_bool": true, "nested_array": []}]})",
+                          Error::kKeyNotFound,
+                          "nested_int"},
+        FailingFieldParam{"ListValueNotAList",
+                          R"({"nested_val": {"nested_int": 1, "nested_bool": true, "nested_array": []},
+                              "nested_list": {}})",
+                          Error::kWrongType,
+                          "nested_list"},
+        FailingFieldParam{"ListEntryNotAnObject",
+                          R"({"nested_val": {"nested_int": 1, "nested_bool": true, "nested_array": []},
+                              "nested_list": [1]})",
+                          Error::kWrongType,
+                          "nested_list"},
+        FailingFieldParam{"NumberOutOfRangeInOptional",
+                          R"({"nested_val": {"nested_int": 1, "nested_bool": true, "nested_array": []},
+                              "nested_list": [],
+                              "nested_optional": {"nested_int": 1, "nested_bool": true, "nested_array": [2, 256]}})",
+                          Error::kOutOfRange,
+                          "nested_array"},
+        FailingFieldParam{"OptionalValueNotAnObject",
+                          R"({"nested_val": {"nested_int": 1, "nested_bool": true, "nested_array": []},
+                              "nested_list": [],
+                              "nested_optional": "x"})",
+                          Error::kWrongType,
+                          "nested_optional"},
+        FailingFieldParam{"ExplicitSerializerError",
+                          R"({"nested_val": {"nested_int": 1, "nested_bool": true, "nested_array": []},
+                              "nested_list": [],
+                              "explicit_val": "x"})",
+                          Error::kInvalidValue,
+                          "explicit_val"}),
+    [](const testing::TestParamInfo<FailingFieldParam>& param_info) {
+        return std::string{param_info.param.name};
+    });
 
 }  // namespace
 }  // namespace score::json::test

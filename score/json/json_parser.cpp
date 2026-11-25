@@ -115,9 +115,9 @@ class AnyTreeBuilder final : private score::json::vajson::internal::StructurePar
     auto EndContainer() noexcept -> score::json::vajson::ParserResult;
 
     auto OnStartObject() noexcept -> score::json::vajson::ParserResult override;
-    auto OnEndObject(std::size_t) noexcept -> score::json::vajson::ParserResult override;
+    auto OnEndObject() noexcept -> score::json::vajson::ParserResult override;
     auto OnStartArray() noexcept -> score::json::vajson::ParserResult override;
-    auto OnEndArray(std::size_t) noexcept -> score::json::vajson::ParserResult override;
+    auto OnEndArray() noexcept -> score::json::vajson::ParserResult override;
 
     template <typename... NumberType>
     // NOLINTNEXTLINE(bugprone-exception-escape) an exception terminates, as required by the safety concept
@@ -238,7 +238,7 @@ auto AnyTreeBuilder::OnStartObject() noexcept -> score::json::vajson::ParserResu
     return StartContainer(score::json::Object{});
 }
 
-auto AnyTreeBuilder::OnEndObject(std::size_t) noexcept -> score::json::vajson::ParserResult
+auto AnyTreeBuilder::OnEndObject() noexcept -> score::json::vajson::ParserResult
 {
     return EndContainer();
 }
@@ -248,7 +248,7 @@ auto AnyTreeBuilder::OnStartArray() noexcept -> score::json::vajson::ParserResul
     return StartContainer(score::json::List{});
 }
 
-auto AnyTreeBuilder::OnEndArray(std::size_t) noexcept -> score::json::vajson::ParserResult
+auto AnyTreeBuilder::OnEndArray() noexcept -> score::json::vajson::ParserResult
 {
     return EndContainer();
 }
@@ -263,14 +263,15 @@ auto JsonParser::FromFile(const std::string_view file_path) const noexcept -> sc
 {
     score::Result<Any> result{};
     // NOLINTNEXTLINE(score-banned-function) Tolerated because JsonParser::FromFile is also on the banned function list
-    auto json_data{score::json::vajson::JsonData::FromFile(file_path)};
+    auto json_data{score::json::vajson::JsonData::FromFile(file_path, kMaxFileSize)};
     if (json_data.has_value())
     {
         result = AnyTreeBuilder{json_data.value()}.GetData();
     }
     else
     {
-        result = MakeUnexpected(Error::kParsingError, json_data.error().UserMessage());
+        // JsonData::FromFile only fails if the file cannot be opened or read, or exceeds kMaxFileSize.
+        result = MakeUnexpected(Error::kIoError, json_data.error().UserMessage());
     }
     return result;
 }

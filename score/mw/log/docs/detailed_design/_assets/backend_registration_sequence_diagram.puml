@@ -64,11 +64,19 @@ group #FFF3E0 Phase 3: Application Runtime (after main)
 
     runtime -> factory : CreateRecorderFactory()
     activate factory
+    runtime -> factory : CreateFromConfiguration(memory_resource)
 
     factory -> config_reader : ReadConfig()
     activate config_reader
     config_reader --> factory : Result<Configuration>\n{logMode: kConsole | kFile | kRemote}
     deactivate config_reader
+
+    alt configuration could not be read
+        note right of factory
+            Report the error and fall back to
+            CreateWithConsoleLoggingOnly().
+        end note
+    end
 
     ' --- Iterate over configured log modes ---
     loop for each mode in config.GetLogMode()
@@ -87,14 +95,19 @@ group #FFF3E0 Phase 3: Application Runtime (after main)
             table --> factory : false (nullptr)
             note right
                 **Fallback:** Backend not linked.
-                Create console recorder instead.
+                Report the error and create the console
+                recorder instead, if no console recorder
+                was created yet and kConsole is registered.
             end note
             factory -> table : CreateRecorderForMode(kConsole, config, memory_resource)
             table --> factory : unique_ptr<TextRecorder> (fallback)
         end
     end
 
-    alt recorders.size() == 1
+    alt recorders.empty()
+        factory -> factory : CreateWithConsoleLoggingOnly(memory_resource)
+        factory --> runtime : console Recorder (EmptyRecorder if kConsole is not registered)
+    else recorders.size() == 1
         factory --> runtime : single Recorder
     else recorders.size() > 1
         factory -> composite : CompositeRecorder(move(recorders))

@@ -11,16 +11,22 @@
  * SPDX-License-Identifier: Apache-2.0
  ********************************************************************************/
 #include "score/json/json_writer.h"
+#include "score/filesystem/error.h"
 #include "score/filesystem/filestream/file_factory_fake.h"
+#include "score/filesystem/filestream/file_stream.h"
 #include "score/filesystem/filestream/simple_string_stream_collection.h"
 
 #include <gtest/gtest.h>
 
 #include <array>
+#include <cstddef>
+#include <ios>
+#include <iostream>
 #include <iterator>
 #include <limits>
 #include <memory>
 #include <sstream>
+#include <streambuf>
 #include <string_view>
 #include <vector>
 
@@ -101,7 +107,7 @@ using WriterTestCases = ::testing::Types<WriterTestCase<TestJsonList, Formatting
                                          WriterTestCase<TestJsonAny, Formatting::kPrettyPrint>>;
 
 template <typename T>
-class JsonWriterWriteToFileTest : public ::testing::Test
+class JsonWriterFormattingTest : public ::testing::Test
 {
   protected:
     using SampleJson = typename T::SampleJson;
@@ -132,9 +138,9 @@ class JsonWriterWriteToFileTest : public ::testing::Test
         std::make_shared<score::filesystem::FileFactoryFake>(stream_)};
 };
 
-TYPED_TEST_SUITE(JsonWriterWriteToFileTest, WriterTestCases, );
+TYPED_TEST_SUITE(JsonWriterFormattingTest, WriterTestCases, );
 
-TYPED_TEST(JsonWriterWriteToFileTest, ToBuffer)
+TYPED_TEST(JsonWriterFormattingTest, ToBufferWritesFormattedJson)
 {
     this->RecordProperty("Verifies", "::score::json::JsonWriter::ToBuffer");
     this->RecordProperty("ASIL", "B");
@@ -152,26 +158,7 @@ TYPED_TEST(JsonWriterWriteToFileTest, ToBuffer)
     EXPECT_EQ(buffer, TestFixture::Expected());
 }
 
-TYPED_TEST(JsonWriterWriteToFileTest, ToFile)
-{
-    this->RecordProperty("Verifies", "::score::json::JsonWriter::ToFile");
-    this->RecordProperty("ASIL", "B");
-    this->RecordProperty("Description", "writing json to string buffer, cf. RFC-8259 section 4, 5 and 9");
-    this->RecordProperty("TestType", "interface-test");
-    this->RecordProperty("DerivationTechnique", "equivalence-classes");  // boundary values
-    this->RecordProperty("Priority", "3");
-
-    typename TestFixture::SampleJson json;
-
-    EXPECT_CALL(*this->file_factory_fake_, AtomicUpdate(StrEq("/foo/foo.json"), std::ios::out | std::ios::trunc, _))
-        .Times(1);
-
-    auto file_content{this->WriteToFile(json, "/foo/foo.json", FileSyncMode::kSynced)};
-
-    EXPECT_EQ(file_content, TestFixture::Expected());
-}
-
-TYPED_TEST(JsonWriterWriteToFileTest, ToUnsyncedFile)
+TYPED_TEST(JsonWriterFormattingTest, ToUnsyncedFileWritesFormattedJson)
 {
     this->RecordProperty("Verifies", "::score::json::JsonWriter::ToFile");
     this->RecordProperty("ASIL", "B");
@@ -189,7 +176,7 @@ TYPED_TEST(JsonWriterWriteToFileTest, ToUnsyncedFile)
     EXPECT_EQ(file_content, TestFixture::Expected());
 }
 
-TYPED_TEST(JsonWriterWriteToFileTest, ToSyncedFile)
+TYPED_TEST(JsonWriterFormattingTest, ToSyncedFileWritesFormattedJson)
 {
     this->RecordProperty("Verifies", "::score::json::JsonWriter::ToFile");
     this->RecordProperty("ASIL", "B");
@@ -208,55 +195,146 @@ TYPED_TEST(JsonWriterWriteToFileTest, ToSyncedFile)
     EXPECT_EQ(file_content, TestFixture::Expected());
 }
 
-TYPED_TEST(JsonWriterWriteToFileTest, ToUnsyncedFileResultsInError)
+TYPED_TEST(JsonWriterFormattingTest, ToUnsyncedFileReturnsIoErrorIfFileCannotBeOpened)
 {
-    this->RecordProperty("Verifies", "5310867");
-    this->RecordProperty("ASIL", "B");
-    this->RecordProperty("Description", "Invalid file path returns error when writing unsynced file");
-    this->RecordProperty("TestType", "requirements-based");                // requirements test
-    this->RecordProperty("DerivationTechnique", "requirements-analysis");  // requirements
-    this->RecordProperty("Priority", "3");
+    this->RecordProperty("PartiallyVerifies", "comp_req__json__io_error");
+    this->RecordProperty("Description",
+                         "Check that an unsynced ToFile returns an I/O error if the file cannot be opened.");
+    this->RecordProperty("TestType", "requirements-based");
+    this->RecordProperty("DerivationTechnique", "requirements-analysis");
 
     typename TestFixture::SampleJson json;
 
     EXPECT_CALL(*this->file_factory_fake_, Open(StrEq("/foo/foo.json"), std::ios::out | std::ios::trunc))
-        .WillOnce(Return(ByMove(score::MakeUnexpected(score::json::Error::kInvalidFilePath))));
+        .WillOnce(Return(ByMove(score::MakeUnexpected(score::filesystem::ErrorCode::kCouldNotOpenFileStream))));
 
     score::json::JsonWriter writer{FileSyncMode::kUnsynced};
     std::string_view path_view{"/foo/foo.json"};
     auto result{writer.ToFile(json, path_view, this->file_factory_fake_)};
 
     EXPECT_FALSE(result.has_value());
-    EXPECT_EQ(result.error(), score::json::Error::kInvalidFilePath);
+    EXPECT_EQ(result.error(), score::json::Error::kIoError);
 }
 
-TYPED_TEST(JsonWriterWriteToFileTest, ToSyncedFileResultsInError)
+TYPED_TEST(JsonWriterFormattingTest, ToSyncedFileReturnsIoErrorIfUpdateCannotBeStarted)
 {
-    this->RecordProperty("Verifies", "5310867");
-    this->RecordProperty("ASIL", "B");
-    this->RecordProperty("Description", "Invalid file path returns error when writing with atomic update");
-    this->RecordProperty("TestType", "requirements-based");                // requirements test
-    this->RecordProperty("DerivationTechnique", "requirements-analysis");  // requirements
-    this->RecordProperty("Priority", "3");
+    this->RecordProperty("PartiallyVerifies", "comp_req__json__io_error");
+    this->RecordProperty("Description",
+                         "Check that a synced ToFile returns an I/O error if the atomic update cannot be started.");
+    this->RecordProperty("TestType", "requirements-based");
+    this->RecordProperty("DerivationTechnique", "requirements-analysis");
 
     typename TestFixture::SampleJson json;
 
     EXPECT_CALL(*this->file_factory_fake_, AtomicUpdate(StrEq("/foo/foo.json"), std::ios::out | std::ios::trunc, _))
-        .WillOnce(Return(ByMove(score::MakeUnexpected(score::json::Error::kInvalidFilePath))));
+        .WillOnce(Return(ByMove(score::MakeUnexpected(score::filesystem::ErrorCode::kCouldNotOpenFileStream))));
 
     score::json::JsonWriter writer{FileSyncMode::kSynced};
     std::string_view path_view{"/foo/foo.json"};
     auto result{writer.ToFile(json, path_view, this->file_factory_fake_)};
 
     EXPECT_FALSE(result.has_value());
-    EXPECT_EQ(result.error(), score::json::Error::kInvalidFilePath);
+    EXPECT_EQ(result.error(), score::json::Error::kIoError);
 }
 
-TEST(JsonWriterSyncedFileTest, SerializationFailureKeepsTargetUnchanged)
+/// @brief Stream buffer that holds all writes but fails to transfer them to the file.
+class FlushFailingStreamBuf : public std::streambuf
+{
+  public:
+    FlushFailingStreamBuf() : std::streambuf{}
+    {
+        setp(buffer_.data(), std::next(buffer_.data(), static_cast<std::ptrdiff_t>(buffer_.size())));
+    }
+
+  protected:
+    int sync() override
+    {
+        return kSyncFailed;
+    }
+
+  private:
+    static constexpr int kSyncFailed{-1};
+    static constexpr std::size_t kBufferSize{1024U};
+    std::array<char, kBufferSize> buffer_{};
+};
+
+TYPED_TEST(JsonWriterFormattingTest, ToUnsyncedFileReturnsIoErrorIfWritingFails)
+{
+    this->RecordProperty("PartiallyVerifies", "comp_req__json__io_error");
+    this->RecordProperty("Description",
+                         "Check that an unsynced ToFile returns an I/O error if the written data cannot be "
+                         "transferred to the file.");
+    this->RecordProperty("TestType", "requirements-based");
+    this->RecordProperty("DerivationTechnique", "error-guessing");
+
+    typename TestFixture::SampleJson json;
+    FlushFailingStreamBuf stream_buffer{};
+
+    EXPECT_CALL(*this->file_factory_fake_, Open(StrEq("/foo/foo.json"), std::ios::out | std::ios::trunc))
+        .WillOnce(Return(
+            ByMove(score::Result<std::unique_ptr<std::iostream>>{std::make_unique<std::iostream>(&stream_buffer)})));
+
+    const auto result{
+        score::json::JsonWriter{FileSyncMode::kUnsynced}.ToFile(json, "/foo/foo.json", this->file_factory_fake_)};
+
+    ASSERT_FALSE(result.has_value());
+    EXPECT_EQ(result.error(), score::json::Error::kIoError);
+}
+
+/// @brief File buffer that accepts all writes but fails to close, i.e. to commit the written data.
+class CloseFailingFileBuf : public score::filesystem::details::StdioFileBuf
+{
+  public:
+    explicit CloseFailingFileBuf(const std::ios::openmode mode) : StdioFileBuf{kNoFileDescriptor, mode} {}
+
+    score::Result<void> Close() override
+    {
+        return score::MakeUnexpected(score::filesystem::ErrorCode::kCloseFailed, "Close failed");
+    }
+
+  protected:
+    std::streamsize xsputn(const char_type*, const std::streamsize count) override
+    {
+        return count;
+    }
+
+    int_type overflow(const int_type character) override
+    {
+        return traits_type::not_eof(character);
+    }
+
+  private:
+    static constexpr int kNoFileDescriptor{-1};
+};
+
+TEST(JsonWriterTest, ToSyncedFileReturnsIoErrorIfCommittingFails)
+{
+    RecordProperty("PartiallyVerifies", "comp_req__json__io_error");
+    RecordProperty("Description",
+                   "Check that a synced ToFile returns an I/O error with the reason if the written data cannot be "
+                   "committed.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "error-guessing");
+
+    score::filesystem::SimpleStringStreamCollection collection{};
+    const auto file_factory{std::make_shared<score::filesystem::FileFactoryFake>(collection)};
+    EXPECT_CALL(*file_factory, AtomicUpdate(_, _, _))
+        .WillOnce(Return(ByMove(score::Result<std::unique_ptr<score::filesystem::FileStream>>{
+            std::make_unique<score::filesystem::details::FileStreamImpl<CloseFailingFileBuf>>(std::ios::out)})));
+
+    const auto result{
+        score::json::JsonWriter{FileSyncMode::kSynced}.ToFile(TestJsonObject{}, "/foo/foo.json", file_factory)};
+
+    ASSERT_FALSE(result.has_value());
+    EXPECT_EQ(result.error(), score::json::Error::kIoError);
+    EXPECT_EQ(result.error().UserMessage(), "Close failed");
+}
+
+TEST(JsonWriterTest, ToSyncedFileKeepsTargetUnchangedOnSerializationFailure)
 {
     RecordProperty("PartiallyVerifies", "comp_req__json__serialization");
     RecordProperty("Description",
-                   "Check that a synced ToFile of a list holding NaN returns the serialization error and keeps the "
+                   "Check that a synced ToFile of a list holding NaN returns an invalid value error and keeps the "
                    "existing target file unchanged.");
     RecordProperty("TestType", "interface-test");
     RecordProperty("DerivationTechnique", "error-guessing");
@@ -273,11 +351,11 @@ TEST(JsonWriterSyncedFileTest, SerializationFailureKeepsTargetUnchanged)
     const auto result{score::json::JsonWriter{FileSyncMode::kSynced}.ToFile(list, kPath, file_factory)};
 
     ASSERT_FALSE(result.has_value());
-    EXPECT_EQ(result.error(), score::json::Error::kUnknownError);
+    EXPECT_EQ(result.error(), score::json::Error::kInvalidValue);
     EXPECT_EQ(file_factory->Get(kPath).str(), kOldContent);
 }
 
-TEST(JsonWriterDefaultFormattingTest, PrettyPrintsWhenFormattingIsOmitted)
+TEST(JsonWriterTest, PrettyPrintsWhenFormattingIsOmitted)
 {
     RecordProperty("PartiallyVerifies", "comp_req__json__serialization");
     RecordProperty("Description",

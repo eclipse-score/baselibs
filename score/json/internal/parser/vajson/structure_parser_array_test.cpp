@@ -50,7 +50,7 @@ class DynamicArrayParser final : public StructureParserStub
         return ParserState::kRunning;
     }
 
-    auto OnEndArray(std::size_t) noexcept -> ParserResult override
+    auto OnEndArray() noexcept -> ParserResult override
     {
         this->end_ += 1;
         if (this->balance_ == 0)
@@ -62,7 +62,7 @@ class DynamicArrayParser final : public StructureParserStub
     }
 };
 
-class LimitedEndArrayParser final : public StructureParserStub
+class EndArrayParser final : public StructureParserStub
 {
   public:
     using StructureParserStub::StructureParserStub;
@@ -73,13 +73,9 @@ class LimitedEndArrayParser final : public StructureParserStub
         return ParserState::kRunning;
     }
 
-    auto OnEndArray(std::size_t number_of_elems) noexcept -> ParserResult override
+    auto OnEndArray() noexcept -> ParserResult override
     {
-        if (number_of_elems >= 2)
-        {
-            return score::MakeUnexpected(JsonErrc::kInvalidJson, "OnEndArray called with array size >=2.");
-        }
-        return ParserResult{ParserState::kRunning};
+        return score::MakeUnexpected(JsonErrc::kInvalidJson, "OnEndArray called.");
     }
 };
 
@@ -100,7 +96,7 @@ class LimitedStartArrayParser final : public StructureParserStub
         return ParserResult{ParserState::kRunning};
     }
 
-    auto OnEndArray(std::size_t) noexcept -> ParserResult override
+    auto OnEndArray() noexcept -> ParserResult override
     {
         return ParserState::kRunning;
     }
@@ -110,7 +106,7 @@ class LimitedStartArrayParser final : public StructureParserStub
 
 /// Test array start/end counting — integers in array.
 /// @trace           CREQ-Json-EventCallbacks
-TEST(UT__Parser__Array, Dynamic__Ints)
+TEST(StructureParserArrayTest, CallsArrayCallbacksForFlatArray)
 {
     auto data{JsonData::FromBuffer(std::string_view{"[1,2,3]"})};
     ASSERT_TRUE(data.has_value());
@@ -123,7 +119,7 @@ TEST(UT__Parser__Array, Dynamic__Ints)
 
 /// Test array start/end counting — nested arrays.
 /// @trace           CREQ-Json-EventCallbacks
-TEST(UT__Parser__Array, Dynamic__Nested)
+TEST(StructureParserArrayTest, CallsArrayCallbacksForNestedArrays)
 {
     auto data{JsonData::FromBuffer(std::string_view{"[[1,2],[3,4]]"})};
     ASSERT_TRUE(data.has_value());
@@ -136,7 +132,7 @@ TEST(UT__Parser__Array, Dynamic__Nested)
 
 /// Test array start/end counting — no arrays present.
 /// @trace           CREQ-Json-EventCallbacks
-TEST(UT__Parser__Array, Dynamic__NoArrays)
+TEST(StructureParserArrayTest, DoesNotCallArrayCallbacksForObject)
 {
     auto data{JsonData::FromBuffer(std::string_view{R"({"a":1,"b":2})"})};
     ASSERT_TRUE(data.has_value());
@@ -149,21 +145,21 @@ TEST(UT__Parser__Array, Dynamic__NoArrays)
 
 /// Tests that when the overridden OnEndArray method returns an error, that error is propagated.
 /// @trace           score::json::vajson::internal::StructureParser::ParseEndArray
-TEST(UT__Parser__Array__Error, Dynamic__OnEndArray)
+TEST(StructureParserArrayTest, PropagatesOnEndArrayError)
 {
     auto doc{JsonData::FromBuffer(std::string_view{R"([1,2])"})};
     ASSERT_TRUE(doc.has_value());
-    LimitedEndArrayParser parser{doc.value()};
+    EndArrayParser parser{doc.value()};
 
     const auto parser_result{parser.Parse()};
     ASSERT_FALSE(parser_result.has_value());
     ASSERT_EQ(parser_result.error(), JsonErrc::kInvalidJson);
-    ASSERT_EQ(parser_result.error().UserMessage(), std::string_view{"OnEndArray called with array size >=2."});
+    ASSERT_EQ(parser_result.error().UserMessage(), std::string_view{"OnEndArray called."});
 }
 
 /// Tests that when the overridden OnStartArray method returns an error, that error is propagated.
 /// @trace           score::json::vajson::internal::StructureParser::ParseStartArray
-TEST(UT__Parser__Array__Error, Dynamic__OnStartArray)
+TEST(StructureParserArrayTest, PropagatesOnStartArrayError)
 {
     auto doc{JsonData::FromBuffer(std::string_view{R"([[]])"})};
     ASSERT_TRUE(doc.has_value());

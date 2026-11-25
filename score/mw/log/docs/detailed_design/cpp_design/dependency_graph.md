@@ -5,7 +5,9 @@ implementation details of the backends. Applying the component principles from
 [1] the goal here is to structure the dependencies in a way that instable
 components depend on stable components.
 
-![Use Case Diagram](./score/mw/log/design/frontend_dependency_graph.puml)
+```{uml} ../_assets/frontend_dependency_graph.puml
+:caption: Use Case Diagram
+```
 
 The `mw::log` component is divided in a stable frontend and the backends with
 the implementation details. The frontend shall be API compatible to the ara::log
@@ -20,7 +22,7 @@ component, and should only contain the essential entities that are needed for
 the public API.
 
 In order to instantiate the concrete recorder factory, the `Runtime` depends on
-the `RecorderFactory`. This would violate the one-way principle from above.
+the `RegistryAwareRecorderFactory`. This would violate the one-way principle from above.
 This is tackled by declaring the `CreateRecorderFactory()` function in the `IRecorderFactory` interface and only supply the implementation
 of that in the details component.
 

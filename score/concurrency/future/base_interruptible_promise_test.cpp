@@ -215,6 +215,13 @@ TYPED_TEST(BaseInterruptiblePromiseTest, MoveAssignmentWhenStateIsInvalid)
 
 TYPED_TEST(BaseInterruptiblePromiseTest, DestructionBreaksPromise)
 {
+    this->RecordProperty("TestType", "requirements-based");
+    this->RecordProperty("DerivationTechnique", "equivalence-classes");
+    this->RecordProperty("PartiallyVerifies", "comp_req__concurrency__error_handling");
+    this->RecordProperty("Description",
+                         "Check that Get() on a future whose promise was destroyed unfulfilled returns the "
+                         "kPromiseBroken error code.");
+
     InterruptibleFuture<TypeParam> future{};
     {
         BaseInterruptiblePromise<TypeParam> promise{};
@@ -246,6 +253,12 @@ TYPED_TEST(BaseInterruptiblePromiseTest, CanSwap)
 
 TYPED_TEST(BaseInterruptiblePromiseTest, CanSetError)
 {
+    this->RecordProperty("TestType", "requirements-based");
+    this->RecordProperty("DerivationTechnique", "requirements-analysis");
+    this->RecordProperty("PartiallyVerifies", "comp_req__concurrency__error_handling");
+    this->RecordProperty("Description",
+                         "Check that an error code set on a promise is returned by Get() on its future.");
+
     auto return_code = this->promise_.SetError(Error::kFutureAlreadyRetrieved);
     ASSERT_TRUE(return_code.has_value());
 
@@ -257,6 +270,13 @@ TYPED_TEST(BaseInterruptiblePromiseTest, CanSetError)
 
 TYPED_TEST(BaseInterruptiblePromiseTest, SettingErrorTwiceReturnsPromiseAlreadySatisfiedError)
 {
+    this->RecordProperty("TestType", "requirements-based");
+    this->RecordProperty("DerivationTechnique", "error-guessing");
+    this->RecordProperty("PartiallyVerifies", "comp_req__concurrency__error_handling");
+    this->RecordProperty("Description",
+                         "Check that setting an error on an already satisfied promise returns the "
+                         "kPromiseAlreadySatisfied error code.");
+
     this->promise_.SetError(Error::kFutureAlreadyRetrieved);
 
     auto return_code = this->promise_.SetError(Error::kFutureAlreadyRetrieved);
@@ -266,6 +286,12 @@ TYPED_TEST(BaseInterruptiblePromiseTest, SettingErrorTwiceReturnsPromiseAlreadyS
 
 TYPED_TEST(BaseInterruptiblePromiseTest, SettingErrorOnMovedFromPromiseFailesWithNoState)
 {
+    this->RecordProperty("TestType", "requirements-based");
+    this->RecordProperty("DerivationTechnique", "error-guessing");
+    this->RecordProperty("PartiallyVerifies", "comp_req__concurrency__error_handling");
+    this->RecordProperty("Description",
+                         "Check that setting an error on a moved-from promise returns the kNoState error code.");
+
     BaseInterruptiblePromise<TypeParam> moved_from_promise{};
     BaseInterruptiblePromise<TypeParam> moved_to_promise{std::move(moved_from_promise)};
 
@@ -346,6 +372,13 @@ TYPED_TEST(BaseInterruptiblePromiseTest, RetrievedSharedFuturesSharesStateWithPr
 
 TYPED_TEST(BaseInterruptiblePromiseTest, RetrievingFutureTwiceReturnsFutureAlreadyRetrievedError)
 {
+    this->RecordProperty("TestType", "requirements-based");
+    this->RecordProperty("DerivationTechnique", "error-guessing");
+    this->RecordProperty("PartiallyVerifies", "comp_req__concurrency__error_handling");
+    this->RecordProperty("Description",
+                         "Check that retrieving the future of a promise a second time returns the "
+                         "kFutureAlreadyRetrieved error code.");
+
     BaseInterruptiblePromise<TypeParam> promise{};
     auto expected_future = promise.GetInterruptibleFuture();
     ASSERT_TRUE(expected_future.has_value());
@@ -357,6 +390,13 @@ TYPED_TEST(BaseInterruptiblePromiseTest, RetrievingFutureTwiceReturnsFutureAlrea
 
 TYPED_TEST(BaseInterruptiblePromiseTest, AbortionCallbackNotStoredOnInvalidPromise)
 {
+    this->RecordProperty("TestType", "requirements-based");
+    this->RecordProperty("DerivationTechnique", "error-guessing");
+    this->RecordProperty("PartiallyVerifies", "comp_req__concurrency__error_handling");
+    this->RecordProperty("Description",
+                         "Check that registering an abort callback on a moved-from promise returns the kNoState "
+                         "error code.");
+
     BaseInterruptiblePromise<TypeParam> moved_from_promise{};
     BaseInterruptiblePromise<TypeParam> moved_to_promise{std::move(moved_from_promise)};
 

@@ -31,7 +31,7 @@ void CheckResult(Result res, Value val, bool expect_has_value)
     // We allow casting from double to float by user request
     // and it leads to precision loss. Because of that we can't
     // compare float and double directly and we are casting
-    // 'val' to float first to verify correctess of a conversion
+    // 'val' to float first to verify correctness of a conversion
     constexpr bool res_is_float = std::is_same_v<Result, score::Result<float>>;
     constexpr bool val_is_double = std::is_same_v<Value, double>;
     EXPECT_EQ(res.has_value(), expect_has_value);
@@ -83,7 +83,7 @@ void TestFromUnsignedToAnyOtherType(bool uint8_ok,
     CheckResult(Number{kZero}.As<bool>(), false, true);
 }
 
-TEST(Number, FromUint8ToAnyOtherType)
+TEST(NumberTest, ConvertsUint8MaxOnlyToTypesThatHoldIt)
 {
     RecordProperty("Verifies", "::score::json::Number::As");
     RecordProperty("ASIL", "B");
@@ -105,7 +105,7 @@ TEST(Number, FromUint8ToAnyOtherType)
     );
 }
 
-TEST(Number, FromUint16ToAnyOtherType)
+TEST(NumberTest, ConvertsUint16MaxOnlyToTypesThatHoldIt)
 {
     RecordProperty("Verifies", "::score::json::Number::As");
     RecordProperty("ASIL", "B");
@@ -127,7 +127,7 @@ TEST(Number, FromUint16ToAnyOtherType)
     );
 }
 
-TEST(Number, FromUint32ToAnyOtherType)
+TEST(NumberTest, ConvertsUint32MaxOnlyToTypesThatHoldIt)
 {
     RecordProperty("Verifies", "::score::json::Number::As");
     RecordProperty("ASIL", "B");
@@ -149,7 +149,7 @@ TEST(Number, FromUint32ToAnyOtherType)
     );
 }
 
-TEST(Number, FromUint64ToAnyOtherType)
+TEST(NumberTest, ConvertsUint64MaxOnlyToTypesThatHoldIt)
 {
     RecordProperty("Verifies", "::score::json::Number::As");
     RecordProperty("ASIL", "B");
@@ -180,7 +180,7 @@ void TestFromSignedToAnyOtherType(bool int8_ok,
                                   bool double_ok)
 {
     // The parser should only return a signed integer if the value is negative.
-    // So any cast to an unsigend shall fail if the number contains a signed integer.
+    // So any cast to an unsigned shall fail if the number contains a signed integer.
 
     constexpr Signed kMax = std::numeric_limits<int8_t>::max();
     constexpr Signed kMin = std::numeric_limits<int8_t>::min();
@@ -228,7 +228,7 @@ void TestFromSignedToAnyOtherType(bool int8_ok,
     CheckResult(Number{kZero}.As<bool>(), false, true);
 }
 
-TEST(Number, FromInt8ToAnyOtherType)
+TEST(NumberTest, ConvertsInt8ValuesOnlyToTypesThatHoldThem)
 {
     RecordProperty("Verifies", "::score::json::Number::As");
     RecordProperty("ASIL", "B");
@@ -246,7 +246,7 @@ TEST(Number, FromInt8ToAnyOtherType)
     );
 }
 
-TEST(Number, FromInt16ToAnyOtherType)
+TEST(NumberTest, ConvertsInt16ValuesOnlyToTypesThatHoldThem)
 {
     RecordProperty("Verifies", "::score::json::Number::As");
     RecordProperty("ASIL", "B");
@@ -264,7 +264,7 @@ TEST(Number, FromInt16ToAnyOtherType)
     );
 }
 
-TEST(Number, FromInt32ToAnyOtherType)
+TEST(NumberTest, ConvertsInt32ValuesOnlyToTypesThatHoldThem)
 {
     RecordProperty("Verifies", "::score::json::Number::As");
     RecordProperty("ASIL", "B");
@@ -282,7 +282,7 @@ TEST(Number, FromInt32ToAnyOtherType)
     );
 }
 
-TEST(Number, FromInt64ToAnyOtherType)
+TEST(NumberTest, ConvertsInt64ValuesOnlyToTypesThatHoldThem)
 {
     RecordProperty("Verifies", "::score::json::Number::As");
     RecordProperty("ASIL", "B");
@@ -588,7 +588,7 @@ void TestFloatingPointValues(FloatingPoint maximum_integer)
     );
 }
 
-TEST(Number, FromFloatToAnyOtherType)
+TEST(NumberTest, ConvertsFloatValuesOnlyToTypesThatHoldThem)
 {
     RecordProperty("Verifies", "::score::json::Number::As");
     RecordProperty("ASIL", "B");
@@ -600,7 +600,7 @@ TEST(Number, FromFloatToAnyOtherType)
     TestFloatingPointValues<float>(GetMaximumIntegerInFloat());
 }
 
-TEST(Number, FromDoubleToAnyOtherType)
+TEST(NumberTest, ConvertsDoubleValuesOnlyToTypesThatHoldThem)
 {
     RecordProperty("Verifies", "::score::json::Number::As");
     RecordProperty("ASIL", "B");
@@ -617,6 +617,13 @@ void ExpectWrongType(const Result& result)
 {
     ASSERT_FALSE(result.has_value());
     EXPECT_EQ(result.error(), Error::kWrongType);
+}
+
+template <typename Result>
+void ExpectOutOfRange(const Result& result)
+{
+    ASSERT_FALSE(result.has_value());
+    EXPECT_EQ(result.error(), Error::kOutOfRange);
 }
 
 template <typename FloatingPoint>
@@ -643,7 +650,7 @@ void TestNanToAnyOtherType()
     EXPECT_TRUE(std::isnan(as_double.value()));
 }
 
-TEST(Number, FromNanToAnyOtherType)
+TEST(NumberTest, ConvertsNanOnlyToFloatingPointTypes)
 {
     RecordProperty("Verifies", "::score::json::Number::As");
     RecordProperty("ASIL", "B");
@@ -656,7 +663,7 @@ TEST(Number, FromNanToAnyOtherType)
     TestNanToAnyOtherType<double>();
 }
 
-TEST(Number, NarrowingIntegerIsRejectedByType)
+TEST(NumberTest, ReturnsWrongTypeForNarrowingIntegerConversion)
 {
     RecordProperty("Verifies", "::score::json::Number::As");
     RecordProperty("ASIL", "B");
@@ -682,15 +689,15 @@ void TestFloatingPointEdgeCases(FloatingPoint maximum_integer)
 
     ExpectWrongType(Number{above_maximum_integer}.As<std::int64_t>());
     ExpectWrongType(Number{-above_maximum_integer}.As<std::int64_t>());
-    ExpectWrongType(Number{kInfinity}.As<std::int64_t>());
-    ExpectWrongType(Number{-kInfinity}.As<std::int64_t>());
+    ExpectOutOfRange(Number{kInfinity}.As<std::int64_t>());
+    ExpectOutOfRange(Number{-kInfinity}.As<std::int64_t>());
 
     CheckResult(Number{FloatingPoint{-0.0}}.As<std::uint8_t>(), 0, true);
     CheckResult(Number{kInfinity}.As<float>(), kInfinity, true);
     CheckResult(Number{-kInfinity}.As<double>(), -kInfinity, true);
 }
 
-TEST(Number, FloatingPointEdgeCases)
+TEST(NumberTest, ConvertsFloatingPointValuesBeyondExactIntegerRange)
 {
     RecordProperty("Verifies", "::score::json::Number::As");
     RecordProperty("ASIL", "B");
@@ -704,13 +711,57 @@ TEST(Number, FloatingPointEdgeCases)
     TestFloatingPointEdgeCases<double>(GetMaximumIntegerInDouble());
 }
 
+TEST(NumberTest, ReturnsOutOfRangeForValueOutsideRequestedType)
+{
+    RecordProperty("PartiallyVerifies", "comp_req__json__out_of_range_error");
+    RecordProperty("Description",
+                   "Check that requesting a number as a type whose range does not include it returns an out-of-range "
+                   "error, while a value within the range that cannot be converted without loss returns a wrong "
+                   "type error.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "boundary-values");
+
+    // Integer to integer, the parser stores every integer in the smallest type that holds it.
+    ExpectOutOfRange(Number{std::uint16_t{256}}.As<std::uint8_t>());
+    ExpectOutOfRange(Number{std::uint8_t{128}}.As<std::int8_t>());
+    ExpectOutOfRange(Number{std::uint64_t{std::numeric_limits<std::uint64_t>::max()}}.As<std::int64_t>());
+    ExpectOutOfRange(Number{std::int8_t{-1}}.As<std::uint64_t>());
+    ExpectOutOfRange(Number{std::int16_t{-129}}.As<std::int8_t>());
+    ExpectOutOfRange(Number{std::uint8_t{2}}.As<bool>());
+
+    // Floating point to integer.
+    ExpectOutOfRange(Number{256.0}.As<std::uint8_t>());
+    ExpectOutOfRange(Number{255.5}.As<std::uint8_t>());
+    ExpectOutOfRange(Number{127.5F}.As<std::int8_t>());
+    ExpectOutOfRange(Number{-128.5}.As<std::int8_t>());
+    ExpectOutOfRange(Number{1.5}.As<bool>());
+    ExpectOutOfRange(Number{-1.0}.As<std::uint8_t>());
+    ExpectOutOfRange(Number{-129.0}.As<std::int8_t>());
+    ExpectOutOfRange(Number{9223372036854775808.0}.As<std::int64_t>());
+    ExpectOutOfRange(Number{18446744073709551616.0F}.As<std::uint64_t>());
+    ExpectOutOfRange(Number{2.0}.As<bool>());
+
+    // Floating point to floating point.
+    ExpectOutOfRange(Number{std::numeric_limits<double>::max()}.As<float>());
+    ExpectOutOfRange(Number{std::numeric_limits<double>::lowest()}.As<float>());
+
+    // Within the range, but not convertible without loss.
+    ExpectWrongType(Number{254.5}.As<std::uint8_t>());
+    ExpectWrongType(Number{-0.5}.As<std::int8_t>());
+    ExpectWrongType(Number{0.5}.As<bool>());
+    ExpectWrongType(Number{std::uint64_t{1}}.As<std::uint8_t>());
+    ExpectWrongType(Number{std::int8_t{1}}.As<std::uint8_t>());
+    CheckResult(Number{255.0}.As<std::uint8_t>(), 255, true);
+    CheckResult(Number{-128.0}.As<std::int8_t>(), -128, true);
+}
+
 template <typename T1, typename T2>
 void TestEqualOperator(T1 lhs, T2 rhs, bool result)
 {
     EXPECT_EQ(Number(lhs) == Number(rhs), result);
 }
 
-TEST(Number, CheckEqualOperator)
+TEST(NumberTest, EqualityComparesTypeAndValue)
 {
     RecordProperty("Verifies", "::score::json::Number::operator==");
     RecordProperty("ASIL", "B");

@@ -250,10 +250,6 @@ class NumberTest : public testing::TestWithParam<TestValue<Num>>
     Optional<TestValue<Num>> params_;
 };
 
-class UT__Number : public ::testing::Test
-{
-};
-
 template <typename T>
 std::optional<T> ParseNumberAs(const std::string& json_number)
 {
@@ -278,7 +274,7 @@ void ExpectOutOfRangeRejected(const ::std::string& underflow, const std::string&
 
 /// @brief           Tests that a failed conversion does not affect the next conversion
 /// @trace           score::json::vajson::JsonNumber::New
-TEST_F(UT__Number, FailedConversionDoesNotAffectNextConversion)
+TEST(JsonNumberTest, FailedConversionDoesNotAffectNextConversion)
 {
     Optional<std::uint64_t> result_64{NewAs<std::uint64_t>("0x1FFFFFFFFFFFFFFFF")};
     ASSERT_FALSE(result_64.has_value());
@@ -309,7 +305,7 @@ TEST_F(UT__Number, FailedConversionDoesNotAffectNextConversion)
 /// - Assert that an empty view is detected as invalid.
 /// - Assert that a number to a negative char is detected as invalid.
 /// @trace           score::json::vajson::JsonNumber::New
-TEST_F(UT__Number, InvalidNumber)
+TEST(JsonNumberTest, NewRejectsInvalidNumbers)
 {
     {
         StringView sv{"0a"};
@@ -348,29 +344,29 @@ TEST_F(UT__Number, InvalidNumber)
 /// @brief           Test value for Int8
 using I8Value = TestValue<std::int8_t>;
 /// @brief           Test fixture for Int8 Success
-class UT__Number__I8Success : public NumberTest<std::int8_t>
+class JsonNumberInt8ValidTest : public NumberTest<std::int8_t>
 {
 };
 /// @brief           Test fixture for Int8 Failure
-class UT__Number__I8Failure : public NumberTest<std::int8_t>
+class JsonNumberInt8InvalidTest : public NumberTest<std::int8_t>
 {
 };
 
 /// @brief           Test that checks that conversions succeed if valid values are passed
 /// @trace           score::json::vajson::JsonNumber::As
-TEST_P(UT__Number__I8Success, ConvertsValidIntegers8bit)
+TEST_P(JsonNumberInt8ValidTest, ConvertsToExpectedValue)
 {
     auto actual{ActualSigned()};
     ASSERT_TRUE(actual.has_value());
     EXPECT_EQ(actual, Expected());
 }
 
-/// @brief           Instanciation of testcases for multiple values with successful conversion
+/// @brief           Instantiation of test cases for multiple values with successful conversion
 /// @details         Input data:
 ///                  - Positive and negative integers within the range of a std::int8_t, including min, max,
 ///                    intermediate, and zero values
-INSTANTIATE_TEST_SUITE_P(SignedIntTest8bit,
-                         UT__Number__I8Success,
+INSTANTIATE_TEST_SUITE_P(ValidInt8,
+                         JsonNumberInt8ValidTest,
                          Values(I8Value::Nonzeroed("0,", 0),
                                 I8Value::Nonzeroed("1;", 1),
                                 I8Value::Nonzeroed("-1;", -1),
@@ -383,19 +379,19 @@ INSTANTIATE_TEST_SUITE_P(SignedIntTest8bit,
 
 /// @brief           Test that checks that conversions fail if invalid values are passed
 /// @trace           score::json::vajson::JsonNumber::As
-TEST_P(UT__Number__I8Failure, FailsOnInvalidIntegers8bit)
+TEST_P(JsonNumberInt8InvalidTest, RejectsConversion)
 {
     auto actual{ActualSigned()};
 
     ASSERT_FALSE(actual.has_value());
 }
 
-/// @brief           Instanciation of testcases for multiple values where conversion fails
+/// @brief           Instantiation of test cases for multiple values where conversion fails
 /// @details         Input data:
 ///                  - Numbers that cannot be converted to a std::int8_t, such as floating point, scientific notation,
 ///                    invalid characters, and to integers that are too big
-INSTANTIATE_TEST_SUITE_P(SignedIntTestFail8bit,
-                         UT__Number__I8Failure,
+INSTANTIATE_TEST_SUITE_P(InvalidInt8,
+                         JsonNumberInt8InvalidTest,
                          Values(I8Value::Nonzeroed(";,"),
                                 I8Value::Nonzeroed("1.01;"),
                                 I8Value::Nonzeroed("-1e-2;"),
@@ -409,29 +405,29 @@ INSTANTIATE_TEST_SUITE_P(SignedIntTestFail8bit,
 /// @brief           Test value for Uint8
 using U8Value = TestValue<std::uint8_t>;
 /// @brief           Test fixture for Int8 Success
-class UT__Number__U8Success : public NumberTest<std::uint8_t>
+class JsonNumberUint8ValidTest : public NumberTest<std::uint8_t>
 {
 };
 /// @brief           Test fixture for Int8 Failure
-class UT__Number__U8Failure : public NumberTest<std::uint8_t>
+class JsonNumberUint8InvalidTest : public NumberTest<std::uint8_t>
 {
 };
 
 /// @brief           Test that checks that conversions succeed if valid values are passed
 /// @trace           score::json::vajson::JsonNumber::As
-TEST_P(UT__Number__U8Success, ConvertsValidIntegers8bit)
+TEST_P(JsonNumberUint8ValidTest, ConvertsToExpectedValue)
 {
     auto actual{ActualUnsigned()};
     ASSERT_TRUE(actual.has_value());
     EXPECT_EQ(actual, Expected());
 }
 
-/// @brief           Instanciation of testcases for multiple values with successful conversion
+/// @brief           Instantiation of test cases for multiple values with successful conversion
 /// @details         Input data:
 ///                  - Positive integers within the range of a std::uint8_t including min, max, intermediate, and zero
 ///                    values
-INSTANTIATE_TEST_SUITE_P(UnsignedIntTest8bit,
-                         UT__Number__U8Success,
+INSTANTIATE_TEST_SUITE_P(ValidUint8,
+                         JsonNumberUint8ValidTest,
                          Values(U8Value::Nonzeroed("0,", 0),
                                 U8Value::Nonzeroed("1;", 1),
                                 U8Value("0", 0),
@@ -441,19 +437,19 @@ INSTANTIATE_TEST_SUITE_P(UnsignedIntTest8bit,
 
 /// @brief           Test that checks that conversions fail if invalid values are passed
 /// @trace           CREQ-Json-Validation
-TEST_P(UT__Number__U8Failure, FailsOnInvalidIntegers8bit)
+TEST_P(JsonNumberUint8InvalidTest, RejectsConversion)
 {
     auto actual{ActualUnsigned()};
 
     ASSERT_FALSE(actual.has_value());
 }
 
-/// @brief           Instanciation of testcases for multiple values where conversion fails
+/// @brief           Instantiation of test cases for multiple values where conversion fails
 /// @details         Input data:
 ///                  - Numbers that cannot be converted to a std::uint8_t, such as negative values, floating point,
 ///                    scientific notation, invalid characters, and integers that are too big
-INSTANTIATE_TEST_SUITE_P(UnsignedIntTestFail8bit,
-                         UT__Number__U8Failure,
+INSTANTIATE_TEST_SUITE_P(InvalidUint8,
+                         JsonNumberUint8InvalidTest,
                          Values(U8Value::Nonzeroed("-1;"),
                                 U8Value::Nonzeroed(";,"),
                                 U8Value::Nonzeroed("1.01;"),
@@ -469,28 +465,28 @@ INSTANTIATE_TEST_SUITE_P(UnsignedIntTestFail8bit,
 /// @brief           Test value for Double
 using DoubleValue = TestValue<double>;
 /// @brief           Test fixture for Int8 Success
-class UT__Number__DoubleSuccess : public NumberTest<double>
+class JsonNumberDoubleValidTest : public NumberTest<double>
 {
 };
 /// @brief           Test fixture for Int8 Failure
-class UT__Number__DoubleFailure : public NumberTest<double>
+class JsonNumberDoubleInvalidTest : public NumberTest<double>
 {
 };
 
 /// @brief           Test that checks that conversions succeed if valid values are passed
 /// @trace           score::json::vajson::JsonNumber::As
-TEST_P(UT__Number__DoubleSuccess, ConvertsValidDoubles)
+TEST_P(JsonNumberDoubleValidTest, ConvertsToExpectedValue)
 {
     auto actual{ActualFloat()};
     ASSERT_TRUE(actual.has_value());
     ASSERT_TRUE(CompareFloat(actual.value(), Expected().value()));
 }
 
-/// @brief           Instanciation of testcases for multiple values with successful conversion
+/// @brief           Instantiation of test cases for multiple values with successful conversion
 /// @details         Input data:
 ///                  - Positive and negative numbers, such as integers and floats, including zero
-INSTANTIATE_TEST_SUITE_P(FloatTestDouble,
-                         UT__Number__DoubleSuccess,
+INSTANTIATE_TEST_SUITE_P(ValidDouble,
+                         JsonNumberDoubleValidTest,
                          Values(DoubleValue("0", 0),
                                 DoubleValue::Nonzeroed("1;", 1),
                                 DoubleValue::Nonzeroed("-1;", -1),
@@ -506,19 +502,19 @@ INSTANTIATE_TEST_SUITE_P(FloatTestDouble,
 
 /// @brief           Test that checks that conversions fail if invalid values are passed
 /// @trace           score::json::vajson::JsonNumber::As
-TEST_P(UT__Number__DoubleFailure, FailsOnInvalidDoubles)
+TEST_P(JsonNumberDoubleInvalidTest, RejectsConversion)
 {
     auto actual{ActualFloat()};
 
     ASSERT_FALSE(actual.has_value());
 }
 
-/// @brief           Instanciation of testcases for multiple values where conversion fails
+/// @brief           Instantiation of test cases for multiple values where conversion fails
 /// @details         Input data:
 ///                  - Numbers that cannot be converted to a double, such as invalid characters, bases without exponent,
 ///                    exponent with a base of zero, exponent in octal notation
-INSTANTIATE_TEST_SUITE_P(FloatTestFailDouble,
-                         UT__Number__DoubleFailure,
+INSTANTIATE_TEST_SUITE_P(InvalidDouble,
+                         JsonNumberDoubleInvalidTest,
                          Values(DoubleValue("-0."),
                                 DoubleValue::Nonzeroed(";,"),
                                 DoubleValue("0e1.2"),
@@ -527,7 +523,7 @@ INSTANTIATE_TEST_SUITE_P(FloatTestFailDouble,
                                 DoubleValue("0e+"),
                                 DoubleValue("0e+ - 1")));
 
-TEST(Number, Uint8)
+TEST(JsonNumberTest, RejectsValuesOutsideUint8Range)
 {
     RecordProperty("PartiallyVerifies", "comp_req__json__deserialization");
     RecordProperty("Description",
@@ -538,7 +534,7 @@ TEST(Number, Uint8)
     ExpectOutOfRangeRejected<std::uint8_t>("-1", "256");
 }
 
-TEST(Number, Uint16)
+TEST(JsonNumberTest, RejectsValuesOutsideUint16Range)
 {
     RecordProperty("PartiallyVerifies", "comp_req__json__deserialization");
     RecordProperty("Description",
@@ -549,7 +545,7 @@ TEST(Number, Uint16)
     ExpectOutOfRangeRejected<std::uint16_t>("-1", "65536");
 }
 
-TEST(Number, Uint32)
+TEST(JsonNumberTest, RejectsValuesOutsideUint32Range)
 {
     RecordProperty("PartiallyVerifies", "comp_req__json__deserialization");
     RecordProperty("Description",
@@ -560,7 +556,7 @@ TEST(Number, Uint32)
     ExpectOutOfRangeRejected<std::uint32_t>("-1", "4294967296");
 }
 
-TEST(Number, Uint64)
+TEST(JsonNumberTest, RejectsValuesOutsideUint64Range)
 {
     RecordProperty("PartiallyVerifies", "comp_req__json__deserialization");
     RecordProperty("Description",
@@ -571,7 +567,7 @@ TEST(Number, Uint64)
     ExpectOutOfRangeRejected<std::uint64_t>("-1", "18446744073709551616");
 }
 
-TEST(Number, Int8)
+TEST(JsonNumberTest, RejectsValuesOutsideInt8Range)
 {
     RecordProperty("PartiallyVerifies", "comp_req__json__deserialization");
     RecordProperty("Description",
@@ -582,7 +578,7 @@ TEST(Number, Int8)
     ExpectOutOfRangeRejected<std::int8_t>("-129", "128");
 }
 
-TEST(Number, Int16)
+TEST(JsonNumberTest, RejectsValuesOutsideInt16Range)
 {
     RecordProperty("PartiallyVerifies", "comp_req__json__deserialization");
     RecordProperty("Description",
@@ -593,7 +589,7 @@ TEST(Number, Int16)
     ExpectOutOfRangeRejected<std::int16_t>("-32769", "32768");
 }
 
-TEST(Number, Int32)
+TEST(JsonNumberTest, RejectsValuesOutsideInt32Range)
 {
     RecordProperty("PartiallyVerifies", "comp_req__json__deserialization");
     RecordProperty("Description",
@@ -604,7 +600,7 @@ TEST(Number, Int32)
     ExpectOutOfRangeRejected<std::int32_t>("-2147483649", "2147483648");
 }
 
-TEST(Number, Int64)
+TEST(JsonNumberTest, RejectsValuesOutsideInt64Range)
 {
     RecordProperty("PartiallyVerifies", "comp_req__json__deserialization");
     RecordProperty("Description",
@@ -615,7 +611,7 @@ TEST(Number, Int64)
     ExpectOutOfRangeRejected<std::int64_t>("-9223372036854775809", "9223372036854775808");
 }
 
-TEST(Number, Float)
+TEST(JsonNumberTest, RejectsValuesOutsideFloatRange)
 {
     RecordProperty("PartiallyVerifies", "comp_req__json__deserialization");
     RecordProperty("Description",
@@ -626,7 +622,7 @@ TEST(Number, Float)
     ExpectOutOfRangeRejected<float>("-3.402823476385288598117e+38", "3.402823476385288598117e+38");
 }
 
-TEST(Number, Double)
+TEST(JsonNumberTest, RejectsValuesOutsideDoubleRange)
 {
     RecordProperty("PartiallyVerifies", "comp_req__json__deserialization");
     RecordProperty("Description",
@@ -637,7 +633,7 @@ TEST(Number, Double)
     ExpectOutOfRangeRejected<double>("-1.797693134862415708145e+308", "1.797693134862415708145e+308");
 }
 
-TEST(Number, WithDecimalPointWithoutFractionalPartCannotBeParsedAsInteger)
+TEST(JsonNumberTest, RejectsIntegerConversionOfNumberWithDecimalPoint)
 {
     RecordProperty("PartiallyVerifies", "comp_req__json__deserialization");
     RecordProperty("Description",
@@ -649,7 +645,7 @@ TEST(Number, WithDecimalPointWithoutFractionalPartCannotBeParsedAsInteger)
     EXPECT_EQ(ParseNumberAs<int64_t>("-1.0").has_value(), false);
 }
 
-TEST(Number, WithExponentialNotationWithoutFractionalPartCannotBeParsedAsInteger)
+TEST(JsonNumberTest, RejectsIntegerConversionOfNumberWithExponent)
 {
     RecordProperty("PartiallyVerifies", "comp_req__json__deserialization");
     RecordProperty("Description",
@@ -662,7 +658,7 @@ TEST(Number, WithExponentialNotationWithoutFractionalPartCannotBeParsedAsInteger
     EXPECT_EQ(ParseNumberAs<int64_t>("-10e-1").has_value(), false);
 }
 
-TEST(Number, FloatingPointWithoutDecimalPoint)
+TEST(JsonNumberTest, ConvertsIntegerLiteralToFloatingPoint)
 {
     RecordProperty("PartiallyVerifies", "comp_req__json__deserialization");
     RecordProperty("Description",
@@ -674,7 +670,7 @@ TEST(Number, FloatingPointWithoutDecimalPoint)
     EXPECT_EQ(ParseNumberAs<double>("18446744073709551615").value_or(-999), 18446744073709551615.0);
 }
 
-TEST(Number, NearDoubleLimitsIsParsable)
+TEST(JsonNumberTest, ConvertsValuesNearDoubleLimits)
 {
     RecordProperty("PartiallyVerifies", "comp_req__json__deserialization");
     RecordProperty("Description", "Near-limit finite doubles are accepted across architectures.");
@@ -685,7 +681,7 @@ TEST(Number, NearDoubleLimitsIsParsable)
     EXPECT_TRUE(ParseNumberAs<double>("1.797693134862315708145e+308").has_value());
 }
 
-TEST(Number, FloatingPointOverflowIsRejected)
+TEST(JsonNumberTest, RejectsFloatingPointOverflow)
 {
     RecordProperty("PartiallyVerifies", "comp_req__json__deserialization");
     RecordProperty("Description", "Overflowing floating-point values are rejected.");
@@ -696,7 +692,7 @@ TEST(Number, FloatingPointOverflowIsRejected)
     EXPECT_FALSE(ParseNumberAs<double>("-1e309").has_value());
 }
 
-TEST(Number, AcceptsNumbersMatchingTheGrammar)
+TEST(JsonNumberTest, AcceptsNumbersMatchingTheGrammar)
 {
     RecordProperty("PartiallyVerifies", "comp_req__json__deserialization, comp_req__vajson__hex_integers");
     RecordProperty("Description",
@@ -723,7 +719,7 @@ TEST(Number, AcceptsNumbersMatchingTheGrammar)
     }
 }
 
-TEST(Number, RejectsNumbersOutsideTheGrammar)
+TEST(JsonNumberTest, RejectsNumbersOutsideTheGrammar)
 {
     RecordProperty("PartiallyVerifies", "comp_req__vajson__number_grammar");
     RecordProperty("Description",
@@ -742,7 +738,7 @@ TEST(Number, RejectsNumbersOutsideTheGrammar)
     }
 }
 
-TEST(Number, ConvertsHexadecimalIntegersWithinTheTargetRange)
+TEST(JsonNumberTest, ConvertsHexadecimalIntegersWithinTheTargetRange)
 {
     RecordProperty("PartiallyVerifies", "comp_req__vajson__hex_integers");
     RecordProperty("Description",
@@ -766,7 +762,7 @@ TEST(Number, ConvertsHexadecimalIntegersWithinTheTargetRange)
     EXPECT_FALSE(ParseNumberAs<std::int64_t>("-0x8000000000000001").has_value());
 }
 
-TEST(Number, HexadecimalIntegersDoNotConvertToFloatingPoint)
+TEST(JsonNumberTest, HexadecimalIntegersDoNotConvertToFloatingPoint)
 {
     RecordProperty("PartiallyVerifies", "comp_req__vajson__hex_integers");
     RecordProperty("Description",

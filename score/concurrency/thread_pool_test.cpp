@@ -17,8 +17,10 @@
 
 #include "gtest/gtest.h"
 
+#include <numeric>
 #include <optional>
 #include <thread>
+#include <vector>
 
 namespace score
 {
@@ -62,6 +64,11 @@ TEST(ThreadPool, ConstructionAndDestructionOnHeapWithBasePointer)
 
 TEST(ThreadPool, executesSubmittedCallables)
 {
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
+    RecordProperty("PartiallyVerifies", "comp_req__concurrency__task_interface");
+    RecordProperty("Description", "Check that a thread pool with two threads executes two submitted callables.");
+
     // Given a ThreadPool with two threads
     ThreadPool unit{2U};
 
@@ -80,8 +87,52 @@ TEST(ThreadPool, executesSubmittedCallables)
     ASSERT_EQ(counter, 2U);
 }
 
+TEST(ThreadPool, executesQueuedTasksInSubmissionOrder)
+{
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
+    RecordProperty("PartiallyVerifies", "comp_req__concurrency__thread_pool");
+    RecordProperty("Description",
+                   "Check that a single-thread pool executes tasks queued behind a blocked task in the order they "
+                   "were submitted.");
+
+    // Given a ThreadPool with one thread that is blocked by a first task
+    // The result is kept alive, since destroying it would request a stop on the blocking task.
+    ThreadPool unit{1U};
+    concurrency::Notification release_first_task{};
+    auto first_result = unit.Submit([&release_first_task](const score::cpp::stop_token& token) noexcept {
+        score::cpp::ignore = release_first_task.waitWithAbort(token);
+    });
+
+    // When queuing further tasks while the only thread is blocked
+    constexpr std::size_t kNumQueuedTasks{5U};
+    std::vector<std::size_t> execution_order{};
+    for (std::size_t i{0U}; i < kNumQueuedTasks; ++i)
+    {
+        unit.Post([&execution_order, i](const score::cpp::stop_token&) noexcept {
+            execution_order.push_back(i);
+        });
+    }
+    const std::size_t last_task_id{kNumQueuedTasks};
+    auto last_result = unit.Submit([&execution_order, last_task_id](const score::cpp::stop_token&) noexcept {
+        execution_order.push_back(last_task_id);
+    });
+    release_first_task.notify();
+    score::cpp::ignore = last_result.Get();
+
+    // Then the tasks are executed in the order of submission
+    std::vector<std::size_t> expected_order(kNumQueuedTasks + 1U);
+    std::iota(expected_order.begin(), expected_order.end(), 0U);
+    EXPECT_EQ(execution_order, expected_order);
+}
+
 TEST(ThreadPool, correctMaxConcurrencyLevel)
 {
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
+    RecordProperty("PartiallyVerifies", "comp_req__concurrency__thread_count_reporting");
+    RecordProperty("Description", "Check that MaxConcurrencyLevel() of a thread pool with five threads reports five.");
+
     // Given a ThreadPool with 5 threads
     ThreadPool unit{5U};
 
@@ -92,6 +143,13 @@ TEST(ThreadPool, correctMaxConcurrencyLevel)
 
 TEST(ThreadPool, stopRequestFunctional)
 {
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
+    RecordProperty("PartiallyVerifies", "comp_req__concurrency__executor_interface");
+    RecordProperty("Description",
+                   "Check that ShutdownRequested() is false before and true after Shutdown() on a thread pool with "
+                   "running tasks.");
+
     // Given a ThreadPool with two threads, that includes two long running tasks
     ThreadPool unit{2U};
 
@@ -127,6 +185,13 @@ TEST(ThreadPool, stopRequestFunctional)
 
 TEST(ThreadPool, DestructionStopsAndJoinsThreads)
 {
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
+    RecordProperty("PartiallyVerifies", "comp_req__concurrency__executor_interface");
+    RecordProperty("Description",
+                   "Check that destroying a thread pool with long running tasks requests a stop and waits for the "
+                   "tasks to finish.");
+
     std::atomic<std::size_t> counter{0};
 
     // Given a ThreadPool with two threads
@@ -158,6 +223,12 @@ TEST(ThreadPool, DestructionStopsAndJoinsThreads)
 
 TEST(ThreadPool, CanAbortThread)
 {
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
+    RecordProperty("PartiallyVerifies", "comp_req__concurrency__task_cancellation");
+    RecordProperty("Description",
+                   "Check that aborting the result of a long running task requests a stop on the running task.");
+
     // Given a ThreadPool with two threads, that includes one long running tasks
     ThreadPool unit{2U};
 
@@ -182,6 +253,12 @@ TEST(ThreadPool, CanAbortThread)
 
 TEST(ThreadPool, PostTaskFromWithinAnotherTask)
 {
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "error-guessing");
+    RecordProperty("PartiallyVerifies", "comp_req__concurrency__task_interface");
+    RecordProperty("Description",
+                   "Check that a task running in a thread pool can post another task that gets executed.");
+
     std::atomic<std::size_t> counter{0};
     concurrency::Notification first_done{};
     concurrency::Notification second_done{};
@@ -208,6 +285,12 @@ TEST(ThreadPool, PostTaskFromWithinAnotherTask)
 
 TEST(ThreadPool, SubmitTaskFromWithinAnotherTask)
 {
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "error-guessing");
+    RecordProperty("PartiallyVerifies", "comp_req__concurrency__task_interface");
+    RecordProperty("Description",
+                   "Check that a task running in a thread pool can submit another task and wait for its result.");
+
     std::atomic<std::size_t> counter{0};
 
     // Given a ThreadPool with two threads
@@ -229,6 +312,13 @@ TEST(ThreadPool, SubmitTaskFromWithinAnotherTask)
 
 TEST(ThreadPool, PostTaskFromWithinAnotherTaskAfterShutdown)
 {
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "error-guessing");
+    RecordProperty("PartiallyVerifies", "comp_req__concurrency__executor_interface");
+    RecordProperty("Description",
+                   "Check that a task posted to a shut down thread pool can submit a further task and both get "
+                   "executed.");
+
     std::atomic<std::size_t> counter{0};
     concurrency::Notification first_done{};
     concurrency::Notification second_done{};
@@ -258,6 +348,13 @@ TEST(ThreadPool, PostTaskFromWithinAnotherTaskAfterShutdown)
 
 TEST(ThreadPool, SubmitTaskFromWithinAnotherTaskAfterShutdown)
 {
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "error-guessing");
+    RecordProperty("PartiallyVerifies", "comp_req__concurrency__executor_interface");
+    RecordProperty("Description",
+                   "Check that a task submitted to a shut down thread pool can submit a further task and both get "
+                   "executed.");
+
     std::atomic<std::size_t> counter{0};
 
     // Given a ThreadPool without any thread which got already shutdown
@@ -280,6 +377,11 @@ TEST(ThreadPool, SubmitTaskFromWithinAnotherTaskAfterShutdown)
 
 TEST(ThreadPool, SubmitTaskWhileThreadPoolWasAlreadyRequestedToShutDown)
 {
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
+    RecordProperty("PartiallyVerifies", "comp_req__concurrency__executor_interface");
+    RecordProperty("Description", "Check that a task submitted after Shutdown() is still executed.");
+
     std::atomic<std::size_t> counter{0};
 
     // Given a ThreadPool without any thread which got already shutdown
@@ -298,6 +400,11 @@ TEST(ThreadPool, SubmitTaskWhileThreadPoolWasAlreadyRequestedToShutDown)
 
 TEST(ThreadPool, PostTaskWhileThreadPoolWasAlreadyRequestedToShutDown)
 {
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
+    RecordProperty("PartiallyVerifies", "comp_req__concurrency__executor_interface");
+    RecordProperty("Description", "Check that a task posted after Shutdown() is still executed.");
+
     std::atomic<std::size_t> counter{0};
 
     // Given a ThreadPool without any thread which got already shutdown
@@ -316,6 +423,12 @@ TEST(ThreadPool, PostTaskWhileThreadPoolWasAlreadyRequestedToShutDown)
 
 TEST(ThreadPool, SubmitTaskAndDestroyThreadPoolDirectlyAfterwards)
 {
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
+    RecordProperty("PartiallyVerifies", "comp_req__concurrency__executor_interface");
+    RecordProperty("Description",
+                   "Check that a submitted task is executed even if the thread pool is destroyed right away.");
+
     std::atomic<std::size_t> counter{0};
 
     // Given a ThreadPool with one thread
@@ -336,6 +449,12 @@ TEST(ThreadPool, SubmitTaskAndDestroyThreadPoolDirectlyAfterwards)
 
 TEST(ThreadPool, PostTaskAndDestroyThreadPoolDirectlyAfterwards)
 {
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
+    RecordProperty("PartiallyVerifies", "comp_req__concurrency__executor_interface");
+    RecordProperty("Description",
+                   "Check that a posted task is executed even if the thread pool is destroyed right away.");
+
     std::atomic<std::size_t> counter{0};
 
     // Given a ThreadPool with one thread
@@ -355,6 +474,11 @@ TEST(ThreadPool, PostTaskAndDestroyThreadPoolDirectlyAfterwards)
 
 TEST(ThreadPool, SubmitTasksWhileThreadPoolGetsShutDown)
 {
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "error-guessing");
+    RecordProperty("PartiallyVerifies", "comp_req__concurrency__executor_interface");
+    RecordProperty("Description", "Check that all tasks submitted concurrently to Shutdown() are executed.");
+
     constexpr std::size_t kMaxNumRuns{1000};
     constexpr std::size_t kNumSubmits{10};
     std::atomic<std::size_t> counter{0};
@@ -394,6 +518,11 @@ TEST(ThreadPool, SubmitTasksWhileThreadPoolGetsShutDown)
 
 TEST(ThreadPool, PostTasksWhileThreadPoolGetsShutDown)
 {
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "error-guessing");
+    RecordProperty("PartiallyVerifies", "comp_req__concurrency__executor_interface");
+    RecordProperty("Description", "Check that all tasks posted concurrently to Shutdown() are executed.");
+
     constexpr std::size_t kMaxNumRuns{1000};
     constexpr std::size_t kNumSubmits{10};
     std::atomic<std::size_t> counter{0};

@@ -30,6 +30,11 @@ namespace
 
 TEST(Notification, Waits)
 {
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
+    RecordProperty("PartiallyVerifies", "comp_req__concurrency__notification");
+    RecordProperty("Description", "Check that waitWithAbort() blocks until another thread calls notify().");
+
     using namespace std::chrono_literals;
 
     Notification notification{};
@@ -49,6 +54,11 @@ TEST(Notification, Waits)
 
 TEST(Notification, WaitGetsAborted)
 {
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
+    RecordProperty("PartiallyVerifies", "comp_req__concurrency__notification");
+    RecordProperty("Description", "Check that waitWithAbort() stops blocking when a stop is requested.");
+
     using namespace std::chrono_literals;
 
     Notification notification{};
@@ -69,6 +79,11 @@ TEST(Notification, WaitGetsAborted)
 
 TEST(Notification, WaitDoesNotWaitIfAlreadyAborted)
 {
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "boundary-values");
+    RecordProperty("PartiallyVerifies", "comp_req__concurrency__notification");
+    RecordProperty("Description", "Check that waitWithAbort() returns immediately if a stop was already requested.");
+
     Notification notification{};
     score::cpp::stop_source stop{};
     stop.request_stop();
@@ -82,6 +97,12 @@ TEST(Notification, WaitDoesNotWaitIfAlreadyAborted)
 
 TEST(Notification, WaitsForNotificationAfterNotifying)
 {
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
+    RecordProperty("PartiallyVerifies", "comp_req__concurrency__notification");
+    RecordProperty("Description",
+                   "Check that after reset() a notification blocks waiters again until the next notify().");
+
     using namespace std::chrono_literals;
 
     Notification notification{};
@@ -114,6 +135,11 @@ TEST(Notification, WaitsForNotificationAfterNotifying)
 
 TEST(Notification, WaitsForNotificationWithTimeout)
 {
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
+    RecordProperty("PartiallyVerifies", "comp_req__concurrency__notification");
+    RecordProperty("Description", "Check that waitForWithAbort() blocks until notify() is called within the timeout.");
+
     using namespace std::chrono_literals;
 
     Notification notification{};
@@ -131,8 +157,38 @@ TEST(Notification, WaitsForNotificationWithTimeout)
     waiting_thread.join();
 }
 
+TEST(Notification, WaitsForReturnsFalseWhenTimeoutExpires)
+{
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "boundary-values");
+    RecordProperty("PartiallyVerifies", "comp_req__concurrency__notification");
+    RecordProperty("Description",
+                   "Check that waitForWithAbort() returns false once the timeout elapsed without a notification or "
+                   "stop request.");
+
+    using namespace std::chrono_literals;
+
+    // Given a notification that is neither notified nor aborted
+    Notification notification{};
+    constexpr auto kTimeout{50ms};
+
+    // When waiting for it with a timeout
+    const auto start = std::chrono::steady_clock::now();
+    const bool notified = notification.waitForWithAbort(kTimeout, score::cpp::stop_token{});
+    const auto elapsed = std::chrono::steady_clock::now() - start;
+
+    // Then the wait ends without notification only after the timeout elapsed
+    EXPECT_FALSE(notified);
+    EXPECT_GE(elapsed, kTimeout);
+}
+
 TEST(Notification, WaitDoesNotWaitIfAlreadyNotified)
 {
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "boundary-values");
+    RecordProperty("PartiallyVerifies", "comp_req__concurrency__notification");
+    RecordProperty("Description", "Check that waitWithAbort() returns immediately if notify() was already called.");
+
     using namespace std::chrono_literals;
 
     // When creating a notification
@@ -157,6 +213,11 @@ TEST(Notification, WaitDoesNotWaitIfAlreadyNotified)
 
 TEST(Notification, WaitsForDoesNotWaitIfAlreadyNotified)
 {
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "boundary-values");
+    RecordProperty("PartiallyVerifies", "comp_req__concurrency__notification");
+    RecordProperty("Description", "Check that waitForWithAbort() returns immediately if notify() was already called.");
+
     using namespace std::chrono_literals;
 
     // When creating a notification
@@ -181,6 +242,11 @@ TEST(Notification, WaitsForDoesNotWaitIfAlreadyNotified)
 
 TEST(Notification, WaitsForGetsAborted)
 {
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
+    RecordProperty("PartiallyVerifies", "comp_req__concurrency__notification");
+    RecordProperty("Description", "Check that waitForWithAbort() stops blocking when a stop is requested.");
+
     using namespace std::chrono_literals;
 
     Notification notification{};
@@ -201,6 +267,11 @@ TEST(Notification, WaitsForGetsAborted)
 
 TEST(Notification, WaitsForDoesNotWaitIfAlreadyAborted)
 {
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "boundary-values");
+    RecordProperty("PartiallyVerifies", "comp_req__concurrency__notification");
+    RecordProperty("Description", "Check that waitForWithAbort() returns immediately if a stop was already requested.");
+
     using namespace std::chrono_literals;
 
     Notification notification{};

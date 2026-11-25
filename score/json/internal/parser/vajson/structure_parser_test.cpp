@@ -76,7 +76,7 @@ class FailingParser final : public internal::StructureParser
         return this->OnEvent();
     }
 
-    auto OnEndObject(std::size_t) noexcept -> ParserResult override
+    auto OnEndObject() noexcept -> ParserResult override
     {
         return this->OnEvent();
     }
@@ -86,7 +86,7 @@ class FailingParser final : public internal::StructureParser
         return this->OnEvent();
     }
 
-    auto OnEndArray(std::size_t) noexcept -> ParserResult override
+    auto OnEndArray() noexcept -> ParserResult override
     {
         return this->OnEvent();
     }
@@ -110,7 +110,7 @@ class FailingParser final : public internal::StructureParser
 
 /// Test that an error returned by any callback aborts parsing with that error.
 /// @trace           score::json::vajson::internal::StructureParser
-TEST(UT__Parser, Static__CallbackError)
+TEST(StructureParserTest, PropagatesErrorOfAnyCallback)
 {
     constexpr std::string_view doc{R"({"key": [123, "string", null, true]})"};
     const std::size_t num_events{9};

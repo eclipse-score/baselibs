@@ -268,6 +268,13 @@ TYPED_TEST(InterruptiblePromiseTest, MoveAssignmentAlsoMovesFutureRetrievalState
 
 TYPED_TEST(InterruptiblePromiseTest, DestructionBreaksPromise)
 {
+    this->RecordProperty("TestType", "requirements-based");
+    this->RecordProperty("DerivationTechnique", "equivalence-classes");
+    this->RecordProperty("PartiallyVerifies", "comp_req__concurrency__error_handling");
+    this->RecordProperty("Description",
+                         "Check that Get() on a future whose promise was destroyed unfulfilled returns the "
+                         "kPromiseBroken error code.");
+
     InterruptibleFuture<TypeParam> future{};
     {
         InterruptiblePromise<TypeParam> promise{};
@@ -299,6 +306,11 @@ TYPED_TEST(InterruptiblePromiseTest, CanSwap)
 
 TYPED_TEST(InterruptiblePromiseTest, CanSetValue)
 {
+    this->RecordProperty("TestType", "requirements-based");
+    this->RecordProperty("DerivationTechnique", "requirements-analysis");
+    this->RecordProperty("PartiallyVerifies", "comp_req__concurrency__task_result");
+    this->RecordProperty("Description", "Check that a value set on a promise can be retrieved through its future.");
+
     auto return_code = InterruptiblePromiseTest<TypeParam>::SetPromise(this->promise_);
     ASSERT_TRUE(return_code.has_value());
 
@@ -309,6 +321,13 @@ TYPED_TEST(InterruptiblePromiseTest, CanSetValue)
 
 TYPED_TEST(InterruptiblePromiseTest, SettingValueTwiceReturnsPromiseAlreadySatisfiedError)
 {
+    this->RecordProperty("TestType", "requirements-based");
+    this->RecordProperty("DerivationTechnique", "error-guessing");
+    this->RecordProperty("PartiallyVerifies", "comp_req__concurrency__error_handling");
+    this->RecordProperty("Description",
+                         "Check that setting a value on an already satisfied promise returns the "
+                         "kPromiseAlreadySatisfied error code.");
+
     InterruptiblePromiseTest<TypeParam>::SetPromise(this->promise_);
 
     auto return_code = InterruptiblePromiseTest<TypeParam>::SetPromise(this->promise_);
@@ -318,6 +337,12 @@ TYPED_TEST(InterruptiblePromiseTest, SettingValueTwiceReturnsPromiseAlreadySatis
 
 TYPED_TEST(InterruptiblePromiseTest, SettingValueOnMovedFromPromiseFailesWithNoState)
 {
+    this->RecordProperty("TestType", "requirements-based");
+    this->RecordProperty("DerivationTechnique", "error-guessing");
+    this->RecordProperty("PartiallyVerifies", "comp_req__concurrency__error_handling");
+    this->RecordProperty("Description",
+                         "Check that setting a value on a moved-from promise returns the kNoState error code.");
+
     InterruptiblePromise<TypeParam> moved_from_promise{};
     InterruptiblePromise<TypeParam> moved_to_promise{std::move(moved_from_promise)};
 
@@ -328,6 +353,12 @@ TYPED_TEST(InterruptiblePromiseTest, SettingValueOnMovedFromPromiseFailesWithNoS
 
 TYPED_TEST(InterruptiblePromiseTest, CanSetError)
 {
+    this->RecordProperty("TestType", "requirements-based");
+    this->RecordProperty("DerivationTechnique", "requirements-analysis");
+    this->RecordProperty("PartiallyVerifies", "comp_req__concurrency__error_handling");
+    this->RecordProperty("Description",
+                         "Check that an error code set on a promise is returned by Get() on its future.");
+
     auto return_code = this->promise_.SetError(Error::kFutureAlreadyRetrieved);
     ASSERT_TRUE(return_code.has_value());
 
@@ -339,6 +370,13 @@ TYPED_TEST(InterruptiblePromiseTest, CanSetError)
 
 TYPED_TEST(InterruptiblePromiseTest, SettingErrorTwiceReturnsPromiseAlreadySatisfiedError)
 {
+    this->RecordProperty("TestType", "requirements-based");
+    this->RecordProperty("DerivationTechnique", "error-guessing");
+    this->RecordProperty("PartiallyVerifies", "comp_req__concurrency__error_handling");
+    this->RecordProperty("Description",
+                         "Check that setting an error on an already satisfied promise returns the "
+                         "kPromiseAlreadySatisfied error code.");
+
     this->promise_.SetError(Error::kFutureAlreadyRetrieved);
 
     auto return_code = this->promise_.SetError(Error::kFutureAlreadyRetrieved);
@@ -348,6 +386,12 @@ TYPED_TEST(InterruptiblePromiseTest, SettingErrorTwiceReturnsPromiseAlreadySatis
 
 TYPED_TEST(InterruptiblePromiseTest, SettingErrorOnMovedFromPromiseFailesWithNoState)
 {
+    this->RecordProperty("TestType", "requirements-based");
+    this->RecordProperty("DerivationTechnique", "error-guessing");
+    this->RecordProperty("PartiallyVerifies", "comp_req__concurrency__error_handling");
+    this->RecordProperty("Description",
+                         "Check that setting an error on a moved-from promise returns the kNoState error code.");
+
     InterruptiblePromise<TypeParam> moved_from_promise{};
     InterruptiblePromise<TypeParam> moved_to_promise{std::move(moved_from_promise)};
 
@@ -358,6 +402,13 @@ TYPED_TEST(InterruptiblePromiseTest, SettingErrorOnMovedFromPromiseFailesWithNoS
 
 TYPED_TEST(InterruptiblePromiseTest, SettingErrorAfterValueReturnsPromiseAlreadySatisfiedError)
 {
+    this->RecordProperty("TestType", "requirements-based");
+    this->RecordProperty("DerivationTechnique", "error-guessing");
+    this->RecordProperty("PartiallyVerifies", "comp_req__concurrency__error_handling");
+    this->RecordProperty("Description",
+                         "Check that setting an error on a promise that already holds a value returns the "
+                         "kPromiseAlreadySatisfied error code.");
+
     auto set_value_return_code = InterruptiblePromiseTest<TypeParam>::SetPromise(this->promise_);
     ASSERT_TRUE(set_value_return_code.has_value());
 
@@ -368,6 +419,13 @@ TYPED_TEST(InterruptiblePromiseTest, SettingErrorAfterValueReturnsPromiseAlready
 
 TYPED_TEST(InterruptiblePromiseTest, SettingValueAfterErrorReturnsPromiseAlreadySatisfiedError)
 {
+    this->RecordProperty("TestType", "requirements-based");
+    this->RecordProperty("DerivationTechnique", "error-guessing");
+    this->RecordProperty("PartiallyVerifies", "comp_req__concurrency__error_handling");
+    this->RecordProperty("Description",
+                         "Check that setting a value on a promise that already holds an error returns the "
+                         "kPromiseAlreadySatisfied error code.");
+
     auto set_error_return_code = this->promise_.SetError(Error::kFutureAlreadyRetrieved);
     ASSERT_TRUE(set_error_return_code.has_value());
 
@@ -443,6 +501,13 @@ TYPED_TEST(InterruptiblePromiseTest, RetrievedSharedFuturesSharesStateWithPromis
 
 TYPED_TEST(InterruptiblePromiseTest, RetrievingFutureTwiceReturnsFutureAlreadyRetrievedError)
 {
+    this->RecordProperty("TestType", "requirements-based");
+    this->RecordProperty("DerivationTechnique", "error-guessing");
+    this->RecordProperty("PartiallyVerifies", "comp_req__concurrency__error_handling");
+    this->RecordProperty("Description",
+                         "Check that retrieving the future of a promise a second time returns the "
+                         "kFutureAlreadyRetrieved error code.");
+
     InterruptiblePromise<TypeParam> promise{};
     auto expected_future = promise.GetInterruptibleFuture();
     ASSERT_TRUE(expected_future.has_value());

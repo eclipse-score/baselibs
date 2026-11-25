@@ -76,6 +76,13 @@ TEST_F(PeriodicTaskTest, ConstructionAndDestructionOnHeapWithBasePointer)
 
 TEST_F(PeriodicTaskTest, ExecutesCallbackReturningVoid)
 {
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
+    RecordProperty("PartiallyVerifies", "comp_req__concurrency__periodic_task");
+    RecordProperty("Description",
+                   "Check that a PeriodicTask with a void callback invokes it at the first execution time and again "
+                   "after one interval until stopped.");
+
     auto unit = PeriodicTaskFactory::Make<score::concurrency::testing::SteadyClock>(
         score::cpp::pmr::get_default_resource(),
         first_execution_,
@@ -98,6 +105,12 @@ TEST_F(PeriodicTaskTest, ExecutesCallbackReturningVoid)
 
 TEST_F(PeriodicTaskTest, ExecutesCallbackReturningNonVoid)
 {
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
+    RecordProperty("PartiallyVerifies", "comp_req__concurrency__periodic_task");
+    RecordProperty("Description",
+                   "Check that a PeriodicTask with a non-void callback invokes it periodically until stopped.");
+
     auto unit = PeriodicTaskFactory::Make<score::concurrency::testing::SteadyClock>(
         score::cpp::pmr::get_default_resource(),
         first_execution_,
@@ -121,6 +134,13 @@ TEST_F(PeriodicTaskTest, ExecutesCallbackReturningNonVoid)
 
 TEST_F(PeriodicTaskTest, ExecutesCallbackReturningBoolUntilReturnsFalse)
 {
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
+    RecordProperty("PartiallyVerifies", "comp_req__concurrency__periodic_task");
+    RecordProperty("Description",
+                   "Check that a PeriodicTask with a bool callback stops invoking it once the callback returns "
+                   "false.");
+
     bool return_value{true};
     auto unit = PeriodicTaskFactory::Make<score::concurrency::testing::SteadyClock>(
         score::cpp::pmr::get_default_resource(),
@@ -145,6 +165,12 @@ TEST_F(PeriodicTaskTest, ExecutesCallbackReturningBoolUntilReturnsFalse)
 
 TEST_F(PeriodicTaskTest, ExecutesCallbackWithCorrectAttributes)
 {
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
+    RecordProperty("PartiallyVerifies", "comp_req__concurrency__periodic_task");
+    RecordProperty("Description",
+                   "Check that a PeriodicTask invokes its callback with the configured first execution time point.");
+
     auto unit = PeriodicTaskFactory::Make<score::concurrency::testing::SteadyClock>(
         score::cpp::pmr::get_default_resource(),
         first_execution_,
@@ -163,6 +189,13 @@ TEST_F(PeriodicTaskTest, ExecutesCallbackWithCorrectAttributes)
 
 TEST_F(PeriodicTaskTest, WillRunMultipleIterations)
 {
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
+    RecordProperty("PartiallyVerifies", "comp_req__concurrency__periodic_task");
+    RecordProperty("Description",
+                   "Check that a PeriodicTask waits for and invokes its callback at the first execution time and at "
+                   "each following interval.");
+
     testing::InterruptibleConditionalVariableMock mock_cv{};
     // Given a manually created PeriodicTask with a void callback
     auto unit = PeriodicTaskFactory::Make<score::concurrency::testing::SteadyClock>(
@@ -207,6 +240,13 @@ TEST_F(PeriodicTaskTest, WillRunMultipleIterations)
 
 TEST_F(PeriodicTaskTest, WillInvokeAtLeastOnce)
 {
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "boundary-values");
+    RecordProperty("PartiallyVerifies", "comp_req__concurrency__periodic_task");
+    RecordProperty("Description",
+                   "Check that a PeriodicTask that is already stopped before execution still invokes its callback "
+                   "once.");
+
     testing::InterruptibleConditionalVariableMock mock_cv{};
     // Given a manually created PeriodicTask with a void callback
     auto unit = PeriodicTaskFactory::Make<score::concurrency::testing::SteadyClock>(
@@ -230,6 +270,13 @@ TEST_F(PeriodicTaskTest, WillInvokeAtLeastOnce)
 
 TEST_F(PeriodicTaskTest, DoNotWaitIfStartExecutionSetToPast)
 {
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "boundary-values");
+    RecordProperty("PartiallyVerifies", "comp_req__concurrency__periodic_task");
+    RecordProperty("Description",
+                   "Check that a PeriodicTask with a first execution time in the past invokes its callback without "
+                   "waiting.");
+
     score::concurrency::testing::SteadyClock::modify_time(interval_);
 
     testing::InterruptibleConditionalVariableMock mock_cv{};
@@ -258,6 +305,11 @@ TEST_F(PeriodicTaskTest, DoNotWaitIfStartExecutionSetToPast)
 
 TEST_F(PeriodicTaskTest, ExecutesCallbackWithParameter)
 {
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
+    RecordProperty("PartiallyVerifies", "comp_req__concurrency__periodic_task");
+    RecordProperty("Description", "Check that a PeriodicTask invokes its callback with the bound argument.");
+
     std::int32_t observer{0};
     auto unit = PeriodicTaskFactory::Make<score::concurrency::testing::SteadyClock>(
         score::cpp::pmr::get_default_resource(),
@@ -282,6 +334,13 @@ TEST_F(PeriodicTaskTest, ExecutesCallbackWithParameter)
 
 TEST_F(PeriodicTaskTest, MakeWithTaskResultLeadsToAssociatedTaskAndTaskResult)
 {
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
+    RecordProperty("PartiallyVerifies", "comp_req__concurrency__task_result");
+    RecordProperty("Description",
+                   "Check that a PeriodicTask created with a task result provides a valid result that completes "
+                   "after the task ended.");
+
     // Given a task created using the make_* function
     auto unit = PeriodicTaskFactory::MakeWithTaskResult<score::concurrency::testing::SteadyClock>(
         score::cpp::pmr::get_default_resource(),
@@ -316,6 +375,13 @@ TEST_F(PeriodicTaskTest, WillTerminateWhenCalculationOfTimePointForNextExecution
 
 TEST_F(PeriodicTaskTest, MakeWithTaskResultCapturesAllArguments)
 {
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
+    RecordProperty("PartiallyVerifies", "comp_req__concurrency__periodic_task");
+    RecordProperty("Description",
+                   "Check that a PeriodicTask created with a task result invokes its callback with all bound "
+                   "arguments.");
+
     int arg1 = 42;
     double arg2 = 3.14;
 

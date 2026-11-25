@@ -18,11 +18,11 @@
 #ifndef SCORE_JSON_INTERNAL_PARSER_VAJSON_JSON_DATA_H
 #define SCORE_JSON_INTERNAL_PARSER_VAJSON_JSON_DATA_H
 
-#include "score/json/internal/parser/vajson/depth_counter.h"
 #include "score/json/internal/parser/vajson/parser_state.h"
 #include "score/json/internal/parser/vajson/reader_config.h"
 #include "score/json/internal/parser/vajson/reader_fwd.h"
 #include "score/json/internal/parser/vajson/types.h"
+#include <cstddef>
 #include <vector>
 
 namespace score
@@ -33,7 +33,7 @@ namespace vajson
 {
 
 /// @brief           A JSON data representation
-/// @details         Handles the data state, such as the current position in the document and nesting of JSON tree.
+/// @details         Handles the data state, such as the current position in the document.
 /// @trace           DSGN-JSON-Reader-Deserialization
 class JsonData final
 {
@@ -81,15 +81,18 @@ class JsonData final
     /// @details         The whole file is read into memory owned by the JSON data object.
     /// @param[in]       path
     ///                  The path to the JSON file.
+    /// @param[in]       max_size
+    ///                  The maximum file size in bytes.
     /// @return          A constructed JSON data object.
     /// @error           score::json::vajson::JsonErrc::kStreamFailure
-    ///                  if the file could not be opened or read.
+    ///                  if the path is not a regular file, the file could not be opened or read,
+    ///                  or the file is larger than max_size.
     /// @context         ANY
     /// @pre             -
     /// @threadsafe      FALSE
     /// @reentrant       FALSE
     /// @synchronous     -
-    static auto FromFile(std::string_view path) noexcept -> Result<JsonData>;
+    static auto FromFile(std::string_view path, std::size_t max_size) noexcept -> Result<JsonData>;
 
     /// @brief           Initializes a JSON data object from a buffer
     /// @param[in]       buffer
@@ -101,16 +104,6 @@ class JsonData final
     /// @reentrant       FALSE
     /// @synchronous     -
     static auto FromBuffer(std::string_view buffer) noexcept -> Result<JsonData>;
-
-    /// @brief           Returns the JSON structure state
-    /// @return          The current state.
-    /// @context         ANY
-    /// @pre             -
-    /// @threadsafe      TRUE, for different this pointer
-    auto GetState() & noexcept -> internal::DepthCounter&
-    {
-        return this->depth_counter_;
-    }
 
     /// @brief           Returns the current string
     /// @return          The current string.
@@ -179,8 +172,6 @@ class JsonData final
     std::vector<char> owned_document_{};
     /// @brief           The unread part of the document
     StringView input_{};
-    /// @brief           JSON structure state
-    internal::DepthCounter depth_counter_{};
     /// @brief           Current buffer
     String current_buffer_{};
 };
