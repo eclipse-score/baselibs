@@ -75,7 +75,7 @@ Other IDs: requirements document `doc__<component>_requirements`; architecture c
 | `:safety:` | Yes | `QM` \| `ASIL_B` |
 | `:security:` | Yes | `YES` \| `NO` |
 | `:status:` | Yes | `valid` \| `valid_inspected` \| `invalid`; see [Requirement Status](#requirement-status) |
-| `:version:` | Yes | Whole number, starting at `1`; bump on material change |
+| `:version:` | Yes | Whole number, starting at `1`; see [Need Versioning](#need-versioning) |
 | body (content) | Yes | Normative text for `comp_req`; integrator/user assumption for `aou_req` |
 
 ### `comp_req`-only attributes
@@ -94,11 +94,22 @@ Other IDs: requirements document `doc__<component>_requirements`; architecture c
 
 `safety` is either `QM` or `ASIL_B`. A `QM` requirement may not be `derived_from` an `ASIL_B` requirement; re-check the chain whenever you change safety.
 
+## Material Changes
+
+A change is material if it changes any of the following:
+
+- The meaning of the need's body.
+- Its safety classification.
+- Its security classification.
+- What a link traces to.
+
+Non-material changes preserve all of these.
+Examples include typo and formatting fixes, title-only or version-only changes, and retargeting a link to a renamed or re-versioned need without changing what it traces to.
+
 ## Need Versioning
 
-Every need has a whole-number `:version:`. Bump it only on a material change: a change of the body's meaning, safety, security, or of what a link traces to.
-Do not bump for non-material changes, such as typo and formatting fixes, title changes, or retargeting a link to a renamed or re-versioned need without changing what it traces to.
-A non-material change must not cascade: keep the need's version, so pins to it stay valid and their owners need no edits.
+Bump a need's `:version:` only for a [material change](#material-changes).
+For non-material changes, keep the version so existing pins stay valid and downstream needs require no edits.
 Document needs (`doc__...`) that no link pins can be bumped whenever their content changes.
 
 Every link value is written as `<target_id>[version==N]`, where `N` is the current version of the target need:
@@ -118,10 +129,10 @@ Every link value is written as `<target_id>[version==N]`, where `N` is the curre
 - `valid_inspected`: the requirement passed a human requirements inspection according to the S-CORE process, and the human inspector filled out the inspection checklist.
   This status is relevant for ASIL code, including this repository's `ASIL_B` requirements.
   An automated or AI-assisted review or a successful documentation build does not replace the human inspection or justify setting this status.
-  Keep this status as long as the requirement text is unchanged, including when only its links, title, or version change.
 - `invalid`: the requirement is not in force, for example while its `feat_req` does not exist yet.
 
-Reset `valid_inspected` to `valid` only when the requirement text changes materially, since that requires a new inspection.
+After a [material change](#material-changes), reset `valid_inspected` to `valid` because a new human inspection is required.
+For non-material changes, preserve the status.
 
 ## Directory Structure
 
