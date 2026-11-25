@@ -3084,7 +3084,7 @@
     "url": ""
   },
   {
-    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/i_number_double_huge_neg_exp",
+    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/INumberDoubleHugeNegExp",
     "file": "score/json/json_test_suite_test.cpp",
     "line": 160,
     "need": "comp_req__json__deserialization",
@@ -3096,7 +3096,7 @@
     "url": ""
   },
   {
-    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/i_number_huge_exp",
+    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/INumberHugeExp",
     "file": "score/json/json_test_suite_test.cpp",
     "line": 160,
     "need": "comp_req__json__deserialization",
@@ -3108,7 +3108,7 @@
     "url": ""
   },
   {
-    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/i_number_neg_int_huge_exp",
+    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/INumberNegIntHugeExp",
     "file": "score/json/json_test_suite_test.cpp",
     "line": 160,
     "need": "comp_req__json__deserialization",
@@ -3120,7 +3120,7 @@
     "url": ""
   },
   {
-    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/i_number_pos_double_huge_exp",
+    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/INumberPosDoubleHugeExp",
     "file": "score/json/json_test_suite_test.cpp",
     "line": 160,
     "need": "comp_req__json__deserialization",
@@ -3132,7 +3132,7 @@
     "url": ""
   },
   {
-    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/i_number_real_neg_overflow",
+    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/INumberRealNegOverflow",
     "file": "score/json/json_test_suite_test.cpp",
     "line": 160,
     "need": "comp_req__json__deserialization",
@@ -3144,7 +3144,7 @@
     "url": ""
   },
   {
-    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/i_number_real_pos_overflow",
+    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/INumberRealPosOverflow",
     "file": "score/json/json_test_suite_test.cpp",
     "line": 160,
     "need": "comp_req__json__deserialization",
@@ -3156,7 +3156,7 @@
     "url": ""
   },
   {
-    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/i_number_real_underflow",
+    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/INumberRealUnderflow",
     "file": "score/json/json_test_suite_test.cpp",
     "line": 160,
     "need": "comp_req__json__deserialization",
@@ -3168,7 +3168,7 @@
     "url": ""
   },
   {
-    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/i_number_too_big_neg_int",
+    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/INumberTooBigNegInt",
     "file": "score/json/json_test_suite_test.cpp",
     "line": 160,
     "need": "comp_req__json__deserialization",
@@ -3180,7 +3180,7 @@
     "url": ""
   },
   {
-    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/i_number_too_big_pos_int",
+    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/INumberTooBigPosInt",
     "file": "score/json/json_test_suite_test.cpp",
     "line": 160,
     "need": "comp_req__json__deserialization",
@@ -3192,7 +3192,7 @@
     "url": ""
   },
   {
-    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/i_number_very_big_negative_int",
+    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/INumberVeryBigNegativeInt",
     "file": "score/json/json_test_suite_test.cpp",
     "line": 160,
     "need": "comp_req__json__deserialization",
@@ -3204,7 +3204,7 @@
     "url": ""
   },
   {
-    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/i_object_key_lone_2nd_surrogate",
+    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/IObjectKeyLone2ndSurrogate",
     "file": "score/json/json_test_suite_test.cpp",
     "line": 160,
     "need": "comp_req__json__deserialization",
@@ -3216,7 +3216,7 @@
     "url": ""
   },
   {
-    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/i_string_1st_surrogate_but_2nd_missing",
+    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/IString1stSurrogateBut2ndMissing",
     "file": "score/json/json_test_suite_test.cpp",
     "line": 160,
     "need": "comp_req__json__deserialization",
@@ -3228,7 +3228,7 @@
     "url": ""
   },
   {
-    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/i_string_1st_valid_surrogate_2nd_invalid",
+    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/IString1stValidSurrogate2ndInvalid",
     "file": "score/json/json_test_suite_test.cpp",
     "line": 160,
     "need": "comp_req__json__deserialization",
@@ -3240,7 +3240,7 @@
     "url": ""
   },
   {
-    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/i_string_UTF_2d16LE_with_BOM",
+    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/IStringUTFMinus16LEWithBOM",
     "file": "score/json/json_test_suite_test.cpp",
     "line": 160,
     "need": "comp_req__json__deserialization",
@@ -3252,7 +3252,7 @@
     "url": ""
   },
   {
-    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/i_string_UTF_2d8_invalid_sequence",
+    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/IStringUTFMinus8InvalidSequence",
     "file": "score/json/json_test_suite_test.cpp",
     "line": 160,
     "need": "comp_req__json__deserialization",
@@ -3264,7 +3264,7 @@
     "url": ""
   },
   {
-    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/i_string_UTF8_surrogate_U_2bD800",
+    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/IStringUTF8SurrogateUPlusD800",
     "file": "score/json/json_test_suite_test.cpp",
     "line": 160,
     "need": "comp_req__json__deserialization",
@@ -3276,7 +3276,7 @@
     "url": ""
   },
   {
-    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/i_string_incomplete_surrogate_and_escape_valid",
+    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/IStringIncompleteSurrogateAndEscapeValid",
     "file": "score/json/json_test_suite_test.cpp",
     "line": 160,
     "need": "comp_req__json__deserialization",
@@ -3288,7 +3288,7 @@
     "url": ""
   },
   {
-    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/i_string_incomplete_surrogate_pair",
+    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/IStringIncompleteSurrogatePair",
     "file": "score/json/json_test_suite_test.cpp",
     "line": 160,
     "need": "comp_req__json__deserialization",
@@ -3300,7 +3300,7 @@
     "url": ""
   },
   {
-    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/i_string_incomplete_surrogates_escape_valid",
+    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/IStringIncompleteSurrogatesEscapeValid",
     "file": "score/json/json_test_suite_test.cpp",
     "line": 160,
     "need": "comp_req__json__deserialization",
@@ -3312,7 +3312,7 @@
     "url": ""
   },
   {
-    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/i_string_invalid_lonely_surrogate",
+    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/IStringInvalidLonelySurrogate",
     "file": "score/json/json_test_suite_test.cpp",
     "line": 160,
     "need": "comp_req__json__deserialization",
@@ -3324,7 +3324,7 @@
     "url": ""
   },
   {
-    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/i_string_invalid_surrogate",
+    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/IStringInvalidSurrogate",
     "file": "score/json/json_test_suite_test.cpp",
     "line": 160,
     "need": "comp_req__json__deserialization",
@@ -3336,7 +3336,7 @@
     "url": ""
   },
   {
-    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/i_string_invalid_utf_2d8",
+    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/IStringInvalidUtfMinus8",
     "file": "score/json/json_test_suite_test.cpp",
     "line": 160,
     "need": "comp_req__json__deserialization",
@@ -3348,7 +3348,7 @@
     "url": ""
   },
   {
-    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/i_string_inverted_surrogates_U_2b1D11E",
+    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/IStringInvertedSurrogatesUPlus1D11E",
     "file": "score/json/json_test_suite_test.cpp",
     "line": 160,
     "need": "comp_req__json__deserialization",
@@ -3360,7 +3360,7 @@
     "url": ""
   },
   {
-    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/i_string_iso_latin_1",
+    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/IStringIsoLatin1",
     "file": "score/json/json_test_suite_test.cpp",
     "line": 160,
     "need": "comp_req__json__deserialization",
@@ -3372,7 +3372,7 @@
     "url": ""
   },
   {
-    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/i_string_lone_second_surrogate",
+    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/IStringLoneSecondSurrogate",
     "file": "score/json/json_test_suite_test.cpp",
     "line": 160,
     "need": "comp_req__json__deserialization",
@@ -3384,7 +3384,7 @@
     "url": ""
   },
   {
-    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/i_string_lone_utf8_continuation_byte",
+    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/IStringLoneUtf8ContinuationByte",
     "file": "score/json/json_test_suite_test.cpp",
     "line": 160,
     "need": "comp_req__json__deserialization",
@@ -3396,7 +3396,7 @@
     "url": ""
   },
   {
-    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/i_string_not_in_unicode_range",
+    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/IStringNotInUnicodeRange",
     "file": "score/json/json_test_suite_test.cpp",
     "line": 160,
     "need": "comp_req__json__deserialization",
@@ -3408,7 +3408,7 @@
     "url": ""
   },
   {
-    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/i_string_overlong_sequence_2_bytes",
+    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/IStringOverlongSequence2Bytes",
     "file": "score/json/json_test_suite_test.cpp",
     "line": 160,
     "need": "comp_req__json__deserialization",
@@ -3420,7 +3420,7 @@
     "url": ""
   },
   {
-    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/i_string_overlong_sequence_6_bytes",
+    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/IStringOverlongSequence6Bytes",
     "file": "score/json/json_test_suite_test.cpp",
     "line": 160,
     "need": "comp_req__json__deserialization",
@@ -3432,7 +3432,7 @@
     "url": ""
   },
   {
-    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/i_string_overlong_sequence_6_bytes_null",
+    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/IStringOverlongSequence6BytesNull",
     "file": "score/json/json_test_suite_test.cpp",
     "line": 160,
     "need": "comp_req__json__deserialization",
@@ -3444,7 +3444,7 @@
     "url": ""
   },
   {
-    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/i_string_truncated_2dutf_2d8",
+    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/IStringTruncatedMinusUtfMinus8",
     "file": "score/json/json_test_suite_test.cpp",
     "line": 160,
     "need": "comp_req__json__deserialization",
@@ -3456,7 +3456,7 @@
     "url": ""
   },
   {
-    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/i_string_utf16BE_no_BOM",
+    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/IStringUtf16BENoBOM",
     "file": "score/json/json_test_suite_test.cpp",
     "line": 160,
     "need": "comp_req__json__deserialization",
@@ -3468,7 +3468,7 @@
     "url": ""
   },
   {
-    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/i_string_utf16LE_no_BOM",
+    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/IStringUtf16LENoBOM",
     "file": "score/json/json_test_suite_test.cpp",
     "line": 160,
     "need": "comp_req__json__deserialization",
@@ -3480,7 +3480,7 @@
     "url": ""
   },
   {
-    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/i_structure_500_nested_arrays",
+    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/IStructure500NestedArrays",
     "file": "score/json/json_test_suite_test.cpp",
     "line": 160,
     "need": "comp_req__json__deserialization",
@@ -3492,7 +3492,7 @@
     "url": ""
   },
   {
-    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/i_structure_UTF_2d8_BOM_empty_object",
+    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/IStructureUTFMinus8BOMEmptyObject",
     "file": "score/json/json_test_suite_test.cpp",
     "line": 160,
     "need": "comp_req__json__deserialization",
@@ -3504,7 +3504,7 @@
     "url": ""
   },
   {
-    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/n_array_1_true_without_comma",
+    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/NArray1TrueWithoutComma",
     "file": "score/json/json_test_suite_test.cpp",
     "line": 160,
     "need": "comp_req__json__deserialization",
@@ -3516,7 +3516,7 @@
     "url": ""
   },
   {
-    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/n_array_a_invalid_utf8",
+    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/NArrayAInvalidUtf8",
     "file": "score/json/json_test_suite_test.cpp",
     "line": 160,
     "need": "comp_req__json__deserialization",
@@ -3528,7 +3528,7 @@
     "url": ""
   },
   {
-    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/n_array_colon_instead_of_comma",
+    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/NArrayColonInsteadOfComma",
     "file": "score/json/json_test_suite_test.cpp",
     "line": 160,
     "need": "comp_req__json__deserialization",
@@ -3540,7 +3540,7 @@
     "url": ""
   },
   {
-    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/n_array_comma_after_close",
+    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/NArrayCommaAfterClose",
     "file": "score/json/json_test_suite_test.cpp",
     "line": 160,
     "need": "comp_req__json__deserialization",
@@ -3552,7 +3552,7 @@
     "url": ""
   },
   {
-    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/n_array_comma_and_number",
+    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/NArrayCommaAndNumber",
     "file": "score/json/json_test_suite_test.cpp",
     "line": 160,
     "need": "comp_req__json__deserialization",
@@ -3564,7 +3564,7 @@
     "url": ""
   },
   {
-    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/n_array_double_comma",
+    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/NArrayDoubleComma",
     "file": "score/json/json_test_suite_test.cpp",
     "line": 160,
     "need": "comp_req__json__deserialization",
@@ -3576,7 +3576,7 @@
     "url": ""
   },
   {
-    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/n_array_double_extra_comma",
+    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/NArrayDoubleExtraComma",
     "file": "score/json/json_test_suite_test.cpp",
     "line": 160,
     "need": "comp_req__json__deserialization",
@@ -3588,7 +3588,7 @@
     "url": ""
   },
   {
-    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/n_array_extra_close",
+    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/NArrayExtraClose",
     "file": "score/json/json_test_suite_test.cpp",
     "line": 160,
     "need": "comp_req__json__deserialization",
@@ -3600,7 +3600,7 @@
     "url": ""
   },
   {
-    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/n_array_extra_comma",
+    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/NArrayExtraComma",
     "file": "score/json/json_test_suite_test.cpp",
     "line": 160,
     "need": "comp_req__json__deserialization",
@@ -3612,7 +3612,7 @@
     "url": ""
   },
   {
-    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/n_array_incomplete",
+    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/NArrayIncomplete",
     "file": "score/json/json_test_suite_test.cpp",
     "line": 160,
     "need": "comp_req__json__deserialization",
@@ -3624,7 +3624,7 @@
     "url": ""
   },
   {
-    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/n_array_incomplete_invalid_value",
+    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/NArrayIncompleteInvalidValue",
     "file": "score/json/json_test_suite_test.cpp",
     "line": 160,
     "need": "comp_req__json__deserialization",
@@ -3636,7 +3636,7 @@
     "url": ""
   },
   {
-    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/n_array_inner_array_no_comma",
+    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/NArrayInnerArrayNoComma",
     "file": "score/json/json_test_suite_test.cpp",
     "line": 160,
     "need": "comp_req__json__deserialization",
@@ -3648,7 +3648,7 @@
     "url": ""
   },
   {
-    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/n_array_invalid_utf8",
+    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/NArrayInvalidUtf8",
     "file": "score/json/json_test_suite_test.cpp",
     "line": 160,
     "need": "comp_req__json__deserialization",
@@ -3660,7 +3660,7 @@
     "url": ""
   },
   {
-    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/n_array_items_separated_by_semicolon",
+    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/NArrayItemsSeparatedBySemicolon",
     "file": "score/json/json_test_suite_test.cpp",
     "line": 160,
     "need": "comp_req__json__deserialization",
@@ -3672,7 +3672,7 @@
     "url": ""
   },
   {
-    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/n_array_just_comma",
+    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/NArrayJustComma",
     "file": "score/json/json_test_suite_test.cpp",
     "line": 160,
     "need": "comp_req__json__deserialization",
@@ -3684,7 +3684,7 @@
     "url": ""
   },
   {
-    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/n_array_just_minus",
+    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/NArrayJustMinus",
     "file": "score/json/json_test_suite_test.cpp",
     "line": 160,
     "need": "comp_req__json__deserialization",
@@ -3696,7 +3696,7 @@
     "url": ""
   },
   {
-    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/n_array_missing_value",
+    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/NArrayMissingValue",
     "file": "score/json/json_test_suite_test.cpp",
     "line": 160,
     "need": "comp_req__json__deserialization",
@@ -3708,7 +3708,7 @@
     "url": ""
   },
   {
-    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/n_array_newlines_unclosed",
+    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/NArrayNewlinesUnclosed",
     "file": "score/json/json_test_suite_test.cpp",
     "line": 160,
     "need": "comp_req__json__deserialization",
@@ -3720,7 +3720,7 @@
     "url": ""
   },
   {
-    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/n_array_number_and_comma",
+    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/NArrayNumberAndComma",
     "file": "score/json/json_test_suite_test.cpp",
     "line": 160,
     "need": "comp_req__json__deserialization",
@@ -3732,7 +3732,7 @@
     "url": ""
   },
   {
-    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/n_array_number_and_several_commas",
+    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/NArrayNumberAndSeveralCommas",
     "file": "score/json/json_test_suite_test.cpp",
     "line": 160,
     "need": "comp_req__json__deserialization",
@@ -3744,7 +3744,7 @@
     "url": ""
   },
   {
-    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/n_array_spaces_vertical_tab_formfeed",
+    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/NArraySpacesVerticalTabFormfeed",
     "file": "score/json/json_test_suite_test.cpp",
     "line": 160,
     "need": "comp_req__json__deserialization",
@@ -3756,7 +3756,7 @@
     "url": ""
   },
   {
-    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/n_array_star_inside",
+    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/NArrayStarInside",
     "file": "score/json/json_test_suite_test.cpp",
     "line": 160,
     "need": "comp_req__json__deserialization",
@@ -3768,7 +3768,7 @@
     "url": ""
   },
   {
-    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/n_array_unclosed",
+    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/NArrayUnclosed",
     "file": "score/json/json_test_suite_test.cpp",
     "line": 160,
     "need": "comp_req__json__deserialization",
@@ -3780,7 +3780,7 @@
     "url": ""
   },
   {
-    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/n_array_unclosed_trailing_comma",
+    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/NArrayUnclosedTrailingComma",
     "file": "score/json/json_test_suite_test.cpp",
     "line": 160,
     "need": "comp_req__json__deserialization",
@@ -3792,7 +3792,7 @@
     "url": ""
   },
   {
-    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/n_array_unclosed_with_new_lines",
+    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/NArrayUnclosedWithNewLines",
     "file": "score/json/json_test_suite_test.cpp",
     "line": 160,
     "need": "comp_req__json__deserialization",
@@ -3804,7 +3804,7 @@
     "url": ""
   },
   {
-    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/n_array_unclosed_with_object_inside",
+    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/NArrayUnclosedWithObjectInside",
     "file": "score/json/json_test_suite_test.cpp",
     "line": 160,
     "need": "comp_req__json__deserialization",
@@ -3816,7 +3816,7 @@
     "url": ""
   },
   {
-    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/n_incomplete_false",
+    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/NIncompleteFalse",
     "file": "score/json/json_test_suite_test.cpp",
     "line": 160,
     "need": "comp_req__json__deserialization",
@@ -3828,7 +3828,7 @@
     "url": ""
   },
   {
-    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/n_incomplete_null",
+    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/NIncompleteNull",
     "file": "score/json/json_test_suite_test.cpp",
     "line": 160,
     "need": "comp_req__json__deserialization",
@@ -3840,7 +3840,7 @@
     "url": ""
   },
   {
-    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/n_incomplete_true",
+    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/NIncompleteTrue",
     "file": "score/json/json_test_suite_test.cpp",
     "line": 160,
     "need": "comp_req__json__deserialization",
@@ -3852,7 +3852,7 @@
     "url": ""
   },
   {
-    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/n_multidigit_number_then_00",
+    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/NMultidigitNumberThen00",
     "file": "score/json/json_test_suite_test.cpp",
     "line": 160,
     "need": "comp_req__json__deserialization",
@@ -3864,7 +3864,7 @@
     "url": ""
   },
   {
-    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/n_number__2b_2b",
+    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/NNumberPlusPlus",
     "file": "score/json/json_test_suite_test.cpp",
     "line": 160,
     "need": "comp_req__json__deserialization",
@@ -3876,7 +3876,7 @@
     "url": ""
   },
   {
-    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/n_number__2b1",
+    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/NNumberPlus1",
     "file": "score/json/json_test_suite_test.cpp",
     "line": 160,
     "need": "comp_req__json__deserialization",
@@ -3888,7 +3888,7 @@
     "url": ""
   },
   {
-    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/n_number__2bInf",
+    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/NNumberPlusInf",
     "file": "score/json/json_test_suite_test.cpp",
     "line": 160,
     "need": "comp_req__json__deserialization",
@@ -3900,7 +3900,7 @@
     "url": ""
   },
   {
-    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/n_number__2d01",
+    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/NNumberMinus01",
     "file": "score/json/json_test_suite_test.cpp",
     "line": 160,
     "need": "comp_req__json__deserialization",
@@ -3912,7 +3912,7 @@
     "url": ""
   },
   {
-    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/n_number__2d1_2e0_2e",
+    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/NNumberMinus1Dot0Dot",
     "file": "score/json/json_test_suite_test.cpp",
     "line": 160,
     "need": "comp_req__json__deserialization",
@@ -3924,7 +3924,7 @@
     "url": ""
   },
   {
-    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/n_number__2d2_2e",
+    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/NNumberMinus2Dot",
     "file": "score/json/json_test_suite_test.cpp",
     "line": 160,
     "need": "comp_req__json__deserialization",
@@ -3936,7 +3936,7 @@
     "url": ""
   },
   {
-    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/n_number__2dNaN",
+    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/NNumberMinusNaN",
     "file": "score/json/json_test_suite_test.cpp",
     "line": 160,
     "need": "comp_req__json__deserialization",
@@ -3948,7 +3948,7 @@
     "url": ""
   },
   {
-    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/n_number__2e_2d1",
+    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/NNumberDotMinus1",
     "file": "score/json/json_test_suite_test.cpp",
     "line": 160,
     "need": "comp_req__json__deserialization",
@@ -3960,7 +3960,7 @@
     "url": ""
   },
   {
-    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/n_number__2e2e_2d3",
+    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/NNumberDot2eMinus3",
     "file": "score/json/json_test_suite_test.cpp",
     "line": 160,
     "need": "comp_req__json__deserialization",
@@ -3972,7 +3972,7 @@
     "url": ""
   },
   {
-    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/n_number_0_2e1_2e2",
+    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/NNumber0Dot1Dot2",
     "file": "score/json/json_test_suite_test.cpp",
     "line": 160,
     "need": "comp_req__json__deserialization",
@@ -3984,7 +3984,7 @@
     "url": ""
   },
   {
-    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/n_number_0_2e3e_2b",
+    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/NNumber0Dot3ePlus",
     "file": "score/json/json_test_suite_test.cpp",
     "line": 160,
     "need": "comp_req__json__deserialization",
@@ -3996,7 +3996,7 @@
     "url": ""
   },
   {
-    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/n_number_0_2e3e",
+    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/NNumber0Dot3e",
     "file": "score/json/json_test_suite_test.cpp",
     "line": 160,
     "need": "comp_req__json__deserialization",
@@ -4008,7 +4008,7 @@
     "url": ""
   },
   {
-    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/n_number_0_2ee1",
+    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/NNumber0DotE1",
     "file": "score/json/json_test_suite_test.cpp",
     "line": 160,
     "need": "comp_req__json__deserialization",
@@ -4020,7 +4020,7 @@
     "url": ""
   },
   {
-    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/n_number_0_capital_E_2b",
+    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/NNumber0CapitalEPlus",
     "file": "score/json/json_test_suite_test.cpp",
     "line": 160,
     "need": "comp_req__json__deserialization",
@@ -4032,7 +4032,7 @@
     "url": ""
   },
   {
-    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/n_number_0_capital_E",
+    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/NNumber0CapitalE",
     "file": "score/json/json_test_suite_test.cpp",
     "line": 160,
     "need": "comp_req__json__deserialization",
@@ -4044,7 +4044,7 @@
     "url": ""
   },
   {
-    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/n_number_0e_2b",
+    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/NNumber0ePlus",
     "file": "score/json/json_test_suite_test.cpp",
     "line": 160,
     "need": "comp_req__json__deserialization",
@@ -4056,7 +4056,7 @@
     "url": ""
   },
   {
-    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/n_number_0e",
+    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/NNumber0e",
     "file": "score/json/json_test_suite_test.cpp",
     "line": 160,
     "need": "comp_req__json__deserialization",
@@ -4068,7 +4068,7 @@
     "url": ""
   },
   {
-    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/n_number_1_2e0e_2b",
+    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/NNumber1Dot0ePlus",
     "file": "score/json/json_test_suite_test.cpp",
     "line": 160,
     "need": "comp_req__json__deserialization",
@@ -4080,7 +4080,7 @@
     "url": ""
   },
   {
-    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/n_number_1_2e0e_2d",
+    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/NNumber1Dot0eMinus",
     "file": "score/json/json_test_suite_test.cpp",
     "line": 160,
     "need": "comp_req__json__deserialization",
@@ -4092,7 +4092,7 @@
     "url": ""
   },
   {
-    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/n_number_1_2e0e",
+    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/NNumber1Dot0e",
     "file": "score/json/json_test_suite_test.cpp",
     "line": 160,
     "need": "comp_req__json__deserialization",
@@ -4104,7 +4104,7 @@
     "url": ""
   },
   {
-    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/n_number_1_000",
+    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/NNumber1000",
     "file": "score/json/json_test_suite_test.cpp",
     "line": 160,
     "need": "comp_req__json__deserialization",
@@ -4116,7 +4116,7 @@
     "url": ""
   },
   {
-    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/n_number_1eE2",
+    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/NNumber1eE2",
     "file": "score/json/json_test_suite_test.cpp",
     "line": 160,
     "need": "comp_req__json__deserialization",
@@ -4128,7 +4128,7 @@
     "url": ""
   },
   {
-    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/n_number_2_2ee_2b3",
+    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/NNumber2DotEPlus3",
     "file": "score/json/json_test_suite_test.cpp",
     "line": 160,
     "need": "comp_req__json__deserialization",
@@ -4140,7 +4140,7 @@
     "url": ""
   },
   {
-    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/n_number_2_2ee_2d3",
+    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/NNumber2DotEMinus3",
     "file": "score/json/json_test_suite_test.cpp",
     "line": 160,
     "need": "comp_req__json__deserialization",
@@ -4152,7 +4152,7 @@
     "url": ""
   },
   {
-    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/n_number_2_2ee3",
+    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/NNumber2DotE3",
     "file": "score/json/json_test_suite_test.cpp",
     "line": 160,
     "need": "comp_req__json__deserialization",
@@ -4164,7 +4164,7 @@
     "url": ""
   },
   {
-    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/n_number_9_2ee_2b",
+    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/NNumber9DotEPlus",
     "file": "score/json/json_test_suite_test.cpp",
     "line": 160,
     "need": "comp_req__json__deserialization",
@@ -4176,7 +4176,7 @@
     "url": ""
   },
   {
-    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/n_number_Inf",
+    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/NNumberInf",
     "file": "score/json/json_test_suite_test.cpp",
     "line": 160,
     "need": "comp_req__json__deserialization",
@@ -4188,7 +4188,7 @@
     "url": ""
   },
   {
-    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/n_number_NaN",
+    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/NNumberNaN",
     "file": "score/json/json_test_suite_test.cpp",
     "line": 160,
     "need": "comp_req__json__deserialization",
@@ -4200,7 +4200,7 @@
     "url": ""
   },
   {
-    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/n_number_U_2bFF11_fullwidth_digit_one",
+    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/NNumberUPlusFF11FullwidthDigitOne",
     "file": "score/json/json_test_suite_test.cpp",
     "line": 160,
     "need": "comp_req__json__deserialization",
@@ -4212,7 +4212,7 @@
     "url": ""
   },
   {
-    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/n_number_expression",
+    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/NNumberExpression",
     "file": "score/json/json_test_suite_test.cpp",
     "line": 160,
     "need": "comp_req__json__deserialization",
@@ -4224,7 +4224,7 @@
     "url": ""
   },
   {
-    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/n_number_hex_1_digit",
+    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/NNumberHex1Digit",
     "file": "score/json/json_test_suite_test.cpp",
     "line": 160,
     "need": "comp_req__json__deserialization",
@@ -4236,7 +4236,7 @@
     "url": ""
   },
   {
-    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/n_number_hex_2_digits",
+    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/NNumberHex2Digits",
     "file": "score/json/json_test_suite_test.cpp",
     "line": 160,
     "need": "comp_req__json__deserialization",
@@ -4248,7 +4248,7 @@
     "url": ""
   },
   {
-    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/n_number_infinity",
+    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/NNumberInfinity",
     "file": "score/json/json_test_suite_test.cpp",
     "line": 160,
     "need": "comp_req__json__deserialization",
@@ -4260,7 +4260,7 @@
     "url": ""
   },
   {
-    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/n_number_invalid_2b_2d",
+    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/NNumberInvalidPlusMinus",
     "file": "score/json/json_test_suite_test.cpp",
     "line": 160,
     "need": "comp_req__json__deserialization",
@@ -4272,7 +4272,7 @@
     "url": ""
   },
   {
-    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/n_number_invalid_2dnegative_2dreal",
+    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/NNumberInvalidMinusNegativeMinusReal",
     "file": "score/json/json_test_suite_test.cpp",
     "line": 160,
     "need": "comp_req__json__deserialization",
@@ -4284,7 +4284,7 @@
     "url": ""
   },
   {
-    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/n_number_invalid_2dutf_2d8_2din_2dbigger_2dint",
+    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/NNumberInvalidMinusUtfMinus8MinusInMinusBiggerMinusInt",
     "file": "score/json/json_test_suite_test.cpp",
     "line": 160,
     "need": "comp_req__json__deserialization",
@@ -4296,7 +4296,7 @@
     "url": ""
   },
   {
-    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/n_number_invalid_2dutf_2d8_2din_2dexponent",
+    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/NNumberInvalidMinusUtfMinus8MinusInMinusExponent",
     "file": "score/json/json_test_suite_test.cpp",
     "line": 160,
     "need": "comp_req__json__deserialization",
@@ -4308,7 +4308,7 @@
     "url": ""
   },
   {
-    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/n_number_invalid_2dutf_2d8_2din_2dint",
+    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/NNumberInvalidMinusUtfMinus8MinusInMinusInt",
     "file": "score/json/json_test_suite_test.cpp",
     "line": 160,
     "need": "comp_req__json__deserialization",
@@ -4320,7 +4320,7 @@
     "url": ""
   },
   {
-    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/n_number_minus_infinity",
+    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/NNumberMinusInfinity",
     "file": "score/json/json_test_suite_test.cpp",
     "line": 160,
     "need": "comp_req__json__deserialization",
@@ -4332,7 +4332,7 @@
     "url": ""
   },
   {
-    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/n_number_minus_sign_with_trailing_garbage",
+    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/NNumberMinusSignWithTrailingGarbage",
     "file": "score/json/json_test_suite_test.cpp",
     "line": 160,
     "need": "comp_req__json__deserialization",
@@ -4344,7 +4344,7 @@
     "url": ""
   },
   {
-    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/n_number_minus_space_1",
+    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/NNumberMinusSpace1",
     "file": "score/json/json_test_suite_test.cpp",
     "line": 160,
     "need": "comp_req__json__deserialization",
@@ -4356,7 +4356,7 @@
     "url": ""
   },
   {
-    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/n_number_neg_int_starting_with_zero",
+    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/NNumberNegIntStartingWithZero",
     "file": "score/json/json_test_suite_test.cpp",
     "line": 160,
     "need": "comp_req__json__deserialization",
@@ -4368,7 +4368,7 @@
     "url": ""
   },
   {
-    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/n_number_neg_real_without_int_part",
+    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/NNumberNegRealWithoutIntPart",
     "file": "score/json/json_test_suite_test.cpp",
     "line": 160,
     "need": "comp_req__json__deserialization",
@@ -4380,7 +4380,7 @@
     "url": ""
   },
   {
-    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/n_number_neg_with_garbage_at_end",
+    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/NNumberNegWithGarbageAtEnd",
     "file": "score/json/json_test_suite_test.cpp",
     "line": 160,
     "need": "comp_req__json__deserialization",
@@ -4392,7 +4392,7 @@
     "url": ""
   },
   {
-    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/n_number_real_garbage_after_e",
+    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/NNumberRealGarbageAfterE",
     "file": "score/json/json_test_suite_test.cpp",
     "line": 160,
     "need": "comp_req__json__deserialization",
@@ -4404,7 +4404,7 @@
     "url": ""
   },
   {
-    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/n_number_real_with_invalid_utf8_after_e",
+    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/NNumberRealWithInvalidUtf8AfterE",
     "file": "score/json/json_test_suite_test.cpp",
     "line": 160,
     "need": "comp_req__json__deserialization",
@@ -4416,7 +4416,7 @@
     "url": ""
   },
   {
-    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/n_number_real_without_fractional_part",
+    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/NNumberRealWithoutFractionalPart",
     "file": "score/json/json_test_suite_test.cpp",
     "line": 160,
     "need": "comp_req__json__deserialization",
@@ -4428,7 +4428,7 @@
     "url": ""
   },
   {
-    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/n_number_starting_with_dot",
+    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/NNumberStartingWithDot",
     "file": "score/json/json_test_suite_test.cpp",
     "line": 160,
     "need": "comp_req__json__deserialization",
@@ -4440,7 +4440,7 @@
     "url": ""
   },
   {
-    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/n_number_with_alpha",
+    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/NNumberWithAlpha",
     "file": "score/json/json_test_suite_test.cpp",
     "line": 160,
     "need": "comp_req__json__deserialization",
@@ -4452,7 +4452,7 @@
     "url": ""
   },
   {
-    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/n_number_with_alpha_char",
+    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/NNumberWithAlphaChar",
     "file": "score/json/json_test_suite_test.cpp",
     "line": 160,
     "need": "comp_req__json__deserialization",
@@ -4464,7 +4464,7 @@
     "url": ""
   },
   {
-    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/n_number_with_leading_zero",
+    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/NNumberWithLeadingZero",
     "file": "score/json/json_test_suite_test.cpp",
     "line": 160,
     "need": "comp_req__json__deserialization",
@@ -4476,7 +4476,7 @@
     "url": ""
   },
   {
-    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/n_object_bad_value",
+    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/NObjectBadValue",
     "file": "score/json/json_test_suite_test.cpp",
     "line": 160,
     "need": "comp_req__json__deserialization",
@@ -4488,7 +4488,7 @@
     "url": ""
   },
   {
-    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/n_object_bracket_key",
+    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/NObjectBracketKey",
     "file": "score/json/json_test_suite_test.cpp",
     "line": 160,
     "need": "comp_req__json__deserialization",
@@ -4500,7 +4500,7 @@
     "url": ""
   },
   {
-    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/n_object_comma_instead_of_colon",
+    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/NObjectCommaInsteadOfColon",
     "file": "score/json/json_test_suite_test.cpp",
     "line": 160,
     "need": "comp_req__json__deserialization",
@@ -4512,7 +4512,7 @@
     "url": ""
   },
   {
-    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/n_object_double_colon",
+    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/NObjectDoubleColon",
     "file": "score/json/json_test_suite_test.cpp",
     "line": 160,
     "need": "comp_req__json__deserialization",
@@ -4524,7 +4524,7 @@
     "url": ""
   },
   {
-    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/n_object_emoji",
+    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/NObjectEmoji",
     "file": "score/json/json_test_suite_test.cpp",
     "line": 160,
     "need": "comp_req__json__deserialization",
@@ -4536,7 +4536,7 @@
     "url": ""
   },
   {
-    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/n_object_garbage_at_end",
+    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/NObjectGarbageAtEnd",
     "file": "score/json/json_test_suite_test.cpp",
     "line": 160,
     "need": "comp_req__json__deserialization",
@@ -4548,7 +4548,7 @@
     "url": ""
   },
   {
-    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/n_object_key_with_single_quotes",
+    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/NObjectKeyWithSingleQuotes",
     "file": "score/json/json_test_suite_test.cpp",
     "line": 160,
     "need": "comp_req__json__deserialization",
@@ -4560,7 +4560,7 @@
     "url": ""
   },
   {
-    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/n_object_lone_continuation_byte_in_key_and_trailing_comma",
+    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/NObjectLoneContinuationByteInKeyAndTrailingComma",
     "file": "score/json/json_test_suite_test.cpp",
     "line": 160,
     "need": "comp_req__json__deserialization",
@@ -4572,7 +4572,7 @@
     "url": ""
   },
   {
-    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/n_object_missing_colon",
+    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/NObjectMissingColon",
     "file": "score/json/json_test_suite_test.cpp",
     "line": 160,
     "need": "comp_req__json__deserialization",
@@ -4584,7 +4584,7 @@
     "url": ""
   },
   {
-    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/n_object_missing_key",
+    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/NObjectMissingKey",
     "file": "score/json/json_test_suite_test.cpp",
     "line": 160,
     "need": "comp_req__json__deserialization",
@@ -4596,7 +4596,7 @@
     "url": ""
   },
   {
-    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/n_object_missing_semicolon",
+    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/NObjectMissingSemicolon",
     "file": "score/json/json_test_suite_test.cpp",
     "line": 160,
     "need": "comp_req__json__deserialization",
@@ -4608,7 +4608,7 @@
     "url": ""
   },
   {
-    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/n_object_missing_value",
+    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/NObjectMissingValue",
     "file": "score/json/json_test_suite_test.cpp",
     "line": 160,
     "need": "comp_req__json__deserialization",
@@ -4620,7 +4620,7 @@
     "url": ""
   },
   {
-    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/n_object_no_2dcolon",
+    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/NObjectNoMinusColon",
     "file": "score/json/json_test_suite_test.cpp",
     "line": 160,
     "need": "comp_req__json__deserialization",
@@ -4632,7 +4632,7 @@
     "url": ""
   },
   {
-    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/n_object_non_string_key",
+    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/NObjectNonStringKey",
     "file": "score/json/json_test_suite_test.cpp",
     "line": 160,
     "need": "comp_req__json__deserialization",
@@ -4644,7 +4644,7 @@
     "url": ""
   },
   {
-    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/n_object_non_string_key_but_huge_number_instead",
+    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/NObjectNonStringKeyButHugeNumberInstead",
     "file": "score/json/json_test_suite_test.cpp",
     "line": 160,
     "need": "comp_req__json__deserialization",
@@ -4656,7 +4656,7 @@
     "url": ""
   },
   {
-    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/n_object_repeated_null_null",
+    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/NObjectRepeatedNullNull",
     "file": "score/json/json_test_suite_test.cpp",
     "line": 160,
     "need": "comp_req__json__deserialization",
@@ -4668,7 +4668,7 @@
     "url": ""
   },
   {
-    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/n_object_several_trailing_commas",
+    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/NObjectSeveralTrailingCommas",
     "file": "score/json/json_test_suite_test.cpp",
     "line": 160,
     "need": "comp_req__json__deserialization",
@@ -4680,7 +4680,7 @@
     "url": ""
   },
   {
-    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/n_object_single_quote",
+    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/NObjectSingleQuote",
     "file": "score/json/json_test_suite_test.cpp",
     "line": 160,
     "need": "comp_req__json__deserialization",
@@ -4692,7 +4692,7 @@
     "url": ""
   },
   {
-    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/n_object_trailing_comma",
+    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/NObjectTrailingComma",
     "file": "score/json/json_test_suite_test.cpp",
     "line": 160,
     "need": "comp_req__json__deserialization",
@@ -4704,7 +4704,7 @@
     "url": ""
   },
   {
-    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/n_object_trailing_comment",
+    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/NObjectTrailingComment",
     "file": "score/json/json_test_suite_test.cpp",
     "line": 160,
     "need": "comp_req__json__deserialization",
@@ -4716,7 +4716,7 @@
     "url": ""
   },
   {
-    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/n_object_trailing_comment_open",
+    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/NObjectTrailingCommentOpen",
     "file": "score/json/json_test_suite_test.cpp",
     "line": 160,
     "need": "comp_req__json__deserialization",
@@ -4728,7 +4728,7 @@
     "url": ""
   },
   {
-    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/n_object_trailing_comment_slash_open",
+    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/NObjectTrailingCommentSlashOpen",
     "file": "score/json/json_test_suite_test.cpp",
     "line": 160,
     "need": "comp_req__json__deserialization",
@@ -4740,7 +4740,7 @@
     "url": ""
   },
   {
-    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/n_object_trailing_comment_slash_open_incomplete",
+    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/NObjectTrailingCommentSlashOpenIncomplete",
     "file": "score/json/json_test_suite_test.cpp",
     "line": 160,
     "need": "comp_req__json__deserialization",
@@ -4752,7 +4752,7 @@
     "url": ""
   },
   {
-    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/n_object_two_commas_in_a_row",
+    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/NObjectTwoCommasInARow",
     "file": "score/json/json_test_suite_test.cpp",
     "line": 160,
     "need": "comp_req__json__deserialization",
@@ -4764,7 +4764,7 @@
     "url": ""
   },
   {
-    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/n_object_unquoted_key",
+    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/NObjectUnquotedKey",
     "file": "score/json/json_test_suite_test.cpp",
     "line": 160,
     "need": "comp_req__json__deserialization",
@@ -4776,7 +4776,7 @@
     "url": ""
   },
   {
-    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/n_object_unterminated_2dvalue",
+    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/NObjectUnterminatedMinusValue",
     "file": "score/json/json_test_suite_test.cpp",
     "line": 160,
     "need": "comp_req__json__deserialization",
@@ -4788,7 +4788,7 @@
     "url": ""
   },
   {
-    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/n_object_with_single_string",
+    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/NObjectWithSingleString",
     "file": "score/json/json_test_suite_test.cpp",
     "line": 160,
     "need": "comp_req__json__deserialization",
@@ -4800,7 +4800,7 @@
     "url": ""
   },
   {
-    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/n_object_with_trailing_garbage",
+    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/NObjectWithTrailingGarbage",
     "file": "score/json/json_test_suite_test.cpp",
     "line": 160,
     "need": "comp_req__json__deserialization",
@@ -4812,7 +4812,7 @@
     "url": ""
   },
   {
-    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/n_single_space",
+    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/NSingleSpace",
     "file": "score/json/json_test_suite_test.cpp",
     "line": 160,
     "need": "comp_req__json__deserialization",
@@ -4824,7 +4824,7 @@
     "url": ""
   },
   {
-    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/n_string_1_surrogate_then_escape",
+    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/NString1SurrogateThenEscape",
     "file": "score/json/json_test_suite_test.cpp",
     "line": 160,
     "need": "comp_req__json__deserialization",
@@ -4836,7 +4836,7 @@
     "url": ""
   },
   {
-    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/n_string_1_surrogate_then_escape_u",
+    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/NString1SurrogateThenEscapeU",
     "file": "score/json/json_test_suite_test.cpp",
     "line": 160,
     "need": "comp_req__json__deserialization",
@@ -4848,7 +4848,7 @@
     "url": ""
   },
   {
-    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/n_string_1_surrogate_then_escape_u1",
+    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/NString1SurrogateThenEscapeU1",
     "file": "score/json/json_test_suite_test.cpp",
     "line": 160,
     "need": "comp_req__json__deserialization",
@@ -4860,7 +4860,7 @@
     "url": ""
   },
   {
-    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/n_string_1_surrogate_then_escape_u1x",
+    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/NString1SurrogateThenEscapeU1x",
     "file": "score/json/json_test_suite_test.cpp",
     "line": 160,
     "need": "comp_req__json__deserialization",
@@ -4872,7 +4872,7 @@
     "url": ""
   },
   {
-    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/n_string_accentuated_char_no_quotes",
+    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/NStringAccentuatedCharNoQuotes",
     "file": "score/json/json_test_suite_test.cpp",
     "line": 160,
     "need": "comp_req__json__deserialization",
@@ -4884,7 +4884,7 @@
     "url": ""
   },
   {
-    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/n_string_backslash_00",
+    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/NStringBackslash00",
     "file": "score/json/json_test_suite_test.cpp",
     "line": 160,
     "need": "comp_req__json__deserialization",
@@ -4896,7 +4896,7 @@
     "url": ""
   },
   {
-    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/n_string_escape_x",
+    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/NStringEscapeX",
     "file": "score/json/json_test_suite_test.cpp",
     "line": 160,
     "need": "comp_req__json__deserialization",
@@ -4908,7 +4908,7 @@
     "url": ""
   },
   {
-    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/n_string_escaped_backslash_bad",
+    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/NStringEscapedBackslashBad",
     "file": "score/json/json_test_suite_test.cpp",
     "line": 160,
     "need": "comp_req__json__deserialization",
@@ -4920,7 +4920,7 @@
     "url": ""
   },
   {
-    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/n_string_escaped_ctrl_char_tab",
+    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/NStringEscapedCtrlCharTab",
     "file": "score/json/json_test_suite_test.cpp",
     "line": 160,
     "need": "comp_req__json__deserialization",
@@ -4932,7 +4932,7 @@
     "url": ""
   },
   {
-    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/n_string_escaped_emoji",
+    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/NStringEscapedEmoji",
     "file": "score/json/json_test_suite_test.cpp",
     "line": 160,
     "need": "comp_req__json__deserialization",
@@ -4944,7 +4944,7 @@
     "url": ""
   },
   {
-    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/n_string_incomplete_escape",
+    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/NStringIncompleteEscape",
     "file": "score/json/json_test_suite_test.cpp",
     "line": 160,
     "need": "comp_req__json__deserialization",
@@ -4956,7 +4956,7 @@
     "url": ""
   },
   {
-    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/n_string_incomplete_escaped_character",
+    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/NStringIncompleteEscapedCharacter",
     "file": "score/json/json_test_suite_test.cpp",
     "line": 160,
     "need": "comp_req__json__deserialization",
@@ -4968,7 +4968,7 @@
     "url": ""
   },
   {
-    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/n_string_incomplete_surrogate",
+    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/NStringIncompleteSurrogate",
     "file": "score/json/json_test_suite_test.cpp",
     "line": 160,
     "need": "comp_req__json__deserialization",
@@ -4980,7 +4980,7 @@
     "url": ""
   },
   {
-    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/n_string_incomplete_surrogate_escape_invalid",
+    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/NStringIncompleteSurrogateEscapeInvalid",
     "file": "score/json/json_test_suite_test.cpp",
     "line": 160,
     "need": "comp_req__json__deserialization",
@@ -4992,7 +4992,7 @@
     "url": ""
   },
   {
-    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/n_string_invalid_2dutf_2d8_2din_2descape",
+    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/NStringInvalidMinusUtfMinus8MinusInMinusEscape",
     "file": "score/json/json_test_suite_test.cpp",
     "line": 160,
     "need": "comp_req__json__deserialization",
@@ -5004,7 +5004,7 @@
     "url": ""
   },
   {
-    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/n_string_invalid_backslash_esc",
+    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/NStringInvalidBackslashEsc",
     "file": "score/json/json_test_suite_test.cpp",
     "line": 160,
     "need": "comp_req__json__deserialization",
@@ -5016,7 +5016,7 @@
     "url": ""
   },
   {
-    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/n_string_invalid_unicode_escape",
+    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/NStringInvalidUnicodeEscape",
     "file": "score/json/json_test_suite_test.cpp",
     "line": 160,
     "need": "comp_req__json__deserialization",
@@ -5028,7 +5028,7 @@
     "url": ""
   },
   {
-    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/n_string_invalid_utf8_after_escape",
+    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/NStringInvalidUtf8AfterEscape",
     "file": "score/json/json_test_suite_test.cpp",
     "line": 160,
     "need": "comp_req__json__deserialization",
@@ -5040,7 +5040,7 @@
     "url": ""
   },
   {
-    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/n_string_leading_uescaped_thinspace",
+    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/NStringLeadingUescapedThinspace",
     "file": "score/json/json_test_suite_test.cpp",
     "line": 160,
     "need": "comp_req__json__deserialization",
@@ -5052,7 +5052,7 @@
     "url": ""
   },
   {
-    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/n_string_no_quotes_with_bad_escape",
+    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/NStringNoQuotesWithBadEscape",
     "file": "score/json/json_test_suite_test.cpp",
     "line": 160,
     "need": "comp_req__json__deserialization",
@@ -5064,7 +5064,7 @@
     "url": ""
   },
   {
-    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/n_string_single_doublequote",
+    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/NStringSingleDoublequote",
     "file": "score/json/json_test_suite_test.cpp",
     "line": 160,
     "need": "comp_req__json__deserialization",
@@ -5076,7 +5076,7 @@
     "url": ""
   },
   {
-    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/n_string_single_quote",
+    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/NStringSingleQuote",
     "file": "score/json/json_test_suite_test.cpp",
     "line": 160,
     "need": "comp_req__json__deserialization",
@@ -5088,7 +5088,7 @@
     "url": ""
   },
   {
-    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/n_string_single_string_no_double_quotes",
+    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/NStringSingleStringNoDoubleQuotes",
     "file": "score/json/json_test_suite_test.cpp",
     "line": 160,
     "need": "comp_req__json__deserialization",
@@ -5100,7 +5100,7 @@
     "url": ""
   },
   {
-    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/n_string_start_escape_unclosed",
+    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/NStringStartEscapeUnclosed",
     "file": "score/json/json_test_suite_test.cpp",
     "line": 160,
     "need": "comp_req__json__deserialization",
@@ -5112,7 +5112,7 @@
     "url": ""
   },
   {
-    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/n_string_unescaped_ctrl_char",
+    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/NStringUnescapedCtrlChar",
     "file": "score/json/json_test_suite_test.cpp",
     "line": 160,
     "need": "comp_req__json__deserialization",
@@ -5124,7 +5124,7 @@
     "url": ""
   },
   {
-    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/n_string_unescaped_newline",
+    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/NStringUnescapedNewline",
     "file": "score/json/json_test_suite_test.cpp",
     "line": 160,
     "need": "comp_req__json__deserialization",
@@ -5136,7 +5136,7 @@
     "url": ""
   },
   {
-    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/n_string_unescaped_tab",
+    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/NStringUnescapedTab",
     "file": "score/json/json_test_suite_test.cpp",
     "line": 160,
     "need": "comp_req__json__deserialization",
@@ -5148,7 +5148,7 @@
     "url": ""
   },
   {
-    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/n_string_unicode_CapitalU",
+    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/NStringUnicodeCapitalU",
     "file": "score/json/json_test_suite_test.cpp",
     "line": 160,
     "need": "comp_req__json__deserialization",
@@ -5160,7 +5160,7 @@
     "url": ""
   },
   {
-    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/n_string_with_trailing_garbage",
+    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/NStringWithTrailingGarbage",
     "file": "score/json/json_test_suite_test.cpp",
     "line": 160,
     "need": "comp_req__json__deserialization",
@@ -5172,7 +5172,7 @@
     "url": ""
   },
   {
-    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/n_structure_100000_opening_arrays",
+    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/NStructure100000OpeningArrays",
     "file": "score/json/json_test_suite_test.cpp",
     "line": 160,
     "need": "comp_req__json__deserialization",
@@ -5184,7 +5184,7 @@
     "url": ""
   },
   {
-    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/n_structure_U_2b2060_word_joined",
+    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/NStructureUPlus2060WordJoined",
     "file": "score/json/json_test_suite_test.cpp",
     "line": 160,
     "need": "comp_req__json__deserialization",
@@ -5196,7 +5196,7 @@
     "url": ""
   },
   {
-    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/n_structure_UTF8_BOM_no_data",
+    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/NStructureUTF8BOMNoData",
     "file": "score/json/json_test_suite_test.cpp",
     "line": 160,
     "need": "comp_req__json__deserialization",
@@ -5208,7 +5208,7 @@
     "url": ""
   },
   {
-    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/n_structure_angle_bracket__2e",
+    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/NStructureAngleBracketDot",
     "file": "score/json/json_test_suite_test.cpp",
     "line": 160,
     "need": "comp_req__json__deserialization",
@@ -5220,7 +5220,7 @@
     "url": ""
   },
   {
-    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/n_structure_angle_bracket_null",
+    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/NStructureAngleBracketNull",
     "file": "score/json/json_test_suite_test.cpp",
     "line": 160,
     "need": "comp_req__json__deserialization",
@@ -5232,7 +5232,7 @@
     "url": ""
   },
   {
-    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/n_structure_array_trailing_garbage",
+    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/NStructureArrayTrailingGarbage",
     "file": "score/json/json_test_suite_test.cpp",
     "line": 160,
     "need": "comp_req__json__deserialization",
@@ -5244,7 +5244,7 @@
     "url": ""
   },
   {
-    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/n_structure_array_with_extra_array_close",
+    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/NStructureArrayWithExtraArrayClose",
     "file": "score/json/json_test_suite_test.cpp",
     "line": 160,
     "need": "comp_req__json__deserialization",
@@ -5256,7 +5256,7 @@
     "url": ""
   },
   {
-    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/n_structure_array_with_unclosed_string",
+    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/NStructureArrayWithUnclosedString",
     "file": "score/json/json_test_suite_test.cpp",
     "line": 160,
     "need": "comp_req__json__deserialization",
@@ -5268,7 +5268,7 @@
     "url": ""
   },
   {
-    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/n_structure_ascii_2dunicode_2didentifier",
+    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/NStructureAsciiMinusUnicodeMinusIdentifier",
     "file": "score/json/json_test_suite_test.cpp",
     "line": 160,
     "need": "comp_req__json__deserialization",
@@ -5280,7 +5280,7 @@
     "url": ""
   },
   {
-    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/n_structure_capitalized_True",
+    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/NStructureCapitalizedTrue",
     "file": "score/json/json_test_suite_test.cpp",
     "line": 160,
     "need": "comp_req__json__deserialization",
@@ -5292,7 +5292,7 @@
     "url": ""
   },
   {
-    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/n_structure_close_unopened_array",
+    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/NStructureCloseUnopenedArray",
     "file": "score/json/json_test_suite_test.cpp",
     "line": 160,
     "need": "comp_req__json__deserialization",
@@ -5304,7 +5304,7 @@
     "url": ""
   },
   {
-    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/n_structure_comma_instead_of_closing_brace",
+    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/NStructureCommaInsteadOfClosingBrace",
     "file": "score/json/json_test_suite_test.cpp",
     "line": 160,
     "need": "comp_req__json__deserialization",
@@ -5316,7 +5316,7 @@
     "url": ""
   },
   {
-    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/n_structure_double_array",
+    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/NStructureDoubleArray",
     "file": "score/json/json_test_suite_test.cpp",
     "line": 160,
     "need": "comp_req__json__deserialization",
@@ -5328,7 +5328,7 @@
     "url": ""
   },
   {
-    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/n_structure_end_array",
+    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/NStructureEndArray",
     "file": "score/json/json_test_suite_test.cpp",
     "line": 160,
     "need": "comp_req__json__deserialization",
@@ -5340,7 +5340,7 @@
     "url": ""
   },
   {
-    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/n_structure_incomplete_UTF8_BOM",
+    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/NStructureIncompleteUTF8BOM",
     "file": "score/json/json_test_suite_test.cpp",
     "line": 160,
     "need": "comp_req__json__deserialization",
@@ -5352,7 +5352,7 @@
     "url": ""
   },
   {
-    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/n_structure_lone_2dinvalid_2dutf_2d8",
+    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/NStructureLoneMinusInvalidMinusUtfMinus8",
     "file": "score/json/json_test_suite_test.cpp",
     "line": 160,
     "need": "comp_req__json__deserialization",
@@ -5364,7 +5364,7 @@
     "url": ""
   },
   {
-    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/n_structure_lone_2dopen_2dbracket",
+    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/NStructureLoneMinusOpenMinusBracket",
     "file": "score/json/json_test_suite_test.cpp",
     "line": 160,
     "need": "comp_req__json__deserialization",
@@ -5376,7 +5376,7 @@
     "url": ""
   },
   {
-    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/n_structure_no_data",
+    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/NStructureNoData",
     "file": "score/json/json_test_suite_test.cpp",
     "line": 160,
     "need": "comp_req__json__deserialization",
@@ -5388,7 +5388,7 @@
     "url": ""
   },
   {
-    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/n_structure_null_2dbyte_2doutside_2dstring",
+    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/NStructureNullMinusByteMinusOutsideMinusString",
     "file": "score/json/json_test_suite_test.cpp",
     "line": 160,
     "need": "comp_req__json__deserialization",
@@ -5400,7 +5400,7 @@
     "url": ""
   },
   {
-    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/n_structure_number_with_trailing_garbage",
+    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/NStructureNumberWithTrailingGarbage",
     "file": "score/json/json_test_suite_test.cpp",
     "line": 160,
     "need": "comp_req__json__deserialization",
@@ -5412,7 +5412,7 @@
     "url": ""
   },
   {
-    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/n_structure_object_followed_by_closing_object",
+    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/NStructureObjectFollowedByClosingObject",
     "file": "score/json/json_test_suite_test.cpp",
     "line": 160,
     "need": "comp_req__json__deserialization",
@@ -5424,7 +5424,7 @@
     "url": ""
   },
   {
-    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/n_structure_object_unclosed_no_value",
+    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/NStructureObjectUnclosedNoValue",
     "file": "score/json/json_test_suite_test.cpp",
     "line": 160,
     "need": "comp_req__json__deserialization",
@@ -5436,7 +5436,7 @@
     "url": ""
   },
   {
-    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/n_structure_object_with_comment",
+    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/NStructureObjectWithComment",
     "file": "score/json/json_test_suite_test.cpp",
     "line": 160,
     "need": "comp_req__json__deserialization",
@@ -5448,7 +5448,7 @@
     "url": ""
   },
   {
-    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/n_structure_object_with_trailing_garbage",
+    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/NStructureObjectWithTrailingGarbage",
     "file": "score/json/json_test_suite_test.cpp",
     "line": 160,
     "need": "comp_req__json__deserialization",
@@ -5460,7 +5460,7 @@
     "url": ""
   },
   {
-    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/n_structure_open_array_apostrophe",
+    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/NStructureOpenArrayApostrophe",
     "file": "score/json/json_test_suite_test.cpp",
     "line": 160,
     "need": "comp_req__json__deserialization",
@@ -5472,7 +5472,7 @@
     "url": ""
   },
   {
-    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/n_structure_open_array_comma",
+    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/NStructureOpenArrayComma",
     "file": "score/json/json_test_suite_test.cpp",
     "line": 160,
     "need": "comp_req__json__deserialization",
@@ -5484,7 +5484,7 @@
     "url": ""
   },
   {
-    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/n_structure_open_array_object",
+    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/NStructureOpenArrayObject",
     "file": "score/json/json_test_suite_test.cpp",
     "line": 160,
     "need": "comp_req__json__deserialization",
@@ -5496,7 +5496,7 @@
     "url": ""
   },
   {
-    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/n_structure_open_array_open_object",
+    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/NStructureOpenArrayOpenObject",
     "file": "score/json/json_test_suite_test.cpp",
     "line": 160,
     "need": "comp_req__json__deserialization",
@@ -5508,7 +5508,7 @@
     "url": ""
   },
   {
-    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/n_structure_open_array_open_string",
+    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/NStructureOpenArrayOpenString",
     "file": "score/json/json_test_suite_test.cpp",
     "line": 160,
     "need": "comp_req__json__deserialization",
@@ -5520,7 +5520,7 @@
     "url": ""
   },
   {
-    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/n_structure_open_array_string",
+    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/NStructureOpenArrayString",
     "file": "score/json/json_test_suite_test.cpp",
     "line": 160,
     "need": "comp_req__json__deserialization",
@@ -5532,7 +5532,7 @@
     "url": ""
   },
   {
-    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/n_structure_open_object",
+    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/NStructureOpenObject",
     "file": "score/json/json_test_suite_test.cpp",
     "line": 160,
     "need": "comp_req__json__deserialization",
@@ -5544,7 +5544,7 @@
     "url": ""
   },
   {
-    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/n_structure_open_object_close_array",
+    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/NStructureOpenObjectCloseArray",
     "file": "score/json/json_test_suite_test.cpp",
     "line": 160,
     "need": "comp_req__json__deserialization",
@@ -5556,7 +5556,7 @@
     "url": ""
   },
   {
-    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/n_structure_open_object_comma",
+    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/NStructureOpenObjectComma",
     "file": "score/json/json_test_suite_test.cpp",
     "line": 160,
     "need": "comp_req__json__deserialization",
@@ -5568,7 +5568,7 @@
     "url": ""
   },
   {
-    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/n_structure_open_object_open_array",
+    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/NStructureOpenObjectOpenArray",
     "file": "score/json/json_test_suite_test.cpp",
     "line": 160,
     "need": "comp_req__json__deserialization",
@@ -5580,7 +5580,7 @@
     "url": ""
   },
   {
-    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/n_structure_open_object_open_string",
+    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/NStructureOpenObjectOpenString",
     "file": "score/json/json_test_suite_test.cpp",
     "line": 160,
     "need": "comp_req__json__deserialization",
@@ -5592,7 +5592,7 @@
     "url": ""
   },
   {
-    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/n_structure_open_object_string_with_apostrophes",
+    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/NStructureOpenObjectStringWithApostrophes",
     "file": "score/json/json_test_suite_test.cpp",
     "line": 160,
     "need": "comp_req__json__deserialization",
@@ -5604,7 +5604,7 @@
     "url": ""
   },
   {
-    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/n_structure_open_open",
+    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/NStructureOpenOpen",
     "file": "score/json/json_test_suite_test.cpp",
     "line": 160,
     "need": "comp_req__json__deserialization",
@@ -5616,7 +5616,7 @@
     "url": ""
   },
   {
-    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/n_structure_single_eacute",
+    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/NStructureSingleEacute",
     "file": "score/json/json_test_suite_test.cpp",
     "line": 160,
     "need": "comp_req__json__deserialization",
@@ -5628,7 +5628,7 @@
     "url": ""
   },
   {
-    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/n_structure_single_star",
+    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/NStructureSingleStar",
     "file": "score/json/json_test_suite_test.cpp",
     "line": 160,
     "need": "comp_req__json__deserialization",
@@ -5640,7 +5640,7 @@
     "url": ""
   },
   {
-    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/n_structure_trailing__23",
+    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/NStructureTrailingHash",
     "file": "score/json/json_test_suite_test.cpp",
     "line": 160,
     "need": "comp_req__json__deserialization",
@@ -5652,7 +5652,7 @@
     "url": ""
   },
   {
-    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/n_structure_uescaped_LF_before_string",
+    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/NStructureUescapedLFBeforeString",
     "file": "score/json/json_test_suite_test.cpp",
     "line": 160,
     "need": "comp_req__json__deserialization",
@@ -5664,7 +5664,7 @@
     "url": ""
   },
   {
-    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/n_structure_unclosed_array",
+    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/NStructureUnclosedArray",
     "file": "score/json/json_test_suite_test.cpp",
     "line": 160,
     "need": "comp_req__json__deserialization",
@@ -5676,7 +5676,7 @@
     "url": ""
   },
   {
-    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/n_structure_unclosed_array_partial_null",
+    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/NStructureUnclosedArrayPartialNull",
     "file": "score/json/json_test_suite_test.cpp",
     "line": 160,
     "need": "comp_req__json__deserialization",
@@ -5688,7 +5688,7 @@
     "url": ""
   },
   {
-    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/n_structure_unclosed_array_unfinished_false",
+    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/NStructureUnclosedArrayUnfinishedFalse",
     "file": "score/json/json_test_suite_test.cpp",
     "line": 160,
     "need": "comp_req__json__deserialization",
@@ -5700,7 +5700,7 @@
     "url": ""
   },
   {
-    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/n_structure_unclosed_array_unfinished_true",
+    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/NStructureUnclosedArrayUnfinishedTrue",
     "file": "score/json/json_test_suite_test.cpp",
     "line": 160,
     "need": "comp_req__json__deserialization",
@@ -5712,7 +5712,7 @@
     "url": ""
   },
   {
-    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/n_structure_unclosed_object",
+    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/NStructureUnclosedObject",
     "file": "score/json/json_test_suite_test.cpp",
     "line": 160,
     "need": "comp_req__json__deserialization",
@@ -5724,7 +5724,7 @@
     "url": ""
   },
   {
-    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/n_structure_unicode_2didentifier",
+    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/NStructureUnicodeMinusIdentifier",
     "file": "score/json/json_test_suite_test.cpp",
     "line": 160,
     "need": "comp_req__json__deserialization",
@@ -5736,7 +5736,7 @@
     "url": ""
   },
   {
-    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/n_structure_whitespace_U_2b2060_word_joiner",
+    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/NStructureWhitespaceUPlus2060WordJoiner",
     "file": "score/json/json_test_suite_test.cpp",
     "line": 160,
     "need": "comp_req__json__deserialization",
@@ -5748,7 +5748,7 @@
     "url": ""
   },
   {
-    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/n_structure_whitespace_formfeed",
+    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/NStructureWhitespaceFormfeed",
     "file": "score/json/json_test_suite_test.cpp",
     "line": 160,
     "need": "comp_req__json__deserialization",
@@ -5760,7 +5760,7 @@
     "url": ""
   },
   {
-    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/y_array_arraysWithSpaces",
+    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/YArrayArraysWithSpaces",
     "file": "score/json/json_test_suite_test.cpp",
     "line": 160,
     "need": "comp_req__json__deserialization",
@@ -5772,7 +5772,7 @@
     "url": ""
   },
   {
-    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/y_array_empty_2dstring",
+    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/YArrayEmptyMinusString",
     "file": "score/json/json_test_suite_test.cpp",
     "line": 160,
     "need": "comp_req__json__deserialization",
@@ -5784,7 +5784,7 @@
     "url": ""
   },
   {
-    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/y_array_empty",
+    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/YArrayEmpty",
     "file": "score/json/json_test_suite_test.cpp",
     "line": 160,
     "need": "comp_req__json__deserialization",
@@ -5796,7 +5796,7 @@
     "url": ""
   },
   {
-    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/y_array_ending_with_newline",
+    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/YArrayEndingWithNewline",
     "file": "score/json/json_test_suite_test.cpp",
     "line": 160,
     "need": "comp_req__json__deserialization",
@@ -5808,7 +5808,7 @@
     "url": ""
   },
   {
-    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/y_array_false",
+    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/YArrayFalse",
     "file": "score/json/json_test_suite_test.cpp",
     "line": 160,
     "need": "comp_req__json__deserialization",
@@ -5820,7 +5820,7 @@
     "url": ""
   },
   {
-    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/y_array_heterogeneous",
+    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/YArrayHeterogeneous",
     "file": "score/json/json_test_suite_test.cpp",
     "line": 160,
     "need": "comp_req__json__deserialization",
@@ -5832,7 +5832,7 @@
     "url": ""
   },
   {
-    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/y_array_null",
+    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/YArrayNull",
     "file": "score/json/json_test_suite_test.cpp",
     "line": 160,
     "need": "comp_req__json__deserialization",
@@ -5844,7 +5844,7 @@
     "url": ""
   },
   {
-    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/y_array_with_1_and_newline",
+    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/YArrayWith1AndNewline",
     "file": "score/json/json_test_suite_test.cpp",
     "line": 160,
     "need": "comp_req__json__deserialization",
@@ -5856,7 +5856,7 @@
     "url": ""
   },
   {
-    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/y_array_with_leading_space",
+    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/YArrayWithLeadingSpace",
     "file": "score/json/json_test_suite_test.cpp",
     "line": 160,
     "need": "comp_req__json__deserialization",
@@ -5868,7 +5868,7 @@
     "url": ""
   },
   {
-    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/y_array_with_several_null",
+    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/YArrayWithSeveralNull",
     "file": "score/json/json_test_suite_test.cpp",
     "line": 160,
     "need": "comp_req__json__deserialization",
@@ -5880,7 +5880,7 @@
     "url": ""
   },
   {
-    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/y_array_with_trailing_space",
+    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/YArrayWithTrailingSpace",
     "file": "score/json/json_test_suite_test.cpp",
     "line": 160,
     "need": "comp_req__json__deserialization",
@@ -5892,7 +5892,7 @@
     "url": ""
   },
   {
-    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/y_number",
+    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/YNumber",
     "file": "score/json/json_test_suite_test.cpp",
     "line": 160,
     "need": "comp_req__json__deserialization",
@@ -5904,7 +5904,7 @@
     "url": ""
   },
   {
-    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/y_number_0e_2b1",
+    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/YNumber0ePlus1",
     "file": "score/json/json_test_suite_test.cpp",
     "line": 160,
     "need": "comp_req__json__deserialization",
@@ -5916,7 +5916,7 @@
     "url": ""
   },
   {
-    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/y_number_0e1",
+    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/YNumber0e1",
     "file": "score/json/json_test_suite_test.cpp",
     "line": 160,
     "need": "comp_req__json__deserialization",
@@ -5928,7 +5928,7 @@
     "url": ""
   },
   {
-    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/y_number_after_space",
+    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/YNumberAfterSpace",
     "file": "score/json/json_test_suite_test.cpp",
     "line": 160,
     "need": "comp_req__json__deserialization",
@@ -5940,7 +5940,7 @@
     "url": ""
   },
   {
-    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/y_number_double_close_to_zero",
+    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/YNumberDoubleCloseToZero",
     "file": "score/json/json_test_suite_test.cpp",
     "line": 160,
     "need": "comp_req__json__deserialization",
@@ -5952,7 +5952,7 @@
     "url": ""
   },
   {
-    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/y_number_int_with_exp",
+    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/YNumberIntWithExp",
     "file": "score/json/json_test_suite_test.cpp",
     "line": 160,
     "need": "comp_req__json__deserialization",
@@ -5964,7 +5964,7 @@
     "url": ""
   },
   {
-    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/y_number_minus_zero",
+    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/YNumberMinusZero",
     "file": "score/json/json_test_suite_test.cpp",
     "line": 160,
     "need": "comp_req__json__deserialization",
@@ -5976,7 +5976,7 @@
     "url": ""
   },
   {
-    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/y_number_negative_int",
+    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/YNumberNegativeInt",
     "file": "score/json/json_test_suite_test.cpp",
     "line": 160,
     "need": "comp_req__json__deserialization",
@@ -5988,7 +5988,7 @@
     "url": ""
   },
   {
-    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/y_number_negative_one",
+    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/YNumberNegativeOne",
     "file": "score/json/json_test_suite_test.cpp",
     "line": 160,
     "need": "comp_req__json__deserialization",
@@ -6000,7 +6000,7 @@
     "url": ""
   },
   {
-    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/y_number_negative_zero",
+    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/YNumberNegativeZero",
     "file": "score/json/json_test_suite_test.cpp",
     "line": 160,
     "need": "comp_req__json__deserialization",
@@ -6012,7 +6012,7 @@
     "url": ""
   },
   {
-    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/y_number_real_capital_e",
+    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/YNumberRealCapitalE",
     "file": "score/json/json_test_suite_test.cpp",
     "line": 160,
     "need": "comp_req__json__deserialization",
@@ -6024,7 +6024,7 @@
     "url": ""
   },
   {
-    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/y_number_real_capital_e_neg_exp",
+    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/YNumberRealCapitalENegExp",
     "file": "score/json/json_test_suite_test.cpp",
     "line": 160,
     "need": "comp_req__json__deserialization",
@@ -6036,7 +6036,7 @@
     "url": ""
   },
   {
-    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/y_number_real_capital_e_pos_exp",
+    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/YNumberRealCapitalEPosExp",
     "file": "score/json/json_test_suite_test.cpp",
     "line": 160,
     "need": "comp_req__json__deserialization",
@@ -6048,7 +6048,7 @@
     "url": ""
   },
   {
-    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/y_number_real_exponent",
+    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/YNumberRealExponent",
     "file": "score/json/json_test_suite_test.cpp",
     "line": 160,
     "need": "comp_req__json__deserialization",
@@ -6060,7 +6060,7 @@
     "url": ""
   },
   {
-    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/y_number_real_fraction_exponent",
+    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/YNumberRealFractionExponent",
     "file": "score/json/json_test_suite_test.cpp",
     "line": 160,
     "need": "comp_req__json__deserialization",
@@ -6072,7 +6072,7 @@
     "url": ""
   },
   {
-    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/y_number_real_neg_exp",
+    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/YNumberRealNegExp",
     "file": "score/json/json_test_suite_test.cpp",
     "line": 160,
     "need": "comp_req__json__deserialization",
@@ -6084,7 +6084,7 @@
     "url": ""
   },
   {
-    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/y_number_real_pos_exponent",
+    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/YNumberRealPosExponent",
     "file": "score/json/json_test_suite_test.cpp",
     "line": 160,
     "need": "comp_req__json__deserialization",
@@ -6096,7 +6096,7 @@
     "url": ""
   },
   {
-    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/y_number_simple_int",
+    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/YNumberSimpleInt",
     "file": "score/json/json_test_suite_test.cpp",
     "line": 160,
     "need": "comp_req__json__deserialization",
@@ -6108,7 +6108,7 @@
     "url": ""
   },
   {
-    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/y_number_simple_real",
+    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/YNumberSimpleReal",
     "file": "score/json/json_test_suite_test.cpp",
     "line": 160,
     "need": "comp_req__json__deserialization",
@@ -6120,7 +6120,7 @@
     "url": ""
   },
   {
-    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/y_object",
+    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/YObject",
     "file": "score/json/json_test_suite_test.cpp",
     "line": 160,
     "need": "comp_req__json__deserialization",
@@ -6132,7 +6132,7 @@
     "url": ""
   },
   {
-    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/y_object_basic",
+    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/YObjectBasic",
     "file": "score/json/json_test_suite_test.cpp",
     "line": 160,
     "need": "comp_req__json__deserialization",
@@ -6144,7 +6144,7 @@
     "url": ""
   },
   {
-    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/y_object_duplicated_key",
+    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/YObjectDuplicatedKey",
     "file": "score/json/json_test_suite_test.cpp",
     "line": 160,
     "need": "comp_req__json__deserialization",
@@ -6156,7 +6156,7 @@
     "url": ""
   },
   {
-    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/y_object_duplicated_key_and_value",
+    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/YObjectDuplicatedKeyAndValue",
     "file": "score/json/json_test_suite_test.cpp",
     "line": 160,
     "need": "comp_req__json__deserialization",
@@ -6168,7 +6168,7 @@
     "url": ""
   },
   {
-    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/y_object_empty",
+    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/YObjectEmpty",
     "file": "score/json/json_test_suite_test.cpp",
     "line": 160,
     "need": "comp_req__json__deserialization",
@@ -6180,7 +6180,7 @@
     "url": ""
   },
   {
-    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/y_object_empty_key",
+    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/YObjectEmptyKey",
     "file": "score/json/json_test_suite_test.cpp",
     "line": 160,
     "need": "comp_req__json__deserialization",
@@ -6192,7 +6192,7 @@
     "url": ""
   },
   {
-    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/y_object_escaped_null_in_key",
+    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/YObjectEscapedNullInKey",
     "file": "score/json/json_test_suite_test.cpp",
     "line": 160,
     "need": "comp_req__json__deserialization",
@@ -6204,7 +6204,7 @@
     "url": ""
   },
   {
-    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/y_object_extreme_numbers",
+    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/YObjectExtremeNumbers",
     "file": "score/json/json_test_suite_test.cpp",
     "line": 160,
     "need": "comp_req__json__deserialization",
@@ -6216,7 +6216,7 @@
     "url": ""
   },
   {
-    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/y_object_long_strings",
+    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/YObjectLongStrings",
     "file": "score/json/json_test_suite_test.cpp",
     "line": 160,
     "need": "comp_req__json__deserialization",
@@ -6228,7 +6228,7 @@
     "url": ""
   },
   {
-    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/y_object_simple",
+    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/YObjectSimple",
     "file": "score/json/json_test_suite_test.cpp",
     "line": 160,
     "need": "comp_req__json__deserialization",
@@ -6240,7 +6240,7 @@
     "url": ""
   },
   {
-    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/y_object_string_unicode",
+    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/YObjectStringUnicode",
     "file": "score/json/json_test_suite_test.cpp",
     "line": 160,
     "need": "comp_req__json__deserialization",
@@ -6252,7 +6252,7 @@
     "url": ""
   },
   {
-    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/y_object_with_newlines",
+    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/YObjectWithNewlines",
     "file": "score/json/json_test_suite_test.cpp",
     "line": 160,
     "need": "comp_req__json__deserialization",
@@ -6264,7 +6264,7 @@
     "url": ""
   },
   {
-    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/y_string_1_2_3_bytes_UTF_2d8_sequences",
+    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/YString123BytesUTFMinus8Sequences",
     "file": "score/json/json_test_suite_test.cpp",
     "line": 160,
     "need": "comp_req__json__deserialization",
@@ -6276,7 +6276,7 @@
     "url": ""
   },
   {
-    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/y_string_accepted_surrogate_pair",
+    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/YStringAcceptedSurrogatePair",
     "file": "score/json/json_test_suite_test.cpp",
     "line": 160,
     "need": "comp_req__json__deserialization",
@@ -6288,7 +6288,7 @@
     "url": ""
   },
   {
-    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/y_string_accepted_surrogate_pairs",
+    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/YStringAcceptedSurrogatePairs",
     "file": "score/json/json_test_suite_test.cpp",
     "line": 160,
     "need": "comp_req__json__deserialization",
@@ -6300,7 +6300,7 @@
     "url": ""
   },
   {
-    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/y_string_allowed_escapes",
+    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/YStringAllowedEscapes",
     "file": "score/json/json_test_suite_test.cpp",
     "line": 160,
     "need": "comp_req__json__deserialization",
@@ -6312,7 +6312,7 @@
     "url": ""
   },
   {
-    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/y_string_backslash_and_u_escaped_zero",
+    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/YStringBackslashAndUEscapedZero",
     "file": "score/json/json_test_suite_test.cpp",
     "line": 160,
     "need": "comp_req__json__deserialization",
@@ -6324,7 +6324,7 @@
     "url": ""
   },
   {
-    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/y_string_backslash_doublequotes",
+    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/YStringBackslashDoublequotes",
     "file": "score/json/json_test_suite_test.cpp",
     "line": 160,
     "need": "comp_req__json__deserialization",
@@ -6336,7 +6336,7 @@
     "url": ""
   },
   {
-    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/y_string_comments",
+    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/YStringComments",
     "file": "score/json/json_test_suite_test.cpp",
     "line": 160,
     "need": "comp_req__json__deserialization",
@@ -6348,7 +6348,7 @@
     "url": ""
   },
   {
-    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/y_string_double_escape_a",
+    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/YStringDoubleEscapeA",
     "file": "score/json/json_test_suite_test.cpp",
     "line": 160,
     "need": "comp_req__json__deserialization",
@@ -6360,7 +6360,7 @@
     "url": ""
   },
   {
-    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/y_string_double_escape_n",
+    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/YStringDoubleEscapeN",
     "file": "score/json/json_test_suite_test.cpp",
     "line": 160,
     "need": "comp_req__json__deserialization",
@@ -6372,7 +6372,7 @@
     "url": ""
   },
   {
-    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/y_string_escaped_control_character",
+    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/YStringEscapedControlCharacter",
     "file": "score/json/json_test_suite_test.cpp",
     "line": 160,
     "need": "comp_req__json__deserialization",
@@ -6384,7 +6384,7 @@
     "url": ""
   },
   {
-    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/y_string_escaped_noncharacter",
+    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/YStringEscapedNoncharacter",
     "file": "score/json/json_test_suite_test.cpp",
     "line": 160,
     "need": "comp_req__json__deserialization",
@@ -6396,7 +6396,7 @@
     "url": ""
   },
   {
-    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/y_string_in_array",
+    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/YStringInArray",
     "file": "score/json/json_test_suite_test.cpp",
     "line": 160,
     "need": "comp_req__json__deserialization",
@@ -6408,7 +6408,7 @@
     "url": ""
   },
   {
-    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/y_string_in_array_with_leading_space",
+    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/YStringInArrayWithLeadingSpace",
     "file": "score/json/json_test_suite_test.cpp",
     "line": 160,
     "need": "comp_req__json__deserialization",
@@ -6420,7 +6420,7 @@
     "url": ""
   },
   {
-    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/y_string_last_surrogates_1_and_2",
+    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/YStringLastSurrogates1And2",
     "file": "score/json/json_test_suite_test.cpp",
     "line": 160,
     "need": "comp_req__json__deserialization",
@@ -6432,7 +6432,7 @@
     "url": ""
   },
   {
-    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/y_string_nbsp_uescaped",
+    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/YStringNbspUescaped",
     "file": "score/json/json_test_suite_test.cpp",
     "line": 160,
     "need": "comp_req__json__deserialization",
@@ -6444,7 +6444,7 @@
     "url": ""
   },
   {
-    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/y_string_nonCharacterInUTF_2d8_U_2b10FFFF",
+    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/YStringNonCharacterInUTFMinus8UPlus10FFFF",
     "file": "score/json/json_test_suite_test.cpp",
     "line": 160,
     "need": "comp_req__json__deserialization",
@@ -6456,7 +6456,7 @@
     "url": ""
   },
   {
-    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/y_string_nonCharacterInUTF_2d8_U_2bFFFF",
+    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/YStringNonCharacterInUTFMinus8UPlusFFFF",
     "file": "score/json/json_test_suite_test.cpp",
     "line": 160,
     "need": "comp_req__json__deserialization",
@@ -6468,7 +6468,7 @@
     "url": ""
   },
   {
-    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/y_string_null_escape",
+    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/YStringNullEscape",
     "file": "score/json/json_test_suite_test.cpp",
     "line": 160,
     "need": "comp_req__json__deserialization",
@@ -6480,7 +6480,7 @@
     "url": ""
   },
   {
-    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/y_string_one_2dbyte_2dutf_2d8",
+    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/YStringOneMinusByteMinusUtfMinus8",
     "file": "score/json/json_test_suite_test.cpp",
     "line": 160,
     "need": "comp_req__json__deserialization",
@@ -6492,7 +6492,7 @@
     "url": ""
   },
   {
-    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/y_string_pi",
+    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/YStringPi",
     "file": "score/json/json_test_suite_test.cpp",
     "line": 160,
     "need": "comp_req__json__deserialization",
@@ -6504,7 +6504,7 @@
     "url": ""
   },
   {
-    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/y_string_reservedCharacterInUTF_2d8_U_2b1BFFF",
+    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/YStringReservedCharacterInUTFMinus8UPlus1BFFF",
     "file": "score/json/json_test_suite_test.cpp",
     "line": 160,
     "need": "comp_req__json__deserialization",
@@ -6516,7 +6516,7 @@
     "url": ""
   },
   {
-    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/y_string_simple_ascii",
+    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/YStringSimpleAscii",
     "file": "score/json/json_test_suite_test.cpp",
     "line": 160,
     "need": "comp_req__json__deserialization",
@@ -6528,7 +6528,7 @@
     "url": ""
   },
   {
-    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/y_string_space",
+    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/YStringSpace",
     "file": "score/json/json_test_suite_test.cpp",
     "line": 160,
     "need": "comp_req__json__deserialization",
@@ -6540,7 +6540,7 @@
     "url": ""
   },
   {
-    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/y_string_surrogates_U_2b1D11E_MUSICAL_SYMBOL_G_CLEF",
+    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/YStringSurrogatesUPlus1D11EMUSICALSYMBOLGCLEF",
     "file": "score/json/json_test_suite_test.cpp",
     "line": 160,
     "need": "comp_req__json__deserialization",
@@ -6552,7 +6552,7 @@
     "url": ""
   },
   {
-    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/y_string_three_2dbyte_2dutf_2d8",
+    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/YStringThreeMinusByteMinusUtfMinus8",
     "file": "score/json/json_test_suite_test.cpp",
     "line": 160,
     "need": "comp_req__json__deserialization",
@@ -6564,7 +6564,7 @@
     "url": ""
   },
   {
-    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/y_string_two_2dbyte_2dutf_2d8",
+    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/YStringTwoMinusByteMinusUtfMinus8",
     "file": "score/json/json_test_suite_test.cpp",
     "line": 160,
     "need": "comp_req__json__deserialization",
@@ -6576,7 +6576,7 @@
     "url": ""
   },
   {
-    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/y_string_u_2b2028_line_sep",
+    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/YStringUPlus2028LineSep",
     "file": "score/json/json_test_suite_test.cpp",
     "line": 160,
     "need": "comp_req__json__deserialization",
@@ -6588,7 +6588,7 @@
     "url": ""
   },
   {
-    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/y_string_u_2b2029_par_sep",
+    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/YStringUPlus2029ParSep",
     "file": "score/json/json_test_suite_test.cpp",
     "line": 160,
     "need": "comp_req__json__deserialization",
@@ -6600,7 +6600,7 @@
     "url": ""
   },
   {
-    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/y_string_uEscape",
+    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/YStringUEscape",
     "file": "score/json/json_test_suite_test.cpp",
     "line": 160,
     "need": "comp_req__json__deserialization",
@@ -6612,7 +6612,7 @@
     "url": ""
   },
   {
-    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/y_string_uescaped_newline",
+    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/YStringUescapedNewline",
     "file": "score/json/json_test_suite_test.cpp",
     "line": 160,
     "need": "comp_req__json__deserialization",
@@ -6624,7 +6624,7 @@
     "url": ""
   },
   {
-    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/y_string_unescaped_char_delete",
+    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/YStringUnescapedCharDelete",
     "file": "score/json/json_test_suite_test.cpp",
     "line": 160,
     "need": "comp_req__json__deserialization",
@@ -6636,7 +6636,7 @@
     "url": ""
   },
   {
-    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/y_string_unicode",
+    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/YStringUnicode",
     "file": "score/json/json_test_suite_test.cpp",
     "line": 160,
     "need": "comp_req__json__deserialization",
@@ -6648,7 +6648,7 @@
     "url": ""
   },
   {
-    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/y_string_unicodeEscapedBackslash",
+    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/YStringUnicodeEscapedBackslash",
     "file": "score/json/json_test_suite_test.cpp",
     "line": 160,
     "need": "comp_req__json__deserialization",
@@ -6660,7 +6660,7 @@
     "url": ""
   },
   {
-    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/y_string_unicode_2",
+    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/YStringUnicode2",
     "file": "score/json/json_test_suite_test.cpp",
     "line": 160,
     "need": "comp_req__json__deserialization",
@@ -6672,7 +6672,7 @@
     "url": ""
   },
   {
-    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/y_string_unicode_U_2b10FFFE_nonchar",
+    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/YStringUnicodeUPlus10FFFENonchar",
     "file": "score/json/json_test_suite_test.cpp",
     "line": 160,
     "need": "comp_req__json__deserialization",
@@ -6684,7 +6684,7 @@
     "url": ""
   },
   {
-    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/y_string_unicode_U_2b1FFFE_nonchar",
+    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/YStringUnicodeUPlus1FFFENonchar",
     "file": "score/json/json_test_suite_test.cpp",
     "line": 160,
     "need": "comp_req__json__deserialization",
@@ -6696,7 +6696,7 @@
     "url": ""
   },
   {
-    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/y_string_unicode_U_2b200B_ZERO_WIDTH_SPACE",
+    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/YStringUnicodeUPlus200BZEROWIDTHSPACE",
     "file": "score/json/json_test_suite_test.cpp",
     "line": 160,
     "need": "comp_req__json__deserialization",
@@ -6708,7 +6708,7 @@
     "url": ""
   },
   {
-    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/y_string_unicode_U_2b2064_invisible_plus",
+    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/YStringUnicodeUPlus2064InvisiblePlus",
     "file": "score/json/json_test_suite_test.cpp",
     "line": 160,
     "need": "comp_req__json__deserialization",
@@ -6720,7 +6720,7 @@
     "url": ""
   },
   {
-    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/y_string_unicode_U_2bFDD0_nonchar",
+    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/YStringUnicodeUPlusFDD0Nonchar",
     "file": "score/json/json_test_suite_test.cpp",
     "line": 160,
     "need": "comp_req__json__deserialization",
@@ -6732,7 +6732,7 @@
     "url": ""
   },
   {
-    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/y_string_unicode_U_2bFFFE_nonchar",
+    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/YStringUnicodeUPlusFFFENonchar",
     "file": "score/json/json_test_suite_test.cpp",
     "line": 160,
     "need": "comp_req__json__deserialization",
@@ -6744,7 +6744,7 @@
     "url": ""
   },
   {
-    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/y_string_unicode_escaped_double_quote",
+    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/YStringUnicodeEscapedDoubleQuote",
     "file": "score/json/json_test_suite_test.cpp",
     "line": 160,
     "need": "comp_req__json__deserialization",
@@ -6756,7 +6756,7 @@
     "url": ""
   },
   {
-    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/y_string_utf8",
+    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/YStringUtf8",
     "file": "score/json/json_test_suite_test.cpp",
     "line": 160,
     "need": "comp_req__json__deserialization",
@@ -6768,7 +6768,7 @@
     "url": ""
   },
   {
-    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/y_string_with_del_character",
+    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/YStringWithDelCharacter",
     "file": "score/json/json_test_suite_test.cpp",
     "line": 160,
     "need": "comp_req__json__deserialization",
@@ -6780,7 +6780,7 @@
     "url": ""
   },
   {
-    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/y_structure_lonely_false",
+    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/YStructureLonelyFalse",
     "file": "score/json/json_test_suite_test.cpp",
     "line": 160,
     "need": "comp_req__json__deserialization",
@@ -6792,7 +6792,7 @@
     "url": ""
   },
   {
-    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/y_structure_lonely_int",
+    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/YStructureLonelyInt",
     "file": "score/json/json_test_suite_test.cpp",
     "line": 160,
     "need": "comp_req__json__deserialization",
@@ -6804,7 +6804,7 @@
     "url": ""
   },
   {
-    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/y_structure_lonely_negative_real",
+    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/YStructureLonelyNegativeReal",
     "file": "score/json/json_test_suite_test.cpp",
     "line": 160,
     "need": "comp_req__json__deserialization",
@@ -6816,7 +6816,7 @@
     "url": ""
   },
   {
-    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/y_structure_lonely_null",
+    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/YStructureLonelyNull",
     "file": "score/json/json_test_suite_test.cpp",
     "line": 160,
     "need": "comp_req__json__deserialization",
@@ -6828,7 +6828,7 @@
     "url": ""
   },
   {
-    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/y_structure_lonely_string",
+    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/YStructureLonelyString",
     "file": "score/json/json_test_suite_test.cpp",
     "line": 160,
     "need": "comp_req__json__deserialization",
@@ -6840,7 +6840,7 @@
     "url": ""
   },
   {
-    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/y_structure_lonely_true",
+    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/YStructureLonelyTrue",
     "file": "score/json/json_test_suite_test.cpp",
     "line": 160,
     "need": "comp_req__json__deserialization",
@@ -6852,7 +6852,7 @@
     "url": ""
   },
   {
-    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/y_structure_string_empty",
+    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/YStructureStringEmpty",
     "file": "score/json/json_test_suite_test.cpp",
     "line": 160,
     "need": "comp_req__json__deserialization",
@@ -6864,7 +6864,7 @@
     "url": ""
   },
   {
-    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/y_structure_trailing_newline",
+    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/YStructureTrailingNewline",
     "file": "score/json/json_test_suite_test.cpp",
     "line": 160,
     "need": "comp_req__json__deserialization",
@@ -6876,7 +6876,7 @@
     "url": ""
   },
   {
-    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/y_structure_true_in_array",
+    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/YStructureTrueInArray",
     "file": "score/json/json_test_suite_test.cpp",
     "line": 160,
     "need": "comp_req__json__deserialization",
@@ -6888,7 +6888,7 @@
     "url": ""
   },
   {
-    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/y_structure_whitespace_array",
+    "name": "Corpus/JsonTestSuiteTest__FromBufferMatchesExpectedOutcome/YStructureWhitespaceArray",
     "file": "score/json/json_test_suite_test.cpp",
     "line": 160,
     "need": "comp_req__json__deserialization",
@@ -6900,9 +6900,9 @@
     "url": ""
   },
   {
-    "name": "JsonParserTest__ViaErrorLiteralPrintsReason",
+    "name": "JsonParserDeathTest__JsonLiteralPrintsReasonBeforeAborting",
     "file": "score/json/json_parser_test.cpp",
-    "line": 103,
+    "line": 118,
     "need": "comp_req__json__parsing_error_reason",
     "verify_type": "partially",
     "result": "passed",
@@ -6912,9 +6912,9 @@
     "url": ""
   },
   {
-    "name": "ParserTest__CanParseObjectBool",
+    "name": "JsonParserTest__FromBufferParsesBoolMember",
     "file": "score/json/json_parser_test.cpp",
-    "line": 213,
+    "line": 215,
     "need": "comp_req__json__deserialization",
     "verify_type": "partially",
     "result": "passed",
@@ -6924,9 +6924,9 @@
     "url": ""
   },
   {
-    "name": "ParserTest__CanParseObjectString",
+    "name": "JsonParserTest__FromBufferParsesStringMember",
     "file": "score/json/json_parser_test.cpp",
-    "line": 230,
+    "line": 232,
     "need": "comp_req__json__deserialization",
     "verify_type": "partially",
     "result": "passed",
@@ -6936,9 +6936,9 @@
     "url": ""
   },
   {
-    "name": "ParserTest__CanParseObjectNull",
+    "name": "JsonParserTest__FromBufferParsesNullMember",
     "file": "score/json/json_parser_test.cpp",
-    "line": 247,
+    "line": 249,
     "need": "comp_req__json__deserialization",
     "verify_type": "partially",
     "result": "passed",
@@ -6948,9 +6948,9 @@
     "url": ""
   },
   {
-    "name": "ParserTest__CanParseObjectNumber",
+    "name": "JsonParserTest__FromBufferParsesUint64Member",
     "file": "score/json/json_parser_test.cpp",
-    "line": 264,
+    "line": 266,
     "need": "comp_req__json__deserialization",
     "verify_type": "partially",
     "result": "passed",
@@ -6960,9 +6960,9 @@
     "url": ""
   },
   {
-    "name": "ParserTest__CanParseObjectFloatingPointNumber",
+    "name": "JsonParserTest__FromBufferParsesFloatMember",
     "file": "score/json/json_parser_test.cpp",
-    "line": 281,
+    "line": 283,
     "need": "comp_req__json__deserialization",
     "verify_type": "partially",
     "result": "passed",
@@ -6972,9 +6972,9 @@
     "url": ""
   },
   {
-    "name": "ParserTest__CanParseObjectInObject",
+    "name": "JsonParserTest__FromBufferParsesNestedObject",
     "file": "score/json/json_parser_test.cpp",
-    "line": 302,
+    "line": 304,
     "need": "comp_req__json__deserialization",
     "verify_type": "partially",
     "result": "passed",
@@ -6984,9 +6984,9 @@
     "url": ""
   },
   {
-    "name": "ParserTest__CanParseListInObject",
+    "name": "JsonParserTest__FromBufferParsesListMember",
     "file": "score/json/json_parser_test.cpp",
-    "line": 319,
+    "line": 321,
     "need": "comp_req__json__deserialization",
     "verify_type": "partially",
     "result": "passed",
@@ -6996,9 +6996,9 @@
     "url": ""
   },
   {
-    "name": "ParserTest__CanParseObjectInObjectAndIterateOverKeys",
+    "name": "JsonParserTest__IteratesOverAllMembersOfParsedObject",
     "file": "score/json/json_parser_test.cpp",
-    "line": 338,
+    "line": 340,
     "need": "comp_req__json__deserialization",
     "verify_type": "partially",
     "result": "passed",
@@ -7008,9 +7008,9 @@
     "url": ""
   },
   {
-    "name": "ParserTest__EmitsErrorWhenParsingObjectWithValueButNoKey",
+    "name": "JsonParserTest__FromBufferRejectsObjectValueWithoutKey",
     "file": "score/json/json_parser_test.cpp",
-    "line": 387,
+    "line": 389,
     "need": "comp_req__json__deserialization",
     "verify_type": "partially",
     "result": "passed",
@@ -7020,9 +7020,9 @@
     "url": ""
   },
   {
-    "name": "ParserTest__EmitsErrorWhenParsingObjectWithBinaryValue",
+    "name": "JsonParserTest__FromBufferRejectsBinaryValue",
     "file": "score/json/json_parser_test.cpp",
-    "line": 407,
+    "line": 409,
     "need": "comp_req__json__deserialization",
     "verify_type": "partially",
     "result": "passed",
@@ -7032,9 +7032,9 @@
     "url": ""
   },
   {
-    "name": "ParserTest__EmitsErrorWhenParsingTooLargeNumber",
+    "name": "JsonParserTest__FromBufferRejectsTooLargeNumber",
     "file": "score/json/json_parser_test.cpp",
-    "line": 439,
+    "line": 441,
     "need": "comp_req__json__deserialization",
     "verify_type": "partially",
     "result": "passed",
@@ -7044,9 +7044,9 @@
     "url": ""
   },
   {
-    "name": "ParserTest__EmitsErrorWhenParsingNumberOutsideTheGrammar",
+    "name": "JsonParserTest__FromBufferRejectsNumberOutsideTheGrammar",
     "file": "score/json/json_parser_test.cpp",
-    "line": 456,
+    "line": 458,
     "need": "comp_req__vajson__number_grammar",
     "verify_type": "partially",
     "result": "passed",
@@ -7056,9 +7056,9 @@
     "url": ""
   },
   {
-    "name": "ParserTest__EmitsErrorWhenParsingHexadecimalNumberExceeding64Bits",
+    "name": "JsonParserTest__FromBufferRejectsHexadecimalNumberExceeding64Bits",
     "file": "score/json/json_parser_test.cpp",
-    "line": 474,
+    "line": 476,
     "need": "comp_req__vajson__hex_integers",
     "verify_type": "partially",
     "result": "passed",
@@ -7068,9 +7068,9 @@
     "url": ""
   },
   {
-    "name": "ParserTest__FromFileFail",
+    "name": "JsonParserTest__FromFileFailsForNonExistentFile",
     "file": "score/json/json_parser_test.cpp",
-    "line": 489,
+    "line": 491,
     "need": "comp_req__json__deserialization",
     "verify_type": "partially",
     "result": "passed",
@@ -7080,10 +7080,10 @@
     "url": ""
   },
   {
-    "name": "ParserTest__FromFileReportsReasonWhenFileCannotBeOpened",
+    "name": "JsonParserTest__FromFileReportsIoErrorWhenFileCannotBeOpened",
     "file": "score/json/json_parser_test.cpp",
-    "line": 501,
-    "need": "comp_req__json__parsing_error_reason",
+    "line": 503,
+    "need": "comp_req__json__io_error",
     "verify_type": "partially",
     "result": "passed",
     "result_text": "",
@@ -7092,9 +7092,45 @@
     "url": ""
   },
   {
-    "name": "ParserTest__ParsingFromFileWorks",
+    "name": "JsonParserTest__FromFileRejectsDirectory",
     "file": "score/json/json_parser_test.cpp",
-    "line": 562,
+    "line": 564,
+    "need": "comp_req__json__regular_file",
+    "verify_type": "partially",
+    "result": "passed",
+    "result_text": "",
+    "repo_name": "local_repo",
+    "hash": "",
+    "url": ""
+  },
+  {
+    "name": "JsonParserTest__FromFileRejectsFifoWithoutBlocking",
+    "file": "score/json/json_parser_test.cpp",
+    "line": 578,
+    "need": "comp_req__json__regular_file",
+    "verify_type": "partially",
+    "result": "passed",
+    "result_text": "",
+    "repo_name": "local_repo",
+    "hash": "",
+    "url": ""
+  },
+  {
+    "name": "JsonParserTest__FromFileRejectsFileAboveMaxFileSize",
+    "file": "score/json/json_parser_test.cpp",
+    "line": 596,
+    "need": "comp_req__json__max_file_size",
+    "verify_type": "partially",
+    "result": "passed",
+    "result_text": "",
+    "repo_name": "local_repo",
+    "hash": "",
+    "url": ""
+  },
+  {
+    "name": "JsonParserTest__FromFileParsesBoolMember",
+    "file": "score/json/json_parser_test.cpp",
+    "line": 613,
     "need": "comp_req__json__deserialization",
     "verify_type": "partially",
     "result": "passed",
@@ -7104,9 +7140,9 @@
     "url": ""
   },
   {
-    "name": "ParserTest__EmitsErrorWhenParsingObjectWithDuplicateEscapedMemberName",
+    "name": "JsonParserTest__FromBufferRejectsDuplicateEscapedMemberName",
     "file": "score/json/json_parser_test.cpp",
-    "line": 633,
+    "line": 684,
     "need": "comp_req__json__duplicate_member_names",
     "verify_type": "partially",
     "result": "passed",
@@ -7116,9 +7152,9 @@
     "url": ""
   },
   {
-    "name": "ParserTest__CanParseSameMemberNameInDifferentObjects",
+    "name": "JsonParserTest__FromBufferAcceptsSameMemberNameInDifferentObjects",
     "file": "score/json/json_parser_test.cpp",
-    "line": 648,
+    "line": 699,
     "need": "comp_req__json__duplicate_member_names",
     "verify_type": "partially",
     "result": "passed",
@@ -7128,9 +7164,9 @@
     "url": ""
   },
   {
-    "name": "ParserTest__CanParseEmptyMemberName",
+    "name": "JsonParserTest__FromBufferAcceptsEmptyMemberName",
     "file": "score/json/json_parser_test.cpp",
-    "line": 667,
+    "line": 718,
     "need": "comp_req__json__deserialization",
     "verify_type": "partially",
     "result": "passed",
@@ -7140,9 +7176,9 @@
     "url": ""
   },
   {
-    "name": "JsonParserVajsonTest__CanParseObjectHexadecimalNumber",
+    "name": "JsonParserTest__FromBufferParsesHexadecimalNumbers",
     "file": "score/json/json_parser_test.cpp",
-    "line": 689,
+    "line": 740,
     "need": "comp_req__vajson__hex_integers",
     "verify_type": "partially",
     "result": "passed",
@@ -7152,9 +7188,9 @@
     "url": ""
   },
   {
-    "name": "JsonParserVajsonTest__CanParseTwoByteBuffer",
+    "name": "JsonParserTest__FromBufferParsesTwoByteBuffer",
     "file": "score/json/json_parser_test.cpp",
-    "line": 738,
+    "line": 789,
     "need": "comp_req__json__deserialization",
     "verify_type": "partially",
     "result": "passed",
@@ -7164,9 +7200,9 @@
     "url": ""
   },
   {
-    "name": "JsonParserVajsonTest__CanParseBufferWithUtf8Bom",
+    "name": "JsonParserTest__FromBufferSkipsUtf8Bom",
     "file": "score/json/json_parser_test.cpp",
-    "line": 757,
+    "line": 808,
     "need": "comp_req__json__deserialization",
     "verify_type": "partially",
     "result": "passed",
@@ -7176,9 +7212,9 @@
     "url": ""
   },
   {
-    "name": "NumberTest__WhenParsingABoolStoredInAJsonThenParsingIsSuccessfulAndCorrectValueIsReturned",
+    "name": "JsonParserTest__FromBufferParsesBoolValues",
     "file": "score/json/json_parser_test.cpp",
-    "line": 829,
+    "line": 880,
     "need": "comp_req__json__deserialization",
     "verify_type": "partially",
     "result": "passed",
@@ -7188,9 +7224,9 @@
     "url": ""
   },
   {
-    "name": "NumberTest__WhenParsingAUint8StoredInAJsonThenParsingIsSuccessfulAndCorrectValueIsReturned",
+    "name": "JsonParserTest__FromBufferParsesUint8Limits",
     "file": "score/json/json_parser_test.cpp",
-    "line": 851,
+    "line": 902,
     "need": "comp_req__json__deserialization",
     "verify_type": "partially",
     "result": "passed",
@@ -7200,9 +7236,9 @@
     "url": ""
   },
   {
-    "name": "NumberTest__WhenParsingAUint16StoredInAJsonThenParsingIsSuccessfulAndCorrectValueIsReturned",
+    "name": "JsonParserTest__FromBufferParsesUint16Limits",
     "file": "score/json/json_parser_test.cpp",
-    "line": 874,
+    "line": 925,
     "need": "comp_req__json__deserialization",
     "verify_type": "partially",
     "result": "passed",
@@ -7212,9 +7248,9 @@
     "url": ""
   },
   {
-    "name": "NumberTest__WhenParsingAUint32StoredInAJsonThenParsingIsSuccessfulAndCorrectValueIsReturned",
+    "name": "JsonParserTest__FromBufferParsesUint32Limits",
     "file": "score/json/json_parser_test.cpp",
-    "line": 897,
+    "line": 948,
     "need": "comp_req__json__deserialization",
     "verify_type": "partially",
     "result": "passed",
@@ -7224,9 +7260,9 @@
     "url": ""
   },
   {
-    "name": "NumberTest__WhenParsingAUint64StoredInAJsonThenParsingIsSuccessfulAndCorrectValueIsReturned",
+    "name": "JsonParserTest__FromBufferParsesUint64Limits",
     "file": "score/json/json_parser_test.cpp",
-    "line": 920,
+    "line": 971,
     "need": "comp_req__json__deserialization",
     "verify_type": "partially",
     "result": "passed",
@@ -7236,9 +7272,9 @@
     "url": ""
   },
   {
-    "name": "NumberTest__WhenParsingAInt8StoredInAJsonThenParsingIsSuccessfulAndCorrectValueIsReturned",
+    "name": "JsonParserTest__FromBufferParsesInt8Limits",
     "file": "score/json/json_parser_test.cpp",
-    "line": 943,
+    "line": 994,
     "need": "comp_req__json__deserialization",
     "verify_type": "partially",
     "result": "passed",
@@ -7248,9 +7284,9 @@
     "url": ""
   },
   {
-    "name": "NumberTest__WhenParsingAInt16StoredInAJsonThenParsingIsSuccessfulAndCorrectValueIsReturned",
+    "name": "JsonParserTest__FromBufferParsesInt16Limits",
     "file": "score/json/json_parser_test.cpp",
-    "line": 966,
+    "line": 1017,
     "need": "comp_req__json__deserialization",
     "verify_type": "partially",
     "result": "passed",
@@ -7260,9 +7296,9 @@
     "url": ""
   },
   {
-    "name": "NumberTest__WhenParsingAInt32StoredInAJsonThenParsingIsSuccessfulAndCorrectValueIsReturned",
+    "name": "JsonParserTest__FromBufferParsesInt32Limits",
     "file": "score/json/json_parser_test.cpp",
-    "line": 989,
+    "line": 1040,
     "need": "comp_req__json__deserialization",
     "verify_type": "partially",
     "result": "passed",
@@ -7272,9 +7308,9 @@
     "url": ""
   },
   {
-    "name": "NumberTest__WhenParsingAInt64StoredInAJsonThenParsingIsSuccessfulAndCorrectValueIsReturned",
+    "name": "JsonParserTest__FromBufferParsesInt64Limits",
     "file": "score/json/json_parser_test.cpp",
-    "line": 1012,
+    "line": 1063,
     "need": "comp_req__json__deserialization",
     "verify_type": "partially",
     "result": "passed",
@@ -7284,9 +7320,9 @@
     "url": ""
   },
   {
-    "name": "NumberTest__WhenParsingAFloatStoredInAJsonThenParsingIsSuccessfulAndCorrectValueIsReturned",
+    "name": "JsonParserTest__FromBufferParsesFloatLimits",
     "file": "score/json/json_parser_test.cpp",
-    "line": 1034,
+    "line": 1085,
     "need": "comp_req__json__deserialization",
     "verify_type": "partially",
     "result": "passed",
@@ -7296,9 +7332,9 @@
     "url": ""
   },
   {
-    "name": "NumberTest__WhenParsingADoubleStoredInAJsonThenParsingIsSuccessfulAndCorrectValueIsReturned",
+    "name": "JsonParserTest__FromBufferParsesDoubleLimits",
     "file": "score/json/json_parser_test.cpp",
-    "line": 1057,
+    "line": 1108,
     "need": "comp_req__json__deserialization",
     "verify_type": "partially",
     "result": "passed",
@@ -7308,9 +7344,9 @@
     "url": ""
   },
   {
-    "name": "ParserTest/ParsingErrorReasonTest__ReportsReasonWithParsingError/EmptyDocument",
+    "name": "FromBuffer/JsonParserErrorReasonTest__ReportsReasonWithParsingError/EmptyDocument",
     "file": "score/json/json_parser_test.cpp",
-    "line": 534,
+    "line": 536,
     "need": "comp_req__json__parsing_error_reason",
     "verify_type": "partially",
     "result": "passed",
@@ -7320,9 +7356,9 @@
     "url": ""
   },
   {
-    "name": "ParserTest/ParsingErrorReasonTest__ReportsReasonWithParsingError/MissingComma",
+    "name": "FromBuffer/JsonParserErrorReasonTest__ReportsReasonWithParsingError/MissingComma",
     "file": "score/json/json_parser_test.cpp",
-    "line": 534,
+    "line": 536,
     "need": "comp_req__json__parsing_error_reason",
     "verify_type": "partially",
     "result": "passed",
@@ -7332,9 +7368,9 @@
     "url": ""
   },
   {
-    "name": "ParserTest/ParsingErrorReasonTest__ReportsReasonWithParsingError/DuplicateMemberName",
+    "name": "FromBuffer/JsonParserErrorReasonTest__ReportsReasonWithParsingError/DuplicateMemberName",
     "file": "score/json/json_parser_test.cpp",
-    "line": 534,
+    "line": 536,
     "need": "comp_req__json__parsing_error_reason",
     "verify_type": "partially",
     "result": "passed",
@@ -7344,9 +7380,9 @@
     "url": ""
   },
   {
-    "name": "ParserTest/ParsingErrorReasonTest__ReportsReasonWithParsingError/NumberOutOfRange",
+    "name": "FromBuffer/JsonParserErrorReasonTest__ReportsReasonWithParsingError/NumberOutOfRange",
     "file": "score/json/json_parser_test.cpp",
-    "line": 534,
+    "line": 536,
     "need": "comp_req__json__parsing_error_reason",
     "verify_type": "partially",
     "result": "passed",
@@ -7356,9 +7392,9 @@
     "url": ""
   },
   {
-    "name": "ParserTest/DuplicateMemberNameTest__EmitsErrorWhenParsingObjectWithDuplicateMemberName/Null",
+    "name": "FromBuffer/JsonParserDuplicateMemberNameTest__FromBufferRejectsDuplicateMemberName/Null",
     "file": "score/json/json_parser_test.cpp",
-    "line": 598,
+    "line": 649,
     "need": "comp_req__json__duplicate_member_names",
     "verify_type": "partially",
     "result": "passed",
@@ -7368,9 +7404,9 @@
     "url": ""
   },
   {
-    "name": "ParserTest/DuplicateMemberNameTest__EmitsErrorWhenParsingObjectWithDuplicateMemberName/Bool",
+    "name": "FromBuffer/JsonParserDuplicateMemberNameTest__FromBufferRejectsDuplicateMemberName/Bool",
     "file": "score/json/json_parser_test.cpp",
-    "line": 598,
+    "line": 649,
     "need": "comp_req__json__duplicate_member_names",
     "verify_type": "partially",
     "result": "passed",
@@ -7380,9 +7416,9 @@
     "url": ""
   },
   {
-    "name": "ParserTest/DuplicateMemberNameTest__EmitsErrorWhenParsingObjectWithDuplicateMemberName/Number",
+    "name": "FromBuffer/JsonParserDuplicateMemberNameTest__FromBufferRejectsDuplicateMemberName/Number",
     "file": "score/json/json_parser_test.cpp",
-    "line": 598,
+    "line": 649,
     "need": "comp_req__json__duplicate_member_names",
     "verify_type": "partially",
     "result": "passed",
@@ -7392,9 +7428,9 @@
     "url": ""
   },
   {
-    "name": "ParserTest/DuplicateMemberNameTest__EmitsErrorWhenParsingObjectWithDuplicateMemberName/String",
+    "name": "FromBuffer/JsonParserDuplicateMemberNameTest__FromBufferRejectsDuplicateMemberName/String",
     "file": "score/json/json_parser_test.cpp",
-    "line": 598,
+    "line": 649,
     "need": "comp_req__json__duplicate_member_names",
     "verify_type": "partially",
     "result": "passed",
@@ -7404,9 +7440,9 @@
     "url": ""
   },
   {
-    "name": "ParserTest/DuplicateMemberNameTest__EmitsErrorWhenParsingObjectWithDuplicateMemberName/Object",
+    "name": "FromBuffer/JsonParserDuplicateMemberNameTest__FromBufferRejectsDuplicateMemberName/Object",
     "file": "score/json/json_parser_test.cpp",
-    "line": 598,
+    "line": 649,
     "need": "comp_req__json__duplicate_member_names",
     "verify_type": "partially",
     "result": "passed",
@@ -7416,9 +7452,9 @@
     "url": ""
   },
   {
-    "name": "ParserTest/DuplicateMemberNameTest__EmitsErrorWhenParsingObjectWithDuplicateMemberName/List",
+    "name": "FromBuffer/JsonParserDuplicateMemberNameTest__FromBufferRejectsDuplicateMemberName/List",
     "file": "score/json/json_parser_test.cpp",
-    "line": 598,
+    "line": 649,
     "need": "comp_req__json__duplicate_member_names",
     "verify_type": "partially",
     "result": "passed",
@@ -7428,9 +7464,9 @@
     "url": ""
   },
   {
-    "name": "ParserTest/DuplicateMemberNameTest__EmitsErrorWhenParsingObjectWithDuplicateMemberName/ScalarThenObject",
+    "name": "FromBuffer/JsonParserDuplicateMemberNameTest__FromBufferRejectsDuplicateMemberName/ScalarThenObject",
     "file": "score/json/json_parser_test.cpp",
-    "line": 598,
+    "line": 649,
     "need": "comp_req__json__duplicate_member_names",
     "verify_type": "partially",
     "result": "passed",
@@ -7440,9 +7476,9 @@
     "url": ""
   },
   {
-    "name": "ParserTest/DuplicateMemberNameTest__EmitsErrorWhenParsingObjectWithDuplicateMemberName/ScalarThenList",
+    "name": "FromBuffer/JsonParserDuplicateMemberNameTest__FromBufferRejectsDuplicateMemberName/ScalarThenList",
     "file": "score/json/json_parser_test.cpp",
-    "line": 598,
+    "line": 649,
     "need": "comp_req__json__duplicate_member_names",
     "verify_type": "partially",
     "result": "passed",
@@ -7452,9 +7488,9 @@
     "url": ""
   },
   {
-    "name": "ParserTest/DuplicateMemberNameTest__EmitsErrorWhenParsingObjectWithDuplicateMemberName/ObjectThenScalar",
+    "name": "FromBuffer/JsonParserDuplicateMemberNameTest__FromBufferRejectsDuplicateMemberName/ObjectThenScalar",
     "file": "score/json/json_parser_test.cpp",
-    "line": 598,
+    "line": 649,
     "need": "comp_req__json__duplicate_member_names",
     "verify_type": "partially",
     "result": "passed",
@@ -7464,9 +7500,9 @@
     "url": ""
   },
   {
-    "name": "ParserTest/DuplicateMemberNameTest__EmitsErrorWhenParsingObjectWithDuplicateMemberName/ListThenObject",
+    "name": "FromBuffer/JsonParserDuplicateMemberNameTest__FromBufferRejectsDuplicateMemberName/ListThenObject",
     "file": "score/json/json_parser_test.cpp",
-    "line": 598,
+    "line": 649,
     "need": "comp_req__json__duplicate_member_names",
     "verify_type": "partially",
     "result": "passed",
@@ -7476,9 +7512,9 @@
     "url": ""
   },
   {
-    "name": "ParserTest/DuplicateMemberNameTest__EmitsErrorWhenParsingObjectWithDuplicateMemberName/NotAdjacent",
+    "name": "FromBuffer/JsonParserDuplicateMemberNameTest__FromBufferRejectsDuplicateMemberName/NotAdjacent",
     "file": "score/json/json_parser_test.cpp",
-    "line": 598,
+    "line": 649,
     "need": "comp_req__json__duplicate_member_names",
     "verify_type": "partially",
     "result": "passed",
@@ -7488,9 +7524,9 @@
     "url": ""
   },
   {
-    "name": "ParserTest/DuplicateMemberNameTest__EmitsErrorWhenParsingObjectWithDuplicateMemberName/EmptyName",
+    "name": "FromBuffer/JsonParserDuplicateMemberNameTest__FromBufferRejectsDuplicateMemberName/EmptyName",
     "file": "score/json/json_parser_test.cpp",
-    "line": 598,
+    "line": 649,
     "need": "comp_req__json__duplicate_member_names",
     "verify_type": "partially",
     "result": "passed",
@@ -7500,9 +7536,9 @@
     "url": ""
   },
   {
-    "name": "ParserTest/DuplicateMemberNameTest__EmitsErrorWhenParsingObjectWithDuplicateMemberName/InNestedObject",
+    "name": "FromBuffer/JsonParserDuplicateMemberNameTest__FromBufferRejectsDuplicateMemberName/InNestedObject",
     "file": "score/json/json_parser_test.cpp",
-    "line": 598,
+    "line": 649,
     "need": "comp_req__json__duplicate_member_names",
     "verify_type": "partially",
     "result": "passed",
@@ -7512,9 +7548,9 @@
     "url": ""
   },
   {
-    "name": "ParserTest/DuplicateMemberNameTest__EmitsErrorWhenParsingObjectWithDuplicateMemberName/InObjectInList",
+    "name": "FromBuffer/JsonParserDuplicateMemberNameTest__FromBufferRejectsDuplicateMemberName/InObjectInList",
     "file": "score/json/json_parser_test.cpp",
-    "line": 598,
+    "line": 649,
     "need": "comp_req__json__duplicate_member_names",
     "verify_type": "partially",
     "result": "passed",
@@ -7524,7 +7560,115 @@
     "url": ""
   },
   {
-    "name": "JsonTest__ReadWriteEmptyMemberName",
+    "name": "JsonSerializerTest__ReturnsOutOfRangeForNumberOutsideFieldType",
+    "file": "score/json/json_serializer_test.cpp",
+    "line": 497,
+    "need": "comp_req__json__out_of_range_error",
+    "verify_type": "partially",
+    "result": "passed",
+    "result_text": "",
+    "repo_name": "local_repo",
+    "hash": "",
+    "url": ""
+  },
+  {
+    "name": "NestedFields/JsonSerializerFailingFieldTest__ErrorNamesInnermostFailingField/NestedFieldOfWrongType",
+    "file": "score/json/json_serializer_test.cpp",
+    "line": 865,
+    "need": "comp_req__json__deserialization_error_field",
+    "verify_type": "fully",
+    "result": "passed",
+    "result_text": "",
+    "repo_name": "local_repo",
+    "hash": "",
+    "url": ""
+  },
+  {
+    "name": "NestedFields/JsonSerializerFailingFieldTest__ErrorNamesInnermostFailingField/NestedValueNotAnObject",
+    "file": "score/json/json_serializer_test.cpp",
+    "line": 865,
+    "need": "comp_req__json__deserialization_error_field",
+    "verify_type": "fully",
+    "result": "passed",
+    "result_text": "",
+    "repo_name": "local_repo",
+    "hash": "",
+    "url": ""
+  },
+  {
+    "name": "NestedFields/JsonSerializerFailingFieldTest__ErrorNamesInnermostFailingField/MissingFieldInListEntry",
+    "file": "score/json/json_serializer_test.cpp",
+    "line": 865,
+    "need": "comp_req__json__deserialization_error_field",
+    "verify_type": "fully",
+    "result": "passed",
+    "result_text": "",
+    "repo_name": "local_repo",
+    "hash": "",
+    "url": ""
+  },
+  {
+    "name": "NestedFields/JsonSerializerFailingFieldTest__ErrorNamesInnermostFailingField/ListValueNotAList",
+    "file": "score/json/json_serializer_test.cpp",
+    "line": 865,
+    "need": "comp_req__json__deserialization_error_field",
+    "verify_type": "fully",
+    "result": "passed",
+    "result_text": "",
+    "repo_name": "local_repo",
+    "hash": "",
+    "url": ""
+  },
+  {
+    "name": "NestedFields/JsonSerializerFailingFieldTest__ErrorNamesInnermostFailingField/ListEntryNotAnObject",
+    "file": "score/json/json_serializer_test.cpp",
+    "line": 865,
+    "need": "comp_req__json__deserialization_error_field",
+    "verify_type": "fully",
+    "result": "passed",
+    "result_text": "",
+    "repo_name": "local_repo",
+    "hash": "",
+    "url": ""
+  },
+  {
+    "name": "NestedFields/JsonSerializerFailingFieldTest__ErrorNamesInnermostFailingField/NumberOutOfRangeInOptional",
+    "file": "score/json/json_serializer_test.cpp",
+    "line": 865,
+    "need": "comp_req__json__deserialization_error_field",
+    "verify_type": "fully",
+    "result": "passed",
+    "result_text": "",
+    "repo_name": "local_repo",
+    "hash": "",
+    "url": ""
+  },
+  {
+    "name": "NestedFields/JsonSerializerFailingFieldTest__ErrorNamesInnermostFailingField/OptionalValueNotAnObject",
+    "file": "score/json/json_serializer_test.cpp",
+    "line": 865,
+    "need": "comp_req__json__deserialization_error_field",
+    "verify_type": "fully",
+    "result": "passed",
+    "result_text": "",
+    "repo_name": "local_repo",
+    "hash": "",
+    "url": ""
+  },
+  {
+    "name": "NestedFields/JsonSerializerFailingFieldTest__ErrorNamesInnermostFailingField/ExplicitSerializerError",
+    "file": "score/json/json_serializer_test.cpp",
+    "line": 865,
+    "need": "comp_req__json__deserialization_error_field",
+    "verify_type": "fully",
+    "result": "passed",
+    "result_text": "",
+    "repo_name": "local_repo",
+    "hash": "",
+    "url": ""
+  },
+  {
+    "name": "JsonTest__ReadsBackWrittenEmptyMemberNames",
     "file": "score/json/json_test.cpp",
     "line": 71,
     "need": "comp_req__json__serialization",
@@ -7536,7 +7680,7 @@
     "url": ""
   },
   {
-    "name": "JsonTest__ReadWriteEmptyMemberName",
+    "name": "JsonTest__ReadsBackWrittenEmptyMemberNames",
     "file": "score/json/json_test.cpp",
     "line": 71,
     "need": "comp_req__json__deserialization",
@@ -7584,7 +7728,7 @@
     "url": ""
   },
   {
-    "name": "JsonTest__ReadWriteEscapedCharacters",
+    "name": "JsonTest__ReadsBackWrittenEscapedCharacters",
     "file": "score/json/json_test.cpp",
     "line": 143,
     "need": "comp_req__json__serialization",
@@ -7596,7 +7740,7 @@
     "url": ""
   },
   {
-    "name": "JsonTest__ReadWriteEscapedCharacters",
+    "name": "JsonTest__ReadsBackWrittenEscapedCharacters",
     "file": "score/json/json_test.cpp",
     "line": 143,
     "need": "comp_req__json__deserialization",
@@ -7608,9 +7752,237 @@
     "url": ""
   },
   {
-    "name": "JsonWriterSyncedFileTest__SerializationFailureKeepsTargetUnchanged",
+    "name": "JsonWriterFormattingTest/0__ToUnsyncedFileReturnsIoErrorIfFileCannotBeOpened",
     "file": "score/json/json_writer_test.cpp",
-    "line": 255,
+    "line": 198,
+    "need": "comp_req__json__io_error",
+    "verify_type": "partially",
+    "result": "passed",
+    "result_text": "",
+    "repo_name": "local_repo",
+    "hash": "",
+    "url": ""
+  },
+  {
+    "name": "JsonWriterFormattingTest/0__ToSyncedFileReturnsIoErrorIfUpdateCannotBeStarted",
+    "file": "score/json/json_writer_test.cpp",
+    "line": 219,
+    "need": "comp_req__json__io_error",
+    "verify_type": "partially",
+    "result": "passed",
+    "result_text": "",
+    "repo_name": "local_repo",
+    "hash": "",
+    "url": ""
+  },
+  {
+    "name": "JsonWriterFormattingTest/0__ToUnsyncedFileReturnsIoErrorIfWritingFails",
+    "file": "score/json/json_writer_test.cpp",
+    "line": 261,
+    "need": "comp_req__json__io_error",
+    "verify_type": "partially",
+    "result": "passed",
+    "result_text": "",
+    "repo_name": "local_repo",
+    "hash": "",
+    "url": ""
+  },
+  {
+    "name": "JsonWriterFormattingTest/1__ToUnsyncedFileReturnsIoErrorIfFileCannotBeOpened",
+    "file": "score/json/json_writer_test.cpp",
+    "line": 198,
+    "need": "comp_req__json__io_error",
+    "verify_type": "partially",
+    "result": "passed",
+    "result_text": "",
+    "repo_name": "local_repo",
+    "hash": "",
+    "url": ""
+  },
+  {
+    "name": "JsonWriterFormattingTest/1__ToSyncedFileReturnsIoErrorIfUpdateCannotBeStarted",
+    "file": "score/json/json_writer_test.cpp",
+    "line": 219,
+    "need": "comp_req__json__io_error",
+    "verify_type": "partially",
+    "result": "passed",
+    "result_text": "",
+    "repo_name": "local_repo",
+    "hash": "",
+    "url": ""
+  },
+  {
+    "name": "JsonWriterFormattingTest/1__ToUnsyncedFileReturnsIoErrorIfWritingFails",
+    "file": "score/json/json_writer_test.cpp",
+    "line": 261,
+    "need": "comp_req__json__io_error",
+    "verify_type": "partially",
+    "result": "passed",
+    "result_text": "",
+    "repo_name": "local_repo",
+    "hash": "",
+    "url": ""
+  },
+  {
+    "name": "JsonWriterFormattingTest/2__ToUnsyncedFileReturnsIoErrorIfFileCannotBeOpened",
+    "file": "score/json/json_writer_test.cpp",
+    "line": 198,
+    "need": "comp_req__json__io_error",
+    "verify_type": "partially",
+    "result": "passed",
+    "result_text": "",
+    "repo_name": "local_repo",
+    "hash": "",
+    "url": ""
+  },
+  {
+    "name": "JsonWriterFormattingTest/2__ToSyncedFileReturnsIoErrorIfUpdateCannotBeStarted",
+    "file": "score/json/json_writer_test.cpp",
+    "line": 219,
+    "need": "comp_req__json__io_error",
+    "verify_type": "partially",
+    "result": "passed",
+    "result_text": "",
+    "repo_name": "local_repo",
+    "hash": "",
+    "url": ""
+  },
+  {
+    "name": "JsonWriterFormattingTest/2__ToUnsyncedFileReturnsIoErrorIfWritingFails",
+    "file": "score/json/json_writer_test.cpp",
+    "line": 261,
+    "need": "comp_req__json__io_error",
+    "verify_type": "partially",
+    "result": "passed",
+    "result_text": "",
+    "repo_name": "local_repo",
+    "hash": "",
+    "url": ""
+  },
+  {
+    "name": "JsonWriterFormattingTest/3__ToUnsyncedFileReturnsIoErrorIfFileCannotBeOpened",
+    "file": "score/json/json_writer_test.cpp",
+    "line": 198,
+    "need": "comp_req__json__io_error",
+    "verify_type": "partially",
+    "result": "passed",
+    "result_text": "",
+    "repo_name": "local_repo",
+    "hash": "",
+    "url": ""
+  },
+  {
+    "name": "JsonWriterFormattingTest/3__ToSyncedFileReturnsIoErrorIfUpdateCannotBeStarted",
+    "file": "score/json/json_writer_test.cpp",
+    "line": 219,
+    "need": "comp_req__json__io_error",
+    "verify_type": "partially",
+    "result": "passed",
+    "result_text": "",
+    "repo_name": "local_repo",
+    "hash": "",
+    "url": ""
+  },
+  {
+    "name": "JsonWriterFormattingTest/3__ToUnsyncedFileReturnsIoErrorIfWritingFails",
+    "file": "score/json/json_writer_test.cpp",
+    "line": 261,
+    "need": "comp_req__json__io_error",
+    "verify_type": "partially",
+    "result": "passed",
+    "result_text": "",
+    "repo_name": "local_repo",
+    "hash": "",
+    "url": ""
+  },
+  {
+    "name": "JsonWriterFormattingTest/4__ToUnsyncedFileReturnsIoErrorIfFileCannotBeOpened",
+    "file": "score/json/json_writer_test.cpp",
+    "line": 198,
+    "need": "comp_req__json__io_error",
+    "verify_type": "partially",
+    "result": "passed",
+    "result_text": "",
+    "repo_name": "local_repo",
+    "hash": "",
+    "url": ""
+  },
+  {
+    "name": "JsonWriterFormattingTest/4__ToSyncedFileReturnsIoErrorIfUpdateCannotBeStarted",
+    "file": "score/json/json_writer_test.cpp",
+    "line": 219,
+    "need": "comp_req__json__io_error",
+    "verify_type": "partially",
+    "result": "passed",
+    "result_text": "",
+    "repo_name": "local_repo",
+    "hash": "",
+    "url": ""
+  },
+  {
+    "name": "JsonWriterFormattingTest/4__ToUnsyncedFileReturnsIoErrorIfWritingFails",
+    "file": "score/json/json_writer_test.cpp",
+    "line": 261,
+    "need": "comp_req__json__io_error",
+    "verify_type": "partially",
+    "result": "passed",
+    "result_text": "",
+    "repo_name": "local_repo",
+    "hash": "",
+    "url": ""
+  },
+  {
+    "name": "JsonWriterFormattingTest/5__ToUnsyncedFileReturnsIoErrorIfFileCannotBeOpened",
+    "file": "score/json/json_writer_test.cpp",
+    "line": 198,
+    "need": "comp_req__json__io_error",
+    "verify_type": "partially",
+    "result": "passed",
+    "result_text": "",
+    "repo_name": "local_repo",
+    "hash": "",
+    "url": ""
+  },
+  {
+    "name": "JsonWriterFormattingTest/5__ToSyncedFileReturnsIoErrorIfUpdateCannotBeStarted",
+    "file": "score/json/json_writer_test.cpp",
+    "line": 219,
+    "need": "comp_req__json__io_error",
+    "verify_type": "partially",
+    "result": "passed",
+    "result_text": "",
+    "repo_name": "local_repo",
+    "hash": "",
+    "url": ""
+  },
+  {
+    "name": "JsonWriterFormattingTest/5__ToUnsyncedFileReturnsIoErrorIfWritingFails",
+    "file": "score/json/json_writer_test.cpp",
+    "line": 261,
+    "need": "comp_req__json__io_error",
+    "verify_type": "partially",
+    "result": "passed",
+    "result_text": "",
+    "repo_name": "local_repo",
+    "hash": "",
+    "url": ""
+  },
+  {
+    "name": "JsonWriterTest__ToSyncedFileReturnsIoErrorIfCommittingFails",
+    "file": "score/json/json_writer_test.cpp",
+    "line": 310,
+    "need": "comp_req__json__io_error",
+    "verify_type": "partially",
+    "result": "passed",
+    "result_text": "",
+    "repo_name": "local_repo",
+    "hash": "",
+    "url": ""
+  },
+  {
+    "name": "JsonWriterTest__ToSyncedFileKeepsTargetUnchangedOnSerializationFailure",
+    "file": "score/json/json_writer_test.cpp",
+    "line": 333,
     "need": "comp_req__json__serialization",
     "verify_type": "partially",
     "result": "passed",
@@ -7620,9 +7992,69 @@
     "url": ""
   },
   {
-    "name": "JsonWriterDefaultFormattingTest__PrettyPrintsWhenFormattingIsOmitted",
+    "name": "JsonWriterTest__PrettyPrintsWhenFormattingIsOmitted",
     "file": "score/json/json_writer_test.cpp",
-    "line": 280,
+    "line": 358,
+    "need": "comp_req__json__serialization",
+    "verify_type": "partially",
+    "result": "passed",
+    "result_text": "",
+    "repo_name": "local_repo",
+    "hash": "",
+    "url": ""
+  },
+  {
+    "name": "NumberTest__ReturnsOutOfRangeForValueOutsideRequestedType",
+    "file": "score/json/number_test.cpp",
+    "line": 714,
+    "need": "comp_req__json__out_of_range_error",
+    "verify_type": "partially",
+    "result": "passed",
+    "result_text": "",
+    "repo_name": "local_repo",
+    "hash": "",
+    "url": ""
+  },
+  {
+    "name": "SerializerTest__RejectsInfiniteDouble",
+    "file": "score/json/internal/writer/serializer_test.cpp",
+    "line": 237,
+    "need": "comp_req__json__serialization",
+    "verify_type": "partially",
+    "result": "passed",
+    "result_text": "",
+    "repo_name": "local_repo",
+    "hash": "",
+    "url": ""
+  },
+  {
+    "name": "SerializerTest__RejectsNegativeInfiniteFloat",
+    "file": "score/json/internal/writer/serializer_test.cpp",
+    "line": 252,
+    "need": "comp_req__json__serialization",
+    "verify_type": "partially",
+    "result": "passed",
+    "result_text": "",
+    "repo_name": "local_repo",
+    "hash": "",
+    "url": ""
+  },
+  {
+    "name": "SerializerTest__RejectsNotANumber",
+    "file": "score/json/internal/writer/serializer_test.cpp",
+    "line": 267,
+    "need": "comp_req__json__serialization",
+    "verify_type": "partially",
+    "result": "passed",
+    "result_text": "",
+    "repo_name": "local_repo",
+    "hash": "",
+    "url": ""
+  },
+  {
+    "name": "SerializerTest__RejectsNotANumberOnStream",
+    "file": "score/json/internal/writer/serializer_test.cpp",
+    "line": 281,
     "need": "comp_req__json__serialization",
     "verify_type": "partially",
     "result": "passed",
@@ -7634,7 +8066,7 @@
   {
     "name": "SerializerTest__PrettyPrintsNestedAny",
     "file": "score/json/internal/writer/serializer_test.cpp",
-    "line": 326,
+    "line": 329,
     "need": "comp_req__json__serialization",
     "verify_type": "partially",
     "result": "passed",
@@ -7646,7 +8078,7 @@
   {
     "name": "SerializerTest__PrettyPrintsMixedNesting",
     "file": "score/json/internal/writer/serializer_test.cpp",
-    "line": 454,
+    "line": 457,
     "need": "comp_req__json__serialization",
     "verify_type": "partially",
     "result": "passed",
@@ -7658,7 +8090,7 @@
   {
     "name": "SerializerTest__SerializesMixedNestingCompactly",
     "file": "score/json/internal/writer/serializer_test.cpp",
-    "line": 484,
+    "line": 487,
     "need": "comp_req__json__serialization",
     "verify_type": "partially",
     "result": "passed",
@@ -7670,7 +8102,7 @@
   {
     "name": "SerializerTest__SerializesTopLevelScalars",
     "file": "score/json/internal/writer/serializer_test.cpp",
-    "line": 498,
+    "line": 501,
     "need": "comp_req__json__serialization",
     "verify_type": "partially",
     "result": "passed",
@@ -7682,7 +8114,7 @@
   {
     "name": "SerializerTest__EscapesObjectKeysInNestedObjects",
     "file": "score/json/internal/writer/serializer_test.cpp",
-    "line": 519,
+    "line": 522,
     "need": "comp_req__json__serialization",
     "verify_type": "partially",
     "result": "passed",
@@ -7694,7 +8126,7 @@
   {
     "name": "SerializerTest__RejectsNonFiniteNumberNestedDeepInsideContainers",
     "file": "score/json/internal/writer/serializer_test.cpp",
-    "line": 534,
+    "line": 537,
     "need": "comp_req__json__serialization",
     "verify_type": "partially",
     "result": "passed",
@@ -7704,9 +8136,21 @@
     "url": ""
   },
   {
-    "name": "Number__Uint8",
+    "name": "JsonDataTest__FromFileAppliesSizeLimitToBytesReadBeyondReportedSize",
+    "file": "score/json/internal/parser/vajson/json_data_test.cpp",
+    "line": 115,
+    "need": "comp_req__json__max_file_size",
+    "verify_type": "partially",
+    "result": "passed",
+    "result_text": "",
+    "repo_name": "local_repo",
+    "hash": "",
+    "url": ""
+  },
+  {
+    "name": "JsonNumberTest__RejectsValuesOutsideUint8Range",
     "file": "score/json/internal/parser/vajson/json_number_test.cpp",
-    "line": 530,
+    "line": 526,
     "need": "comp_req__json__deserialization",
     "verify_type": "partially",
     "result": "passed",
@@ -7716,9 +8160,9 @@
     "url": ""
   },
   {
-    "name": "Number__Uint16",
+    "name": "JsonNumberTest__RejectsValuesOutsideUint16Range",
     "file": "score/json/internal/parser/vajson/json_number_test.cpp",
-    "line": 541,
+    "line": 537,
     "need": "comp_req__json__deserialization",
     "verify_type": "partially",
     "result": "passed",
@@ -7728,9 +8172,9 @@
     "url": ""
   },
   {
-    "name": "Number__Uint32",
+    "name": "JsonNumberTest__RejectsValuesOutsideUint32Range",
     "file": "score/json/internal/parser/vajson/json_number_test.cpp",
-    "line": 552,
+    "line": 548,
     "need": "comp_req__json__deserialization",
     "verify_type": "partially",
     "result": "passed",
@@ -7740,9 +8184,9 @@
     "url": ""
   },
   {
-    "name": "Number__Uint64",
+    "name": "JsonNumberTest__RejectsValuesOutsideUint64Range",
     "file": "score/json/internal/parser/vajson/json_number_test.cpp",
-    "line": 563,
+    "line": 559,
     "need": "comp_req__json__deserialization",
     "verify_type": "partially",
     "result": "passed",
@@ -7752,9 +8196,9 @@
     "url": ""
   },
   {
-    "name": "Number__Int8",
+    "name": "JsonNumberTest__RejectsValuesOutsideInt8Range",
     "file": "score/json/internal/parser/vajson/json_number_test.cpp",
-    "line": 574,
+    "line": 570,
     "need": "comp_req__json__deserialization",
     "verify_type": "partially",
     "result": "passed",
@@ -7764,9 +8208,9 @@
     "url": ""
   },
   {
-    "name": "Number__Int16",
+    "name": "JsonNumberTest__RejectsValuesOutsideInt16Range",
     "file": "score/json/internal/parser/vajson/json_number_test.cpp",
-    "line": 585,
+    "line": 581,
     "need": "comp_req__json__deserialization",
     "verify_type": "partially",
     "result": "passed",
@@ -7776,9 +8220,9 @@
     "url": ""
   },
   {
-    "name": "Number__Int32",
+    "name": "JsonNumberTest__RejectsValuesOutsideInt32Range",
     "file": "score/json/internal/parser/vajson/json_number_test.cpp",
-    "line": 596,
+    "line": 592,
     "need": "comp_req__json__deserialization",
     "verify_type": "partially",
     "result": "passed",
@@ -7788,9 +8232,9 @@
     "url": ""
   },
   {
-    "name": "Number__Int64",
+    "name": "JsonNumberTest__RejectsValuesOutsideInt64Range",
     "file": "score/json/internal/parser/vajson/json_number_test.cpp",
-    "line": 607,
+    "line": 603,
     "need": "comp_req__json__deserialization",
     "verify_type": "partially",
     "result": "passed",
@@ -7800,9 +8244,9 @@
     "url": ""
   },
   {
-    "name": "Number__Float",
+    "name": "JsonNumberTest__RejectsValuesOutsideFloatRange",
     "file": "score/json/internal/parser/vajson/json_number_test.cpp",
-    "line": 618,
+    "line": 614,
     "need": "comp_req__json__deserialization",
     "verify_type": "partially",
     "result": "passed",
@@ -7812,9 +8256,9 @@
     "url": ""
   },
   {
-    "name": "Number__Double",
+    "name": "JsonNumberTest__RejectsValuesOutsideDoubleRange",
     "file": "score/json/internal/parser/vajson/json_number_test.cpp",
-    "line": 629,
+    "line": 625,
     "need": "comp_req__json__deserialization",
     "verify_type": "partially",
     "result": "passed",
@@ -7824,9 +8268,9 @@
     "url": ""
   },
   {
-    "name": "Number__WithDecimalPointWithoutFractionalPartCannotBeParsedAsInteger",
+    "name": "JsonNumberTest__RejectsIntegerConversionOfNumberWithDecimalPoint",
     "file": "score/json/internal/parser/vajson/json_number_test.cpp",
-    "line": 640,
+    "line": 636,
     "need": "comp_req__json__deserialization",
     "verify_type": "partially",
     "result": "passed",
@@ -7836,9 +8280,9 @@
     "url": ""
   },
   {
-    "name": "Number__WithExponentialNotationWithoutFractionalPartCannotBeParsedAsInteger",
+    "name": "JsonNumberTest__RejectsIntegerConversionOfNumberWithExponent",
     "file": "score/json/internal/parser/vajson/json_number_test.cpp",
-    "line": 652,
+    "line": 648,
     "need": "comp_req__json__deserialization",
     "verify_type": "partially",
     "result": "passed",
@@ -7848,9 +8292,9 @@
     "url": ""
   },
   {
-    "name": "Number__FloatingPointWithoutDecimalPoint",
+    "name": "JsonNumberTest__ConvertsIntegerLiteralToFloatingPoint",
     "file": "score/json/internal/parser/vajson/json_number_test.cpp",
-    "line": 665,
+    "line": 661,
     "need": "comp_req__json__deserialization",
     "verify_type": "partially",
     "result": "passed",
@@ -7860,9 +8304,9 @@
     "url": ""
   },
   {
-    "name": "Number__NearDoubleLimitsIsParsable",
+    "name": "JsonNumberTest__ConvertsValuesNearDoubleLimits",
     "file": "score/json/internal/parser/vajson/json_number_test.cpp",
-    "line": 677,
+    "line": 673,
     "need": "comp_req__json__deserialization",
     "verify_type": "partially",
     "result": "passed",
@@ -7872,9 +8316,9 @@
     "url": ""
   },
   {
-    "name": "Number__FloatingPointOverflowIsRejected",
+    "name": "JsonNumberTest__RejectsFloatingPointOverflow",
     "file": "score/json/internal/parser/vajson/json_number_test.cpp",
-    "line": 688,
+    "line": 684,
     "need": "comp_req__json__deserialization",
     "verify_type": "partially",
     "result": "passed",
@@ -7884,9 +8328,9 @@
     "url": ""
   },
   {
-    "name": "Number__AcceptsNumbersMatchingTheGrammar",
+    "name": "JsonNumberTest__AcceptsNumbersMatchingTheGrammar",
     "file": "score/json/internal/parser/vajson/json_number_test.cpp",
-    "line": 699,
+    "line": 695,
     "need": "comp_req__json__deserialization",
     "verify_type": "partially",
     "result": "passed",
@@ -7896,9 +8340,9 @@
     "url": ""
   },
   {
-    "name": "Number__AcceptsNumbersMatchingTheGrammar",
+    "name": "JsonNumberTest__AcceptsNumbersMatchingTheGrammar",
     "file": "score/json/internal/parser/vajson/json_number_test.cpp",
-    "line": 699,
+    "line": 695,
     "need": "comp_req__vajson__hex_integers",
     "verify_type": "partially",
     "result": "passed",
@@ -7908,9 +8352,9 @@
     "url": ""
   },
   {
-    "name": "Number__RejectsNumbersOutsideTheGrammar",
+    "name": "JsonNumberTest__RejectsNumbersOutsideTheGrammar",
     "file": "score/json/internal/parser/vajson/json_number_test.cpp",
-    "line": 726,
+    "line": 722,
     "need": "comp_req__vajson__number_grammar",
     "verify_type": "partially",
     "result": "passed",
@@ -7920,9 +8364,9 @@
     "url": ""
   },
   {
-    "name": "Number__ConvertsHexadecimalIntegersWithinTheTargetRange",
+    "name": "JsonNumberTest__ConvertsHexadecimalIntegersWithinTheTargetRange",
     "file": "score/json/internal/parser/vajson/json_number_test.cpp",
-    "line": 745,
+    "line": 741,
     "need": "comp_req__vajson__hex_integers",
     "verify_type": "partially",
     "result": "passed",
@@ -7932,9 +8376,9 @@
     "url": ""
   },
   {
-    "name": "Number__HexadecimalIntegersDoNotConvertToFloatingPoint",
+    "name": "JsonNumberTest__HexadecimalIntegersDoNotConvertToFloatingPoint",
     "file": "score/json/internal/parser/vajson/json_number_test.cpp",
-    "line": 769,
+    "line": 765,
     "need": "comp_req__vajson__hex_integers",
     "verify_type": "partially",
     "result": "passed",
@@ -7944,7 +8388,7 @@
     "url": ""
   },
   {
-    "name": "UT__NumberParser__IsHexDigit",
+    "name": "NumberParserTest__IsHexDigitAcceptsOnlyHexadecimalDigits",
     "file": "score/json/internal/parser/vajson/number_parser_test.cpp",
     "line": 37,
     "need": "comp_req__vajson__hex_integers",
@@ -7956,7 +8400,7 @@
     "url": ""
   },
   {
-    "name": "UT__Parser__Bool__Dynamic__MalformedLiteralMessage",
+    "name": "StructureParserBoolTest__RejectsMalformedLiteralWithReason",
     "file": "score/json/internal/parser/vajson/structure_parser_bool_test.cpp",
     "line": 140,
     "need": "comp_req__vajson__validation",
@@ -7968,9 +8412,9 @@
     "url": ""
   },
   {
-    "name": "UT__Parser__Invalid__Dynamic__TruncatedInput",
+    "name": "StructureParserInvalidTest__RejectsTruncatedInput",
     "file": "score/json/internal/parser/vajson/structure_parser_invalid_test.cpp",
-    "line": 124,
+    "line": 119,
     "need": "comp_req__vajson__validation",
     "verify_type": "partially",
     "result": "passed",
@@ -7980,9 +8424,9 @@
     "url": ""
   },
   {
-    "name": "UT__Parser__Invalid__Dynamic__TruncatedUnicodeEscape",
+    "name": "StructureParserInvalidTest__RejectsTruncatedUnicodeEscape",
     "file": "score/json/internal/parser/vajson/structure_parser_invalid_test.cpp",
-    "line": 237,
+    "line": 232,
     "need": "comp_req__vajson__unicode",
     "verify_type": "partially",
     "result": "passed",
@@ -7992,9 +8436,9 @@
     "url": ""
   },
   {
-    "name": "UT__Parser__Invalid__Dynamic__TruncatedUnicodeEscape",
+    "name": "StructureParserInvalidTest__RejectsTruncatedUnicodeEscape",
     "file": "score/json/internal/parser/vajson/structure_parser_invalid_test.cpp",
-    "line": 237,
+    "line": 232,
     "need": "comp_req__vajson__validation",
     "verify_type": "partially",
     "result": "passed",
@@ -8004,9 +8448,9 @@
     "url": ""
   },
   {
-    "name": "UT__Parser__Invalid__Dynamic__NonHexadecimalUnicodeEscape",
+    "name": "StructureParserInvalidTest__RejectsNonHexadecimalUnicodeEscape",
     "file": "score/json/internal/parser/vajson/structure_parser_invalid_test.cpp",
-    "line": 247,
+    "line": 242,
     "need": "comp_req__vajson__unicode",
     "verify_type": "partially",
     "result": "passed",
@@ -8016,9 +8460,9 @@
     "url": ""
   },
   {
-    "name": "UT__Parser__Invalid__Dynamic__NonHexadecimalUnicodeEscape",
+    "name": "StructureParserInvalidTest__RejectsNonHexadecimalUnicodeEscape",
     "file": "score/json/internal/parser/vajson/structure_parser_invalid_test.cpp",
-    "line": 247,
+    "line": 242,
     "need": "comp_req__vajson__validation",
     "verify_type": "partially",
     "result": "passed",
@@ -8028,9 +8472,9 @@
     "url": ""
   },
   {
-    "name": "UT__Parser__Invalid__Dynamic__LoneHighSurrogate",
+    "name": "StructureParserInvalidTest__RejectsLoneHighSurrogate",
     "file": "score/json/internal/parser/vajson/structure_parser_invalid_test.cpp",
-    "line": 257,
+    "line": 252,
     "need": "comp_req__vajson__unicode",
     "verify_type": "partially",
     "result": "passed",
@@ -8040,9 +8484,9 @@
     "url": ""
   },
   {
-    "name": "UT__Parser__Invalid__Dynamic__HighSurrogateFollowedByNonSurrogate",
+    "name": "StructureParserInvalidTest__RejectsHighSurrogateFollowedByNonSurrogate",
     "file": "score/json/internal/parser/vajson/structure_parser_invalid_test.cpp",
-    "line": 267,
+    "line": 262,
     "need": "comp_req__vajson__unicode",
     "verify_type": "partially",
     "result": "passed",
@@ -8052,9 +8496,9 @@
     "url": ""
   },
   {
-    "name": "UT__Parser__Invalid__Dynamic__HighSurrogateFollowedByOtherEscape",
+    "name": "StructureParserInvalidTest__RejectsHighSurrogateFollowedByOtherEscape",
     "file": "score/json/internal/parser/vajson/structure_parser_invalid_test.cpp",
-    "line": 277,
+    "line": 272,
     "need": "comp_req__vajson__unicode",
     "verify_type": "partially",
     "result": "passed",
@@ -8064,9 +8508,9 @@
     "url": ""
   },
   {
-    "name": "UT__Parser__Invalid__Dynamic__LoneLowSurrogate",
+    "name": "StructureParserInvalidTest__RejectsLoneLowSurrogate",
     "file": "score/json/internal/parser/vajson/structure_parser_invalid_test.cpp",
-    "line": 287,
+    "line": 282,
     "need": "comp_req__vajson__unicode",
     "verify_type": "partially",
     "result": "passed",
@@ -8076,9 +8520,9 @@
     "url": ""
   },
   {
-    "name": "UT__Parser__Invalid__Dynamic__UnescapedControlCharacterInString",
+    "name": "StructureParserInvalidTest__RejectsUnescapedControlCharacterInString",
     "file": "score/json/internal/parser/vajson/structure_parser_invalid_test.cpp",
-    "line": 302,
+    "line": 297,
     "need": "comp_req__vajson__validation",
     "verify_type": "partially",
     "result": "passed",
@@ -8088,9 +8532,9 @@
     "url": ""
   },
   {
-    "name": "UT__Parser__Invalid__Dynamic__UnescapedControlCharacterInKey",
+    "name": "StructureParserInvalidTest__RejectsUnescapedControlCharacterInKey",
     "file": "score/json/internal/parser/vajson/structure_parser_invalid_test.cpp",
-    "line": 318,
+    "line": 313,
     "need": "comp_req__vajson__validation",
     "verify_type": "partially",
     "result": "passed",
@@ -8100,7 +8544,7 @@
     "url": ""
   },
   {
-    "name": "UT__Parser__String__Dynamic__TwoCharacterEscapes",
+    "name": "StructureParserStringTest__DecodesTwoCharacterEscapes",
     "file": "score/json/internal/parser/vajson/structure_parser_string_test.cpp",
     "line": 117,
     "need": "comp_req__vajson__unicode",
@@ -8112,7 +8556,7 @@
     "url": ""
   },
   {
-    "name": "UT__Parser__String__Dynamic__UnicodeEscape",
+    "name": "StructureParserStringTest__DecodesUnicodeEscapesToUtf8",
     "file": "score/json/internal/parser/vajson/structure_parser_string_test.cpp",
     "line": 130,
     "need": "comp_req__vajson__unicode",
@@ -8124,7 +8568,7 @@
     "url": ""
   },
   {
-    "name": "UT__Parser__String__Dynamic__UnicodeEscapeInContext",
+    "name": "StructureParserStringTest__DecodesUnicodeEscapesAtUtf8LengthBoundaries",
     "file": "score/json/internal/parser/vajson/structure_parser_string_test.cpp",
     "line": 159,
     "need": "comp_req__vajson__unicode",
@@ -8136,10 +8580,406 @@
     "url": ""
   },
   {
-    "name": "UT__Parser__String__Dynamic__UnicodeEscapeInKey",
+    "name": "StructureParserStringTest__DecodesUnicodeEscapeInKey",
     "file": "score/json/internal/parser/vajson/structure_parser_string_test.cpp",
     "line": 220,
     "need": "comp_req__vajson__unicode",
+    "verify_type": "partially",
+    "result": "passed",
+    "result_text": "",
+    "repo_name": "local_repo",
+    "hash": "",
+    "url": ""
+  },
+  {
+    "name": "StructureValidatorTest__AcceptsWellFormedDocuments",
+    "file": "score/json/internal/parser/vajson/structure_validator_test.cpp",
+    "line": 89,
+    "need": "comp_req__vajson__validation",
+    "verify_type": "partially",
+    "result": "passed",
+    "result_text": "",
+    "repo_name": "local_repo",
+    "hash": "",
+    "url": ""
+  },
+  {
+    "name": "StructureValidatorTest__AcceptsTrailingCommas",
+    "file": "score/json/internal/parser/vajson/structure_validator_test.cpp",
+    "line": 105,
+    "need": "comp_req__vajson__trailing_commas",
+    "verify_type": "partially",
+    "result": "passed",
+    "result_text": "",
+    "repo_name": "local_repo",
+    "hash": "",
+    "url": ""
+  },
+  {
+    "name": "ChunkBoundaries/JsonDataFileSizeTest__AcceptsFileAtSizeLimit/0",
+    "file": "score/json/internal/parser/vajson/json_data_test.cpp",
+    "line": 94,
+    "need": "comp_req__json__max_file_size",
+    "verify_type": "partially",
+    "result": "passed",
+    "result_text": "",
+    "repo_name": "local_repo",
+    "hash": "",
+    "url": ""
+  },
+  {
+    "name": "ChunkBoundaries/JsonDataFileSizeTest__AcceptsFileAtSizeLimit/1",
+    "file": "score/json/internal/parser/vajson/json_data_test.cpp",
+    "line": 94,
+    "need": "comp_req__json__max_file_size",
+    "verify_type": "partially",
+    "result": "passed",
+    "result_text": "",
+    "repo_name": "local_repo",
+    "hash": "",
+    "url": ""
+  },
+  {
+    "name": "ChunkBoundaries/JsonDataFileSizeTest__AcceptsFileAtSizeLimit/2",
+    "file": "score/json/internal/parser/vajson/json_data_test.cpp",
+    "line": 94,
+    "need": "comp_req__json__max_file_size",
+    "verify_type": "partially",
+    "result": "passed",
+    "result_text": "",
+    "repo_name": "local_repo",
+    "hash": "",
+    "url": ""
+  },
+  {
+    "name": "ChunkBoundaries/JsonDataFileSizeTest__AcceptsFileAtSizeLimit/3",
+    "file": "score/json/internal/parser/vajson/json_data_test.cpp",
+    "line": 94,
+    "need": "comp_req__json__max_file_size",
+    "verify_type": "partially",
+    "result": "passed",
+    "result_text": "",
+    "repo_name": "local_repo",
+    "hash": "",
+    "url": ""
+  },
+  {
+    "name": "ChunkBoundaries/JsonDataFileSizeTest__AcceptsFileAtSizeLimit/4",
+    "file": "score/json/internal/parser/vajson/json_data_test.cpp",
+    "line": 94,
+    "need": "comp_req__json__max_file_size",
+    "verify_type": "partially",
+    "result": "passed",
+    "result_text": "",
+    "repo_name": "local_repo",
+    "hash": "",
+    "url": ""
+  },
+  {
+    "name": "ChunkBoundaries/JsonDataFileSizeTest__RejectsFileAboveSizeLimit/0",
+    "file": "score/json/internal/parser/vajson/json_data_test.cpp",
+    "line": 103,
+    "need": "comp_req__json__max_file_size",
+    "verify_type": "partially",
+    "result": "passed",
+    "result_text": "",
+    "repo_name": "local_repo",
+    "hash": "",
+    "url": ""
+  },
+  {
+    "name": "ChunkBoundaries/JsonDataFileSizeTest__RejectsFileAboveSizeLimit/1",
+    "file": "score/json/internal/parser/vajson/json_data_test.cpp",
+    "line": 103,
+    "need": "comp_req__json__max_file_size",
+    "verify_type": "partially",
+    "result": "passed",
+    "result_text": "",
+    "repo_name": "local_repo",
+    "hash": "",
+    "url": ""
+  },
+  {
+    "name": "ChunkBoundaries/JsonDataFileSizeTest__RejectsFileAboveSizeLimit/2",
+    "file": "score/json/internal/parser/vajson/json_data_test.cpp",
+    "line": 103,
+    "need": "comp_req__json__max_file_size",
+    "verify_type": "partially",
+    "result": "passed",
+    "result_text": "",
+    "repo_name": "local_repo",
+    "hash": "",
+    "url": ""
+  },
+  {
+    "name": "ChunkBoundaries/JsonDataFileSizeTest__RejectsFileAboveSizeLimit/3",
+    "file": "score/json/internal/parser/vajson/json_data_test.cpp",
+    "line": 103,
+    "need": "comp_req__json__max_file_size",
+    "verify_type": "partially",
+    "result": "passed",
+    "result_text": "",
+    "repo_name": "local_repo",
+    "hash": "",
+    "url": ""
+  },
+  {
+    "name": "ChunkBoundaries/JsonDataFileSizeTest__RejectsFileAboveSizeLimit/4",
+    "file": "score/json/internal/parser/vajson/json_data_test.cpp",
+    "line": 103,
+    "need": "comp_req__json__max_file_size",
+    "verify_type": "partially",
+    "result": "passed",
+    "result_text": "",
+    "repo_name": "local_repo",
+    "hash": "",
+    "url": ""
+  },
+  {
+    "name": "StructureValidatorTest/StructureValidatorRejectsTest__ReportsViolatedRule/SecondTopLevelValue",
+    "file": "score/json/internal/parser/vajson/structure_validator_test.cpp",
+    "line": 119,
+    "need": "comp_req__vajson__validation",
+    "verify_type": "partially",
+    "result": "passed",
+    "result_text": "",
+    "repo_name": "local_repo",
+    "hash": "",
+    "url": ""
+  },
+  {
+    "name": "StructureValidatorTest/StructureValidatorRejectsTest__ReportsViolatedRule/ContainerAfterTopLevelValue",
+    "file": "score/json/internal/parser/vajson/structure_validator_test.cpp",
+    "line": 119,
+    "need": "comp_req__vajson__validation",
+    "verify_type": "partially",
+    "result": "passed",
+    "result_text": "",
+    "repo_name": "local_repo",
+    "hash": "",
+    "url": ""
+  },
+  {
+    "name": "StructureValidatorTest/StructureValidatorRejectsTest__ReportsViolatedRule/KeyAfterTopLevelValue",
+    "file": "score/json/internal/parser/vajson/structure_validator_test.cpp",
+    "line": 119,
+    "need": "comp_req__vajson__validation",
+    "verify_type": "partially",
+    "result": "passed",
+    "result_text": "",
+    "repo_name": "local_repo",
+    "hash": "",
+    "url": ""
+  },
+  {
+    "name": "StructureValidatorTest/StructureValidatorRejectsTest__ReportsViolatedRule/ValueWithoutComma",
+    "file": "score/json/internal/parser/vajson/structure_validator_test.cpp",
+    "line": 119,
+    "need": "comp_req__vajson__validation",
+    "verify_type": "partially",
+    "result": "passed",
+    "result_text": "",
+    "repo_name": "local_repo",
+    "hash": "",
+    "url": ""
+  },
+  {
+    "name": "StructureValidatorTest/StructureValidatorRejectsTest__ReportsViolatedRule/ContainerWithoutComma",
+    "file": "score/json/internal/parser/vajson/structure_validator_test.cpp",
+    "line": 119,
+    "need": "comp_req__vajson__validation",
+    "verify_type": "partially",
+    "result": "passed",
+    "result_text": "",
+    "repo_name": "local_repo",
+    "hash": "",
+    "url": ""
+  },
+  {
+    "name": "StructureValidatorTest/StructureValidatorRejectsTest__ReportsViolatedRule/KeyWithoutComma",
+    "file": "score/json/internal/parser/vajson/structure_validator_test.cpp",
+    "line": 119,
+    "need": "comp_req__vajson__validation",
+    "verify_type": "partially",
+    "result": "passed",
+    "result_text": "",
+    "repo_name": "local_repo",
+    "hash": "",
+    "url": ""
+  },
+  {
+    "name": "StructureValidatorTest/StructureValidatorRejectsTest__ReportsViolatedRule/ValueWithoutKey",
+    "file": "score/json/internal/parser/vajson/structure_validator_test.cpp",
+    "line": 119,
+    "need": "comp_req__vajson__validation",
+    "verify_type": "partially",
+    "result": "passed",
+    "result_text": "",
+    "repo_name": "local_repo",
+    "hash": "",
+    "url": ""
+  },
+  {
+    "name": "StructureValidatorTest/StructureValidatorRejectsTest__ReportsViolatedRule/ContainerWithoutKey",
+    "file": "score/json/internal/parser/vajson/structure_validator_test.cpp",
+    "line": 119,
+    "need": "comp_req__vajson__validation",
+    "verify_type": "partially",
+    "result": "passed",
+    "result_text": "",
+    "repo_name": "local_repo",
+    "hash": "",
+    "url": ""
+  },
+  {
+    "name": "StructureValidatorTest/StructureValidatorRejectsTest__ReportsViolatedRule/KeyAfterKey",
+    "file": "score/json/internal/parser/vajson/structure_validator_test.cpp",
+    "line": 119,
+    "need": "comp_req__vajson__validation",
+    "verify_type": "partially",
+    "result": "passed",
+    "result_text": "",
+    "repo_name": "local_repo",
+    "hash": "",
+    "url": ""
+  },
+  {
+    "name": "StructureValidatorTest/StructureValidatorRejectsTest__ReportsViolatedRule/CommaAfterKey",
+    "file": "score/json/internal/parser/vajson/structure_validator_test.cpp",
+    "line": 119,
+    "need": "comp_req__vajson__validation",
+    "verify_type": "partially",
+    "result": "passed",
+    "result_text": "",
+    "repo_name": "local_repo",
+    "hash": "",
+    "url": ""
+  },
+  {
+    "name": "StructureValidatorTest/StructureValidatorRejectsTest__ReportsViolatedRule/CloseAfterKey",
+    "file": "score/json/internal/parser/vajson/structure_validator_test.cpp",
+    "line": 119,
+    "need": "comp_req__vajson__validation",
+    "verify_type": "partially",
+    "result": "passed",
+    "result_text": "",
+    "repo_name": "local_repo",
+    "hash": "",
+    "url": ""
+  },
+  {
+    "name": "StructureValidatorTest/StructureValidatorRejectsTest__ReportsViolatedRule/TopLevelKey",
+    "file": "score/json/internal/parser/vajson/structure_validator_test.cpp",
+    "line": 119,
+    "need": "comp_req__vajson__validation",
+    "verify_type": "partially",
+    "result": "passed",
+    "result_text": "",
+    "repo_name": "local_repo",
+    "hash": "",
+    "url": ""
+  },
+  {
+    "name": "StructureValidatorTest/StructureValidatorRejectsTest__ReportsViolatedRule/KeyInArray",
+    "file": "score/json/internal/parser/vajson/structure_validator_test.cpp",
+    "line": 119,
+    "need": "comp_req__vajson__validation",
+    "verify_type": "partially",
+    "result": "passed",
+    "result_text": "",
+    "repo_name": "local_repo",
+    "hash": "",
+    "url": ""
+  },
+  {
+    "name": "StructureValidatorTest/StructureValidatorRejectsTest__ReportsViolatedRule/TopLevelComma",
+    "file": "score/json/internal/parser/vajson/structure_validator_test.cpp",
+    "line": 119,
+    "need": "comp_req__vajson__validation",
+    "verify_type": "partially",
+    "result": "passed",
+    "result_text": "",
+    "repo_name": "local_repo",
+    "hash": "",
+    "url": ""
+  },
+  {
+    "name": "StructureValidatorTest/StructureValidatorRejectsTest__ReportsViolatedRule/CommaAfterTopLevelValue",
+    "file": "score/json/internal/parser/vajson/structure_validator_test.cpp",
+    "line": 119,
+    "need": "comp_req__vajson__validation",
+    "verify_type": "partially",
+    "result": "passed",
+    "result_text": "",
+    "repo_name": "local_repo",
+    "hash": "",
+    "url": ""
+  },
+  {
+    "name": "StructureValidatorTest/StructureValidatorRejectsTest__ReportsViolatedRule/TopLevelArrayClose",
+    "file": "score/json/internal/parser/vajson/structure_validator_test.cpp",
+    "line": 119,
+    "need": "comp_req__vajson__validation",
+    "verify_type": "partially",
+    "result": "passed",
+    "result_text": "",
+    "repo_name": "local_repo",
+    "hash": "",
+    "url": ""
+  },
+  {
+    "name": "StructureValidatorTest/StructureValidatorRejectsTest__ReportsViolatedRule/ArrayCloseInObject",
+    "file": "score/json/internal/parser/vajson/structure_validator_test.cpp",
+    "line": 119,
+    "need": "comp_req__vajson__validation",
+    "verify_type": "partially",
+    "result": "passed",
+    "result_text": "",
+    "repo_name": "local_repo",
+    "hash": "",
+    "url": ""
+  },
+  {
+    "name": "StructureValidatorTest/StructureValidatorRejectsTest__ReportsViolatedRule/ObjectCloseInArray",
+    "file": "score/json/internal/parser/vajson/structure_validator_test.cpp",
+    "line": 119,
+    "need": "comp_req__vajson__validation",
+    "verify_type": "partially",
+    "result": "passed",
+    "result_text": "",
+    "repo_name": "local_repo",
+    "hash": "",
+    "url": ""
+  },
+  {
+    "name": "StructureValidatorTest/StructureValidatorRejectsTest__ReportsViolatedRule/EmptyDocument",
+    "file": "score/json/internal/parser/vajson/structure_validator_test.cpp",
+    "line": 119,
+    "need": "comp_req__vajson__validation",
+    "verify_type": "partially",
+    "result": "passed",
+    "result_text": "",
+    "repo_name": "local_repo",
+    "hash": "",
+    "url": ""
+  },
+  {
+    "name": "StructureValidatorTest/StructureValidatorRejectsTest__ReportsViolatedRule/UnclosedArray",
+    "file": "score/json/internal/parser/vajson/structure_validator_test.cpp",
+    "line": 119,
+    "need": "comp_req__vajson__validation",
+    "verify_type": "partially",
+    "result": "passed",
+    "result_text": "",
+    "repo_name": "local_repo",
+    "hash": "",
+    "url": ""
+  },
+  {
+    "name": "StructureValidatorTest/StructureValidatorRejectsTest__ReportsViolatedRule/UnclosedObject",
+    "file": "score/json/internal/parser/vajson/structure_validator_test.cpp",
+    "line": 119,
+    "need": "comp_req__vajson__validation",
     "verify_type": "partially",
     "result": "passed",
     "result_text": "",
