@@ -44,9 +44,9 @@ test --test_output=errors
 # Import platform and toolchain configurations. Not try-import: these files are required.
 import %workspace%/score.bazelrc/score_toolchain.bazelrc
 
-# GCC reports -Wtsan for the atomic fences used by the logging frontend.
-# Keep that diagnostic visible while allowing the TSan build to complete.
-build:tsan --cxxopt=-Wno-error=tsan
+# GCC reports -Wtsan for the atomic fences in WaitFreeStack, used by the logging frontend and its tests.
+# Keep that diagnostic visible and allow logging sources to compile with TSan.
+build:tsan --per_file_copt='(^|/)score/mw/log/.*[.]cpp$@-Wno-error=tsan'
 
 # Test execution and compatibility settings for this repository.
 test:_score_common --build_tests_only
