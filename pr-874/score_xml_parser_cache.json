@@ -17787,7 +17787,7 @@
     "name": "FilesystemFactoryMockObjectsTest__InstanceResolution",
     "file": "score/filesystem/factory/filesystem_factory_mock_objects_test.cpp",
     "line": 24,
-    "need": "comp_req__filesystem__full_testability",
+    "need": "comp_req__filesystem__mock_fake",
     "verify_type": "partially",
     "result": "passed",
     "result_text": "",
@@ -18002,7 +18002,7 @@
   {
     "name": "FileFactoryTest__OpenRegularFileReadsRegularFile",
     "file": "score/filesystem/filestream/file_factory_test.cpp",
-    "line": 585,
+    "line": 584,
     "need": "comp_req__filesystem__regular_file_open",
     "verify_type": "partially",
     "result": "passed",
@@ -18014,7 +18014,7 @@
   {
     "name": "FileFactoryTest__OpenRegularFileCreatesAndWritesRegularFile",
     "file": "score/filesystem/filestream/file_factory_test.cpp",
-    "line": 601,
+    "line": 600,
     "need": "comp_req__filesystem__regular_file_open",
     "verify_type": "partially",
     "result": "passed",
@@ -18026,7 +18026,7 @@
   {
     "name": "FileFactoryTest__OpenRegularFileRejectsFifoForReadingWithoutBlocking",
     "file": "score/filesystem/filestream/file_factory_test.cpp",
-    "line": 621,
+    "line": 620,
     "need": "comp_req__filesystem__regular_file_open",
     "verify_type": "partially",
     "result": "passed",
@@ -18038,7 +18038,7 @@
   {
     "name": "FileFactoryTest__OpenRegularFileRejectsFifoForWritingWithoutBlocking",
     "file": "score/filesystem/filestream/file_factory_test.cpp",
-    "line": 638,
+    "line": 637,
     "need": "comp_req__filesystem__regular_file_open",
     "verify_type": "partially",
     "result": "passed",
@@ -18050,7 +18050,7 @@
   {
     "name": "FileFactoryTest__OpenRegularFileRejectsDirectory",
     "file": "score/filesystem/filestream/file_factory_test.cpp",
-    "line": 655,
+    "line": 654,
     "need": "comp_req__filesystem__regular_file_open",
     "verify_type": "partially",
     "result": "passed",
@@ -18062,7 +18062,7 @@
   {
     "name": "FileFactoryTest__OpenRegularFileFailsForMissingFile",
     "file": "score/filesystem/filestream/file_factory_test.cpp",
-    "line": 668,
+    "line": 667,
     "need": "comp_req__filesystem__regular_file_open",
     "verify_type": "partially",
     "result": "passed",
@@ -18206,7 +18206,7 @@
   {
     "name": "FileFactoryTestWithStatMock__OpenRegularFileClosesFileWhenStatusIsUnavailable",
     "file": "score/filesystem/filestream/file_factory_test.cpp",
-    "line": 681,
+    "line": 680,
     "need": "comp_req__filesystem__regular_file_open",
     "verify_type": "partially",
     "result": "passed",
@@ -18230,7 +18230,7 @@
   {
     "name": "OpenRegularFileWithFcntlMock__RestoresBlockingIo",
     "file": "score/filesystem/filestream/file_factory_test.cpp",
-    "line": 721,
+    "line": 720,
     "need": "comp_req__filesystem__regular_file_open",
     "verify_type": "partially",
     "result": "passed",
@@ -18242,7 +18242,7 @@
   {
     "name": "OpenRegularFileWithFcntlMock__FailsWhenStatusFlagsCannotBeRead",
     "file": "score/filesystem/filestream/file_factory_test.cpp",
-    "line": 738,
+    "line": 737,
     "need": "comp_req__filesystem__regular_file_open",
     "verify_type": "partially",
     "result": "passed",
@@ -18254,7 +18254,7 @@
   {
     "name": "OpenRegularFileWithFcntlMock__FailsWhenBlockingIoCannotBeRestored",
     "file": "score/filesystem/filestream/file_factory_test.cpp",
-    "line": 753,
+    "line": 752,
     "need": "comp_req__filesystem__regular_file_open",
     "verify_type": "partially",
     "result": "passed",
