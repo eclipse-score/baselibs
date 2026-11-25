@@ -17954,7 +17954,7 @@
   {
     "name": "FileFactoryTest__AtomicUpdateInvalidMode",
     "file": "score/filesystem/filestream/file_factory_test.cpp",
-    "line": 171,
+    "line": 172,
     "need": "comp_req__filesystem__file_io",
     "verify_type": "partially",
     "result": "passed",
@@ -17966,7 +17966,7 @@
   {
     "name": "FileFactoryTest__OldContentVisibleBeforeAtomicObjectGetsDeleted",
     "file": "score/filesystem/filestream/file_factory_test.cpp",
-    "line": 185,
+    "line": 186,
     "need": "comp_req__filesystem__file_io",
     "verify_type": "partially",
     "result": "passed",
@@ -17978,7 +17978,7 @@
   {
     "name": "FileFactoryTest__ErrorOnFailingAtomicUpdate",
     "file": "score/filesystem/filestream/file_factory_test.cpp",
-    "line": 312,
+    "line": 313,
     "need": "comp_req__filesystem__file_io",
     "verify_type": "partially",
     "result": "passed",
@@ -17990,7 +17990,7 @@
   {
     "name": "FileFactoryTest__AtomicUpdateWithEmptyPath",
     "file": "score/filesystem/filestream/file_factory_test.cpp",
-    "line": 333,
+    "line": 334,
     "need": "comp_req__filesystem__file_io",
     "verify_type": "partially",
     "result": "passed",
@@ -18002,7 +18002,7 @@
   {
     "name": "FileFactoryTest__OpenRegularFileReadsRegularFile",
     "file": "score/filesystem/filestream/file_factory_test.cpp",
-    "line": 586,
+    "line": 585,
     "need": "comp_req__filesystem__regular_file_open",
     "verify_type": "partially",
     "result": "passed",
@@ -18014,7 +18014,7 @@
   {
     "name": "FileFactoryTest__OpenRegularFileCreatesAndWritesRegularFile",
     "file": "score/filesystem/filestream/file_factory_test.cpp",
-    "line": 602,
+    "line": 601,
     "need": "comp_req__filesystem__regular_file_open",
     "verify_type": "partially",
     "result": "passed",
@@ -18026,7 +18026,7 @@
   {
     "name": "FileFactoryTest__OpenRegularFileRejectsFifoForReadingWithoutBlocking",
     "file": "score/filesystem/filestream/file_factory_test.cpp",
-    "line": 622,
+    "line": 621,
     "need": "comp_req__filesystem__regular_file_open",
     "verify_type": "partially",
     "result": "passed",
@@ -18038,7 +18038,7 @@
   {
     "name": "FileFactoryTest__OpenRegularFileRejectsFifoForWritingWithoutBlocking",
     "file": "score/filesystem/filestream/file_factory_test.cpp",
-    "line": 639,
+    "line": 638,
     "need": "comp_req__filesystem__regular_file_open",
     "verify_type": "partially",
     "result": "passed",
@@ -18050,7 +18050,7 @@
   {
     "name": "FileFactoryTest__OpenRegularFileRejectsDirectory",
     "file": "score/filesystem/filestream/file_factory_test.cpp",
-    "line": 656,
+    "line": 655,
     "need": "comp_req__filesystem__regular_file_open",
     "verify_type": "partially",
     "result": "passed",
@@ -18062,7 +18062,7 @@
   {
     "name": "FileFactoryTest__OpenRegularFileFailsForMissingFile",
     "file": "score/filesystem/filestream/file_factory_test.cpp",
-    "line": 669,
+    "line": 668,
     "need": "comp_req__filesystem__regular_file_open",
     "verify_type": "partially",
     "result": "passed",
@@ -18074,7 +18074,7 @@
   {
     "name": "FileFactoryFailedAtomicUpdateTest__CloseKeepsTargetUnchanged",
     "file": "score/filesystem/filestream/file_factory_test.cpp",
-    "line": 270,
+    "line": 271,
     "need": "comp_req__filesystem__file_io",
     "verify_type": "partially",
     "result": "passed",
@@ -18086,7 +18086,7 @@
   {
     "name": "FileFactoryFailedAtomicUpdateTest__DestructionKeepsTargetUnchanged",
     "file": "score/filesystem/filestream/file_factory_test.cpp",
-    "line": 292,
+    "line": 293,
     "need": "comp_req__filesystem__file_io",
     "verify_type": "partially",
     "result": "passed",
@@ -18098,7 +18098,7 @@
   {
     "name": "FileFactoryTestWithFcntlMock__OpenFileHandleFailedOnOpen",
     "file": "score/filesystem/filestream/file_factory_test.cpp",
-    "line": 350,
+    "line": 351,
     "need": "comp_req__filesystem__file_io",
     "verify_type": "partially",
     "result": "passed",
@@ -18206,7 +18206,7 @@
   {
     "name": "FileFactoryTestWithStatMock__OpenRegularFileClosesFileWhenStatusIsUnavailable",
     "file": "score/filesystem/filestream/file_factory_test.cpp",
-    "line": 682,
+    "line": 681,
     "need": "comp_req__filesystem__regular_file_open",
     "verify_type": "partially",
     "result": "passed",
@@ -18218,7 +18218,7 @@
   {
     "name": "FileFactoryHelpersTest__ComposeTempFilenameUsesAllParameters",
     "file": "score/filesystem/filestream/file_factory_test.cpp",
-    "line": 564,
+    "line": 563,
     "need": "comp_req__filesystem__file_io",
     "verify_type": "partially",
     "result": "passed",
@@ -18230,7 +18230,7 @@
   {
     "name": "OpenRegularFileWithFcntlMock__RestoresBlockingIo",
     "file": "score/filesystem/filestream/file_factory_test.cpp",
-    "line": 722,
+    "line": 721,
     "need": "comp_req__filesystem__regular_file_open",
     "verify_type": "partially",
     "result": "passed",
@@ -18242,7 +18242,7 @@
   {
     "name": "OpenRegularFileWithFcntlMock__FailsWhenStatusFlagsCannotBeRead",
     "file": "score/filesystem/filestream/file_factory_test.cpp",
-    "line": 739,
+    "line": 738,
     "need": "comp_req__filesystem__regular_file_open",
     "verify_type": "partially",
     "result": "passed",
@@ -18254,7 +18254,7 @@
   {
     "name": "OpenRegularFileWithFcntlMock__FailsWhenBlockingIoCannotBeRestored",
     "file": "score/filesystem/filestream/file_factory_test.cpp",
-    "line": 754,
+    "line": 753,
     "need": "comp_req__filesystem__regular_file_open",
     "verify_type": "partially",
     "result": "passed",
