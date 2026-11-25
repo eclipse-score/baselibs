@@ -34,6 +34,7 @@ Functional Requirements
    :safety: ASIL_B
    :status: valid
    :version: 1
+   :derived_from: feat_req__baselibs__osal[version==1]
    :satisfied_by: comp__baselibs_os[version==1]
 
    The OS component shall provide functions for getting an environment variable.
@@ -45,6 +46,7 @@ Functional Requirements
    :safety: ASIL_B
    :status: valid
    :version: 1
+   :derived_from: feat_req__baselibs__osal[version==1]
    :satisfied_by: comp__baselibs_os[version==1]
 
    The OS component shall provide functions for setting environment variable.
@@ -56,6 +58,7 @@ Functional Requirements
    :safety: ASIL_B
    :status: valid
    :version: 1
+   :derived_from: feat_req__baselibs__osal[version==1]
    :satisfied_by: comp__baselibs_os[version==1]
 
    The OS component shall provide functions for unsetting environment variable.
@@ -67,6 +70,7 @@ Functional Requirements
    :safety: ASIL_B
    :status: valid
    :version: 1
+   :derived_from: feat_req__baselibs__osal[version==1]
    :satisfied_by: comp__baselibs_os[version==1]
 
    The OS component shall create pipes, accepted sockets and inotify instances with close-on-exec by default.
@@ -78,6 +82,7 @@ Functional Requirements
    :safety: ASIL_B
    :status: valid
    :version: 1
+   :derived_from: feat_req__baselibs__osal[version==1]
    :satisfied_by: comp__baselibs_os[version==1]
 
    The OS component shall allow the caller to choose close-on-exec and non-blocking when creating pipes and inotify

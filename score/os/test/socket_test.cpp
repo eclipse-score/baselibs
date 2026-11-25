@@ -829,6 +829,7 @@ TEST_F(SocketTestFixture, TestAcceptFailure)
     auto accept_result = instance_.accept(server_fd_, reinterpret_cast<sockaddr*>(&client_addr_), &sock_size);
     server_fd_ = -1;
     ASSERT_FALSE(accept_result.has_value());
+    EXPECT_EQ(accept_result.error(), Error::createFromErrno(EBADF));
 }
 
 }  // namespace
