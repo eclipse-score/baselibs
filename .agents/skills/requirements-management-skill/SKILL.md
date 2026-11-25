@@ -10,7 +10,7 @@ description: >-
 
 ### Author or edit `comp_req` / `aou_req`
 
-1. Edit `docs/baselibs/components/<component>/docs/requirements/index.rst`.
+1. Edit `score/<component>/docs/requirements/index.rst`.
 2. Use a stable lower-snake-case ID: `comp_req__<component>__<short_name>` or `aou_req__<component>__<short_name>`.
 3. Write the body following [Requirement Wording](#requirement-wording); split non-atomic requirements into separate needs.
 4. Set every required attribute from [Requirement Attributes](#requirement-attributes), including `:version:`.
@@ -74,8 +74,8 @@ Other IDs: requirements document `doc__<component>_requirements`; architecture c
 | `:reqtype:` | Yes | `Functional` \| `Interface` \| `Process` \| `Non-Functional` |
 | `:safety:` | Yes | `QM` \| `ASIL_B` |
 | `:security:` | Yes | `YES` \| `NO` |
-| `:status:` | Yes | `valid` \| `invalid` |
-| `:version:` | Yes | Whole number, starting at `1`; bump on material change |
+| `:status:` | Yes | `valid` \| `valid_inspected` \| `invalid`; see [Requirement Status](#requirement-status) |
+| `:version:` | Yes | Whole number, starting at `1`; see [Need Versioning](#need-versioning) |
 | body (content) | Yes | Normative text for `comp_req`; integrator/user assumption for `aou_req` |
 
 ### `comp_req`-only attributes
@@ -94,9 +94,23 @@ Other IDs: requirements document `doc__<component>_requirements`; architecture c
 
 `safety` is either `QM` or `ASIL_B`. A `QM` requirement may not be `derived_from` an `ASIL_B` requirement; re-check the chain whenever you change safety.
 
+## Material Changes
+
+A change is material if it changes any of the following:
+
+- The meaning of the need's body.
+- Its safety classification.
+- Its security classification.
+- What a link traces to.
+
+Non-material changes preserve all of these.
+Examples include typo and formatting fixes, title-only or version-only changes, and retargeting a link to a renamed or re-versioned need without changing what it traces to.
+
 ## Need Versioning
 
-Every need has a whole-number `:version:`. Bump it on material body, safety, security, or link changes; typo and formatting fixes do not need a bump.
+Bump a need's `:version:` only for a [material change](#material-changes).
+For non-material changes, keep the version so existing pins stay valid and downstream needs require no edits.
+Document needs (`doc__...`) that no link pins can be bumped whenever their content changes.
 
 Every link value is written as `<target_id>[version==N]`, where `N` is the current version of the target need:
 
@@ -109,12 +123,24 @@ Every link value is written as `<target_id>[version==N]`, where `N` is the curre
 - For comma-separated links, pin each ID individually.
 - On unresolved-link failures, check the target version as well as the target ID.
 
+## Requirement Status
+
+- `valid`: the requirement is in force but has not passed a requirements inspection. Use it for every new requirement.
+- `valid_inspected`: the requirement passed a human requirements inspection according to the S-CORE process, and the human inspector filled out the inspection checklist.
+  This status is relevant for ASIL code, including this repository's `ASIL_B` requirements.
+  An automated or AI-assisted review or a successful documentation build does not replace the human inspection or justify setting this status.
+- `invalid`: the requirement is not in force, for example while its `feat_req` does not exist yet.
+
+After a [material change](#material-changes), reset `valid_inspected` to `valid` because a new human inspection is required.
+For non-material changes, preserve the status.
+
 ## Directory Structure
 
-Author `comp_req` / `aou_req` in each component's `requirements/index.rst`:
+Author `comp_req` / `aou_req` in each component's `requirements/index.rst`.
+Component docs live next to the component source and are mounted under `baselibs/components/<component>/` in the built documentation:
 
 ```
-docs/baselibs/components/<component>/docs/
+score/<component>/docs/
 ├── index.rst                 # component document node (doc__<component>)
 ├── requirements/index.rst    # comp_req + aou_req  <- edit here
 └── architecture/index.rst    # component architecture (comp__..., interfaces)

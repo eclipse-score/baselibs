@@ -1,10 +1,17 @@
 # AGENTS.md
 
-## Repository Overview
+## Repository overview
 
-**score_baselibs** is a collection of foundational C++ and Rust libraries for the S-CORE (Eclipse) automotive platform, targeting ISO 26262 ASIL-B compliance with MISRA C++:2023. The C++ standard is **C++17**. Rust edition is **2021**. C++ exceptions are **not used** (they cause `abort` on target platforms). Supported platforms: **Linux** and **QNX 8.0 SDP**. Architectures: **x86_64** and **AArch64**. Build system: **Bazel 8 (bzlmod)**. The Bazel module name is `score_baselibs`.
+**score_baselibs** is a collection of foundational C++ and Rust libraries for the S-CORE (Eclipse) automotive platform, targeting ISO 26262 ASIL-B compliance with MISRA C++:2023.
+The C++ standard is **C++17**.
+Rust edition is **2021**.
+C++ exceptions are **not used** (they cause `abort` on target platforms).
+Supported platforms: **Linux** and **QNX 8.0 SDP**.
+Architectures: **x86_64** and **AArch64**.
+Build system: **Bazel 8 (bzlmod)**.
+The Bazel module name is `score_baselibs`.
 
-## Repository Layout
+## Repository layout
 
 ```
 score/          # C++ AND Rust libraries side by side (concurrency, containers, containers_rust, filesystem,
@@ -19,19 +26,28 @@ docs/           # Feature-level and module-level Sphinx docs.
 
 **Key root files:** `MODULE.bazel` (Bazel module definition and deps), `.bazelrc` (entry point, imports `score.bazelrc/`), `score.bazelrc/` (platform, sanitizer and lint configs), `REPO.bazel` (repository-wide toolchain features), `Cargo.toml` (Rust workspace).
 
-## Core Libraries and Preferred Alternatives
+## Core libraries and preferred alternatives
 
-A few `score/` libraries exist specifically to replace a standard C++ feature that is banned, unavailable, or unsafe in this repository. Prefer these over the standard feature they replace:
+A few `score/` libraries exist specifically to replace a standard C++ feature that is banned, unavailable, or unsafe in this repository.
+Prefer these over the standard feature they replace:
 
-- **`score/result`** — `score::Result<T>` is the repository's error-return type. Use it instead of C++ exceptions, which this repository does not use (see Repository Overview).
-- **`score/filesystem`** — a C++ wrapper around POSIX filesystem operations, modeled on `std::filesystem` but with mockable/fake implementations for tests. Use it instead of the standard `<filesystem>` header, which might be not safety-certified on some platforms.
-- **`score/language/futurecpp`** (namespace `score::cpp`) — backports of newer (C++20-and-later) standard library facilities to C++17, e.g. `score::cpp::jthread`, `score::cpp::span`, `score::cpp::expected`, `score::cpp::latch`, `score::cpp::stop_token`. Use these instead of the equivalent `std::` C++20+ types, since this repository is C++17 only. It also provides `score::cpp::pmr`, the repository's counterpart to the C++17 `std::pmr` polymorphic memory resource facilities (e.g. `score::cpp::pmr::polymorphic_allocator`, `score::cpp::pmr::memory_resource`, and the `score::cpp::pmr` container aliases like `vector`, `string`, `map`). Prefer `score::cpp::pmr` over `std::pmr`.
-- **`score/os`** — the OS Abstraction Layer (OSAL): an adapter library giving an OS-independent interface to POSIX-like operating systems (Linux, QNX). Use it instead of calling raw OS/POSIX APIs directly (e.g. `SigAction` wraps `sigaction()`).
-- **`libm`** (system library) — the C math library, for real-valued math functions. Use it instead of the C++ `<complex>`/`<complex.h>` headers, which might be not safety-certified on some platforms.
+- **`score/result`** — `score::Result<T>` is the repository's error-return type.
+  Use it instead of C++ exceptions, which this repository does not use (see Repository overview).
+- **`score/filesystem`** — a C++ wrapper around POSIX filesystem operations, modeled on `std::filesystem` but with mockable/fake implementations for tests.
+  Use it instead of the standard `<filesystem>` header, which might be not safety-certified on some platforms.
+- **`score/language/futurecpp`** (namespace `score::cpp`) — backports of newer (C++20-and-later) standard library facilities to C++17, for example `score::cpp::jthread`, `score::cpp::span`, `score::cpp::expected`, `score::cpp::latch`, `score::cpp::stop_token`.
+  Use these instead of the equivalent `std::` C++20+ types, since this repository is C++17 only.
+  It also provides `score::cpp::pmr`, the repository's counterpart to the C++17 `std::pmr` polymorphic memory resource facilities, such as `score::cpp::pmr::polymorphic_allocator`, `score::cpp::pmr::memory_resource`, and the `score::cpp::pmr` container aliases like `vector`, `string`, `map`.
+  Prefer `score::cpp::pmr` over `std::pmr`.
+- **`score/os`** — the OS Abstraction Layer (OSAL): an adapter library giving an OS-independent interface to POSIX-like operating systems (Linux, QNX).
+  Use it instead of calling raw OS/POSIX APIs directly; for example, `SigAction` wraps `sigaction()`.
+- **`libm`** (system library) — the C math library, for real-valued math functions.
+  Use it instead of the C++ `<complex>`/`<complex.h>` headers, which might be not safety-certified on some platforms.
 
-## Building and Testing
+## Building and testing
 
-Always use `--config=score-linux-x86_64` for Linux x86_64 builds. This flag is **required** — bare `bazel build //...` will fail due to missing platform/toolchain configuration.
+Always use `--config=score-linux-x86_64` for Linux x86_64 builds.
+This flag is **required** — bare `bazel build //...` will fail due to missing platform/toolchain configuration.
 
 ### Build
 
@@ -45,12 +61,14 @@ bazel build --config=score-linux-x86_64 //score/...   # All C++ and Rust librari
 bazel test --config=score-linux-x86_64 //score/...    # All C++ and Rust tests
 ```
 
-To test a single target, replace `//score/...` with the specific Bazel label, e.g., `//score/containers_rust:containers_test`.
+To test a single target, replace `//score/...` with the specific Bazel label, for example `//score/containers_rust:containers_test`.
 
-### Other Configs (reference only — prefer score-linux-x86_64)
+### Other configs (reference only — prefer score-linux-x86_64)
 
 - `--config=score-linux-aarch64` — AArch64 Linux (cross-compile, needs `qemu-user`)
-- `--config=score-qnx-x86_64` / `--config=score-qnx-aarch64` — QNX (needs SDP credentials). If a user requests a QNX build, first confirm they have QNX SDP credentials configured. If not, direct them to obtain credentials before proceeding and do not generate QNX build commands.
+- `--config=score-qnx-x86_64` / `--config=score-qnx-aarch64` — QNX (needs SDP credentials).
+  If a user requests a QNX build, first confirm they have QNX SDP credentials configured.
+  If not, direct them to obtain credentials before proceeding and do not generate QNX build commands.
 
 ## Formatting
 
@@ -86,7 +104,9 @@ bazel run //tools:copyright.check    # Verify
 bazel run //tools:copyright.fix      # Auto-fix missing headers
 ```
 
-**Every new file with a covered extension must have a copyright header.** The year must be the year in which the file is being created. If the current year is unknown, use `<YEAR>` as a placeholder.
+**Every new file with a covered extension must have a copyright header.**
+The year must be the year in which the file is being created.
+If the current year is unknown, use `<YEAR>` as a placeholder.
 
 C++ files (`.h`, `.cpp`):
 ```cpp
@@ -104,7 +124,8 @@ C++ files (`.h`, `.cpp`):
  ********************************************************************************/
 ```
 
-Rust (`.rs`), Python (`.py`), Starlark (`.bzl`), BUILD files — use `#` comment prefix. Bazel files use the same text with `#` line comments.
+Rust (`.rs`), Python (`.py`), Starlark (`.bzl`), BUILD files — use `#` comment prefix.
+Bazel files use the same text with `#` line comments.
 
 ## Linting
 
@@ -116,12 +137,9 @@ bazel build --config=score-linux-x86_64 --config=clang-tidy -- //...
 
 Config: `.clang-tidy` at repo root.
 
-Packages can also opt into a package-local `.clang-tidy` override, discovered by clang-tidy's
-own per-directory config search (nearest directory wins). See the docstring in
-`tools/lint/linters.bzl` for the exact steps and pitfalls (Bazel sandboxing requires the file
-to be exported and registered; `Checks: '-*'` alone errors instead of disabling everything).
-`score/language/futurecpp` uses this to keep linting under its own, Copybara-synced config
-instead of this repo's stricter baseline.
+Packages can also opt into a package-local `.clang-tidy` override, discovered by clang-tidy's own per-directory config search (nearest directory wins).
+See the docstring in `tools/lint/linters.bzl` for the exact steps and pitfalls (Bazel sandboxing requires the file to be exported and registered; `Checks: '-*'` alone errors instead of disabling everything).
+`score/language/futurecpp` uses this to keep linting under its own, Copybara-synced config instead of this repo's stricter baseline.
 
 ### Rust clippy
 
@@ -129,50 +147,84 @@ instead of this repo's stricter baseline.
 bazel build --config=clippy -- //score/...
 ```
 
-### C++ Sanitizers
+### C++ sanitizers
 
 ```bash
 bazel test --config=score-linux-x86_64 --config=asan_ubsan_lsan --build_tests_only -- //score/...
 ```
 
-## General coding commenting guidelines
+## Prose style (code comments, Markdown, RST)
 
-- Write in English in complete sentences. Be concise.
-- Avoid filler, pleasantries and hedging.
-- Write one sentence per line.
-- Do not decorate sections (e.g. with long ---------- comments).
-- Wrap only when unavoidable, first try to rephrase the comment to fit. Respect formatter column limit.
-- Do not wrap Markdown - rephrase or keep as is.
-- Double spaces between sentences are unnecessary.
+These rules apply to prose in code comments, Markdown, RST, and commit message bodies.
 
-## C++ Coding Conventions
+- Write in English, in complete sentences.
+- Be concise: remove words that carry no information, such as pleasantries and filler phrases.
+  Keep every condition, limitation, assumption, and rationale.
+- State uncertainty explicitly; do not drop a qualifier to make a statement sound stronger.
+- In requirements, keep the normative keywords (shall, should, may) as intended; they are not hedging.
+- Do not shorten existing text unless the task asks for it.
+- Use a single space after a period.
+- Do not decorate comments or sections with separator lines such as `// -----`.
+
+### Markdown, RST, and commit message bodies
+
+- Start each sentence on a new line, so diffs and review comments target a single sentence.
+- Never hard-wrap a sentence, however long.
+  Split a sentence that is too long to read instead.
+  Do not copy wrapped prose from other repositories.
+- Keep headings, table cells, and directive options on one line.
+- In a list item with several sentences, put each further sentence on its own indented continuation line.
+- These rules cover prose only.
+  Code blocks and literal blocks follow the formatting of their language.
+
+### Code comments
+
+- Keep comments short; one or two sentences usually suffice.
+- If a sentence exceeds the formatter column limit, first rephrase it shorter; wrap only if that fails.
+
+## C++ coding conventions
 
 ### Style (naming, files, formatting, comments)
 
-**Before writing, modifying, or reviewing any C++, you MUST read [cpp-style-guide.md](./docs/cpp-style-guide.md)** and apply it on the first pass. It is the source of truth for naming, file/API structure, and comments. Do not rely on neighboring files as a style reference — some predate the guide and violate it. Mechanical formatting is applied by `.clang-format`.
+**Before writing, modifying, or reviewing any C++, you MUST read [cpp-style-guide.md](./docs/cpp-style-guide.md)** and apply it on the first pass.
+It is the source of truth for naming, file/API structure, and comments.
+Do not rely on neighboring files as a style reference — some predate the guide and violate it.
+Mechanical formatting is applied by `.clang-format`.
 
-C++ standard: C++17. No exceptions. No RTTI unless explicitly needed. Tests use Google Test (`cc_gtest_unit_test` macro from `bazel/unit_tests.bzl`), named `*_test.cpp` and colocated with source.
+C++ standard: C++17.
+No exceptions.
+No RTTI unless explicitly needed.
+Tests use Google Test (`cc_gtest_unit_test` macro from `bazel/unit_tests.bzl`), named `*_test.cpp` and colocated with source.
 
-### Build Rules
+### Build rules
 
-- **Visibility:** Use `visibility = ["//visibility:public"]` only for libraries with a public API consumed by users of `score_baselibs`. Be conservative: do not expose internal or helper libraries. Internal targets should use package-level or narrower visibility.
+- **Visibility:** Use `visibility = ["//visibility:public"]` only for libraries with a public API consumed by users of `score_baselibs`.
+  Be conservative: do not expose internal or helper libraries.
+  Internal targets should use package-level or narrower visibility.
 - **Compiler warnings:** Use `features = COMPILER_WARNING_FEATURES` from `score/language/safecpp:toolchain_features.bzl`.
 
-### Safety Tags
+### Safety tags
 
-- **ASIL tags:** Use `tags = ["FFI"]` only for libraries targeting ASIL-B safety integrity level. QM-level libraries must not have this tag.
+- **ASIL tags:** Use `tags = ["FFI"]` only for libraries targeting ASIL-B safety integrity level.
+  QM-level libraries must not have this tag.
 
-## Rust Conventions
+## Rust conventions
 
-- Do **not** run `rustfmt` directly. Use commands from Formatting section.
-- Cargo workspace is defined in root `Cargo.toml`. Rust crates live under `score/`, alongside the C++ libraries.
-- Cargo build requires Rust **1.90.0** (from `rust-toolchain.toml`). Bazel uses Ferrocene toolchain.
+- Do **not** run `rustfmt` directly.
+  Use commands from Formatting section.
+- Cargo workspace is defined in root `Cargo.toml`.
+  Rust crates live under `score/`, alongside the C++ libraries.
+- Cargo build requires Rust **1.90.0** (from `rust-toolchain.toml`).
+  Bazel uses Ferrocene toolchain.
 - Rust code should follow the Safety-Critical Rust Consortium coding guidelines: https://github.com/Safety-Critical-Rust-Consortium/safety-critical-rust-coding-guidelines/tree/main/src/coding-guidelines.
-- Allowed Rust crates are listed in https://github.com/eclipse-score/score-crates/blob/main/MODULE.bazel. Adding new crate dependencies should be a last resort. If a required crate is missing and there is no meaningful alternative to implement a feature, consult the user before proceeding.
+- Allowed Rust crates are listed in https://github.com/eclipse-score/score-crates/blob/main/MODULE.bazel.
+  Adding new crate dependencies should be a last resort.
+  If a required crate is missing and there is no meaningful alternative to implement a feature, consult the user before proceeding.
 
-## Integration Test
+## Integration test
 
-The `examples/integration/` directory contains a module-level integration test. CI runs:
+The `examples/integration/` directory contains a module-level integration test.
+CI runs:
 
 ```bash
 cd examples/integration && bazel build //...
@@ -180,9 +232,12 @@ cd examples/integration && bazel build //...
 
 ## Documentation
 
-Documentation uses Sphinx with the sphinx-needs extension, integrated with Bazel. The project follows the S-CORE process defined at https://github.com/eclipse-score/process_description. The metamodels for Sphinx-needs directives and Bazel integration are maintained at https://github.com/eclipse-score/docs-as-code.
+Documentation uses Sphinx with the sphinx-needs extension, integrated with Bazel.
+The project follows the S-CORE process defined at https://github.com/eclipse-score/process_description.
+The metamodels for Sphinx-needs directives and Bazel integration are maintained at https://github.com/eclipse-score/docs-as-code.
 
-`score/<component>/docs/` holds most components' documentation (requirements, architecture, detailed design, safety analysis), colocated with the component's source. `docs/` at the repo root hosts feature-level docs (`docs/features/`) and module-level docs (`docs/module/`).
+`score/<component>/docs/` holds most components' documentation (requirements, architecture, detailed design, safety analysis), colocated with the component's source.
+`docs/` at the repo root hosts feature-level docs (`docs/features/`) and module-level docs (`docs/module/`).
 
 ```bash
 bazel run //:docs    # Run sphinx-needs consistency checks and build HTML documentation, output at _build/index.html
@@ -190,7 +245,14 @@ bazel run //:docs    # Run sphinx-needs consistency checks and build HTML docume
 
 ### Documentation guidelines
 
-- Write RST prose about current capabilities, observable behavior, and constraints. Omit migration narratives, inventories of absent functionality, namespaces, code symbols, and implementation details.
+- Write RST prose about current capabilities, observable behavior, and constraints.
+  Omit migration narratives, inventories of absent functionality, namespaces, code symbols, and implementation details.
+  Implementation details include memory addresses and pointers, locking primitives such as mutexes, internal storage layout, C++ idioms, and concrete `std::` types.
+  For example, write "Provides a hash value that is consistent with equality" instead of "Hashes the view by its backing string address".
+- Write requirements and other needs according to the S-CORE requirement formulation template, using normative wording such as "The component shall ...".
+  General documentation style, such as second-person voice, applies to READMEs and guides, not to need content.
 - Do not link RST prose to source files or Markdown READMEs to RST files.
-- Before deleting obsolete requirements, check whether their functionality moved elsewhere within Baselibs. Remove or retire obsolete needs consistently, updating architecture, safety analysis, incoming references, test metadata, and documentation bundle IDs together.
-- Preserve stable need IDs where possible, bump versions for material changes, and pin links to verified target versions. Tests must reference valid requirements they genuinely verify; do not invent requirements merely to preserve links.
+- Before deleting obsolete requirements, check whether their functionality moved elsewhere within Baselibs.
+  Remove or retire obsolete needs consistently, updating architecture, safety analysis, incoming references, test metadata, and documentation bundle IDs together.
+- Preserve stable need IDs where possible, bump versions only for material changes (see the requirements-management skill, Need Versioning), and pin links to verified target versions.
+  Tests must reference valid requirements they genuinely verify; do not invent requirements merely to preserve links.
