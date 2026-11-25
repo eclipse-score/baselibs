@@ -212,16 +212,16 @@
     },
     {
       "branches": {
-        "percent": null,
-        "total": null
+        "percent": 96,
+        "total": 406
       },
       "files": {
-        "measured": 0,
-        "total": 0
+        "measured": 59,
+        "total": 85
       },
       "lines": {
-        "percent": null,
-        "total": null
+        "percent": 98,
+        "total": 2354
       },
       "primary_need_id": "comp__log"
     }
