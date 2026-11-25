@@ -22,7 +22,8 @@
               comp__baselibs_utils[version==1], comp__baselibs_concurrency[version==1],
               comp__baselibs_safecpp[version==1], comp__baselibs_os[version==1],
               comp__baselibs_flatbuffers[version==1], comp__baselibs_hash[version==1],
-              comp__baselibs_static_reflection[version==1], comp__baselibs_scope_exit[version==1]
+              comp__baselibs_static_reflection[version==1], comp__baselibs_scope_exit[version==1],
+              comp__log[version==1]
    :status: valid
    :maturity: experimental
    :version: 3
@@ -40,7 +41,8 @@
               comp__baselibs_utils[version==1], comp__baselibs_concurrency[version==1],
               comp__baselibs_safecpp[version==1], comp__baselibs_os[version==1],
               comp__baselibs_flatbuffers[version==1], comp__baselibs_hash[version==1],
-              comp__baselibs_static_reflection[version==1], comp__baselibs_scope_exit[version==1]
+              comp__baselibs_static_reflection[version==1], comp__baselibs_scope_exit[version==1],
+              comp__log[version==1]
 
    .. needarch::
       :scale: 50
