@@ -19,7 +19,6 @@
 #include "flatbuffers/flatbuffer_builder.h"
 #include "flatbuffers/table.h"
 #include "gtest/gtest.h"
-#include "score/flatbuffers/details/full_table_fixture.hpp"
 
 namespace score
 {
@@ -32,23 +31,72 @@ namespace test
 
 using namespace ::flatbuffers;
 
+// These tests compare against native values, so they assume a little-endian host, matching FlatBuffers' wire format.
+static_assert(FLATBUFFERS_LITTLEENDIAN, "flatbuffers struct tests assume a little-endian host");
+
 namespace
 {
+
+// Initial capacity hint for each test's FlatBufferBuilder64; the builder grows as needed.
+constexpr std::size_t kInitialBufferCapacity{256U};
+
+// A vtable entry for field index i sits at byte position 4 + 2 * i, the formula
+// FlatBufferBuilder::FieldIndexToOffset() uses internally.
+// The tables in this file have no .fbs schema, so the slot numbers are hardcoded here.
+// The struct sits at field index 2 so that the table stores fields both before and after it: its in-table
+// offset is then one the vtable has to supply, rather than one a reader could assume.
+constexpr voffset_t kLeadingScalarFieldSlot{4};    // Field 0: int32 scalar.
+constexpr voffset_t kLeadingStringFieldSlot{6};    // Field 1: string offset.
+constexpr voffset_t kStructFieldSlot{8};           // Field 2: inline struct.
+constexpr voffset_t kTrailingStringFieldSlot{10};  // Field 3: string offset.
+constexpr voffset_t kTrailingScalarFieldSlot{12};  // Field 4: int32 scalar.
+
+constexpr std::int32_t kLeadingScalarValue{17};
+constexpr char kLeadingStringValue[]{"before"};
+constexpr char kTrailingStringValue[]{"after"};
+constexpr std::int32_t kTrailingScalarValue{23};
+
+constexpr std::int32_t kStructFieldX{11};
+constexpr std::int32_t kStructFieldY{22};
+
+// Inline struct stored in the surrounded struct field.
+struct Point2D
+{
+    std::int32_t x;
+    std::int32_t y;
+};
 
 // Byte offsets of Point2D's two members within the inline struct stored at kStructFieldSlot.
 // A struct has no vtable, so its members are addressed by their fixed offset rather than by a slot number.
 constexpr uoffset_t kStructMemberXOffset{0U};
 constexpr uoffset_t kStructMemberYOffset{sizeof(std::int32_t)};
 
-// Value written by the mutation test; it differs from every value BuildFullTable stores.
+// Value written by the mutation test; it differs from every value the tables in this file store.
 constexpr std::int32_t kMutatedValue{99};
 
-// Returns the fixture table's inline struct field viewed as a flatbuffers::Struct.
+// Builds a table whose struct field is surrounded by scalar and string fields, and returns that struct's
+// inline storage viewed as a flatbuffers::Struct.
 // Table::GetStruct casts away constness internally, so this yields a mutable view even though the struct
 // lives in the buffer the builder owns. The FlatBufferBuilder must outlive the returned pointer.
 Struct* GetFixtureStruct(FlatBufferBuilder64& fbb)
 {
-    return BuildFullTable(fbb)->GetStruct<Struct*>(kStructFieldSlot);
+    // The strings are serialized to the tail first; the table then stores offsets to them.
+    const auto leading_string = fbb.CreateString(kLeadingStringValue);
+    const auto trailing_string = fbb.CreateString(kTrailingStringValue);
+    const Point2D point{kStructFieldX, kStructFieldY};
+
+    const auto start = fbb.StartTable();
+    fbb.AddElement<std::int32_t>(kLeadingScalarFieldSlot, kLeadingScalarValue, 0);
+    fbb.AddOffset(kLeadingStringFieldSlot, leading_string);
+    // AddStruct is like AddElement, not AddOffset: it copies the whole struct directly into the
+    // table, since Point2D is fixed-size and needs no tail storage.
+    fbb.AddStruct(kStructFieldSlot, &point);
+    fbb.AddOffset(kTrailingStringFieldSlot, trailing_string);
+    fbb.AddElement<std::int32_t>(kTrailingScalarFieldSlot, kTrailingScalarValue, 0);
+    const auto root = fbb.EndTable(start);
+    fbb.Finish(Offset<Table>(root));
+
+    return GetMutableRoot<Table>(fbb.GetBufferPointer())->GetStruct<Struct*>(kStructFieldSlot);
 }
 
 // A struct of mixed scalar types and widths, declared in an order that leaves gaps a compiler
