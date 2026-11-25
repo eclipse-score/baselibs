@@ -24,9 +24,10 @@ permissions:
   id-token: write
 jobs:
   daily-cleanup:
-    uses: eclipse-score/cicd-workflows/.github/workflows/daily.yml@b775b8e8e53aa6fcc9f47afc6d62cc8b66bbe18f
+    uses: eclipse-score/cicd-workflows/.github/workflows/daily.yml@2d1dc93f0edb9f99dbcce4c0065d31d73996f04a
     with:
       skip-stale-prs: true
+      skip-docs-link-check: true
     permissions:
       actions: write
       contents: write
