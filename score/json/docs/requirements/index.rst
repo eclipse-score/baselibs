@@ -48,7 +48,7 @@ General Requirements
    :status: valid
    :version: 1
    :satisfied_by: comp__baselibs_json[version==2]
-   :covers: aou_req__json__stack_budget[version==1]
+   :covers: aou_req__json__stack_budget[version==2]
 
    The JSON parser shall return a parsing error for JSON data that is nested deeper than 64 levels.
 
@@ -238,9 +238,11 @@ AoU Requirements
    :security: NO
    :safety: ASIL_B
    :status: valid
-   :version: 1
+   :version: 2
 
    The integrator shall validate the maximum nesting depth of 64 against the available thread stack for parsing cleanup, destruction, cloning, comparison and serialization on the deployed platform and toolchain.
+
+   The integrator shall not let the nesting depth of trees constructed or modified through the public API exceed the depth validated for the deployed platform and toolchain.
 
    Note: The maximum nesting depth is not a platform-qualified stack bound.
    The parser limit does not constrain manually constructed or subsequently modified trees, document size, container width or heap consumption.

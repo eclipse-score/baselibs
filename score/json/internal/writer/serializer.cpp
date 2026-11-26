@@ -90,6 +90,10 @@ void WriteNumber(std::ostream& out_stream, const Number& number) noexcept
     });
 }
 
+// Deviation from MISRA C++:2023 Rule 8.2.10 for WriteValue, WriteList and WriteObject:
+// they recurse once per nesting level of the written Any.
+// The depth of parsed trees is limited by comp_req__json__nesting_depth.
+// The depth of other trees is covered by aou_req__json__stack_budget.
 void WriteValue(FormattingWriter& writer, const Any& value) noexcept;
 
 // NOLINTNEXTLINE(misc-no-recursion) stack depth equals the nesting depth of the written Any

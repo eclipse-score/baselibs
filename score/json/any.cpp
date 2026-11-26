@@ -25,6 +25,10 @@ namespace json
 // coverity[autosar_cpp14_a12_1_5_violation: FALSE]
 Any::Any() : value_(Null{}) {}
 
+// Deviation from MISRA C++:2023 Rule 8.2.10: the comparison recurses once per nesting level of the compared Any.
+// The depth of parsed trees is limited by comp_req__json__nesting_depth.
+// The depth of other trees is covered by aou_req__json__stack_budget.
+//
 // std::visit throws std::bad_variant_access if as-variant(value_i).valueless_by_exception() is true
 // this case is already handled inside an assertion
 // coverity[autosar_cpp14_a15_5_3_violation]
@@ -94,6 +98,10 @@ bool operator==(const Any& lhs, const Any& rhs) noexcept
                       lhs.value_);
 }
 
+// Deviation from MISRA C++:2023 Rule 8.2.10: the clone recurses once per nesting level of the cloned Any.
+// The depth of parsed trees is limited by comp_req__json__nesting_depth.
+// The depth of other trees is covered by aou_req__json__stack_budget.
+//
 // std::visit throws std::bad_variant_access if as-variant(value_i).valueless_by_exception() is true
 // this case is already handled inside an assertion
 // coverity[autosar_cpp14_a15_5_3_violation]
