@@ -48,6 +48,9 @@ class JsonParser : public IJsonParser
 
 /// @brief Parses the underlying buffer and creates a tree of JSON data
 /// @return root to the tree of JSON data, on error will terminate
+[[deprecated(
+    "score::json::operator\"\"_json is deprecated, use score::json::literals::operator\"\"_json from "
+    "//score/json:json_literals instead")]]
 Any operator""_json(const char* const data, const size_t size);
 
 }  // namespace json

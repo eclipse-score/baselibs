@@ -12,6 +12,8 @@
  ********************************************************************************/
 #include "score/json/json_serializer.h"
 
+#include "score/json/json_literals.h"
+
 #include <static_reflection_with_serialization/visitor/visit.h>
 #include <static_reflection_with_serialization/visitor/visit_as_struct.h>
 
@@ -126,6 +128,8 @@ namespace score::json::test
 
 namespace
 {
+
+using score::json::literals::operator""_json;
 
 struct NestedType
 {

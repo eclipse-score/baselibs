@@ -193,6 +193,17 @@ cc_library(
     ],
 )
 
+cc_library(
+    name = "json_literals",
+    testonly = True,
+    srcs = ["json_literals.cpp"],
+    hdrs = ["json_literals.h"],
+    features = COMPILER_WARNING_FEATURES,
+    implementation_deps = [":json_parser_impl"],
+    visibility = LIB_JSON_VISIBILITY,
+    deps = [":model"],
+)
+
 cc_test(
     name = "model_test",
     srcs = [
@@ -232,7 +243,20 @@ cc_gtest_unit_test(
     name = "json_parser_test",
     srcs = ["json_parser_test.cpp"],
     features = COMPILER_WARNING_FEATURES,
-    deps = [":json"],
+    deps = [
+        ":json",
+        "@score_baselibs//score/quality/compiler_warnings",
+    ],
+)
+
+cc_gtest_unit_test(
+    name = "json_literals_test",
+    srcs = ["json_literals_test.cpp"],
+    features = COMPILER_WARNING_FEATURES,
+    deps = [
+        ":json_literals",
+        ":model",
+    ],
 )
 
 cc_gtest_unit_test(
@@ -264,6 +288,7 @@ cc_test(
     features = COMPILER_WARNING_FEATURES,
     tags = ["unit"],
     deps = [
+        ":json_literals",
         ":json_serializer",
         "@googletest//:gtest_main",
     ],

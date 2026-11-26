@@ -20,6 +20,7 @@
   - [Assumptions of Use](#assumptions-of-use)
   - [Deprecated `base_library` flag](#deprecated-base_library-flag)
   - [Deprecated `internal/model` headers](#deprecated-internalmodel-headers)
+  - [Deprecated `score::json::operator""_json`](#deprecated-scorejsonoperator_json)
 
 This JSON library is designed as an abstraction layer over the underlying JSON implementation. At the moment it
 uses vaJson from Vector for parsing, which is ASIL D certified. Serialization is built on the vaJson writer.
@@ -42,6 +43,10 @@ Additionally, there is [another](#declarative-parsing-of-json-data) Bazel target
 Public targets expose the JSON API and data model, while parser and writer implementation dependencies remain private.
 Neither the parser nor the writer implementation depends on the other.
 The `mock` target uses only the parser and writer interfaces.
+
+For tests, the test-only target `//score/json:json_literals` provides the `_json` string literal.
+It parses a string literal into a `json::Any`; on a parsing error, it prints the reason and terminates.
+Import it with `using score::json::literals::operator""_json;`.
 
 ### Loading a JSON document from a file
 
@@ -339,9 +344,10 @@ The following example demonstrates the usage of the declarative JSON parser:
 ```c++
 #include <static_reflection_with_serialization/visitor/visit_as_struct.h>
 
+#include "score/json/json_literals.h"
 #include "score/json/json_serializer.h"
 
-using score::json::_json;
+using score::json::literals::operator""_json;
 
 struct Size
 {
@@ -366,13 +372,14 @@ void SerializeToJsonAny()
 
 void DeserializeFromJson()
 {
+    // The _json literal is test-only; production code parses with JsonParser instead.
     auto json = R"({
         "width": 10,
         "height": 20,
         "unit": "px"
     })"_json;
 
-    auto size = score::json::FromJsonAny<Size>(json);
+    auto size = score::json::FromJsonAny<Size>(std::move(json));
     if (size.has_value())
     {
         // size.value() is now a Size object with the following values:
@@ -484,3 +491,18 @@ release.
 The headers in `score/json/internal/model/` are deprecated and only forward to the data model headers `score/json/any.h`, `score/json/error.h`, `score/json/null.h`, `score/json/number.h`, and `score/json/object.h`.
 They are kept so that existing includes keep compiling; including one of them emits a deprecation warning.
 Include the headers from `score/json/` instead; the deprecated headers will be deleted in a future breaking release.
+
+## Deprecated `score::json::operator""_json`
+
+The `_json` literal declared in `score/json/json_parser.h` is deprecated; each use emits a deprecation warning.
+Its replacement, `score::json::literals::operator""_json`, behaves the same and comes from the test-only target `//score/json:json_literals`.
+The deprecated literal will be deleted in the next breaking release.
+
+To migrate:
+
+1. Add `@score_baselibs//score/json:json_literals` to the `deps` of the test target.
+2. Include `score/json/json_literals.h`.
+3. Replace `using score::json::operator""_json;` with `using score::json::literals::operator""_json;`.
+
+Prefer this using-declaration over `using namespace score::json::literals;`.
+Inside `namespace score::json`, the using-directive makes the call ambiguous while the deprecated literal still exists.
