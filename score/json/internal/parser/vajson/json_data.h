@@ -84,7 +84,7 @@ class JsonData final
     /// @param[in]       max_size
     ///                  The maximum file size in bytes.
     /// @return          A constructed JSON data object.
-    /// @error           score::json::vajson::JsonErrc::kStreamFailure
+    /// @error           score::json::Error::kIoError
     ///                  if the path is not a regular file, the file could not be opened or read,
     ///                  or the file is larger than max_size.
     /// @context         ANY

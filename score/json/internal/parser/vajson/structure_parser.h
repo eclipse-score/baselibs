@@ -69,7 +69,7 @@ class StructureParser
 
     /// @brief           Parses the file until the current parser is finished
     /// @return          The empty Result, or an error.
-    /// @error           score::json::vajson::JsonErrc::kInvalidJson
+    /// @error           score::json::Error::kParsingError
     ///                  if parsing has failed due to invalid JSON data.
     /// @error           Any error returned by a callback.
     /// @context         ANY
@@ -164,7 +164,7 @@ class StructureParser
 
     /// @brief           Parses a "null" value
     /// @return          The Result of the callback, or an error.
-    /// @error           score::json::vajson::JsonErrc::kInvalidJson
+    /// @error           score::json::Error::kParsingError
     ///                  if no valid 'null' literal was encountered.
     /// @context         ANY
     /// @pre             -
@@ -174,7 +174,7 @@ class StructureParser
 
     /// @brief           Parses a "true" value
     /// @return          The Result of the callback, or an error.
-    /// @error           score::json::vajson::JsonErrc::kInvalidJson
+    /// @error           score::json::Error::kParsingError
     ///                  if no valid string was encountered.
     /// @context         ANY
     /// @pre             -
@@ -184,7 +184,7 @@ class StructureParser
 
     /// @brief           Parses a "false" value
     /// @return          The Result of the callback, or an error.
-    /// @error           score::json::vajson::JsonErrc::kInvalidJson
+    /// @error           score::json::Error::kParsingError
     ///                  if the 'false' literal cannot be parsed
     /// @context         ANY
     /// @pre             -
@@ -196,7 +196,7 @@ class StructureParser
     /// @param[in]       cur
     ///                  The current character.
     /// @return          The Result of the callback, or an error.
-    /// @error           score::json::vajson::JsonErrc::kInvalidJson
+    /// @error           score::json::Error::kParsingError
     ///                  if the number literal cannot be parsed
     /// @context         ANY
     /// @pre             -
@@ -206,7 +206,7 @@ class StructureParser
 
     /// @brief           Parses a string value
     /// @return          The Result of the callback, or an error.
-    /// @error           score::json::vajson::JsonErrc::kInvalidJson
+    /// @error           score::json::Error::kParsingError
     ///                  if the next token is no valid string.
     /// @context         ANY
     /// @pre             -
@@ -218,7 +218,7 @@ class StructureParser
     /// @param[in]       string
     ///                  The unescaped string to parse.
     /// @return          The Result of the callback, or an error.
-    /// @error           score::json::vajson::JsonErrc::kInvalidJson
+    /// @error           score::json::Error::kParsingError
     ///                  if the next token is no valid string.
     /// @context         ANY
     /// @pre             -
@@ -228,7 +228,7 @@ class StructureParser
 
     /// @brief           Parses a JSON string and removes JSON escape characters
     /// @return          A string view into the parsed string, or an error.
-    /// @error           score::json::vajson::JsonErrc::kInvalidJson
+    /// @error           score::json::Error::kParsingError
     ///                  if an invalid JSON string was encountered.
     /// @context         ANY
     /// @pre             -
@@ -240,7 +240,7 @@ class StructureParser
     /// @param[in]       escaped
     ///                  The character to unescape.
     /// @return          The unescaped character.
-    /// @error           score::json::vajson::JsonErrc::kInvalidJson
+    /// @error           score::json::Error::kParsingError
     ///                  If an unknown escape sequence was encountered
     /// @context         ANY
     /// @pre             -
@@ -255,7 +255,7 @@ class StructureParser
     /// @param[in,out]   buffer
     ///                  The buffer to append to.
     /// @return          An empty Result, or an error.
-    /// @error           score::json::vajson::JsonErrc::kInvalidJson
+    /// @error           score::json::Error::kParsingError
     ///                  If an unknown or malformed escape sequence was encountered
     /// @context         ANY
     /// @pre             The backslash has already been consumed.
@@ -267,7 +267,7 @@ class StructureParser
     /// @details         A high surrogate must be followed by a \\uXXXX escaped low surrogate, both are combined into
     ///                  a single code point, cf. RFC 8259, section 7.
     /// @return          The decoded code point, or an error.
-    /// @error           score::json::vajson::JsonErrc::kInvalidJson
+    /// @error           score::json::Error::kParsingError
     ///                  If the escape sequence is malformed or encodes an unpaired surrogate
     /// @context         ANY
     /// @pre             The backslash and the 'u' have already been consumed.
@@ -277,7 +277,7 @@ class StructureParser
 
     /// @brief           Reads the \\uXXXX escaped low surrogate that completes a surrogate pair
     /// @return          The decoded low surrogate, or an error.
-    /// @error           score::json::vajson::JsonErrc::kInvalidJson
+    /// @error           score::json::Error::kParsingError
     ///                  If no \\uXXXX escape follows, or if it does not encode a low surrogate
     /// @context         ANY
     /// @pre             A high surrogate has already been decoded.
@@ -287,7 +287,7 @@ class StructureParser
 
     /// @brief           Reads the four hexadecimal digits of a \\uXXXX escape sequence
     /// @return          The decoded UTF-16 code unit, or an error.
-    /// @error           score::json::vajson::JsonErrc::kInvalidJson
+    /// @error           score::json::Error::kParsingError
     ///                  If the four characters are no hexadecimal digits
     /// @context         ANY
     /// @pre             The backslash and the 'u' have already been consumed.
@@ -297,7 +297,7 @@ class StructureParser
 
     /// @brief           Parses the start of an Object
     /// @return          The Result of the callback, or an error.
-    /// @error           score::json::vajson::JsonErrc::kInvalidJson
+    /// @error           score::json::Error::kParsingError
     ///                  if the object cannot be opened
     /// @context         ANY
     /// @pre             -
@@ -307,7 +307,7 @@ class StructureParser
 
     /// @brief           Parses the end of an Object
     /// @return          The Result of the callback, or an error.
-    /// @error           score::json::vajson::JsonErrc::kInvalidJson
+    /// @error           score::json::Error::kParsingError
     ///                  If no end of an object can be parsed
     /// @context         ANY
     /// @pre             -
@@ -317,7 +317,7 @@ class StructureParser
 
     /// @brief           Parses the start of an Array
     /// @return          The Result of the callback, or an error.
-    /// @error           score::json::vajson::JsonErrc::kInvalidJson
+    /// @error           score::json::Error::kParsingError
     ///                  If no end of an object can be parsed
     /// @context         ANY
     /// @pre             -
@@ -327,7 +327,7 @@ class StructureParser
 
     /// @brief           Parses the end of an Array
     /// @return          The Result of the callback, or an error.
-    /// @error           score::json::vajson::JsonErrc::kInvalidJson
+    /// @error           score::json::Error::kParsingError
     ///                  If no end of an object can be parsed
     /// @context         ANY
     /// @pre             -
@@ -337,7 +337,7 @@ class StructureParser
 
     /// @brief           Parses a comma in a list/object
     /// @return          kRunning if the comma is allowed at the current position, or an error.
-    /// @error           score::json::vajson::JsonErrc::kInvalidJson
+    /// @error           score::json::Error::kParsingError
     ///                  if the comma is outside of an array or object, or follows a key
     /// @context         ANY
     /// @pre             -
@@ -348,7 +348,7 @@ class StructureParser
     /// @brief           Parses any JSON value
     /// @return          kRunning if the parser has not finished yet, kFinished if the end of the file is reached, or an
     ///                  error.
-    /// @error           score::json::vajson::JsonErrc::kInvalidJson
+    /// @error           score::json::Error::kParsingError
     ///                  if the JSON data is invalid.
     /// @error           Any error returned by a callback.
     /// @context         ANY

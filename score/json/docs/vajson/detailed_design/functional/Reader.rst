@@ -110,5 +110,4 @@ Error reporting
     :safety: ASIL_D
     :trace: CREQ-Json-Validation
 
-Upon detection of an error, the parser returns from Parse() with an ara::core::Result<void> and one of the errors
-defined in score::json::vajson::JsonErrc.
+Upon detection of an error, the parser returns from Parse() with the error of the JSON library that describes it.

@@ -5,12 +5,6 @@ package "score" {
 
   package "json" {
   package "vajson" {
-    enum JsonErrc {
-      kInvalidJson,
-      kStreamFailure
-    }
-
-
     class NumberParser {}
 
     class JsonNumber {}
@@ -22,9 +16,6 @@ package "score" {
     }
 
     class JsonData {}
-
-    class JsonErrorDomain {}
-    class JsonException {}
 
     package "internal" {
       class JsonOps {
@@ -40,8 +31,6 @@ package "score" {
 JsonNumber --> NumberParser
 
 Reader -down-> JsonNumber
-Reader -down-> JsonErrorDomain
-Reader -down-> JsonErrc
 Reader -down-> JsonData
 
 JsonOps --> Ref
@@ -49,8 +38,5 @@ Ref --> JsonData
 JsonData --> Ref
 JsonOps --> JsonData
 JsonOps --> OptChar
-
-JsonData --> JsonErrorDomain
-JsonErrorDomain --> JsonException
 
 @enduml

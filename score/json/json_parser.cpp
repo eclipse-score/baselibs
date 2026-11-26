@@ -90,13 +90,13 @@ class AnyTreeBuilder final : private score::json::vajson::internal::StructurePar
         return &((*(it.first)).second);
     }
 
-    /// @brief Converts the result of Store() into a parser result that keeps the failure reason.
+    /// @brief Converts the result of Store() into a parser result that keeps its error.
     static auto ToParserResult(const score::Result<score::json::Any*>& result) noexcept
         -> score::json::vajson::ParserResult
     {
         if (!result.has_value())
         {
-            return score::MakeUnexpected(score::json::vajson::JsonErrc::kInvalidJson, result.error().UserMessage());
+            return score::MakeUnexpected<score::json::vajson::ParserState>(result.error());
         }
         return score::json::vajson::ParserState::kRunning;
     }
@@ -141,7 +141,7 @@ class AnyTreeBuilder final : private score::json::vajson::internal::StructurePar
         static_cast<void>(((try_convert(value.As<NumberType>())) || ...));
         if (!number.has_value())
         {
-            return score::MakeUnexpected(score::json::vajson::JsonErrc::kInvalidJson,
+            return score::MakeUnexpected(Error::kParsingError,
                                          "Number is outside the range of all supported number types.");
         }
         return ToParserResult(Store(*number));
@@ -165,7 +165,7 @@ auto AnyTreeBuilder::GetData() noexcept -> score::Result<score::json::Any>
     }
     else
     {
-        result = MakeUnexpected(Error::kParsingError, parse_result.error().UserMessage());
+        result = score::MakeUnexpected<score::json::Any>(parse_result.error());
     }
     return result;
 }
@@ -270,8 +270,7 @@ auto JsonParser::FromFile(const std::string_view file_path) const noexcept -> sc
     }
     else
     {
-        // JsonData::FromFile only fails if the file cannot be opened or read, or exceeds kMaxFileSize.
-        result = MakeUnexpected(Error::kIoError, json_data.error().UserMessage());
+        result = score::MakeUnexpected<score::json::Any>(json_data.error());
     }
     return result;
 }

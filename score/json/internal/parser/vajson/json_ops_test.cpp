@@ -19,8 +19,8 @@
 #include <utility>
 
 #include "gtest/gtest.h"
+#include "score/json/error.h"
 #include "score/json/internal/parser/vajson/json_data.h"
-#include "score/json/internal/parser/vajson/json_error_domain.h"
 #include "score/json/internal/parser/vajson/types.h"
 
 namespace score
@@ -68,7 +68,7 @@ TEST(JsonOpsTest, TakeReturnsNextCharacter)
 
 /// Test that TryTake returns an error if position is at end of string.
 /// @trace           score::json::vajson::internal::JsonOps::TryTake
-TEST(JsonOpsTest, TryTakeReturnsInvalidJsonAtEndOfInput)
+TEST(JsonOpsTest, TryTakeReturnsParsingErrorAtEndOfInput)
 {
     TestDocument ts{"ab"};
 
@@ -85,7 +85,7 @@ TEST(JsonOpsTest, TryTakeReturnsInvalidJsonAtEndOfInput)
     {
         const auto r3{ts.ops.TryTake()};
         ASSERT_FALSE(r3.has_value());
-        ASSERT_EQ(r3.error(), JsonErrc::kInvalidJson);
+        ASSERT_EQ(r3.error(), Error::kParsingError);
     }
 }
 
@@ -118,7 +118,7 @@ TEST(JsonOpsTest, CheckStringAcceptsOnlyExpectedString)
         TestDocument ts{std::string{expected}};
         const auto result{ts.ops.CheckString("different string", "No error")};
         ASSERT_FALSE(result.has_value());
-        ASSERT_EQ(result.error(), JsonErrc::kInvalidJson);
+        ASSERT_EQ(result.error(), Error::kParsingError);
     }
 }
 

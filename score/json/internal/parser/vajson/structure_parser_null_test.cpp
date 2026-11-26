@@ -16,8 +16,8 @@
 #include "score/json/internal/parser/vajson/structure_parser.h"
 
 #include "gtest/gtest.h"
+#include "score/json/error.h"
 #include "score/json/internal/parser/vajson/json_data.h"
-#include "score/json/internal/parser/vajson/json_error_domain.h"
 #include "score/json/internal/parser/vajson/structure_parser_stub.h"
 #include <utility>
 
@@ -57,7 +57,7 @@ class ErrorNullParser final : public StructureParserStub
   private:
     auto OnNull() noexcept -> ParserResult override
     {
-        return score::MakeUnexpected(JsonErrc::kInvalidJson, "OnNull called.");
+        return score::MakeUnexpected(Error::kParsingError, "OnNull called.");
     }
 };
 
@@ -107,7 +107,7 @@ TEST(StructureParserNullTest, RejectsNullAsKey)
     DynamicNullParser parser{data};
     const auto parse_result{parser.Parse()};
     ASSERT_FALSE(parse_result.has_value());
-    ASSERT_EQ(parse_result.error(), JsonErrc::kInvalidJson);
+    ASSERT_EQ(parse_result.error(), Error::kParsingError);
 }
 
 /// Tests that when the overridden OnNull method returns an error, that error is propagated.
@@ -120,7 +120,7 @@ TEST(StructureParserNullTest, PropagatesOnNullError)
 
     const auto parser_result{parser.Parse()};
     ASSERT_FALSE(parser_result.has_value());
-    ASSERT_EQ(parser_result.error(), JsonErrc::kInvalidJson);
+    ASSERT_EQ(parser_result.error(), Error::kParsingError);
     ASSERT_EQ(parser_result.error().UserMessage(), std::string_view{"OnNull called."});
 }
 

@@ -19,10 +19,10 @@
 #define SCORE_JSON_INTERNAL_PARSER_VAJSON_JSON_OPS_H
 
 #include "score/functional.hpp"
-#include "score/json/internal/parser/vajson/json_error_domain.h"
 #include "score/json/internal/parser/vajson/opt_char.h"
 #include "score/json/internal/parser/vajson/reader_config.h"
 #include "score/json/internal/parser/vajson/reader_fwd.h"
+#include "score/result/result.h"
 #include <functional>
 #include <string_view>
 
@@ -84,7 +84,7 @@ class JsonOps final
 
     /// @brief           Tries to take the character at the current position and moves the cursor to the next character
     /// @return          The character if inside the document, or the error.
-    /// @error           score::json::vajson::JsonErrc::kInvalidJson
+    /// @error           score::json::Error::kParsingError
     ///                  if the document has ended
     /// @context         ANY
     /// @pre             -
@@ -117,7 +117,7 @@ class JsonOps final
     /// @param[in]       error_msg
     ///                  in case the check fails. Must live until the error object is evaluated.
     /// @return          The empty Result if the string was found, or the error.
-    /// @error           score::json::vajson::JsonErrc::kInvalidJson
+    /// @error           score::json::Error::kParsingError
     ///                  if the passed string is empty or it could not be found.
     /// @context         ANY
     /// @pre             -

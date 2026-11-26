@@ -26,7 +26,6 @@ cc_library(
     ],
     hdrs = [
         "json_data.h",
-        "json_error_domain.h",
         "json_number.h",
         "json_ops.h",
         "number_parser.h",
@@ -42,6 +41,7 @@ cc_library(
     tags = ["FFI"],
     deps = [
         "@score_baselibs//score/filesystem",
+        "@score_baselibs//score/json:model",
         "@score_baselibs//score/language/futurecpp",
         "@score_baselibs//score/language/safecpp/string_view:zstring_view",
         "@score_baselibs//score/result",
@@ -52,7 +52,6 @@ cc_gtest_unit_test(
     name = "unit_test",
     srcs = [
         "json_data_test.cpp",
-        "json_error_domain_test.cpp",
         "json_number_test.cpp",
         "json_ops_test.cpp",
         "number_parser_test.cpp",

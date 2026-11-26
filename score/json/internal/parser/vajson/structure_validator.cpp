@@ -12,7 +12,7 @@
  ********************************************************************************/
 #include "score/json/internal/parser/vajson/structure_validator.h"
 
-#include "score/json/internal/parser/vajson/json_error_domain.h"
+#include "score/json/error.h"
 
 namespace score::json::vajson::internal
 {
@@ -75,12 +75,12 @@ auto StructureValidator::CheckEndOfDocument() const noexcept -> score::Result<vo
     if (!open_containers_.empty())
     {
         result = score::MakeUnexpected(
-            JsonErrc::kInvalidJson,
+            Error::kParsingError,
             (open_containers_.back() == Container::kArray) ? "Expected closing bracket." : "Expected closing brace.");
     }
     else if (!value_completed_)
     {
-        result = score::MakeUnexpected(JsonErrc::kInvalidJson, "Document is empty.");
+        result = score::MakeUnexpected(Error::kParsingError, "Document is empty.");
     }
     else
     {
@@ -124,7 +124,7 @@ auto StructureValidator::CheckSeparated() const noexcept -> score::Result<void>
     score::Result<void> result{};
     if (value_completed_)
     {
-        result = score::MakeUnexpected(JsonErrc::kInvalidJson,
+        result = score::MakeUnexpected(Error::kParsingError,
                                        open_containers_.empty() ? "Multiple top-level values." : "Missing comma.");
     }
     return result;
@@ -135,7 +135,7 @@ auto StructureValidator::CheckKeyPresent() const noexcept -> score::Result<void>
     score::Result<void> result{};
     if (IsInObject() && (!key_pending_))
     {
-        result = score::MakeUnexpected(JsonErrc::kInvalidJson, "Expected a key.");
+        result = score::MakeUnexpected(Error::kParsingError, "Expected a key.");
     }
     return result;
 }
@@ -145,7 +145,7 @@ auto StructureValidator::CheckNoPendingKey() const noexcept -> score::Result<voi
     score::Result<void> result{};
     if (key_pending_)
     {
-        result = score::MakeUnexpected(JsonErrc::kInvalidJson, "Expected a value after a key.");
+        result = score::MakeUnexpected(Error::kParsingError, "Expected a value after a key.");
     }
     return result;
 }
@@ -155,7 +155,7 @@ auto StructureValidator::CheckInObject() const noexcept -> score::Result<void>
     score::Result<void> result{};
     if (!IsInObject())
     {
-        result = score::MakeUnexpected(JsonErrc::kInvalidJson, "Key outside of an object.");
+        result = score::MakeUnexpected(Error::kParsingError, "Key outside of an object.");
     }
     return result;
 }
@@ -165,7 +165,7 @@ auto StructureValidator::CheckInContainer() const noexcept -> score::Result<void
     score::Result<void> result{};
     if (open_containers_.empty())
     {
-        result = score::MakeUnexpected(JsonErrc::kInvalidJson, "Comma outside of an array or object.");
+        result = score::MakeUnexpected(Error::kParsingError, "Comma outside of an array or object.");
     }
     return result;
 }
@@ -176,7 +176,7 @@ auto StructureValidator::CheckClosing(const Container container) const noexcept 
     if (open_containers_.empty() || (open_containers_.back() != container))
     {
         result = score::MakeUnexpected(
-            JsonErrc::kInvalidJson,
+            Error::kParsingError,
             (container == Container::kArray) ? "Unexpected closing bracket." : "Unexpected closing brace.");
     }
     return result;

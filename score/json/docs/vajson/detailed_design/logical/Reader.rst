@@ -61,21 +61,6 @@ Reader
 
       Contains the logic to parse strings as numbers.
 
-    .. Unit:: JsonErrc
-      :safety: ASIL_D
-
-      Contains the vaJson error codes.
-
-    .. Unit:: JsonErrorDomain
-      :safety: ASIL_D
-
-      Contains the vaJson error domain.
-
-    .. Unit:: JsonException
-      :safety: ASIL_D
-
-      Contains the vaJson exception type.
-
     .. uml:: diagrams/Util.puml
 
 
@@ -165,13 +150,6 @@ Util
       package "score" {
         package "json" {
           package "vajson" {
-            enum JsonErrc {
-              kInvalidJson,
-              kStreamFailure
-            }
-
-            class JsonErrorDomain {}
-
             class NumberParser {}
 
             class JsonNumber {
@@ -192,7 +170,5 @@ Util
       JsonNumber --> NumberParser
 
       Reader -down-> JsonNumber
-      Reader -down-> JsonErrorDomain
-      Reader -down-> JsonErrc
 
     @enduml

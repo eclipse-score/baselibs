@@ -23,7 +23,7 @@
 
 #include "score/result/result.h"
 
-#include "score/json/internal/parser/vajson/json_error_domain.h"
+#include "score/json/error.h"
 #include "score/json/internal/parser/vajson/number_parser.h"
 #include "score/json/internal/parser/vajson/types.h"
 
@@ -42,7 +42,7 @@ class JsonNumber final
     /// @param[in]       view
     ///                  to parse.
     /// @return          A Result containing the number or the error that occurred.
-    /// @error           score::json::vajson::JsonErrc::kInvalidJson
+    /// @error           score::json::Error::kParsingError
     ///                  if the number does not match the accepted number grammar
     /// @context         ANY
     /// @pre             All whitespace must have been stripped.
@@ -61,11 +61,11 @@ class JsonNumber final
         Result<JsonNumber> result{number};
         if (view.empty())
         {
-            result = score::MakeUnexpected(JsonErrc::kInvalidJson, "JsonNumber::New: View must not be empty.");
+            result = score::MakeUnexpected(Error::kParsingError, "JsonNumber::New: View must not be empty.");
         }
         else if (!number.Validate())
         {
-            result = score::MakeUnexpected(JsonErrc::kInvalidJson,
+            result = score::MakeUnexpected(Error::kParsingError,
                                            "JsonNumber::New: Number does not match the accepted number grammar.");
         }
         else

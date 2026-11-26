@@ -27,6 +27,7 @@
 #include "score/filesystem/filestream/file_factory.h"
 #include "score/filesystem/filestream/file_stream.h"
 #include "score/filesystem/path.h"
+#include "score/json/error.h"
 
 #include "score/json/internal/parser/vajson/json_ops.h"
 namespace score
@@ -64,12 +65,12 @@ JsonData::JsonData(std::vector<char> document) noexcept
 }
 
 /// @internal
-/// - Open the file, returning a JsonErrc if it is not a regular file.
+/// - Open the file, returning an I/O error if it is not a regular file.
 /// - If the file has been opened successfully:
-///   - Return a JsonErrc if the reported file size exceeds max_size.
-///   - Read the file in chunks into memory, returning a JsonErrc once it exceeds max_size.
+///   - Return an I/O error if the reported file size exceeds max_size.
+///   - Read the file in chunks into memory, returning an I/O error once it exceeds max_size.
 ///   - If the file has been read successfully, then create & return the JsonData object owning the content.
-/// - Otherwise return a JsonErrc containing the error message.
+/// - Otherwise return an I/O error containing the error message.
 /// @endinternal
 auto JsonData::FromFile(const std::string_view path, const std::size_t max_size) noexcept -> Result<JsonData>
 {
@@ -80,9 +81,9 @@ auto JsonData::FromFile(const std::string_view path, const std::size_t max_size)
     auto file_result{factory.OpenRegularFile(file_path, std::ios::in | std::ios::binary)};
     if ((!file_result.has_value()) && (file_result.error() == score::filesystem::ErrorCode::kNotARegularFile))
     {
-        return score::MakeUnexpected(JsonErrc::kStreamFailure, "Not a regular file");
+        return score::MakeUnexpected(Error::kIoError, "Not a regular file");
     }
-    Result<JsonData> result{score::MakeUnexpected(JsonErrc::kStreamFailure, "Could not open file")};
+    Result<JsonData> result{score::MakeUnexpected(Error::kIoError, "Could not open file")};
     if (file_result.has_value())
     {
         std::istream& file{*file_result.value()};
@@ -91,11 +92,11 @@ auto JsonData::FromFile(const std::string_view path, const std::size_t max_size)
         file.seekg(0, std::ios::beg);
         if (file.fail() || (reported_size < 0))
         {
-            return score::MakeUnexpected(JsonErrc::kStreamFailure, "Could not read file");
+            return score::MakeUnexpected(Error::kIoError, "Could not read file");
         }
         if (static_cast<std::size_t>(reported_size) > max_size)
         {
-            return score::MakeUnexpected(JsonErrc::kStreamFailure, "File too large");
+            return score::MakeUnexpected(Error::kIoError, "File too large");
         }
         std::vector<char> content{};
         content.reserve(static_cast<std::size_t>(reported_size));
@@ -107,14 +108,14 @@ auto JsonData::FromFile(const std::string_view path, const std::size_t max_size)
             // The reported size can be wrong, e.g. for a file that grows, so the limit also applies to the bytes read.
             if (count > (max_size - content.size()))
             {
-                return score::MakeUnexpected(JsonErrc::kStreamFailure, "File too large");
+                return score::MakeUnexpected(Error::kIoError, "File too large");
             }
             static_cast<void>(content.insert(
                 content.end(), chunk.cbegin(), std::next(chunk.cbegin(), static_cast<std::ptrdiff_t>(count))));
         }
         if (file.bad())
         {
-            return score::MakeUnexpected(JsonErrc::kStreamFailure, "Could not read file");
+            return score::MakeUnexpected(Error::kIoError, "Could not read file");
         }
         result.emplace(JsonData{std::move(content)});
     }

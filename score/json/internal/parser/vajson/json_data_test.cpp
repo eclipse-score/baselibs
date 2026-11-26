@@ -22,7 +22,7 @@
 #include <utility>
 
 #include "gtest/gtest.h"
-#include "score/json/internal/parser/vajson/json_error_domain.h"
+#include "score/json/error.h"
 #include "score/json/internal/parser/vajson/json_ops.h"
 #include "score/json/internal/parser/vajson/types.h"
 
@@ -59,13 +59,13 @@ TEST(JsonDataTest, FromBufferAcceptsStringView)
     ASSERT_TRUE(result.has_value());
 }
 
-/// Test that JsonData returns a JsonErrc if the file cannot be opened.
-TEST(JsonDataTest, FromFileReturnsStreamFailureForMissingFile)
+/// Test that JsonData returns an I/O error if the file cannot be opened.
+TEST(JsonDataTest, FromFileReturnsIoErrorForMissingFile)
 {
     const Result<JsonData> result{JsonData::FromFile("doesnotexist", kNoSizeLimit)};
 
     ASSERT_FALSE(result.has_value());
-    ASSERT_EQ(result.error(), JsonErrc::kStreamFailure);
+    ASSERT_EQ(result.error(), Error::kIoError);
 }
 
 class JsonDataFileSizeTest : public ::testing::TestWithParam<std::size_t>
@@ -107,7 +107,7 @@ TEST_P(JsonDataFileSizeTest, RejectsFileAboveSizeLimit)
     const Result<JsonData> result{JsonData::FromFile(file_path_, GetParam() - 1U)};
 
     ASSERT_FALSE(result.has_value());
-    EXPECT_EQ(result.error(), JsonErrc::kStreamFailure);
+    EXPECT_EQ(result.error(), Error::kIoError);
 }
 
 INSTANTIATE_TEST_SUITE_P(ChunkBoundaries, JsonDataFileSizeTest, ::testing::Values(1U, 65535U, 65536U, 65537U, 200000U));
@@ -126,7 +126,7 @@ TEST(JsonDataTest, FromFileAppliesSizeLimitToBytesReadBeyondReportedSize)
     const Result<JsonData> result{JsonData::FromFile(file, 1U)};
 
     ASSERT_FALSE(result.has_value());
-    EXPECT_EQ(result.error(), JsonErrc::kStreamFailure);
+    EXPECT_EQ(result.error(), Error::kIoError);
 #else
     GTEST_SKIP() << "Requires Linux procfs";
 #endif
