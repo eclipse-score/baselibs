@@ -5,10 +5,12 @@ You can find the design as below:
 <img alt="Class diagram" src="https://www.plantuml.com/plantuml/proxy?src=https://raw.githubusercontent.com/eclipse-score/baselibs/refs/heads/main/score/json/detailed_design/class_diagram.puml">
 
 The main idea is to split the library into two parts, one user facing and one
-implementation detail which can be swapped out if necessary.
+implementation detail (the vaJson parser and the output formatting).
+The implementation detail is not selectable.
 
-Basically we offer to the user the actual JSON data structure as also free
-functions to create this data structure from a file.
+Basically we offer to the user the actual JSON data structure as also a parser
+to create this data structure from a file or a buffer and a writer to write it
+as compact or pretty-printed JSON.
 
 JSON supports different value types: object, list, string, null, boolean,
 integer and float. JSON objects and lists can be interpreted as trees, where

@@ -106,7 +106,9 @@ Safety Impact
    :safety: ASIL_B
    :derived_from: feat_req__baselibs__json_library[version==2]
    :status: valid
-   :version: 1
+   :version: 2
    :satisfied_by: comp__baselibs_vajson[version==1]
+
+   VaJson shall be ASIL-B compliant.
 
    The VaJson library shall be ASIL-B compliant.

@@ -18,7 +18,7 @@ VaJson
 .. document:: vajson
    :id: doc__vajson
    :status: valid
-   :version: 3
+   :version: 4
    :safety: ASIL_B
    :security: NO
    :realizes: wp__cmpt_request[version==1]
@@ -28,11 +28,10 @@ VaJson
 Abstract
 ========
 
-This component request proposes adding VaJson as a JSON parser backend for Eclipse S-CORE.
+This component request describes VaJson, the JSON parsing engine and output formatting of the Eclipse S-CORE JSON component.
 
-This component request describes a JSON parser to be used within applications of the Eclipse S-CORE project.
-
-This requests adds VaJson, a SAX-based JSON parser for Eclipse S-CORE applications that enables parsing of JSON data for configuration and data exchange.
+VaJson is a SAX-based JSON parser for Eclipse S-CORE applications that enables parsing of JSON data for configuration and data exchange.
+The JSON component, see :need:`doc__json`, uses VaJson as its only parser implementation and for its output formatting.
 
 
 Motivation
@@ -76,8 +75,8 @@ In addition, VaJson satisfies the extended requirements defined in :need:`doc__v
 Backward Compatibility
 ======================
 
-VaJson is integrated through the existing S-CORE JSON wrapper and is the only parser and writer backend; backend
-selection has been removed.
+VaJson is used through the S-CORE JSON wrapper and is the only parser and writer implementation.
+It is not selectable by users.
 
 
 Security Impact
@@ -100,7 +99,8 @@ Potential security concerns and mitigations for VaJson:
 Safety Impact
 =============
 
-A full safety analysis for VaJson exists in an external format and addresses all identified concerns with appropriate measures.
+The safety analysis that Vector created for VaJson is retained as upstream evidence, see :doc:`safety/SafetyAnalysis`.
+It addresses all identified concerns with appropriate measures.
 Example:
 
 FM-VaJson-NumberConversion
@@ -109,7 +109,7 @@ Details: Number conversion from textual JSON representation to a numerical value
 Effect: Incorrect numerical values may violate safety requirements.
 Measure: Use only well-known standard library functions for number conversion, verified through unit testing.
 
-All concerns listed in the external safety analysis have been implemented and verified in the source code and tests.
+All concerns listed in the retained safety analysis have been implemented and verified in the source code and tests.
 
 **Expected ASIL Level:**
 
@@ -138,8 +138,8 @@ How to Teach This
 
 - Update baselibs/README.md
 
-  Clearly document the available JSON parser configuration options.
-  This component introduces an additional backend, so users must understand the selectable configurations.
+  Document the use of the JSON parser and writer.
+  There is no configuration of the parser implementation.
 
 
 Rejected Ideas
@@ -151,10 +151,11 @@ None.
 Open Issues
 ===========
 
-- S-CORE process compliance and Vector's role
+- S-CORE process compliance
 
-  The task of adapting the new component to be S-CORE-process-compliant is currently unassigned.
-  Vector will not create the required S-CORE process documentation (for example, safety and security analysis).
+  Baselibs owns the VaJson implementation.
+  The adaptation of the retained upstream safety material to the S-CORE process is tracked in the work products of
+  the JSON component, see :need:`doc__json_fmea` and :need:`doc__json_dfa`.
 
 
 Footnotes

@@ -26,3 +26,4 @@ Logical
 .. toctree::
 
   Reader.rst
+  Writer.rst

@@ -18,7 +18,7 @@ JSON-Library
 .. document:: JSON-Library
    :id: doc__json
    :status: valid
-   :version: 1
+   :version: 2
    :safety: ASIL_B
    :security: YES
    :tags: component_request
@@ -42,22 +42,14 @@ JSON-Library
 Abstract
 ========
 
-This component request proposes the integration of a safe JSON-Library with parsing functionality.
+This component request describes a safe JSON-Library that parses JSON data into a data model and writes a data model as JSON data.
+The library has one parser implementation and one writer implementation.
 
 
 Basic Functionality
 ----------------------
-The component shall support parsing JSON data and convert that information to a compatible user format.
-
-
-Future Extensions
-----------------------
-The component shall support a future extension for serializing from user format into JSON data.
-
-Optional extensions which may be added if required:
-
-* JSON schema validation.
-* Compile-time parsing (used for test purposes to ensure that a component with errors cannot exist even in the absence of a pipeline).
+The component supports parsing JSON data and converting that information to a compatible user format.
+The component supports writing the user format as compact or pretty-printed JSON data.
 
 Motivation
 ==========
@@ -69,9 +61,10 @@ There is currently no solution for this inside S-CORE.
 Rationale
 =========
 
-A JSON-Library with parsing functionality needs to be introduced in S-CORE software platform due to specific functional dependencies of different features (ex: IPC).
+A JSON-Library with parsing and writing functionality is part of the S-CORE software platform due to specific functional dependencies of different features (ex: IPC).
 
 Further details are available in the following section:
+
 .. _Specification:
 
 Specification
@@ -90,6 +83,8 @@ The JSON-Library should provide parsing, writing and data conversion capabilitie
 * :need:`comp_req__json__duplicate_member_names`
 * :need:`comp_req__json__parsing_error_reason`
 * :need:`comp_req__json__io_error`
+* :need:`comp_req__json__regular_file`
+* :need:`comp_req__json__max_file_size`
 * :need:`comp_req__json__deserialization_error_field`
 
 User friendly API
@@ -119,12 +114,18 @@ For them to reach full coverage, they need to be easily able to mock or fake the
 Backwards Compatibility
 =======================
 
-As there is currently no previous solution in S-CORE, no backwards compatibility is required.
+The public API and the observable behavior of the parser and the writer are unchanged by the consolidation on one parser and one writer implementation.
+The Bazel flag ``base_library`` is a deprecated no-op that is kept until its planned removal.
 
 Security Impact
 ===============
 
-[How could a malicious user take advantage of this new/modified component?]
+The parser processes data that may come from an untrusted source.
+It rejects malformed JSON, files that are not regular files and files larger than 64 MiB.
+The integrity and the access control of the JSON data are Assumptions of Use:
+
+* :need:`aou_req__json__data_integrity`
+* :need:`aou_req__json__access_control`
 
 Safety Impact
 =============
@@ -133,12 +134,15 @@ Overall, the component shall support use cases up to ASIL-B:
 
 * :need:`comp_req__json__asil`
 
+The failure modes of the component and their mitigations are analyzed in :need:`doc__json_fmea` and :need:`doc__json_dfa`.
+
 License Impact
 ==============
 
-[How could the copyright impacted by the license of the new contribution?]
+The vaJson parser is licensed under the Apache License Version 2.0, see :need:`doc__vajson`.
+No other third-party JSON library is used.
 
 How to Teach This
 =================
 
-[How to teach users, new and experienced, how to apply the CR to their work.]
+The usage of the parser, the writer and the data model is described in the README of the component.

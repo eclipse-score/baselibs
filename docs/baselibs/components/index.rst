@@ -25,7 +25,8 @@ Overview
 - :need:`doc__containers`: Offers a ``DynamicArray`` (fixed-size array with dynamic construction-time size)
   and an intrusive linked list implementation conforming to the
   `P0406R1 proposal <https://www.open-std.org/jtc1/sc22/wg21/docs/papers/2016/p0406r1.html>`_.
-- :need:`doc__json`: JSON abstraction layer that can switch between different parsers/serializers under the hood.
+- :need:`doc__json`: JSON library that parses JSON data into a data model and writes a data model as compact
+  or pretty-printed JSON data.
 - :need:`doc__flatbuffers`: FlatBuffers-Library with serialization, read access, and structural
   verification of FlatBuffers data, plus code generation via ``flatc`` for C++, Rust, and Python.
 - :need:`doc__filesystem`: Filesystem manipulation library similar to ``std::filesystem``.

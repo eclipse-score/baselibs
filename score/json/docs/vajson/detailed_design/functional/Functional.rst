@@ -23,3 +23,4 @@ These are the functionalities of the vaJson component.
 
   Common.rst
   Reader.rst
+  Writer.rst

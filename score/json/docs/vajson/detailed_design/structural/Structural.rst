@@ -17,8 +17,10 @@
 Structural
 **********
 
-vaJson is a library that provides utilities to create streaming JSON serializer & deserializer.
+vaJson is a library that provides a streaming JSON parser and the formatting of JSON output.
 
-The ``Reader`` subcomponent provides utilities to deserialize/read JSON files.
-The ``Writer`` subcomponent provides utilities to serialize/write JSON files.
-The ``Util`` subcomponent provides generic utilities.
+The ``Reader`` subcomponent provides the parser that reads JSON data from a file or a buffer and reports each JSON
+element as an event.
+The ``Writer`` subcomponent provides the formatting of JSON output in a compact or a pretty-printed layout and the
+escaping of strings.
+The ``Util`` subcomponent provides generic utilities that the ``Reader`` uses.

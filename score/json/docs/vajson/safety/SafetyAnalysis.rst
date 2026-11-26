@@ -15,6 +15,77 @@
 Safety Analysis of vajson
 =========================
 
+The commented block below is the verbatim safety analysis that Vector created for the standalone VaJson product.
+It is retained as upstream evidence and is not rendered.
+Its identifiers (``CREQ-*``, ``TSR-*``, ``SMI-*``, ``DSGN-*``) and test names belong to the upstream product.
+The S-CORE safety analysis of the JSON component is in :need:`doc__json_fmea` and :need:`doc__json_dfa`.
+
+.. list-table:: Upstream requirements and their S-CORE counterparts
+   :header-rows: 1
+   :widths: 30,70
+
+   * - Upstream ID
+     - S-CORE need
+   * - CREQ-Json-Validation
+     - :need:`comp_req__vajson__validation`
+   * - CREQ-Json-Deserialization
+     - :need:`comp_req__json__deserialization`, :need:`comp_req__vajson__trailing_commas`,
+       :need:`comp_req__vajson__hex_integers`, :need:`comp_req__vajson__number_grammar`
+   * - CREQ-Json-Unicode
+     - :need:`comp_req__vajson__unicode`
+   * - CREQ-Json-EventCallbacks
+     - No dedicated S-CORE requirement; the internal event interface is exercised by the parser unit tests.
+   * - CREQ-Json-Concurrency
+     - No S-CORE requirement.
+   * - SMI-JSON-InitializeJSONWithBuffer, SMI-JSON-InitializeJSONWithFilePath
+     - :need:`aou_req__json__data_integrity`
+   * - SMI-JSON-PRIVATE-* (LibVac, LibOsAbstraction, CharacterConversion)
+     - Not applicable; these upstream libraries are not used in S-CORE.
+
+Vector created the analysis below for the standalone VaJson product.
+It is retained as upstream evidence for the failure modes of the parsing engine.
+The commented block is the upstream text and is not rendered.
+Its identifiers (``CREQ-*``, ``TSR-*``, ``SMI-*``, ``DSGN-*``, and the names of the test cases) belong to the upstream
+product and do not name S-CORE needs.
+
+The S-CORE safety analysis of the JSON component, which references the S-CORE requirements and Assumptions of Use,
+is documented in :need:`doc__json_fmea` and :need:`doc__json_dfa`.
+
+.. list-table:: Mapping of the upstream safety requirements to S-CORE needs
+   :header-rows: 1
+   :widths: 30,70
+
+   * - Upstream safety requirement
+     - S-CORE need
+   * - ``CREQ-Json-Validation``
+     - :need:`comp_req__vajson__validation`
+   * - ``CREQ-Json-Deserialization``
+     - :need:`comp_req__json__deserialization`, :need:`comp_req__vajson__trailing_commas`,
+       :need:`comp_req__vajson__hex_integers`, :need:`comp_req__vajson__number_grammar`
+   * - ``CREQ-Json-EventCallbacks``
+     - No dedicated need.
+       The event interface is internal to the parser and its behavior is observable through
+       :need:`comp_req__json__deserialization` and :need:`comp_req__json__user_format`.
+   * - ``CREQ-Json-Unicode``
+     - :need:`comp_req__vajson__unicode`
+   * - ``CREQ-Json-Concurrency``
+     - No need.
+       The statement that instances do not share state is not an S-CORE requirement.
+
+.. list-table:: Mapping of the upstream safety manual items to S-CORE needs
+   :header-rows: 1
+   :widths: 30,70
+
+   * - Upstream item
+     - S-CORE need
+   * - ``SMI-JSON-InitializeJSONWithBuffer``
+     - :need:`aou_req__json__data_integrity`
+   * - ``SMI-JSON-InitializeJSONWithFilePath``
+     - :need:`aou_req__json__data_integrity`
+   * - ``SMI-JSON-PRIVATE-LibVac``, ``SMI-JSON-PRIVATE-LibOsAbstraction``, ``SMI-JSON-PRIVATE-CharacterConversion``
+     - Not applicable.
+       The S-CORE implementation does not use these upstream libraries.
+
 ..
     The following TSRs are allocated to this component:
 

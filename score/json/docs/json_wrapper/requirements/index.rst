@@ -18,18 +18,18 @@ Requirements
 .. document:: JSON Wrapper Requirements
    :id: doc__json_wrapper_requirements
    :status: valid
-   :version: 2
+   :version: 3
    :safety: ASIL_B
    :security: YES
    :realizes: wp__requirements_comp[version==1]
 
 Due to low complexity, the shared requirements of the JSON component were not split into the "sub" components
 "JSON Wrapper" and "vaJson": both are covered by the requirements documented here. Reasoning is the low number of
-requirements (only about ten).
+requirements.
 
-vaJson, being reused from a third-party vendor (Vector), additionally has backend-specific requirements (e.g.
-validation, trailing commas, hexadecimal integers, unicode) that do not apply to "JSON Wrapper". Those are documented
-separately in :need:`doc__vajson_requirements`.
+vaJson, being reused from a third-party vendor (Vector), additionally has requirements specific to its parsing
+behavior (e.g. validation, trailing commas, hexadecimal integers, unicode) that do not apply to "JSON Wrapper".
+Those are documented separately in :need:`doc__vajson_requirements`.
 
 So the requirements for "JSON Wrapper" are documented in :need:`doc__json_requirements`
 (all requirements which are "fulfilled_by" :need:`comp__baselibs_json_wrapper`)

@@ -27,10 +27,13 @@ Deserialization
 Reading of JSON documents is done by the class score::json::vajson::internal::StructureParser by implementing a SAX-style
 JSON parser.
 The JSON data must be provided to the parser as
-* a path to a file
+
+* a path to a file together with the maximum size of the file, or
 * a character buffer.
 
-The JSON document size and the number of concurrently parsed documents is not restricted by vaJson.
+Reading from a file fails if the path does not refer to a regular file, if the file cannot be read or if the file is
+larger than the maximum size.
+The number of concurrently parsed documents is not restricted by vaJson.
 
 Sequences
 ^^^^^^^^^
@@ -71,14 +74,14 @@ The event handler must inherit from score::json::vajson::internal::StructurePars
 * "true" is reported to the applications event handler by calling ``OnBool(bool)``
 * "false" is reported to the applications event handler by calling ``OnBool(bool)``
 * A number is reported to the applications event handler by calling ``OnNumber(score::json::vajson::JsonNumber)``
-* A string is reported to the applications event handler by calling ``OnString(ara::core::StringView)``
-* A key is reported to the applications event handler by calling ``OnKey(ara::core::StringView)``
+* A string is reported to the applications event handler by calling ``OnString(score::json::vajson::CStringView)``
+* A key is reported to the applications event handler by calling ``OnKey(score::json::vajson::CStringView)``
 * The start of an object is reported to the applications event handler by calling ``OnStartObject()``
 * The end of an object is reported to the applications event handler by calling ``OnEndObject()``
 * The start of an array is reported to the applications event handler by calling ``OnStartArray()``
 * The end of an array is reported to the applications event handler by calling ``OnEndArray()``
 
-Each function returns an ``ara::core::Result<score::json::vajson::ParserState>`` to report errors and to indicate whether the
+Each function returns a ``score::Result<score::json::vajson::ParserState>`` to report errors and to indicate whether the
 parser shall go on (``score::json::vajson::ParserState::kRunning``) or stop (``score::json::vajson::ParserState::kFinished``).
 
 A hierarchical parser can be implemented by the application by letting the event handler delegate events to further
@@ -110,5 +113,5 @@ Error reporting
     :safety: ASIL_D
     :trace: CREQ-Json-Validation
 
-Upon detection of an error, the parser returns from Parse() with an ara::core::Result<void> and one of the errors
+Upon detection of an error, the parser returns from Parse() with a score::Result<void> and one of the errors
 defined in score::json::vajson::JsonErrc.

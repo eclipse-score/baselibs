@@ -16,6 +16,17 @@
 Safety Manual VaJson
 ********************
 
+Vector created the safety manual below for the standalone VaJson product.
+It is retained as upstream evidence.
+The commented block is the upstream text and is not rendered.
+
+The assumptions that users of the JSON component must fulfill are the Assumptions of Use of the JSON component:
+
+* :need:`aou_req__json__data_integrity`
+* :need:`aou_req__json__access_control`
+
+The mapping of the upstream items to S-CORE needs is given in :doc:`SafetyAnalysis`.
+
 ..
     Assumed Safety Requirements
     ===========================
