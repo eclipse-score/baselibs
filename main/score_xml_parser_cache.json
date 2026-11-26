@@ -11846,7 +11846,7 @@
   {
     "name": "JsonNumberTest__RejectsValuesOutsideUint8Range",
     "file": "score/json/internal/parser/vajson/json_number_test.cpp",
-    "line": 526,
+    "line": 527,
     "need": "comp_req__json__deserialization",
     "verify_type": "partially",
     "result": "passed",
@@ -11858,7 +11858,7 @@
   {
     "name": "JsonNumberTest__RejectsValuesOutsideUint16Range",
     "file": "score/json/internal/parser/vajson/json_number_test.cpp",
-    "line": 537,
+    "line": 538,
     "need": "comp_req__json__deserialization",
     "verify_type": "partially",
     "result": "passed",
@@ -11870,7 +11870,7 @@
   {
     "name": "JsonNumberTest__RejectsValuesOutsideUint32Range",
     "file": "score/json/internal/parser/vajson/json_number_test.cpp",
-    "line": 548,
+    "line": 549,
     "need": "comp_req__json__deserialization",
     "verify_type": "partially",
     "result": "passed",
@@ -11882,7 +11882,7 @@
   {
     "name": "JsonNumberTest__RejectsValuesOutsideUint64Range",
     "file": "score/json/internal/parser/vajson/json_number_test.cpp",
-    "line": 559,
+    "line": 560,
     "need": "comp_req__json__deserialization",
     "verify_type": "partially",
     "result": "passed",
@@ -11894,7 +11894,7 @@
   {
     "name": "JsonNumberTest__RejectsValuesOutsideInt8Range",
     "file": "score/json/internal/parser/vajson/json_number_test.cpp",
-    "line": 570,
+    "line": 571,
     "need": "comp_req__json__deserialization",
     "verify_type": "partially",
     "result": "passed",
@@ -11906,7 +11906,7 @@
   {
     "name": "JsonNumberTest__RejectsValuesOutsideInt16Range",
     "file": "score/json/internal/parser/vajson/json_number_test.cpp",
-    "line": 581,
+    "line": 582,
     "need": "comp_req__json__deserialization",
     "verify_type": "partially",
     "result": "passed",
@@ -11918,7 +11918,7 @@
   {
     "name": "JsonNumberTest__RejectsValuesOutsideInt32Range",
     "file": "score/json/internal/parser/vajson/json_number_test.cpp",
-    "line": 592,
+    "line": 593,
     "need": "comp_req__json__deserialization",
     "verify_type": "partially",
     "result": "passed",
@@ -11930,7 +11930,7 @@
   {
     "name": "JsonNumberTest__RejectsValuesOutsideInt64Range",
     "file": "score/json/internal/parser/vajson/json_number_test.cpp",
-    "line": 603,
+    "line": 604,
     "need": "comp_req__json__deserialization",
     "verify_type": "partially",
     "result": "passed",
@@ -11942,7 +11942,7 @@
   {
     "name": "JsonNumberTest__RejectsValuesOutsideFloatRange",
     "file": "score/json/internal/parser/vajson/json_number_test.cpp",
-    "line": 614,
+    "line": 615,
     "need": "comp_req__json__deserialization",
     "verify_type": "partially",
     "result": "passed",
@@ -11954,7 +11954,7 @@
   {
     "name": "JsonNumberTest__RejectsValuesOutsideDoubleRange",
     "file": "score/json/internal/parser/vajson/json_number_test.cpp",
-    "line": 625,
+    "line": 626,
     "need": "comp_req__json__deserialization",
     "verify_type": "partially",
     "result": "passed",
@@ -11966,7 +11966,7 @@
   {
     "name": "JsonNumberTest__RejectsIntegerConversionOfNumberWithDecimalPoint",
     "file": "score/json/internal/parser/vajson/json_number_test.cpp",
-    "line": 636,
+    "line": 637,
     "need": "comp_req__json__deserialization",
     "verify_type": "partially",
     "result": "passed",
@@ -11978,7 +11978,7 @@
   {
     "name": "JsonNumberTest__RejectsIntegerConversionOfNumberWithExponent",
     "file": "score/json/internal/parser/vajson/json_number_test.cpp",
-    "line": 648,
+    "line": 649,
     "need": "comp_req__json__deserialization",
     "verify_type": "partially",
     "result": "passed",
@@ -11990,7 +11990,7 @@
   {
     "name": "JsonNumberTest__ConvertsIntegerLiteralToFloatingPoint",
     "file": "score/json/internal/parser/vajson/json_number_test.cpp",
-    "line": 661,
+    "line": 662,
     "need": "comp_req__json__deserialization",
     "verify_type": "partially",
     "result": "passed",
@@ -12002,7 +12002,7 @@
   {
     "name": "JsonNumberTest__ConvertsValuesNearDoubleLimits",
     "file": "score/json/internal/parser/vajson/json_number_test.cpp",
-    "line": 673,
+    "line": 674,
     "need": "comp_req__json__deserialization",
     "verify_type": "partially",
     "result": "passed",
@@ -12014,7 +12014,7 @@
   {
     "name": "JsonNumberTest__RejectsFloatingPointOverflow",
     "file": "score/json/internal/parser/vajson/json_number_test.cpp",
-    "line": 684,
+    "line": 685,
     "need": "comp_req__json__deserialization",
     "verify_type": "partially",
     "result": "passed",
@@ -12026,7 +12026,7 @@
   {
     "name": "JsonNumberTest__AcceptsNumbersMatchingTheGrammar",
     "file": "score/json/internal/parser/vajson/json_number_test.cpp",
-    "line": 695,
+    "line": 696,
     "need": "comp_req__json__deserialization",
     "verify_type": "partially",
     "result": "passed",
@@ -12038,7 +12038,7 @@
   {
     "name": "JsonNumberTest__AcceptsNumbersMatchingTheGrammar",
     "file": "score/json/internal/parser/vajson/json_number_test.cpp",
-    "line": 695,
+    "line": 696,
     "need": "comp_req__vajson__hex_integers",
     "verify_type": "partially",
     "result": "passed",
@@ -12050,7 +12050,7 @@
   {
     "name": "JsonNumberTest__RejectsNumbersOutsideTheGrammar",
     "file": "score/json/internal/parser/vajson/json_number_test.cpp",
-    "line": 722,
+    "line": 723,
     "need": "comp_req__vajson__number_grammar",
     "verify_type": "partially",
     "result": "passed",
@@ -12062,7 +12062,7 @@
   {
     "name": "JsonNumberTest__ConvertsHexadecimalIntegersWithinTheTargetRange",
     "file": "score/json/internal/parser/vajson/json_number_test.cpp",
-    "line": 741,
+    "line": 742,
     "need": "comp_req__vajson__hex_integers",
     "verify_type": "partially",
     "result": "passed",
@@ -12074,7 +12074,7 @@
   {
     "name": "JsonNumberTest__HexadecimalIntegersDoNotConvertToFloatingPoint",
     "file": "score/json/internal/parser/vajson/json_number_test.cpp",
-    "line": 765,
+    "line": 766,
     "need": "comp_req__vajson__hex_integers",
     "verify_type": "partially",
     "result": "passed",
