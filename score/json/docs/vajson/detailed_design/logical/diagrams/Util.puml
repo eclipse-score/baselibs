@@ -24,13 +24,11 @@ package "score" {
     class JsonData {}
 
     class JsonErrorDomain {}
-    class JsonException {}
 
     package "internal" {
       class JsonOps {
         + JsonOps(JsonData& json_data)
       }
-      class Ref<JsonData> {}
       class OptChar {}
     }
   }
@@ -44,13 +42,9 @@ Reader -down-> JsonErrorDomain
 Reader -down-> JsonErrc
 Reader -down-> JsonData
 
-JsonOps --> Ref
-Ref --> JsonData
-JsonData --> Ref
 JsonOps --> JsonData
 JsonOps --> OptChar
 
 JsonData --> JsonErrorDomain
-JsonErrorDomain --> JsonException
 
 @enduml

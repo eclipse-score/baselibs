@@ -12,10 +12,27 @@
    # SPDX-License-Identifier: Apache-2.0
    # *******************************************************************************
 
-Templates and Polymorphism
-==========================
+Polymorphism
+============
+
+The parser interface uses dynamic polymorphism.
+The event handlers are virtual functions of the abstract class ``StructureParser``.
+A user of the parser derives from this class and overrides all event handlers.
+The correct event handler is selected at run time.
+
+Advantages:
+
+* No overloaded functions and templates.
+* Fewer violations of the coding guidelines.
+
+Disadvantages:
+
+* There may be a performance impact due to the organization of the virtual method table.
 
 ..
+  The following text is the upstream text of the concept.
+  It describes a second interface with static polymorphism that is not part of the S-CORE implementation.
+
   Concept:: DSGN-Concept-Polymorphism
 
   There are two parser interfaces available, one using static polymorphism and another one using dynamic polymorphism.

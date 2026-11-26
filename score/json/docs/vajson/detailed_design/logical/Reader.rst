@@ -15,7 +15,49 @@
 Reader
 ======
 
+Parser
+------
+
+The parser contains all logic of the parser.
+It traces to the functional design features Deserialization, Encoding, Data Items and Error Reporting.
+
+``StructureParser``
+  Contains the logic for a SAX-style JSON parser based on dynamic polymorphism.
+
+``StructureValidator``
+  Contains the logic to check the order of the tokens of a JSON document.
+
+Util
+----
+
+The utilities trace to the functional design features Deserialization, Encoding and Number Formatting.
+
+``JsonData``
+  Contains the logic to implement stateful JSON documents that are loaded from a file or a buffer.
+
+``JsonOps``
+  Contains the logic for operations on a JSON document.
+
+``OptChar``
+  Contains a union over end of file and a character.
+
+``JsonNumber``
+  Contains the logic to handle JSON numbers.
+
+``NumberParser``
+  Contains the logic to parse strings as numbers.
+
+``JsonErrc``
+  Contains the vaJson error codes.
+
+``JsonErrorDomain``
+  Contains the vaJson error domain.
+
+.. uml:: diagrams/Util.puml
+
 ..
+    The following text is the upstream text of the logical design, with the ASIL D units of the upstream product.
+
     LogicalUnit:: Parser
     :trace: DSGN-JSON-Reader-Deserialization, DSGN-JSON-Reader-Encoding, DSGN-JSON-Reader-Data-Items,
             DSGN-JSON-Reader-Error-Reporting
@@ -176,7 +218,6 @@ Util
 
             class JsonNumber {
               + {static} auto New(StringView view) -> Result<JsonNumber>
-              + auto As()<vac::language::byte> const -> Optional<vac::language::byte>
               + auto As()<T> const -> Optional<T>
             }
 

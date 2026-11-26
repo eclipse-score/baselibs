@@ -22,8 +22,8 @@ skinparam legend {
 
 
 legend top left
-<#White,#White>|<#WhiteSmoke>| Frontend class |
-|<#LightSteelBlue>      | Backend class |
+<#White,#White>|<#WhiteSmoke>| Public API class |
+|<#LightSteelBlue>      | Internal implementation class |
 end legend
 
 
@@ -94,7 +94,7 @@ class score::json::JsonParser {
 }
 
 score::json::JsonParser --> score::json::Error : use
-score::json::JsonParser --> amsr::json::JsonData : use
+score::json::JsonParser --> score::json::vajson::JsonData : use
 
 
 enum score::json::Formatting {
@@ -121,21 +121,21 @@ score::json::internal::writer::Serializer --> score::json::Error : use
 score::json::internal::writer::Serializer --> score::Result : use
 
 
-enum amsr::json::ParserState #LightSteelBlue
+enum score::json::vajson::ParserState #LightSteelBlue
 
 
-enum amsr::json::JsonErrc #LightSteelBlue
+enum score::json::vajson::JsonErrc #LightSteelBlue
 
 
-class amsr::json::ParserResult <<typedef>> #LightSteelBlue
+class score::json::vajson::ParserResult <<typedef>> #LightSteelBlue
 
 
-class amsr::json::internal::StructureParser #LightSteelBlue
+class score::json::vajson::internal::StructureParser #LightSteelBlue
 
 
-class amsr::json::JsonData #LightSteelBlue
+class score::json::vajson::JsonData #LightSteelBlue
 
-amsr::json::internal::StructureParser <|-- AnyTreeBuilder
+score::json::vajson::internal::StructureParser <|-- AnyTreeBuilder
 
 
 class AnyTreeBuilder <<internal to JsonParser>> #LightSteelBlue {
@@ -146,9 +146,9 @@ score::json::JsonParser --> AnyTreeBuilder : use
 AnyTreeBuilder *-- score::json::Any
 AnyTreeBuilder --> score::json::Error : use
 AnyTreeBuilder --> score::Result : use
-AnyTreeBuilder --> amsr::json::ParserResult : use
-AnyTreeBuilder --> amsr::json::ParserState : use
-AnyTreeBuilder --> amsr::json::JsonErrc : use
+AnyTreeBuilder --> score::json::vajson::ParserResult : use
+AnyTreeBuilder --> score::json::vajson::ParserState : use
+AnyTreeBuilder --> score::json::vajson::JsonErrc : use
 
 
 class score::json::Any {
