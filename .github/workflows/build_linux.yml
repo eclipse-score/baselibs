@@ -65,7 +65,7 @@ jobs:
             working-directory: "examples/integration"
             bazel-build-target: "//..."
             bazel-test-target: "//..."
-    uses: eclipse-score/cicd-workflows/.github/workflows/bazel.yml@d241348e8670bf5b8902d67ff3ac77e7f60f9ec7 # main (2026-11-11)
+    uses: eclipse-score/cicd-workflows/.github/workflows/bazel.yml@419f87cb66c1a0eb444416ae47c4c97bdc5732fc # bazel/v0.1.0
     with:
       build-targets: ${{ matrix.bazel-build-target }}
       test-targets: ${{ matrix.bazel-test-target }}
