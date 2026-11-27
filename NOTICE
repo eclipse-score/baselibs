@@ -64,3 +64,16 @@ nst/JSONTestSuite is provided under the MIT License, Copyright (c) 2016 Nicolas 
 The license text is part of the downloaded archive.
 
 [2] https://github.com/nst/JSONTestSuite
+
+## acl
+
+third_party/acl vendors the plain POSIX ACL portion of libacl's source (excluding
+acl_delete_def_file_at and perm_copy_fd/perm_copy_file) from acl 2.4.0 [3],
+compiled directly as a score_baselibs cc_library instead of installing a prebuilt,
+architecture-pinned package (see
+https://github.com/eclipse-score/baselibs/issues/172, /issues/496, /issues/78).
+
+libacl is provided under the GNU Lesser General Public License v2.1 (or later).
+The license text can be found in licenses/acl-lgpl.txt.
+
+[3] https://download.savannah.nongnu.org/releases/acl/acl-2.4.0.tar.xz
