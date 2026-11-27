@@ -38,11 +38,14 @@ static_assert(FLATBUFFERS_LITTLEENDIAN, "flatbuffers table tests assume a little
 namespace
 {
 
-// A vtable is an array of 2-byte voffset_t entries.
-// Entry 0 holds the vtable's own byte size, entry 1 holds the table object's byte size.
-// Entry 2 onward holds one byte offset per field, in declaration order.
-// So field index i lives at byte offset 4 + 2 * i within the vtable.
+// A vtable is an array of 2-byte voffset_t entries, each holding a byte count.
+// Entry 0 holds the vtable's own size, entry 1 the size of the table object's inline data.
+// Each further entry holds one field's byte offset from the table start, in declaration order.
+// A stored offset of 0 marks the field as absent.
+// Offset 0 never names a real field, because the table's soffset_t back-pointer to its vtable occupies it.
+// So field index i lives at byte position 4 + 2 * i within the vtable.
 // This is the same formula FlatBufferBuilder::FieldIndexToOffset() uses internally.
+// The slot constants below are these byte positions within the vtable, not the offsets stored there.
 // The tables in this file have no .fbs schema, so the slot numbers are hardcoded here.
 constexpr voffset_t kScalarFieldSlot{4};         // Field 0: int32 scalar.
 constexpr voffset_t kOptionalFieldSlot{6};       // Field 1: optional int32 (generic GetOptional).
@@ -82,6 +85,7 @@ constexpr int32_t kMutatedValue{99};
 // and written as a length it exceeds the buffer.
 constexpr uint64_t kOutOfBoundsValue{10'000'000ULL};
 
+// Inline struct stored in the fixture table's struct field.
 struct Point2D
 {
     int32_t x;
@@ -104,24 +108,27 @@ bool WriteRawOffset(Table& table, const voffset_t field, const OffsetType value)
 
 // Builds a single table exercising every field kind Table can read.
 // The i-th AddElement/AddOffset/AddStruct call is field index i and uses the matching slot constant above.
-// The values written are independent of the slot numbers:
+// The in-table offset is the value the vtable stores at that slot; the value written is independent of both:
 //
-//   index  slot constant           slot  value written
-//     0    kScalarFieldSlot           4  kScalarFieldValue (42)
-//     1    kOptionalFieldSlot         6  kOptionalFieldValue (7)
-//     2    kBoolFieldSlot             8  kBoolFieldValue (1, i.e. true)
-//     3    kStringFieldSlot          10  kStringFieldValue ("hello")
-//     4    kSecondStringFieldSlot    12  kSecondStringFieldValue ("world")
-//     5    kVectorFieldSlot          14  kVectorValues ({1, 2, 3})
-//     6    kStructFieldSlot          16  {kStructFieldX, kStructFieldY} (11, 22)
-//     7    kVector64FieldSlot        18  kVector64Values ({100, 200, 300})
+//   index  slot constant           slot  in-table offset  value written
+//     0    kScalarFieldSlot           4               40  kScalarFieldValue (42)
+//     1    kOptionalFieldSlot         6               36  kOptionalFieldValue (7)
+//     2    kBoolFieldSlot             8               35  kBoolFieldValue (1, i.e. true)
+//     3    kStringFieldSlot          10               28  kStringFieldValue ("hello")
+//     4    kSecondStringFieldSlot    12               24  kSecondStringFieldValue ("world")
+//     5    kVectorFieldSlot          14               20  kVectorValues ({1, 2, 3})
+//     6    kStructFieldSlot          16               12  {kStructFieldX, kStructFieldY} (11, 22)
+//     7    kVector64FieldSlot        18                4  kVector64Values ({100, 200, 300})
+//
+// The two vtable entries ahead of those hold the vtable's own size (20 bytes, i.e. 10 entries) and the size of
+// the table object (44 bytes: its header plus the inline fields below).
 //
 // FlatBufferBuilder fills the buffer back to front, which currently yields this layout:
 //
 //   bytes    content                                         size
 //    0-3     root offset (points forward to table)              4   <- fbb.GetBufferPointer()
-//    4-23    vtable header, then 8 field slots (2 B each)      20
-//   24-27    alignment padding                                  4
+//    4-7     alignment padding                                  4
+//    8-27    vtable: 2 size entries, then 8 field entries      20
 //   28-31    table header: soffset_t back to vtable             4   <- table start, Table::data_[0]
 //   32-39    vec64 field (8-byte offset A, slot 18)             8   <- in-table offset 4
 //   40-47    struct field (Point2D inline: x, y)                8   <- in-table offset 12
