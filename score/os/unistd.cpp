@@ -12,11 +12,15 @@
  ********************************************************************************/
 #include "score/os/unistd.h"
 
+#include <fcntl.h>
+#include <unistd.h>
+
+#include <cerrno>
+
 #if defined(__QNX__)
 #include <process.h>
 #elif defined(__linux__)
 #include <sys/syscall.h>
-#include <unistd.h>
 #endif  // __QNX__
 
 score::cpp::expected_blank<score::os::Error> score::os::internal::UnistdImpl::close(
@@ -75,11 +79,35 @@ score::cpp::expected_blank<score::os::Error> score::os::internal::UnistdImpl::ac
 score::cpp::expected_blank<score::os::Error> score::os::internal::UnistdImpl::pipe(
     std::int32_t pipefd[2]) const noexcept
 {
+    return this->pipe2(pipefd, PipeFlag::kCloseOnExec);
+}
+
+// Wrapped function requires C-style array param
+// NOLINTNEXTLINE(modernize-avoid-c-arrays) see comment above
+score::cpp::expected_blank<score::os::Error> score::os::internal::UnistdImpl::pipe2(std::int32_t pipefd[2],
+                                                                                    const PipeFlag flags) const noexcept
+{
+    // Unknown flags are rejected like the OS does, instead of being dropped.
+    constexpr PipeFlag kSupportedFlags{PipeFlag::kCloseOnExec | PipeFlag::kNonBlocking};
+    if (static_cast<std::uint32_t>(flags & ~kSupportedFlags) != 0U)
+    {
+        return score::cpp::make_unexpected(score::os::Error::createFromErrno(EINVAL));
+    }
+    // The flags are applied by pipe2() atomically, so no concurrent fork() can leak the descriptors.
+    std::uint32_t native_flags{0U};
+    if (static_cast<std::uint32_t>(flags & PipeFlag::kCloseOnExec) != 0U)
+    {
+        native_flags |= static_cast<std::uint32_t>(O_CLOEXEC);
+    }
+    if (static_cast<std::uint32_t>(flags & PipeFlag::kNonBlocking) != 0U)
+    {
+        native_flags |= static_cast<std::uint32_t>(O_NONBLOCK);
+    }
     // Suppressed here because usage of this OSAL method is on banned list
     /* It is immposible to cover the return statement */
     /* Hence, added suppression */
     // NOLINTNEXTLINE(score-banned-function) see comment above
-    if (::pipe(pipefd) == -1)  // LCOV_EXCL_BR_LINE
+    if (::pipe2(pipefd, static_cast<std::int32_t>(native_flags)) == -1)  // LCOV_EXCL_BR_LINE
     {
         return score::cpp::make_unexpected(score::os::Error::createFromErrno()); /* LCOV_EXCL_LINE */
         /*Error can not be reproduced in scope of unit tests. Incorrect value is prohibited, causes undefined behavior*/

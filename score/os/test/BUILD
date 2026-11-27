@@ -443,6 +443,7 @@ cc_test(
         "@score_baselibs//score/os:socket",
         "@score_baselibs//score/os:unistd",
         "@score_baselibs//score/os:version",
+        "@score_baselibs//score/scope_exit",
     ],
 )
 

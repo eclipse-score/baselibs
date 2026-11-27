@@ -34,6 +34,7 @@ Functional Requirements
    :safety: ASIL_B
    :status: valid
    :version: 1
+   :derived_from: feat_req__baselibs__osal[version==1]
    :satisfied_by: comp__baselibs_os[version==1]
 
    The OS component shall provide functions for getting an environment variable.
@@ -45,6 +46,7 @@ Functional Requirements
    :safety: ASIL_B
    :status: valid
    :version: 1
+   :derived_from: feat_req__baselibs__osal[version==1]
    :satisfied_by: comp__baselibs_os[version==1]
 
    The OS component shall provide functions for setting environment variable.
@@ -56,9 +58,35 @@ Functional Requirements
    :safety: ASIL_B
    :status: valid
    :version: 1
+   :derived_from: feat_req__baselibs__osal[version==1]
    :satisfied_by: comp__baselibs_os[version==1]
 
    The OS component shall provide functions for unsetting environment variable.
+
+.. comp_req:: File descriptor close-on-exec
+   :id: comp_req__os__fd_close_on_exec
+   :reqtype: Functional
+   :security: YES
+   :safety: ASIL_B
+   :status: valid
+   :version: 1
+   :derived_from: feat_req__baselibs__osal[version==1]
+   :satisfied_by: comp__baselibs_os[version==1]
+
+   The OS component shall create pipes, accepted sockets and inotify instances with close-on-exec by default.
+
+.. comp_req:: File descriptor creation flags
+   :id: comp_req__os__fd_creation_flags
+   :reqtype: Functional
+   :security: YES
+   :safety: ASIL_B
+   :status: valid
+   :version: 1
+   :derived_from: feat_req__baselibs__osal[version==1]
+   :satisfied_by: comp__baselibs_os[version==1]
+
+   The OS component shall allow the caller to choose close-on-exec and non-blocking when creating pipes and inotify
+   instances, and shall reject unsupported creation flags.
 
 .. needextend:: c.this_doc() and (type == "comp_req" or type == "aou_req")
    :+tags: baselibs, os

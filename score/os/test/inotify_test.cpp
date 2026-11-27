@@ -13,7 +13,9 @@
 #include "score/os/inotify.h"
 #include "score/os/errno.h"
 
+#include <fcntl.h>
 #include <sys/inotify.h>
+#include <unistd.h>
 
 #include <gtest/gtest.h>
 
@@ -39,12 +41,97 @@ struct InotifyTest : ::testing::Test
 
     void TearDown() override
     {
+        if (fd.has_value())
+        {
+            ::close(fd.value());
+        }
         ASSERT_EQ(::rmdir(temp_dir_.c_str()), 0);
     }
 
     std::string temp_dir_;
     score::cpp::expected<int, score::os::Error> fd;
 };
+
+TEST_F(InotifyTest, InotifyInstanceHasCloseOnExecSet)
+{
+    RecordProperty("PartiallyVerifies", "comp_req__os__fd_close_on_exec");
+    RecordProperty(
+        "Description",
+        "An inotify instance has close-on-exec set, so it is not inherited by processes created via execve()");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
+
+    // Given an inotify instance created with inotify_init() in SetUp()
+    ASSERT_TRUE(fd.has_value());
+
+    // When reading its descriptor flags
+    const int flags{::fcntl(fd.value(), F_GETFD)};
+
+    // Then it has close-on-exec set
+    ASSERT_NE(flags, -1);
+    EXPECT_NE(flags & FD_CLOEXEC, 0);
+}
+
+TEST_F(InotifyTest, InotifyInit1WithNoFlagsCreatesInheritableBlockingInstance)
+{
+    RecordProperty("PartiallyVerifies", "comp_req__os__fd_creation_flags");
+    RecordProperty("Description", "inotify_init1 without flags leaves close-on-exec and non-blocking unset");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
+
+    // When creating an instance without flags
+    const auto instance{score::os::Inotify::instance().inotify_init1(score::os::Inotify::InitFlag::kNone)};
+
+    // Then neither close-on-exec nor non-blocking is set
+    ASSERT_TRUE(instance.has_value());
+    const int fd_flags{::fcntl(instance.value(), F_GETFD)};
+    const int status_flags{::fcntl(instance.value(), F_GETFL)};
+    ::close(instance.value());
+    ASSERT_NE(fd_flags, -1);
+    ASSERT_NE(status_flags, -1);
+    EXPECT_EQ(fd_flags & FD_CLOEXEC, 0);
+    EXPECT_EQ(status_flags & O_NONBLOCK, 0);
+}
+
+TEST_F(InotifyTest, InotifyInit1WithCloseOnExecAndNonBlockingSetsBothFlags)
+{
+    RecordProperty("PartiallyVerifies", "comp_req__os__fd_creation_flags");
+    RecordProperty("Description", "inotify_init1 applies the requested close-on-exec and non-blocking flags");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
+
+    // When creating an instance with close-on-exec and non-blocking
+    const auto instance{score::os::Inotify::instance().inotify_init1(score::os::Inotify::InitFlag::kCloseOnExec |
+                                                                     score::os::Inotify::InitFlag::kNonBlocking)};
+
+    // Then both flags are set
+    ASSERT_TRUE(instance.has_value());
+    const int fd_flags{::fcntl(instance.value(), F_GETFD)};
+    const int status_flags{::fcntl(instance.value(), F_GETFL)};
+    ::close(instance.value());
+    ASSERT_NE(fd_flags, -1);
+    ASSERT_NE(status_flags, -1);
+    EXPECT_NE(fd_flags & FD_CLOEXEC, 0);
+    EXPECT_NE(status_flags & O_NONBLOCK, 0);
+}
+
+TEST_F(InotifyTest, InotifyInit1WithUnknownFlagReturnsInvalidArgument)
+{
+    RecordProperty("PartiallyVerifies", "comp_req__os__fd_creation_flags");
+    RecordProperty("Description", "inotify_init1 rejects a flag other than kCloseOnExec and kNonBlocking with EINVAL");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
+
+    // Given a flag value that is not a combination of the supported flags
+    constexpr auto kUnknownFlag{static_cast<score::os::Inotify::InitFlag>(4U)};
+
+    // When creating an instance with it
+    const auto instance{score::os::Inotify::instance().inotify_init1(kUnknownFlag)};
+
+    // Then no instance is created and the error is EINVAL
+    ASSERT_FALSE(instance.has_value());
+    EXPECT_EQ(instance.error(), score::os::Error::createFromErrno(EINVAL));
+}
 
 TEST_F(InotifyTest, AddWatchSuccessfull)
 {

@@ -21,6 +21,9 @@ namespace os
 {
 std::int32_t daemon(const std::int32_t nochdir, const std::int32_t noclose);
 
+/// @brief Calls ::pipe2() with raw flags on Linux. It returns -1 and sets errno on failure.
+/// @deprecated Use score::os::Unistd::pipe2(), which is available on Linux and QNX and can be mocked with UnistdMock.
+[[deprecated("Use score::os::Unistd::pipe2() instead.")]]
 std::int32_t pipe2(std::int32_t pipedes[2], const std::int32_t flags);
 }  // namespace os
 }  // namespace score

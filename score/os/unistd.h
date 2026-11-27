@@ -57,13 +57,39 @@ class Unistd : public ObjectSeam<Unistd>
         kExists = 8,
     };
 
+    /// @brief Creation flags for pipe2().
+    /// They can be combined with the bitmask operators.
+    enum class PipeFlag : std::uint32_t
+    {
+        kNone = 0U,
+        kCloseOnExec = 1U,  ///< The pipe ends are not inherited by processes created via fork() + execve().
+        kNonBlocking = 2U,  ///< Reads and writes on the pipe ends do not block.
+    };
+
     virtual score::cpp::expected_blank<score::os::Error> close(const std::int32_t fd) const noexcept = 0;
     virtual score::cpp::expected_blank<score::os::Error> unlink(const char* const pathname) const noexcept = 0;
     virtual score::cpp::expected_blank<score::os::Error> access(const char* const pathname,
                                                                 const AccessMode mode) const noexcept = 0;
+    /// @brief Creates a pipe.
+    /// Both file descriptors are created with close-on-exec (FD_CLOEXEC), as with pipe2(pipefd, kCloseOnExec).
+    /// This way they are not inherited by processes created via fork() + execve().
+    /// To hand a pipe end to a child, create it with pipe2() without kCloseOnExec.
+    /// Alternatively, dup2() the end onto another descriptor number or clear FD_CLOEXEC with fcntl().
     // Wrapped function requires C-style array param
     // NOLINTNEXTLINE(modernize-avoid-c-arrays) see comment above
     virtual score::cpp::expected_blank<score::os::Error> pipe(std::int32_t pipefd[2]) const noexcept = 0;
+    /// @brief Creates a pipe with the given creation flags.
+    /// The flags are applied atomically.
+    /// PipeFlag::kNone creates inheritable, blocking pipe ends.
+    /// @param pipefd Receives the read end in pipefd[0] and the write end in pipefd[1], unchanged on error.
+    /// @param flags Combination of kCloseOnExec and kNonBlocking.
+    /// @return Nothing on success.
+    /// An error for EINVAL if @p flags contains a value other than kCloseOnExec and kNonBlocking.
+    /// The error of the OS otherwise.
+    // Wrapped function requires C-style array param
+    // NOLINTNEXTLINE(modernize-avoid-c-arrays) see comment above
+    [[nodiscard]] virtual score::cpp::expected_blank<score::os::Error> pipe2(std::int32_t pipefd[2],
+                                                                             const PipeFlag flags) const noexcept = 0;
     virtual score::cpp::expected<std::int32_t, score::os::Error> dup(const std::int32_t oldfd) const noexcept = 0;
     virtual score::cpp::expected<std::int32_t, score::os::Error> dup2(const std::int32_t oldfd,
                                                                       const std::int32_t newfd) const noexcept = 0;
@@ -153,6 +179,10 @@ class UnistdImpl final : public Unistd
     // Wrapped function requires C-style array param
     // NOLINTNEXTLINE(modernize-avoid-c-arrays) see comment above
     score::cpp::expected_blank<score::os::Error> pipe(std::int32_t pipefd[2]) const noexcept override;
+    // Wrapped function requires C-style array param
+    // NOLINTNEXTLINE(modernize-avoid-c-arrays) see comment above
+    [[nodiscard]] score::cpp::expected_blank<score::os::Error> pipe2(std::int32_t pipefd[2],
+                                                                     const PipeFlag flags) const noexcept override;
 
     score::cpp::expected<std::int32_t, score::os::Error> dup(const std::int32_t oldfd) const noexcept override;
 
@@ -250,6 +280,11 @@ namespace score
 {
 template <>
 struct enable_bitmask_operators<::score::os::Unistd::AccessMode> : public std::true_type
+{
+};
+
+template <>
+struct enable_bitmask_operators<::score::os::Unistd::PipeFlag> : public std::true_type
 {
 };
 }  // namespace score
