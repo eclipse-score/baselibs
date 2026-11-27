@@ -96,6 +96,10 @@ class FileFactoryTestWithStatMock : public FileFactoryTest
 
 TEST_F(FileFactoryTest, OpensFile)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__filesystem__file_io");
+    RecordProperty("Description", "Check that opening a file for output succeeds and allows writing data.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     auto file = unit_.Open("/tmp/some_file", std::ios_base::out);
 
     ASSERT_TRUE(file.has_value());
@@ -107,6 +111,10 @@ TEST_F(FileFactoryTest, OpensFile)
 
 TEST_F(FileFactoryTest, OpensFileForAppending)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__filesystem__file_io");
+    RecordProperty("Description", "Check that opening a file in append mode succeeds and allows writing data.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     auto file = unit_.Open("/tmp/some_file", std::ios_base::out | std::ios_base::app);
 
     ASSERT_TRUE(file.has_value());
@@ -118,6 +126,10 @@ TEST_F(FileFactoryTest, OpensFileForAppending)
 
 TEST_F(FileFactoryTest, OpensNonExistingFile)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__filesystem__file_io");
+    RecordProperty("Description", "Check that opening a missing file for input returns an open-file-stream error.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     auto file = unit_.Open("/tmp/some_file_not_existing", std::ios_base::in);
 
     ASSERT_FALSE(file.has_value());
@@ -126,6 +138,11 @@ TEST_F(FileFactoryTest, OpensNonExistingFile)
 
 TEST_F(FileFactoryTest, OpenForAtomicUpdate)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__filesystem__file_io");
+    RecordProperty("Description",
+                   "Check that atomic update replaces target file content after the update stream closes.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     static constexpr auto kTestFileName = "not_existing_yet";
     Path test_filename = test_tmpdir_ / kTestFileName;
 
@@ -154,6 +171,10 @@ TEST_F(FileFactoryTest, OpenForAtomicUpdate)
 
 TEST_F(FileFactoryTest, AtomicUpdateInvalidMode)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__filesystem__file_io");
+    RecordProperty("Description", "Check that atomic update with input-only mode is rejected as not implemented.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     static constexpr auto kTestFileName = "not_existing_yet";
     Path test_filename = test_tmpdir_ / kTestFileName;
     auto file_result = unit_.AtomicUpdate(test_filename, std::ios::in);
@@ -164,6 +185,12 @@ TEST_F(FileFactoryTest, AtomicUpdateInvalidMode)
 
 TEST_F(FileFactoryTest, OldContentVisibleBeforeAtomicObjectGetsDeleted)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__filesystem__file_io");
+    RecordProperty("Description",
+                   "Check that the old file content stays visible until the atomic-update stream is released, then "
+                   "changes to the new content.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     static constexpr auto kTestFileName = "keep_content_before_drop";
     Path test_filename = test_tmpdir_ / kTestFileName;
 
@@ -285,6 +312,12 @@ TEST_F(FileFactoryFailedAtomicUpdateTest, DestructionKeepsTargetUnchanged)
 
 TEST_F(FileFactoryTest, ErrorOnFailingAtomicUpdate)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__filesystem__file_io");
+    RecordProperty("Description",
+                   "Check that atomic update creation fails with not implemented when the target path is a "
+                   "directory.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     auto fs = FilesystemFactory{}.CreateInstance();
 
     static constexpr auto kFaultyTargetFile{"file_in_disguise"};
@@ -300,6 +333,10 @@ TEST_F(FileFactoryTest, ErrorOnFailingAtomicUpdate)
 
 TEST_F(FileFactoryTest, AtomicUpdateWithEmptyPath)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__filesystem__file_io");
+    RecordProperty("Description", "Check that atomic update with an empty path fails to open the file stream.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     auto fs = FilesystemFactory{}.CreateInstance();
 
     static constexpr auto kFaultyTargetFile{""};
@@ -313,6 +350,11 @@ TEST_F(FileFactoryTest, AtomicUpdateWithEmptyPath)
 
 TEST_F(FileFactoryTestWithFcntlMock, OpenFileHandleFailedOnOpen)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__filesystem__file_io");
+    RecordProperty("Description",
+                   "Check that opening a file handle returns an open-file-stream error when os::open fails.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     constexpr os::Stat::Mode kDefaultMode = os::Stat::Mode::kReadUser | os::Stat::Mode::kWriteUser |
                                             os::Stat::Mode::kReadGroup | os::Stat::Mode::kWriteGroup |
                                             os::Stat::Mode::kReadOthers | os::Stat::Mode::kWriteOthers;
@@ -329,6 +371,12 @@ TEST_F(FileFactoryTestWithFcntlMock, OpenFileHandleFailedOnOpen)
 
 TEST_F(FileFactoryTestWithFcntlMock, OpenFileHandleFailedOnOpen_AppendMode)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__filesystem__file_io");
+    RecordProperty("Description",
+                   "Check that append-mode file-handle opening returns an open-file-stream error when os::open "
+                   "fails.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     constexpr os::Stat::Mode kDefaultMode = os::Stat::Mode::kReadUser | os::Stat::Mode::kWriteUser |
                                             os::Stat::Mode::kReadGroup | os::Stat::Mode::kWriteGroup |
                                             os::Stat::Mode::kReadOthers | os::Stat::Mode::kWriteOthers;
@@ -345,6 +393,12 @@ TEST_F(FileFactoryTestWithFcntlMock, OpenFileHandleFailedOnOpen_AppendMode)
 
 TEST_F(FileFactoryTestWithFcntlMock, AtomicUpdateFileHandleFailedOnOpen)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__filesystem__file_io");
+    RecordProperty("Description",
+                   "Check that atomic-update creation returns an open-file-stream error when opening the temporary "
+                   "file fails.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     EXPECT_CALL(*fcntl_, open(_, _, _))
         .WillOnce(Return(score::cpp::make_unexpected(score::os::Error::createUnspecifiedError())));
     static constexpr auto kFaultyTargetFile{"path"};
@@ -357,6 +411,11 @@ TEST_F(FileFactoryTestWithFcntlMock, AtomicUpdateFileHandleFailedOnOpen)
 
 TEST_F(FileFactoryTestWithStatMock, AtomicUpdateFileHandleFailedOnStat)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__filesystem__file_io");
+    RecordProperty("Description",
+                   "Check that atomic-update stream creation succeeds when retrieving the target file status fails.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     EXPECT_CALL(*stat_, stat(_, _, _))
         .WillOnce(Return(score::cpp::make_unexpected(score::os::Error::createUnspecifiedError())));
     static constexpr auto kFaultyTargetFile{"path"};
@@ -368,6 +427,12 @@ TEST_F(FileFactoryTestWithStatMock, AtomicUpdateFileHandleFailedOnStat)
 
 TEST_F(FileFactoryTestWithStatMock, OpenForAtomicUpdateWithOwnershipChange)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__filesystem__file_io");
+    RecordProperty("Description",
+                   "Check that atomic-update creation succeeds and applies ownership when status metadata requests a "
+                   "change.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     static constexpr auto kTestFileName = "not_existing_yet";
     Path test_filename = test_tmpdir_ / kTestFileName;
 
@@ -393,6 +458,11 @@ TEST_F(FileFactoryTestWithStatMock, OpenForAtomicUpdateWithOwnershipChange)
 
 TEST_F(FileFactoryTestWithStatMock, AtomicUpdateFileHandleFailedOnChown)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__filesystem__file_io");
+    RecordProperty("Description",
+                   "Check that atomic-update creation fails with a permission-setting error when chown fails.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     auto set_mode = [](auto, auto& buffer, auto) {
         buffer.st_mode = mode_t{S_IFREG | S_IWUSR};
         buffer.st_uid = 1234;
@@ -414,6 +484,12 @@ TEST_F(FileFactoryTestWithStatMock, AtomicUpdateFileHandleFailedOnChown)
 
 TEST_F(FileFactoryTestWithStatMock, AtomicUpdateFailsWhenWriteAccessDenied)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__filesystem__file_io");
+    RecordProperty("Description",
+                   "Check that atomic-update creation fails with write-permission-denied when write access is not "
+                   "granted.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     // stat returns a regular file
     auto set_mode = [](auto, auto& buffer, auto) {
         buffer.st_mode = mode_t{S_IFREG | S_IRUSR | S_IRGRP | S_IROTH};
@@ -436,6 +512,11 @@ TEST_F(FileFactoryTestWithStatMock, AtomicUpdateFailsWhenWriteAccessDenied)
 
 TEST_F(FileFactoryTestWithStatMock, AtomicUpdateSucceedsWhenWriteAccessGranted)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__filesystem__file_io");
+    RecordProperty("Description",
+                   "Check that atomic-update creation succeeds when write access is granted for a regular file.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     // stat returns a regular file
     auto set_mode = [](auto, auto& buffer, auto) {
         buffer.st_mode = mode_t{S_IFREG | S_IWUSR};
@@ -457,6 +538,11 @@ TEST_F(FileFactoryTestWithStatMock, AtomicUpdateSucceedsWhenWriteAccessGranted)
 
 TEST_F(FileFactoryTestWithStatMock, AtomicUpdateFailsOnNonRegularFile)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__filesystem__file_io");
+    RecordProperty("Description",
+                   "Check that atomic-update creation rejects non-regular targets with a not-implemented error.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     // stat returns a non-regular file (e.g. a directory)
     auto set_mode = [](auto, auto& buffer, auto) {
         buffer.st_mode = mode_t{S_IFDIR};
@@ -476,6 +562,11 @@ TEST_F(FileFactoryTestWithStatMock, AtomicUpdateFailsOnNonRegularFile)
 
 TEST(FileFactoryHelpersTest, ComposeTempFilenameUsesAllParameters)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__filesystem__file_io");
+    RecordProperty("Description",
+                   "Check that temporary filename composition includes the base name, thread-ID hash, and timestamp.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     const auto result = details::ComposeTempFilename("foo", 42, 32);
     EXPECT_EQ(result, ".foo-000042-00000032");
 }

@@ -23,6 +23,10 @@ namespace
 
 TEST(DirectoryEntry, CanEqualCompare)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__filesystem__directory_iterators");
+    RecordProperty("Description", "Check 'DirectoryEntry.CanEqualCompare' behavior for the filesystem component.");
+    RecordProperty("TestType", "interface-test");
+    RecordProperty("DerivationTechnique", "design-analysis");
     // Given a default constructed entry and a path constructed one
     DirectoryEntry unit{};
     DirectoryEntry other{"/foo"};
@@ -34,6 +38,10 @@ TEST(DirectoryEntry, CanEqualCompare)
 
 TEST(DirectoryEntry, CanEqualCompareCopy)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__filesystem__directory_iterators");
+    RecordProperty("Description", "Check 'DirectoryEntry.CanEqualCompareCopy' behavior for the filesystem component.");
+    RecordProperty("TestType", "interface-test");
+    RecordProperty("DerivationTechnique", "design-analysis");
     // Given a path constructed entry and a copy constructed one
     DirectoryEntry unit{"/foo"};
     DirectoryEntry other{unit};
@@ -45,6 +53,11 @@ TEST(DirectoryEntry, CanEqualCompareCopy)
 
 TEST(DirectoryEntry, GetPathOnMoveConstructedEntry)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__filesystem__directory_iterators");
+    RecordProperty("Description",
+                   "Check 'DirectoryEntry.GetPathOnMoveConstructedEntry' behavior for the filesystem component.");
+    RecordProperty("TestType", "interface-test");
+    RecordProperty("DerivationTechnique", "design-analysis");
     // Given a path constructed entry that move constructs another one
     DirectoryEntry unit{"/foo"};
     DirectoryEntry other{std::move(unit)};
@@ -55,6 +68,10 @@ TEST(DirectoryEntry, GetPathOnMoveConstructedEntry)
 
 TEST(DirectoryEntry, AssignOperators)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__filesystem__directory_iterators");
+    RecordProperty("Description", "Check 'DirectoryEntry.AssignOperators' behavior for the filesystem component.");
+    RecordProperty("TestType", "interface-test");
+    RecordProperty("DerivationTechnique", "design-analysis");
     // Given a path constructed entry
     DirectoryEntry unit{"/foo"};
 
@@ -71,6 +88,10 @@ TEST(DirectoryEntry, AssignOperators)
 
 TEST(DirectoryEntry, DirectoryEntryExists)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__filesystem__directory_iterators");
+    RecordProperty("Description", "Check 'DirectoryEntry.DirectoryEntryExists' behavior for the filesystem component.");
+    RecordProperty("TestType", "interface-test");
+    RecordProperty("DerivationTechnique", "design-analysis");
     // Given a valid directory entry
     DirectoryEntry unit{"/proc"};
 
@@ -84,6 +105,10 @@ TEST(DirectoryEntry, DirectoryEntryExists)
 
 TEST(DirectoryEntry, DoesNotExist)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__filesystem__directory_iterators");
+    RecordProperty("Description", "Check 'DirectoryEntry.DoesNotExist' behavior for the filesystem component.");
+    RecordProperty("TestType", "interface-test");
+    RecordProperty("DerivationTechnique", "design-analysis");
     // Given an invalid path
     DirectoryEntry unit{"/foo/bar"};
 
@@ -97,6 +122,10 @@ TEST(DirectoryEntry, DoesNotExist)
 
 TEST(DirectoryEntry, GetStatus)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__filesystem__directory_iterators");
+    RecordProperty("Description", "Check 'DirectoryEntry.GetStatus' behavior for the filesystem component.");
+    RecordProperty("TestType", "interface-test");
+    RecordProperty("DerivationTechnique", "design-analysis");
     // Given a valid entry
     DirectoryEntry unit{"/proc"};
 

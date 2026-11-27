@@ -23,6 +23,10 @@ namespace
 
 TEST(FileStatus, DefaultConstructedAsNone)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__filesystem__api_abstraction");
+    RecordProperty("Description", "Check 'FileStatus.DefaultConstructedAsNone' behavior for the filesystem component.");
+    RecordProperty("TestType", "interface-test");
+    RecordProperty("DerivationTechnique", "design-analysis");
     FileStatus unit{};
 
     EXPECT_EQ(unit.Type(), FileType::kNone);
@@ -31,6 +35,11 @@ TEST(FileStatus, DefaultConstructedAsNone)
 
 TEST(FileStatus, ConstructWithTypeAndPerms)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__filesystem__api_abstraction");
+    RecordProperty("Description",
+                   "Check 'FileStatus.ConstructWithTypeAndPerms' behavior for the filesystem component.");
+    RecordProperty("TestType", "interface-test");
+    RecordProperty("DerivationTechnique", "design-analysis");
     FileStatus unit{FileType::kRegular, Perms::kReadOthers};
 
     EXPECT_EQ(unit.Type(), FileType::kRegular);
@@ -39,6 +48,10 @@ TEST(FileStatus, ConstructWithTypeAndPerms)
 
 TEST(FileStatus, CanCopyConstruct)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__filesystem__api_abstraction");
+    RecordProperty("Description", "Check 'FileStatus.CanCopyConstruct' behavior for the filesystem component.");
+    RecordProperty("TestType", "interface-test");
+    RecordProperty("DerivationTechnique", "design-analysis");
     const FileStatus other{FileType::kRegular, Perms::kReadOthers};
 
     FileStatus unit{other};
@@ -49,6 +62,10 @@ TEST(FileStatus, CanCopyConstruct)
 
 TEST(FileStatus, CanMoveConstruct)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__filesystem__api_abstraction");
+    RecordProperty("Description", "Check 'FileStatus.CanMoveConstruct' behavior for the filesystem component.");
+    RecordProperty("TestType", "interface-test");
+    RecordProperty("DerivationTechnique", "design-analysis");
     FileStatus other{FileType::kRegular, Perms::kReadOthers};
 
     FileStatus unit{std::move(other)};
@@ -59,6 +76,10 @@ TEST(FileStatus, CanMoveConstruct)
 
 TEST(FileStatus, CanCopyAssign)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__filesystem__api_abstraction");
+    RecordProperty("Description", "Check 'FileStatus.CanCopyAssign' behavior for the filesystem component.");
+    RecordProperty("TestType", "interface-test");
+    RecordProperty("DerivationTechnique", "design-analysis");
     const FileStatus other{FileType::kRegular, Perms::kReadOthers};
 
     FileStatus unit = other;
@@ -69,6 +90,10 @@ TEST(FileStatus, CanCopyAssign)
 
 TEST(FileStatus, CanMoveAssign)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__filesystem__api_abstraction");
+    RecordProperty("Description", "Check 'FileStatus.CanMoveAssign' behavior for the filesystem component.");
+    RecordProperty("TestType", "interface-test");
+    RecordProperty("DerivationTechnique", "design-analysis");
     FileStatus other{FileType::kRegular, Perms::kReadOthers};
 
     FileStatus unit = std::move(other);
@@ -79,6 +104,10 @@ TEST(FileStatus, CanMoveAssign)
 
 TEST(FileStatus, SetType)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__filesystem__api_abstraction");
+    RecordProperty("Description", "Check 'FileStatus.SetType' behavior for the filesystem component.");
+    RecordProperty("TestType", "interface-test");
+    RecordProperty("DerivationTechnique", "design-analysis");
     FileStatus unit{FileType::kRegular, Perms::kReadOthers};
 
     unit.Type(FileType::kDirectory);
@@ -89,6 +118,10 @@ TEST(FileStatus, SetType)
 
 TEST(FileStatus, SetPermissions)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__filesystem__api_abstraction");
+    RecordProperty("Description", "Check 'FileStatus.SetPermissions' behavior for the filesystem component.");
+    RecordProperty("TestType", "interface-test");
+    RecordProperty("DerivationTechnique", "design-analysis");
     FileStatus unit{FileType::kRegular, Perms::kReadOthers};
 
     unit.Permissions(Perms::kWriteOthers);
@@ -99,6 +132,10 @@ TEST(FileStatus, SetPermissions)
 
 TEST(FileStatus, EqualOperator)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__filesystem__api_abstraction");
+    RecordProperty("Description", "Check 'FileStatus.EqualOperator' behavior for the filesystem component.");
+    RecordProperty("TestType", "interface-test");
+    RecordProperty("DerivationTechnique", "design-analysis");
     FileStatus unit{FileType::kRegular, Perms::kReadOthers};
     FileStatus same{FileType::kRegular, Perms::kReadOthers};
     FileStatus other_file_type{FileType::kSocket, Perms::kReadOthers};

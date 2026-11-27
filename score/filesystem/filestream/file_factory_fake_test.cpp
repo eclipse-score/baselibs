@@ -27,6 +27,11 @@ namespace
 
 TEST(FileFactoryFakeTest, CanOpenStringStream)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__filesystem__mock_fake");
+    RecordProperty("Description",
+                   "Check 'FileFactoryFakeTest.CanOpenStringStream' behavior for the filesystem component.");
+    RecordProperty("TestType", "interface-test");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     SimpleStringStreamCollection collection{};
     FileFactoryFake unit{collection};
     {
@@ -43,6 +48,11 @@ TEST(FileFactoryFakeTest, CanOpenStringStream)
 
 TEST(FileFactoryFakeTest, FailedToOpenStringStream)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__filesystem__mock_fake");
+    RecordProperty("Description",
+                   "Check 'FileFactoryFakeTest.FailedToOpenStringStream' behavior for the filesystem component.");
+    RecordProperty("TestType", "interface-test");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     BadStringStreamCollection bad_collection{};  // LCOV_EXCL_LINE
     FileFactoryFake unit{bad_collection};
 

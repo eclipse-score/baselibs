@@ -23,6 +23,10 @@ namespace
 
 TEST(FilesystemFactoryFakeTest, InstanceResolution)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__filesystem__mock_fake");
+    RecordProperty("Description", "Check that the fake factory provides all filesystem interfaces for test use.");
+    RecordProperty("TestType", "interface-test");
+    RecordProperty("DerivationTechnique", "design-analysis");
     FilesystemFactoryFake unit;
 
     const Filesystem& fs = unit.CreateInstance();
@@ -34,6 +38,10 @@ TEST(FilesystemFactoryFakeTest, InstanceResolution)
 
 TEST(FilesystemFactoryFakeTest, SameInstanceForStandard)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__filesystem__mock_fake");
+    RecordProperty("Description", "Check that the standard-filesystem interface returns the fake instance.");
+    RecordProperty("TestType", "interface-test");
+    RecordProperty("DerivationTechnique", "design-analysis");
     FilesystemFactoryFake unit;
     StandardFilesystemFake* fake = &unit.GetStandard();
     IStandardFilesystem* expected{fake};
@@ -45,6 +53,10 @@ TEST(FilesystemFactoryFakeTest, SameInstanceForStandard)
 
 TEST(FilesystemFactoryFakeTest, SameInstanceForUtils)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__filesystem__mock_fake");
+    RecordProperty("Description", "Check that the file-utils interface returns the configured mock instance.");
+    RecordProperty("TestType", "interface-test");
+    RecordProperty("DerivationTechnique", "design-analysis");
     FilesystemFactoryFake unit;
     FileUtilsMock* mock = &unit.GetUtils();
     IFileUtils* expected{mock};
@@ -56,6 +68,10 @@ TEST(FilesystemFactoryFakeTest, SameInstanceForUtils)
 
 TEST(FilesystemFactoryFakeTest, SameInstanceForStreams)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__filesystem__mock_fake");
+    RecordProperty("Description", "Check that the filestream interface returns the fake instance.");
+    RecordProperty("TestType", "interface-test");
+    RecordProperty("DerivationTechnique", "design-analysis");
     FilesystemFactoryFake unit;
     FileFactoryFake* fake = &unit.GetStreams();
     IFileFactory* expected{fake};
@@ -67,6 +83,11 @@ TEST(FilesystemFactoryFakeTest, SameInstanceForStreams)
 
 TEST(FilesystemFactoryFakeTest, StandardAndStreamsAreConnected)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__filesystem__mock_fake");
+    RecordProperty("Description",
+                   "Check that fake standard filesystem and fake streams share a consistent backend state.");
+    RecordProperty("TestType", "interface-test");
+    RecordProperty("DerivationTechnique", "design-analysis");
     FilesystemFactoryFake unit;
     ASSERT_TRUE(unit.GetStandard().CreateDirectory("/tmp"));
 

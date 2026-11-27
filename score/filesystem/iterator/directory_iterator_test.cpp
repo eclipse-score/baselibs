@@ -65,6 +65,15 @@ class DirectoryIteratorFixture : public ::testing::Test
 
 TEST_F(DirectoryIteratorFixture, DefaultConstructedEqualEnd)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__filesystem__directory_iterators");
+    RecordProperty(
+        "Description",
+        "Check 'DirectoryIteratorFixture.DefaultConstructedEqualEnd' behavior for the filesystem component.");
+    RecordProperty(
+        "Description",
+        "Check 'DirectoryIteratorFixture.DefaultConstructedEqualEnd' behavior for the filesystem component.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     DirectoryIterator unit{"/"};
 
     EXPECT_EQ(DirectoryIterator{}, end(unit));
@@ -72,6 +81,11 @@ TEST_F(DirectoryIteratorFixture, DefaultConstructedEqualEnd)
 
 TEST_F(DirectoryIteratorFixture, IterateRangeBased)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__filesystem__directory_iterators");
+    RecordProperty("Description",
+                   "Check 'DirectoryIteratorFixture.IterateRangeBased' behavior for the filesystem component.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     DirectoryIterator unit{Path{"/tmp/directory_iterator_test"}};
 
     std::vector<Path> found_paths{};
@@ -87,6 +101,15 @@ TEST_F(DirectoryIteratorFixture, IterateRangeBased)
 
 TEST_F(DirectoryIteratorFixture, IterateNonExistingDirectory)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__filesystem__directory_iterators");
+    RecordProperty(
+        "Description",
+        "Check 'DirectoryIteratorFixture.IterateNonExistingDirectory' behavior for the filesystem component.");
+    RecordProperty(
+        "Description",
+        "Check 'DirectoryIteratorFixture.IterateNonExistingDirectory' behavior for the filesystem component.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     DirectoryIterator unit{Path{"/tmp/directory_iterator_test_not_existing"}};
 
     EXPECT_EQ(unit, end(DirectoryIterator{}));
@@ -97,6 +120,11 @@ TEST_F(DirectoryIteratorFixture, IterateNonExistingDirectory)
 
 TEST_F(DirectoryIteratorFixture, CanDereferenceIterator)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__filesystem__directory_iterators");
+    RecordProperty("Description",
+                   "Check 'DirectoryIteratorFixture.CanDereferenceIterator' behavior for the filesystem component.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     DirectoryIterator unit{Path{"/tmp/directory_iterator_test"}};
 
     const auto& entry = *unit;
@@ -106,6 +134,11 @@ TEST_F(DirectoryIteratorFixture, CanDereferenceIterator)
 
 TEST_F(DirectoryIteratorFixture, DefaultConstructedIsEmpty)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__filesystem__directory_iterators");
+    RecordProperty("Description",
+                   "Check 'DirectoryIteratorFixture.DefaultConstructedIsEmpty' behavior for the filesystem component.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     DirectoryIterator unit{};
 
     EXPECT_EQ(unit->GetPath(), Path{});
@@ -116,6 +149,15 @@ TEST_F(DirectoryIteratorFixture, DefaultConstructedIsEmpty)
 
 TEST_F(DirectoryIteratorFixture, DefaultConstructedIsSafeToIncrement)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__filesystem__directory_iterators");
+    RecordProperty(
+        "Description",
+        "Check 'DirectoryIteratorFixture.DefaultConstructedIsSafeToIncrement' behavior for the filesystem component.");
+    RecordProperty(
+        "Description",
+        "Check 'DirectoryIteratorFixture.DefaultConstructedIsSafeToIncrement' behavior for the filesystem component.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     DirectoryIterator unit{};
 
     score::cpp::ignore = ++unit;
@@ -125,6 +167,12 @@ TEST_F(DirectoryIteratorFixture, DefaultConstructedIsSafeToIncrement)
 
 TEST_F(DirectoryIteratorFixture, DefaultConstructedIsSafeToDereference)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__filesystem__directory_iterators");
+    RecordProperty("Description",
+                   "Check 'DirectoryIteratorFixture.DefaultConstructedIsSafeToDereference' behavior for the filesystem "
+                   "component.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     DirectoryIterator unit{};
 
     EXPECT_NO_THROW(*unit);
@@ -132,6 +180,11 @@ TEST_F(DirectoryIteratorFixture, DefaultConstructedIsSafeToDereference)
 
 TEST_F(DirectoryIteratorFixture, ReaddirError)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__filesystem__directory_iterators");
+    RecordProperty("Description",
+                   "Check 'DirectoryIteratorFixture.ReaddirError' behavior for the filesystem component.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     DirectoryIterator unit{Path{"/tmp/directory_iterator_test"}};
 
     {

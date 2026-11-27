@@ -80,6 +80,10 @@ class FileUtilsTest : public ::testing::Test
 
 TEST_F(FileUtilsTest, CreateDirectory)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__filesystem__file_utils");
+    RecordProperty("Description", "Check 'FileUtilsTest.CreateDirectory' behavior for the filesystem component.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     EXPECT_CALL(*filesystemMock_, Status(Path{"/foo/bar"})).WillOnce(Return(FileStatus{FileType::kNotFound}));
     EXPECT_CALL(*filesystemMock_, CreateDirectory(Path{"/foo/bar"})).WillOnce(Return(no_error));
     EXPECT_CALL(*filesystemMock_, Permissions(Path{"/foo/bar"}, permissions, PermOptions::kReplace))
@@ -92,6 +96,12 @@ TEST_F(FileUtilsTest, CreateDirectory)
 
 TEST_F(FileUtilsTest, CreateDirectoryThatAlreadyExistsWithCorrectPermissions)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__filesystem__file_utils");
+    RecordProperty("Description",
+                   "Check 'FileUtilsTest.CreateDirectoryThatAlreadyExistsWithCorrectPermissions' behavior for the "
+                   "filesystem component.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     EXPECT_CALL(*filesystemMock_, Status(Path{"/foo/bar"}))
         .WillOnce(Return(FileStatus{FileType::kDirectory, permissions}));
     EXPECT_CALL(*filesystemMock_, CreateDirectory(_)).Times(0);
@@ -104,6 +114,12 @@ TEST_F(FileUtilsTest, CreateDirectoryThatAlreadyExistsWithCorrectPermissions)
 
 TEST_F(FileUtilsTest, CreateDirectoryThatAlreadyExistsWithWrongPermissions)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__filesystem__file_utils");
+    RecordProperty("Description",
+                   "Check 'FileUtilsTest.CreateDirectoryThatAlreadyExistsWithWrongPermissions' behavior for the "
+                   "filesystem component.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     EXPECT_CALL(*filesystemMock_, Status(Path{"/foo/bar"}))
         .WillOnce(Return(FileStatus{FileType::kDirectory, Perms::kNone}));
     EXPECT_CALL(*filesystemMock_, CreateDirectory(_)).Times(0);
@@ -116,6 +132,15 @@ TEST_F(FileUtilsTest, CreateDirectoryThatAlreadyExistsWithWrongPermissions)
 
 TEST_F(FileUtilsTest, CreateDirectoryThatAlreadyExistsAsFile)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__filesystem__file_utils");
+    RecordProperty(
+        "Description",
+        "Check 'FileUtilsTest.CreateDirectoryThatAlreadyExistsAsFile' behavior for the filesystem component.");
+    RecordProperty(
+        "Description",
+        "Check 'FileUtilsTest.CreateDirectoryThatAlreadyExistsAsFile' behavior for the filesystem component.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     EXPECT_CALL(*filesystemMock_, Status(Path{"/foo/bar"}))
         .WillOnce(Return(FileStatus{FileType::kRegular, Perms::kWriteUser}));
     EXPECT_CALL(*filesystemMock_, CreateDirectory(_)).Times(0);
@@ -128,6 +153,11 @@ TEST_F(FileUtilsTest, CreateDirectoryThatAlreadyExistsAsFile)
 
 TEST_F(FileUtilsTest, CreateDirectoryFailsOnCreate)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__filesystem__file_utils");
+    RecordProperty("Description",
+                   "Check 'FileUtilsTest.CreateDirectoryFailsOnCreate' behavior for the filesystem component.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     EXPECT_CALL(*filesystemMock_, Status(Path{"/foo/bar"})).WillOnce(Return(FileStatus{FileType::kNotFound}));
     EXPECT_CALL(*filesystemMock_, CreateDirectory(Path{"/foo/bar"})).WillOnce(Return(error_create_directory));
     EXPECT_CALL(*filesystemMock_, Permissions(_, _, _)).Times(0);
@@ -140,6 +170,11 @@ TEST_F(FileUtilsTest, CreateDirectoryFailsOnCreate)
 
 TEST_F(FileUtilsTest, CreateDirectoryFailsOnIsDirectory)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__filesystem__file_utils");
+    RecordProperty("Description",
+                   "Check 'FileUtilsTest.CreateDirectoryFailsOnIsDirectory' behavior for the filesystem component.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     EXPECT_CALL(*filesystemMock_, Status(Path{"/foo/bar"})).WillOnce(Return(error_is_directory));
     EXPECT_CALL(*filesystemMock_, CreateDirectory(_)).Times(0);
     EXPECT_CALL(*filesystemMock_, Permissions(_, _, _)).Times(0);
@@ -152,6 +187,11 @@ TEST_F(FileUtilsTest, CreateDirectoryFailsOnIsDirectory)
 
 TEST_F(FileUtilsTest, CreateDirectoryFailsOnPermissions)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__filesystem__file_utils");
+    RecordProperty("Description",
+                   "Check 'FileUtilsTest.CreateDirectoryFailsOnPermissions' behavior for the filesystem component.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     EXPECT_CALL(*filesystemMock_, Status(Path{"/foo/bar"})).WillOnce(Return(FileStatus{FileType::kNotFound}));
     EXPECT_CALL(*filesystemMock_, CreateDirectory(Path{"/foo/bar"})).WillOnce(Return(no_error));
     EXPECT_CALL(*filesystemMock_, Permissions(_, _, _)).WillOnce(Return(error_permissions));
@@ -164,6 +204,11 @@ TEST_F(FileUtilsTest, CreateDirectoryFailsOnPermissions)
 
 TEST_F(FileUtilsTest, CreateDirectories_AbsolutePathTest)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__filesystem__file_utils");
+    RecordProperty("Description",
+                   "Check 'FileUtilsTest.CreateDirectories_AbsolutePathTest' behavior for the filesystem component.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     EXPECT_CALL(*filesystemMock_, Status(_)).WillRepeatedly(Return(FileStatus{FileType::kNotFound}));
     EXPECT_CALL(*filesystemMock_, CreateDirectory(Path{"/dir1"})).WillOnce(Return(no_error));
     EXPECT_CALL(*filesystemMock_, CreateDirectory(Path{"/dir1/dir2"})).WillOnce(Return(no_error));
@@ -180,6 +225,15 @@ TEST_F(FileUtilsTest, CreateDirectories_AbsolutePathTest)
 
 TEST_F(FileUtilsTest, CreateDirectories_AbsolutePathRetryTest)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__filesystem__file_utils");
+    RecordProperty(
+        "Description",
+        "Check 'FileUtilsTest.CreateDirectories_AbsolutePathRetryTest' behavior for the filesystem component.");
+    RecordProperty(
+        "Description",
+        "Check 'FileUtilsTest.CreateDirectories_AbsolutePathRetryTest' behavior for the filesystem component.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     EXPECT_CALL(*filesystemMock_, Status(_)).WillRepeatedly(Return(FileStatus{FileType::kNotFound}));
     EXPECT_CALL(*filesystemMock_, CreateDirectory(Path{"/dir1"})).WillOnce(Return(no_error));
     EXPECT_CALL(*unistd_mock_, nanosleep(_, _)).Times(3).WillRepeatedly(Return(os_no_error));
@@ -202,6 +256,15 @@ TEST_F(FileUtilsTest, CreateDirectories_AbsolutePathRetryTest)
 
 TEST_F(FileUtilsTest, CreateDirectories_AbsolutePathRetryFailTest)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__filesystem__file_utils");
+    RecordProperty(
+        "Description",
+        "Check 'FileUtilsTest.CreateDirectories_AbsolutePathRetryFailTest' behavior for the filesystem component.");
+    RecordProperty(
+        "Description",
+        "Check 'FileUtilsTest.CreateDirectories_AbsolutePathRetryFailTest' behavior for the filesystem component.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     EXPECT_CALL(*filesystemMock_, Status(_)).WillRepeatedly(Return(FileStatus{FileType::kNotFound}));
     EXPECT_CALL(*filesystemMock_, CreateDirectory(Path{"/dir1"})).WillOnce(Return(no_error));
     EXPECT_CALL(*filesystemMock_, Permissions(Path{"/dir1"}, permissions, PermOptions::kReplace))
@@ -216,6 +279,11 @@ TEST_F(FileUtilsTest, CreateDirectories_AbsolutePathRetryFailTest)
 
 TEST_F(FileUtilsTest, CreateDirectories_RelativePathTest)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__filesystem__file_utils");
+    RecordProperty("Description",
+                   "Check 'FileUtilsTest.CreateDirectories_RelativePathTest' behavior for the filesystem component.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     EXPECT_CALL(*filesystemMock_, IsDirectory(_)).WillRepeatedly(Return(false));
     EXPECT_CALL(*filesystemMock_, Status(_)).WillRepeatedly(Return(FileStatus{FileType::kNotFound}));
     EXPECT_CALL(*filesystemMock_, CreateDirectory(Path{"dir1"})).WillOnce(Return(no_error));
@@ -233,6 +301,15 @@ TEST_F(FileUtilsTest, CreateDirectories_RelativePathTest)
 
 TEST_F(FileUtilsTest, CreateDirectories_PartialDirectoryExistsTest)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__filesystem__file_utils");
+    RecordProperty(
+        "Description",
+        "Check 'FileUtilsTest.CreateDirectories_PartialDirectoryExistsTest' behavior for the filesystem component.");
+    RecordProperty(
+        "Description",
+        "Check 'FileUtilsTest.CreateDirectories_PartialDirectoryExistsTest' behavior for the filesystem component.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     EXPECT_CALL(*filesystemMock_, IsDirectory(Path{"/dir1"})).WillOnce(Return(true));
     EXPECT_CALL(*filesystemMock_, IsDirectory(Path{"/dir1/dir2"})).WillOnce(Return(false));
     EXPECT_CALL(*filesystemMock_, Status(Path{"/dir1/dir2"})).WillOnce(Return(FileStatus{FileType::kNotFound}));
@@ -249,6 +326,11 @@ TEST_F(FileUtilsTest, CreateDirectories_PartialDirectoryExistsTest)
 
 TEST_F(FileUtilsTest, CreateDirectories_PathEndsWithSlash)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__filesystem__file_utils");
+    RecordProperty("Description",
+                   "Check 'FileUtilsTest.CreateDirectories_PathEndsWithSlash' behavior for the filesystem component.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     EXPECT_CALL(*filesystemMock_, IsDirectory(Path{"dir1"})).WillOnce(Return(true));
 
     ASSERT_TRUE(unit_.CreateDirectories("dir1/", permissions).has_value());
@@ -256,6 +338,12 @@ TEST_F(FileUtilsTest, CreateDirectories_PathEndsWithSlash)
 
 TEST_F(FileUtilsTest, CreateDirectories_FailsWithExistingPathWithWrongPermissions)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__filesystem__file_utils");
+    RecordProperty("Description",
+                   "Check 'FileUtilsTest.CreateDirectories_FailsWithExistingPathWithWrongPermissions' behavior for the "
+                   "filesystem component.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     testing::InSequence seq{};
 
     ON_CALL(*filesystemMock_, IsDirectory(Path{"/dir1"})).WillByDefault(Return(true));
@@ -268,6 +356,11 @@ TEST_F(FileUtilsTest, CreateDirectories_FailsWithExistingPathWithWrongPermission
 
 TEST_F(FileUtilsTest, ValidateGroup_failedStat)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__filesystem__file_utils");
+    RecordProperty("Description",
+                   "Check 'FileUtilsTest.ValidateGroup_failedStat' behavior for the filesystem component.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     const Path path{"/dir1/file1"};
     const std::string group_name{"group_name"};
     //  Given error returned when getting file stats
@@ -282,6 +375,11 @@ TEST_F(FileUtilsTest, ValidateGroup_failedStat)
 
 TEST_F(FileUtilsTest, ValidateGroup_failedGetgrnam)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__filesystem__file_utils");
+    RecordProperty("Description",
+                   "Check 'FileUtilsTest.ValidateGroup_failedGetgrnam' behavior for the filesystem component.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     const Path path{"/dir1/file1"};
     const std::string group_name{"group_name"};
     //  Given error returned for getting group
@@ -296,6 +394,11 @@ TEST_F(FileUtilsTest, ValidateGroup_failedGetgrnam)
 
 TEST_F(FileUtilsTest, ValidateGroup_equalGroups)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__filesystem__file_utils");
+    RecordProperty("Description",
+                   "Check 'FileUtilsTest.ValidateGroup_equalGroups' behavior for the filesystem component.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     const Path path{"/dir1/file1"};
     const std::string group_name{"group_name"};
     const auto gid = 78293;
@@ -322,6 +425,11 @@ TEST_F(FileUtilsTest, ValidateGroup_equalGroups)
 
 TEST_F(FileUtilsTest, ValidateGroup_diffGroups)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__filesystem__file_utils");
+    RecordProperty("Description",
+                   "Check 'FileUtilsTest.ValidateGroup_diffGroups' behavior for the filesystem component.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     const Path path{"/dir1/file1"};
     const std::string group_name{"group_name"};
     const auto gid1 = 78293;
@@ -349,6 +457,11 @@ TEST_F(FileUtilsTest, ValidateGroup_diffGroups)
 
 TEST_F(FileUtilsTest, ChangeGroup_checkCalls)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__filesystem__file_utils");
+    RecordProperty("Description",
+                   "Check 'FileUtilsTest.ChangeGroup_checkCalls' behavior for the filesystem component.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     const Path path{"/dir1/file1"};
     const std::string group_name{"group_name"};
     const auto uid = 135;
@@ -372,6 +485,11 @@ TEST_F(FileUtilsTest, ChangeGroup_checkCalls)
 
 TEST_F(FileUtilsTest, ChangeGroup_checkFailGetGroupName)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__filesystem__file_utils");
+    RecordProperty("Description",
+                   "Check 'FileUtilsTest.ChangeGroup_checkFailGetGroupName' behavior for the filesystem component.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     const Path path{"/dir1/file1"};
     const std::string group_name{"group_name"};
     //  Given a 'gid' value retrival failiure:
@@ -386,6 +504,11 @@ TEST_F(FileUtilsTest, ChangeGroup_checkFailGetGroupName)
 
 TEST_F(FileUtilsTest, ChangeGroup_checkFailChmod)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__filesystem__file_utils");
+    RecordProperty("Description",
+                   "Check 'FileUtilsTest.ChangeGroup_checkFailChmod' behavior for the filesystem component.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     const Path path{"/dir1/file1"};
     const std::string group_name{"group_name"};
     //  Given positive status of getgrnam
@@ -402,6 +525,11 @@ TEST_F(FileUtilsTest, ChangeGroup_checkFailChmod)
 
 TEST_F(FileUtilsTest, ChangeGroup_checkOkChmodByGID)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__filesystem__file_utils");
+    RecordProperty("Description",
+                   "Check 'FileUtilsTest.ChangeGroup_checkOkChmodByGID' behavior for the filesystem component.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     const Path path{"/dir1/file1"};
     const auto uid = 123;
     const auto gid = 4321;
@@ -418,6 +546,11 @@ TEST_F(FileUtilsTest, ChangeGroup_checkOkChmodByGID)
 
 TEST_F(FileUtilsTest, ChangeGroup_checkNokChmodByGID)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__filesystem__file_utils");
+    RecordProperty("Description",
+                   "Check 'FileUtilsTest.ChangeGroup_checkNokChmodByGID' behavior for the filesystem component.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     const Path path{"/dir1/file1"};
     const auto uid = 123;
     const auto gid = 4321;
@@ -435,6 +568,10 @@ TEST_F(FileUtilsTest, ChangeGroup_checkNokChmodByGID)
 
 TEST_F(FileUtilsTest, SyncDirectory_ok)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__filesystem__file_utils");
+    RecordProperty("Description", "Check 'FileUtilsTest.SyncDirectory_ok' behavior for the filesystem component.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     const std::int32_t directoryDescriptor = 42;
     EXPECT_CALL(*fcntl_mock_, open(StrEq("/dir1/dir2"), score::os::Fcntl::Open::kReadOnly))
         .WillOnce(Return(directoryDescriptor));
@@ -448,6 +585,11 @@ TEST_F(FileUtilsTest, SyncDirectory_ok)
 
 TEST_F(FileUtilsTest, SyncDirectory_failed_open)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__filesystem__file_utils");
+    RecordProperty("Description",
+                   "Check 'FileUtilsTest.SyncDirectory_failed_open' behavior for the filesystem component.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     EXPECT_CALL(*fcntl_mock_, open(StrEq("/dir1/dir2"), score::os::Fcntl::Open::kReadOnly))
         .WillOnce(Return(score::cpp::make_unexpected(os::Error::createFromErrno(EEXIST))));
     EXPECT_CALL(*unistd_mock_, fsync).Times(0);
@@ -460,6 +602,11 @@ TEST_F(FileUtilsTest, SyncDirectory_failed_open)
 
 TEST_F(FileUtilsTest, SyncDirectory_failed_fsync)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__filesystem__file_utils");
+    RecordProperty("Description",
+                   "Check 'FileUtilsTest.SyncDirectory_failed_fsync' behavior for the filesystem component.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     const std::int32_t directoryDescriptor = 42;
     EXPECT_CALL(*fcntl_mock_, open(StrEq("/dir1/dir2"), score::os::Fcntl::Open::kReadOnly))
         .WillOnce(Return(directoryDescriptor));
@@ -505,6 +652,11 @@ class FileUtilsTest_OpenUniqueFile : public ::testing::Test
 
 TEST_F(FileUtilsTest_OpenUniqueFile, OpenUniqueFile_ok)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__filesystem__file_utils");
+    RecordProperty("Description",
+                   "Check 'FileUtilsTest_OpenUniqueFile.OpenUniqueFile_ok' behavior for the filesystem component.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     EXPECT_CALL(*stdlib_mock_, mkstemp(StrEq(template_path_.Native().c_str())));
     EXPECT_CALL(*unistd_mock_, close(valid_file_descriptor_)).WillOnce(Return(os_no_error_));
     EXPECT_CALL(*filefactory_mock_, Open(expected_path_, std::ios_base::out))
@@ -522,6 +674,12 @@ TEST_F(FileUtilsTest_OpenUniqueFile, OpenUniqueFile_ok)
 
 TEST_F(FileUtilsTest_OpenUniqueFile, OpenUniqueFile_fails_with_wrong_path)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__filesystem__file_utils");
+    RecordProperty("Description",
+                   "Check 'FileUtilsTest_OpenUniqueFile.OpenUniqueFile_fails_with_wrong_path' behavior for the "
+                   "filesystem component.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     EXPECT_CALL(*stdlib_mock_, mkstemp(_)).Times(0);
     EXPECT_CALL(*unistd_mock_, close(_)).Times(0);
     EXPECT_CALL(*filefactory_mock_, Open(_, _)).Times(0);
@@ -534,6 +692,15 @@ TEST_F(FileUtilsTest_OpenUniqueFile, OpenUniqueFile_fails_with_wrong_path)
 
 TEST_F(FileUtilsTest_OpenUniqueFile, OpenUniqueFile_mkstemp_fails)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__filesystem__file_utils");
+    RecordProperty(
+        "Description",
+        "Check 'FileUtilsTest_OpenUniqueFile.OpenUniqueFile_mkstemp_fails' behavior for the filesystem component.");
+    RecordProperty(
+        "Description",
+        "Check 'FileUtilsTest_OpenUniqueFile.OpenUniqueFile_mkstemp_fails' behavior for the filesystem component.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     EXPECT_CALL(*stdlib_mock_, mkstemp(StrEq(template_path_.Native().data())))
         .WillOnce(Return(score::cpp::make_unexpected(score::os::Error::createFromErrno(EINVAL))));
     EXPECT_CALL(*unistd_mock_, close(_)).Times(0);
@@ -546,6 +713,15 @@ TEST_F(FileUtilsTest_OpenUniqueFile, OpenUniqueFile_mkstemp_fails)
 
 TEST_F(FileUtilsTest_OpenUniqueFile, OpenUniqueFile_close_fails)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__filesystem__file_utils");
+    RecordProperty(
+        "Description",
+        "Check 'FileUtilsTest_OpenUniqueFile.OpenUniqueFile_close_fails' behavior for the filesystem component.");
+    RecordProperty(
+        "Description",
+        "Check 'FileUtilsTest_OpenUniqueFile.OpenUniqueFile_close_fails' behavior for the filesystem component.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     EXPECT_CALL(*stdlib_mock_, mkstemp(StrEq(template_path_.Native().data())));
     EXPECT_CALL(*unistd_mock_, close(valid_file_descriptor_)).WillOnce(Return(os_eio_));
     EXPECT_CALL(*filefactory_mock_, Open(_, _)).Times(0);
@@ -557,6 +733,15 @@ TEST_F(FileUtilsTest_OpenUniqueFile, OpenUniqueFile_close_fails)
 
 TEST_F(FileUtilsTest_OpenUniqueFile, OpenUniqueFile_open_fails)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__filesystem__file_utils");
+    RecordProperty(
+        "Description",
+        "Check 'FileUtilsTest_OpenUniqueFile.OpenUniqueFile_open_fails' behavior for the filesystem component.");
+    RecordProperty(
+        "Description",
+        "Check 'FileUtilsTest_OpenUniqueFile.OpenUniqueFile_open_fails' behavior for the filesystem component.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     EXPECT_CALL(*stdlib_mock_, mkstemp(StrEq(template_path_.Native().data())));
     EXPECT_CALL(*unistd_mock_, close(valid_file_descriptor_)).WillOnce(Return(os_no_error_));
     EXPECT_CALL(*filefactory_mock_, Open(expected_path_, std::ios_base::out))
@@ -620,6 +805,15 @@ class FileUtilsTest_FileContentsAreIdentical : public ::testing::Test
 
 TEST_F(FileUtilsTest_FileContentsAreIdentical, FilesAreEqual)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__filesystem__file_utils");
+    RecordProperty(
+        "Description",
+        "Check 'FileUtilsTest_FileContentsAreIdentical.FilesAreEqual' behavior for the filesystem component.");
+    RecordProperty(
+        "Description",
+        "Check 'FileUtilsTest_FileContentsAreIdentical.FilesAreEqual' behavior for the filesystem component.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     EXPECT_CALL(*filesystem_mock_, IsRegularFile(Eq(path1))).WillOnce(Return(true));
     EXPECT_CALL(*filesystem_mock_, IsRegularFile(Eq(path2))).WillOnce(Return(true));
     ExpectFileOpen(path1, "data");
@@ -633,6 +827,15 @@ TEST_F(FileUtilsTest_FileContentsAreIdentical, FilesAreEqual)
 
 TEST_F(FileUtilsTest_FileContentsAreIdentical, FilesAreEmpty)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__filesystem__file_utils");
+    RecordProperty(
+        "Description",
+        "Check 'FileUtilsTest_FileContentsAreIdentical.FilesAreEmpty' behavior for the filesystem component.");
+    RecordProperty(
+        "Description",
+        "Check 'FileUtilsTest_FileContentsAreIdentical.FilesAreEmpty' behavior for the filesystem component.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     EXPECT_CALL(*filesystem_mock_, IsRegularFile(Eq(path1))).WillOnce(Return(true));
     EXPECT_CALL(*filesystem_mock_, IsRegularFile(Eq(path2))).WillOnce(Return(true));
     ExpectFileOpen(path1, "");
@@ -646,6 +849,15 @@ TEST_F(FileUtilsTest_FileContentsAreIdentical, FilesAreEmpty)
 
 TEST_F(FileUtilsTest_FileContentsAreIdentical, FirstFileIsLarger)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__filesystem__file_utils");
+    RecordProperty(
+        "Description",
+        "Check 'FileUtilsTest_FileContentsAreIdentical.FirstFileIsLarger' behavior for the filesystem component.");
+    RecordProperty(
+        "Description",
+        "Check 'FileUtilsTest_FileContentsAreIdentical.FirstFileIsLarger' behavior for the filesystem component.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     EXPECT_CALL(*filesystem_mock_, IsRegularFile(Eq(path1))).WillOnce(Return(true));
     EXPECT_CALL(*filesystem_mock_, IsRegularFile(Eq(path2))).WillOnce(Return(true));
     ExpectFileOpen(path1, "ab");
@@ -659,6 +871,15 @@ TEST_F(FileUtilsTest_FileContentsAreIdentical, FirstFileIsLarger)
 
 TEST_F(FileUtilsTest_FileContentsAreIdentical, SecondFileIsLarger)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__filesystem__file_utils");
+    RecordProperty(
+        "Description",
+        "Check 'FileUtilsTest_FileContentsAreIdentical.SecondFileIsLarger' behavior for the filesystem component.");
+    RecordProperty(
+        "Description",
+        "Check 'FileUtilsTest_FileContentsAreIdentical.SecondFileIsLarger' behavior for the filesystem component.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     EXPECT_CALL(*filesystem_mock_, IsRegularFile(Eq(path1))).WillOnce(Return(true));
     EXPECT_CALL(*filesystem_mock_, IsRegularFile(Eq(path2))).WillOnce(Return(true));
     ExpectFileOpen(path1, "a");
@@ -672,6 +893,15 @@ TEST_F(FileUtilsTest_FileContentsAreIdentical, SecondFileIsLarger)
 
 TEST_F(FileUtilsTest_FileContentsAreIdentical, ContentAreNotEqual)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__filesystem__file_utils");
+    RecordProperty(
+        "Description",
+        "Check 'FileUtilsTest_FileContentsAreIdentical.ContentAreNotEqual' behavior for the filesystem component.");
+    RecordProperty(
+        "Description",
+        "Check 'FileUtilsTest_FileContentsAreIdentical.ContentAreNotEqual' behavior for the filesystem component.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     EXPECT_CALL(*filesystem_mock_, IsRegularFile(Eq(path1))).WillOnce(Return(true));
     EXPECT_CALL(*filesystem_mock_, IsRegularFile(Eq(path2))).WillOnce(Return(true));
     ExpectFileOpen(path1, "abc");
@@ -685,6 +915,12 @@ TEST_F(FileUtilsTest_FileContentsAreIdentical, ContentAreNotEqual)
 
 TEST_F(FileUtilsTest_FileContentsAreIdentical, FailedIsRegilarFileForPath1)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__filesystem__file_utils");
+    RecordProperty("Description",
+                   "Check 'FileUtilsTest_FileContentsAreIdentical.FailedIsRegilarFileForPath1' behavior for the "
+                   "filesystem component.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     EXPECT_CALL(*filesystem_mock_, IsRegularFile(Eq(path1))).WillOnce(Return(error));
 
     const auto result = unit_.FileContentsAreIdentical(path1, path2);
@@ -696,6 +932,12 @@ TEST_F(FileUtilsTest_FileContentsAreIdentical, FailedIsRegilarFileForPath1)
 
 TEST_F(FileUtilsTest_FileContentsAreIdentical, FailedIsRegilarFileForPath2)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__filesystem__file_utils");
+    RecordProperty("Description",
+                   "Check 'FileUtilsTest_FileContentsAreIdentical.FailedIsRegilarFileForPath2' behavior for the "
+                   "filesystem component.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     EXPECT_CALL(*filesystem_mock_, IsRegularFile(Eq(path1))).WillOnce(Return(true));
     EXPECT_CALL(*filesystem_mock_, IsRegularFile(Eq(path2))).WillOnce(Return(error));
 
@@ -708,6 +950,15 @@ TEST_F(FileUtilsTest_FileContentsAreIdentical, FailedIsRegilarFileForPath2)
 
 TEST_F(FileUtilsTest_FileContentsAreIdentical, Path1DoesntExist)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__filesystem__file_utils");
+    RecordProperty(
+        "Description",
+        "Check 'FileUtilsTest_FileContentsAreIdentical.Path1DoesntExist' behavior for the filesystem component.");
+    RecordProperty(
+        "Description",
+        "Check 'FileUtilsTest_FileContentsAreIdentical.Path1DoesntExist' behavior for the filesystem component.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     EXPECT_CALL(*filesystem_mock_, IsRegularFile(Eq(path1))).WillOnce(Return(false));
 
     const auto result = unit_.FileContentsAreIdentical(path1, path2);
@@ -719,6 +970,15 @@ TEST_F(FileUtilsTest_FileContentsAreIdentical, Path1DoesntExist)
 
 TEST_F(FileUtilsTest_FileContentsAreIdentical, Path2DoesntExist)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__filesystem__file_utils");
+    RecordProperty(
+        "Description",
+        "Check 'FileUtilsTest_FileContentsAreIdentical.Path2DoesntExist' behavior for the filesystem component.");
+    RecordProperty(
+        "Description",
+        "Check 'FileUtilsTest_FileContentsAreIdentical.Path2DoesntExist' behavior for the filesystem component.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     EXPECT_CALL(*filesystem_mock_, IsRegularFile(Eq(path1))).WillOnce(Return(true));
     EXPECT_CALL(*filesystem_mock_, IsRegularFile(Eq(path2))).WillOnce(Return(false));
 
@@ -731,6 +991,11 @@ TEST_F(FileUtilsTest_FileContentsAreIdentical, Path2DoesntExist)
 
 TEST_F(FileUtilsTest_FileContentsAreIdentical, File1_Bad)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__filesystem__file_utils");
+    RecordProperty("Description",
+                   "Check 'FileUtilsTest_FileContentsAreIdentical.File1_Bad' behavior for the filesystem component.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     EXPECT_CALL(*filesystem_mock_, IsRegularFile(Eq(path1))).WillOnce(Return(true));
     EXPECT_CALL(*filesystem_mock_, IsRegularFile(Eq(path2))).WillOnce(Return(true));
     ExpectBadFileOpen(path1);
@@ -744,6 +1009,15 @@ TEST_F(FileUtilsTest_FileContentsAreIdentical, File1_Bad)
 
 TEST_F(FileUtilsTest_FileContentsAreIdentical, File1_NullPtr)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__filesystem__file_utils");
+    RecordProperty(
+        "Description",
+        "Check 'FileUtilsTest_FileContentsAreIdentical.File1_NullPtr' behavior for the filesystem component.");
+    RecordProperty(
+        "Description",
+        "Check 'FileUtilsTest_FileContentsAreIdentical.File1_NullPtr' behavior for the filesystem component.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     EXPECT_CALL(*filesystem_mock_, IsRegularFile(Eq(path1))).WillOnce(Return(true));
     EXPECT_CALL(*filesystem_mock_, IsRegularFile(Eq(path2))).WillOnce(Return(true));
     ExpectFileOpenNullPtr(path1);
@@ -757,6 +1031,11 @@ TEST_F(FileUtilsTest_FileContentsAreIdentical, File1_NullPtr)
 
 TEST_F(FileUtilsTest_FileContentsAreIdentical, File1_Error)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__filesystem__file_utils");
+    RecordProperty("Description",
+                   "Check 'FileUtilsTest_FileContentsAreIdentical.File1_Error' behavior for the filesystem component.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     EXPECT_CALL(*filesystem_mock_, IsRegularFile(Eq(path1))).WillOnce(Return(true));
     EXPECT_CALL(*filesystem_mock_, IsRegularFile(Eq(path2))).WillOnce(Return(true));
     ExpectFileOpenError(path1);
@@ -770,6 +1049,11 @@ TEST_F(FileUtilsTest_FileContentsAreIdentical, File1_Error)
 
 TEST_F(FileUtilsTest_FileContentsAreIdentical, File2_Bad)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__filesystem__file_utils");
+    RecordProperty("Description",
+                   "Check 'FileUtilsTest_FileContentsAreIdentical.File2_Bad' behavior for the filesystem component.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     EXPECT_CALL(*filesystem_mock_, IsRegularFile(Eq(path1))).WillOnce(Return(true));
     EXPECT_CALL(*filesystem_mock_, IsRegularFile(Eq(path2))).WillOnce(Return(true));
     ExpectFileOpen(path1, "data");
@@ -784,6 +1068,15 @@ TEST_F(FileUtilsTest_FileContentsAreIdentical, File2_Bad)
 
 TEST_F(FileUtilsTest_FileContentsAreIdentical, File2_NullPtr)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__filesystem__file_utils");
+    RecordProperty(
+        "Description",
+        "Check 'FileUtilsTest_FileContentsAreIdentical.File2_NullPtr' behavior for the filesystem component.");
+    RecordProperty(
+        "Description",
+        "Check 'FileUtilsTest_FileContentsAreIdentical.File2_NullPtr' behavior for the filesystem component.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     EXPECT_CALL(*filesystem_mock_, IsRegularFile(Eq(path1))).WillOnce(Return(true));
     EXPECT_CALL(*filesystem_mock_, IsRegularFile(Eq(path2))).WillOnce(Return(true));
     ExpectFileOpen(path1, "data");
@@ -798,6 +1091,11 @@ TEST_F(FileUtilsTest_FileContentsAreIdentical, File2_NullPtr)
 
 TEST_F(FileUtilsTest_FileContentsAreIdentical, File2_Error)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__filesystem__file_utils");
+    RecordProperty("Description",
+                   "Check 'FileUtilsTest_FileContentsAreIdentical.File2_Error' behavior for the filesystem component.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     EXPECT_CALL(*filesystem_mock_, IsRegularFile(Eq(path1))).WillOnce(Return(true));
     EXPECT_CALL(*filesystem_mock_, IsRegularFile(Eq(path2))).WillOnce(Return(true));
     ExpectFileOpen(path1, "data");

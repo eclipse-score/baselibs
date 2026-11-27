@@ -24,6 +24,10 @@ namespace
 
 TEST(Path, DefaultConstructedPathIsEmpty)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__filesystem__path_utilities");
+    RecordProperty("Description", "Check 'Path.DefaultConstructedPathIsEmpty' behavior for the filesystem component.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     // Given a default constructed unit
     Path unit{};
 
@@ -36,6 +40,10 @@ TEST(Path, DefaultConstructedPathIsEmpty)
 
 TEST(Path, ConstructedByStdString)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__filesystem__path_utilities");
+    RecordProperty("Description", "Check 'Path.ConstructedByStdString' behavior for the filesystem component.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     // Given a Path that is constructed by a std::string
     Path unit = std::string{"/some/path"};
 
@@ -48,6 +56,10 @@ TEST(Path, ConstructedByStdString)
 
 TEST(Path, ConstructedByConstStdString)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__filesystem__path_utilities");
+    RecordProperty("Description", "Check 'Path.ConstructedByConstStdString' behavior for the filesystem component.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     // Given a Path that is constructed by a std::string
     const std::string s{"/some/path"};
     Path unit{s};
@@ -61,6 +73,10 @@ TEST(Path, ConstructedByConstStdString)
 
 TEST(Path, ConstructedByCharArray)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__filesystem__path_utilities");
+    RecordProperty("Description", "Check 'Path.ConstructedByCharArray' behavior for the filesystem component.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     // Given a Path that is constructed by a const char[?]
     Path unit = "/some/path";
 
@@ -73,6 +89,10 @@ TEST(Path, ConstructedByCharArray)
 
 TEST(Path, ConstructedByCharPointer)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__filesystem__path_utilities");
+    RecordProperty("Description", "Check 'Path.ConstructedByCharPointer' behavior for the filesystem component.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     // Given a Path that is constructed by a const char*
     const char* x = "/some/path";
     Path unit = x;
@@ -86,6 +106,10 @@ TEST(Path, ConstructedByCharPointer)
 
 TEST(Path, CopyConstructed)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__filesystem__path_utilities");
+    RecordProperty("Description", "Check 'Path.CopyConstructed' behavior for the filesystem component.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     // Given a Path that is copy constructed
     Path other{std::string{"/some/path"}};
     Path unit = other;
@@ -99,6 +123,10 @@ TEST(Path, CopyConstructed)
 
 TEST(Path, MoveConstructed)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__filesystem__path_utilities");
+    RecordProperty("Description", "Check 'Path.MoveConstructed' behavior for the filesystem component.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     // Given a Path that is move constructed
     Path other{std::string{"/some/path"}};
     Path unit = std::move(other);
@@ -112,6 +140,10 @@ TEST(Path, MoveConstructed)
 
 TEST(Path, AppendRelativePath)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__filesystem__path_utilities");
+    RecordProperty("Description", "Check 'Path.AppendRelativePath' behavior for the filesystem component.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     // Given a path
     Path unit{"/foo"};
 
@@ -124,6 +156,10 @@ TEST(Path, AppendRelativePath)
 
 TEST(Path, AppendEmptyPath)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__filesystem__path_utilities");
+    RecordProperty("Description", "Check 'Path.AppendEmptyPath' behavior for the filesystem component.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     // Given a path
     Path unit{"/foo"};
 
@@ -136,6 +172,10 @@ TEST(Path, AppendEmptyPath)
 
 TEST(Path, AppendToEmptyPath)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__filesystem__path_utilities");
+    RecordProperty("Description", "Check 'Path.AppendToEmptyPath' behavior for the filesystem component.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     // Given a path
     Path unit{""};
 
@@ -148,6 +188,10 @@ TEST(Path, AppendToEmptyPath)
 
 TEST(Path, AppendAbsolutePath)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__filesystem__path_utilities");
+    RecordProperty("Description", "Check 'Path.AppendAbsolutePath' behavior for the filesystem component.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     // Given a path
     Path unit{"/foo"};
 
@@ -160,6 +204,11 @@ TEST(Path, AppendAbsolutePath)
 
 TEST(Path, AppendPathWithExistingSeparator)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__filesystem__path_utilities");
+    RecordProperty("Description",
+                   "Check 'Path.AppendPathWithExistingSeparator' behavior for the filesystem component.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     // Given a path with a trailing separator
     Path unit{"/foo/"};
 
@@ -172,6 +221,10 @@ TEST(Path, AppendPathWithExistingSeparator)
 
 TEST(Path, AppendString)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__filesystem__path_utilities");
+    RecordProperty("Description", "Check 'Path.AppendString' behavior for the filesystem component.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     // Given a path
     Path unit{"/foo"};
 
@@ -184,6 +237,11 @@ TEST(Path, AppendString)
 
 TEST(Path, AppendStringViewPointingToStringLiteral)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__filesystem__path_utilities");
+    RecordProperty("Description",
+                   "Check 'Path.AppendStringViewPointingToStringLiteral' behavior for the filesystem component.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     // Given a path
     Path unit{"/foo"};
 
@@ -196,6 +254,10 @@ TEST(Path, AppendStringViewPointingToStringLiteral)
 
 TEST(Path, IsAbsoluteOnEmpty)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__filesystem__path_utilities");
+    RecordProperty("Description", "Check 'Path.IsAbsoluteOnEmpty' behavior for the filesystem component.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     // Given an empty path
     Path unit{};
 
@@ -208,6 +270,10 @@ TEST(Path, IsAbsoluteOnEmpty)
 
 TEST(Path, IsAbsoluteOnAbsolutePath)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__filesystem__path_utilities");
+    RecordProperty("Description", "Check 'Path.IsAbsoluteOnAbsolutePath' behavior for the filesystem component.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     // Given an absolute path
     Path unit{"/home"};
 
@@ -220,6 +286,10 @@ TEST(Path, IsAbsoluteOnAbsolutePath)
 
 TEST(Path, IsRelativeOnAbsolutePath)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__filesystem__path_utilities");
+    RecordProperty("Description", "Check 'Path.IsRelativeOnAbsolutePath' behavior for the filesystem component.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     // Given an absolute path
     Path unit{"/home"};
 
@@ -232,6 +302,10 @@ TEST(Path, IsRelativeOnAbsolutePath)
 
 TEST(Path, IsAbsoluteOnRelativePath)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__filesystem__path_utilities");
+    RecordProperty("Description", "Check 'Path.IsAbsoluteOnRelativePath' behavior for the filesystem component.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     // Given a relative path
     Path unit{"./home"};
 
@@ -244,6 +318,10 @@ TEST(Path, IsAbsoluteOnRelativePath)
 
 TEST(Path, IsRelativeOnRelativePath)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__filesystem__path_utilities");
+    RecordProperty("Description", "Check 'Path.IsRelativeOnRelativePath' behavior for the filesystem component.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     // Given a relative path
     Path unit{"./home"};
 
@@ -256,6 +334,10 @@ TEST(Path, IsRelativeOnRelativePath)
 
 TEST(Path, CheckForRootName)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__filesystem__path_utilities");
+    RecordProperty("Description", "Check 'Path.CheckForRootName' behavior for the filesystem component.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     // Given a path without root-name
     Path unit{"/home/some/path"};
 
@@ -268,6 +350,10 @@ TEST(Path, CheckForRootName)
 
 TEST(Path, GetRootDirectoryOnAbsolutePath)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__filesystem__path_utilities");
+    RecordProperty("Description", "Check 'Path.GetRootDirectoryOnAbsolutePath' behavior for the filesystem component.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     // Given an absolute path
     Path unit{"/home"};
 
@@ -281,6 +367,10 @@ TEST(Path, GetRootDirectoryOnAbsolutePath)
 
 TEST(Path, GetRootDirectoryOnRelativePath)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__filesystem__path_utilities");
+    RecordProperty("Description", "Check 'Path.GetRootDirectoryOnRelativePath' behavior for the filesystem component.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     // Given a relative path
     Path unit{"home/some/path"};
 
@@ -294,6 +384,10 @@ TEST(Path, GetRootDirectoryOnRelativePath)
 
 TEST(Path, GetRootPathOnAbsolutePath)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__filesystem__path_utilities");
+    RecordProperty("Description", "Check 'Path.GetRootPathOnAbsolutePath' behavior for the filesystem component.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     // Given an absolute path
     Path unit{"/home"};
 
@@ -307,6 +401,10 @@ TEST(Path, GetRootPathOnAbsolutePath)
 
 TEST(Path, GetRootPathOnRelativePath)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__filesystem__path_utilities");
+    RecordProperty("Description", "Check 'Path.GetRootPathOnRelativePath' behavior for the filesystem component.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     // Given a relative path
     Path unit{"home/some/path"};
 
@@ -320,6 +418,10 @@ TEST(Path, GetRootPathOnRelativePath)
 
 TEST(Path, RelativePathOfAbsoluteOne)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__filesystem__path_utilities");
+    RecordProperty("Description", "Check 'Path.RelativePathOfAbsoluteOne' behavior for the filesystem component.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     // Given an absolute path
     Path unit{"/home/some/path"};
 
@@ -333,6 +435,10 @@ TEST(Path, RelativePathOfAbsoluteOne)
 
 TEST(Path, RelativePathOfRelativePath)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__filesystem__path_utilities");
+    RecordProperty("Description", "Check 'Path.RelativePathOfRelativePath' behavior for the filesystem component.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     // Given an relative path
     Path unit{"home/some/path"};
 
@@ -346,6 +452,10 @@ TEST(Path, RelativePathOfRelativePath)
 
 TEST(Path, RelativePathOfEmptyPath)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__filesystem__path_utilities");
+    RecordProperty("Description", "Check 'Path.RelativePathOfEmptyPath' behavior for the filesystem component.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     // Given an empty path
     Path unit{};
 
@@ -359,6 +469,10 @@ TEST(Path, RelativePathOfEmptyPath)
 
 TEST(Path, RelativePathOfRootPath)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__filesystem__path_utilities");
+    RecordProperty("Description", "Check 'Path.RelativePathOfRootPath' behavior for the filesystem component.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     // Given an root path
     Path unit{"/"};
 
@@ -372,6 +486,10 @@ TEST(Path, RelativePathOfRootPath)
 
 TEST(Path, ResolveParentPath)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__filesystem__path_utilities");
+    RecordProperty("Description", "Check 'Path.ResolveParentPath' behavior for the filesystem component.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     // The test data was checked on page https://en.cppreference.com/w/cpp/filesystem/path/parent_path
     EXPECT_STREQ(Path{"/var/tmp/example.txt"}.ParentPath().CStr(), "/var/tmp");
     EXPECT_STREQ(Path{""}.ParentPath().CStr(), "");
@@ -387,6 +505,10 @@ TEST(Path, ResolveParentPath)
 
 TEST(Path, HasParentPath)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__filesystem__path_utilities");
+    RecordProperty("Description", "Check 'Path.HasParentPath' behavior for the filesystem component.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     EXPECT_TRUE(Path{"/"}.HasParentPath());
     EXPECT_TRUE(Path{"/tmp"}.HasParentPath());
     EXPECT_TRUE(Path{"/tmp/file"}.HasParentPath());
@@ -396,6 +518,10 @@ TEST(Path, HasParentPath)
 
 TEST(Path, ResolveFilename)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__filesystem__path_utilities");
+    RecordProperty("Description", "Check 'Path.ResolveFilename' behavior for the filesystem component.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     // Given a path with a filename
     Path unit{"/hello/world"};
 
@@ -409,6 +535,10 @@ TEST(Path, ResolveFilename)
 
 TEST(Path, ResolveSimpleFilename)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__filesystem__path_utilities");
+    RecordProperty("Description", "Check 'Path.ResolveSimpleFilename' behavior for the filesystem component.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     // Given a path with a filename
     Path unit{"world"};
 
@@ -422,6 +552,10 @@ TEST(Path, ResolveSimpleFilename)
 
 TEST(Path, ResolveFilenameWithoutFilename)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__filesystem__path_utilities");
+    RecordProperty("Description", "Check 'Path.ResolveFilenameWithoutFilename' behavior for the filesystem component.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     // Given a path with an empty filename
     Path unit{"/hello/"};
 
@@ -435,6 +569,10 @@ TEST(Path, ResolveFilenameWithoutFilename)
 
 TEST(Path, FilenameWithExtension)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__filesystem__path_utilities");
+    RecordProperty("Description", "Check 'Path.FilenameWithExtension' behavior for the filesystem component.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     // Given a filename with an extension
     Path unit{"/foo/bar/test.txt"};
 
@@ -448,6 +586,10 @@ TEST(Path, FilenameWithExtension)
 
 TEST(Path, FilenameStartsWithPeriod)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__filesystem__path_utilities");
+    RecordProperty("Description", "Check 'Path.FilenameStartsWithPeriod' behavior for the filesystem component.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     // Given a path which starts with period (.) character
     Path unit{"/foo/bar/.ssh"};
 
@@ -461,6 +603,10 @@ TEST(Path, FilenameStartsWithPeriod)
 
 TEST(Path, NoFileNameOnlyCurrentDir)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__filesystem__path_utilities");
+    RecordProperty("Description", "Check 'Path.NoFileNameOnlyCurrentDir' behavior for the filesystem component.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     // Given a path with no extension but only a dot (current dir)
     Path unit{"/foo/bar/."};
 
@@ -474,6 +620,10 @@ TEST(Path, NoFileNameOnlyCurrentDir)
 
 TEST(Path, NoFilenameOnlyParentDir)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__filesystem__path_utilities");
+    RecordProperty("Description", "Check 'Path.NoFilenameOnlyParentDir' behavior for the filesystem component.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     // Given a path with no extension but only a dot-dot (parent dir)
     Path unit{"/foo/bar/.."};
 
@@ -487,6 +637,10 @@ TEST(Path, NoFilenameOnlyParentDir)
 
 TEST(Path, NoExtension)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__filesystem__path_utilities");
+    RecordProperty("Description", "Check 'Path.NoExtension' behavior for the filesystem component.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     // Given a filename without an extension (e.g. a dir)
     Path unit{"/foo/bar"};
 
@@ -500,6 +654,10 @@ TEST(Path, NoExtension)
 
 TEST(Path, CheckStem)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__filesystem__path_utilities");
+    RecordProperty("Description", "Check 'Path.CheckStem' behavior for the filesystem component.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     EXPECT_EQ(Path{"foo/bar/filename.ext"}.Stem().Native(), "filename");
     EXPECT_EQ(Path{"foo/bar/filename.ext.ext2"}.Stem().Native(), "filename.ext");
     EXPECT_EQ(Path{"foo/bar/.zzz"}.Stem().Native(), ".zzz");
@@ -517,6 +675,10 @@ std::string LexicallyNormal(const Path& unit)
 
 TEST(Path, PathsAreLexicallyNormalized)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__filesystem__path_utilities");
+    RecordProperty("Description", "Check 'Path.PathsAreLexicallyNormalized' behavior for the filesystem component.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     EXPECT_EQ(LexicallyNormal("./"), ".");
     EXPECT_EQ(LexicallyNormal("hey/bla/../bla2/./../bla-bla/"), "hey/bla-bla/");
     EXPECT_EQ(LexicallyNormal("hey/bla/../bla2/./bla-bla/"), "hey/bla2/bla-bla/");
@@ -559,6 +721,10 @@ TEST(Path, PathsAreLexicallyNormalized)
 
 TEST(Path, Empty)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__filesystem__path_utilities");
+    RecordProperty("Description", "Check 'Path.Empty' behavior for the filesystem component.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     Path unit{};
 
     EXPECT_TRUE(unit.Empty());
@@ -566,6 +732,10 @@ TEST(Path, Empty)
 
 TEST(Path, NotEmpty)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__filesystem__path_utilities");
+    RecordProperty("Description", "Check 'Path.NotEmpty' behavior for the filesystem component.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     Path unit{"/foo"};
 
     EXPECT_FALSE(unit.Empty());
@@ -573,6 +743,10 @@ TEST(Path, NotEmpty)
 
 TEST(Path, CStrConverter)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__filesystem__path_utilities");
+    RecordProperty("Description", "Check 'Path.CStrConverter' behavior for the filesystem component.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     Path unit{"/foo"};
 
     EXPECT_STREQ(unit.CStr(), "/foo");
@@ -580,6 +754,10 @@ TEST(Path, CStrConverter)
 
 TEST(Path, ImplicitStringConversion)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__filesystem__path_utilities");
+    RecordProperty("Description", "Check 'Path.ImplicitStringConversion' behavior for the filesystem component.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     Path unit{"/foo"};
 
     std::string string = unit;
@@ -589,6 +767,10 @@ TEST(Path, ImplicitStringConversion)
 
 TEST(Path, NotEqual)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__filesystem__path_utilities");
+    RecordProperty("Description", "Check 'Path.NotEqual' behavior for the filesystem component.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     Path foo{"/foo"};
     Path foo2{"/foo"};
     Path bar{"/bar"};
@@ -603,6 +785,10 @@ class PathLessThan : public ::testing::TestWithParam<std::tuple<std::string_view
 
 TEST_P(PathLessThan, LessThan)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__filesystem__path_utilities");
+    RecordProperty("Description", "Check 'PathLessThan.LessThan' behavior for the filesystem component.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     // Given two strings with arbitrary order
     auto [a, b] = GetParam();
     Path path_a{std::string{a}};
@@ -652,6 +838,11 @@ class PathIteratorFixture : public ::testing::Test
 
 TEST_F(PathIteratorFixture, SplitAbsolutePath)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__filesystem__path_utilities");
+    RecordProperty("Description",
+                   "Check 'PathIteratorFixture.SplitAbsolutePath' behavior for the filesystem component.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     const auto& array = PathToArray("/foo/bar.txt");
 
     ASSERT_EQ(array.size(), 3);
@@ -662,6 +853,11 @@ TEST_F(PathIteratorFixture, SplitAbsolutePath)
 
 TEST_F(PathIteratorFixture, SplitRelativePath)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__filesystem__path_utilities");
+    RecordProperty("Description",
+                   "Check 'PathIteratorFixture.SplitRelativePath' behavior for the filesystem component.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     const auto& array = PathToArray("foo/bar.txt");
 
     ASSERT_EQ(array.size(), 2);
@@ -671,6 +867,10 @@ TEST_F(PathIteratorFixture, SplitRelativePath)
 
 TEST_F(PathIteratorFixture, SplitEmptyPath)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__filesystem__path_utilities");
+    RecordProperty("Description", "Check 'PathIteratorFixture.SplitEmptyPath' behavior for the filesystem component.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     const auto& array = PathToArray("");
 
     EXPECT_EQ(array.size(), 0);
@@ -678,6 +878,10 @@ TEST_F(PathIteratorFixture, SplitEmptyPath)
 
 TEST_F(PathIteratorFixture, SplitRootPath)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__filesystem__path_utilities");
+    RecordProperty("Description", "Check 'PathIteratorFixture.SplitRootPath' behavior for the filesystem component.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     const auto& array = PathToArray("/");
 
     EXPECT_EQ(array.size(), 1);
@@ -686,6 +890,11 @@ TEST_F(PathIteratorFixture, SplitRootPath)
 
 TEST_F(PathIteratorFixture, SplitSeveralSeparators)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__filesystem__path_utilities");
+    RecordProperty("Description",
+                   "Check 'PathIteratorFixture.SplitSeveralSeparators' behavior for the filesystem component.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     const auto& array = PathToArray("/////");
 
     EXPECT_EQ(array.size(), 1);
@@ -694,6 +903,15 @@ TEST_F(PathIteratorFixture, SplitSeveralSeparators)
 
 TEST_F(PathIteratorFixture, SplitSeveralSeparatorsInAbsolutePath)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__filesystem__path_utilities");
+    RecordProperty(
+        "Description",
+        "Check 'PathIteratorFixture.SplitSeveralSeparatorsInAbsolutePath' behavior for the filesystem component.");
+    RecordProperty(
+        "Description",
+        "Check 'PathIteratorFixture.SplitSeveralSeparatorsInAbsolutePath' behavior for the filesystem component.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     const auto& array = PathToArray("///foo/////bar.txt");
 
     ASSERT_EQ(array.size(), 3);
@@ -704,6 +922,11 @@ TEST_F(PathIteratorFixture, SplitSeveralSeparatorsInAbsolutePath)
 
 TEST_F(PathIteratorFixture, PathToArrayWithouSeparator)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__filesystem__path_utilities");
+    RecordProperty("Description",
+                   "Check 'PathIteratorFixture.PathToArrayWithouSeparator' behavior for the filesystem component.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     const auto& array = PathToArray("foo");
 
     ASSERT_EQ(array.size(), 1);
@@ -712,6 +935,11 @@ TEST_F(PathIteratorFixture, PathToArrayWithouSeparator)
 
 TEST_F(PathIteratorFixture, SplitRelativePathDot)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__filesystem__path_utilities");
+    RecordProperty("Description",
+                   "Check 'PathIteratorFixture.SplitRelativePathDot' behavior for the filesystem component.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     const auto& array = PathToArray("./foo/bar.txt");
 
     ASSERT_EQ(array.size(), 3);
@@ -722,6 +950,11 @@ TEST_F(PathIteratorFixture, SplitRelativePathDot)
 
 TEST_F(PathIteratorFixture, SplitRelativePathDotDot)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__filesystem__path_utilities");
+    RecordProperty("Description",
+                   "Check 'PathIteratorFixture.SplitRelativePathDotDot' behavior for the filesystem component.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     const auto& array = PathToArray("../foo/bar.txt");
 
     ASSERT_EQ(array.size(), 3);
@@ -732,6 +965,10 @@ TEST_F(PathIteratorFixture, SplitRelativePathDotDot)
 
 TEST(PathIterator, LongPathIncrement)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__filesystem__path_utilities");
+    RecordProperty("Description", "Check 'PathIterator.LongPathIncrement' behavior for the filesystem component.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     Path path{"/foo/bar.txt"};
 
     auto iterator = path.begin();
@@ -751,6 +988,10 @@ TEST(PathIterator, LongPathIncrement)
 
 TEST(PathIterator, ShortPathIncrement)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__filesystem__path_utilities");
+    RecordProperty("Description", "Check 'PathIterator.ShortPathIncrement' behavior for the filesystem component.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     Path path{"bar.txt"};
 
     auto iterator = path.begin();
@@ -764,6 +1005,10 @@ TEST(PathIterator, ShortPathIncrement)
 
 TEST(PathIterator, EmptyPathIncrement)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__filesystem__path_utilities");
+    RecordProperty("Description", "Check 'PathIterator.EmptyPathIncrement' behavior for the filesystem component.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     Path path{""};
 
     auto iterator = path.begin();
@@ -774,6 +1019,10 @@ TEST(PathIterator, EmptyPathIncrement)
 
 TEST(PathIterator, LongPathDecrement)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__filesystem__path_utilities");
+    RecordProperty("Description", "Check 'PathIterator.LongPathDecrement' behavior for the filesystem component.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     Path path{"/foo/bar.txt"};
 
     auto iterator = path.begin();
@@ -797,6 +1046,10 @@ TEST(PathIterator, LongPathDecrement)
 
 TEST(PathIterator, ShortPathDecrement)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__filesystem__path_utilities");
+    RecordProperty("Description", "Check 'PathIterator.ShortPathDecrement' behavior for the filesystem component.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     Path path{"bar.txt"};
 
     auto iterator = path.begin();
@@ -812,6 +1065,10 @@ TEST(PathIterator, ShortPathDecrement)
 
 TEST(PathIterator, EmptyPathDecrement)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__filesystem__path_utilities");
+    RecordProperty("Description", "Check 'PathIterator.EmptyPathDecrement' behavior for the filesystem component.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     Path path{""};
 
     auto iterator = path.begin();
@@ -822,6 +1079,10 @@ TEST(PathIterator, EmptyPathDecrement)
 
 TEST_F(PathIteratorFixture, ConcatPath)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__filesystem__path_utilities");
+    RecordProperty("Description", "Check 'PathIteratorFixture.ConcatPath' behavior for the filesystem component.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     Path foo{"foo"};
     Path bar{"bar"};
     Path path = foo / bar;
@@ -834,6 +1095,10 @@ TEST_F(PathIteratorFixture, ConcatPath)
 
 TEST_F(PathIteratorFixture, AppendPath)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__filesystem__path_utilities");
+    RecordProperty("Description", "Check 'PathIteratorFixture.AppendPath' behavior for the filesystem component.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     Path foo{"foo"};
     Path bar{"bar"};
     Path path = foo;
@@ -847,6 +1112,10 @@ TEST_F(PathIteratorFixture, AppendPath)
 
 TEST(PathIterator, PostIncrement)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__filesystem__path_utilities");
+    RecordProperty("Description", "Check 'PathIterator.PostIncrement' behavior for the filesystem component.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     Path path{"foo/bar.txt"};
 
     auto iterator = path.begin();
@@ -859,6 +1128,10 @@ TEST(PathIterator, PostIncrement)
 
 TEST(PathIterator, PostDecrement)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__filesystem__path_utilities");
+    RecordProperty("Description", "Check 'PathIterator.PostDecrement' behavior for the filesystem component.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     Path path{"foo/bar.txt"};
 
     auto iterator = path.begin();
@@ -877,6 +1150,10 @@ TEST(PathIterator, PostDecrement)
 
 TEST(PathIterator, Equality)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__filesystem__path_utilities");
+    RecordProperty("Description", "Check 'PathIterator.Equality' behavior for the filesystem component.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     Path path{"foo/bar.txt"};
 
     auto iterator_foo_1 = ++path.begin();
@@ -899,6 +1176,11 @@ TEST(PathIterator, Equality)
 
 TEST(PathIterator, CompareIteratorsFromDifferentVariable)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__filesystem__path_utilities");
+    RecordProperty("Description",
+                   "Check 'PathIterator.CompareIteratorsFromDifferentVariable' behavior for the filesystem component.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     Path path1{"foo/bar.txt"};
     Path path2{"foo/bar.txt"};
     auto iterator1 = path1.begin();
@@ -909,6 +1191,11 @@ TEST(PathIterator, CompareIteratorsFromDifferentVariable)
 
 TEST(PathIterator, CompareWithEmptyIterator)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__filesystem__path_utilities");
+    RecordProperty("Description",
+                   "Check 'PathIterator.CompareWithEmptyIterator' behavior for the filesystem component.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     Path path{"foo/bar.txt"};
 
     EXPECT_NE(path.begin(), Path::iterator{});
@@ -916,6 +1203,10 @@ TEST(PathIterator, CompareWithEmptyIterator)
 
 TEST(Path, ReplaceExtension)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__filesystem__path_utilities");
+    RecordProperty("Description", "Check 'Path.ReplaceExtension' behavior for the filesystem component.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     EXPECT_STREQ(Path{""}.ReplaceExtension(".empty").CStr(), ".empty");
     EXPECT_STREQ(Path{"/foo/bar.jpg"}.ReplaceExtension(".png").CStr(), "/foo/bar.png");
     EXPECT_STREQ(Path{"/foo/bar.jpg"}.ReplaceExtension("png").CStr(), "/foo/bar.png");
@@ -936,6 +1227,10 @@ TEST(Path, ReplaceExtension)
 
 TEST(Path, RemoveFilename)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__filesystem__path_utilities");
+    RecordProperty("Description", "Check 'Path.RemoveFilename' behavior for the filesystem component.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     EXPECT_STREQ(Path{"foo/bar"}.RemoveFilename().CStr(), "foo/");
     EXPECT_STREQ(Path{"foo/"}.RemoveFilename().CStr(), "foo/");
     EXPECT_STREQ(Path{"/foo"}.RemoveFilename().CStr(), "/");
@@ -945,6 +1240,10 @@ TEST(Path, RemoveFilename)
 
 TEST(PathIterator, CopyOperator)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__filesystem__path_utilities");
+    RecordProperty("Description", "Check 'PathIterator.CopyOperator' behavior for the filesystem component.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     Path path{"foo/bar.txt"};
     Path::iterator iterator = path.begin();
     Path::iterator iterator_copy{};
@@ -956,6 +1255,10 @@ TEST(PathIterator, CopyOperator)
 
 TEST(Path, CopyOperator_SelfAssignment)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__filesystem__path_utilities");
+    RecordProperty("Description", "Check 'Path.CopyOperator_SelfAssignment' behavior for the filesystem component.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     Path path{"foo/bar.txt"};
 
     path = *std::addressof(path);
@@ -965,6 +1268,10 @@ TEST(Path, CopyOperator_SelfAssignment)
 
 TEST(Path, MoveOperator_SelfAssignment)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__filesystem__path_utilities");
+    RecordProperty("Description", "Check 'Path.MoveOperator_SelfAssignment' behavior for the filesystem component.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     Path path{"foo/bar.txt"};
     Path& path_ref{path};  // we use ref to avoid clang build error
 
@@ -975,6 +1282,11 @@ TEST(Path, MoveOperator_SelfAssignment)
 
 TEST(PathIterator, CopyOperator_SelfAssignment)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__filesystem__path_utilities");
+    RecordProperty("Description",
+                   "Check 'PathIterator.CopyOperator_SelfAssignment' behavior for the filesystem component.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     Path path{"foo/bar.txt"};
     Path::iterator iterator = path.begin();
 
@@ -985,6 +1297,11 @@ TEST(PathIterator, CopyOperator_SelfAssignment)
 
 TEST(PathIterator, MoveOperator_SelfAssignment)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__filesystem__path_utilities");
+    RecordProperty("Description",
+                   "Check 'PathIterator.MoveOperator_SelfAssignment' behavior for the filesystem component.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     Path path{"foo/bar.txt"};
     Path::iterator iterator = path.begin();
     Path::iterator& iterator_ref{iterator};  // we use ref to avoid clang build error
@@ -996,6 +1313,11 @@ TEST(PathIterator, MoveOperator_SelfAssignment)
 
 TEST(PathIterator, MoveOperator_Assignment)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__filesystem__path_utilities");
+    RecordProperty("Description",
+                   "Check 'PathIterator.MoveOperator_Assignment' behavior for the filesystem component.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     // Given two iterators on paths
     Path path{"foo/bar.txt"};
     Path path_2{"baz/fooz.txt"};

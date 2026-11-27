@@ -33,6 +33,10 @@ class FilesystemErrorTest : public ::testing::Test
 
 TEST_F(FilesystemErrorTest, AllMessages)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__filesystem__api_abstraction");
+    RecordProperty("Description", "Check 'FilesystemErrorTest.AllMessages' behavior for the filesystem component.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     ASSERT_TRUE(ErrorMessageContains(ErrorCode::kCouldNotRetrieveStatus, "Could not execute stat()"));
     ASSERT_TRUE(ErrorMessageContains(ErrorCode::kFromFileDoesNotExist, "Input file does not exists"));
     ASSERT_TRUE(ErrorMessageContains(ErrorCode::kCouldNotAccessFileDuringCopy, "Could not access file during copy"));
@@ -72,6 +76,10 @@ TEST_F(FilesystemErrorTest, AllMessages)
 
 TEST_F(FilesystemErrorTest, UserMessage)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__filesystem__api_abstraction");
+    RecordProperty("Description", "Check 'FilesystemErrorTest.UserMessage' behavior for the filesystem component.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     std::string_view user_message = "ABC_123";
     score::result::Error error = MakeError(ErrorCode::kCouldNotRetrieveStatus, user_message.data());
     ASSERT_EQ(error.UserMessage(), user_message);
@@ -79,6 +87,11 @@ TEST_F(FilesystemErrorTest, UserMessage)
 
 TEST_F(FilesystemErrorTest, UnknownErrorCode)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__filesystem__api_abstraction");
+    RecordProperty("Description",
+                   "Check 'FilesystemErrorTest.UnknownErrorCode' behavior for the filesystem component.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     score::result::ErrorCode unknown_error_code = -42;
     score::result::Error error = MakeError(static_cast<ErrorCode>(unknown_error_code));
     ASSERT_EQ(*error, unknown_error_code);

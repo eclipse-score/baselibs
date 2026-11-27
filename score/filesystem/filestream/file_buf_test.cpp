@@ -40,6 +40,10 @@ class AtomicFileBufTest : public ::testing::Test
 
 TEST_F(FileBufTest, TestFailureOnClose)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__filesystem__file_io");
+    RecordProperty("Description", "Check 'FileBufTest.TestFailureOnClose' behavior for the filesystem component.");
+    RecordProperty("TestType", "fault-injection");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     EXPECT_CALL(filebuf, is_open()).WillOnce(Return(true));
     EXPECT_CALL(filebuf, close()).WillOnce(Return(nullptr));
 
@@ -50,6 +54,11 @@ TEST_F(FileBufTest, TestFailureOnClose)
 
 TEST_F(FileBufTest, TestClosingAlreadyClosedFile)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__filesystem__file_io");
+    RecordProperty("Description",
+                   "Check 'FileBufTest.TestClosingAlreadyClosedFile' behavior for the filesystem component.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     EXPECT_CALL(filebuf, is_open()).WillOnce(Return(false));
     EXPECT_CALL(filebuf, close()).Times(0);
 
@@ -59,6 +68,10 @@ TEST_F(FileBufTest, TestClosingAlreadyClosedFile)
 
 TEST_F(AtomicFileBufTest, TestFailureOnSync)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__filesystem__file_io");
+    RecordProperty("Description", "Check 'AtomicFileBufTest.TestFailureOnSync' behavior for the filesystem component.");
+    RecordProperty("TestType", "fault-injection");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     EXPECT_CALL(atomic_filebuf, is_open()).WillRepeatedly(testing::Return(true));
     EXPECT_CALL(atomic_filebuf, sync()).WillOnce(testing::Return(-1));
     EXPECT_CALL(*unistd_, unlink(StrEq("from_path")))
@@ -71,6 +84,11 @@ TEST_F(AtomicFileBufTest, TestFailureOnSync)
 
 TEST_F(AtomicFileBufTest, TestFailureOnFsync)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__filesystem__file_io");
+    RecordProperty("Description",
+                   "Check 'AtomicFileBufTest.TestFailureOnFsync' behavior for the filesystem component.");
+    RecordProperty("TestType", "fault-injection");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     EXPECT_CALL(atomic_filebuf, is_open()).WillRepeatedly(Return(true));
     EXPECT_CALL(atomic_filebuf, sync()).WillOnce(Return(0));
     EXPECT_CALL(*unistd_, fsync(_))
@@ -86,6 +104,11 @@ TEST_F(AtomicFileBufTest, TestFailureOnFsync)
 
 TEST_F(AtomicFileBufTest, TestFailureOnClose)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__filesystem__file_io");
+    RecordProperty("Description",
+                   "Check 'AtomicFileBufTest.TestFailureOnClose' behavior for the filesystem component.");
+    RecordProperty("TestType", "fault-injection");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     EXPECT_CALL(atomic_filebuf, is_open()).WillRepeatedly(Return(true));
     EXPECT_CALL(atomic_filebuf, sync()).WillOnce(Return(0));
     EXPECT_CALL(*unistd_, fsync(_)).WillOnce(Return(score::cpp::expected_blank<score::os::Error>{}));
@@ -99,6 +122,11 @@ TEST_F(AtomicFileBufTest, TestFailureOnClose)
 }
 TEST_F(AtomicFileBufTest, TestFailureOnRename)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__filesystem__file_io");
+    RecordProperty("Description",
+                   "Check 'AtomicFileBufTest.TestFailureOnRename' behavior for the filesystem component.");
+    RecordProperty("TestType", "fault-injection");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     EXPECT_CALL(atomic_filebuf, is_open()).WillRepeatedly(Return(true));
     EXPECT_CALL(atomic_filebuf, sync()).WillOnce(Return(0));
     EXPECT_CALL(*unistd_, fsync(_)).WillOnce(Return(score::cpp::expected_blank<score::os::Error>{}));
@@ -178,6 +206,10 @@ TEST_F(AtomicFileBufTest, DiscardOnClosedFileDoesNothing)
 
 TEST(FileStreamTest, TestNullBuffer)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__filesystem__file_io");
+    RecordProperty("Description", "Check 'FileStreamTest.TestNullBuffer' behavior for the filesystem component.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     FileStream unit{nullptr};
     EXPECT_TRUE(unit.Close().has_value());
 }
@@ -206,6 +238,12 @@ class AtomicFileBufTempFileCleanupTest : public ::testing::Test
 
 TEST_F(AtomicFileBufTempFileCleanupTest, CloseFailureRemovesTempFileFromDisk)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__filesystem__file_io");
+    RecordProperty("Description",
+                   "Check 'AtomicFileBufTempFileCleanupTest.CloseFailureRemovesTempFileFromDisk' behavior for the "
+                   "filesystem component.");
+    RecordProperty("TestType", "fault-injection");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     AtomicFileBuf buf{0, std::ios::in, temp_file_, "to_path"};
 
     EXPECT_CALL(buf, is_open()).WillRepeatedly(Return(true));
@@ -219,6 +257,12 @@ TEST_F(AtomicFileBufTempFileCleanupTest, CloseFailureRemovesTempFileFromDisk)
 
 TEST_F(AtomicFileBufTempFileCleanupTest, DestructorRemovesTempFileWhenCloseNeverCalled)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__filesystem__file_io");
+    RecordProperty("Description",
+                   "Check 'AtomicFileBufTempFileCleanupTest.DestructorRemovesTempFileWhenCloseNeverCalled' behavior "
+                   "for the filesystem component.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     {
         AtomicFileBuf buf{0, std::ios::in, temp_file_, "to_path"};
         EXPECT_CALL(buf, is_open()).WillRepeatedly(Return(true));
@@ -229,6 +273,12 @@ TEST_F(AtomicFileBufTempFileCleanupTest, DestructorRemovesTempFileWhenCloseNever
 
 TEST_F(AtomicFileBufTempFileCleanupTest, DestructorDoesNothingAfterSuccessfulClose)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__filesystem__file_io");
+    RecordProperty("Description",
+                   "Check 'AtomicFileBufTempFileCleanupTest.DestructorDoesNothingAfterSuccessfulClose' behavior for "
+                   "the filesystem component.");
+    RecordProperty("TestType", "requirements-based");
+    RecordProperty("DerivationTechnique", "requirements-analysis");
     {
         AtomicFileBuf buf{0, std::ios::in, temp_file_, "to_path"};
         EXPECT_CALL(buf, is_open()).WillRepeatedly(Return(false));

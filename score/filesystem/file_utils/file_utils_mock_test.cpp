@@ -23,6 +23,10 @@ namespace
 
 TEST(FileUtilsMock, CheckReturnValues)
 {
+    RecordProperty("PartiallyVerifies", "comp_req__filesystem__mock_fake");
+    RecordProperty("Description", "Check 'FileUtilsMock.CheckReturnValues' behavior for the filesystem component.");
+    RecordProperty("TestType", "interface-test");
+    RecordProperty("DerivationTechnique", "design-analysis");
     FileUtilsMock unit;
 
     EXPECT_EQ(Result<void>{}, unit.ChangeGroup({}, std::string{}));
