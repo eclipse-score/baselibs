@@ -1,0 +1,90 @@
+/********************************************************************************
+ * Copyright (c) 2026 Contributors to the Eclipse Foundation
+ *
+ * See the NOTICE file(s) distributed with this work for additional
+ * information regarding copyright ownership.
+ *
+ * This program and the accompanying materials are made available under the
+ * terms of the Apache License Version 2.0 which is available at
+ * https://www.apache.org/licenses/LICENSE-2.0
+ *
+ * SPDX-License-Identifier: Apache-2.0
+ ********************************************************************************/
+package BaselibsMwLogStakeholder
+
+import ScoreReq
+
+// Source: https://github.com/eclipse-score/score/blob/main/docs/requirements/stakeholder/index.rst
+// score_tooling does not support selecting specific requiremnt IDs from the stakeholder
+// requirements. Without which the traceability fails. Hence a subset of the stakeholder
+// requirements that are applicable to mw/log are maintained here as assumed system requirements.
+// TODO: https://github.com/eclipse-score/baselibs/issues/905
+// stkh_req__dev_experience__logging_support
+ScoreReq.AssumedSystemReq stkh_req__dev_experience__logging_support {
+    description = '''The SW-platform shall support the following logging setups:
+
+    * Logging to external disk via mounted filesystem on top of PCIe driver
+    * Logging via second dedicated Ethernet Channel
+    * Logging/sensor data Gathering via Cloud native filesystem on top of second Ethernet Channel
+    * Gathering of raw sensor data e.g. video streams
+    * Diagnostic Log and Trace / Logcat format is supported
+    * Logging of early startup events'''
+    safety = ScoreReq.Asil.QM
+    rationale = "tbd"
+    version = 1
+}
+
+// stkh_req__functional_req__safe_comput
+ScoreReq.AssumedSystemReq stkh_req__functional_req__safe_comput {
+    description = "The SW-platform shall support safe computation."
+    safety = ScoreReq.Asil.B
+    rationale = "Safe systems require computations to be done in safe environments."
+    version = 1
+}
+
+// stkh_req__dev_experience__boot_logging
+ScoreReq.AssumedSystemReq stkh_req__dev_experience__boot_logging {
+    description = "The SW-platform shall support logging of data to memory which survives a reboot cycle."
+    safety = ScoreReq.Asil.QM
+    rationale = "tbd"
+    version = 1
+}
+
+// stkh_req__dependability__security_features
+ScoreReq.AssumedSystemReq stkh_req__dependability__security_features {
+    description = '''The SW-platform shall support the following security features:
+
+    * Mandatory access control
+    * Secure boot
+    * Secure onboard communication
+    * IPSec and MACSec
+    * Firewall
+    * Certificate installation and storage in HSM or ARM trustzone.
+    * Kernel hardening (ASLR, Pointer obfuscation …) in libc and compiler
+    * Identity and Access Management
+    * Secure Feature Activation
+    * Secure software update'''
+    safety = ScoreReq.Asil.QM
+    rationale = "tbd"
+    version = 1
+}
+
+// stkh_req__dev_experience__prog_languages
+ScoreReq.AssumedSystemReq stkh_req__dev_experience__prog_languages {
+    description = '''The SW-platform shall support implementation of applications in the following
+    programming languages up to the highest ASIL level as defined in :need:`stkh_req__dependability__automotive_safety`:
+
+    * C++
+    * Rust'''
+    safety = ScoreReq.Asil.QM
+    rationale = "tbd"
+    version = 1
+}
+
+// stkh_req__overall_goals__enable_cooperation
+ScoreReq.AssumedSystemReq stkh_req__overall_goals__enable_cooperation {
+    description = "The SW-platform shall where possible be based on existing standards (e.g. network protocols)."
+    safety = ScoreReq.Asil.QM
+    rationale = "To enable cooperation with other cooperation partners."
+    version = 1
+}

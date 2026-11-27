@@ -67,19 +67,13 @@ class ConfigurationFileDiscovererFixture : public ::testing::Test
 
     score::cpp::expected_blank<score::os::Error> OnAccessCall(const char* pathname, score::os::Unistd::AccessMode mode)
     {
-        score::cpp::expected_blank<score::os::Error> result{score::cpp::make_unexpected(kError)};
-
-        if (mode != score::os::Unistd::AccessMode::kExists)
+        if (mode == score::os::Unistd::AccessMode::kExists &&
+            std::find(existing_files.begin(), existing_files.end(), std::string{pathname}) != existing_files.end())
         {
-            return result;
+            return score::cpp::expected_blank<score::os::Error>{};
         }
 
-        if (std::find(existing_files.begin(), existing_files.end(), std::string{pathname}) != existing_files.end())
-        {
-            result = score::cpp::expected_blank<score::os::Error>{};
-        }
-
-        return result;
+        return score::cpp::make_unexpected(kError);
     }
 
     score::cpp::expected<std::string, score::os::Error> OnExecPathCall() const
@@ -133,6 +127,7 @@ class ConfigurationFileDiscovererFixture : public ::testing::Test
 TEST_F(ConfigurationFileDiscovererFixture, DiscovererShallFindGlobalConfigurationFile)
 {
     RecordProperty("PartiallyVerifies", "comp_req__log__global_config");
+    RecordProperty("lobster-tracing", "BaselibsMwLog.comp_req__log__global_config");
     RecordProperty("TestType", "requirements-based");
     RecordProperty("Requirement", "SCR-1634075");
     RecordProperty("ASIL", "B");
@@ -152,6 +147,7 @@ TEST_F(ConfigurationFileDiscovererFixture, DiscovererShallFindGlobalConfiguratio
 TEST_F(ConfigurationFileDiscovererFixture, DiscovererShallFindConfigurationFileInCwdEtc)
 {
     RecordProperty("PartiallyVerifies", "comp_req__log__cfg_file_loc");
+    RecordProperty("lobster-tracing", "BaselibsMwLog.comp_req__log__cfg_file_loc");
     RecordProperty("TestType", "requirements-based");
     RecordProperty("Requirement", "SCR-1633294");
     RecordProperty("ASIL", "B");
@@ -176,6 +172,7 @@ TEST_F(ConfigurationFileDiscovererFixture, DiscovererShallFindConfigurationFileI
 TEST_F(ConfigurationFileDiscovererFixture, DiscovererShallFindConfigurationFileInCwd)
 {
     RecordProperty("PartiallyVerifies", "comp_req__log__cfg_file_loc");
+    RecordProperty("lobster-tracing", "BaselibsMwLog.comp_req__log__cfg_file_loc");
     RecordProperty("TestType", "requirements-based");
     RecordProperty("Requirement", "SCR-1633294");
     RecordProperty("ASIL", "B");
@@ -198,6 +195,7 @@ TEST_F(ConfigurationFileDiscovererFixture, DiscovererShallFindConfigurationFileI
 TEST_F(ConfigurationFileDiscovererFixture, DiscovererShallFindConfigurationFileInExecPath)
 {
     RecordProperty("PartiallyVerifies", "comp_req__log__cfg_file_loc");
+    RecordProperty("lobster-tracing", "BaselibsMwLog.comp_req__log__cfg_file_loc");
     RecordProperty("TestType", "requirements-based");
     RecordProperty("Requirement", "SCR-1633294");
     RecordProperty("ASIL", "B");
@@ -223,6 +221,7 @@ TEST_F(ConfigurationFileDiscovererFixture, DiscovererShallFindConfigurationFileI
 TEST_F(ConfigurationFileDiscovererFixture, DiscovererShallFindConfigurationFileInEnvPath)
 {
     RecordProperty("PartiallyVerifies", "comp_req__log__cfg_file_loc");
+    RecordProperty("lobster-tracing", "BaselibsMwLog.comp_req__log__cfg_file_loc");
     RecordProperty("TestType", "requirements-based");
     RecordProperty("Requirement", "SCR-1633294");
     RecordProperty("ASIL", "B");
@@ -246,6 +245,7 @@ TEST_F(ConfigurationFileDiscovererFixture, DiscovererShallFindConfigurationFileI
 TEST_F(ConfigurationFileDiscovererFixture, DiscovererShallFindConfigurationFileInEnvPathOverrideCwdEtc)
 {
     RecordProperty("PartiallyVerifies", "comp_req__log__cfg_file_loc");
+    RecordProperty("lobster-tracing", "BaselibsMwLog.comp_req__log__cfg_file_loc");
     RecordProperty("TestType", "requirements-based");
     RecordProperty("Requirement", "SCR-1633294");
     RecordProperty("ASIL", "B");
@@ -270,6 +270,7 @@ TEST_F(ConfigurationFileDiscovererFixture, DiscovererShallFindConfigurationFileI
 TEST_F(ConfigurationFileDiscovererFixture, DiscovererShallFindConfigurationFileInEnvPathOverrideCwd)
 {
     RecordProperty("PartiallyVerifies", "comp_req__log__cfg_file_loc");
+    RecordProperty("lobster-tracing", "BaselibsMwLog.comp_req__log__cfg_file_loc");
     RecordProperty("TestType", "requirements-based");
     RecordProperty("Requirement", "SCR-1633294");
     RecordProperty("ASIL", "B");
@@ -294,6 +295,7 @@ TEST_F(ConfigurationFileDiscovererFixture, DiscovererShallFindConfigurationFileI
 TEST_F(ConfigurationFileDiscovererFixture, DiscovererShallFindConfigurationFileInEnvPathOverrideExecPath)
 {
     RecordProperty("PartiallyVerifies", "comp_req__log__cfg_file_loc");
+    RecordProperty("lobster-tracing", "BaselibsMwLog.comp_req__log__cfg_file_loc");
     RecordProperty("TestType", "requirements-based");
     RecordProperty("Requirement", "SCR-1633294");
     RecordProperty("ASIL", "B");

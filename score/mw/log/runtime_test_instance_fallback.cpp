@@ -42,7 +42,7 @@ bool IsRecorderOfType(const Recorder& recorder) noexcept
     return dynamic_cast<const ConcreteRecorder*>(&recorder) != nullptr;
 }
 
-TEST(RuntimeTest, RuntimeInitializationWithoutPointer)
+TEST(RuntimeTest, RuntimeInitializationAfterNullRecorder)
 {
     RecordProperty("ASIL", "B");
     RecordProperty("Description",

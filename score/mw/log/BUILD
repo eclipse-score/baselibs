@@ -15,6 +15,7 @@ load("@rules_cc//cc:defs.bzl", "cc_library", "cc_test")
 load("@score_baselibs//:bazel/unit_tests.bzl", "cc_unit_test_suites_for_host_and_qnx")
 load("@score_baselibs//score/quality/clang_tidy:extra_checks.bzl", "clang_tidy_extra_checks")
 load("@score_docs_as_code//:docs.bzl", "docs_bundle")
+load("@score_tooling//bazel/rules/rules_score:rules_score.bzl", "architectural_design", "assumed_system_requirements", "component", "component_requirements", "feature_requirements", "rst_to_trlc", "unit", "unit_design")
 
 clang_tidy_extra_checks(
     name = "clang_tidy_extra_checks",
@@ -379,6 +380,8 @@ cc_test(
     srcs = [
         ":log_stream_test.cpp",
     ],
+    # This test also exercises deprecated logging APIs.
+    copts = ["-Wno-error=deprecated-declarations"],
     features = COMPILER_WARNING_FEATURES + [
         "aborts_upon_exception",
     ],
@@ -427,6 +430,8 @@ cc_test(
     srcs = [
         ":log_types_test.cpp",
     ],
+    # This test also exercises deprecated logging APIs.
+    copts = ["-Wno-error=deprecated-declarations"],
     features = COMPILER_WARNING_FEATURES + [
         "aborts_upon_exception",
     ],
@@ -494,12 +499,167 @@ cc_unit_test_suites_for_host_and_qnx(
     ],
 )
 
+# The shared class diagram is contextual; per-unit conformance remains unresolved.
+unit_design(
+    name = "mw_log_frontend_class_design",
+    static = ["docs/detailed_design/_assets/verbose_console_logging_static.puml"],
+)
+
+unit_design(
+    name = "mw_log_default_recorders",
+    static = ["docs/detailed_design/_assets/mw_log_default_recorders.puml"],
+)
+
+unit_design(
+    name = "mw_log_frontend_initialization_design",
+    dynamic = ["docs/detailed_design/_assets/configuration_sequence.puml"],
+)
+
+unit_design(
+    name = "mw_log_backend_registration_design",
+    dynamic = ["docs/detailed_design/_assets/backend_registration_sequence_diagram.puml"],
+)
+
+unit(
+    name = "mw_log_frontend_unit",
+    maturity = "development",
+    target_compatible_with = ["@platforms//os:linux"],
+    tests = [
+        ":log_stream_factory_test",
+        ":logger_container_test",
+        ":logger_test",
+        ":logging_test",
+        ":runtime_test",
+        ":runtime_test_instance_fallback",
+        ":runtime_test_without_pointer_initialization",
+    ],
+    unit_design = [
+        ":mw_log_frontend_class_design",
+    ],
+    implementation = [":frontend"],
+)
+
+unit(
+    name = "mw_log_stream_unit",
+    maturity = "development",
+    target_compatible_with = ["@platforms//os:linux"],
+    tests = [
+        ":log_stream_error_test",
+        ":log_stream_test",
+    ],
+    unit_design = [":mw_log_frontend_initialization_design"],
+    implementation = [":log_stream"],
+)
+
+unit(
+    name = "mw_log_types_and_recorder_unit",
+    maturity = "development",
+    target_compatible_with = ["@platforms//os:linux"],
+    tests = [
+        ":log_level_test",
+        ":log_types_test",
+        ":slot_handle_test",
+    ],
+    unit_design = [":mw_log_default_recorders"],
+    implementation = [
+        ":recorder",
+        ":shared_types",
+    ],
+)
+
+unit(
+    name = "mw_log_backend_registration_unit",
+    maturity = "development",
+    target_compatible_with = ["@platforms//os:linux"],
+    tests = [
+        ":backend_table_test",
+        ":plugin_api_test",
+    ],
+    unit_design = [":mw_log_backend_registration_design"],
+    implementation = [
+        ":backend_table",
+        ":plugin_api",
+    ],
+)
+
+assumed_system_requirements(
+    name = "mw_log_assumed_system_requirements",
+    srcs = ["docs/requirements/assumed_system_requirements.trlc"],
+    target_compatible_with = ["@platforms//os:linux"],
+    visibility = ["//visibility:public"],
+)
+
+rst_to_trlc(
+    name = "mw_log_feature_trlc",
+    srcs = ["@score_platform//:docs/features/log_and_trace/logging/requirements/index.rst"],
+    package = "BaselibsMwLogFeature",
+    ref_package = "BaselibsMwLogStakeholder",
+)
+
+feature_requirements(
+    name = "mw_log_feature_requirements",
+    srcs = [":mw_log_feature_trlc"],
+    target_compatible_with = ["@platforms//os:linux"],
+    deps = [":mw_log_assumed_system_requirements"],
+)
+
+rst_to_trlc(
+    name = "mw_log_frontend_requirements_trlc",
+    srcs = ["docs/requirements/index.rst"],
+    package = "BaselibsMwLog",
+    ref_package = "BaselibsMwLogFeature",
+)
+
+component_requirements(
+    name = "mw_log_frontend_requirements",
+    srcs = [":mw_log_frontend_requirements_trlc"],
+    target_compatible_with = ["@platforms//os:linux"],
+    deps = [":mw_log_feature_requirements"],
+)
+
+component(
+    name = "component_mw_log_frontend",
+    components = [
+        ":mw_log_backend_registration_unit",
+        ":mw_log_frontend_unit",
+        ":mw_log_stream_unit",
+        ":mw_log_types_and_recorder_unit",
+        "//score/mw/log/configuration:mw_log_configuration_unit",
+    ],
+    requirements = [
+        ":mw_log_frontend_requirements",
+        ":mw_log_feature_requirements",
+    ],
+    target_compatible_with = ["@platforms//os:linux"],
+    visibility = ["//visibility:public"],
+)
+
+# Only the diagrams that the strict PlantUML parser of score_tooling accepts.
+# The other diagrams in docs/detailed_design/_assets need to be rewritten first:
+# https://github.com/eclipse-score/logging/issues/283
+architectural_design(
+    name = "mw_log_architectural_design",
+    dynamic = [
+        "docs/detailed_design/_assets/configuration_sequence.puml",
+        "docs/detailed_design/_assets/wait_free_stack_trypush.puml",
+    ],
+    visibility = ["//score/mw/log/architectural_design:__pkg__"],
+)
+
 exports_files(
     [
         "docs/detailed_design/_assets/configuration_sequence.puml",
         "docs/detailed_design/_assets/wait_free_stack_trypush.puml",
     ],
     visibility = ["//score/mw/log/architectural_design:__pkg__"],
+)
+
+exports_files(
+    [
+        "docs/requirements/index.rst",
+        "docs/safety_analysis/aou_requirements.rst",
+    ],
+    visibility = ["//visibility:public"],
 )
 
 docs_bundle(

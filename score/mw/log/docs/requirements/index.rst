@@ -34,18 +34,7 @@ Configuration
 .. comp_req:: Logging Configuration File
    :id: comp_req__log__cfg_file
    :status: valid
-   :derived_from:
-      feat_req__logging__config_log_level[version==1],
-      feat_req__logging__sink_device[version==1],
-      feat_req__logging__sink_multiple_device[version==1],
-      feat_req__logging__sink_strategy[version==1],
-      feat_req__logging__config_buffer_size[version==1],
-      feat_req__logging__config_storage_size[version==1],
-      feat_req__logging__config_permissions[version==1],
-      feat_req__logging__config_log_filter[version==1],
-      feat_req__logging__config_entity_id[version==1],
-      feat_req__logging__config_on_demand[version==1],
-      feat_req__logging__config_fallback[version==1]
+   :derived_from: feat_req__logging__config_log_level[version==1], feat_req__logging__sink_device[version==1], feat_req__logging__sink_multiple_device[version==1], feat_req__logging__sink_strategy[version==1], feat_req__logging__config_buffer_size[version==1], feat_req__logging__config_storage_size[version==1], feat_req__logging__config_permissions[version==1], feat_req__logging__config_log_filter[version==1], feat_req__logging__config_entity_id[version==1], feat_req__logging__config_on_demand[version==1], feat_req__logging__config_fallback[version==1]
    :reqtype: Functional
    :security: NO
    :safety: QM
