@@ -12,13 +12,13 @@
    # SPDX-License-Identifier: Apache-2.0
    # *******************************************************************************
 
-utils
-######
+Utils
+#####
 
 .. document:: Utils Library
    :id: doc__utils
    :status: draft
-   :version: 1
+   :version: 2
    :safety: ASIL_B
    :security: YES
    :tags: baselibs_utils
@@ -35,31 +35,5 @@ utils
    safety_analysis/dfa.rst
    detailed_design/chklst_impl_inspection.rst
 
-Abstract
-========
-
-This component request proposes the integration of a safe Utils library for common utility functions and algorithms.
-
-Motivation and Rationale
-========================
-
-The Utils library shall provide safe and efficient implementations of common utility functions and algorithms.
-The library shall enable developers to perform common tasks in a type-safe manner, reducing the risk of runtime errors and improving code quality.
-A Utils library with type-safe utility functions is needed in the S-CORE software platform due to the frequent use of such functions in various features and the need for reliable utility operations.
-There are multiple use-cases like calculating string hashes, embedding binary data in string format or managing resource lifetimes.
-
-Specification
-=============
-
-The following details and requirements describe the aspects of the current feature in the context of S-CORE.
-
-General considerations
-----------------------
-
-The Utils library should provide type-safe utility functions and efficient algorithms:
-
-* :need:`comp_req__utils__base64_encoding`
-* :need:`comp_req__utils__base64_decoding`
-* :need:`comp_req__utils__threadsafe_singleton`
-
-The component should be extensible in the future to support additional utility functions and algorithms as needed.
+The Utils component provides general-purpose C++ utilities for S-CORE platform and application developers.
+It covers Base64 encoding and decoding, thread-safe singletons, static destruction ordering guards, and string deduplication with fast view comparisons.

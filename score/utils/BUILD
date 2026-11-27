@@ -82,6 +82,8 @@ docs_bundle(
         ":base64",
         ":static_destruction_guard",
         "//score/utils/meyer_singleton:meyer_singleton",
+        "//score/utils/string_registry:registry_string_view",
+        "//score/utils/string_registry:string_registry",
     ],
     primary_need_id = "comp__baselibs_utils",
     source_dir = "docs",

@@ -18,7 +18,7 @@ Scope Exit Architecture
 .. document:: Scope Exit Architecture
    :id: doc__scope_exit_architecture
    :status: draft
-   :version: 1
+   :version: 2
    :safety: ASIL_B
    :security: YES
    :realizes: wp__component_arch[version==1]
@@ -29,7 +29,7 @@ Scope Exit Architecture
    :safety: ASIL_B
    :status: valid
    :version: 1
-   :implements: logic_arc_int__baselibs__utils_scoped_op[version==1]
+   :implements: logic_arc_int__baselibs__scope_exit[version==1]
    :belongs_to: feat__baselibs[version==1]
 
    The Scope Exit component contains RAII scope guards that invoke a callable on scope exit unless released.
@@ -64,7 +64,9 @@ Interfaces
    :safety: ASIL_B
    :status: valid
    :version: 1
-   :included_by: logic_arc_int__baselibs__utils_scoped_op[version==1]
+   :included_by: logic_arc_int__baselibs__scope_exit[version==1]
+
+   Creates an active scope guard that owns the supplied callback.
 
 .. needextend:: c.this_doc() and type == "logic_arc_int_op"
    :+tags: baselibs, scope_exit
@@ -75,4 +77,26 @@ Interfaces
    :safety: ASIL_B
    :status: valid
    :version: 1
-   :included_by: logic_arc_int__baselibs__utils_scoped_op[version==1]
+   :included_by: logic_arc_int__baselibs__scope_exit[version==1]
+
+   Invokes the callback once when the active scope guard is destroyed.
+
+.. logic_arc_int_op:: Release
+   :id: logic_arc_int_op__scope_exit__release
+   :security: YES
+   :safety: ASIL_B
+   :status: valid
+   :version: 1
+   :included_by: logic_arc_int__baselibs__scope_exit[version==1]
+
+   Deactivates the scope guard so destruction does not invoke its callback.
+
+.. logic_arc_int_op:: Transfer Callback Ownership
+   :id: logic_arc_int_op__scope_exit__move
+   :security: YES
+   :safety: ASIL_B
+   :status: valid
+   :version: 1
+   :included_by: logic_arc_int__baselibs__scope_exit[version==1]
+
+   Transfers callback ownership during move construction or move assignment.
