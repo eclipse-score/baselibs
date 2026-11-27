@@ -13,7 +13,7 @@ title This diagram only illustrates the use-case of verbose logging.
 ' LEFT SIDE: NOT MOCKABLE PART
 ' ============================================================
 
-package "Not Mockable Part" as NotMockablePart {
+package NotMockablePart {
 
   class "score::mw::LogLevel" as LogLevel <<enumeration>> {
     kOff
@@ -74,7 +74,7 @@ package "Not Mockable Part" as NotMockablePart {
     + {static} GetStream(LogLevel, ctxId: std::string_view = "DFLT"): LogStream
   }
 
-  package "User-Facing API" as UserFacingAPI {
+  package UserFacingAPI {
     class "LoggingIdentifier" as LoggingIdentifier {
     }
 
@@ -94,7 +94,7 @@ package "Not Mockable Part" as NotMockablePart {
       + GetContext(): std::string_view
     }
 
-    class "Free Functions" as FreeFunctions {
+    class FreeFunctions {
       + score::mw::LogFatal(): LogStream
       + score::mw::LogError(): LogStream
       + score::mw::LogWarn(): LogStream
@@ -117,7 +117,7 @@ package "Not Mockable Part" as NotMockablePart {
 ' RIGHT SIDE: MOCKABLE PART
 ' ============================================================
 
-package "Mockable Part" as MockablePart {
+package MockablePart {
   class "score::mw::log::LoggerContainer" as LoggerContainer {
     - InsertNewLogger(const std::string_view): Logger&
     - FindExistingLogger(const std::string_view): score::cpp::optional<std::reference_wrapper<Logger>>
@@ -129,7 +129,7 @@ package "Mockable Part" as MockablePart {
     + GetDefaultLogger(): Logger&
   }
 
-  class "template <typename Element>\nscore::mw::log::detail::WaitFreeStack" as WaitFreeStack {
+  class "score::mw::log::detail::WaitFreeStack" as WaitFreeStack {
     - elements_: std::vector<score::cpp::optional<Element>>
     - elements_written_: std::vector<std::atomic_int>
     - write_index_: AtomicIndex
@@ -139,6 +139,7 @@ package "Mockable Part" as MockablePart {
     + TryPush(Element&&): score::cpp::optional<std::reference_wrapper<Element>>
     + Find(const FindPredicate<Element>&): score::cpp::optional<std::reference_wrapper<Element>>
   }
+  note right of WaitFreeStack : template <typename Element>
 
   class "TextFormat" as TextFormat {
   }
@@ -146,12 +147,12 @@ package "Mockable Part" as MockablePart {
   interface "score::mw::log::Recorder" as Recorder {
     + Recorder()
     + {abstract} StartRecord(context_id: std::string_view, LogLevel): score::cpp::optional<SlotHandle>
-    + {abstract} StopRecord(SlotHandle const&): void
+    + {abstract} StopRecord(const SlotHandle&): void
     + {abstract} Log(SlotHandle, std::uint8_t): void
     + {abstract} Log(SlotHandle, std::int8_t): void
   }
 
-  note as N_RecorderUsage #blue
+  note as N_RecorderUsage
     A user is allowed to use the Recorder interface
     for its abstraction. But its not recommended due
     to its more complicated usage.
@@ -163,15 +164,16 @@ package "Mockable Part" as MockablePart {
   class "EmptyRecorder" as EmptyRecorder {
   }
 
-  note as N_EmptyRecorder #orange
+  note as N_EmptyRecorder
     EmptyRecorder acts as /dev/null.
     All log data is silently discarded.
     Used as fallback when TextRecorder
     initialization fails.
   end note
 
-  class "Console (stdout)" as Console {
+  class Console {
   }
+  note right of Console : stdout
 
 }
 

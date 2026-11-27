@@ -84,6 +84,14 @@ Following targets are available to integrate `mw::log` into your application:
 | `//score/mw/log/backend:remote` | Adds DataRouter remote DLT as a backend plugin. |
 | `//score/mw/log/backend:slog` | Adds QNX slog2 as a backend plugin. |
 
+Modelling the mw::log frontend as a component that can be consumed by dependable elements (seooc) E.g.: score_logging requires the libclang toolchain:
+
+```bash
+bazel build --config=score-linux-x86_64 \
+  --extra_toolchains=//bazel/toolchains:baselibs_libclang_toolchain \
+  //score/mw/log:component_mw_log_frontend
+```
+
 See [registry_aware_recorder_factory.md](./design/registry_aware_recorder_factory.md) for a complete overview of all targets, usage examples, and guidance on adding new backends.
 
 > **Note:** If your application binary requires any backend other than console (e.g., remote DLT logging), you must add the corresponding backend target to your `deps` explicitly. In the future, `@score_baselibs//mw/log` will serve as the sole logging target. The integrator will be responsible for making the required backends available for each target platform, and `mw/log` will take care of loading them dynamically as shared libraries (.so). Until dynamic backend loading is supported (score/issues/2848), you must provide each backend dependency yourself.

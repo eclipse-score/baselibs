@@ -13,6 +13,7 @@
 
 load("@rules_cc//cc:defs.bzl", "cc_library", "cc_test")
 load("@score_baselibs//:bazel/unit_tests.bzl", "cc_unit_test_suites_for_host_and_qnx")
+load("@score_tooling//bazel/rules/rules_score:rules_score.bzl", "unit")
 
 COMPILER_WARNING_FEATURES = [
     "treat_warnings_as_errors",
@@ -138,7 +139,9 @@ filegroup(
     name = "tests_config_files",
     srcs = [
         "test/data/app_config.json",
+        "test/data/context_level_broken_config.json",
         "test/data/ecu_config.json",
+        "test/data/empty_config.json",
         "test/data/error-json-structure.json",
         "test/data/invalid_app_config.json",
         "test/data/syntax_error.json",
@@ -157,7 +160,12 @@ cc_test(
         "configuration_test.cpp",
         "target_config_reader_test.cpp",
     ],
+    copts = [
+        "-DMW_LOG_TEST_DATA_EXECPATH=\\\"$(execpath test/data/ecu_config.json)\\\"",
+        "-DMW_LOG_TEST_DATA_ROOTPATH=\\\"$(rootpath test/data/ecu_config.json)\\\"",
+    ],
     data = [
+        "test/data/ecu_config.json",
         ":tests_config_files",
     ],
     features = COMPILER_WARNING_FEATURES + [
@@ -174,6 +182,19 @@ cc_test(
         "@score_baselibs//score/os/utils/mocklib:path_mock",
         #"@score_baselibs//score/mw/log/test/console_logging_environment",
         "@googletest//:gtest_main",
+    ],
+)
+
+unit(
+    name = "mw_log_configuration_unit",
+    maturity = "development",
+    tests = [":unit_test"],
+    unit_design = [],
+    visibility = ["//visibility:public"],
+    implementation = [
+        ":configuration",
+        ":configuration_interface",
+        ":configuration_parser",
     ],
 )
 

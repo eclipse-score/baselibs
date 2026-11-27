@@ -12,16 +12,21 @@ skinparam sequenceGroupBackgroundColor #F5F5F5
 title **mw::log — Backend Registration & Recorder Creation Sequence**
 
 ' === Participants ===
-participant "OS Loader" as loader #F8CECC
-participant "gBackendCreators\n[std::array<FnPtr,6>]" as table #FFF2CC
-participant "ConsoleRegistrant\n(static const)" as console_reg #D5E8D4
-participant "FileRegistrant\n(static const)" as file_reg #DAE8FC
-participant "RemoteRegistrant\n(static const)" as remote_reg #DAE8FC
-participant "Application\nmain()" as app #F8CECC
-participant "Runtime\n(Meyers' Singleton)" as runtime #D5E8D4
-participant "RegistryAware\nRecorderFactory" as factory #D5E8D4
+participant "OSLoader" as loader #F8CECC
+participant "gBackendCreators" as table #FFF2CC
+participant "ConsoleRegistrant" as console_reg #D5E8D4
+participant "FileRegistrant" as file_reg #DAE8FC
+participant "RemoteRegistrant" as remote_reg #DAE8FC
+participant "Application" as app #F8CECC
+participant "Runtime" as runtime #D5E8D4
+participant "RegistryAwareRecorderFactory" as factory #D5E8D4
 participant "TargetConfigReader" as config_reader #FFF2CC
 participant "CompositeRecorder" as composite #E1D5E7
+note over table : std::array<FnPtr,6>
+note over console_reg, file_reg : static const
+note over remote_reg : static const
+note over app : main()
+note over runtime : Meyers' Singleton
 
 ' === Phase 1: Constant Initialization (load time) ===
 autonumber
