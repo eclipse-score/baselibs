@@ -131,17 +131,25 @@ class TargetConfigReaderFixture : public ::testing::Test
     std::string GetPath(const std::string& file_name)
     {
         const std::string default_path = "score/mw/log/configuration/test/data/" + file_name;
-
-        std::ifstream file(default_path);
-        if (file.is_open())
+        const std::string candidates[] = {
+            "score/mw/log/configuration/test/data/ecu_config.json",
+            "external/safe_posix_platform/score/mw/log/configuration/test/data/ecu_config.json",
+#ifdef MW_LOG_TEST_DATA_ROOTPATH
+            MW_LOG_TEST_DATA_ROOTPATH,
+#endif
+#ifdef MW_LOG_TEST_DATA_EXECPATH
+            MW_LOG_TEST_DATA_EXECPATH,
+#endif
+        };
+        for (const auto& candidate : candidates)
         {
-            file.close();
-            return default_path;
+            if (std::ifstream{candidate}.is_open())
+            {
+                return candidate.substr(0, candidate.find_last_of('/') + 1U) + file_name;
+            }
         }
-        else
-        {
-            return "external/safe_posix_platform/" + default_path;
-        }
+        ADD_FAILURE() << "Cannot locate configuration test data";
+        return default_path;
     }
 
     std::vector<std::string> configuration_file_paths_{KEcuConfigFile(), KAppConfigFile()};
@@ -166,6 +174,8 @@ TEST_F(TargetConfigReaderFixture, NoConfigFilesShallFail)
 TEST_F(TargetConfigReaderFixture, ConfigReaderShallParseEcuIdFromEcuConfig)
 {
     RecordProperty("PartiallyVerifies", "comp_req__log__global_config, comp_req__log__cfg_log_ecu_id");
+    RecordProperty("lobster-tracing",
+                   "BaselibsMwLog.comp_req__log__global_config, BaselibsMwLog.comp_req__log__cfg_log_ecu_id");
     RecordProperty("TestType", "requirements-based");
     RecordProperty("Requirement", "SCR-1633316, SCR-1634075");
     RecordProperty("ASIL", "B");
@@ -181,6 +191,9 @@ TEST_F(TargetConfigReaderFixture, ConfigReaderShallParseAppIdFromAppConfig)
 {
     RecordProperty("PartiallyVerifies",
                    "comp_req__log__cfg_file, comp_req__log__cfg_precedence, comp_req__log__cfg_log_app_id");
+    RecordProperty("lobster-tracing",
+                   "BaselibsMwLog.comp_req__log__cfg_file, BaselibsMwLog.comp_req__log__cfg_precedence, "
+                   "BaselibsMwLog.comp_req__log__cfg_log_app_id");
     RecordProperty("TestType", "requirements-based");
     RecordProperty("Requirement", "SCR-1633316");
     RecordProperty("ASIL", "B");
@@ -195,6 +208,7 @@ TEST_F(TargetConfigReaderFixture, ConfigReaderShallParseAppIdFromAppConfig)
 TEST_F(TargetConfigReaderFixture, ConfigReaderShallParseLogLevelFromAppConfig)
 {
     RecordProperty("PartiallyVerifies", "comp_req__log__cfg_file");
+    RecordProperty("lobster-tracing", "BaselibsMwLog.comp_req__log__cfg_file");
     RecordProperty("TestType", "requirements-based");
     RecordProperty("Requirement", "SCR-1633316");
     RecordProperty("ASIL", "B");
@@ -210,6 +224,7 @@ TEST_F(TargetConfigReaderFixture, ConfigReaderShallParseLogLevelFromAppConfig)
 TEST_F(TargetConfigReaderFixture, ConfigReaderShallParseLogModeFromAppConfig)
 {
     RecordProperty("PartiallyVerifies", "comp_req__log__cfg_file");
+    RecordProperty("lobster-tracing", "BaselibsMwLog.comp_req__log__cfg_file");
     RecordProperty("TestType", "requirements-based");
     RecordProperty("Requirement", "SCR-1633316");
     RecordProperty("ASIL", "B");
@@ -249,6 +264,7 @@ TEST_F(TargetConfigReaderFixture, ConfigReaderShallParseBufferOverwriteOnFullSta
 TEST_F(TargetConfigReaderFixture, ConfigReaderShallParseStackBufferSizeFromEcuConfig)
 {
     RecordProperty("PartiallyVerifies", "comp_req__log__cfg_buffer_size");
+    RecordProperty("lobster-tracing", "BaselibsMwLog.comp_req__log__cfg_buffer_size");
     RecordProperty("TestType", "requirements-based");
     RecordProperty("Requirement", "SCR-1633316");
     RecordProperty("ASIL", "B");
@@ -264,6 +280,7 @@ TEST_F(TargetConfigReaderFixture, ConfigReaderShallParseStackBufferSizeFromEcuCo
 TEST_F(TargetConfigReaderFixture, ConfigReaderShallParseRingBufferSizeFromEcuConfig)
 {
     RecordProperty("PartiallyVerifies", "comp_req__log__cfg_buffer_size");
+    RecordProperty("lobster-tracing", "BaselibsMwLog.comp_req__log__cfg_buffer_size");
     RecordProperty("TestType", "requirements-based");
     RecordProperty("Requirement", "SCR-1633316, SCR-1634075");
     RecordProperty("ASIL", "B");
@@ -292,6 +309,7 @@ TEST_F(TargetConfigReaderFixture, ConfigReaderShallParseLogLevelConsoleFromEcuCo
 TEST_F(TargetConfigReaderFixture, ConfigReaderShallParseLogFilePathFromAppConfig)
 {
     RecordProperty("PartiallyVerifies", "comp_req__log__cfg_sink_device");
+    RecordProperty("lobster-tracing", "BaselibsMwLog.comp_req__log__cfg_sink_device");
     RecordProperty("TestType", "requirements-based");
     RecordProperty("Requirement", "SCR-1633316");
     RecordProperty("ASIL", "B");
@@ -307,6 +325,7 @@ TEST_F(TargetConfigReaderFixture, ConfigReaderShallParseLogFilePathFromAppConfig
 TEST_F(TargetConfigReaderFixture, ConfigReaderShallParseContextLogLevelFromEcuAndAppConfig)
 {
     RecordProperty("PartiallyVerifies", "comp_req__log__cfg_precedence");
+    RecordProperty("lobster-tracing", "BaselibsMwLog.comp_req__log__cfg_precedence");
     RecordProperty("TestType", "requirements-based");
     RecordProperty("Requirement", "SCR-1633316, SCR-1634075");
     RecordProperty("ASIL", "B");
@@ -322,6 +341,7 @@ TEST_F(TargetConfigReaderFixture, ConfigReaderShallParseContextLogLevelFromEcuAn
 TEST_F(TargetConfigReaderFixture, ConfigReaderShallParseNumberOfSlots)
 {
     RecordProperty("PartiallyVerifies", "comp_req__log__cfg_buffer_size");
+    RecordProperty("lobster-tracing", "BaselibsMwLog.comp_req__log__cfg_buffer_size");
     RecordProperty("TestType", "requirements-based");
     RecordProperty("Requirement", "SCR-1633316");
     RecordProperty("ASIL", "B");
@@ -335,6 +355,7 @@ TEST_F(TargetConfigReaderFixture, ConfigReaderShallParseNumberOfSlots)
 TEST_F(TargetConfigReaderFixture, ConfigReaderShallParseSlotSizeBytes)
 {
     RecordProperty("PartiallyVerifies", "comp_req__log__cfg_buffer_size");
+    RecordProperty("lobster-tracing", "BaselibsMwLog.comp_req__log__cfg_buffer_size");
     RecordProperty("TestType", "requirements-based");
     RecordProperty("Requirement", "SCR-1633316");
     RecordProperty("ASIL", "B");
@@ -371,6 +392,7 @@ TEST_F(TargetConfigReaderFixture, ConfigReaderShallParseDataRouterUid)
 TEST_F(TargetConfigReaderFixture, AppConfigSyntaxErrorShallFallbackToEcuConfig)
 {
     RecordProperty("PartiallyVerifies", "comp_req__log__cfg_syntax_err");
+    RecordProperty("lobster-tracing", "BaselibsMwLog.comp_req__log__cfg_syntax_err");
     RecordProperty("TestType", "requirements-based");
     RecordProperty("Requirement", "SCR-7263547");
     RecordProperty("ASIL", "B");
@@ -407,6 +429,7 @@ TEST_F(TargetConfigReaderFixture, WrongStructureConfigFileShallCauseDefaultAppId
 TEST_F(TargetConfigReaderFixture, WrongLogLevelValueShallFallbackToEcuConfig)
 {
     RecordProperty("PartiallyVerifies", "comp_req__log__cfg_invalid");
+    RecordProperty("lobster-tracing", "BaselibsMwLog.comp_req__log__cfg_invalid");
     RecordProperty("TestType", "requirements-based");
     RecordProperty("Requirement", "SCR-7263547");
     RecordProperty("ASIL", "B");
@@ -426,6 +449,7 @@ TEST_F(TargetConfigReaderFixture, WrongLogLevelValueShallFallbackToEcuConfig)
 TEST_F(TargetConfigReaderFixture, AppConfigInvalidLogLevelFallbackToEcuConfig)
 {
     RecordProperty("PartiallyVerifies", "comp_req__log__cfg_invalid");
+    RecordProperty("lobster-tracing", "BaselibsMwLog.comp_req__log__cfg_invalid");
     RecordProperty("TestType", "requirements-based");
     RecordProperty("Requirement", "SCR-7263548");
     RecordProperty("ASIL", "B");
@@ -445,6 +469,7 @@ TEST_F(TargetConfigReaderFixture, AppConfigInvalidLogLevelFallbackToEcuConfig)
 TEST_F(TargetConfigReaderFixture, AppConfigInvalidLogModeFallbackToEcuConfig)
 {
     RecordProperty("PartiallyVerifies", "comp_req__log__cfg_invalid");
+    RecordProperty("lobster-tracing", "BaselibsMwLog.comp_req__log__cfg_invalid");
     RecordProperty("TestType", "requirements-based");
     RecordProperty("Requirement", "SCR-7263548");
     RecordProperty("ASIL", "B");
@@ -464,6 +489,7 @@ TEST_F(TargetConfigReaderFixture, AppConfigInvalidLogModeFallbackToEcuConfig)
 TEST_F(TargetConfigReaderFixture, AppConfigInvalidContextConfigFallbackToEcuConfig)
 {
     RecordProperty("PartiallyVerifies", "comp_req__log__cfg_invalid");
+    RecordProperty("lobster-tracing", "BaselibsMwLog.comp_req__log__cfg_invalid");
     RecordProperty("TestType", "requirements-based");
     RecordProperty("Requirement", "SCR-7263548");
     RecordProperty("ASIL", "B");
@@ -499,6 +525,7 @@ TEST_F(TargetConfigReaderFixture, WrongEntriesToContextConfigslShallReturnEmptyC
 TEST_F(TargetConfigReaderFixture, WhenInvalidFilePathReaderShallReturnDefaultAppId)
 {
     RecordProperty("PartiallyVerifies", "comp_req__log__cfg_defaults");
+    RecordProperty("lobster-tracing", "BaselibsMwLog.comp_req__log__cfg_defaults");
     RecordProperty("TestType", "requirements-based");
     RecordProperty("Requirement", "SCR-7263537, SCR-7263552");
     RecordProperty("ASIL", "B");
@@ -518,6 +545,7 @@ TEST_F(TargetConfigReaderFixture, WhenInvalidFilePathReaderShallReturnDefaultApp
 TEST_F(TargetConfigReaderFixture, EmptyConfigFileShallCauseDefaultAppId)
 {
     RecordProperty("PartiallyVerifies", "comp_req__log__cfg_defaults");
+    RecordProperty("lobster-tracing", "BaselibsMwLog.comp_req__log__cfg_defaults");
     RecordProperty("TestType", "requirements-based");
     RecordProperty("Requirement", "SCR-7263552");
     RecordProperty("ASIL", "B");
@@ -537,6 +565,7 @@ TEST_F(TargetConfigReaderFixture, EmptyConfigFileShallCauseDefaultAppId)
 TEST_F(TargetConfigReaderFixture, ConfigReaderShallFallBackToContextLogLevelDefaultWhenNoValidValueInConfigurationFiles)
 {
     RecordProperty("PartiallyVerifies", "comp_req__log__cfg_defaults");
+    RecordProperty("lobster-tracing", "BaselibsMwLog.comp_req__log__cfg_defaults");
     RecordProperty("TestType", "requirements-based");
     RecordProperty("Requirement", "SCR-7263548, SCR-7263552");
     RecordProperty("ASIL", "B");

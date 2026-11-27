@@ -188,9 +188,10 @@ cc_test(
 unit(
     name = "mw_log_configuration_unit",
     maturity = "development",
+    target_compatible_with = ["@platforms//os:linux"],
     tests = [":unit_test"],
     unit_design = [],
-    visibility = ["//visibility:public"],
+    visibility = ["//score/mw/log:__subpackages__"],
     implementation = [
         ":configuration",
         ":configuration_interface",

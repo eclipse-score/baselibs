@@ -523,6 +523,7 @@ unit_design(
 unit(
     name = "mw_log_frontend_unit",
     maturity = "development",
+    target_compatible_with = ["@platforms//os:linux"],
     tests = [
         ":log_stream_factory_test",
         ":logger_container_test",
@@ -541,6 +542,7 @@ unit(
 unit(
     name = "mw_log_stream_unit",
     maturity = "development",
+    target_compatible_with = ["@platforms//os:linux"],
     tests = [
         ":log_stream_error_test",
         ":log_stream_test",
@@ -552,6 +554,7 @@ unit(
 unit(
     name = "mw_log_types_and_recorder_unit",
     maturity = "development",
+    target_compatible_with = ["@platforms//os:linux"],
     tests = [
         ":log_level_test",
         ":log_types_test",
@@ -567,6 +570,7 @@ unit(
 unit(
     name = "mw_log_backend_registration_unit",
     maturity = "development",
+    target_compatible_with = ["@platforms//os:linux"],
     tests = [
         ":backend_table_test",
         ":plugin_api_test",
@@ -581,6 +585,7 @@ unit(
 assumed_system_requirements(
     name = "mw_log_assumed_system_requirements",
     srcs = ["docs/requirements/assumed_system_requirements.trlc"],
+    target_compatible_with = ["@platforms//os:linux"],
     visibility = ["//visibility:public"],
 )
 
@@ -594,7 +599,7 @@ rst_to_trlc(
 feature_requirements(
     name = "mw_log_feature_requirements",
     srcs = [":mw_log_feature_trlc"],
-    visibility = ["//visibility:public"],
+    target_compatible_with = ["@platforms//os:linux"],
     deps = [":mw_log_assumed_system_requirements"],
 )
 
@@ -608,6 +613,7 @@ rst_to_trlc(
 component_requirements(
     name = "mw_log_frontend_requirements",
     srcs = [":mw_log_frontend_requirements_trlc"],
+    target_compatible_with = ["@platforms//os:linux"],
     deps = [":mw_log_feature_requirements"],
 )
 
@@ -624,6 +630,7 @@ component(
         ":mw_log_frontend_requirements",
         ":mw_log_feature_requirements",
     ],
+    target_compatible_with = ["@platforms//os:linux"],
     visibility = ["//visibility:public"],
 )
 

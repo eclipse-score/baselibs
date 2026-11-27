@@ -143,6 +143,7 @@ TEST(ConfigurationTestSuite, IsLogEnabledShallReturnFalseIfLogLevelIsBelowDefaul
 TEST(ConfigurationTestSuite, AppidWithMoreThanFourCharactersShallBeTruncated)
 {
     RecordProperty("PartiallyVerifies", "comp_req__log__cfg_log_app_id");
+    RecordProperty("lobster-tracing", "BaselibsMwLog.comp_req__log__cfg_log_app_id");
     RecordProperty("TestType", "requirements-based");
     RecordProperty("Requirement", "SCR-1633316");
     RecordProperty("ASIL", "B");
@@ -159,6 +160,7 @@ TEST(ConfigurationTestSuite, AppidWithMoreThanFourCharactersShallBeTruncated)
 TEST(ConfigurationTestSuite, EcuidWithMoreThanFourCharactersShallBeTruncated)
 {
     RecordProperty("PartiallyVerifies", "comp_req__log__cfg_log_ecu_id");
+    RecordProperty("lobster-tracing", "BaselibsMwLog.comp_req__log__cfg_log_ecu_id");
     RecordProperty("TestType", "requirements-based");
     RecordProperty("Requirement", "SCR-1633316");
     RecordProperty("ASIL", "B");
