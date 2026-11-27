@@ -50,7 +50,8 @@ jobs:
             artifact-name: aarch64-linux
             bazel-config: score-linux-aarch64
             working-directory: "."
-            bazel-build-target: "//..."
+            # The dependable element's Sphinx docs cannot be built in the aarch64 cross configuration.
+            bazel-build-target: "//... -//dependable_element/..."
             bazel-test-target: >-
               //...
               -//score/os/test:acl_test
