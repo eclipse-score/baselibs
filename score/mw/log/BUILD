@@ -513,3 +513,12 @@ docs_bundle(
     source_dir = "docs",
     visibility = ["//visibility:public"],
 )
+
+# For consumption in score_logging mw/log backend
+exports_files(
+    [
+        "docs/requirements/index.rst",
+        "docs/safety_analysis/aou_requirements.rst",
+    ],
+    visibility = ["//visibility:public"],
+)

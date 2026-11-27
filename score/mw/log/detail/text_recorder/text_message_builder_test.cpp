@@ -16,6 +16,10 @@
 #include "gtest/gtest.h"
 #include <gmock/gmock.h>
 
+#include <array>
+#include <chrono>
+#include <ctime>
+
 namespace score
 {
 namespace mw
@@ -101,6 +105,46 @@ TEST_F(TextMessageBuilderFixture, HeaderShallHaveSpecificElements)
     EXPECT_THAT(string_content, HasSubstr(" verbose "));
     EXPECT_THAT(string_content, HasSubstr(" log "));
     EXPECT_THAT(string_content, HasSubstr(" warn "));
+}
+
+TEST_F(TextMessageBuilderFixture, HeaderShallContainLocalTimestamp)
+{
+    RecordProperty("PartiallyVerifies", "comp_req__log__timestamp_local");
+    RecordProperty("ASIL", "B");
+    RecordProperty("Description", "Header of TextMessageBuilder shall contain a timestamp.");
+    RecordProperty("TestingTechnique", "Requirements-based test");
+
+    const auto before = std::chrono::system_clock::to_time_t(std::chrono::system_clock::now());
+    unit_.SetNextMessage(log_record_);
+    const auto after = std::chrono::system_clock::to_time_t(std::chrono::system_clock::now());
+
+    const auto header_span = unit_.GetNextSpan();
+    ASSERT_TRUE(header_span.has_value());
+    const std::string header(reinterpret_cast<const char*>(header_span->data()), header_span->size());
+    ASSERT_GE(header.size(), 20U);
+    EXPECT_EQ(header[19], '.');
+
+    std::tm before_local{};
+    std::tm after_local{};
+    ASSERT_NE(localtime_r(&before, &before_local), nullptr);
+    ASSERT_NE(localtime_r(&after, &after_local), nullptr);
+    std::array<char, 20> before_text{};
+    std::array<char, 20> after_text{};
+    ASSERT_EQ(std::strftime(before_text.data(), before_text.size(), "%Y/%m/%d %H:%M:%S", &before_local), 19U);
+    ASSERT_EQ(std::strftime(after_text.data(), after_text.size(), "%Y/%m/%d %H:%M:%S", &after_local), 19U);
+
+    const std::string timestamp = header.substr(0, 19);
+    const std::string before_timestamp{before_text.data()};
+    const std::string after_timestamp{after_text.data()};
+    if (before_timestamp <= after_timestamp)
+    {
+        EXPECT_GE(timestamp, before_timestamp);
+        EXPECT_LE(timestamp, after_timestamp);
+    }
+    else
+    {
+        EXPECT_TRUE(timestamp >= before_timestamp || timestamp <= after_timestamp);
+    }
 }
 
 TEST_F(TextMessageBuilderFixture, PayloadShouldHaveSetText)
