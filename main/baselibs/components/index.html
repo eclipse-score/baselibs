@@ -419,7 +419,7 @@
 <li class="toctree-l1"><a class="reference internal" href="containers_rust/index.html">containers_rust</a></li>
 <li class="toctree-l1"><a class="reference internal" href="filesystem/index.html">filesystem</a></li>
 <li class="toctree-l1"><a class="reference internal" href="flatbuffers/index.html">FlatBuffers-Library</a></li>
-<li class="toctree-l1"><a class="reference internal" href="hash/index.html">hash</a></li>
+<li class="toctree-l1"><a class="reference internal" href="hash/index.html">Hash</a></li>
 <li class="toctree-l1"><a class="reference internal" href="json/index.html">JSON-Library</a></li>
 <li class="toctree-l1"><a class="reference internal" href="language/index.html">language</a></li>
 <li class="toctree-l1"><a class="reference internal" href="memory/index.html">Memory</a></li>
@@ -570,7 +570,14 @@
 <li class="toctree-l2"><a class="reference internal" href="flatbuffers/index.html#footnotes">Footnotes</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="hash/index.html">hash</a></li>
+<li class="toctree-l1"><a class="reference internal" href="hash/index.html">Hash</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="hash/index.html#supported-algorithms">Supported algorithms</a></li>
+<li class="toctree-l2"><a class="reference internal" href="hash/index.html#sha-256-variants">SHA-256 variants</a></li>
+<li class="toctree-l2"><a class="reference internal" href="hash/index.html#crc-32-customization">CRC-32 customization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="hash/index.html#input-and-results">Input and results</a></li>
+<li class="toctree-l2"><a class="reference internal" href="hash/index.html#usage-constraints">Usage constraints</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="json/index.html">JSON-Library</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="json/index.html#abstract">Abstract</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="json/index.html#basic-functionality">Basic Functionality</a></li>
@@ -966,8 +973,8 @@ and an intrusive linked list implementation conforming to the
 <li><p><a class="reference internal" href="flatbuffers/index.html#doc__flatbuffers" title="doc__flatbuffers"><em class="xref need">FlatBuffers-Library (doc__flatbuffers)</em></a>: FlatBuffers-Library with serialization, read access, and structural
 verification of FlatBuffers data, plus code generation via <code class="docutils literal notranslate"><span class="pre">flatc</span></code> for C++, Rust, and Python.</p></li>
 <li><p><a class="reference internal" href="filesystem/index.html#doc__filesystem" title="doc__filesystem"><em class="xref need">Filesystem Library (doc__filesystem)</em></a>: Filesystem manipulation library similar to <code class="docutils literal notranslate"><span class="pre">std::filesystem</span></code>.</p></li>
-<li><p><a class="reference internal" href="hash/index.html#doc__hash" title="doc__hash"><em class="xref need">Hash Library (doc__hash)</em></a>: Hash calculation library supporting cryptographic (SHA-256, SHA-512) and
-checksum (CRC-32) algorithms via a pluggable interface.</p></li>
+<li><p><a class="reference internal" href="hash/index.html#doc__hash" title="doc__hash"><em class="xref need">Hash Library (doc__hash)</em></a>: Provides CRC-32 checksums and SHA hashes (SHA-256, SHA-384, SHA-512).
+Includes a native SHA-256 implementation for safety-oriented, non-cryptographic data-integrity checks.</p></li>
 <li><p><a class="reference internal" href="language/futurecpp/index.html#doc__futurecpp" title="doc__futurecpp"><em class="xref need">FutureCPP Library (doc__futurecpp)</em></a>: Extends the C++17 Standard Library with features from newer C++ standards up to C++26,
 as well as selected proposals for the C++ Standard Library.</p></li>
 <li><p><a class="reference internal" href="language/safecpp/index.html#doc__safecpp" title="doc__safecpp"><em class="xref need">Safecpp Library (doc__safecpp)</em></a>: A collection of utilities that helps developers write safer C++ code, including
