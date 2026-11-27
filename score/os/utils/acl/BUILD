@@ -33,6 +33,7 @@ cc_library(
         "@score_baselibs//score/language/futurecpp",
         "@score_baselibs//score/os:acl",
         "@score_baselibs//score/os:errno",
+        "@score_baselibs//score/os:user_id",
         "@score_baselibs//score/result",
     ],
 )

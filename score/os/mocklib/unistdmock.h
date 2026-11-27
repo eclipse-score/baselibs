@@ -90,15 +90,15 @@ class UnistdMock : public Unistd
 
     MOCK_METHOD((std::int64_t), gettid, (), (const, noexcept, override));
 
-    MOCK_METHOD(uid_t, getuid, (), (const, noexcept, override));
+    MOCK_METHOD(UserId, getuid, (), (const, noexcept, override));
 
-    MOCK_METHOD(gid_t, getgid, (), (const, noexcept, override));
+    MOCK_METHOD(GroupId, getgid, (), (const, noexcept, override));
 
     MOCK_METHOD(pid_t, getppid, (), (const, noexcept, override));
 
-    MOCK_METHOD(score::cpp::expected_blank<score::os::Error>, setuid, (const uid_t uid), (const, noexcept, override));
+    MOCK_METHOD(score::cpp::expected_blank<score::os::Error>, setuid, (const UserId uid), (const, noexcept, override));
 
-    MOCK_METHOD(score::cpp::expected_blank<score::os::Error>, setgid, (const gid_t gid), (const, noexcept, override));
+    MOCK_METHOD(score::cpp::expected_blank<score::os::Error>, setgid, (const GroupId gid), (const, noexcept, override));
 
     MOCK_METHOD((score::cpp::expected<ssize_t, score::os::Error>),
                 readlink,
@@ -138,7 +138,7 @@ class UnistdMock : public Unistd
     MOCK_METHOD(score::cpp::expected_blank<score::os::Error>, chdir, (const char* path), (const, noexcept, override));
     MOCK_METHOD(score::cpp::expected_blank<score::os::Error>,
                 chown,
-                (const char* path, uid_t uid, gid_t gid),
+                (const char* path, UserId uid, GroupId gid),
                 (const, noexcept, override));
 
     MOCK_METHOD((score::cpp::expected<char*, score::os::Error>),
@@ -153,6 +153,11 @@ class UnistdMock : public Unistd
     MOCK_METHOD((score::cpp::expected_blank<score::os::Error>),
                 getpwnam_r,
                 (const char* name, struct passwd* pwd, char* buffer, size_t bufsize, struct passwd** result),
+                (const, noexcept, override));
+
+    MOCK_METHOD((score::cpp::expected<score::cpp::optional<PasswdIdentity>, score::os::Error>),
+                getpwnam_r,
+                (const char* name, char* buffer, size_t bufsize),
                 (const, noexcept, override));
 };
 

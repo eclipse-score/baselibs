@@ -410,7 +410,7 @@ TEST_F(UnistdFixture, GetUiIdMatchSystemGetuid)
     RecordProperty("TestType", "interface-test");
     RecordProperty("DerivationTechnique", "equivalence-classes");  // equivalence classes
 
-    EXPECT_EQ(unit_->getuid(), ::getuid());
+    EXPECT_EQ(unit_->getuid(), UserId{::getuid()});
 }
 
 TEST_F(UnistdFixture, GetGidMatchSystemGetGid)
@@ -421,7 +421,7 @@ TEST_F(UnistdFixture, GetGidMatchSystemGetGid)
     RecordProperty("TestType", "interface-test");
     RecordProperty("DerivationTechnique", "equivalence-classes");  // equivalence classes
 
-    EXPECT_EQ(unit_->getgid(), ::getgid());
+    EXPECT_EQ(unit_->getgid(), GroupId{::getgid()});
 }
 
 TEST_F(UnistdFixture, GetPidMatchSystemGetPid)
@@ -459,7 +459,7 @@ TEST_F(UnistdFixture, SetuidNotChangesUidIfPassInvalidId)
         ::setuid(1);
 #endif
         uid_t expected_uid{::getuid()};
-        const auto val = unit_->setuid(0);
+        const auto val = unit_->setuid(UserId{0});
         return !val.has_value() && (::getuid() == expected_uid);
     });
 }
@@ -479,7 +479,7 @@ TEST_F(UnistdFixture, SetGidNotChangesGidIfPassInvalidId)
         const auto cap_result = procmgr_ability(0, remove_setgid_capability, PROCMGR_AID_EOL);
         EXPECT_EQ(cap_result, 0);
 #endif
-        const auto val = unit_->setgid(expected_gid + 1);
+        const auto val = unit_->setgid(GroupId{expected_gid + 1});
         return !val.has_value() && (::getgid() == expected_gid);
     });
 }
@@ -730,7 +730,7 @@ TEST_F(UnistdFixture, ChownReturnsErrorIfPassInvalidParams)
     RecordProperty("TestType", "interface-test");
     RecordProperty("DerivationTechnique", "equivalence-classes");  // equivalence classes
 
-    const auto val = unit_->chown("", 0, 0);
+    const auto val = unit_->chown("", UserId{0}, GroupId{0});
     EXPECT_FALSE(val.has_value());
 }
 
@@ -745,8 +745,8 @@ TEST_F(UnistdFixture, ChownReturnsNonErrorIfPassValidParams)
     const OpenFileGuard file_guard{"chown_test_file", O_RDWR | O_CREAT, S_IRUSR | S_IWUSR};
     ASSERT_EQ(file_guard.Stat(), 0);
 
-    const auto uid = ::getuid();
-    const auto gid = ::getgid();
+    const UserId uid{::getuid()};
+    const GroupId gid{::getgid()};
 
     const auto val = unit_->chown(file_guard.Path().c_str(), uid, gid);
     EXPECT_TRUE(val.has_value());
@@ -1069,12 +1069,11 @@ TEST_F(UnistdFixture, SetuidReturnsErrorIfPassInvalidUid)
     RecordProperty("TestType", "interface-test");
     RecordProperty("DerivationTechnique", "equivalence-classes");  // equivalence classes
 
-    const uid_t uid_before_set = unit_->getuid();
-    const uid_t invalid_id = static_cast<uid_t>(-1);
-    const auto val = unit_->setuid(invalid_id);
+    const UserId uid_before_set = unit_->getuid();
+    const auto val = unit_->setuid(kUnchangedUserId);
     EXPECT_FALSE(val.has_value());
     EXPECT_EQ(val.error(), score::os::Error::Code::kInvalidArgument);
-    const uid_t uid_after_set = unit_->getuid();
+    const UserId uid_after_set = unit_->getuid();
     EXPECT_EQ(uid_after_set, uid_before_set);
 }
 
@@ -1091,7 +1090,7 @@ TEST_F(UnistdFixture, SetuidReturnsNoErrorIfPassValidID)
         ::setuid(0);
         uid_t uid_before_set = ::getuid();
         uid_t expected_uid{10};
-        const auto val = unit_->setuid(expected_uid);
+        const auto val = unit_->setuid(UserId{expected_uid});
         uid_t uid_after_set = ::getuid();
         return val.has_value() && (uid_after_set == expected_uid) && (uid_before_set != uid_after_set);
     });
@@ -1203,6 +1202,53 @@ TEST_F(UnistdFixture, GetpwnamReturnsErrorIfPassInvalidUser)
     const auto val = unit_->getpwnam_r(kUserName, &pwd, buffer.data(), buffer.size(), &result);
     EXPECT_TRUE(val.has_value());
     EXPECT_EQ(result, nullptr);
+}
+
+TEST_F(UnistdFixture, GetpwnamIdentityReturnsIdsOfValidUser)
+{
+    RecordProperty("Verifies", "SCR-46010294");
+    RecordProperty("ASIL", "B");
+    RecordProperty("Description", "UnistdFixture Getpwnam_r identity overload returns uid and gid of existing user");
+    RecordProperty("TestType", "interface-test");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
+
+    std::vector<char> buffer(16384U);
+
+    const auto val = unit_->getpwnam_r("root", buffer.data(), buffer.size());
+    ASSERT_TRUE(val.has_value());
+    ASSERT_TRUE(val.value().has_value());
+    EXPECT_EQ(val.value()->uid, UserId{0});
+    EXPECT_EQ(val.value()->gid, GroupId{0});
+}
+
+TEST_F(UnistdFixture, GetpwnamIdentityReturnsEmptyForUnknownUser)
+{
+    RecordProperty("Verifies", "SCR-46010294");
+    RecordProperty("ASIL", "B");
+    RecordProperty("Description", "UnistdFixture Getpwnam_r identity overload returns no value for unknown user");
+    RecordProperty("TestType", "interface-test");
+    RecordProperty("DerivationTechnique", "equivalence-classes");
+
+    std::vector<char> buffer(16384U);
+
+    const auto val = unit_->getpwnam_r("not_existing_user", buffer.data(), buffer.size());
+    ASSERT_TRUE(val.has_value());
+    EXPECT_FALSE(val.value().has_value());
+}
+
+TEST_F(UnistdFixture, GetpwnamIdentityReturnsErangeIfBufferIsTooSmall)
+{
+    RecordProperty("Verifies", "SCR-46010294");
+    RecordProperty("ASIL", "B");
+    RecordProperty("Description", "UnistdFixture Getpwnam_r identity overload reports ERANGE for too small buffer");
+    RecordProperty("TestType", "interface-test");
+    RecordProperty("DerivationTechnique", "boundary-values");
+
+    std::vector<char> buffer(1U);
+
+    const auto val = unit_->getpwnam_r("root", buffer.data(), buffer.size());
+    ASSERT_FALSE(val.has_value());
+    EXPECT_EQ(val.error().GetOsDependentErrorCode(), ERANGE);
 }
 
 }  // namespace
