@@ -1,0 +1,23 @@
+' *******************************************************************************
+' Copyright (c) 2026 Contributors to the Eclipse Foundation
+'
+' See the NOTICE file(s) distributed with this work for additional
+' information regarding copyright ownership.
+'
+' This program and the accompanying materials are made available under the
+' terms of the Apache License Version 2.0 which is available at
+' https://www.apache.org/licenses/LICENSE-2.0
+'
+' SPDX-License-Identifier: Apache-2.0
+' *******************************************************************************
+
+@startuml
+
+!include fta_metamodel.puml
+
+$FailureMode("Bitmanipulation No Return", "BitmanipulationFmea.comp_saf_fmea__bitmanipulation__no_return")
+$OrGate("OG_NR", "BitmanipulationFmea.comp_saf_fmea__bitmanipulation__no_return")
+$RootCause("Call is not issued by the user", "CallNotIssued", "OG_NR")
+$RootCause("Calling process loses its execution", "ExecutionLost", "OG_NR")
+
+@enduml
