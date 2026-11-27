@@ -22,7 +22,7 @@ bazel_dep(name = "score_bazel_platforms", version = "1.3.0")
 bazel_dep(name = "platforms", version = "1.1.0")
 
 bazel_dep(name = "score_toolchains_rust", version = "0.10.1", dev_dependency = True)
-bazel_dep(name = "score_rules_imagefs", version = "0.2.0", dev_dependency = True)
+bazel_dep(name = "score_rules_imagefs", version = "0.2.1", dev_dependency = True)
 bazel_dep(name = "score_cpp_policies", version = "0.1.3", dev_dependency = True)
 
 # score_bazel_cpp_toolchains 1.0.0 removed its built-in warning features; inject them instead.
