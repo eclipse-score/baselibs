@@ -16,6 +16,7 @@
 
 #include <cstdint>
 #include <memory>
+#include <type_traits>
 
 namespace score
 {
@@ -191,6 +192,21 @@ TEST_F(StaticDestructionGuardTest, GetStorageAlwaysRefersToTheSameLiveObject)
     // every access refers to the one live object
     EXPECT_EQ(Guard::GetStorage().value, 1337);
     EXPECT_EQ(&Guard::GetStorage(), &Guard::GetStorage());
+}
+
+TEST_F(StaticDestructionGuardTest, IsNeitherCopyableNorMovable)
+{
+    ::testing::Test::RecordProperty("TestType", "requirements-based");
+    ::testing::Test::RecordProperty("DerivationTechnique", "requirements-analysis");
+    ::testing::Test::RecordProperty("PartiallyVerifies", "comp_req__utils__static_destruction_guard");
+    ::testing::Test::RecordProperty("Description",
+                                    "Check that a guard can be neither copied nor moved, so no guard can release the "
+                                    "guarded object without having acquired it.");
+
+    static_assert(!std::is_copy_constructible_v<Guard>, "Guard must not be copy-constructible");
+    static_assert(!std::is_copy_assignable_v<Guard>, "Guard must not be copy-assignable");
+    static_assert(!std::is_move_constructible_v<Guard>, "Guard must not be move-constructible");
+    static_assert(!std::is_move_assignable_v<Guard>, "Guard must not be move-assignable");
 }
 
 }  // namespace

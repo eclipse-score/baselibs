@@ -39,6 +39,7 @@ This design preserves the intended static construction and destruction order whe
 
 `StaticDestructionGuard<T>` implements the nifty-counter idiom for a static object that another static object's destructor needs to access.
 The first guard constructs `T`, and the final guard destroys it.
+Guards can be neither copied nor moved.
 
 `GetStorage` returns the single guarded instance.
 The returned reference is valid only while at least one guard remains alive.

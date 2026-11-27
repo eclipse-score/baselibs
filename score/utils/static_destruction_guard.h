@@ -103,10 +103,10 @@ class StaticDestructionGuard
         }
     };
 
-    StaticDestructionGuard(const StaticDestructionGuard&) = default;
-    StaticDestructionGuard& operator=(const StaticDestructionGuard&) = default;
-    StaticDestructionGuard(StaticDestructionGuard&&) noexcept = default;
-    StaticDestructionGuard& operator=(StaticDestructionGuard&&) noexcept = default;
+    StaticDestructionGuard(const StaticDestructionGuard&) = delete;
+    StaticDestructionGuard& operator=(const StaticDestructionGuard&) = delete;
+    StaticDestructionGuard(StaticDestructionGuard&&) = delete;
+    StaticDestructionGuard& operator=(StaticDestructionGuard&&) = delete;
 
   private:
     /// \brief Raw, not-yet-typed storage. Only intended to obtain an address for placement-new (before T exists);
