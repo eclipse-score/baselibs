@@ -207,6 +207,8 @@ TEST_F(CompositeRecorderFixture, StartRecordWithNoSlotAvailableShallDropRecorder
 
 TEST_F(CompositeRecorderFixture, LogInvocationShallBeForwardedToAllAvailableRecorders)
 {
+    RecordProperty("PartiallyVerifies", "comp_arc_sta__log__cpp_recorders");
+    RecordProperty("TestType", "requirements-based");
     RecordProperty("Requirement", "SCR-861534, SCR-1633236");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "log invocation shall be forworded to any supported logging type.");

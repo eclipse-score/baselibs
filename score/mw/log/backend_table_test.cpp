@@ -80,6 +80,9 @@ TEST(ModeToSlotIndexTest, InvalidModeReturnsSentinel)
 
 TEST_F(BackendTableTest, RegisterBackendSetsSlotForConsole)
 {
+    RecordProperty("PartiallyVerifies", "comp_arc_sta__log__cpp_backend_registration");
+    RecordProperty("TestType", "interface-test");
+    RecordProperty("DerivationTechnique", "design-analysis");
     RecordProperty("Description", "RegisterBackend shall populate the correct slot for kConsole.");
     RecordProperty("TestingTechnique", "Requirements-based test");
 
@@ -94,6 +97,9 @@ TEST_F(BackendTableTest, RegisterBackendSetsSlotForConsole)
 
 TEST_F(BackendTableTest, RegisterBackendSetsSlotForFile)
 {
+    RecordProperty("PartiallyVerifies", "comp_arc_dyn__log__cpp_backend_registration");
+    RecordProperty("TestType", "interface-test");
+    RecordProperty("DerivationTechnique", "design-analysis");
     RecordProperty("Description", "RegisterBackend shall populate the correct slot for kFile.");
     RecordProperty("TestingTechnique", "Requirements-based test");
 
@@ -139,6 +145,9 @@ TEST_F(BackendTableTest, IsBackendAvailableReturnsFalseWhenNotRegistered)
 
 TEST_F(BackendTableTest, IsBackendAvailableReturnsTrueWhenRegistered)
 {
+    RecordProperty("PartiallyVerifies", "comp_arc_sta__log__cpp_backend_registration");
+    RecordProperty("TestType", "interface-test");
+    RecordProperty("DerivationTechnique", "design-analysis");
     RecordProperty("Description", "IsBackendAvailable shall return true after registration.");
     RecordProperty("TestingTechnique", "Requirements-based test");
 

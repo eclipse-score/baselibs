@@ -48,6 +48,8 @@ using CircularAllocatorFixtureDeathTest = CircularAllocatorFixture;
 
 TEST_F(CircularAllocatorFixture, WriteSingleEntryWithoutThreads)
 {
+    RecordProperty("PartiallyVerifies", "comp_arc_dyn__log__cpp_slot_allocation");
+    RecordProperty("TestType", "requirements-based");
     RecordProperty("Requirement", "SCR-861534");
     RecordProperty("ASIL", "B");
     RecordProperty("Description",
@@ -113,6 +115,8 @@ TEST_F(CircularAllocatorFixture, WriteSingleThreadedOverBufferSize)
 
 TEST_F(CircularAllocatorFixture, WritingFromMultipleThreadsIsSafe)
 {
+    RecordProperty("PartiallyVerifies", "comp_arc_dyn__log__cpp_slot_allocation");
+    RecordProperty("TestType", "requirements-based");
     RecordProperty("Requirement", "SCR-861578, SCR-1016719");
     RecordProperty("ASIL", "B");
     RecordProperty(
@@ -189,6 +193,8 @@ TEST_F(CircularAllocatorFixture, WritingFromMultipleThreadsIsSafeWithInsufficien
 
 TEST_F(CircularAllocatorFixture, TryAcquireWhenAllSlotsAcquired)
 {
+    RecordProperty("PartiallyVerifies", "comp_arc_dyn__log__cpp_slot_allocation");
+    RecordProperty("TestType", "requirements-based");
     RecordProperty("Requirement", "SCR-1016719");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "When every slot is occupied acquiring another slot shall return an empty result.");

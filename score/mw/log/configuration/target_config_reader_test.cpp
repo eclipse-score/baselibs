@@ -150,6 +150,8 @@ class TargetConfigReaderFixture : public ::testing::Test
 
 TEST_F(TargetConfigReaderFixture, NoConfigFilesShallFail)
 {
+    RecordProperty("PartiallyVerifies", "comp_arc_sta__log__cpp_configuration");
+    RecordProperty("TestType", "requirements-based");
     RecordProperty("Requirement", "SCR-7263537, SCR-7263552");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "TargetConfigReader shall return an error if no configuration files are found");
@@ -165,7 +167,9 @@ TEST_F(TargetConfigReaderFixture, NoConfigFilesShallFail)
 
 TEST_F(TargetConfigReaderFixture, ConfigReaderShallParseEcuIdFromEcuConfig)
 {
-    RecordProperty("PartiallyVerifies", "comp_req__log__global_config, comp_req__log__cfg_log_ecu_id");
+    RecordProperty("PartiallyVerifies",
+                   "comp_req__log__global_config, comp_req__log__cfg_log_ecu_id, "
+                   "comp_arc_sta__log__cpp_configuration");
     RecordProperty("TestType", "requirements-based");
     RecordProperty("Requirement", "SCR-1633316, SCR-1634075");
     RecordProperty("ASIL", "B");
@@ -306,7 +310,7 @@ TEST_F(TargetConfigReaderFixture, ConfigReaderShallParseLogFilePathFromAppConfig
 
 TEST_F(TargetConfigReaderFixture, ConfigReaderShallParseContextLogLevelFromEcuAndAppConfig)
 {
-    RecordProperty("PartiallyVerifies", "comp_req__log__cfg_precedence");
+    RecordProperty("PartiallyVerifies", "comp_req__log__cfg_precedence, comp_arc_dyn__log__cpp_configuration");
     RecordProperty("TestType", "requirements-based");
     RecordProperty("Requirement", "SCR-1633316, SCR-1634075");
     RecordProperty("ASIL", "B");

@@ -88,6 +88,8 @@ TEST_F(TextRecorderFixtureWithLogLevelCheck, WillObtainEmptySlotForInsufficentLo
 
 TEST_F(TextRecorderFixtureWithLogLevelCheck, DisablesOrEnablesLogAccordingToLevel)
 {
+    RecordProperty("PartiallyVerifies", "comp_arc_sta__log__cpp_console_logging");
+    RecordProperty("TestType", "requirements-based");
     RecordProperty("Requirement", "SCR-861534");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "Verifies the ability of enabling or disabling specific log level");
@@ -411,6 +413,7 @@ TEST_F(TextRecorderFixture, LogRawBuffer)
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "TextRecorder can log raw buffer.");
     RecordProperty("TestingTechnique", "Requirements-based test");
+
     recorder_->Log(SlotHandle{}, LogRawBuffer{"raw", 3});
 }
 
@@ -422,6 +425,7 @@ TEST_F(TextRecorderFixture, LogSlog2Message)
     RecordProperty("TestingTechnique", "Requirements-based test");
     RecordProperty("TestType", "requirements-based");
     RecordProperty("DerivationTechnique", "requirements-analysis");
+
     recorder_->Log(SlotHandle{}, LogSlog2Message{11, "slog message"});
 }
 
