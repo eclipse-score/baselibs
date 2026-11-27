@@ -4351,7 +4351,7 @@
             {
               "name": "StaticDestructionGuardTest__FirstGuardConstructsGuardedInstanceExactlyOnce",
               "file": "score/utils/static_destruction_guard_test.cpp",
-              "line": 79,
+              "line": 80,
               "need": "comp_req__utils__static_destruction_guard",
               "verify_type": "partially",
               "result": "passed",
@@ -4360,7 +4360,7 @@
             {
               "name": "StaticDestructionGuardTest__GuardedInstanceIsDestroyedOnceAllGuardsAreGone",
               "file": "score/utils/static_destruction_guard_test.cpp",
-              "line": 99,
+              "line": 100,
               "need": "comp_req__utils__static_destruction_guard",
               "verify_type": "partially",
               "result": "passed",
@@ -4369,7 +4369,7 @@
             {
               "name": "StaticDestructionGuardTest__GuardedInstanceOutlivesEveryGuardExceptTheLast",
               "file": "score/utils/static_destruction_guard_test.cpp",
-              "line": 128,
+              "line": 129,
               "need": "comp_req__utils__static_destruction_guard",
               "verify_type": "partially",
               "result": "passed",
@@ -4378,7 +4378,7 @@
             {
               "name": "StaticDestructionGuardTest__GetStorageReturnsFreshlyConstructedValue",
               "file": "score/utils/static_destruction_guard_test.cpp",
-              "line": 155,
+              "line": 156,
               "need": "comp_req__utils__static_destruction_guard",
               "verify_type": "partially",
               "result": "passed",
@@ -4387,7 +4387,16 @@
             {
               "name": "StaticDestructionGuardTest__GetStorageAlwaysRefersToTheSameLiveObject",
               "file": "score/utils/static_destruction_guard_test.cpp",
-              "line": 170,
+              "line": 171,
+              "need": "comp_req__utils__static_destruction_guard",
+              "verify_type": "partially",
+              "result": "passed",
+              "result_text": ""
+            },
+            {
+              "name": "StaticDestructionGuardTest__IsNeitherCopyableNorMovable",
+              "file": "score/utils/static_destruction_guard_test.cpp",
+              "line": 197,
               "need": "comp_req__utils__static_destruction_guard",
               "verify_type": "partially",
               "result": "passed",

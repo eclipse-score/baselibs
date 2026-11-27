@@ -19182,7 +19182,7 @@
   {
     "name": "StaticDestructionGuardTest__FirstGuardConstructsGuardedInstanceExactlyOnce",
     "file": "score/utils/static_destruction_guard_test.cpp",
-    "line": "79",
+    "line": "80",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -19196,7 +19196,7 @@
   {
     "name": "StaticDestructionGuardTest__GuardedInstanceIsDestroyedOnceAllGuardsAreGone",
     "file": "score/utils/static_destruction_guard_test.cpp",
-    "line": "99",
+    "line": "100",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -19210,7 +19210,7 @@
   {
     "name": "StaticDestructionGuardTest__GuardedInstanceOutlivesEveryGuardExceptTheLast",
     "file": "score/utils/static_destruction_guard_test.cpp",
-    "line": "128",
+    "line": "129",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -19224,7 +19224,7 @@
   {
     "name": "StaticDestructionGuardTest__GetStorageReturnsFreshlyConstructedValue",
     "file": "score/utils/static_destruction_guard_test.cpp",
-    "line": "155",
+    "line": "156",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -19238,7 +19238,21 @@
   {
     "name": "StaticDestructionGuardTest__GetStorageAlwaysRefersToTheSameLiveObject",
     "file": "score/utils/static_destruction_guard_test.cpp",
-    "line": "170",
+    "line": "171",
+    "result": "passed",
+    "repo_name": "local_repo",
+    "hash": "",
+    "url": "",
+    "TestType": "requirements-based",
+    "DerivationTechnique": "requirements-analysis",
+    "result_text": "",
+    "PartiallyVerifies": "comp_req__utils__static_destruction_guard",
+    "FullyVerifies": null
+  },
+  {
+    "name": "StaticDestructionGuardTest__IsNeitherCopyableNorMovable",
+    "file": "score/utils/static_destruction_guard_test.cpp",
+    "line": "197",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
