@@ -419,7 +419,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../../containers_rust/index.html">containers_rust</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../filesystem/index.html">filesystem</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../flatbuffers/index.html">FlatBuffers-Library</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../hash/index.html">hash</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../hash/index.html">Hash</a></li>
 <li class="toctree-l1 current active has-children"><a class="reference internal" href="../index.html">JSON-Library</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="../requirements/index.html">Requirements</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../requirements/chklst_req_inspection.html">Requirement Inspection Checklist</a></li>
@@ -441,7 +441,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../../shared_layout/index.html">Cross-Language Shared-Layout Data Types</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../static_reflection_with_serialization/index.html">static_reflection_with_serialization</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../string_manipulation/index.html">String Manipulation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../utils/index.html">utils</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../utils/index.html">Utils</a></li>
 </ul>
 </div>
 </nav></div>
@@ -507,7 +507,7 @@
                   
   <section id="json-component-architecture">
 <h1>JSON Component Architecture<a class="headerlink" href="#json-component-architecture" title="Link to this heading">#</a></h1>
-<div class="need_container docutils container" id="SNCB-fe146dad">
+<div class="need_container docutils container" id="SNCB-5a609d12">
 <div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_document table" id="doc__json_architecture">
 <tbody>
 <tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
@@ -577,7 +577,7 @@ the main driver is to re-use existing implementation(s) and to allow replacing t
 </section>
 <section id="static-architecture">
 <h2>Static Architecture<a class="headerlink" href="#static-architecture" title="Link to this heading">#</a></h2>
-<div class="need_container docutils container" id="SNCB-576790d3">
+<div class="need_container docutils container" id="SNCB-77b14e3c">
 <div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_comp table" id="comp__baselibs_json">
 <tbody>
 <tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
@@ -607,7 +607,7 @@ the main driver is to re-use existing implementation(s) and to allow replacing t
 <div class="line">implements: <span class="implements"><span><a class="external_link reference external" href="https://eclipse-score.github.io/score/main/features/baselibs/architecture/index.html#logic_arc_int__baselibs__json">logic_arc_int__baselibs__json</a></span></span></div>
 <div class="line">included by: <span class="includes"><span><a class="reference internal" href="../../../../module/index.html#mod__baselibs" title="comp__baselibs_json">mod__baselibs</a>, <a class="reference internal" href="../../../../module/index.html#mod_view_sta__baselibs__baselibs" title="comp__baselibs_json">mod_view_sta__baselibs__baselibs</a></span></span></div>
 </span></div>
-<div class="score-coverage line"><span class="needs_label">coverage: </span><span class="needs_data">lines 97% · branches 92% · files 15/25</span></div>
+<div class="score-coverage line"><span class="needs_label">coverage: </span><span class="needs_data">lines 97% · branches 92% · files 15/20</span></div>
 </div>
 </td>
 <td class="meta" colspan="3"></td>
@@ -628,7 +628,7 @@ the main driver is to re-use existing implementation(s) and to allow replacing t
 </table>
 </div>
 </div>
-<div class="need_container docutils container" id="SNCB-b36d4567">
+<div class="need_container docutils container" id="SNCB-692b0506">
 <div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_comp_arc_sta table" id="comp_arc_sta__baselibs__json">
 <tbody>
 <tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
@@ -677,7 +677,7 @@ the main driver is to re-use existing implementation(s) and to allow replacing t
 </section>
 <section id="dynamic-architecture">
 <h2>Dynamic Architecture<a class="headerlink" href="#dynamic-architecture" title="Link to this heading">#</a></h2>
-<div class="need_container docutils container" id="SNCB-6eb06b38">
+<div class="need_container docutils container" id="SNCB-8431318a">
 <div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_comp_arc_dyn table" id="comp_arc_dyn__baselibs__json_dynamic_view">
 <tbody>
 <tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
@@ -724,7 +724,7 @@ the main driver is to re-use existing implementation(s) and to allow replacing t
 </section>
 <section id="interfaces">
 <h2>Interfaces<a class="headerlink" href="#interfaces" title="Link to this heading">#</a></h2>
-<div class="need_container docutils container" id="SNCB-8862bc1e">
+<div class="need_container docutils container" id="SNCB-920e934d">
 <div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_logic_arc_int_op table" id="logic_arc_int_op__baselibs__parse">
 <tbody>
 <tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
@@ -767,7 +767,7 @@ the main driver is to re-use existing implementation(s) and to allow replacing t
 </table>
 </div>
 </div>
-<div class="need_container docutils container" id="SNCB-c3d0acb5">
+<div class="need_container docutils container" id="SNCB-53e34109">
 <div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_logic_arc_int_op table" id="logic_arc_int_op__baselibs__write">
 <tbody>
 <tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
@@ -813,7 +813,7 @@ the main driver is to re-use existing implementation(s) and to allow replacing t
 </section>
 <section id="lower-level-components">
 <h2>Lower Level Components<a class="headerlink" href="#lower-level-components" title="Link to this heading">#</a></h2>
-<div class="need_container docutils container" id="SNCB-34d48661">
+<div class="need_container docutils container" id="SNCB-0de47e30">
 <div class="pst-scrollable-table-container"><table class="need needs_grid_complex needs_layout_score needs_style_none needs_type_comp table" id="comp__baselibs_json_wrapper">
 <tbody>
 <tr class="head row-odd"><td class="head_left" colspan="2"><div class="needs_head_left line-block">
