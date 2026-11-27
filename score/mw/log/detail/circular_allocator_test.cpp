@@ -83,7 +83,8 @@ TEST_F(CircularAllocatorFixture, WriteSingleEntryWithoutThreadsWithSingleSlotCap
 
 TEST_F(CircularAllocatorFixture, WriteSingleThreadedOverBufferSize)
 {
-    RecordProperty("Requirement", "SCR-861534, SCR-1016719");
+    RecordProperty("PartiallyVerifies", "comp_req__log__local_allocation_strategy2");
+    RecordProperty("lobster-tracing", "BaselibsMwLog.comp_req__log__local_allocation_strategy2");
     RecordProperty("ASIL", "B");
     RecordProperty("Description",
                    "When writing more slots in the circular allocator than capacity, the write to the next slot shall "
@@ -147,7 +148,8 @@ TEST_F(CircularAllocatorFixture, WritingFromMultipleThreadsIsSafe)
 
 TEST_F(CircularAllocatorFixture, WritingFromMultipleThreadsIsSafeWithInsufficientCapacity)
 {
-    RecordProperty("Requirement", "SCR-861578, SCR-1016719");
+    RecordProperty("PartiallyVerifies", "comp_req__log__local_allocation_strategy2");
+    RecordProperty("lobster-tracing", "BaselibsMwLog.comp_req__log__local_allocation_strategy2");
     RecordProperty("ASIL", "B");
     RecordProperty("Description",
                    "When writing to CircularAllocator with multiple threads in parallel and trying to allocate more "
@@ -190,6 +192,11 @@ TEST_F(CircularAllocatorFixture, WritingFromMultipleThreadsIsSafeWithInsufficien
 TEST_F(CircularAllocatorFixture, TryAcquireWhenAllSlotsAcquired)
 {
     RecordProperty("Requirement", "SCR-1016719");
+    RecordProperty("PartiallyVerifies",
+                   "comp_req__log__cfg_file, comp_req__log__cfg_precedence, comp_req__log__local_allocation_strategy2");
+    RecordProperty("lobster-tracing",
+                   "BaselibsMwLog.comp_req__log__cfg_file, BaselibsMwLog.comp_req__log__cfg_precedence, "
+                   "BaselibsMwLog.comp_req__log__local_allocation_strategy2");
     RecordProperty("ASIL", "B");
     RecordProperty("Description", "When every slot is occupied acquiring another slot shall return an empty result.");
     RecordProperty("TestingTechnique", "Requirements-based test");
