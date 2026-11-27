@@ -325,6 +325,10 @@ cc_test(
     srcs = [
         "acl_test.cpp",
     ],
+    dynamic_deps = select({
+        "@score_baselibs//third_party/acl:acl_mode_system": [],
+        "//conditions:default": ["@score_baselibs//third_party/acl:acl_shared"],
+    }),
     features = COMPILER_WARNING_FEATURES + [
         "aborts_upon_exception",
     ],
