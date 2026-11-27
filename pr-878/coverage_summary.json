@@ -17,8 +17,8 @@
     },
     {
       "branches": {
-        "percent": 96,
-        "total": 274
+        "percent": 95,
+        "total": 282
       },
       "files": {
         "measured": 43,
@@ -26,7 +26,7 @@
       },
       "lines": {
         "percent": 99,
-        "total": 1922
+        "total": 1950
       },
       "primary_need_id": "comp__baselibs_concurrency"
     },
@@ -86,7 +86,7 @@
       },
       "lines": {
         "percent": 87,
-        "total": 1425
+        "total": 1431
       },
       "primary_need_id": "comp__baselibs_flatbuffers"
     },
@@ -161,7 +161,7 @@
       },
       "lines": {
         "percent": 72,
-        "total": 1243
+        "total": 1247
       },
       "primary_need_id": "comp__baselibs_result"
     },
@@ -212,16 +212,16 @@
     },
     {
       "branches": {
-        "percent": null,
-        "total": null
+        "percent": 96,
+        "total": 406
       },
       "files": {
-        "measured": 0,
-        "total": 0
+        "measured": 59,
+        "total": 85
       },
       "lines": {
-        "percent": null,
-        "total": null
+        "percent": 98,
+        "total": 2354
       },
       "primary_need_id": "comp__log"
     }
