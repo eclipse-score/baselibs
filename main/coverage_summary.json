@@ -197,16 +197,16 @@
     },
     {
       "branches": {
-        "percent": 91,
-        "total": 32
+        "percent": 90,
+        "total": 40
       },
       "files": {
-        "measured": 3,
-        "total": 5
+        "measured": 5,
+        "total": 8
       },
       "lines": {
         "percent": 100,
-        "total": 177
+        "total": 258
       },
       "primary_need_id": "comp__baselibs_utils"
     },

@@ -5708,6 +5708,74 @@
     }
   },
   {
+    "need": "comp_req__utils__static_destruction_guard",
+    "links": {
+      "CodeLinks": [],
+      "TestLinks": [
+        {
+          "name": "StaticDestructionGuardTest__FirstGuardConstructsGuardedInstanceExactlyOnce",
+          "file": "score/utils/static_destruction_guard_test.cpp",
+          "line": 79,
+          "need": "comp_req__utils__static_destruction_guard",
+          "verify_type": "partially",
+          "result": "passed",
+          "result_text": "",
+          "repo_name": "local_repo",
+          "hash": "",
+          "url": ""
+        },
+        {
+          "name": "StaticDestructionGuardTest__GuardedInstanceIsDestroyedOnceAllGuardsAreGone",
+          "file": "score/utils/static_destruction_guard_test.cpp",
+          "line": 99,
+          "need": "comp_req__utils__static_destruction_guard",
+          "verify_type": "partially",
+          "result": "passed",
+          "result_text": "",
+          "repo_name": "local_repo",
+          "hash": "",
+          "url": ""
+        },
+        {
+          "name": "StaticDestructionGuardTest__GuardedInstanceOutlivesEveryGuardExceptTheLast",
+          "file": "score/utils/static_destruction_guard_test.cpp",
+          "line": 128,
+          "need": "comp_req__utils__static_destruction_guard",
+          "verify_type": "partially",
+          "result": "passed",
+          "result_text": "",
+          "repo_name": "local_repo",
+          "hash": "",
+          "url": ""
+        },
+        {
+          "name": "StaticDestructionGuardTest__GetStorageReturnsFreshlyConstructedValue",
+          "file": "score/utils/static_destruction_guard_test.cpp",
+          "line": 155,
+          "need": "comp_req__utils__static_destruction_guard",
+          "verify_type": "partially",
+          "result": "passed",
+          "result_text": "",
+          "repo_name": "local_repo",
+          "hash": "",
+          "url": ""
+        },
+        {
+          "name": "StaticDestructionGuardTest__GetStorageAlwaysRefersToTheSameLiveObject",
+          "file": "score/utils/static_destruction_guard_test.cpp",
+          "line": 170,
+          "need": "comp_req__utils__static_destruction_guard",
+          "verify_type": "partially",
+          "result": "passed",
+          "result_text": "",
+          "repo_name": "local_repo",
+          "hash": "",
+          "url": ""
+        }
+      ]
+    }
+  },
+  {
     "need": "comp_req__utils__threadsafe_singleton",
     "links": {
       "CodeLinks": [],
