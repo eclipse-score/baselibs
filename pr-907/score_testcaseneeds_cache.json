@@ -331746,7 +331746,7 @@
   {
     "name": "CircularAllocatorFixture__WritingFromMultipleThreadsIsSafe",
     "file": "score/mw/log/detail/circular_allocator_test.cpp",
-    "line": "115",
+    "line": "114",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -331760,7 +331760,7 @@
   {
     "name": "CircularAllocatorFixture__WritingFromMultipleThreadsIsSafeWithInsufficientCapacity",
     "file": "score/mw/log/detail/circular_allocator_test.cpp",
-    "line": "149",
+    "line": "148",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -331774,7 +331774,7 @@
   {
     "name": "CircularAllocatorFixture__TryAcquireWhenAllSlotsAcquired",
     "file": "score/mw/log/detail/circular_allocator_test.cpp",
-    "line": "192",
+    "line": "190",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -334448,7 +334448,7 @@
   {
     "name": "TextMessageBuilderFixture__PayloadShouldHaveSetText",
     "file": "score/mw/log/detail/text_recorder/text_message_builder_test.cpp",
-    "line": "151",
+    "line": "150",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -334462,7 +334462,7 @@
   {
     "name": "TextMessageBuilderFixture__LogLevelToStringShouldReturnUndefinedForInvalidLogLevel",
     "file": "score/mw/log/detail/text_recorder/text_message_builder_test.cpp",
-    "line": "197",
+    "line": "196",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -334868,7 +334868,7 @@
   {
     "name": "TextRecorderTests__DefaultLogLevelShallBeUsedIfCheckForConsoleIsDisabled",
     "file": "score/mw/log/detail/text_recorder/text_recorder_test.cpp",
-    "line": "429",
+    "line": "428",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -334882,7 +334882,7 @@
   {
     "name": "TextRecorderTests__TextRecorderShouldClearSlotOnStart",
     "file": "score/mw/log/detail/text_recorder/text_recorder_test.cpp",
-    "line": "462",
+    "line": "461",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -334896,7 +334896,7 @@
   {
     "name": "TestLevels/TextMessageBuilderFixture__HeaderShallHaveLevelPrintedForAllParams/0",
     "file": "score/mw/log/detail/text_recorder/text_message_builder_test.cpp",
-    "line": "178",
+    "line": "177",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -334910,7 +334910,7 @@
   {
     "name": "TestLevels/TextMessageBuilderFixture__HeaderShallHaveLevelPrintedForAllParams/1",
     "file": "score/mw/log/detail/text_recorder/text_message_builder_test.cpp",
-    "line": "178",
+    "line": "177",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -334924,7 +334924,7 @@
   {
     "name": "TestLevels/TextMessageBuilderFixture__HeaderShallHaveLevelPrintedForAllParams/2",
     "file": "score/mw/log/detail/text_recorder/text_message_builder_test.cpp",
-    "line": "178",
+    "line": "177",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -334938,7 +334938,7 @@
   {
     "name": "TestLevels/TextMessageBuilderFixture__HeaderShallHaveLevelPrintedForAllParams/3",
     "file": "score/mw/log/detail/text_recorder/text_message_builder_test.cpp",
-    "line": "178",
+    "line": "177",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -334952,7 +334952,7 @@
   {
     "name": "TestLevels/TextMessageBuilderFixture__HeaderShallHaveLevelPrintedForAllParams/4",
     "file": "score/mw/log/detail/text_recorder/text_message_builder_test.cpp",
-    "line": "178",
+    "line": "177",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -334966,7 +334966,7 @@
   {
     "name": "TestLevels/TextMessageBuilderFixture__HeaderShallHaveLevelPrintedForAllParams/5",
     "file": "score/mw/log/detail/text_recorder/text_message_builder_test.cpp",
-    "line": "178",
+    "line": "177",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
@@ -334980,7 +334980,7 @@
   {
     "name": "TestLevels/TextMessageBuilderFixture__HeaderShallHaveLevelPrintedForAllParams/6",
     "file": "score/mw/log/detail/text_recorder/text_message_builder_test.cpp",
-    "line": "178",
+    "line": "177",
     "result": "passed",
     "repo_name": "local_repo",
     "hash": "",
