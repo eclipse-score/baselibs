@@ -11,27 +11,12 @@
 # SPDX-License-Identifier: Apache-2.0
 # *******************************************************************************
 
-load("@bazel_skylib//rules:common_settings.bzl", "string_flag")
 load("@rules_cc//cc:defs.bzl", "cc_library", "cc_test")
 load("@score_baselibs//:bazel/unit_tests.bzl", "cc_gtest_unit_test")
 load("@score_baselibs//score/language/safecpp:toolchain_features.bzl", "COMPILER_WARNING_FEATURES")
 load("@score_docs_as_code//:docs.bzl", "docs_bundle")
 
 LIB_JSON_VISIBILITY = ["//visibility:public"]
-
-# No-op, kept only so consumers who still pass --base_library on the command line or in their
-# .bazelrc don't get a hard "no such target" build failure. vaJson is the only parser backend;
-# this flag no longer selects anything. Remove in the next breaking release.
-string_flag(
-    name = "base_library",
-    build_setting_default = "vajson",
-    deprecation = "base_library no longer has any effect, vaJson is the only parser backend. " +
-                  "Remove this flag from your build configuration; it will be deleted in a future release.",
-    values = [
-        "vajson",
-        "nlohmann",
-    ],
-)
 
 cc_library(
     name = "model",

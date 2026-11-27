@@ -18,7 +18,6 @@
     - [Number grammar](#number-grammar)
   - [Requirements](#requirements)
   - [Assumptions of Use](#assumptions-of-use)
-  - [Deprecated `base_library` flag](#deprecated-base_library-flag)
   - [Deprecated `score::json::operator""_json`](#deprecated-scorejsonoperator_json)
 
 This JSON library is designed as an abstraction layer over the underlying JSON implementation. At the moment it
@@ -477,13 +476,6 @@ This library provides the functionality to read and write JSON files/data from a
 buffer used to initialize vaJson where safety requirements are assumed.
 - The user of MICROSAR Adaptive Safe shall ensure the integrity of the file when
 initializing vaJson from a path to the file where safety requirements are assumed.
-
-## Deprecated `base_library` flag
-
-The `base_library` flag (and its `nlohmann` value) no longer has any effect: vaJson is the only parser backend.
-The flag is kept, as a deprecated no-op, only so that consumers who still pass it on the command line or in their
-`.bazelrc` don't hit a hard build failure. Remove it from your build configuration; it will be deleted in a future
-release.
 
 ## Deprecated `score::json::operator""_json`
 
